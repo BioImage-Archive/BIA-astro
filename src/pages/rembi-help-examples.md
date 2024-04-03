@@ -25,7 +25,7 @@ The simplest case is where a single specimen is obtained from a biosample and go
 This Study Component structure may also be used for cases where the biosample and image acquisition parameters are the same but specimen differs from image to image, e.g. high content screening (HCS) type of data. In those cases common properties of the specimen would be put in the submission form and any differences in specimen would be written in the File List.
 
 <figure class="left margin-bottom-large" style="width: 300px">
-<img src="/src/assets/study_component_ex1.png" alt="Study Component Example 1">
+<img src="/src/assets/bioimage-archive/study_component_ex1.png" alt="Study Component Example 1">
 <figcaption class="figure-caption">Figure 1: Study Component Example 1</figcaption>
 </figure>
 
@@ -34,7 +34,7 @@ This Study Component structure may also be used for cases where the biosample an
 The second example is where there are multiple specimen obtained from the same biosample, i.e. to which different growth protocols and/or imaging protocols are applied, and then imaged (see Figure 2). A live-cell imaging study of yeast cells, [S-BIAD449](https://www.ebi.ac.uk/biostudies/BioImages/studies/S-BIAD449), is a good example of this case, however please note that it is an older submission so its metadata is not in REMBI format.
 
 <figure class="left margin-bottom-large margin-top-large" style="width: 450px">
-<img src="/src/assets/study_component_ex2.png" alt="Study Component Example 2">
+<img src="/src/assets/bioimage-archive/study_component_ex2.png" alt="Study Component Example 2">
 <figcaption class="figure-caption">Figure 2: Study Component Example 2</figcaption>
 </figure>
 
@@ -45,7 +45,7 @@ The biosample is the same but both the specimen and image acquisition methods ar
 [S-BIAD15](https://www.ebi.ac.uk/biostudies/BioImages/studies/S-BIAD15) is a good example for this case, however please note that it is an older submission so its metadata is not in REMBI format.
 
 <figure class="left margin-bottom-large margin-top-large" style="width: 600px">
-<img src="/src/assets/study_component_ex3.png" alt="Study Component Example 3">
+<img src="/src/assets/bioimage-archive/study_component_ex3.png" alt="Study Component Example 3">
 <figcaption class="figure-caption">Figure 3: Study Component Example 3</figcaption>
 </figure>
 
@@ -54,7 +54,7 @@ The biosample is the same but both the specimen and image acquisition methods ar
 Different biosample and specimens can also be put into the same study component if the image acquisition method and parameters are the same. One prominent example is if more than one tissue is imaged on the same slide/scan.
 
 <figure class="left margin-bottom-large margin-top-large" style="width: 350px">
-<img src="/src/assets/study_component_ex4.png" alt="Study Component Example 4">
+<img src="/src/assets/bioimage-archive/study_component_ex4.png" alt="Study Component Example 4">
 <figcaption class="figure-caption">Figure 4: Study Component Example 4</figcaption>
 </figure>
 
@@ -66,7 +66,7 @@ Correlative studies are perfect examples for this case, e.g. where the same spec
 You can find more about which archive to use to deposit your correlative datasets [here](/bioimage-archive/helpimagesatebi).
 
 <figure class="left margin-bottom-large margin-top-large" style="width: 350px">
-<img src="/src/assets/study_component_ex5.png" alt="Study Component Example 5">
+<img src="/src/assets/bioimage-archive/study_component_ex5.png" alt="Study Component Example 5">
 <figcaption class="figure-caption">Figure 5: Study Component Example 5</figcaption>
 </figure>
 

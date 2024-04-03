@@ -7,16 +7,16 @@ title: About BioImage Archive
 EMBL has been supported via the UK Research and Innovation (UKRI) Strategic Project Fund to develop the internal infrastructure and image resources hosted at EMBL's European Bioinformatics Institute (EMBL-EBI).
 
 ### Development milestones
-![development-milestones](/src/assets/development-milestones.png)
+![development-milestones](/src/assets/bioimage-archive/development-milestones.png)
 
 ### BioImaging Project Governance
 The BioImaging Project is one project supporting the wider Data Infrastructure Programme. It will follow the below governance model with [UKRI-BBSRC](https://bbsrc.ukri.org/) taking on the external Senior Responsible owner role for the capital investment and EMBL-EBI taking on Internal Sponsorship to provide the operational investment required to successfully deliver the project.
 
-![development-milestones](/src/assets/bioimaging_governance_phase2.png)
+![development-milestones](/src/assets/bioimage-archive/bioimaging_governance_phase2.png)
 
 ### Community engagement
 
-<img alt="community-engagement" src="/src/assets/rembi.png" class="float-right padding-left-large" />
+<img alt="community-engagement" src="/src/assets/bioimage-archive/rembi.png" class="float-right padding-left-large" />
 
 Working with community experts throughout the development process is paramount to ensure that the BioImage Archive serves the needs of life-science researchers, data scientists, software engineers, funders and the wider public.
 
@@ -33,11 +33,11 @@ Ongoing development is enabled by capital investment from the UKRI Strategic Pri
 supported by EMBL member state funding.
 
 <a href="https://www.ukri.org/" class="logo-img">
-<img class="padding-bottom-large" src="src/assets/uk_ri_logo.jpg" style="height: 66px;" />
+<img class="padding-bottom-large" src="src/assets/bioimage-archive/uk_ri_logo.jpg" style="height: 66px;" />
 </a>
 			
 <a href="http://www.ebi.ac.uk" class="logo-img">
-<img class="padding-bottom-large" src="src/assets/EMBL_logo_colour_wordmark.png" style="height: 66px;" />
+<img class="padding-bottom-large" src="src/assets/bioimage-archive/EMBL_logo_colour_wordmark.png" style="height: 66px;" />
 </a>
 			
 

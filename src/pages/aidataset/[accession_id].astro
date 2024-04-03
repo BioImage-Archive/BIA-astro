@@ -2,11 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import exports from "../../data/bia-ai-export.json";
 
-import studyImage from '../../assets/study.png';
-import biosampleImage from '../..//assets/biosample.png';
-import imacqImage from '../../assets/im_acquisition.png';
-import specimenImage from '../../assets/specimen.png';
-import annotationsImage from '../../assets/annotations.png';
+import studyImage from '../../assets/bioimage-archive/study.png';
+import biosampleImage from '../..//assets/bioimage-archive/biosample.png';
+import imacqImage from '../../assets/bioimage-archive/im_acquisition.png';
+import specimenImage from '../../assets/bioimage-archive/specimen.png';
+import annotationsImage from '../../assets/bioimage-archive/annotations.png';
 
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {
