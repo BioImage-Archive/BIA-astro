@@ -26,7 +26,7 @@ The BioImage Archive has adopted REMBI as its metadata model, therefore when you
 
 * **Image Acquisition** is about how your images were captured. 
 
-* **Image Data** contains image level metadata. This is implemented as the [File List](/helpfilelist) for BioImage Archive submissions, instead of a seperate component in the submission form. 
+* **Image Data** contains image level metadata. This is implemented as the [File List](/bioimage-archive/helpfilelist) for BioImage Archive submissions, instead of a seperate component in the submission form. 
 
 * **Image Correlation** is optional and contains metadata about correlating images from different modalities. 
 

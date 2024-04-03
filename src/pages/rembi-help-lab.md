@@ -26,7 +26,7 @@ Use a consistent file and directory structure, using directories to group images
 
 ## Metadata
 
-To make it easier to understand your image data, and encourage reuse, we capture extra information, metadata, about your images. The BioImage Archive follows the [REMBI](https://doi.org/10.1038/s41592-021-01166-8) (REcommended Metadata for Biological Images) model. In general, REMBI provides a way to explain how your images were generated, providing enough context to allow others to interpret them without reference to external sources. Here we briefly describe the types of information you’ll need to supply when you come to make your submission. More extensive detail is available in the [Study Component guidance document](/rembihelpexamples) and [REMBI model reference document](/rembimodelreference).
+To make it easier to understand your image data, and encourage reuse, we capture extra information, metadata, about your images. The BioImage Archive follows the [REMBI](https://doi.org/10.1038/s41592-021-01166-8) (REcommended Metadata for Biological Images) model. In general, REMBI provides a way to explain how your images were generated, providing enough context to allow others to interpret them without reference to external sources. Here we briefly describe the types of information you’ll need to supply when you come to make your submission. More extensive detail is available in the [Study Component guidance document](/bioimage-archive/rembihelpexamples) and [REMBI model reference document](/bioimage-archive/rembimodelreference).
 
 
 ### Study

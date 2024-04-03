@@ -7,14 +7,14 @@ const pageData = {
     galleries: "Galleries",
     help: "Help",
     policies: "Policies",
-    aboutus: "About"
+    "about-us": "About"
 }
 ---
 <nav class="vf-navigation vf-navigation--main | vf-cluster" style="margin-top: 0.5rem;">
     <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
       {Object.entries(pageData).map(([key, value]) => (
         <li class="vf-navigation__item">
-            <a href={`/${key}`} class="vf-navigation__link">{value}</a>
+            <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
         </li>
         )
       )}

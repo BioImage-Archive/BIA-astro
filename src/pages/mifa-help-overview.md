@@ -12,6 +12,6 @@ The BioImage Archive has implemented the [Metadata, Incentives, Formats, and Acc
 <figcaption class="figure-caption"></figcaption>
 </figure>
 
-If you are submitting annotation files ([check here](/aiglossary)), you will need to provide MIFA metadata in the submission process and some as part of the file list [as explained here](/submitannotations).
+If you are submitting annotation files ([check here](/bioimage-archive/aiglossary)), you will need to provide MIFA metadata in the submission process and some as part of the file list [as explained here](/bioimage-archive/submitannotations).
 
-For a more detailed description and examples of the MIFA metadata fields, check the [MIFA model reference](/mifamodelreference/).
+For a more detailed description and examples of the MIFA metadata fields, check the [MIFA model reference](/bioimage-archive/mifamodelreference/).
