@@ -12,7 +12,7 @@ Scientific research and development relies on FAIR sharing of the data that supp
 
 REMBI has an 8-component high level structure to encompass diverse biological imaging methods and subdomains.
 
-![REMBI overview](../assets/rembi-fig.png)
+![REMBI overview](../assets/bioimage-archive/rembi-fig.png)
 
 The BioImage Archive has adopted REMBI as its metadata model, therefore when you submit image data to the Archive, you will be asked to supply information about each of the relevant REMBI components. 
 

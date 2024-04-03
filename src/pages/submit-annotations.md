@@ -54,7 +54,7 @@ We support multiple methods of data upload, each recommended if the submission s
 The FTP/Aspera tab in the [submission tool upload section](https://www.ebi.ac.uk/biostudies/submissions/files) will include your credentials and upload guidance for these two upload methods.
 
 <figure>
-<img src="/src/assets/ftp-aspera.png" alt="" class="float-right float-top" style="height: 100px">
+<img src="/src/assets/bioimage-archive/ftp-aspera.png" alt="" class="float-right float-top" style="height: 100px">
 <figcaption class="figure-caption"></figcaption>
 </figure>
 
@@ -69,7 +69,7 @@ In the first column, “Files”, write the path and file name for each annotati
 This will generate a tsv file with all the paths and file names contained in the folder, that you can now copy and paste into your file list template.
 
 <figure>
-<img src="/src/assets/filelist_button.png" alt="" class="float-center float-top" style="height: 120px">
+<img src="/src/assets/bioimage-archive/filelist_button.png" alt="" class="float-center float-top" style="height: 120px">
 <figcaption class="figure-caption"></figcaption>
 </figure>
 
@@ -79,7 +79,7 @@ This will generate a tsv file with all the paths and file names contained in the
 When all annotation files and file lists have been uploaded, you can create your submission [here](https://www.ebi.ac.uk/biostudies/submissions/submissions/new;template=bioimages.mifa). **Make sure you select the BioImage Archive Annotations Submission template** when creating a new submission.
 
 <figure>
-<img src="/src/assets/BIA_annotation_template_view.png" alt="" class="float-center float-top" style="height: 500px">
+<img src="/src/assets/bioimage-archive/BIA_annotation_template_view.png" alt="" class="float-center float-top" style="height: 500px">
 <figcaption class="figure-caption"></figcaption>
 </figure>
 

@@ -42,7 +42,7 @@ You must have one file list per <a href="rembihelpexamples">study component</a> 
 You can now generate a file list of everything within a given directory under your user space with one click. We have developed a file list generator that is displayed next to every directory in your user space, under the File Upload tab (marked with red in the figure below). Please note that this tool only provides the paths and names of the files in a given directory (recursively, i.e. lists all the files in all sub-directories within that directory). You'd still need to add any relevant metadata yourself. 
 
 <figure class="center margin-bottom-large margin-right-large" style="width: 550px">
-  <img src="/src/assets/filelist_generator.png" alt="filelist generator">
+  <img src="/src/assets/bioimage-archive/filelist_generator.png" alt="filelist generator">
 </figure>
 
 ### Detailed Help
@@ -50,7 +50,7 @@ You can now generate a file list of everything within a given directory under yo
 A File List is used to describe all the files that you wish to include in your submission, both image files and other supporting files e.g., analysis results. The file list also allows you to specify file level metadata, i.e. attributes associated with each file.
 
 <figure class="float-right margin-left-large" >
-<img src="/src/assets/filelist.png" alt="file list">
+<img src="/src/assets/bioimage-archive/filelist.png" alt="file list">
   <figcaption class="figure-caption">An example file list</figcaption>
 </figure>
 
@@ -75,7 +75,7 @@ Fill in attribute values for each of the image files. Do not leave blank lines.
 If you have organised files in your BioStudies home directory in a hierarchy, do not forget to reflect that in the file list. E.g., if you have in your home directory folders "Sample1" and "Sample2", refer to files inside those folders as "Sample1/imageFile1.tif" etc. Please note that the file path separator must be forward slash "/", anything else like "\\" or "\ \\" won't work. Please avoid relative paths (./ or ../) and trailing slashes (e.g. //). 
 
 <figure class="center margin-bottom-large margin-right-large" style="width: 600px">
-  <img src="/src/assets/flat_and_hierarchical.png" alt="different file structures">
+  <img src="/src/assets/bioimage-archive/flat_and_hierarchical.png" alt="different file structures">
 </figure>
 
 You need to have at least one file list per submission. If you have different study components, like different experiments belonging to the same submission, you must have one file list per study component. In this case the file list of that study component would only list the names of files that belong to that study component. There are different ways to arrange your submission into study components if you wish to do so, e.g. by experiments in which you imaged different samples or used different imaging techniques, or by different screens in a high content screening study.
@@ -83,7 +83,7 @@ You need to have at least one file list per submission. If you have different st
 As an example, the file structure below contains both raw data as zarr images and analysis results as tsv files for two different experiments. The submission is divided into two study components: Experiment 1 and Experiment 2, each containing raw and analysis files belonging to that experiment. The submission has two file lists, one for each study component.
 
 <figure class="center margin-bottom-large margin-right-large" style="width: 800px">
-  <img src="/src/assets/two_experiment_filelist.png" alt="file lists per study component">
+  <img src="/src/assets/bioimage-archive/two_experiment_filelist.png" alt="file lists per study component">
 </figure>
 
 <!-- The figures below show how that submission looks like on the BioImage Archive. Data files view can be expended (see figure below) and shows all the metadata included in the file lists.
