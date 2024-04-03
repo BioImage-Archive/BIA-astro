@@ -11,5 +11,6 @@ export default defineConfig({
   integrations: [mdx()],
   vite: {
     plugins: [yaml()]
-  }
+  },
+  base: "/bioimage-archive"
 });

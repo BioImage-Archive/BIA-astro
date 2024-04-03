@@ -14,7 +14,7 @@ The Study Component explains the context of your image data (and analysed data i
 * Image Correlation (where applicable)
 * Image Analysis (where applicable)
 
-Detailed information about what these components are can be found in the [REMBI Lab Guide](/rembihelplab) and [REMBI Model Reference](/rembimodelreference) documents. 
+Detailed information about what these components are can be found in the [REMBI Lab Guide](/bioimage-archive/rembihelplab) and [REMBI Model Reference](/bioimage-archive/rembimodelreference) documents. 
 
 A submission can contain one or more Study Components. There are different ways to structure your submission into Study Components. Here are five different examples:
 
@@ -63,7 +63,7 @@ Different biosample and specimens can also be put into the same study component 
 This is the case if the same sample is imaged using two different imaging methods or with different image acquisition parameters and then put together for an analysis. 
 
 Correlative studies are perfect examples for this case, e.g. where the same specimen is first imaged using light microscopy, followed by electron microscopy. An example case is [S-BSST429](https://www.ebi.ac.uk/biostudies/bioimages/studies/S-BSST429) where light microscopy images are deposited at the BioImage Archive and 3D electron microscopy data are deposited at the EMPIAR database with links to each other. However please note that this is an older submission, therefore its metadata is not in REMBI format.
-You can find more about which archive to use to deposit your correlative datasets [here](/helpimagesatebi).
+You can find more about which archive to use to deposit your correlative datasets [here](/bioimage-archive/helpimagesatebi).
 
 <figure class="left margin-bottom-large margin-top-large" style="width: 350px">
 <img src="/src/assets/study_component_ex5.png" alt="Study Component Example 5">

@@ -118,7 +118,7 @@ Use `https://www.ebi.ac.uk/biostudies/BioImages/studies/<accession_number>` to l
 
 #### What is the easiest way to download large data volumes from the BioImage Archive?
 
-For general help with downloading see [downloading section of Biostudies help page](https://www.ebi.ac.uk/biostudies/help#download) or [downloading data section on BioImage Archive help page](/help-download). [Aspera](https://asperasoft.com/) transfers are supported, and are particularly useful for large data volumes.
+For general help with downloading see [downloading section of Biostudies help page](https://www.ebi.ac.uk/biostudies/help#download) or [downloading data section on BioImage Archive help page](/bioimage-archive/help-download). [Aspera](https://asperasoft.com/) transfers are supported, and are particularly useful for large data volumes.
 
 #### Under what license(s) is BioImage Archive data available?
 
