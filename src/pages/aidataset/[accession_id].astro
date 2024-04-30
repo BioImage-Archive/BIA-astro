@@ -1,4 +1,6 @@
 ---
+//import 'datatables.net';
+import DataTable from 'datatables.net-dt';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import exports from "../../data/bia-ai-export.json";
 
@@ -169,7 +171,7 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
       </b>
     </div>
     <div>
-      <table id="viewable_images">
+      <table id="viewable_images" class="display">
         <thead>
           <tr>
             <th>Preview</th>
@@ -207,5 +209,18 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div></div>
     <div> </div>
   </section>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    new DataTable('#viewable_images', {
+    scrollX: true,
+    columnDefs: [
+      { type: 'natural', targets: 0 }
+      ]
+} ) 
+});
+</script>
   </body>
 </BaseLayout>
+

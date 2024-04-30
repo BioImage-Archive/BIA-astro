@@ -13,9 +13,13 @@
     "@astrojs/check": "^0.2.1",
     "@astrojs/mdx": "^1.1.5",
     "astro": "^3.4.0",
+    "datatables.net-dt": "^2.0.1",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@rollup/plugin-yaml": "^4.1.2"
+    "@rollup/plugin-yaml": "^4.1.2",
+    "@types/datatables.net": "^1.10.28",
+    "@types/jquery": "^3.5.29",
+    "@types/node": "^20.11.24"
   }
 }
