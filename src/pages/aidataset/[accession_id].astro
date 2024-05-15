@@ -22,6 +22,9 @@ const { accession_id } = Astro.params;
 const study = exports["datasets"][accession_id];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+
+const viewable_non_annotation_images = (study.image_uuids.filter(item => !Object.values(study.annotation_images).includes(item))).map((uuid) => exports["images"][uuid]);
+const viewable_annotation_images = (study.image_uuids.filter(item => Object.values(study.annotation_images).includes(item))).map((uuid) => exports["images"][uuid]);
 ---
 <BaseLayout pageTitle= {study.accession_id} >
   <body>
@@ -181,7 +184,7 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
           </tr>
         </thead>
         <tbody>
-          {images.map((image) =>
+          {viewable_non_annotation_images.map((image) =>
             <tr>
               <th>
                 <img class="vf-figure__image" src={image.thumbnail_uri}>
@@ -206,7 +209,33 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div class="vf-section-header">
       <h3 class="vf-section-header__heading" id="annotations"> Viewable Annotations </h3>
     </div>
-    <div></div>
+    <div>
+      <table id="viewable_annotations" class="display">
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>Filename</th>
+            <th>Download Size</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {viewable_annotation_images.map((image) =>
+            <tr>
+              <th>
+                <img class="vf-figure__image" src={image.thumbnail_uri}>
+              </th>
+              <th>{image.name}</th>
+              <th>None</th>
+              <th>
+                <a href={"/image/" + image.uuid}>View</a>
+                Download
+              </th>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      </div>
     <div> </div>
   </section>
 
