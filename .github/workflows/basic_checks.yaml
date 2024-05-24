@@ -6,7 +6,7 @@ on:
 
 env:
   #site_name: "deploy-preview-${{ GITHUB_SHA }}-bia-beta-website"
-  site_name: deploy-preview-4--bia-beta-website
+  site_name: bia-beta-website # remainder up to deploy-preview-4--bia-beta-website.netlify.app added by something else?
 
 jobs:
   wait-for-deploy:
