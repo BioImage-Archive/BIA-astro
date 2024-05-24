@@ -14,7 +14,7 @@ The Study Component explains the context of your image data (and analysed data i
 * Image Correlation (where applicable)
 * Image Analysis (where applicable)
 
-Detailed information about what these components are can be found in the [REMBI Lab Guide](/bioimage-archive/rembihelplab) and [REMBI Model Reference](/bioimage-archive/rembimodelreference) documents. 
+Detailed information about what these components are can be found in the [REMBI Lab Guide](/bioimage-archive/rembi-help-lab) and [REMBI Model Reference](/bioimage-archive/rembi-model-reference) documents. 
 
 A submission can contain one or more Study Components. There are different ways to structure your submission into Study Components. Here are five different examples:
 

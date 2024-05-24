@@ -27,7 +27,7 @@ title: File List guide
 
 A File List is used to describe all the files that you wish to include in your submission, both image files and other supporting files e.g., analysis results. It contains file level metadata.
 
-You must have one file list per <a href="rembihelpexamples">study component</a> and one file list per annotations section (if applicable).
+You must have one file list per <a href="rembi-help-examples">study component</a> and one file list per annotations section (if applicable).
 
 * File lists are tabular data, either in tsv or Excel (.xlsx) format. 
 * The first column of the header has to be the word "Files".

@@ -33,11 +33,11 @@ Ongoing development is enabled by capital investment from the UKRI Strategic Pri
 supported by EMBL member state funding.
 
 <a href="https://www.ukri.org/" class="logo-img">
-<img class="padding-bottom-large" src="src/assets/bioimage-archive/uk_ri_logo.jpg" style="height: 66px;" />
+<img class="padding-bottom-large" src="/src/assets/bioimage-archive/uk_ri_logo.jpg" style="height: 66px;" />
 </a>
 			
 <a href="http://www.ebi.ac.uk" class="logo-img">
-<img class="padding-bottom-large" src="src/assets/bioimage-archive/EMBL_logo_colour_wordmark.png" style="height: 66px;" />
+<img class="padding-bottom-large" src="/src/assets/bioimage-archive/EMBL_logo_colour_wordmark.png" style="height: 66px;" />
 </a>
 			
 
