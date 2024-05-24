@@ -22,4 +22,4 @@ jobs:
     needs: wait-for-deploy
     runs-on: ghcr.io/linkchecker/linkchecker:latest
     steps:
-      - run: "linkchecker https://${{ site_name }}.netlify.app/bioimage-archive/ -o failures"
+      - run: "linkchecker https://${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures"
