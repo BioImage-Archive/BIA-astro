@@ -9,6 +9,7 @@ export default defineConfig({
   //output: 'hybrid',
   //integrations: [mdx(), preact()]
   integrations: [mdx()],
+  outDir: './dist/bioimage-archive',
   vite: {
     plugins: [yaml()]
   },
