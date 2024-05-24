@@ -20,6 +20,8 @@ jobs:
 
   link-check:
     needs: wait-for-deploy
-    runs-on: ghcr.io/linkchecker/linkchecker:latest
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/linkchecker/linkchecker:latest
     steps:
       - run: "linkchecker https://${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures"
