@@ -20,7 +20,7 @@ layout: ../layouts/HelpLayout.astro
 Submitting Annotations to the BioImage Archive
 ---------------------------------------
 
-These instructions are for annotations-only submissions, i.e. segmentation masks, point annotations, class labels etc., **without corresponding images.** For example you have created cell segmentations for an already public imaging dataset and you would like to submit the segmentations. For a full list of annotation types and brief descriptions [check here.](/bioimage-archive/aiglossary)
+These instructions are for annotations-only submissions, i.e. segmentation masks, point annotations, class labels etc., **without corresponding images.** For example you have created cell segmentations for an already public imaging dataset and you would like to submit the segmentations. For a full list of annotation types and brief descriptions [check here.](/bioimage-archive/ai-glossary)
 
 For instructions on general submissions, including those with images *and* annotations, please [click here](/bioimage-archive/submit).
 
@@ -34,7 +34,7 @@ You will need to register for a BioStudies account. You can sign up [here](https
 
 Now, organise your data for submission. Your data files should be in a single directory tree with a logical hierarchical file structure. Please note that the file paths are not visible on the submission web page, therefore if there is embedded information in the directory structure please put that information as metadata in the file list (see step 4).
 
-Please note that some special characters are not allowed in directory and file names. Stick to the allowed characters listed [here](/bioimage-archive/helpfilelist/#namerules) to avoid any problems with your submission. 
+Please note that some special characters are not allowed in directory and file names. Stick to the allowed characters listed [here](/bioimage-archive/help-file-list/#namerules) to avoid any problems with your submission. 
 
 For any program code accompanying your study, it is best to upload that code to a specialised repository (e.g. GitHub or Gitlab), and then add a link to it in your submission, which you will be able to do during the submission process. 
 
@@ -62,7 +62,7 @@ The FTP/Aspera tab in the [submission tool upload section](https://www.ebi.ac.uk
 
 You will need a "table of contents" for your annotation files, called a "File List" in the submission tool. Please use [this template](https://docs.google.com/spreadsheets/d/1yeIp2xZsYSii6WEYpCZvGyCjuYChB0Pd/edit?usp=sharing&ouid=114171845103914552186&rtpof=true&sd=true) for the annotations file list, you can delete the instructions preceded by #. 
 
-In the first column, “Files”, write the path and file name for each annotation file. The annotation type should be one of [these](/bioimage-archive/aiglossary), please get in touch if your annotation does not fit any of the categories. The **Files, annotation type and source image columns are mandatory**, the rest of the columns in this spreadsheet are optional and can be customised to your experiment. You can add extra columns to the file list with any information that is important to understand your annotations.
+In the first column, “Files”, write the path and file name for each annotation file. The annotation type should be one of [these](/bioimage-archive/ai-glossary), please get in touch if your annotation does not fit any of the categories. The **Files, annotation type and source image columns are mandatory**, the rest of the columns in this spreadsheet are optional and can be customised to your experiment. You can add extra columns to the file list with any information that is important to understand your annotations.
 
 **Tip:** To automatically create a list of all the files that you have uploaded to your user space, login into your biostudies account and click on the “File Upload” tab. Locate the folder of interest where you uploaded your data, and click on the “Download File List” button to the right (see below). 
 
