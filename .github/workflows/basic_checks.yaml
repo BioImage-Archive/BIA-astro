@@ -24,4 +24,4 @@ jobs:
     container:
       image: ghcr.io/linkchecker/linkchecker:latest
     steps:
-      - run: "linkchecker https://${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures"
+      - run: "linkchecker https://deploy-preview-4--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures"
