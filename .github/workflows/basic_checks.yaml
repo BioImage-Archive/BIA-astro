@@ -15,7 +15,7 @@ jobs:
       - name: Waiting for 200 from the Netlify Preview
         uses: jakepartusch/wait-for-netlify-action@v1.4
         with:
-          site_name: $site_name
+          site_name: ${{ env.site_name }}
           max_timeout: 60
 
   link-check:
