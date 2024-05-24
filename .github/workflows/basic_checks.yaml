@@ -5,7 +5,8 @@ on:
       - main
 
 env:
-  site_name: "deploy-preview-${{ GITHUB_SHA }}-bia-beta-website"
+  #site_name: "deploy-preview-${{ GITHUB_SHA }}-bia-beta-website"
+  site_name: deploy-preview-4--bia-beta-website
 
 jobs:
   wait-for-deploy:
@@ -21,4 +22,4 @@ jobs:
     needs: wait-for-deploy
     runs-on: ghcr.io/linkchecker/linkchecker:latest
     steps:
-      - run: linkchecker  https://deploy-preview-4--bia-beta-website.netlify.app/bioimage-archive/ -o failures
+      - run: "linkchecker https://${{ site_name }}.netlify.app/bioimage-archive/ -o failures"
