@@ -38,7 +38,7 @@ Please note that some special characters are not allowed in directory and file n
 
 For any program code accompanying your study, it is best to upload that code to a specialised repository (e.g. GitHub or Gitlab), and then add a link to it in your submission, which you will be able to do during the submission process. 
 
-The BioImage Archive implemented MIFA metadata guidelines to further support FAIR sharing. You will need to provide MIFA metadata of your study at the final step of the submission process, using the BIA web submission tool. Please check the more detailed overview of MIFA metadata [here](/bioimage-archive/mifamodelreference).
+The BioImage Archive implemented MIFA metadata guidelines to further support FAIR sharing. You will need to provide MIFA metadata of your study at the final step of the submission process, using the BIA web submission tool. Please check the more detailed overview of MIFA metadata [here](/bioimage-archive/mifa-model-reference).
 
 ### 3. Upload your data
 
