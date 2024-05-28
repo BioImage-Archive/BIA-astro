@@ -32,6 +32,4 @@ jobs:
             --ignore-url '.*\/vis\/?.*' \
             --ignore-url '.*\/dataset\/?.*' \
             --ignore-url '.*\/sodataset\/?.*' \
-            --ignore-url '.*\/aidataset\/?.*' \
-            --ignore-url '.*\/mifa-model-reference\/?.*' \
-            --ignore-url '.*\/rembi-model-reference\/?.*'
+            --ignore-url '.*\/aidataset\/?.*'
