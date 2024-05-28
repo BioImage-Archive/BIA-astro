@@ -27,9 +27,9 @@ jobs:
     steps:
       - run: |
           linkchecker https://deploy-preview-4--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures \
-            --ignore-url '.*\/vis\/.*' \
-            --ignore-url '.*\/dataset\/.*' \
-            --ignore-url '.*\/sodataset\/.*' \
-            --ignore-url '.*\/aidataset\/.*' \
-            --ignore-url '.*\/mifa-model-reference\/.*' \
-            --ignore-url '.*\/rembi-model-reference\/.*'
+            --ignore-url '.*\/vis\/?.*' \
+            --ignore-url '.*\/dataset\/?.*' \
+            --ignore-url '.*\/sodataset\/?.*' \
+            --ignore-url '.*\/aidataset\/?.*' \
+            --ignore-url '.*\/mifa-model-reference\/?.*' \
+            --ignore-url '.*\/rembi-model-reference\/?.*'
