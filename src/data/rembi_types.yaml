@@ -145,8 +145,7 @@ models:
   - name: rembi_version
     type:
       name: literal
-      args: &id001 !!python/tuple
-      - '1.5'
+      args: &id001 ['1.5']
     description: REMBI template version
     validation: ''
     examples: []

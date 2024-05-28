@@ -1,69 +1,9 @@
 ---
+import Article from './Article.astro';
+
 const { type } = Astro.props;
-console.log(type);
 ---
-<!-- ** FIXME ** -->
-<!--  <article class="doc-panel medium-12" id={{type.class_name}}><table >
-    <tr>
-        <td><h3>{{ type.class_name }}</h3></td>
-        <td>{{ type.description }}</td>
-    </tr>
 
-    {% for attribute in type.attributes %}
-    <tr>
-        <td>
-            {{ attribute.name }}{% if attribute.required %}*{% endif %}
-        </td>
-        <td><table>
-            <tr>
-                <td>Description</td>
-                <td>{{ attribute.description }}</td>
-            </tr>
-            <tr>
-                <td>Type</td>
-                <td>
-                {% if attribute.type.name == "union" %}
-                    {% for component in attribute.type.args %}
-                    <a href="#{{component | slufigy: 'latin' | downcase}}">{{ component }}</a>
-                    {% unless forloop.last %} OR {% endunless %}
-                    {% endfor %}
-                {% elsif attribute.type.name == "literal" %}
-                    Literal value{% if attribute.args.length > 1 %}s{% endif %}: 
-                    {% for arg in attribute.type.args %}
-                    "{{ arg }}"
-                    {% unless forloop.last %}, {% endunless %}
-                    {% endfor %}
-                {% else %}
-                    {% if attribute.type.is_list %} List[ {% endif %}
-                    <a href="#{{attribute.type.name | slufigy: 'latin' | downcase}}">{{ attribute.type.name }}</a>
-                    {% if attribute.type.is_list %} ] {% endif %}
-                {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td>Required</td>
-                <td>{% if attribute.required %} true {% else %} false {% endif %}</td>
-            </tr>
-            {% if attribute.validation != "" %}
-            <tr>
-                <td>Validation</td>
-                <td>{{ attribute.validation }}</td>
-            </tr>
-            {% endif %}
-            {% if attribute.examples.size != 0 %}
-            <tr>
-                <td>Examples</td>
-                <td>
-                {% for example in attribute.examples %}
-                    <p>{{ example }}</p>
-                {% endfor %}
-                </td>
-            </tr>
-            {% endif %}
-        </table></td>
-    </tr>
-    {% endfor %}
-</table>
-</article>
-
--->
+<div class="model-help-card">
+  <Article type={type} />
+</div>

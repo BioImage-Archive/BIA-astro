@@ -1,0 +1,426 @@
+rembi_version: '1.5'
+models:
+- class_name: MifaContainer
+  description: ''
+  attributes:
+  - name: publications
+    type:
+      name: Publications
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: authors
+    type:
+      name: Author
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: grants
+    type:
+      name: GrantReference
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: link_url
+    type:
+      name: str
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: link_description
+    type:
+      name: str
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: title
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: description
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: keywords
+    type:
+      name: str
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: license
+    type:
+      name: LicenseType
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: ai_models_trained
+    type:
+      name: str
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: acknowledgements
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: funding_statement
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: annotations
+    type:
+      name: Annotations
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: true
+- class_name: Publications
+  description: Information about any publications associated with the dataset
+  attributes:
+  - name: publication_title
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: publication_authors
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: publication_doi
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: publication_year
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: pubmed_id
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+- class_name: Author
+  description: Information about the authors
+  attributes:
+  - name: organisation
+    type:
+      name: OrganisationInfo
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: author_first_name
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: author_last_name
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: email
+    type:
+      name: ConstrainedStrValue
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: orcid_id
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: role
+    type:
+      name: str
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+- class_name: OrganisationInfo
+  description: Information about the organisation the author is affiliated with
+  attributes:
+  - name: organisation_name
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: address
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: ror_id
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+- class_name: GrantReference
+  description: Information about grant ID and funding body that funded the study
+  attributes:
+  - name: grant_id
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: funder
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+- class_name: LicenseType
+  description: An enumeration.
+  attributes:
+  - name: CC0
+    type:
+      name: Enumeration option
+    description: No Copyright. You can copy, modify, distribute and perform the work,
+      even for commercial purposes, all without asking permission.
+    examples: []
+  - name: CC_BY
+    type:
+      name: Enumeration option
+    description: "You are free to: Share \u2014 copy and redistribute the material\
+      \ in any medium or format. Adapt \u2014 remix, transform, and build upon the\
+      \ material  for any purpose, even commercially. You must give appropriate credit,\
+      \ provide a link to the license, and indicate if changes were made.  You may\
+      \ do so in any reasonable manner, but not in any way that suggests the licensor\
+      \ endorses you or your use."
+    examples: []
+- class_name: Annotations
+  description: A set of annotations for an AI-ready dataset
+  attributes:
+  - name: authors
+    type:
+      name: Author
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: file_metadata
+    type:
+      name: FileLevelMetadata
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: annotation_overview
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: annotation_type
+    type:
+      name: AnnotationType
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: annotation_method
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: annotation_criteria
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: annotation_coverage
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: annotation_confidence_level
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+- class_name: FileLevelMetadata
+  description: metadata atributes that must be detailed at the file level
+  attributes:
+  - name: annotation_id
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: annotation_type
+    type:
+      name: AnnotationType
+      is_list: true
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: source_image_id
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: true
+  - name: transformations
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: spatial_information
+    type:
+      name: str
+    description: null
+    validation: null
+    examples: []
+    required: false
+  - name: annotation_creation_time
+    type:
+      name: datetime
+    description: null
+    validation: null
+    examples: []
+    required: false
+- class_name: AnnotationType
+  description: An enumeration.
+  attributes:
+  - name: class_labels
+    type:
+      name: Enumeration option
+    description: tags that identify specific features, patterns or classes in images
+    examples: []
+  - name: bounding_boxes
+    type:
+      name: Enumeration option
+    description: rectangles completely enclosing a structure of interest within an
+      image
+    examples: []
+  - name: counts
+    type:
+      name: Enumeration option
+    description: number of objects, such as cells, found in an image
+    examples: []
+  - name: derived_annotations
+    type:
+      name: Enumeration option
+    description: additional analytical data extracted from the images. For example,
+      the image point spread function,the signal to noise ratio, focus information...
+    examples: []
+  - name: geometrical_annotations
+    type:
+      name: Enumeration option
+    description: polygons and shapes that outline a region of interest in the image.
+      These can be geometrical primitives, 2D polygons, 3D meshes
+    examples: []
+  - name: graphs
+    type:
+      name: Enumeration option
+    description: graphical representations of the morphology, connectivity, or spatial
+      arrangement of biological structures in an image. Graphs, such as skeletons
+      or connectivity diagrams, typically consist of nodes and edges, where nodes
+      represent individual elements or regions and edges represent the connections
+      or interactions between them
+    examples: []
+  - name: point_annotations
+    type:
+      name: Enumeration option
+    description: X, Y, and Z coordinates of a point of interest in an image (for example
+      an object's centroid  or landmarks
+    examples: []
+  - name: segmentation_mask
+    type:
+      name: Enumeration option
+    description: an image, the same size as the source image, with the value of each
+      pixel representing some biological identity or background region
+    examples: []
+  - name: tracks
+    type:
+      name: Enumeration option
+    description: annotations marking the movement or trajectory of objects within
+      a sequence of bioimages
+    examples: []
+  - name: weak_annotations
+    type:
+      name: Enumeration option
+    description: rough imprecise annotations that are fast to generate. These annotations
+      are used, for example,  to detect an object without providing accurate boundaries
+    examples: []
+  - name: other
+    type:
+      name: Enumeration option
+    description: other types of annotations, please specify in the annotation overview
+      section
+    examples: []

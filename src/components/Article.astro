@@ -1,0 +1,85 @@
+---
+const { type } = Astro.props;
+const slugify = (text) => {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+};
+---
+
+<article class="doc-panel medium-12" id={slugify(type.class_name)}>
+  <table class="vf-table--bordered">
+    <thead class="vf-table__header">
+    <tr class="vf-table__row">  
+      <td><h3>{type.class_name}</h3></td>
+      <td>{type.description}</td>
+    </tr>
+    </thead>
+
+    {type.attributes && type.attributes.map((attribute) => (
+      <tr class="vf-table__row">
+        <td class="vf-table__cell">
+          {attribute.name}{attribute.required && '*'}
+        </td>
+        <td class="vf-table__cell">
+          <table class="vf-table--fixed">
+            <tr>
+              <td>Description</td>
+              <td>{attribute.description}</td>
+            </tr>
+            <tr> 
+              <td>Type</td>
+              <td>
+                {attribute.type && attribute.type.name === 'union' ? (
+                  attribute.type.args && attribute.type.args.map((component, index) => (
+                    <>
+                      <a href={`#${slugify(component)}`}>{component}</a>
+                      {index < attribute.type.args.length - 1 && ' OR '}
+                    </>
+                  ))
+                ) : attribute.type && attribute.type.name === 'literal' ? (
+                  <>
+                    Literal value{attribute.type.args.length > 1 && 's'}: 
+                    {attribute.type.args && attribute.type.args.map((arg, index) => (
+                      <>
+                        "{arg}"
+                        {index < attribute.type.args.length - 1 && ', '}
+                      </>
+                    ))}
+                  </>
+                ) : (
+                  attribute.type && (
+                    <>
+                      {attribute.type.is_list && 'List[ '}
+                      <a href={`#${slugify(attribute.type.name)}`}>{attribute.type.name}</a>
+                      {attribute.type.is_list && ' ]'}
+                    </>
+                  )
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td>Required</td>
+              <td>{attribute.required ? 'true' : 'false'}</td>
+            </tr>
+            {attribute.validation && (
+              <tr>
+                <td>Validation</td>
+                <td>{attribute.validation}</td>
+              </tr>
+            )}
+            {attribute.examples && attribute.examples.length > 0 && (
+              <tr>
+                <td>Examples</td>
+                <td>
+                  {attribute.examples.map((example) => (
+                    <p>{example}</p>
+                  ))}
+                </td>
+              </tr>
+            )}
+          </table>
+        </td>
+      </tr>
+    ))}
+  </table>
+  <p></p>
+</article>
