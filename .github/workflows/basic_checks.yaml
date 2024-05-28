@@ -8,6 +8,7 @@ env:
   # TODO
   #site_name: "deploy-preview-${{ GITHUB_SHA }}-bia-beta-website"
   site_name: bia-beta-website # remainder up to deploy-preview-4--bia-beta-website.netlify.app added by something else?
+  pr_number: ${{ github.event.number }}
 
 jobs:
   wait-for-deploy:
@@ -27,7 +28,7 @@ jobs:
     steps:
       - run: |
           # no-warnings because linkchecker runs as root in container -> warning emitted -> nonzero return code -> job fails
-          linkchecker https://deploy-preview-4--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures \
+          linkchecker https://deploy-preview-${{ pr_number }}--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures \
             --no-warnings \
             --ignore-url '.*\/vis\/?.*' \
             --ignore-url '.*\/dataset\/?.*' \
