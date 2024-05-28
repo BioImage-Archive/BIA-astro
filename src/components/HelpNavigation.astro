@@ -1,29 +1,29 @@
 ---
 //const pagenames = ["Home", "Browse", "Submit", "Galleries", "Help", "Policies", "About"];
 const pageData = {
-    faq: "FAQ",      
-    helpsearch: "Searching Data",
-    helpdownload:"Downloading Data",
-    helptools: "Supporting Tools",
-    gallariescontribute: "Contribute to Galleries"
+  "faq": "FAQ",      
+  "help-search": "Searching Data",
+  "help-download":"Downloading Data",
+  "help-tools": "Supporting Tools",
+  "galleries-contribute": "Contribute to Galleries"
 }
 const submHelp = {
-  helpfilelist: "File List Help",
-    submitannotations: "Submit Annotations",
-    aiglossary: "Annotation Types",
-    linkingarchives: "Linking to Other Archives"
+  "help-file-list": "File List Help",
+  "submit-annotations": "Submit Annotations",
+  "ai-glossary": "Annotation Types",
+  "linking-archives": "Linking to Other Archives"
 }
 const metadataHelp = {
-  rembihelpoverview: "REMBI Overview",
-  rembihelplab: "REMBI Lab Guide",
-  rembihelpexamples: "REMBI Examples",
-  mifahelpoverview: "MIFA Overview"
+  "rembi-help-overview": "REMBI Overview",
+  "rembi-help-lab": "REMBI Lab Guide",
+  "rembi-help-examples": "REMBI Examples",
+  "mifa-help-overview": "MIFA Overview"
 }
 ---
 <!--  <nav class="vf-navigation vf-navigation--main | vf-sidebar" style="margin-top: 0.5rem;"> -->
   <ul class="vf-list vf-list--l">
     <li class="vf-list__item">
-      <a href={`/help`} class="vf-navigation__link">Help Overview</a>
+      <a href={`/bioimage-archive/help`} class="vf-navigation__link">Help Overview</a>
   </li>
   </ul>
   <details class="vf-details" open>
@@ -31,7 +31,7 @@ const metadataHelp = {
   <ul class="vf-list vf-list--l">
     {Object.entries(submHelp).map(([key, value]) => (
       <li class="vf-list__item">
-          <a href={`/${key}`} class="vf-navigation__link">{value}</a>
+          <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )
     )}
@@ -42,7 +42,7 @@ const metadataHelp = {
   <ul class="vf-list vf-list--l">
     {Object.entries(metadataHelp).map(([key, value]) => (
       <li class="vf-list__item">
-          <a href={`/${key}`} class="vf-navigation__link">{value}</a>
+          <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )
     )}
@@ -51,7 +51,7 @@ const metadataHelp = {
     <ul class="vf-list vf-list--l">
       {Object.entries(pageData).map(([key, value]) => (
         <li class="vf-list__item">
-            <a href={`/${key}`} class="vf-navigation__link">{value}</a>
+            <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
         </li>
         )
       )}

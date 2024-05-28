@@ -1,14 +1,14 @@
 ---
 const pageData = {
-    aboutus: "About Us",
-    projectdev: "Project Developments",
-    contactus: "Contact Us"
+    "about-us": "About Us",
+    "project-developments": "Project Developments",
+    "contact-us": "Contact Us"
   }
 ---
 <ul class="vf-list vf-list--l">
     {Object.entries(pageData).map(([key, value]) => (
       <li class="vf-list__item">
-          <a href={`/${key}`} class="vf-navigation__link">{value}</a>
+          <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )
     )}

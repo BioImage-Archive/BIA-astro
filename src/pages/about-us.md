@@ -4,7 +4,7 @@ title: About BioImage Archive
 ---
 BioImage Archive is the first central open data imaging archive to support the growing imaging communities and the specialised data resources they may need.
 
-<img alt="community-engagement" src="/src/assets/recommended-metadata_updated.png" style="height: 300px; float: right;" />
+<img alt="community-engagement" src="/src/assets/bioimage-archive/recommended-metadata_updated.png" style="height: 300px; float: right;" />
 
 ### Objectives
 - **Promote** open imaging data and reproducibility of analyses. This allows authors to provide a complete record of their original data and analysis methods, and enables other interested scientists to explore alternative analyses of the same raw data.
