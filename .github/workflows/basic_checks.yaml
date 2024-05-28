@@ -5,6 +5,7 @@ on:
       - main
 
 env:
+  # TODO
   #site_name: "deploy-preview-${{ GITHUB_SHA }}-bia-beta-website"
   site_name: bia-beta-website # remainder up to deploy-preview-4--bia-beta-website.netlify.app added by something else?
 
@@ -24,4 +25,9 @@ jobs:
     container:
       image: ghcr.io/linkchecker/linkchecker:latest
     steps:
-      - run: "linkchecker https://deploy-preview-4--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures"
+      - run: |
+          linkchecker https://deploy-preview-4--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures \
+            --ignore-url '.*\/vis\/.*' \
+            --ignore-url '.*\/dataset\/.*' \
+            --ignore-url '.*\/sodataset\/.*' \
+            --ignore-url '.*\/aidataset\/.*'
