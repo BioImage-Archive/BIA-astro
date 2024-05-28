@@ -27,6 +27,7 @@ jobs:
     steps:
       - run: |
           linkchecker https://deploy-preview-4--${{ env.site_name }}.netlify.app/bioimage-archive/ -o failures \
+            --no-warnings \ # runs as root in container -> warning emitted -> nonzero return code -> job fails
             --ignore-url '.*\/vis\/?.*' \
             --ignore-url '.*\/dataset\/?.*' \
             --ignore-url '.*\/sodataset\/?.*' \
