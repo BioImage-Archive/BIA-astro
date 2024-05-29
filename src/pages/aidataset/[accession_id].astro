@@ -1,6 +1,6 @@
 ---
 //import 'datatables.net';
-import DataTable from 'datatables.net-dt';
+//import DataTable from 'datatables.net-dt';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import exports from "../../data/bia-ai-export.json";
 
@@ -54,7 +54,7 @@ const viewable_annotation_images = (study.image_uuids.filter(item => Object.valu
             </a>
           </li>
           <li class="vf-list__item">
-            <a class="vf-list__link" href="#annotations">
+            <a class="vf-list__link" href="#viewable_annotations">
               Viewable Annotations
             </a>
           </li>
@@ -175,17 +175,17 @@ const viewable_annotation_images = (study.image_uuids.filter(item => Object.valu
     </div>
     <div>
       <table id="viewable_images" class="display">
-        <thead>
+        <thead class="vf-table__header">
           <tr>
-            <th>Preview</th>
-            <th>Filename</th>
-            <th>Download Size</th>
-            <th>Actions</th>
+            <th class="vf-table__heading" scope="col">Preview</th>
+            <th class="vf-table__heading">Filename</th>
+            <th class="vf-table__heading">Download Size</th>
+            <th class="vf-table__heading">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="vf_table__body">
           {viewable_non_annotation_images.map((image) =>
-            <tr>
+            <tr class="vf-table__row">
               <th>
                 <img class="vf-figure__image" src={image.thumbnail_uri}>
               </th>
@@ -213,7 +213,7 @@ const viewable_annotation_images = (study.image_uuids.filter(item => Object.valu
       <table id="viewable_annotations" class="display">
         <thead>
           <tr>
-            <th>Preview</th>
+            <th >Preview</th>
             <th>Filename</th>
             <th>Download Size</th>
             <th>Actions</th>
@@ -240,16 +240,24 @@ const viewable_annotation_images = (study.image_uuids.filter(item => Object.valu
   </section>
 
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    new DataTable('#viewable_images', {
-    scrollX: true,
-    columnDefs: [
-      { type: 'natural', targets: 0 }
-      ]
-} ) 
-});
-</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        $('#viewable_images').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { type: 'natural', targets: 0 }
+          ]
+        });
+        $('#viewable_annotations').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { type: 'natural', targets: 0 }
+          ]
+        });
+      });
+    </script>
   </body>
 </BaseLayout>
 
