@@ -1,11 +1,13 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import exports from "../../data/bia-export.json";
+import DatasetInfo from "../../layouts/DatasetInfoLayout.astro";
+import StudyInfoNewDataModel from "../../data/output_modified.json";
 
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {
     return {
-      params:  {accession_id: dataset.accession_id }
+      params: { accession_id: dataset.accession_id },
     };
   });
 }
@@ -15,74 +17,95 @@ const study = exports["datasets"][accession_id];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
 ---
-<BaseLayout pageTitle= {study.accession_id} >
+
+<BaseLayout pageTitle={study.accession_id}>
   <body>
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-        <div></div>
-        <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ study.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
-            <h2 class="vf-intro__subheading">{ study.title }</h2>
-            Released { study.release_date }<br>
-            <!-- {{ authors }} -->
-        </div>
-         <div></div>
-    </section>
-    <section  class="vf-content | embl-grid embl-grid--has-centered-content">
-        <div>
-          <h2 class="vf-section-header__heading">Content</h2>
-          <ul class="vf-list">
-            <li>{study.n_images} images</li>
-          </ul>
-        </div>
-        <div>                  
-            <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-                <img class="vf-figure__image" src={ study.example_image_uri }>
-            </figure>  
-            { study.description }
-        </div>
-        <div>
-          <a href={study.links[0]["url"]}>
-            <button class="vf-button vf-button--primary vf-button--sm">Original study</button>
-          </a>
-        </div>
-    </section>
-    <section  class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div></div>
       <div>
-        <h2 class="vf-section-header__heading">Biosample</h2>
+        <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+          {study.accession_id}<a
+            href="JavaScript:Void(0);"
+            class="vf-badge vf-badge--primary vf-badge--phases">alpha</a
+          >
+        </h1>
+        <h2 class="vf-intro__subheading">{study.title}</h2>
+        Released {study.release_date}<br />
+        <!-- {{ authors }} -->
       </div>
-      <div>                  
-          <b>Organism: </b> Drosophila melanogaster (fruit fly)
+      <div></div>
+    </section>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Content</h2>
+        <ul class="vf-list">
+          <li>{study.n_images} images</li>
+        </ul>
       </div>
-  </section>
-  <section class="vf-content | embl-grid embl-grid--has-centered-content">
-    <div></div>
-    <div>
-      <table id="viewable">
-        <thead>
-          <tr>
-            <th>Preview</th>
-            <th>Filename</th>
-            <th>Download Size</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {images.map((image) =>
+      <div>
+        <figure class="vf-figure vf-figure--align vf-figure--align-centered">
+          <img class="vf-figure__image" src={study.example_image_uri} />
+        </figure>
+        {study.description}
+      </div>
+      <div>
+        <a href={study.links[0]["url"]}>
+          <button class="vf-button vf-button--primary vf-button--sm"
+            >Original study</button
+          >
+        </a>
+      </div>
+    </section>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Study Information</h2>
+      </div>
+      <div> <b>Description: </b> {StudyInfoNewDataModel.description}<div/>  
+      <div> <b>Licence: </b> {StudyInfoNewDataModel.licence}<div/>
+    </section>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Study Component Information</h2>
+      </div>
+      <div>
+      {
+        StudyInfoNewDataModel.experimental_imaging_component.map((eic_data) => (
+          <DatasetInfo eic={eic_data} />
+        ))
+      }
+      </div>
+    </section>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div></div>
+      <div>
+        <table id="viewable">
+          <thead>
             <tr>
-              <th>
-                <img class="vf-figure__image" src={image.thumbnail_uri}>
-              </th>
-              <th>{image.name}</th>
-              <th>3.0MiB</th>
-              <th>
-                <a href={"/image/" + image.uuid}>View</a>
-                Download
-              </th>
+              <th>Preview</th>
+              <th>Filename</th>
+              <th>Download Size</th>
+              <th>Actions</th>
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-  </section>
+          </thead>
+          <tbody>
+            {
+              images.map((image) => (
+                <tr>
+                  <th>
+                    <img class="vf-figure__image" src={image.thumbnail_uri} />
+                  </th>
+                  <th>{image.name}</th>
+                  <th>3.0MiB</th>
+                  <th>
+                    <a href={"/image/" + image.uuid}>View</a>
+                    Download
+                  </th>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
   </body>
 </BaseLayout>
