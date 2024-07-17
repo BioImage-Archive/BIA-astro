@@ -5,6 +5,7 @@ import DatasetDetailLayout from "./DatasetDetailLayout.astro";
 const { eic } = Astro.props;
 const biosample_map = field_map["biosample"];
 const sipp_map = field_map["specimen_imaging_preparation_protocol"];
+const sgp_map = field_map["specimen_growth_protocol"];
 const image_acquisition_map = field_map["image_acquisition"];
 const analysis_method_map = field_map["analysis_method"];
 ---
@@ -18,8 +19,8 @@ const analysis_method_map = field_map["analysis_method"];
             <b>Description:</b>&nbsp;{eic.description}
         </div>
         {
-            "specimen_imaging_preparation_protocol" in eic &&
-                eic.specimen_imaging_preparation_protocol.length > 0 && (
+            "biological_entity" in eic &&
+                eic.biological_entity.length > 0 && (
                     <>
                         <b>Biosamples:</b>
                         <ul>
@@ -44,6 +45,24 @@ const analysis_method_map = field_map["analysis_method"];
                                     <DatasetDetailLayout
                                         data={sipp}
                                         field_map={sipp_map}
+                                    />
+                                ),
+                            )}
+                        </ul>
+                    </>
+                )
+        }
+        {
+            "specimen_growth_protocol" in eic &&
+                eic.specimen_growth_protocol.length > 0 && (
+                    <>
+                        <b>Specimen Growth Protocols:</b>
+                        <ul>
+                            {eic.specimen_growth_protocol.map(
+                                (sgp) => (
+                                    <DatasetDetailLayout
+                                        data={sgp}
+                                        field_map={sgp_map}
                                     />
                                 ),
                             )}

@@ -12,7 +12,7 @@
     "image_acquisition": {
         "protocol_description": "Protocol description",
         "imaging_instrument_description": "Imaging Instrument",
-        "imaging_method_name": "Imaging Technique"
+        "imaging_method_name": "Imaging Method"
     },
     "analysis_method": {
         "protocol_description": "Protocol description"

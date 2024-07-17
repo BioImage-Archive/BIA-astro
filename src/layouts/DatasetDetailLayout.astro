@@ -3,6 +3,7 @@
 
 const { data, field_map } = Astro.props;
 function taxon_render(taxon) {
+    //TODO: deal with partial information better, as well as link out to NCBI taxon
     return `<div>${taxon["common_name"]} (${taxon["scientific_name"]})</div>`;
 }
 
