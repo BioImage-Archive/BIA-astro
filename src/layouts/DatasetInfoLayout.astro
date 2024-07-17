@@ -1,0 +1,88 @@
+---
+import field_map from "../data/field-names-mapping.json";
+import DatasetDetailLayout from "./DatasetDetailLayout.astro";
+
+const { eic } = Astro.props;
+const biosample_map = field_map["biosample"];
+const sipp_map = field_map["specimen_imaging_preparation_protocol"];
+const image_acquisition_map = field_map["image_acquisition"];
+const analysis_method_map = field_map["analysis_method"];
+---
+
+<div>
+    <div>
+        <b>{eic.title_id}</b>
+    </div>
+    <ul>
+        <div>
+            <b>Description:</b>&nbsp;{eic.description}
+        </div>
+        {
+            "specimen_imaging_preparation_protocol" in eic &&
+                eic.specimen_imaging_preparation_protocol.length > 0 && (
+                    <>
+                        <b>Biosamples:</b>
+                        <ul>
+                            {eic.biological_entity.map((biosample) => (
+                                <DatasetDetailLayout
+                                    data={biosample}
+                                    field_map={biosample_map}
+                                />
+                            ))}
+                        </ul>
+                    </>
+                )
+        }
+        {
+            "specimen_imaging_preparation_protocol" in eic &&
+                eic.specimen_imaging_preparation_protocol.length > 0 && (
+                    <>
+                        <b>Specimen Preparation Protocols:</b>
+                        <ul>
+                            {eic.specimen_imaging_preparation_protocol.map(
+                                (sipp) => (
+                                    <DatasetDetailLayout
+                                        data={sipp}
+                                        field_map={sipp_map}
+                                    />
+                                ),
+                            )}
+                        </ul>
+                    </>
+                )
+        }
+        {
+            "acquisition_process" in eic &&
+                eic.acquisition_process.length > 0 && (
+                    <>
+                        <b>Image Acquisition Processes:</b>
+                        <ul>
+                            {eic.acquisition_process.map(
+                                (image_acquisition) => (
+                                    <DatasetDetailLayout
+                                        data={image_acquisition}
+                                        field_map={image_acquisition_map}
+                                    />
+                                ),
+                            )}
+                        </ul>
+                    </>
+                )
+        }
+        {
+            "analysis_method" in eic && eic.analysis_method.length > 0 && (
+                <>
+                    <b>Image Analysis Methods:</b>
+                    <ul>
+                        {eic.acquisition_process.map((analysis_method) => (
+                            <DatasetDetailLayout
+                                data={analysis_method}
+                                field_map={analysis_method_map}
+                            />
+                        ))}
+                    </ul>
+                </>
+            )
+        }
+    </ul>
+</div>

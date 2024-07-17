@@ -1,0 +1,37 @@
+---
+//import field_map from "../data/field-names-mapping.json";
+
+const { data, field_map } = Astro.props;
+function taxon_render(taxon) {
+    return `<div>${taxon["common_name"]} (${taxon["scientific_name"]})</div>`;
+}
+
+function render_value(key, value) {
+    if (key === "organism_classification") {
+        return `<ul>
+            ${value.map((taxon) => taxon_render(taxon)).join("")} 
+            </ul>`;
+    } else {
+        return value;
+    }
+}
+
+const render_field = Object.keys(data).map((key) => {
+    if (key in field_map && !(data[key] == null)) {
+        return `<div><b>${field_map[key]}:</b>&nbsp; ${render_value(key, data[key])}</div>`;
+    }
+});
+
+//TODO: set this on a per-section basis
+const is_open = "True"
+---
+
+<details open={is_open}>
+    <summary>
+        <b>{data.title_id}</b>
+    </summary>
+
+    <ul>
+        <Fragment set:html={render_field} ` />
+    </ul>
+</details>

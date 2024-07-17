@@ -1,0 +1,20 @@
+{
+    "biosample": {
+        "organism_classification": "Organism(s) taxonomic information",
+        "biological_entity_description": "Description of biological entity"
+    },
+    "specimen_imaging_preparation_protocol": {
+        "protocol_description": "Protocol description"
+    },
+    "specimen_growth_protocol": {
+        "protocol_description": "Protocol description"
+    },
+    "image_acquisition": {
+        "protocol_description": "Protocol description",
+        "imaging_instrument_description": "Imaging Instrument",
+        "imaging_method_name": "Imaging Technique"
+    },
+    "analysis_method": {
+        "protocol_description": "Protocol description"
+    }
+}
