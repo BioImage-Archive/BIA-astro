@@ -1,8 +1,4 @@
 ---
-import 'datatables.net';
-import DataTable from 'datatables.net-dt';
-import '../../../node_modules/datatables.net-dt/css/dataTables.dataTables.css';
-import 'jquery';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import exports from '../../data/bia-ai-export.json';
 
@@ -241,8 +237,6 @@ const viewable_annotation_images = (study.image_uuids.filter(item => Object.valu
     <div> </div>
   </section>
 
-  <script src="../../../node_modules/datatables.net/js/dataTables.js"></script> 
-  <script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         $('#viewable_images').DataTable({
