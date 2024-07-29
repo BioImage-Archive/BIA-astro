@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutusNavigation from '../components/AboutusNavigation.astro';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Header from '../components/Header.astro';
+import onlineImage from '../assets/bioimage-archive/online_tutorial_image.png';
+import paperImage from '../assets/bioimage-archive/BioImage_Archive_paper.png';
+const allPosts = await getCollection("case_studies");
+---
+<html lang="en" class="vf-js">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/bioimage-archive/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css">
+    <!-- JS -->
+    <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
+  <title>Case Studies</title>
+</head>
+<body class="vf-body">
+  <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
+  <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
+  <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
+ 
+  <Header />
+  <hr>
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <AboutusNavigation />
+    </div>
+    <div class="vf-content">
+      <slot />
+    </div>
+    <div>
+          <h3>Further information</h3>
+            <a href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/">
+                <img class="padding-bottom-large" src={onlineImage.src} alt="BioImage Archive Online Tutorial" width="250px"/>
+            </a>
+          <hr/>
+            <a href="https://doi.org/10.1016/j.jmb.2022.167505">
+              <img class="padding-bottom-large" src={paperImage.src} alt="The BioImage Archive paper" width="240px" />
+          </a>
+        <p> The paper describing the BioImage Archive  <a href="https://doi.org/10.1016/j.jmb.2022.167505" target="_blank"> Read more </a>
+        </p>
+        <hr/>    
+        <a href="https://www.nature.com/articles/s41592-018-0195-8">
+                  <img class="padding-bottom-large" src="https://pbs.twimg.com/media/Dq2cvhHXcAE1YoK.jpg" alt="A call for public archives for biological image data" width="240px" />
+              </a>
+              <p> A paper detailing the need for the BioImage Archive was featured in Nature Methods in November 2018. <a href="https://www.nature.com/articles/s41592-018-0195-8" target="_blank"> Read more</a>
+              </p>
+
+  </div>
+
+  </section>
+  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
+</body>
+</html>

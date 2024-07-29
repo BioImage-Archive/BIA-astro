@@ -1,0 +1,21 @@
+---
+/* import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutusNavigation from '../components/AboutusNavigation.astro'; */
+import CasestudiesLayout from "../layouts/CasestudiesLayout.astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import CasestudiesCard from "../components/CasestudiesCard.astro";
+const allPosts = await getCollection("case_studies");
+---
+<CasestudiesLayout>
+      <h2 class="vf-intro__subheading">Case Studies</h2>
+{
+  allPosts.map((post) => (
+    <div>
+        <h4>{post.data.title }</h4>
+      <Image src={post.data.image} alt={post.data.imageAlt} class="float-left padding-right-large" width=250 />
+      <CasestudiesCard post={ post } />
+    </div>
+  ))
+}
+</CasestudiesLayout>
