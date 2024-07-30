@@ -5,12 +5,12 @@ const case_studiesCollection = defineCollection({
     type: 'content',
     schema: ({ image }) => z.object({
         title: z.string(),
-        image: image().refine((img) => img.width = 250 ),
+        cover: image(),
         imageAlt: z.string(),
       }),
     });
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"
 export const collections = {
-  'case_studies': case_studiesCollection,
+  case_studies: case_studiesCollection,
 };
