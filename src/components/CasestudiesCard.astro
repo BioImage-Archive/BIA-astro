@@ -1,0 +1,13 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  post: CollectionEntry<'case_studies'>;
+}
+
+// `post` will match your 'case_studies' collection schema type
+//const { post } = Astro.props;
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+<Content />
+

@@ -1,0 +1,13 @@
+---
+import { Image } from 'astro:assets';
+
+const { src, alt } = Astro.props;
+---
+<Image src={src} {alt} width="250"/>
+
+<style>
+  img :global(img), svg {
+    margin-block: 2.5rem;
+    border-radius: 0.75rem;
+  }
+</style>
