@@ -44,6 +44,7 @@
             "submitted_in_study": "UUID-study-1",
             "specimen_imaging_preparation_protocol": [
                 {
+                    "default_open": true,
                     "uuid": "UUID-specimen-preparation-protocol-1",
                     "title_id": "Pycnogonum litorale amputees",
                     "protocol_description": "All specimens were fixed and stored in Bouin’s fluid (10% formaldehyde, 5% glacial acetic acid in saturated aqueous picric acid) at room temperature (RT). Specimens were briefly rinsed in phosphate-buffered saline (PBS; 1.86 mM NaH2PO4, 8.41 mM Na2HPO4, 175 mM NaCl, pH 7.4; at least 3× 5 min), transferred into deionized water, dehydrated via an ascending ethanol series, incubated in a tissue contrasting solution of 2% iodine (resublimated; Carl Roth; #X864.1) in 99.5% ethanol for 48 h at RT, rinsed in 99.5% ethanol (3 to 4× 10 min), and critical point-dried with a Leica EM CPD300.",
@@ -52,6 +53,7 @@
             ],
             "acquisition_process": [
                 {
+                    "default_open": true,
                     "uuid": "UUID-image-acquisition-1",
                     "title_id": "Pycnogonum litorale µCT",
                     "protocol_description": "Dried specimens were placed in plastic tubes for overview scans. For higher resolution scans of the posterior body region with the regenerates, they were subsequently attached to plastic welding rods with hot glue. Scans were performed under 40 kV/200 μA/8 W or 30 kV/200 μA/6 W settings. Depending on the specimen size and region of interest, a 4×, 10×, or 20× objective was chosen. Exposure times were individually adjusted for each scan, ranging from 0.75 to 6.5 s. To reduce noise, binning 2 was applied during data acquisition. Tomography projections were reconstructed with the XMReconstructor software (Carl Zeiss Microscopy) with binning 1 (= full resolution) and TIFF format image stacks as output.",
@@ -62,6 +64,7 @@
                     ]
                 },
                 {
+                    "default_open": true,
                     "uuid": "UUID-image-acquisition-2",
                     "title_id": "Pycnogonum litorale 1",
                     "imaging_instrument_description": "Xradia MicroXCT-200 (Carl Zeiss Microscopy)",
@@ -73,6 +76,7 @@
             ],
             "biological_entity": [
                 {
+                    "default_open": true,
                     "uuid": "UUID-biosample-1",
                     "title_id": "Pycnogonida (sea spiders)",
                     "organism_classification": [
@@ -89,7 +93,8 @@
                     "biological_entity_description": "Complete specimens and selected ROIs"
                 },
                 {
-                    "uuid": "UUID-biosample-1",
+                    "default_open": true,
+                    "uuid": "UUID-biosample-2",
                     "title_id": "Pycnogonida (sea spiders) - 2",
                     "organism_classification": [
                         {
@@ -120,6 +125,7 @@
             "submitted_in_study": "UUID-study-1",
             "specimen_imaging_preparation_protocol": [
                 {
+                    "default_open": false,
                     "uuid": "UUID-specimen-preparation-protocol-1",
                     "title_id": "Pycnogonum litorale amputees",
                     "protocol_description": "All specimens were fixed and stored in Bouin’s fluid (10% formaldehyde, 5% glacial acetic acid in saturated aqueous picric acid) at room temperature (RT). Specimens were briefly rinsed in phosphate-buffered saline (PBS; 1.86 mM NaH2PO4, 8.41 mM Na2HPO4, 175 mM NaCl, pH 7.4; at least 3× 5 min), transferred into deionized water, dehydrated via an ascending ethanol series, incubated in a tissue contrasting solution of 2% iodine (resublimated; Carl Roth; #X864.1) in 99.5% ethanol for 48 h at RT, rinsed in 99.5% ethanol (3 to 4× 10 min), and critical point-dried with a Leica EM CPD300.",
@@ -128,6 +134,7 @@
             ],
             "acquisition_process": [
                 {
+                    "default_open": false,
                     "uuid": "UUID-image-acquisition-1",
                     "title_id": "Pycnogonum litorale µCT",
                     "protocol_description": "Dried specimens were placed in plastic tubes for overview scans. For higher resolution scans of the posterior body region with the regenerates, they were subsequently attached to plastic welding rods with hot glue. Scans were performed under 40 kV/200 μA/8 W or 30 kV/200 μA/6 W settings. Depending on the specimen size and region of interest, a 4×, 10×, or 20× objective was chosen. Exposure times were individually adjusted for each scan, ranging from 0.75 to 6.5 s. To reduce noise, binning 2 was applied during data acquisition. Tomography projections were reconstructed with the XMReconstructor software (Carl Zeiss Microscopy) with binning 1 (= full resolution) and TIFF format image stacks as output.",
@@ -140,6 +147,7 @@
             ],
             "biological_entity": [
                 {
+                    "default_open": true,
                     "uuid": "UUID-biosample-2",
                     "title_id": "Cambropycnogon klausmuelleri (sea spiders)",
                     "organism_classification": [

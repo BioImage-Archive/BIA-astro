@@ -23,13 +23,12 @@ const render_field = Object.keys(data).map((key) => {
     }
 });
 
-//TODO: set this on a per-section basis
-const is_open = "True"
+
 ---
 
-<details open={is_open}>
+<details open={data.default_open}>
     <summary>
-        <b>{data.title_id}</b>
+        <b>{data.title_id}</b> {data.default_open? ' ':'(as above)'}
     </summary>
 
     <ul>
