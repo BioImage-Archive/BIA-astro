@@ -4,7 +4,20 @@
 const { data, field_map } = Astro.props;
 function taxon_render(taxon) {
     //TODO: deal with partial information better, as well as link out to NCBI taxon
-    return `<div>${taxon["common_name"]} (${taxon["scientific_name"]})</div>`;
+   
+    var string_text = "help test"
+    if (taxon["common_name"] & taxon["scientific_name"]){
+        string_text = taxon["common_name"].concat(" (<i>", taxon["scientific_name"] , "</i>)")
+    } else if (taxon["common_name"]) {
+        string_text = taxon["common_name"]
+    } else if (taxon["scientific_name"]) {
+        string_text = "<i>".concat(taxon["scientific_name"], "</i>")
+    }
+    if (taxon["ncbi_id"]) {
+        return `<li class="vf-content"> <a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\"">${string_text}</a></li>`;
+    } else {
+        return `<li class="vf-content"> ${string_text}</li>`;
+    }
 }
 
 function render_value(key, value) {
