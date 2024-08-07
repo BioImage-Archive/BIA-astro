@@ -83,7 +83,7 @@
                         {
                             "common_name": "star fish",
                             "scientific_name": null,
-                            "ncbi_id": "261975"
+                            "ncbi_id": null
                         }
                     ],
                     "biological_entity_description": "Complete specimens and selected ROIs"
@@ -144,6 +144,7 @@
                     "title_id": "Cambropycnogon klausmuelleri (sea spiders)",
                     "organism_classification": [
                         {
+                            "common_name":"star fish",
                             "scientific_name": "Cambropycnogon klausmuelleri",
                             "ncbi_id": "261975"
                         }
