@@ -20,6 +20,9 @@ const { accession_id } = Astro.params;
 const study = exports["datasets"][accession_id];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+
+const viewable_non_annotation_images = (study.image_uuids.filter(item => !Object.values(study.annotation_images).includes(item))).map((uuid) => exports["images"][uuid]);
+const viewable_annotation_images = (study.image_uuids.filter(item => Object.values(study.annotation_images).includes(item))).map((uuid) => exports["images"][uuid]);
 ---
 <BaseLayout pageTitle= {study.accession_id} >
   <body>
@@ -49,7 +52,7 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
             </a>
           </li>
           <li class="vf-list__item">
-            <a class="vf-list__link" href="#annotations">
+            <a class="vf-list__link" href="#viewable_annotations">
               Viewable Annotations
             </a>
           </li>
@@ -169,18 +172,18 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
       </b>
     </div>
     <div>
-      <table id="viewable_images">
-        <thead>
+      <table id="viewable_images" class="display">
+        <thead class="vf-table__header">
           <tr>
-            <th>Preview</th>
-            <th>Filename</th>
-            <th>Download Size</th>
-            <th>Actions</th>
+            <th class="vf-table__heading" scope="col">Preview</th>
+            <th class="vf-table__heading">Filename</th>
+            <th class="vf-table__heading">Download Size</th>
+            <th class="vf-table__heading">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {images.map((image) =>
-            <tr>
+        <tbody class="vf_table__body">
+          {viewable_non_annotation_images.map((image) =>
+            <tr class="vf-table__row">
               <th>
                 <img class="vf-figure__image" src={image.thumbnail_uri}>
               </th>
@@ -204,8 +207,53 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div class="vf-section-header">
       <h3 class="vf-section-header__heading" id="annotations"> Viewable Annotations </h3>
     </div>
-    <div></div>
+    <div>
+      <table id="viewable_annotations" class="display">
+        <thead>
+          <tr>
+            <th >Preview</th>
+            <th>Filename</th>
+            <th>Download Size</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {viewable_annotation_images.map((image) =>
+            <tr>
+              <th>
+                <img class="vf-figure__image" src={image.thumbnail_uri}>
+              </th>
+              <th>{image.name}</th>
+              <th>None</th>
+              <th>
+                <a href={"/image/" + image.uuid}>View</a>
+                Download
+              </th>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      </div>
     <div> </div>
   </section>
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        $('#viewable_images').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { type: 'natural', targets: 0 }
+          ]
+        });
+        $('#viewable_annotations').DataTable({
+          scrollX: true,
+          columnDefs: [
+            { type: 'natural', targets: 0 }
+          ]
+        });
+      });
+    </script>
   </body>
 </BaseLayout>
+

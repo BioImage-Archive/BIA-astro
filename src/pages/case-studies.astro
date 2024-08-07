@@ -1,0 +1,19 @@
+---
+import CasestudiesLayout from "../layouts/CasestudiesLayout.astro";
+import { getCollection } from "astro:content";
+import CasestudiesCard from "../components/CasestudiesCard.astro";
+import CaseStudyImageCard from "../components/CaseStudyImageCard.astro";
+const allPosts = await getCollection("case_studies");
+---
+<CasestudiesLayout>
+      <h2 class="vf-intro__subheading">Case Studies</h2>
+{
+  allPosts.map((post) => (
+    <div>
+        <h4>{post.data.title }</h4>
+      <CaseStudyImageCard src={post.data.cover} alt={post.data.imageAlt} />
+      <CasestudiesCard post={ post } />
+    </div>
+  ))
+}
+</CasestudiesLayout>

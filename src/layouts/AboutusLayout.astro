@@ -2,8 +2,7 @@
 const { frontmatter } = Astro.props;
 import Header from '../components/Header.astro';
 import AboutusNavigation from '../components/AboutusNavigation.astro';
-import onlineImage from '../assets/bioimage-archive/online_tutorial_image.png';
-import paperImage from '../assets/bioimage-archive/BioImage_Archive_paper.png';
+import RightMenuCard from '../components/RightMenuCard.astro';
 ---
 <html lang="en" class="vf-js">
   <head>
@@ -35,23 +34,7 @@ import paperImage from '../assets/bioimage-archive/BioImage_Archive_paper.png';
         <slot />
       </div>
       <div>
-            <h3>Further information</h3>
-              <a href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/">
-                  <img class="padding-bottom-large" src={onlineImage.src} alt="BioImage Archive Online Tutorial" width="250px"/>
-              </a>
-            <hr/>
-              <a href="https://doi.org/10.1016/j.jmb.2022.167505">
-                <img class="padding-bottom-large" src={paperImage.src} alt="The BioImage Archive paper" width="240px" />
-            </a>
-          <p> The paper describing the BioImage Archive  <a href="https://doi.org/10.1016/j.jmb.2022.167505" target="_blank"> Read more </a>
-          </p>
-          <hr/>    
-          <a href="https://www.nature.com/articles/s41592-018-0195-8">
-                    <img class="padding-bottom-large" src="https://pbs.twimg.com/media/Dq2cvhHXcAE1YoK.jpg" alt="A call for public archives for biological image data" width="240px" />
-                </a>
-                <p> A paper detailing the need for the BioImage Archive was featured in Nature Methods in November 2018. <a href="https://www.nature.com/articles/s41592-018-0195-8" target="_blank"> Read more</a>
-                </p>
-
+            <RightMenuCard />
     </div>
 
     </section>
