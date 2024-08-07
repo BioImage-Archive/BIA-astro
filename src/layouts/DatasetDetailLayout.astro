@@ -1,20 +1,21 @@
 ---
-//import field_map from "../data/field-names-mapping.json";
+const external_link = "/src/assets/bioimage-archive/external-link-svgrepo-com.png";
 
 const { data, field_map } = Astro.props;
+//const { default: innerHTML } = await import('../assets/bioimage-archive/external-link-svgrepo-com.svg?raw')
+
 function taxon_render(taxon) {
-    //TODO: deal with partial information better, as well as link out to NCBI taxon
    
-    var string_text = "help test"
-    if (taxon["common_name"] & taxon["scientific_name"]){
-        string_text = taxon["common_name"].concat(" (<i>", taxon["scientific_name"] , "</i>)")
+    var string_text = ""
+    if (taxon["common_name"] && taxon["scientific_name"]){
+        string_text =  "<i>".concat(taxon["scientific_name"], "</i> (", taxon["common_name"], ")")
     } else if (taxon["common_name"]) {
         string_text = taxon["common_name"]
     } else if (taxon["scientific_name"]) {
         string_text = "<i>".concat(taxon["scientific_name"], "</i>")
     }
     if (taxon["ncbi_id"]) {
-        return `<li class="vf-content"> <a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\"">${string_text}</a></li>`;
+        return `<li class="vf-content"> ${string_text} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">NCBI:${taxon["ncbi_id"]} <img src=${external_link} width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
     } else {
         return `<li class="vf-content"> ${string_text}</li>`;
     }
