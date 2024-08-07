@@ -14,7 +14,7 @@ function taxon_render(taxon) {
         string_text = "<i>".concat(taxon["scientific_name"], "</i>")
     }
     if (taxon["ncbi_id"]) {
-        return `<li class="vf-content"> ${string_text} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">NCBI:${taxon["ncbi_id"]} <img src=\"${external_link.src}\" width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
+        return `<li class="vf-content"> ${string_text} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">NCBI:txid${taxon["ncbi_id"]} <img src=\"${external_link.src}\" width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
     } else {
         return `<li class="vf-content"> ${string_text}</li>`;
     }
