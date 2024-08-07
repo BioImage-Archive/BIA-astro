@@ -1,13 +1,17 @@
 ---
 layout: ../layouts/HelpLayout.astro
 title: File List guide
+setup: |
+  import { Img } from "astro-imagetools/components";
+  import filelist_generator from "../assets/bioimage-archive/filelist_generator.png";
+
 ---
 ## File List Guide
 <style>
     figure {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: center;s
         align-items: center;
         row-gap: 5px;
         border: 1px solid lightgray;
@@ -42,7 +46,7 @@ You must have one file list per <a href="../rembi-help-examples">study component
 You can now generate a file list of everything within a given directory under your user space with one click. We have developed a file list generator that is displayed next to every directory in your user space, under the File Upload tab (marked with red in the figure below). Please note that this tool only provides the paths and names of the files in a given directory (recursively, i.e. lists all the files in all sub-directories within that directory). You'd still need to add any relevant metadata yourself. 
 
 <figure class="center margin-bottom-large margin-right-large" style="width: 550px">
-  <img src="/src/assets/bioimage-archive/filelist_generator.png" alt="filelist generator">
+  <Img src="/src/assets/bioimage-archive/filelist_generator.png" alt="filelist generator">
 </figure>
 
 ### Detailed Help
@@ -50,7 +54,7 @@ You can now generate a file list of everything within a given directory under yo
 A File List is used to describe all the files that you wish to include in your submission, both image files and other supporting files e.g., analysis results. The file list also allows you to specify file level metadata, i.e. attributes associated with each file.
 
 <figure class="float-right margin-left-large" >
-<img src="/src/assets/bioimage-archive/filelist.png" alt="file list">
+<img src={filelist_generator} alt="file list">
   <figcaption class="figure-caption">An example file list</figcaption>
 </figure>
 
