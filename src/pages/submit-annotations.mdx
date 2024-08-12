@@ -1,24 +1,10 @@
 ---
-title: Submit Annotations
 layout: ../layouts/HelpLayout.astro
+title: Submit Annotations
 ---
-<style>
-    figure {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
-        align-items: center;
-    }
+import "/src/styles/figure_styling.css"
 
-    figcaption {
-        padding: 0 2rem 0 .5rem;
-        text-align: center;
-    }
-</style>
-
-
-Submitting Annotations to the BioImage Archive
----------------------------------------
+## Submitting Annotations to the BioImage Archive
 
 These instructions are for annotations-only submissions, i.e. segmentation masks, point annotations, class labels etc., **without corresponding images.** For example you have created cell segmentations for an already public imaging dataset and you would like to submit the segmentations. For a full list of annotation types and brief descriptions [check here.](/bioimage-archive/ai-glossary)
 
@@ -54,7 +40,7 @@ We support multiple methods of data upload, each recommended if the submission s
 The FTP/Aspera tab in the [submission tool upload section](https://www.ebi.ac.uk/biostudies/submissions/files) will include your credentials and upload guidance for these two upload methods.
 
 <figure>
-<img src="/src/assets/bioimage-archive/ftp-aspera.png" alt="" class="float-right float-top" style="height: 100px">
+<img src="/src/assets/bioimage-archive/ftp-aspera.png" alt="" class="float-right float-top" style="height: 100px"/>
 <figcaption class="figure-caption"></figcaption>
 </figure>
 
@@ -69,17 +55,17 @@ In the first column, “Files”, write the path and file name for each annotati
 This will generate a tsv file with all the paths and file names contained in the folder, that you can now copy and paste into your file list template.
 
 <figure>
-<img src="/src/assets/bioimage-archive/filelist_button.png" alt="" class="float-center float-top" style="height: 120px">
+<img src="/src/assets/bioimage-archive/filelist_button.png" alt="" class="float-center float-top" style="height: 120px"/>
 <figcaption class="figure-caption"></figcaption>
 </figure>
 
-<br>
+<br/>
 
 ### 5. Submission
 When all annotation files and file lists have been uploaded, you can create your submission [here](https://www.ebi.ac.uk/biostudies/submissions/submissions/new;template=bioimages.mifa). **Make sure you select the BioImage Archive Annotations Submission template** when creating a new submission.
 
 <figure>
-<img src="/src/assets/bioimage-archive/BIA_annotation_template_view.png" alt="" class="float-center float-top" style="height: 500px">
+<img src="/src/assets/bioimage-archive/BIA_annotation_template_view.png" alt="" class="float-center float-top" style="height: 500px"/>
 <figcaption class="figure-caption"></figcaption>
 </figure>
 
