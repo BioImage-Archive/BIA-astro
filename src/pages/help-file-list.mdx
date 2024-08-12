@@ -1,0 +1,42 @@
+---
+layout: ../layouts/HelpLayout.astro
+title: File List guide
+---
+import fileListGenerator from '/src/assets/bioimage-archive/filelist_generator.png' ;
+import fileList from "/src/assets/bioimage-archive/filelist.png" 
+import figure_styling from 'figure_styling.css' ;
+
+## File List Guide
+### Summary
+
+A File List is used to describe all the files that you wish to include in your submission, both image files and other supporting files e.g., analysis results. It contains file level metadata.
+
+You must have one file list per <a href="../rembi-help-examples">study component</a> and one file list per annotations section (if applicable).
+
+* File lists are tabular data, either in tsv or Excel (.xlsx) format. 
+* The first column of the header has to be the word "Files".
+* It has to have one file per line.
+* Do not leave blank lines.
+* Filenames are case-sensitive.
+* File path separator must be forward slash "/".
+* Some special characters are not allowed (see [below](#namerules)). 
+
+
+### A File List Generator Tool
+
+You can now generate a file list of everything within a given directory under your user space with one click. We have developed a file list generator that is displayed next to every directory in your user space, under the File Upload tab (marked with red in the figure below). Please note that this tool only provides the paths and names of the files in a given directory (recursively, i.e. lists all the files in all sub-directories within that directory). You'd still need to add any relevant metadata yourself. 
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 550px">
+  <img src={fileListGenerator.src} alt="filelist generator"/>
+</figure>
+
+
+### Detailed Help
+
+A File List is used to describe all the files that you wish to include in your submission, both image files and other supporting files e.g., analysis results. The file list also allows you to specify file level metadata, i.e. attributes associated with each file.
+
+
+<figure class="float-right margin-left-large" >
+<img src={fileList.src} alt="file list"/>
+  <figcaption class="figure-caption">An example file list</figcaption>
+</figure>
