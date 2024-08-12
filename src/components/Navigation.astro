@@ -9,14 +9,28 @@ const pageData = {
     policies: "Policies",
     "about-us": "About"
 }
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(18); // remove "bioimage-archive/"
+
 ---
-<nav class="vf-navigation vf-navigation--main | vf-cluster" style="margin-top: 0.5rem;">
-    <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
+
+
+<nav class="vf-navigation | vf-navigation--main" style="margin-top: 0.5rem;">
+    <style>
+      .active { 
+        color: #3b6fb6;
+        }
+      li.active {
+        border-bottom: 2px solid;
+      }
+    </style>
+    <ul class="vf-navigation__list | vf-list " style="display: flex; justify-content: space-between; margin-bottom: 0px;">
       {Object.entries(pageData).map(([key, value]) => (
-        <li class="vf-navigation__item">
-            <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
+        <li class={currentPath === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
+            <a href={`/bioimage-archive/${key}`} class={currentPath === key ? "vf-navigation__link | active" : "vf-navigation__link"}>{value}</a>
         </li>
         )
       )}
     </ul>
+    <hr style="margin-top: 0px">
 </nav>
