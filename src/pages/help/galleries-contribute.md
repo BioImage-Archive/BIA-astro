@@ -1,6 +1,6 @@
 ---
 title: How to Contribute to Galleries
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 
 ## How to contribute to the Galleries

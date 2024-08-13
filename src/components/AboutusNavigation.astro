@@ -1,14 +1,18 @@
 ---
+import '/src/styles/active_left_menu.css'
 const pageData = {
     "about-us": "About Us",
     "case-studies": "Case Studies",
     "project-developments": "Project Developments",
     "contact-us": "Contact Us"
   }
+const pathname = new URL(Astro.request.url).pathname;
+const pagename = pathname.split('/').pop();
+
 ---
 <ul class="vf-list vf-list--l">
     {Object.entries(pageData).map(([key, value]) => (
-      <li class="vf-list__item">
+      <li class={pagename === key ? "vf-list__item | active" : "vf-list__item"}>
           <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )

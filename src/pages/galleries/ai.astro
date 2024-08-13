@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SODatasetCard from '../components/SODatasetCard.astro';
-import exports from "../data/bia-spatialomics-export.json";
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
-import collection from '../data/spatialomics.json';
+import collection from '../../data/ai.json';
+import exports from "../../data/bia-ai-export.json";
+import AIDatasetCard from '../../components/AIDatasetCard.astro';
+
 const datasets = exports["datasets"];
 
 ---
@@ -20,11 +21,11 @@ const datasets = exports["datasets"];
         </div>
         <div></div>
     </section> 
-      <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;"> 
+    <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-            { Object.values(datasets).map((dataset) => ( <SODatasetCard dataset={ dataset } /> )) }
+          { Object.values(datasets).map((dataset) => ( <AIDatasetCard dataset={ dataset } /> )) }
         </div>
-     </section>  
+    </section>
   </body>
 </html>
 </BaseLayout>

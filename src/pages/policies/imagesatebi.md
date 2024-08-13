@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/PoliciesLayout.astro
+layout: ../../layouts/PoliciesLayout.astro
 title: Image archiving at EBI
 ---
 # Image archiving at EBI

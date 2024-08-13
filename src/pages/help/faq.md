@@ -1,6 +1,6 @@
 ---
 title: FAQs
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 
 ## Frequently asked questions

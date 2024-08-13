@@ -1,6 +1,6 @@
 ---
 title: REMBI Lab Guide
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 # BioImage Archive submission - Lab Guide
 

@@ -1,6 +1,6 @@
 ---
 title: Supporting Tools and links
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 
 Supporting Tools and Websites
