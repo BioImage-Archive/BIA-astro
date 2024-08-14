@@ -102,7 +102,7 @@ Data depositors can include their ORCIDs in contact details; these will be searc
 
 #### Can I search by publication/ accession/ study/ area of interest? 
 
-Yes, search by any metadata field is possible. Include multi-word phrases in double quotes; see [more information on search capabilities](./search).
+Yes, search by any metadata field is possible. Include multi-word phrases in double quotes; see [more information on search capabilities](/bioimage-archive/help/search).
 
 #### How do I browse available datasets? 
 
