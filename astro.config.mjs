@@ -15,7 +15,6 @@ export default defineConfig({
   },
   base: "/bioimage-archive",
   redirects: {
-    '/datasets': '/bioimage-archive/dataset',
     '/ai': '/bioimage-archive//galleries/ai',
     '/cryoet': '/bioimage-archive/galleries/cryoet',
     '/vem': '/bioimage-archive/galleries/vem',
