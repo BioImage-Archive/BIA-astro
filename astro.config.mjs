@@ -34,6 +34,6 @@ export default defineConfig({
     '/help-search': '/bioimage-archive/help/search',
     '/submit-annotations': '/bioimage-archive/help/submit-annotations',
     '/help-tools': '/bioimage-archive/help/supporting-tools',
-    '/helpimagesatebi': '/bioimage-archive/policiies/imagesatebi',
+    '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
   }
 });
