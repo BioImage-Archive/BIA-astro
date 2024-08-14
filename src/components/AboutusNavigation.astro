@@ -6,8 +6,8 @@ const pageData = {
     "project-developments": "Project Developments",
     "contact-us": "Contact Us"
   }
-const pathname = new URL(Astro.request.url).pathname;
-const pagename = pathname.split('/').pop();
+const pathname = Astro.url.pathname;
+const pagename = pathname.split('/').at(-2);
 
 ---
 <ul class="vf-list vf-list--l">

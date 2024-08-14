@@ -9,7 +9,7 @@ const pageData = {
     policies: "Policies",
     "about-us": "About"
 }
-const pathname = new URL(Astro.request.url).pathname;
+const pathname = Astro.url.pathname;
 const basePath = pathname.split('/')[2];
 
 ---
