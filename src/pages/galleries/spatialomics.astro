@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import SODatasetCard from '../components/SODatasetCard.astro';
-import exports from "../data/bia-spatialomics-export.json";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SODatasetCard from '../../components/SODatasetCard.astro';
+import exports from "../../data/bia-spatialomics-export.json";
 
-import collection from '../data/spatialomics.json';
+import collection from '../../data/spatialomics.json';
 const datasets = exports["datasets"];
 
 ---
@@ -16,7 +16,7 @@ const datasets = exports["datasets"];
             <h2 class="vf-intro__subheading">{ collection.subtitle }</h2>
             <p class="vf-hero__text">{ collection.description }</p>
             <p></p>
-            <p class="vf-hero__text"> <a href="../galleries-contribute">Check here </a> for how to contribute</p>
+            <p class="vf-hero__text"> <a href="/bioimage-archive/help/galleries-contribute">Check here </a> for how to contribute</p>
         </div>
         <div></div>
     </section> 

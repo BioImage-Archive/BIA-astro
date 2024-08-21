@@ -1,12 +1,22 @@
 ---
+import "/src/styles/active_left_menu.css"
+
 const pageData = {
     policies: "Archive Policies",
-    helpimagesatebi: "Image Data at EBI"
+    "policies/imagesatebi": "Image Data at EBI"
   }
+  
+// Method to make sure dev and prod behave the same whilst having Astro config trailingslash set to ignore by default
+function addTrailingSlash(pathname: String) {
+    pathname += pathname.endsWith("/") ? "" : "/";
+    return pathname
+}
+const pathname = addTrailingSlash(Astro.url.pathname);
+const pagename = pathname.split('/').at(-2);
 ---
 <ul class="vf-list vf-list--l">
     {Object.entries(pageData).map(([key, value]) => (
-      <li class="vf-list__item">
+      <li class={key.split('/').pop() === pagename ? "vf-list__item | active" : "vf-list__item" }>
           <a href={`/bioimage-archive/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )

@@ -1,6 +1,6 @@
 ---
 title: Searching the BioImage Archive.
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 
 ## Searching the BioImage Archive

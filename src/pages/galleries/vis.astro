@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import DatasetCard from '../components/DatasetCard.astro';
-import datasets from "../data/datasets.json";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DatasetCard from '../../components/DatasetCard.astro';
+import datasets from "../../data/datasets.json";
 
-import collection from '../data/visualisation.json';
+import collection from '../../data/visualisation.json';
 
 ---
 <BaseLayout pageTitle={ collection.name }>
@@ -15,7 +15,7 @@ import collection from '../data/visualisation.json';
             <h2 class="vf-intro__subheading">{ collection.subtitle }</h2>
             <p class="vf-hero__text">{ collection.description }</p>
             <p></p>
-            <p class="vf-hero__text"> <a href="../galleries-contribute">Check here </a> for how to contribute</p>
+            <p class="vf-hero__text"> <a href="/bioimage-archive/help/galleries-contribute">Check here </a> for how to contribute</p>
         </div>
         <div></div>
     </section> 

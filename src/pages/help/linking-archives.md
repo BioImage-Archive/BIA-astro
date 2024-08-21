@@ -1,6 +1,6 @@
 ---
 title: Linking with other Archives
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 
 If you have data or analysis code that are deposited to other repositories, you can easily link them in your submission.

@@ -1,6 +1,6 @@
 ---
 title: Downloading data
-layout: ../layouts/HelpLayout.astro
+layout: ../../layouts/HelpLayout.astro
 ---
 
 Data of submission in the BioImage Archive can be downloaded via web browser, ftp or Aspera.  All three methods are explained below. We recommend ftp or Aspera for large download sizes.

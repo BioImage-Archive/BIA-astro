@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/PoliciesLayout.astro
+layout: ../../layouts/PoliciesLayout.astro
 title: Image archiving at EBI
 ---
 # Image archiving at EBI
@@ -12,7 +12,7 @@ Patient associated medical imaging data cannot currently be deposited into any r
 
 ## Spatial-omics data
 
-Spatial-omics represents a comprehensive framework encompassing diverse disciplines such as spatial-transcriptomics, spatial-proteomics, and spatial-metabolomics. Within this framework, spatial data (i.e. images, segmentations etc.) pertinent to each of these domains is centralised within the BioImage Archive, while the corresponding omics data is deposited in relevant omics repositories. These datasets can then be linked to one another ([check here](/bioimage-archive/linking-archives) for a demo).
+Spatial-omics represents a comprehensive framework encompassing diverse disciplines such as spatial-transcriptomics, spatial-proteomics, and spatial-metabolomics. Within this framework, spatial data (i.e. images, segmentations etc.) pertinent to each of these domains is centralised within the BioImage Archive, while the corresponding omics data is deposited in relevant omics repositories. These datasets can then be linked to one another ([check here](/bioimage-archive/help/linking-archives) for a demo).
 
 For cases where the omics data doesn’t fit into any existing omics repositories, you can submit all data to the BioImage Archive along with the spatial data.
 

@@ -1,12 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-import collection from '../data/ai.json';
-import exports from "../data/bia-ai-export.json";
-import AIDatasetCard from '../components/AIDatasetCard.astro';
-
-const datasets = exports["datasets"];
-
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DatasetCard from '../../components/DatasetCard.astro';
+import datasets from "../../data/datasets.json";
+import collection from '../../data/vem.json';
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>
@@ -17,13 +13,13 @@ const datasets = exports["datasets"];
             <h2 class="vf-intro__subheading">{ collection.subtitle }</h2>
             <p class="vf-hero__text">{ collection.description }</p>
             <p></p>
-            <p class="vf-hero__text"> <a href="../galleries-contribute">Check here </a> for how to contribute</p>
+            <p class="vf-hero__text"> <a href="/bioimage-archive/help/galleries-contribute">Check here </a> for how to contribute</p>
         </div>
         <div></div>
     </section> 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(datasets).map((dataset) => ( <AIDatasetCard dataset={ dataset } /> )) }
+            { Object.values(collection.accession_ids).map((accession_id) => ( <DatasetCard dataset={ datasets[accession_id] } /> )) }
         </div>
     </section>
   </body>
