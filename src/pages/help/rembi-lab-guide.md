@@ -72,3 +72,28 @@ If you’re depositing correlative imaging data, i.e. data with multiple imaging
 ### Analysed Data
 
 This section explains how you analysed your images, giving an overview of the approach and tools used.
+
+### A note on synthetic biology and simulated images
+The BIA accepts deposition of synthetic biology image data as well as simulated images used in biological studies. The REMBI sections can be adapted to reflect the peculiarities of these studies. Note that the dropdown menu in the Biosamples Organism field can be overridden to input custom organisms. Please write **synthetic** for synthetic biology studies, and **simulated data** for simulated images.
+
+Some examples are listed below, but please [get in touch](mailto:bioimage-archive@ebi.ac.uk) if you are unsure about how to complete the REMBI metadata for your study. 
+
+**Example metadata for synthetic biology studies:** 
+
+Biosamples section
+* Organism: synthetic 
+* Biological entity: 0.1 μm FluoSpheres beads / lipid nanoparticles prepared at pH 4
+
+**Example metadata for simulated images:**
+
+Biosamples section
+* Organism: simulated data
+* Biological entity: simulated mouse pancreas / simulated *S. cerevisiae* / simulated mitochondria in human colon cells
+
+Specimen section
+* Sample preparation protocol: describe how the synthetic data was created here
+
+Image Acquisition section
+* Imaging instrument: N/A
+* Image acquisition parameters : N/A
+* Imaging method: simulated cryo-EM / simulated fluorescence microscopy
