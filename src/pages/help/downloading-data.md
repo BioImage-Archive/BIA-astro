@@ -12,25 +12,26 @@ You can also download files that belong to a particular study component of a sub
 
 ## Downloading via ftp
 
-The BioImage Archive FTP path is `ftp://ftp.ebi.ac.uk/biostudies`. Anonymous downloads are enabled. For each study, you can click on the FTP button to access it. You can also use your favourite FTP client such as FileZilla to download a study from `ftp://ftp.ebi.ac.uk/biostudies/<mode>/<path>`, where:
+The BioImage Archive FTP path is `ftp://ftp.ebi.ac.uk/biostudies`. Anonymous downloads are enabled. For each study, you can click on the FTP button to access it. 
+
+You can also use your favourite FTP client such as FileZilla to download a study from `ftp://ftp.ebi.ac.uk/biostudies/<mode>/<path>`, where:
+
 
 `<mode>` is the storage mode and can be either fire or nfs
 
 `<path>` is the path of the accession as described above
 
-All data files for a study are in the ftp://ftp.ebi.ac.uk/biostudies/mode/path/Files directory, e.g., to download the file STAN0B0F6_2022-02-25.tiff from S-BIAD570, you can use the command line
-
-    $ wget ftp://ftp.ebi.ac.uk/biostudies/fire/S-BIAD/570/S-BIAD570/Files/STAN0B0F6_2022-02-25.tiff
-
-<br>
-or, for interactive access:
-
-    $ ftp ftp.ebi.ac.uk Name: anonymous ftp> cd biostudies/fire/S-BIAD/570/S-BIAD570/Files/ ftp> get STAN0B0F6_2022-02-25.tiff 
-
-<br>
 You can get the FTP link for a study from the /info REST API endpoint, e.g.,
 
     $ curl https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD570/info -s \| jq -r .ftpLink
+
+All data files for a study are in the `ftp://ftp.ebi.ac.uk/biostudies/<mode>/<path>/Files` directory, e.g., to download the file STAN0B0F6_2022-02-25.tiff from S-BIAD570, you can use the command line
+
+    $ wget ftp://ftp.ebi.ac.uk/biostudies/fire/S-BIAD/570/S-BIAD570/Files/STAN0B0F6_2022-02-25.tiff
+
+or, for interactive access:
+
+    $ ftp ftp.ebi.ac.uk Name: anonymous ftp> cd biostudies/fire/S-BIAD/570/S-BIAD570/Files/ ftp> get STAN0B0F6_2022-02-25.tiff 
 
 ## Downloading data via Aspera
 
