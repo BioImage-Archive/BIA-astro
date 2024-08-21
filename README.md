@@ -29,4 +29,4 @@ To test:
 
 \* Note that on mac you may have to modify permissions of the /Users/$USER/.config/linkchecker to get this command to work.
 
-You can also run this on the files genated by the build by runnign `npm run build` and then `linkchecker dist/bioimage-archive/ ...`
+You can also run this on the files genated by the build by running `npm run build` and then `linkchecker dist/bioimage-archive/ ...`
