@@ -1,236 +1,414 @@
 ---
-import browseImage from '../assets/bioimage-archive/browse.png';
-import submitImage from '../assets/bioimage-archive/submit.png';
-import galleriesImage from '../assets/bioimage-archive/galleries.png';
-import helpImage from '../assets/bioimage-archive/help.png';
-import policiesImage from '../assets/bioimage-archive/policies.png';
-import aboutImage from '../assets/bioimage-archive/aboutus.png';
+import browseImage from "../assets/bioimage-archive/browse.png";
+import submitImage from "../assets/bioimage-archive/submit.png";
+import galleriesImage from "../assets/bioimage-archive/galleries.png";
+import helpImage from "../assets/bioimage-archive/help.png";
+import policiesImage from "../assets/bioimage-archive/policies.png";
+import aboutImage from "../assets/bioimage-archive/aboutus.png";
 
-import onlineTutorialImage from '../assets/bioimage-archive/online_tutorial_image.png';
-import getInTouchImage from '../assets/bioimage-archive/get_in_touch.png';
-import emailImage from '../assets/bioimage-archive/email.png';
-import githubImage from '../assets/bioimage-archive/github.png';
-import xtwitterImage from '../assets/bioimage-archive/x_twitter.png';
-import youtubeImage from '../assets/bioimage-archive/youtube.png';
+import onlineTutorialImage from "../assets/bioimage-archive/online_tutorial_image.png";
+import getInTouchImage from "../assets/bioimage-archive/get_in_touch.png";
+import emailImage from "../assets/bioimage-archive/email.png";
+import githubImage from "../assets/bioimage-archive/github.png";
+import xtwitterImage from "../assets/bioimage-archive/x_twitter.png";
+import youtubeImage from "../assets/bioimage-archive/youtube.png";
 
-import newsExampleImage from '../assets/bioimage-archive/news_example.png';
+import newsExampleImage from "../assets/bioimage-archive/news_example.png";
 
-import ukriImage from '../assets/bioimage-archive/uk_ri_logo.jpg';
-import emblImage from '../assets/bioimage-archive/EMBL_logo_colour_wordmark.png';
-import euImage from '../assets/bioimage-archive/EU_logo.jpg';
-
+import ukriImage from "../assets/bioimage-archive/uk_ri_logo.jpg";
+import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png";
+import euImage from "../assets/bioimage-archive/EU_logo.jpg";
 
 const cards = [
-  { label: "Browse", description: "Explore and search for datasets", img: browseImage.src, target: "/bioimage-archive/datasets" },
-  { label: "Submit", description: "Submit your data to the BIA", img: submitImage.src, target: "/bioimage-archive/submit" },
-  { label: "Galleries", description: "Visually explore our images", img: galleriesImage.src, target: "/bioimage-archive/galleries" },
-  { label: "Help", description: "Find answers to your questions", img: helpImage.src, target: "/bioimage-archive/help" },
-  { label: "Policies", description: "Learn about what you can expect from us", img: policiesImage.src, target: "/bioimage-archive/policies" },
-  { label: "About us", description: "Discover our mission and developments", img: aboutImage.src, target: "/bioimage-archive/about-us" }
-]
+  {
+    label: "Browse",
+    description: "Explore and search for datasets",
+    img: browseImage.src,
+    target: "/bioimage-archive/datasets",
+  },
+  {
+    label: "Submit",
+    description: "Submit your data to the BIA",
+    img: submitImage.src,
+    target: "/bioimage-archive/submit",
+  },
+  {
+    label: "Galleries",
+    description: "Visually explore our images",
+    img: galleriesImage.src,
+    target: "/bioimage-archive/galleries",
+  },
+  {
+    label: "Help",
+    description: "Find answers to your questions",
+    img: helpImage.src,
+    target: "/bioimage-archive/help",
+  },
+  {
+    label: "Policies",
+    description: "Learn about what you can expect from us",
+    img: policiesImage.src,
+    target: "/bioimage-archive/policies",
+  },
+  {
+    label: "About us",
+    description: "Discover our mission and developments",
+    img: aboutImage.src,
+    target: "/bioimage-archive/about-us",
+  },
+];
 
-import multiImageStrip from '../assets/bioimage-archive/multi_image_strip.png';
-import MenuCard from '../components/MenuCard.astro';
+import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.png";
+import MenuCard from "../components/MenuCard.astro";
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en" class="vf-no-js | vf-smooth-scroll">
-<head>
-  <script>
-// Detect if JS is on and swap vf-no-js for vf-js on the html element
-(function(H){H.className=H.className.replace(/\bvf-no-js\b/,'vf-js')})(document.documentElement);
-</script>
-<!-- CSS only -->
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css">
-<!-- JS -->
-<script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
+  <head>
+    <script>
+      // Detect if JS is on and swap vf-no-js for vf-js on the html element
+      (function (H) {
+        H.className = H.className.replace(/\bvf-no-js\b/, "vf-js");
+      })(document.documentElement);
+    </script>
+    <!-- CSS only -->
+    <link
+      rel="stylesheet"
+      href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css"
+    />
+    <!-- JS -->
+    <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"
+    ></script>
 
+    <title>The BioImage Archive</title>
 
-  <title>The BioImage Archive</title>
+    <meta charset="utf-8" />
+    <meta
+      content="width=device-width, initial-scale=1, minimum-scale=1"
+      name="viewport"
+    />
+  </head>
+  <body class="vf-body">
+    <link
+      rel="stylesheet"
+      href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css"
+      type="text/css"
+      media="all"
+    />
+    <header
+      id="masthead-black-bar"
+      class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"
+    >
+    </header>
+    <link
+      rel="import"
+      href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub"
+      data-target="self"
+      data-embl-js-content-hub-loader
+    />
+    <link
+      rel="stylesheet"
+      href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css"
+      type="text/css"
+      media="all"
+    />
+    <script
+      defer="defer"
+      src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"
+    ></script>
 
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport">
+    <style>
+      /* vf-hero wih search is still a prototype concept */
+      .vf-hero--search .vf-hero__content {
+        min-width: 60%;
+        max-width: 60%;
+      }
+    </style>
 
-</head>
-<body class="vf-body">
-
-    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
-    <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-    <link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
-    <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>                  
-
-
-  <style>
-  /* vf-hero wih search is still a prototype concept */
-  .vf-hero--search .vf-hero__content {
-    min-width: 60%;
-    max-width: 60%;
-  }
-  </style>
-
-  <!-- prototype hero + search -->
-  <section class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
-    style="--vf-hero--bg-image: url(https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png);">
-    <div class="vf-hero__content | vf-box | vf-stack vf-stack--400" style="opacity: 0.9;">
-      <!-- <section class="vf-grid vf-grid__col-2"> -->
+    <!-- prototype hero + search -->
+    <section
+      class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
+      style="--vf-hero--bg-image: url(https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png);"
+    >
+      <div
+        class="vf-hero__content | vf-box | vf-stack vf-stack--400"
+        style="opacity: 0.9;"
+      >
+        <!-- <section class="vf-grid vf-grid__col-2"> -->
         <section style="display: flex; gap: 10px;">
           <div>
-            <img src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png" style="width: 110px;">
+            <img
+              src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png"
+              style="width: 110px;"
+            />
           </div>
           <div>
             <h2 class="vf-hero__heading">BioImage Archive</h2>
             <p class="vf-hero__subheading">
-              A free, publicly available resource for life sciences images from any imaging modality, at any scale
+              A free, publicly available resource for life sciences images from
+              any imaging modality, at any scale
             </p>
           </div>
         </section>
-          <div>
-
-          <form action="#" class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end">
+        <div>
+          <form
+            action="#"
+            class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end"
+          >
             <div class="vf-sidebar__inner">
               <div class="vf-form__item">
-                <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem">Search</label>
-                <input type="search" placeholder="Search BioImage Archive" id="searchitem" class="vf-form__input">
+                <label
+                  class="vf-form__label vf-u-sr-only | vf-search__label"
+                  for="searchitem">Search</label
+                >
+                <input
+                  type="search"
+                  placeholder="Search BioImage Archive"
+                  id="searchitem"
+                  class="vf-form__input"
+                />
               </div>
-              <button type="submit" class="vf-search__button | vf-button vf-button--primary">
+              <button
+                type="submit"
+                class="vf-search__button | vf-button vf-button--primary"
+              >
                 <span class="vf-button__text | vf-u-sr-only">Search</span>
-                <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 140 140" width="140" height="140">
-                  <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
-                    <path d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z" fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
+                <svg
+                  class="vf-icon vf-icon--search-btn | vf-button__icon"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 140 140"
+                  width="140"
+                  height="140"
+                >
+                  <g
+                    transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)"
+                  >
+                    <path
+                      d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+                      fill="#FFFFFF"
+                      stroke="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="0"></path>
                   </g>
                 </svg>
               </button>
             </div>
           </form>
           <p class="vf-text-body--5">
-            Example searches: <a href="JavaScript:Void(0);" class="vf-link">Brain</a>, <a href="JavaScript:Void(0);" class="vf-link">Capsid</a>, <a href="JavaScript:Void(0);" class="vf-link">Organelle</a>
+            Example searches: <a href="JavaScript:Void(0);" class="vf-link"
+              >Brain</a
+            >, <a href="JavaScript:Void(0);" class="vf-link">Capsid</a>, <a
+              href="JavaScript:Void(0);"
+              class="vf-link">Organelle</a
+            >
             |
             <a href="JavaScript:Void(0);" class="vf-link">advanced search</a>
           </p>
         </div>
-      </section>
       </div>
-
-      
     </section>
+  </body>
 
-
-  <section 
+  <section
     class="vf-grid vf-grid__col-3 | vf-card-container | vf-u-fullbleed"
     style="margin-left: 10%; margin-right: 10%;"
   >
-        { cards.map((card) => (
-                <MenuCard label={card.label} description={card.description} icon_src={card.img} target={card.target}/>
-        )) }
-
+    {
+      cards.map((card) => (
+        <MenuCard
+          label={card.label}
+          description={card.description}
+          icon_src={card.img}
+          target={card.target}
+        />
+      ))
+    }
   </section>
 
   <!-- Image strip -->
-  <section class="vf-grid" style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
+  <section
+    class="vf-grid"
+    style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
+  >
     <figure class="vf-figure">
-      <img class="vf-figure__image" src={multiImageStrip.src} alt="Biological images from different modalities." loading="lazy">
+      <img
+        class="vf-figure__image"
+        src={multiImageStrip.src}
+        alt="Biological images from different modalities."
+        loading="lazy"
+      />
     </figure>
   </section>
 
   <!-- News -->
-  <section class="vf-stack" style="background-color: rgb(226, 237, 239); padding-top: 10px; padding-left: 10%; padding-right: 10%;">
+  <section
+    class="vf-stack"
+    style="background-color: rgb(226, 237, 239); padding: 16px 10%;"
+  >
     <h2>News</h2>
     <section class="vf-grid vf-grid__col-2">
       <div>
         <h3>BioImage Archive democratises access to microscopy data</h3>
-        EMBL-EBI’s BioImage Archive makes it easier to access and analyse biological research data...
+        EMBL-EBI’s BioImage Archive makes it easier to access and analyse biological
+        research data...
 
-        <a href="https://www.ebi.ac.uk/about/news/updates-from-data-resources/bioimage-archive-galleries/" class="vf-card__link">
-          Read more 
-      </a>
+        <a
+          href="https://www.ebi.ac.uk/about/news/updates-from-data-resources/bioimage-archive-galleries/"
+          class="vf-card__link"
+        >
+          Read more
+        </a>
       </div>
       <div>
         <a href="galleries" class="logo-img">
-        <img class="vf-figure__image" src={newsExampleImage.src} alt="Example news image." loading="lazy">
+          <img
+            class="vf-figure__image"
+            src={newsExampleImage.src}
+            alt="Example news image."
+            loading="lazy"
+          />
         </a>
       </div>
     </section>
     <section class="embl-grid embl-grid--has-centered-content">
       <div></div>
       <div>
-        <a href="https://listserver.ebi.ac.uk/mailman/listinfo/bioimage-archive-announce" class="logo-img">
-        <button class="vf-button vf-button--primary" style="border-radius: 10px;">Subscribe to our mailing list</button>
-      </a>
+        <a
+          href="https://listserver.ebi.ac.uk/mailman/listinfo/bioimage-archive-announce"
+          class="logo-img"
+        >
+          <button
+            class="vf-button vf-button--primary"
+            style="border-radius: 10px;">Subscribe to our mailing list</button
+          >
+        </a>
       </div>
     </section>
   </section>
 
   <!-- Tutorial and get in touch -->
-  <section class="vf-grid vf-grid__col-2" style="margin-left: 10%; margin-right: 10%;">
+  <section
+    class="vf-grid vf-grid__col-2"
+    style="margin-left: 10%; margin-right: 10%;"
+  >
     <div>
       <h2>Learn more</h2>
-      <a href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/" class="logo-img">
-      <img class="vf-figure__image" src={onlineTutorialImage.src} alt="Online tutorial">
+      <a
+        href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/"
+        class="logo-img"
+      >
+        <img
+          class="vf-figure__image"
+          src={onlineTutorialImage.src}
+          alt="Online tutorial"
+        />
       </a>
     </div>
     <div>
       <h2>Stay in touch</h2>
-      <section class="vf-grid | vf-grid__col-3" style="margin-left: 0%; margin-right: 60%;">
-      <div class="column column-block">
-        <a href="mailto:bioimage-archive@ebi.ac.uk" class="logo-img">
-        <img class="vf-figure__image" src={emailImage.src} alt="Email us"></a>
-      </div>
-      <div class="column column-block">
-        <a href="https://github.com/BioImage-Archive" class="logo-img">
-        <img class="vf-figure__image" src={githubImage.src} alt="BIA github repo" ></a>
-      </div>
-      <div class="column column-block">
-        <a href="https://x.com/BioimageA" class="logo-img">
-        <img class="vf-figure__image" src={xtwitterImage.src} alt="BIA Twitter"></a>
-      </div>
-
-    </section>  
+      <section
+        class="vf-grid | vf-grid__col-3"
+        style="margin-left: 0%; margin-right: 60%;"
+      >
+        <div class="column column-block">
+          <a href="mailto:bioimage-archive@ebi.ac.uk" class="logo-img">
+            <img
+              class="vf-figure__image"
+              src={emailImage.src}
+              alt="Email us"
+            /></a
+          >
+        </div>
+        <div class="column column-block">
+          <a href="https://github.com/BioImage-Archive" class="logo-img">
+            <img
+              class="vf-figure__image"
+              src={githubImage.src}
+              alt="BIA github repo"
+            /></a
+          >
+        </div>
+        <div class="column column-block">
+          <a href="https://x.com/BioimageA" class="logo-img">
+            <img
+              class="vf-figure__image"
+              src={xtwitterImage.src}
+              alt="BIA Twitter"
+            /></a
+          >
+        </div>
+      </section>
     </div>
-
   </section>
 
   <!-- Funding -->
-  <section
-    style="margin-left: 10%; margin-right: 10%;"
-  >
-  <h2 class="padding-top-large" id="funders">Funders</h2>
-
-  <p>Ongoing development is enabled by capital investment from the UKRI Strategic Priorities Fund and operational costs
-  supported by EMBL member state funding.</p>
+  <section style="margin: 16px 10%;">
+    <h2 class="padding-top-large" id="funders">Funders</h2>
+    <p>
+      Ongoing development is enabled by capital investment from the UKRI
+      Strategic Priorities Fund and operational costs supported by EMBL member
+      state funding.
+    </p>
   </section>
 
   <style>
-    .logo-img {border-width: 0px; }
+    .logo-img {
+      border-width: 0px;
+    }
   </style>
-  
-    <!-- <div class="medium-9 columns"> -->
-    <section 
-      class="vf-grid | vf-grid__col-5"
-      style="margin-left: 10%; margin-right: 10%;"
-    >
-      <!-- <div class="row small-up-2 medium-up-3 large-up-4 text-center"> -->
-        <div class="column column-block">
-          <a href="https://www.ukri.org/" class="logo-img">
-            <img class="padding-bottom-large" src={ukriImage.src} alt="UKRI logo" style="height: 66px;" />
-          </a>
-        </div>
-        <div class="column column-block">
-          <a href="http://www.ebi.ac.uk" class="logo-img">
-            <img class="padding-bottom-large" src={emblImage.src} alt="EMBL logo" style="height: 66px;" />
-          </a>
-        </div>
-        <div class="column column-block">
-          <a href="http://www.ebi.ac.uk" class="logo-img">
-            <img class="padding-bottom-large" src={euImage.src} alt="EU logo" style="height: 66px;" />
-          </a>
-        </div>
-      <!-- </div> -->
-    </section>
 
-  <!-- IE11 polyfill JS -->
-<script nomodule crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?flags=gated&features=default"></script>
+  <section class="vf-content;" style="margin-left: 10%; margin-right: 10%;">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+      <span class="column column-block">
+        <a href="https://www.ukri.org/" class="logo-img">
+          <img
+            class="padding-bottom-large"
+            src={ukriImage.src}
+            alt="UKRI logo"
+            style="height: 68px;"
+          />
+        </a>
+      </span>
+      <span class="column column-block">
+        <a href="http://www.ebi.ac.uk" class="logo-img">
+          <img
+            class="padding-bottom-large"
+            src={emblImage.src}
+            alt="EMBL logo"
+            style="height: 68px;"
+          />
+        </a>
+      </span>
+      <span class="column column-block">
+        <a href="http://www.ebi.ac.uk" class="logo-img">
+          <img
+            class="padding-bottom-large"
+            src={euImage.src}
+            alt="EU logo"
+            style="height: 68px;"
+          />
+        </a>
+      </span>
+    </div>
+  </section>
 
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
+  <div style="padding: 24px;">
+    <!-- IE11 polyfill JS -->
+    <script
+      nomodule
+      crossorigin="anonymous"
+      src="https://polyfill.io/v3/polyfill.min.js?flags=gated&features=default"
+    ></script>
 
-</body>
+    <link
+      rel="import"
+      href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub"
+      data-target="self"
+      data-embl-js-content-hub-loader
+    />
+  </div>
 </html>
