@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SODatasetCard from '../../components/SODatasetCard.astro';
-import exports from "../../data/bia-spatialomics-export.json";
+import exports from "../../data/old-export-format/bia-spatialomics-export.json";
 
-import collection from '../../data/spatialomics.json';
+import collection from '../../data/collections/spatialomics.json';
 const datasets = exports["datasets"];
 
 ---
@@ -26,5 +26,4 @@ const datasets = exports["datasets"];
         </div>
      </section>  
   </body>
-</html>
 </BaseLayout>
