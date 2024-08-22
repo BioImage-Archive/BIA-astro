@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DatasetCard from '../../components/DatasetCard.astro';
-import datasets from "../../data/datasets.json";
-import collection from '../../data/vem.json';
+import datasets from "../../data/datasets-card-summary.json";
+import collection from '../../data/collections/vem.json';
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>
@@ -23,5 +23,4 @@ import collection from '../../data/vem.json';
         </div>
     </section>
   </body>
-</html>
 </BaseLayout>

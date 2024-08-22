@@ -1,172 +1,194 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import exports from "../../data/bia-ai-export.json";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import exports from "../../data/old-export-format/bia-ai-export.json";
+import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
 
-import studyImage from '../../assets/bioimage-archive/study.png';
-import biosampleImage from '../..//assets/bioimage-archive/biosample.png';
-import imacqImage from '../../assets/bioimage-archive/im_acquisition.png';
-import specimenImage from '../../assets/bioimage-archive/specimen.png';
-import annotationsImage from '../../assets/bioimage-archive/annotations.png';
+import studyImage from "../../assets/bioimage-archive/study.png";
+import biosampleImage from "../..//assets/bioimage-archive/biosample.png";
+import imacqImage from "../../assets/bioimage-archive/im_acquisition.png";
+import specimenImage from "../../assets/bioimage-archive/specimen.png";
+import annotationsImage from "../../assets/bioimage-archive/annotations.png";
 
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {
     return {
-      params:  {accession_id: dataset.accession_id }
+      params: { accession_id: dataset.accession_id },
     };
   });
 }
+
+const table_of_contents = {
+  "Study Information": "study",
+  "Viewable Images": "viewable_images",
+  "Viewable Annotations": "viewable_annotations",
+  "All Images": "all_images",
+  "All Annotations": "annotations",
+};
 
 const { accession_id } = Astro.params;
 const study = exports["datasets"][accession_id];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
 
-const viewable_non_annotation_images = (study.image_uuids.filter(item => !Object.values(study.annotation_images).includes(item))).map((uuid) => exports["images"][uuid]);
-const viewable_annotation_images = (study.image_uuids.filter(item => Object.values(study.annotation_images).includes(item))).map((uuid) => exports["images"][uuid]);
+const viewable_non_annotation_images = study.image_uuids
+  .filter((item) => !Object.values(study.annotation_images).includes(item))
+  .map((uuid) => exports["images"][uuid]);
+
+const viewable_annotation_images = study.image_uuids
+  .filter((item) => Object.values(study.annotation_images).includes(item))
+  .map((uuid) => exports["images"][uuid]);
 ---
-<BaseLayout pageTitle= {study.accession_id} >
+
+<BaseLayout pageTitle={study.accession_id}>
   <body>
-    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-        <div></div>
-        <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ study.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
-            <h2 class="vf-intro__subheading">{ study.title }</h2>
-            Released { study.release_date }<br>
-            <!-- {{ authors }} -->
-        </div>
-        <div></div>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+      <StudyTitleInfo study_info={study} />
     </section>
-    <section  class="vf-content | vf-sidebar vf-sidebar--start">
+
+    <section class="vf-content | vf-sidebar vf-sidebar--start">
       <div class="vf-sidebar__inner">
         <div>
-          <h2 class="vf-section-header__heading"> On this page</h2>
+          <h2 class="vf-section-header__heading">On this page</h2>
           <ul class="vf-list">
-            <li class="vf-list__item">
-            <a class="vf-list__link" href="#study">
-              Study Information
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#viewable_images">
-              Viewable Images
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#viewable_annotations">
-              Viewable Annotations
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#viewable_images">
-              All Images
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#annotations">
-              All Annotations
-            </a>
+            {
+              Object.entries(table_of_contents).map(([text_title, id]) => (
+                <li class="vf-list__item">
+                  <a class="vf-list__link" href={"#" + id}>
+                    {text_title}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
-        <div>                  
-          <table class="vf-table--striped">
-            <colgroup>
-              <col span="1" style="width: 50%;">
-              <col span="1" style="width: 50%;">                         
-            </colgroup>
-            <tr class="vf-table__row">  
-            <td class="vf-table__cell">             
-              <figure class="vf-figure">
-                <img class="vf-figure__image" src={ study.example_image_uri } alt="Example image for this dataset">
-                <figcaption class="vf-figure__caption">Example image for this dataset</figcaption>
-              </figure> 
-              </td> 
-            <td class="vf-table__cell">
-              <figure class="vf-figure">
-                <img class="vf-figure__image" src={ study.example_annotation_uri } alt="Example annotation for this dataset">
-                <figcaption class="vf-figure__caption">Example annotation for this dataset</figcaption>
-              </figure>
-            </td>
-          </tr> 
-          </table>
+        <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+         
+          <figure class="vf-figure">
+            <img
+              class="vf-figure__image"
+              src={study.example_image_uri}
+              alt="Example image for this dataset"
+            />
+            <figcaption class="vf-figure__caption">
+              Example image for this dataset
+            </figcaption>
+          </figure>
+
+          <figure class="vf-figure">
+            <img
+              class="vf-figure__image"
+              src={study.example_annotation_uri}
+              alt="Example annotation for this dataset"
+            />
+            <figcaption class="vf-figure__caption">
+              Example annotation for this dataset
+            </figcaption>
+          </figure>
         </div>
+
       </div>
-    </div>
-        </section>
-      <section class="vf-content">
-        <div class="vf-grid vf-grid__col-4">
-        <div> Images<br/> {study.n_images}</div>
-        <div> Annotations <br> None </div>
-        <div> Study Size <br> None </div>
-        <div> File Types <br> None </div>
-    </div>
     </section>
-    <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 10px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-      <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
+  </body> 
+
+  <section class="vf-content">
+    <div class="vf-grid vf-grid__col-4">
+      <div>Images<br /> {study.n_images}</div>
+      <div>Annotations <br /> None</div>
+      <div>Study Size <br /> None</div>
+      <div>File Types <br /> None</div>
     </div>
-    <section  class="embl-grid embl-grid--has-centered-content">
-        <div>
-        <h2 class="vf-section-header__heading" id="study">Study Information</h2>
-        <p>Complete metadata</p>
-        <h3>Study</h3>
-        <img src={studyImage.src} alt="Study" style="width: 60px">
-      </div>
-      <div>
-        <br>
-        <br>
-        <a href={study.links[0]["url"]}>
-          <button class="vf-button vf-button--primary vf-button--sm">Original submission page</button>
-        </a>
-        <p><b>Licence:</b> CC0</p>
-        { ( study.models_description != null ) && <p><b>Models: </b> { study.models_description }</p> }
-      </div>
-      <div></div>
-    </section>
-    <section class="embl-grid embl-grid--has-centered-content">
-      <div>
-      <h3>Biosample</h3>
-        <img src={biosampleImage.src} alt="Biosample" style="width: 60px">
+  </section>
+
+  <hr/>
+
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading" id="study">Study Information</h2>
+      <p>Complete metadata</p>
+      <h3>Study</h3>
+      <img src={studyImage.src} alt="Study" style="width: 60px" />
     </div>
     <div>
-      <br>                  
-        <b>Organism: </b> { study.organism }
-    </div>
-    <div></div>
-</section>
-<section class="embl-grid embl-grid--has-centered-content">
-  <div>
-    <h3>Image Acquisition </h3>
-    <img src={imacqImage.src} alt="Imaging" style="width: 60px">
-  </div>
-<div>
-  <br>
-  <b>Imaging method: </b> { study.imaging_type } 
-</div>
-<div></div>
-</section>
-<div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-  <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-</div>
-  <section  class="vf-content | embl-grid embl-grid--has-centered-content">
-    <div>
-      <h3 class="vf-section-header__heading" title="Annotation in the context of AI, is the task of marking up data, such as images, so it can be recognised by models and used to make predictions."> Annotations </h3>
-      <br>
-      <img src={annotationsImage.src} alt="Imaging" style="width: 60px">
-    </div>
-    <div>
-      <br>
-      <b><a href={ `/bioimage-archive/ai-glossary` } target=”_blank”>Annotation type(s)</a>: </b><i class="fa-solid fa-circle-info" title="Click on the Annotation type(s) to go to the page with a glossary"></i>
-      { study.annotation_type }
-      <br></br>
-      <b>Annotation method(s): </b> { study.annotation_method }
+      <br />
+      <br />
+      <a href={study.links[0]["url"]}>
+        <button class="vf-button vf-button--primary vf-button--sm"
+          >Original submission page</button
+        >
+      </a>
+      <p><b>Licence:</b> CC0</p>
+      {
+        study.models_description != null && (
+          <p>
+            <b>Models: </b> {study.models_description}
+          </p>
+        )
+      }
     </div>
     <div></div>
   </section>
-  <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-  </div>
+
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <h3>Biosample</h3>
+      <img src={biosampleImage.src} alt="Biosample" style="width: 60px" />
+    </div>
+    <div>
+      <br />
+      <b>Organism: </b>
+      {study.organism}
+    </div>
+    <div></div>
+  </section>
+
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <h3>Image Acquisition</h3>
+      <img src={imacqImage.src} alt="Imaging" style="width: 60px" />
+    </div>
+    <div>
+      <br />
+      <b>Imaging method: </b>
+      {study.imaging_type}
+    </div>
+    <div></div>
+  </section>
+
+  <hr/>
+
   <section class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
-      <h3 class="vf-section-header__heading"> Viewable Images </h3>
+      <h3
+        class="vf-section-header__heading"
+        title="Annotation in the context of AI, is the task of marking up data, such as images, so it can be recognised by models and used to make predictions."
+      >
+        Annotations
+      </h3>
+      <br />
+      <img src={annotationsImage.src} alt="Imaging" style="width: 60px" />
+    </div>
+    <div>
+      <br />
+      <b
+        ><a href={`/bioimage-archive/ai-glossary`} target="”_blank”"
+          >Annotation type(s)</a
+        >:
+      </b><i
+        class="fa-solid fa-circle-info"
+        title="Click on the Annotation type(s) to go to the page with a glossary"
+      ></i>
+      {study.annotation_type}
+      <br />
+    </div>
+    <b>Annotation method(s): </b>
+    {study.annotation_method}
+  </section>
+
+  <hr/>
+
+  <section class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h3 class="vf-section-header__heading">Viewable Images</h3>
       <b>
         <a href="access_data_help.html">How to access the data </a>
       </b>
@@ -182,78 +204,79 @@ const viewable_annotation_images = (study.image_uuids.filter(item => Object.valu
           </tr>
         </thead>
         <tbody class="vf_table__body">
-          {viewable_non_annotation_images.map((image) =>
-            <tr class="vf-table__row">
-              <th>
-                <img class="vf-figure__image" src={image.thumbnail_uri}>
-              </th>
-              <th>{image.name}</th>
-              <th>None</th>
-              <th>
-                <a href={"/image/" + image.uuid}>View</a>
-                Download
-              </th>
-            </tr>
-          )}
+          {
+            viewable_non_annotation_images.map((image) => (
+              <tr class="vf-table__row">
+                <th>
+                  <img class="vf-figure__image" src={image.thumbnail_uri} />
+                </th>
+                <th>{image.name}</th>
+                <th>None</th>
+                <th>
+                  <a href={"/image/" + image.uuid}>View</a>
+                  Download
+                </th>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
     </div>
-    <div></div>
   </section>
-  <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-  </div>
-  <section class="vf-intro | embl-grid embl-grid--has-centered-content section-spacing">
+
+  <hr/>
+
+  <section
+    class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing"
+  >
     <div class="vf-section-header">
-      <h3 class="vf-section-header__heading" id="annotations"> Viewable Annotations </h3>
+      <h3 class="vf-section-header__heading" id="annotations">
+        Viewable Annotations
+      </h3>
     </div>
     <div>
       <table id="viewable_annotations" class="display">
         <thead>
           <tr>
-            <th >Preview</th>
+            <th>Preview</th>
             <th>Filename</th>
             <th>Download Size</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {viewable_annotation_images.map((image) =>
-            <tr>
-              <th>
-                <img class="vf-figure__image" src={image.thumbnail_uri}>
-              </th>
-              <th>{image.name}</th>
-              <th>None</th>
-              <th>
-                <a href={"/image/" + image.uuid}>View</a>
-                Download
-              </th>
-            </tr>
-          )}
+          {
+            viewable_annotation_images.map((image) => (
+              <tr>
+                <th>
+                  <img class="vf-figure__image" src={image.thumbnail_uri} />
+                </th>
+                <th>{image.name}</th>
+                <th>None</th>
+                <th>
+                  <a href={"/image/" + image.uuid}>View</a>
+                  Download
+                </th>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
-      </div>
-    <div> </div>
+    </div>
   </section>
 
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        $('#viewable_images').DataTable({
-          scrollX: true,
-          columnDefs: [
-            { type: 'natural', targets: 0 }
-          ]
-        });
-        $('#viewable_annotations').DataTable({
-          scrollX: true,
-          columnDefs: [
-            { type: 'natural', targets: 0 }
-          ]
-        });
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      $("#viewable_images").DataTable({
+        scrollX: true,
+        columnDefs: [{ type: "natural", targets: 0 }],
       });
-    </script>
-  </body>
+      $("#viewable_annotations").DataTable({
+        scrollX: true,
+        columnDefs: [{ type: "natural", targets: 0 }],
+      });
+    });
+  </script>
 </BaseLayout>
+
 

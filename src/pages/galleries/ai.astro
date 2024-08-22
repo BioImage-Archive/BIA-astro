@@ -1,8 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-import collection from '../../data/ai.json';
-import exports from "../../data/bia-ai-export.json";
+import collection from '../../data/collections/ai.json';
+import exports from "../../data/old-export-format/bia-ai-export.json";
 import AIDatasetCard from '../../components/AIDatasetCard.astro';
 
 const datasets = exports["datasets"];
@@ -27,5 +27,4 @@ const datasets = exports["datasets"];
         </div>
     </section>
   </body>
-</html>
 </BaseLayout>

@@ -1,6 +1,6 @@
 ---
-import field_map from "../data/field-names-mapping.json";
-import DatasetDetailLayout from "./DatasetDetailLayout.astro";
+import field_map from "../data/metadata-field-name-mapping.json";
+import DatasetDetailLayout from "./DatasetDetail.astro";
 
 const { eic } = Astro.props;
 const biosample_map = field_map["biosample"];
@@ -10,9 +10,9 @@ const image_acquisition_map = field_map["image_acquisition"];
 const analysis_method_map = field_map["analysis_method"];
 ---
 
-<div>
+<div style="margin-bottom: 1rem;">
     <div>
-        <b>{eic.title_id}</b>
+        <b style="font-size: 14pt;">{eic.title_id}</b>
     </div>
     <ul>
         <div>

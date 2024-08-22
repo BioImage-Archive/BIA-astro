@@ -1,4 +1,6 @@
 ---
+import "/src/styles/bars_and_sections.css"
+
 import 'datatables.net';
 import DataTable from 'datatables.net-dt';
 import Header from '../components/Header.astro';
@@ -19,19 +21,17 @@ const { pageTitle } = Astro.props;
     <script src="https://cdn.datatables.net/2.1.0/js/dataTables.min.js"></script> 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    
-    <!-- <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script> -->
-
-
     <title>{pageTitle}</title>
   </head>
   <body class="vf-body">
     <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
     <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
-   
     <Header />
     <slot />
-    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
   </body>
+  
+  <!-- Script required for bottom bar -->
+  <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
+  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
 </html>

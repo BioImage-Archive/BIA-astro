@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DatasetCard from '../../components/DatasetCard.astro';
-import datasets from "../../data/datasets.json";
+import datasets from "../../data/datasets-card-summary.json";
 
-import collection from '../../data/visualisation.json';
+import collection from '../../data/collections/vis.json';
 
 ---
 <BaseLayout pageTitle={ collection.name }>
@@ -25,5 +25,4 @@ import collection from '../../data/visualisation.json';
         </div>
     </section>
   </body>
-</html>
 </BaseLayout>

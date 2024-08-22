@@ -1,5 +1,4 @@
 ---
-//const pagenames = ["Home", "Browse", "Submit", "Galleries", "Help", "Policies", "About"];
 const pageData = {
     "": "Home",
     datasets: "Browse",
@@ -15,24 +14,23 @@ const basePath = pathname.split('/')[2];
 ---
 
 
-<nav class="vf-navigation | vf-navigation--main" style="margin-top: 0.25rem; padding: 0 8px 0 8px;
-">
-    <style>
-      .active { 
-        color: #3b6fb6;
-        font-weight: bold;
-        }
-      li.active {
-        border-bottom: 2px solid;
+<nav class="vf-navigation | vf-navigation--main" style="margin-top: 0.25rem; padding: 0 8px 0 8px;">
+  <style>
+    .active { 
+      color: #3b6fb6;
+      font-weight: bold;
       }
-    </style>
-    <ul class="vf-navigation__list | vf-list" style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0px;">
-      {Object.entries(pageData).map(([key, value]) => (
-        <li class={basePath === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
-            <a href={`/bioimage-archive/${key}`} class={basePath === key ? "vf-navigation__link | active" : "vf-navigation__link"}>{value}</a>
-        </li>
-        )
-      )}
-    </ul>
+    li.active {
+      border-bottom: 2px solid;
+    }
+  </style>
+  <ul class="vf-navigation__list | vf-list" style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0px;">
+    {Object.entries(pageData).map(([key, value]) => (
+      <li class={basePath === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
+          <a href={`/bioimage-archive/${key}`} class={basePath === key ? "vf-navigation__link | active" : "vf-navigation__link"}>{value}</a>
+      </li>
+      )
+    )}
+  </ul>
 </nav>
-<hr style="margin-top: 0px">
+<hr style="margin-top: 0px;">

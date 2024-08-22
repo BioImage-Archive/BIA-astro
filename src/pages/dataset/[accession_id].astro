@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import exports from "../../data/bia-export.json";
-import DatasetInfo from "../../layouts/DatasetInfoLayout.astro";
-import StudyInfoNewDataModel from "../../data/output_modified.json";
+import exports from "../../data/old-export-format/bia-export.json";
+import StudyInfoNewDataModel from "../../data/bia-study-metadata.json";
+import DefaultDataSetMetatadata from "../../data/bia-test-study-metadata.json";
+import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
+import DatasetInfo from "../../components/DatasetInfo.astro";
 
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {
@@ -12,42 +14,54 @@ export function getStaticPaths() {
   });
 }
 
+const table_of_contents = {
+  "Study Information": "study",
+  "Viewable Images": "viewable_images",
+  "All Images": "all_images",
+};
+
 const { accession_id } = Astro.params;
 const study = exports["datasets"][accession_id];
+const study_info =
+  accession_id in StudyInfoNewDataModel
+    ? StudyInfoNewDataModel[accession_id]
+    : DefaultDataSetMetatadata;
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+
 ---
 
 <BaseLayout pageTitle={study.accession_id}>
   <body>
-    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-      <div></div>
-      <div>
-        <h1 class="vf-intro__heading vf-intro__heading--has-tag">
-          {study.accession_id}<a
-            href="JavaScript:Void(0);"
-            class="vf-badge vf-badge--primary vf-badge--phases">alpha</a
-          >
-        </h1>
-        <h2 class="vf-intro__subheading">{study.title}</h2>
-        Released {study.release_date}<br />
-        <!-- {{ authors }} -->
-      </div>
-      <div></div>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+      <StudyTitleInfo study_info={study_info} />
     </section>
+
     <section class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
-        <h2 class="vf-section-header__heading">Content</h2>
-        <ul class="vf-list">
-          <li>{study.n_images} images</li>
-        </ul>
+        <div>
+          <h2 class="vf-section-header__heading">On this page</h2>
+          <ul class="vf-list">
+            {
+              Object.entries(table_of_contents).map(([text_title, id]) => (
+                <li class="vf-list__item">
+                  <a class="vf-list__link" href={"#" + id}>
+                    {text_title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
+
       <div>
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
           <img class="vf-figure__image" src={study.example_image_uri} />
         </figure>
         {study.description}
       </div>
+
       <div>
         <a href={study.links[0]["url"]}>
           <button class="vf-button vf-button--primary vf-button--sm"
@@ -56,56 +70,82 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
         </a>
       </div>
     </section>
-    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+
+    <hr/>
+
+    <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
         <h2 class="vf-section-header__heading">Study Information</h2>
       </div>
-      <div> <b>Description: </b> {StudyInfoNewDataModel.description}<div/>  
-      <div> <b>Licence: </b> {StudyInfoNewDataModel.licence}<div/>
-    </section>
-    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+
       <div>
-        <h2 class="vf-section-header__heading">Study Component Information</h2>
-      </div>
-      <div>
-      {
-        StudyInfoNewDataModel.experimental_imaging_component.map((eic_data) => (
-          <DatasetInfo eic={eic_data} />
-        ))
-      }
+        <div><b>Description: </b>{study_info.description}</div>
+        <div><b>Licence: </b> {study_info.licence}<div>
       </div>
     </section>
-    <section class="vf-content | embl-grid embl-grid--has-centered-content">
-      <div></div>
+
+    <hr/>
+
+    <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
-        <table id="viewable">
-          <thead>
-            <tr>
-              <th>Preview</th>
-              <th>Filename</th>
-              <th>Download Size</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              images.map((image) => (
-                <tr>
-                  <th>
-                    <img class="vf-figure__image" src={image.thumbnail_uri} />
-                  </th>
-                  <th>{image.name}</th>
-                  <th>3.0MiB</th>
-                  <th>
-                    <a href={"/image/" + image.uuid}>View</a>
-                    Download
-                  </th>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <h2 class="vf-section-header__heading">Study Components</h2>
+      </div>
+      <div>
+        {
+          study_info.experimental_imaging_component.map((eic_data) => (
+            <DatasetInfo eic={eic_data} />
+          ))
+        }
       </div>
     </section>
+
+    <hr/>
+
+    <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="viewable_images">
+        Viewable Images
+      </h2>
+    </div>
+    <div>
+      <table id="viewable_images_table" class="display">
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>Filename</th>
+            <th>Download Size</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            images.map((image) => (
+              <tr>
+                <th>
+                  <img class="vf-figure__image" src={image.thumbnail_uri}/>
+                </th>
+                <th>{image.name}</th>
+                <th>3.0MiB</th>
+                <th>
+                  <a href={"/image/" + image.uuid}>View</a>
+                  Download
+                </th>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        $("#viewable_images_table").DataTable({
+          scrollX: true,
+          columnDefs: [{ type: "natural", targets: 0 }],
+        });
+      });
+    </script>
   </body>
 </BaseLayout>
