@@ -1,10 +1,10 @@
 ---
-import BasicLayout from '../../layouts/BasicLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import TomogramCard from '../../components/TomogramCard.astro';
-import tomoproj from "../../data/tomp.json";
+import tomoproj from "../../data/collections/tomp.json";
 const tomograms = tomoproj["tomograms"];
 ---
-<BasicLayout pageTitle="Tomograms">
+<BaseLayout pageTitle="Tomograms">
   <body>
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
         <div></div>
