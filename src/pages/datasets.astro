@@ -1,17 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import DatasetCard from '../components/DatasetCard.astro';
-
-import exports from "../data/old-export-format/bia-export.json";
-
-const datasets = exports["datasets"];
+import DatasetCard from '../components/BrowseDatasetCard.astro';
+import study_info from "../data/bia-study-metadata.json"
 ---
 <BaseLayout pageTitle="Datasets">
   <body>
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
         <div></div>
         <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">All datasets being tested<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+            <h1 class="vf-intro__heading vf-intro__heading--has-tag">BioImage Archive Studies<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
             <h2 class="vf-intro__subheading">Through new page design</h2>
             <p class="vf-hero__text">Everything currently exported</p>
             <p></p>
@@ -21,9 +18,8 @@ const datasets = exports["datasets"];
     </section> 
     <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-            { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } /> )) }
+            { Object.values(study_info).map((study) => ( <DatasetCard dataset={study} dataset_path="dataset"/> )) }
         </div>
     </section>
   </body>
-</html>
 </BaseLayout>

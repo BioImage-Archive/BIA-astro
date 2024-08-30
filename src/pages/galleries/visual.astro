@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import DatasetCard from '../../components/DatasetCard.astro';
+import DatasetCard from '../../components/GalleryDatasetCard.astro';
 import datasets from "../../data/datasets-card-summary.json";
-
 import collection from '../../data/collections/vis.json';
 
 ---
@@ -21,7 +20,7 @@ import collection from '../../data/collections/vis.json';
     </section> 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-            { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } /> )) }
+            { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_path="galleries/visual/dataset"/> )) }
         </div>
     </section>
   </body>

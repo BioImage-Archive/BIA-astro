@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import exports from "../../data/old-export-format/bia-export.json";
-import StudyInfoNewDataModel from "../../data/bia-study-metadata.json";
+import StudyMetadata from "../../data/bia-study-metadata.json";
 import DefaultDataSetMetatadata from "../../data/bia-test-study-metadata.json";
 import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
+import default_img from "../../assets/bioimage-archive/default_hero/default_hero_1.png"
 
 export function getStaticPaths() {
-  return Object.values(exports["datasets"]).map((dataset) => {
+  return Object.values(StudyMetadata).map((dataset) => {
     return {
       params: { accession_id: dataset.accession_id },
     };
@@ -21,17 +21,18 @@ const table_of_contents = {
 };
 
 const { accession_id } = Astro.params;
-const study = exports["datasets"][accession_id];
 const study_info =
-  accession_id in StudyInfoNewDataModel
-    ? StudyInfoNewDataModel[accession_id]
+accession_id in StudyMetadata
+    ? StudyMetadata[accession_id]
     : DefaultDataSetMetatadata;
 
-const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+
+
+//const images = study_info.experimental_imaging_dataset.image_uuids.map((uuid) => exports["images"][uuid]);
 
 ---
 
-<BaseLayout pageTitle={study.accession_id}>
+<BaseLayout pageTitle={study_info.accession_id}>
   <body>
     <section class="vf-content | embl-grid embl-grid--has-centered-content">
       <StudyTitleInfo study_info={study_info} />
@@ -57,13 +58,13 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
 
       <div>
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-          <img class="vf-figure__image" src={study.example_image_uri} />
+          <img class="vf-figure__image" src={default_img.src} />
         </figure>
-        {study.description}
+        {study_info.description}
       </div>
 
       <div>
-        <a href={study.links[0]["url"]}>
+        <a href="">
           <button class="vf-button vf-button--primary vf-button--sm"
             >Original study</button
           >
@@ -100,7 +101,7 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     </section>
 
     <hr/>
-
+<!--
     <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
 
     <div class="vf-section-header">
@@ -147,5 +148,6 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
         });
       });
     </script>
+   -->
   </body>
 </BaseLayout>

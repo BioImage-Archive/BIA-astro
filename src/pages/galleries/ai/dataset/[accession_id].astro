@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import exports from "../../data/old-export-format/bia-ai-export.json";
-import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import exports from "../../../../data/old-export-format/bia-ai-export.json";
+import StudyTitleInfo from "../../../../components/StudyTitleInfo.astro";
 
-import studyImage from "../../assets/bioimage-archive/study.png";
-import biosampleImage from "../..//assets/bioimage-archive/biosample.png";
-import imacqImage from "../../assets/bioimage-archive/im_acquisition.png";
-import specimenImage from "../../assets/bioimage-archive/specimen.png";
-import annotationsImage from "../../assets/bioimage-archive/annotations.png";
+import studyImage from "../../../../assets/bioimage-archive/study.png";
+import biosampleImage from "../../../../assets/bioimage-archive/biosample.png";
+import imacqImage from "../../../../assets/bioimage-archive/im_acquisition.png";
+import specimenImage from "../../../../assets/bioimage-archive/specimen.png";
+import annotationsImage from "../../../../assets/bioimage-archive/annotations.png";
 
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {

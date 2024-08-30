@@ -1,0 +1,29 @@
+---
+import default_img_1 from "../assets/bioimage-archive/default_hero/default_hero_1.png"
+import default_img_2 from "../assets/bioimage-archive/default_hero/default_hero_2.png"
+import default_img_3 from "../assets/bioimage-archive/default_hero/default_hero_3.png"
+import default_img_4 from "../assets/bioimage-archive/default_hero/default_hero_4.png"
+
+const { dataset, dataset_path } = Astro.props;
+// Note these images are just to get an idea of the display in dev whilst also being obviously not actual images from the study.
+// Will switch to actual images once we have these.
+const images = {"0": default_img_1, "1": default_img_2, "2": default_img_3, "3": default_img_4}
+const image = images[String(dataset.accession_id.slice(6)%4)] 
+---
+<article class="vf-card vf-card--brand vf-card--bordered">
+    <img src={ image.src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading">
+            <a class="vf-card__link" href={ "/bioimage-archive/"+ dataset_path + "/" + dataset.accession_id } >
+                { dataset.accession_id }
+                <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
+            </a>
+        </h3>
+        <p class="vf-card__text">
+        { dataset.title }<br><br>
+        <b>Release date: </b>{ dataset.release_date }<br>
+        <b>Imaging method: </b><!--{ dataset.imaging_type }--> Placeholder<br>
+        <b>Organism: </b><!--{ dataset.organism }--> Placeholder
+        </p>
+    </div>
+</article>
