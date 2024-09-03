@@ -20,7 +20,7 @@ import collection from '../../data/collections/vis.json';
     </section> 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-            { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_path="galleries/visual/dataset"/> )) }
+            { Object.values(collection.accession_ids).map((accession_id) => ( <DatasetCard dataset={datasets[accession_id]} dataset_page_url={"/bioimage-archive/galleries/visual/dataset/"+accession_id}/> )) }
         </div>
     </section>
   </body>
