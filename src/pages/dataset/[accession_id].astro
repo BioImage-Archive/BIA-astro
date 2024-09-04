@@ -26,9 +26,12 @@ accession_id in StudyMetadata
     ? StudyMetadata[accession_id]
     : DefaultDataSetMetatadata;
 
-
-
-//const images = study_info.experimental_imaging_dataset.image_uuids.map((uuid) => exports["images"][uuid]);
+var images = new Array()
+for (var dataset of study_info.experimental_imaging_component) {
+  for (var image of dataset.image) {
+    images.push(image)
+  }
+}
 
 ---
 
@@ -60,7 +63,6 @@ accession_id in StudyMetadata
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
           <img class="vf-figure__image" src={default_img.src} />
         </figure>
-        {study_info.description}
       </div>
 
       <div>
@@ -101,7 +103,7 @@ accession_id in StudyMetadata
     </section>
 
     <hr/>
-<!--
+
     <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
 
     <div class="vf-section-header">
@@ -115,6 +117,7 @@ accession_id in StudyMetadata
           <tr>
             <th>Preview</th>
             <th>Filename</th>
+            <th>Dataset</th>
             <th>Download Size</th>
             <th>Actions</th>
           </tr>
@@ -126,10 +129,11 @@ accession_id in StudyMetadata
                 <th>
                   <img class="vf-figure__image" src={image.thumbnail_uri}/>
                 </th>
-                <th>{image.name}</th>
+                <th>{image.uuid}</th>
+                <th>{study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}</th>
                 <th>3.0MiB</th>
                 <th>
-                  <a href={"/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
                   Download
                 </th>
               </tr>
@@ -148,6 +152,5 @@ accession_id in StudyMetadata
         });
       });
     </script>
-   -->
   </body>
 </BaseLayout>
