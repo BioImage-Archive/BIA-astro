@@ -16,5 +16,11 @@
     },
     "analysis_method": {
         "protocol_description": "Protocol description"
+    },
+    "annotation_method": {
+        "protocol_description": "Protocol description",
+        "annotation_criteria": "Criteria",
+        "annotation_coverage": "Coverage",
+        "method_type": "Method Type"
     }
 }

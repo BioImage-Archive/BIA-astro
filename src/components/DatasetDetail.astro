@@ -1,7 +1,7 @@
 ---
 import external_link from  "../assets/bioimage-archive/external-link-svgrepo-com.png";
 
-const { data, field_map } = Astro.props;
+var { data, field_map } = Astro.props;
 
 function taxon_render(taxon) {
    
@@ -36,10 +36,12 @@ const render_field = Object.keys(data).map((key) => {
     }
 });
 
-
+if (!("default_open" in data) ) {
+    data.default_open = "True"
+}
 ---
 
-<details open={data.default_open}>
+<details open={"default_open" in data ? data.default_open: "True"}>
     <summary>
         <b>{data.title_id}</b> {data.default_open? ' ':'(as above)'}
     </summary>

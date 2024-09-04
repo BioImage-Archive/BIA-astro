@@ -99,6 +99,11 @@ for (var dataset of study_info.experimental_imaging_component) {
             <DatasetInfo eic={eic_data} />
           ))
         }
+        {
+          study_info.image_annotation_component.map((eic_data) => (
+            <DatasetInfo eic={eic_data} />
+          ))
+        }
       </div>
     </section>
 
