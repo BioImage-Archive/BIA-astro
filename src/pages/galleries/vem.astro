@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import DatasetCard from '../../components/DatasetCard.astro';
+import DatasetCard from '../../components/GalleryDatasetCard.astro';
 import datasets from "../../data/datasets-card-summary.json";
 import collection from '../../data/collections/vem.json';
 ---
@@ -19,7 +19,7 @@ import collection from '../../data/collections/vem.json';
     </section> 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-            { Object.values(collection.accession_ids).map((accession_id) => ( <DatasetCard dataset={ datasets[accession_id] } /> )) }
+            { Object.values(collection.accession_ids).map((accession_id) => ( <DatasetCard dataset={datasets[accession_id]} dataset_page_url={"https://www.ebi.ac.uk/empiar/"+accession_id}/>)) }
         </div>
     </section>
   </body>

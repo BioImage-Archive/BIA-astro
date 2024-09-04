@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 import collection from '../../data/collections/ai.json';
 import exports from "../../data/old-export-format/bia-ai-export.json";
-import AIDatasetCard from '../../components/AIDatasetCard.astro';
+import DatasetCard from '../../components/GalleryDatasetCard.astro';
 
 const datasets = exports["datasets"];
 
@@ -23,7 +23,7 @@ const datasets = exports["datasets"];
     </section> 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(datasets).map((dataset) => ( <AIDatasetCard dataset={ dataset } /> )) }
+          { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_page_url={"/bioimage-archive/galleries/ai/dataset/" + dataset.accession_id} /> )) }
         </div>
     </section>
   </body>

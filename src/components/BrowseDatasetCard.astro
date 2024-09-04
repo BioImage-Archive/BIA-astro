@@ -1,0 +1,96 @@
+---
+import default_img_1 from "../assets/bioimage-archive/default_hero/default_hero_1.png"
+import default_img_2 from "../assets/bioimage-archive/default_hero/default_hero_2.png"
+import default_img_3 from "../assets/bioimage-archive/default_hero/default_hero_3.png"
+import default_img_4 from "../assets/bioimage-archive/default_hero/default_hero_4.png"
+
+const { dataset, dataset_path } = Astro.props;
+// Note these images are just to get an idea of the display in dev whilst also being obviously not actual images from the study.
+// Will switch to actual images once we have these.
+const images = {"0": default_img_1, "1": default_img_2, "2": default_img_3, "3": default_img_4}
+const image = images[String(dataset.accession_id.slice(6)%4)] 
+
+function get_imaging_type(study_info) {
+    var imaging_type_list = new Array()
+    for (var eic of study_info.experimental_imaging_component) {
+        for (var ia of eic.acquisition_process) {
+            for (var method_names of ia.imaging_method_name) {
+                if (!imaging_type_list.includes(method_names)) {
+                    imaging_type_list.push(method_names)
+                }
+            }
+        }
+    }
+    return imaging_type_list
+}
+
+
+function get_taxons(study_info) {
+    var taxon_html_list = new Array()
+    var taxon_list = new Array()
+    for (var eic of study_info.experimental_imaging_component) {
+        for (var biosample of eic.biological_entity) {
+            for (var taxon of biosample.organism_classification) {
+                if (!taxon_list.some(txn_final => txn_final.common_name === taxon.common_name || txn_final.scientific_name === taxon.scientific_name )) {
+                    taxon_list.push(taxon)
+                    taxon_html_list.push(taxon_render(taxon))
+                }
+            }
+        }
+    }
+    return taxon_html_list
+}
+
+
+function taxon_render(taxon) {
+   if (taxon["common_name"] && taxon["scientific_name"]){
+       return `<i>${taxon.scientific_name}</i> (${taxon["common_name"]})`
+   } else if (taxon["common_name"]) {
+       return `${taxon.common_name}`
+   } else if (taxon["scientific_name"]) {
+       return `<i>${taxon.scientific_name}</i>`
+   }
+}
+
+
+function format_list_item(output_string, item, i, list) {
+    if (i + 1 === list.length) {
+        return output_string + item ;
+    } else {
+        return output_string + item + ", " ;
+    }
+}
+
+function display_img_type(dataset) {
+    const image_type_list = get_imaging_type(dataset)
+    const img_type_display = image_type_list.reduce(format_list_item, "")
+    if (img_type_display.length > 50 * image_type_list.length) {
+        // Avoid displaying full method text on dataset cards.
+        return 'See details of study'
+    } else {
+        return img_type_display
+    }
+}
+
+function display_taxon(dataset) {
+    const taxon_list = get_taxons(dataset)
+    return taxon_list.reduce(format_list_item, "")
+}
+---
+<article class="vf-card vf-card--brand vf-card--bordered">
+    <img src={ image.src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading">
+            <a class="vf-card__link" href={ "/bioimage-archive/"+ dataset_path + "/" + dataset.accession_id } >
+                { dataset.accession_id }
+                <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
+            </a>
+        </h3>
+        <p class="vf-card__text">
+        { dataset.title }<br><br>
+        <b>Release date: </b>{ dataset.release_date }<br>
+        <b>Imaging method: </b>{display_img_type(dataset)}<br>
+        <b>Organism: </b><Fragment set:html={display_taxon(dataset)}></Fragment>
+        </p>
+    </div>
+</article>

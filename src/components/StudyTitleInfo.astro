@@ -1,9 +1,7 @@
 ---
-import TestData from "../data/bia-test-study-metadata.json";
-
 const { study_info } = Astro.props;
 
-const authors = "author" in study_info ? study_info.author : TestData.author;
+const authors = "author" in study_info ? study_info.author : [{display_name: ""}];
 
 function author_format(author_name, i, author_list) {
     if (i + 1 === author_list.length) {
