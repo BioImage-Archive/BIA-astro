@@ -1,6 +1,6 @@
 ---
 import field_map from "../data/metadata-field-name-mapping.json";
-import DatasetDetailLayout from "./DatasetDetail.astro";
+import DatasetDetail from "./DatasetDetail.astro";
 
 const { eic } = Astro.props;
 const biosample_map = field_map["biosample"];
@@ -25,7 +25,7 @@ const annotation_method_map = field_map["annotation_method"];
                     <b>Biosamples:</b>
                     <ul>
                         {eic.biological_entity.map((biosample) => (
-                            <DatasetDetailLayout
+                            <DatasetDetail
                                 data={biosample}
                                 field_map={biosample_map}
                             />
@@ -40,7 +40,7 @@ const annotation_method_map = field_map["annotation_method"];
                     <ul>
                         {eic.specimen_imaging_preparation_protocol.map(
                             (sipp) => (
-                                <DatasetDetailLayout
+                                <DatasetDetail
                                     data={sipp}
                                     field_map={sipp_map}
                                 />
@@ -56,7 +56,7 @@ const annotation_method_map = field_map["annotation_method"];
                     <ul>
                         {eic.specimen_growth_protocol.map(
                             (sgp) => (
-                                <DatasetDetailLayout
+                                <DatasetDetail
                                     data={sgp}
                                     field_map={sgp_map}
                                 />
@@ -72,7 +72,7 @@ const annotation_method_map = field_map["annotation_method"];
                     <ul>
                         {eic.acquisition_process.map(
                             (image_acquisition) => (
-                                <DatasetDetailLayout
+                                <DatasetDetail
                                     data={image_acquisition}
                                     field_map={image_acquisition_map}
                                 />
@@ -83,15 +83,15 @@ const annotation_method_map = field_map["annotation_method"];
         }
         {
             "analysis_method" in eic && eic.analysis_method.length > 0 && (
-                    <b>Image Analysis Methods:</b>
-                    <ul>
-                        {eic.acquisition_process.map((analysis_method) => (
-                            <DatasetDetailLayout
-                                data={analysis_method}
-                                field_map={analysis_method_map}
-                            />
-                        ))}
-                    </ul>
+                <b>Image Analysis Methods:</b>
+                <ul>
+                    {eic.acquisition_process.map((analysis_method) => (
+                        <DatasetDetail
+                            data={analysis_method}
+                            field_map={analysis_method_map}
+                        />
+                    ))}
+                </ul>
             )
         }
         {
@@ -99,7 +99,7 @@ const annotation_method_map = field_map["annotation_method"];
                 <b>Annotation Methods:</b>
                 <ul>
                     {eic.annotation_method.map((annotation_method) => (
-                        <DatasetDetailLayout
+                        <DatasetDetail
                             data={annotation_method}
                             field_map={annotation_method_map}
                         />

@@ -93,9 +93,9 @@ const viewable_annotation_images = study.image_uuids
   <section class="vf-content">
     <div class="vf-grid vf-grid__col-4">
       <div>Images<br /> {study.n_images}</div>
-      <div>Annotations <br /> None</div>
-      <div>Study Size <br /> None</div>
-      <div>File Types <br /> None</div>
+      <div>Annotations <br /> Not yet caluclated</div>
+      <div>Study Size <br /> Not yet caluclated</div>
+      <div>File Types <br /> Not yet caluclated</div>
     </div>
   </section>
 
@@ -211,9 +211,9 @@ const viewable_annotation_images = study.image_uuids
                   <img class="vf-figure__image" src={image.thumbnail_uri} />
                 </th>
                 <th>{image.name}</th>
-                <th>None</th>
+                <th>Unknown</th>
                 <th>
-                  <a href={"/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
                   Download
                 </th>
               </tr>
@@ -252,9 +252,9 @@ const viewable_annotation_images = study.image_uuids
                   <img class="vf-figure__image" src={image.thumbnail_uri} />
                 </th>
                 <th>{image.name}</th>
-                <th>None</th>
+                <th>Unknown</th>
                 <th>
-                  <a href={"/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
                   Download
                 </th>
               </tr>

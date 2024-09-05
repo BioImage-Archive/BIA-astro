@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import StudyMetadata from "../../data/bia-study-metadata.json";
+import ImageMetadata from "../../data/bia-image-export.json";
 import DefaultDataSetMetatadata from "../../data/bia-test-study-metadata.json";
 import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
+import ImageRow from "../../components/ImageRow.astro";
 import default_img from "../../assets/bioimage-archive/default_hero/default_hero_1.png"
 
 export function getStaticPaths() {
@@ -31,6 +33,20 @@ for (var dataset of study_info.experimental_imaging_component) {
   for (var image of dataset.image) {
     images.push(image)
   }
+}
+
+
+function image_row_display(image, imageData) {
+  return `<th>
+                  <img class="vf-figure__image" src={ImageMetadata[image.uuid].representation.find((rep)=>rep.use_type == "THUMBNAIL").file_uri[0]}/>
+                </th>
+                <th>{image.uuid}</th>
+                <th>{study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}</th>
+                <th>{ImageMetadata[image.uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER").total_size_in_bytes}</th>
+                <th>
+                  <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
+                  Download
+         </th>`
 }
 
 ---
@@ -130,18 +146,7 @@ for (var dataset of study_info.experimental_imaging_component) {
         <tbody>
           {
             images.map((image) => (
-              <tr>
-                <th>
-                  <img class="vf-figure__image" src={image.thumbnail_uri}/>
-                </th>
-                <th>{image.uuid}</th>
-                <th>{study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}</th>
-                <th>3.0MiB</th>
-                <th>
-                  <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
-                  Download
-                </th>
-              </tr>
+              <ImageRow image={image} study_title={study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}/>
             ))
           }
         </tbody>
