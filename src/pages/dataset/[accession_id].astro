@@ -35,20 +35,6 @@ for (var dataset of study_info.experimental_imaging_component) {
   }
 }
 
-
-function image_row_display(image, imageData) {
-  return `<th>
-                  <img class="vf-figure__image" src={ImageMetadata[image.uuid].representation.find((rep)=>rep.use_type == "THUMBNAIL").file_uri[0]}/>
-                </th>
-                <th>{image.uuid}</th>
-                <th>{study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}</th>
-                <th>{ImageMetadata[image.uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER").total_size_in_bytes}</th>
-                <th>
-                  <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
-                  Download
-         </th>`
-}
-
 ---
 
 <BaseLayout pageTitle={study_info.accession_id}>
