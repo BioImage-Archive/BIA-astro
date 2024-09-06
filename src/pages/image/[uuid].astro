@@ -81,7 +81,7 @@ function pixel_dimensions(value, text) {
                 <h2 class="vf-intro__subheading">{image_study.title}</h2>
                 <p class="studytitle">{image_dataset.title_id}</p>
                 <a href={ "/bioimage-archive/dataset/" + image_study.accession_id}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Study Information</button>
+                    <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                 </a> 
             </div>
         </section>
@@ -120,9 +120,7 @@ function pixel_dimensions(value, text) {
             </div>
         </section>
 
-        { ( image.canconical_representation != null ) &&
-            <SourceImage image={ image} />
-        }
+        <!-- TODO: Include links to source images using  <SourceImage image={ image}/> for derived images -->
 
         <hr/>
 
