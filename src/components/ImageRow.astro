@@ -1,0 +1,38 @@
+---
+import ImageMetadata from "../data/bia-image-export.json";
+const { image , dataset_title} = Astro.props;
+
+function get_thumbnail(uuid, ImageMetadata) {
+    if (uuid in ImageMetadata) {
+        const thumbnail = ImageMetadata[uuid].representation.find((rep)=>rep.use_type == "THUMBNAIL")
+        if (thumbnail != undefined) {
+            return thumbnail.file_uri[0]
+        }
+    }
+    //Default for testing purposes
+    return "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD144/55b79a6d-f679-4b5f-ace4-79074ab68bf8/55b79a6d-f679-4b5f-ace4-79074ab68bf8-thumbnail-128-128.png"
+}
+
+function get_download_size(uuid, ImageMetadata) {
+    if (uuid in ImageMetadata) {
+        const submitter_data = ImageMetadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
+        if (submitter_data != undefined) {
+            return submitter_data.total_size_in_bytes
+        }
+    }
+    return "Unknown"
+}
+
+---
+<tr>
+  <th>
+    <img class="vf-figure__image" src={get_thumbnail(image.uuid, ImageMetadata)}/>
+  </th>
+  <th>{image.uuid}</th>
+  <th>{dataset_title}</th>
+  <th>{get_download_size(image.uuid, ImageMetadata)}</th>
+  <th>
+    <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
+    Download
+  </th>
+</tr>

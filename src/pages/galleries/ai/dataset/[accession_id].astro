@@ -93,9 +93,9 @@ const viewable_annotation_images = study.image_uuids
   <section class="vf-content">
     <div class="vf-grid vf-grid__col-4">
       <div>Images<br /> {study.n_images}</div>
-      <div>Annotations <br /> None</div>
-      <div>Study Size <br /> None</div>
-      <div>File Types <br /> None</div>
+      <div>Annotations <br /> Not yet calculated</div>
+      <div>Study Size <br /> Not yet calculated</div>
+      <div>File Types <br /> Not yet calculated</div>
     </div>
   </section>
 
@@ -168,7 +168,7 @@ const viewable_annotation_images = study.image_uuids
       <img src={annotationsImage.src} alt="Imaging" style="width: 60px" />
     </div>
     <div>
-      <br />
+      <br/>
       <b
         ><a href={`/bioimage-archive/ai-glossary`} target="”_blank”"
           >Annotation type(s)</a
@@ -178,10 +178,10 @@ const viewable_annotation_images = study.image_uuids
         title="Click on the Annotation type(s) to go to the page with a glossary"
       ></i>
       {study.annotation_type}
-      <br />
+      <br/>
+      <b>Annotation method(s): </b>
+      {study.annotation_method}
     </div>
-    <b>Annotation method(s): </b>
-    {study.annotation_method}
   </section>
 
   <hr/>
@@ -211,9 +211,9 @@ const viewable_annotation_images = study.image_uuids
                   <img class="vf-figure__image" src={image.thumbnail_uri} />
                 </th>
                 <th>{image.name}</th>
-                <th>None</th>
+                <th>Unknown</th>
                 <th>
-                  <a href={"/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
                   Download
                 </th>
               </tr>
@@ -252,9 +252,9 @@ const viewable_annotation_images = study.image_uuids
                   <img class="vf-figure__image" src={image.thumbnail_uri} />
                 </th>
                 <th>{image.name}</th>
-                <th>None</th>
+                <th>Unknown</th>
                 <th>
-                  <a href={"/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
                   Download
                 </th>
               </tr>

@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import StudyMetadata from "../../data/bia-study-metadata.json";
+import ImageMetadata from "../../data/bia-image-export.json";
 import DefaultDataSetMetatadata from "../../data/bia-test-study-metadata.json";
 import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
+import ImageRow from "../../components/ImageRow.astro";
 import default_img from "../../assets/bioimage-archive/default_hero/default_hero_1.png"
 
 export function getStaticPaths() {
@@ -26,9 +28,12 @@ accession_id in StudyMetadata
     ? StudyMetadata[accession_id]
     : DefaultDataSetMetatadata;
 
-
-
-//const images = study_info.experimental_imaging_dataset.image_uuids.map((uuid) => exports["images"][uuid]);
+var images = new Array()
+for (var dataset of study_info.experimental_imaging_component) {
+  for (var image of dataset.image) {
+    images.push(image)
+  }
+}
 
 ---
 
@@ -60,7 +65,6 @@ accession_id in StudyMetadata
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
           <img class="vf-figure__image" src={default_img.src} />
         </figure>
-        {study_info.description}
       </div>
 
       <div>
@@ -97,11 +101,16 @@ accession_id in StudyMetadata
             <DatasetInfo eic={eic_data} />
           ))
         }
+        {
+          study_info.image_annotation_component.map((eic_data) => (
+            <DatasetInfo eic={eic_data} />
+          ))
+        }
       </div>
     </section>
 
     <hr/>
-<!--
+
     <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
 
     <div class="vf-section-header">
@@ -115,6 +124,7 @@ accession_id in StudyMetadata
           <tr>
             <th>Preview</th>
             <th>Filename</th>
+            <th>Dataset</th>
             <th>Download Size</th>
             <th>Actions</th>
           </tr>
@@ -122,17 +132,7 @@ accession_id in StudyMetadata
         <tbody>
           {
             images.map((image) => (
-              <tr>
-                <th>
-                  <img class="vf-figure__image" src={image.thumbnail_uri}/>
-                </th>
-                <th>{image.name}</th>
-                <th>3.0MiB</th>
-                <th>
-                  <a href={"/image/" + image.uuid}>View</a>
-                  Download
-                </th>
-              </tr>
+              <ImageRow image={image} study_title={study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}/>
             ))
           }
         </tbody>
@@ -148,6 +148,5 @@ accession_id in StudyMetadata
         });
       });
     </script>
-   -->
   </body>
 </BaseLayout>

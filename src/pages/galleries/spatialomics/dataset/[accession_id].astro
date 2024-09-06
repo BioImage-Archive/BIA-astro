@@ -47,11 +47,6 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
             </a>
           </li>
           <li class="vf-list__item">
-            <a class="vf-list__link" href="#viewable_images">
-              Viewable Images
-            </a>
-          </li>
-          <li class="vf-list__item">
             <a class="vf-list__link" href="#spatial_omics">
               Spatial-omics data
             </a>
@@ -61,11 +56,11 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
               Analysis Code
             </a>
             </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#all_images">
-              All Images
-            </a>
-          </li>
+            <li class="vf-list__item">
+              <a class="vf-list__link" href="#viewable_images">
+                Viewable Images
+              </a>
+            </li>
           </ul>
         </div>
         <div>                                   
@@ -125,50 +120,10 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <br>
     <b>Imaging method: </b> { study.imaging_type } 
   </div>
-  <div></div>
   </section>
-  <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 10px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-  </div>
-  <section class="vf-content | embl-grid embl-grid--has-centered-content">
-    <div>
-      <h3 class="vf-section-header__heading"> Viewable Images </h3>
-      <b>
-        <a href="access_data_help.html">How to access the data </a>
-      </b>
-    </div>
-    <div>
-      <table id="viewable_images">
-        <thead>
-          <tr>
-            <th>Preview</th>
-            <th>Filename</th>
-            <th>Download Size</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {images.map((image) =>
-            <tr>
-              <th>
-                <img class="vf-figure__image" src={image.thumbnail_uri}>
-              </th>
-              <th>{image.name}</th>
-              <th>None</th>
-              <th>
-                <a href={"/image/" + image.uuid}>View</a>
-                Download
-              </th>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-    <div></div>
-  </section>
-  <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-  </div>
+  
+  <hr/>
+
   <section class="embl-grid embl-grid embl-grid--has-centered-content">
     <div class="vf-section-header" id="spatial_omics">
       <h3 class="vf-section-header__heading" title="Cell segmentation, RNA spots and Omics data"> Spatial-omics data </h3>
@@ -205,9 +160,9 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div></div>
   </section>
 }
-  <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-  </div>
+  
+  <hr/>
+   
   <section class="embl-grid embl-grid--has-centered-content">
         <div class="vf-section-header" id="code">
         <h3 class="vf-section-header__heading">Analysis code</h3>
@@ -221,15 +176,57 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
       </div>
     <div></div>
   </section>
-  <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-    <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-  </div>
-  <section class="vf-intro | embl-grid embl-grid--has-centered-content section-spacing">
-    <div class="vf-section-header">
-      <h3 class="vf-section-header__heading" id="all_images"> All images </h3>
-    </div>
-    <div></div>
-    <div> </div>
-  </section>
+
+<hr/>
+
+  <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+
+<div class="vf-section-header">
+  <h2 class="vf-section-header__heading" id="viewable_images">
+    Viewable Images
+  </h2>
+</div>
+<div>
+  <table id="viewable_images_table" class="display">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>Filename</th>
+        <th>Download Size</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        images.map((image) => (
+          <tr>
+            <th>
+              <img class="vf-figure__image" src={image.thumbnail_uri}/>
+            </th>
+            <th>{image.name}</th>
+            <th>Unknown</th>
+            <th>
+              <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
+              Download
+            </th>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $("#viewable_images_table").DataTable({
+      scrollX: true,
+      columnDefs: [{ type: "natural", targets: 0 }],
+    });
+  });
+</script>
+</body>
+
+
   </body>
 </BaseLayout>
