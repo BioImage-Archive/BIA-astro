@@ -35,6 +35,15 @@ for (var dataset of study_info.experimental_imaging_component) {
   }
 }
 
+function get_study_image(study_info) {
+  const dataset_with_img = study_info.experimental_imaging_component.find((dataset) => dataset.example_image_uri.length > 0)
+  if (dataset_with_img == undefined) {
+    return default_img.src
+  } else {
+    return dataset_with_img.example_image_uri[0]
+  }
+}
+
 ---
 
 <BaseLayout pageTitle={study_info.accession_id}>
@@ -63,7 +72,7 @@ for (var dataset of study_info.experimental_imaging_component) {
 
       <div>
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-          <img class="vf-figure__image" src={default_img.src} />
+          <img class="vf-figure__image" src={get_study_image(study_info)} />
         </figure>
       </div>
 

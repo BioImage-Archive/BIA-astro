@@ -5,10 +5,18 @@ import default_img_3 from "../assets/bioimage-archive/default_hero/default_hero_
 import default_img_4 from "../assets/bioimage-archive/default_hero/default_hero_4.png"
 
 const { dataset, dataset_path } = Astro.props;
-// Note these images are just to get an idea of the display in dev whilst also being obviously not actual images from the study.
-// Will switch to actual images once we have these.
-const images = {"0": default_img_1, "1": default_img_2, "2": default_img_3, "3": default_img_4}
-const image = images[String(dataset.accession_id.slice(6)%4)] 
+
+function get_study_image(study_info) {
+  const dataset_with_img = study_info.experimental_imaging_component.find((eic) => eic.example_image_uri.length > 0)
+  if (dataset_with_img == undefined) {
+    // Note these images are just to get an idea of the display in dev whilst also being obviously not actual images from the study.
+    // Will switch to actual images once we have these.
+    const images = {"0": default_img_1, "1": default_img_2, "2": default_img_3, "3": default_img_4}
+    return images[String(dataset.accession_id.slice(6)%4)].src 
+  } else {
+    return dataset_with_img.example_image_uri[0]
+  }
+}
 
 function get_imaging_type(study_info) {
     var imaging_type_list = new Array()
@@ -78,7 +86,7 @@ function display_taxon(dataset) {
 }
 ---
 <article class="vf-card vf-card--brand vf-card--bordered">
-    <img src={ image.src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <img src={ get_study_image(dataset) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
             <a class="vf-card__link" href={ "/bioimage-archive/"+ dataset_path + "/" + dataset.accession_id } >
