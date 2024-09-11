@@ -26,6 +26,7 @@ const image = image_data[uuid];
 const image_dataset = DatasetMetdata[image.submission_dataset_uuid]
 const image_study = image_dataset.submitted_in_study
 const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
+const vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
 
 function format_physical_dimensions(img_rep) {
     const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
@@ -98,7 +99,7 @@ function pixel_dimensions(value, text) {
                 ))}
             </div>
             <div>
-                <iframe style="width: 100%; height: 500px" name="vizarr" src={interactive_image.file_uri[0]}></iframe>
+                <iframe style="width: 100%; height: 500px" name="vizarr" src={vizarr_iframe_source}></iframe>
             </div>
             <div>
                 <h3>Access images</h3>
