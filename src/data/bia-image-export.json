@@ -168,7 +168,7 @@
                 "image_format": ".ome.zarr",
                 "use_type": "INTERACTIVE_DISPLAY",
                 "file_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/a0686d17-f220-494c-81ab-db720b125b60/63b11f57-d80c-4cb0-9d63-d3c27d9b5fbf.ome.zarr"
+                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/a0686d17-f220-494c-81ab-db720b125b60/63b11f57-d80c-4cb0-9d63-d3c27d9b5fbf.ome.zarr/0"
                 ],
                 "total_size_in_bytes": 0,
                 "physical_size_x": null,
@@ -354,7 +354,7 @@
                 "image_format": ".ome.zarr",
                 "use_type": "INTERACTIVE_DISPLAY",
                 "file_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/21487f44-58c0-4969-96e5-cd895401a57a/0aef4ee5-0c2a-49c5-97fb-a45b20785efd.ome.zarr"
+                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/21487f44-58c0-4969-96e5-cd895401a57a/0aef4ee5-0c2a-49c5-97fb-a45b20785efd.ome.zarr/0"
                 ],
                 "total_size_in_bytes": 0,
                 "physical_size_x": null,
@@ -625,7 +625,7 @@
                 "image_format": ".ome.zarr",
                 "use_type": "INTERACTIVE_DISPLAY",
                 "file_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/cb9750b8-3788-4cd7-8024-ec2e20665795/ab69da43-29e5-4b13-b877-d02d6f85d9b9.ome.zarr"
+                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/cb9750b8-3788-4cd7-8024-ec2e20665795/ab69da43-29e5-4b13-b877-d02d6f85d9b9.ome.zarr/0"
                 ],
                 "total_size_in_bytes": 0,
                 "physical_size_x": null,
@@ -903,7 +903,7 @@
                 "image_format": ".ome.zarr",
                 "use_type": "INTERACTIVE_DISPLAY",
                 "file_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/3d805b93-7b68-4777-9495-97e705588041/95ce463c-9a44-4118-9657-4dbe33f87efd.ome.zarr"
+                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/3d805b93-7b68-4777-9495-97e705588041/95ce463c-9a44-4118-9657-4dbe33f87efd.ome.zarr/0"
                 ],
                 "total_size_in_bytes": 0,
                 "physical_size_x": null,
@@ -1177,7 +1177,7 @@
                 "image_format": ".ome.zarr",
                 "use_type": "INTERACTIVE_DISPLAY",
                 "file_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/397427f1-dc44-45b8-a85f-f5e9471c17b9/d5013983-639d-4815-a913-ab7fc348fd10.ome.zarr"
+                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/397427f1-dc44-45b8-a85f-f5e9471c17b9/d5013983-639d-4815-a913-ab7fc348fd10.ome.zarr/0"
                 ],
                 "total_size_in_bytes": 0,
                 "physical_size_x": null,
