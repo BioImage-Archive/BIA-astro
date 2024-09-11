@@ -44552,5 +44552,362 @@
             }
         ],
         "image_annotation_component": []
+    },
+    "S-BIAD1348": {
+        "uuid": "645b6c5e-b425-4c5f-af90-9e650b936492",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1348",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0009-0000-2566-1647",
+                "display_name": "Amanzhol Kurmashev",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Bioengineering Laboratory, D-BSSE, ETH Z\u00fcrich"
+                    }
+                ],
+                "contact_email": "akurmashev@ethz.ch",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Julia A. Boos",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Bioengineering Laboratory, D-BSSE, ETH Z\u00fcrich"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Beno\u00eet-Joseph Laventie",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Biozentrum, University of Basel"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "A. Leoni Swart",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Biozentrum, University of Basel"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Rosmarie S\u00fctterlin",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Biozentrum, University of Basel"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Tina Junne",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Biozentrum, University of Basel"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Urs Jenal",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Biozentrum, University of Basel"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Andreas Hierlemann",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Bioengineering Laboratory, D-BSSE, ETH Z\u00fcrich"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            }
+        ],
+        "title": "Transwell-Based Microfluidic Platform for High-Resolution Imaging of Airway Tissues\n",
+        "release_date": "2024-09-03",
+        "description": "This dataset comprises original imaging data obtained throughout our study on the development and characterization of a transwell-based microfluidic platform for high-resolution imaging of airway tissues\n",
+        "keyword": [
+            "Pseudomonas aeruginosa",
+            "microfluidic",
+            "epithelial barriers",
+            "human airways",
+            "infections",
+            "transwell inserts"
+        ],
+        "acknowledgement": "Authors are grateful for the support of the Imaging Core Facility (IMCF) at Biozentrum, University of Basel, as well as of the Single Cell Facility (SCF)of D-BSSE, ETH Z\u00fcrich.",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [
+            {
+                "id": "51NF40_180541",
+                "funder": [
+                    {
+                        "display_name": "NCCR AntiResist",
+                        "id": null
+                    }
+                ]
+            }
+        ],
+        "funding_statement": "This work was financially supported by the Swiss National Science Foundation (SNSF) within the framework of the National Competence Center in Research \u201cAntiResist\u201d, New approaches to combat antibiotic-resistant bacteria, under contract number 51NF40_180541.",
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 23,
+                "file_type_aggregation": [
+                    ".czi",
+                    ".ims",
+                    ".jpg",
+                    ".nd2"
+                ],
+                "title_id": "Imaging of the infection of a human bronchial organoid by Pseudomonas aeruginosa",
+                "uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+                "version": 0,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "In this study, we propose a microfluidic platform for real-time high resolution image of the infection of a human bronchial organoid by Pseudomonas aeruginosa PAO1 over time. Our real-time observations of the infection process (bacterial internalization, tissue barrier breaching) is described in details in the associated publication.",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "human bronchial organoid",
+                            "image_acquisition": "Time-lapse live imaging",
+                            "specimen": "infected human bronchial organoid"
+                        }
+                    ]
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/21487f44-58c0-4969-96e5-cd895401a57a/be946376-d6d2-4a80-b54b-c9d04caae18b.png"
+                ],
+                "submitted_in_study_uuid": "645b6c5e-b425-4c5f-af90-9e650b936492",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Time-lapse live imaging",
+                        "uuid": "ddf15a35-1a2e-43e5-9ea7-e4e7cf1add00",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Lung tissues were stained with 2 \u00b5g/mL CellMask\u2122 Deep Red Plasma Membrane Stain (ThermoFisher) in the basal compartment for 24-48 hours prior infection and imaging, and imaged in the microfluidic platform described in the original publication. ",
+                        "imaging_instrument_description": "Samples were imaged using a Nikon CSU-W1 equipped with a 2x Hamamatsu ORCA-Fusion camera (sCMOS) and CFP Plan Apo Lambda 10x/0.45 or CFI Apo LWD Lambda S 40x/1.15 objective. Images were analyzed using NIS-Elements General Analysis software and Imaris Imaging Analysis software. ",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "confocal microscopy",
+                            "fluorescence microscopy",
+                            "light microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "infected human bronchial organoid",
+                        "uuid": "df625172-e068-41ab-aea1-6296556214ee",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Lung tissue infection\nP. aeruginosa was grown to stationary phase in synthetic cystic fibrosis medium (SCFM) liquid cultures at 37\u00b0C under shaking conditions. The cultures were back-diluted 1:100 in SCFM and grown to exponential phase for 3-4 hours at 37\u00b0C under shaking conditions. Bacteria were washed with and adjusted in PBS to OD600 = 1.0-0.001. Lung tissues were infected with 2\u00b5l of the adjusted suspension to the inoculum size indicated, 10^1-10^6 respectively (MOI of ~ 0.000001-1). Unless specified in the figure or legend, an inoculum size of 10^3 (MOI of ~0.001) was used. ",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "human bronchial organoid",
+                        "uuid": "2610a023-4824-46b9-b504-faebdf0f5656",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "bronchial epithelium",
+                        "experimental_variable_description": [
+                            "donor\nmucus wash\ninfection with the bacterium Pseudomonas aeruginosa PAO1, time of infection"
+                        ],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "infected human bronchial organoid",
+                        "uuid": "f86c4ee3-e576-43b7-81f0-b3622f87af81",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Normal Human Bronchial Epithelial (NHBE) cells (Lonza) were expanded and differentiated as described by StemCell Technologies (stemcell.com). In short, frozen passage-1 NHBE stocks were thawed and cultured in T75-flask using PneumaCult-Ex Plus medium (Stemcell Technologies) at 37\u00b0C in an atmosphere of 5% CO2 and 95% relative humidity. Once at 60\u201380% confluent, cells were dissociated using ACF Enzymatic Dissociation Solution (Stemcell Technologies) and seeded on 6.5\u2009mm Transwell inserts (Corning) with a 0.4 \u00b5m pore size. Cells were seeded at 3,3 x 10^4 cells/insert and cultured for 2-3 days at liquid-liquid interface in PneumaCult-Ex Plus medium till full confluency was reached. Subsequently, the apical media was removed and the basal media replaced with PneumaCult-ALI medium (Stemcell Technologies). The medium was changed every second or third day and the apical surface washed with HBSS (without Ca2+, Mg2+) once per week from age 25 onwards. The cells were cultured for a minimum of 25 days post airlift before experiments were performed."
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "21487f44-58c0-4969-96e5-cd895401a57a",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "ddf15a35-1a2e-43e5-9ea7-e4e7cf1add00"
+                        ],
+                        "submission_dataset_uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+                        "subject_uuid": "7aa76f85-83e1-4447-aa6a-c5c70bcdeeb5"
+                    },
+                    {
+                        "uuid": "cb9750b8-3788-4cd7-8024-ec2e20665795",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "ddf15a35-1a2e-43e5-9ea7-e4e7cf1add00"
+                        ],
+                        "submission_dataset_uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+                        "subject_uuid": "7aa76f85-83e1-4447-aa6a-c5c70bcdeeb5"
+                    },
+                    {
+                        "uuid": "3d805b93-7b68-4777-9495-97e705588041",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "ddf15a35-1a2e-43e5-9ea7-e4e7cf1add00"
+                        ],
+                        "submission_dataset_uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+                        "subject_uuid": "7aa76f85-83e1-4447-aa6a-c5c70bcdeeb5"
+                    },
+                    {
+                        "uuid": "397427f1-dc44-45b8-a85f-f5e9471c17b9",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "ddf15a35-1a2e-43e5-9ea7-e4e7cf1add00"
+                        ],
+                        "submission_dataset_uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+                        "subject_uuid": "7aa76f85-83e1-4447-aa6a-c5c70bcdeeb5"
+                    },
+                    {
+                        "uuid": "a0686d17-f220-494c-81ab-db720b125b60",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "ddf15a35-1a2e-43e5-9ea7-e4e7cf1add00"
+                        ],
+                        "submission_dataset_uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+                        "subject_uuid": "7aa76f85-83e1-4447-aa6a-c5c70bcdeeb5"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
     }
 }

@@ -58058,5 +58058,207 @@
             "funding_statement": "This work was supported by the U.S. National Institutes of Health (R01 GM138443) and a CPRIT Scholar award from the Cancer Prevention and Research Institute of Texas (RR170054) to DJD. ",
             "attribute": {}
         }
+    },
+    "e58f0a08-ebdf-4159-8652-d1f08e084ac8": {
+        "title_id": "Imaging of the infection of a human bronchial organoid by Pseudomonas aeruginosa",
+        "uuid": "e58f0a08-ebdf-4159-8652-d1f08e084ac8",
+        "version": 0,
+        "model": {
+            "type_name": "ExperimentalImagingDataset",
+            "version": 1
+        },
+        "description": "In this study, we propose a microfluidic platform for real-time high resolution image of the infection of a human bronchial organoid by Pseudomonas aeruginosa PAO1 over time. Our real-time observations of the infection process (bacterial internalization, tissue barrier breaching) is described in details in the associated publication.",
+        "attribute": {
+            "associations": [
+                {
+                    "image_analysis": null,
+                    "image_correlation": null,
+                    "biosample": "human bronchial organoid",
+                    "image_acquisition": "Time-lapse live imaging",
+                    "specimen": "infected human bronchial organoid"
+                }
+            ]
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/testbucket-bia/S-BIAD1348/21487f44-58c0-4969-96e5-cd895401a57a/be946376-d6d2-4a80-b54b-c9d04caae18b.png"
+        ],
+        "submitted_in_study_uuid": "645b6c5e-b425-4c5f-af90-9e650b936492",
+        "submitted_in_study": {
+            "uuid": "645b6c5e-b425-4c5f-af90-9e650b936492",
+            "version": 0,
+            "model": {
+                "type_name": "Study",
+                "version": 1
+            },
+            "accession_id": "S-BIAD1348",
+            "licence": "CC0",
+            "author": [
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0009-0000-2566-1647",
+                    "display_name": "Amanzhol Kurmashev",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Bioengineering Laboratory, D-BSSE, ETH Z\u00fcrich"
+                        }
+                    ],
+                    "contact_email": "akurmashev@ethz.ch",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Julia A. Boos",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Bioengineering Laboratory, D-BSSE, ETH Z\u00fcrich"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Beno\u00eet-Joseph Laventie",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Biozentrum, University of Basel"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "A. Leoni Swart",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Biozentrum, University of Basel"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Rosmarie S\u00fctterlin",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Biozentrum, University of Basel"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Tina Junne",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Biozentrum, University of Basel"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Urs Jenal",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Biozentrum, University of Basel"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Andreas Hierlemann",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "Bioengineering Laboratory, D-BSSE, ETH Z\u00fcrich"
+                        }
+                    ],
+                    "contact_email": "not@supplied.com",
+                    "role": null
+                }
+            ],
+            "title": "Transwell-Based Microfluidic Platform for High-Resolution Imaging of Airway Tissues\n",
+            "release_date": "2024-09-03",
+            "description": "This dataset comprises original imaging data obtained throughout our study on the development and characterization of a transwell-based microfluidic platform for high-resolution imaging of airway tissues\n",
+            "keyword": [
+                "Pseudomonas aeruginosa",
+                "microfluidic",
+                "epithelial barriers",
+                "human airways",
+                "infections",
+                "transwell inserts"
+            ],
+            "acknowledgement": "Authors are grateful for the support of the Imaging Core Facility (IMCF) at Biozentrum, University of Basel, as well as of the Single Cell Facility (SCF)of D-BSSE, ETH Z\u00fcrich.",
+            "see_also": [],
+            "related_publication": [],
+            "grant": [
+                {
+                    "id": "51NF40_180541",
+                    "funder": [
+                        {
+                            "display_name": "NCCR AntiResist",
+                            "id": null
+                        }
+                    ]
+                }
+            ],
+            "funding_statement": "This work was financially supported by the Swiss National Science Foundation (SNSF) within the framework of the National Competence Center in Research \u201cAntiResist\u201d, New approaches to combat antibiotic-resistant bacteria, under contract number 51NF40_180541.",
+            "attribute": {}
+        }
     }
 }
