@@ -18236,5 +18236,3303 @@
             }
         ],
         "image_annotation_component": []
+    },
+    "S-BIAD1122": {
+        "uuid": "b897cec9-ab5c-4e57-b125-c94553342aa1",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1122",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "M. Isabella Prislusky",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "prislusky.2@osu.edu",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Jonathan GT Lam",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Viviana Ruiz Contreras",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Marilynn Ng",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Madeline Chamberlain",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": " Sarika Pathak-Sharma",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Madalyn Fields",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Xiaoli Zhang",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Amal O Amer",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Stephanie Seveau",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Ohio State University"
+                    }
+                ],
+                "contact_email": "stephanie.seveau@osumc.edu",
+                "role": null
+            }
+        ],
+        "title": "The Septin Cytoskeleton is Required for Plasma Membrane Repair ",
+        "release_date": "2024-06-05",
+        "description": "Source microscopy image for the main figures. ",
+        "keyword": [
+            "Septin",
+            "plasma membrane repair"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 164,
+                "file_type_aggregation": [
+                    ".tif",
+                    ".txt"
+                ],
+                "title_id": "All images ",
+                "uuid": "28fbaf55-ad7d-4ebb-a04e-869b80fa76ea",
+                "version": 6,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "All images in the main figures ",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "All Biosamples",
+                            "image_acquisition": "Image Acquisition ",
+                            "specimen": "All Specimen "
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "2d856d25-b0bf-434e-8c79-206d789806c6"
+                    ],
+                    "subject_uuid": "0c0074e3-45f5-4fad-af78-69d005623a7a",
+                    "biosample_uuid": "[UUID('1d6d2ef6-6641-4c2f-91e8-03016c51a86e')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1122/cff6ef6d-6fe4-49ff-ac80-f64cefe70fed/cd8258b9-3933-47c4-a208-227ba7a1d0b8.png"
+                ],
+                "submitted_in_study_uuid": "b897cec9-ab5c-4e57-b125-c94553342aa1",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Image Acquisition ",
+                        "uuid": "2d856d25-b0bf-434e-8c79-206d789806c6",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "See methods section ",
+                        "imaging_instrument_description": "See methods section",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "fluorescence microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "All Specimen ",
+                        "uuid": "7ea7be6a-2145-48c1-a130-0ea5bfc190bf",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "See methods section",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "All Biosamples",
+                        "uuid": "1d6d2ef6-6641-4c2f-91e8-03016c51a86e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "HeLa Human cervical cells ",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "All Specimen ",
+                        "uuid": "8658a5c0-9977-4d9d-b2bf-0ae96f0f624e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "c300cc19-79f6-4efc-b4b3-9bd9401751af",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Figure #": "3B",
+                            "Image Notes ": "See Fig3-Image Notes file for more details"
+                        },
+                        "acquisition_process_uuid": [
+                            "2d856d25-b0bf-434e-8c79-206d789806c6"
+                        ],
+                        "submission_dataset_uuid": "28fbaf55-ad7d-4ebb-a04e-869b80fa76ea",
+                        "subject_uuid": "0c0074e3-45f5-4fad-af78-69d005623a7a"
+                    },
+                    {
+                        "uuid": "3fe9911d-6d03-46bf-96bc-c8be8226c1f8",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Figure #": "7A",
+                            "Image Notes ": "See Fig7-Image Notes file for more details"
+                        },
+                        "acquisition_process_uuid": [
+                            "2d856d25-b0bf-434e-8c79-206d789806c6"
+                        ],
+                        "submission_dataset_uuid": "28fbaf55-ad7d-4ebb-a04e-869b80fa76ea",
+                        "subject_uuid": "0c0074e3-45f5-4fad-af78-69d005623a7a"
+                    },
+                    {
+                        "uuid": "cff6ef6d-6fe4-49ff-ac80-f64cefe70fed",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Figure #": "7D",
+                            "Image Notes ": "See Fig7-Image Notes file for more details"
+                        },
+                        "acquisition_process_uuid": [
+                            "2d856d25-b0bf-434e-8c79-206d789806c6"
+                        ],
+                        "submission_dataset_uuid": "28fbaf55-ad7d-4ebb-a04e-869b80fa76ea",
+                        "subject_uuid": "0c0074e3-45f5-4fad-af78-69d005623a7a"
+                    },
+                    {
+                        "uuid": "c461cf6a-2241-4454-8a98-be35337a2139",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Figure #": "4A and A'",
+                            "Image Notes ": "See Fig4-Image Notes file for more details"
+                        },
+                        "acquisition_process_uuid": [
+                            "2d856d25-b0bf-434e-8c79-206d789806c6"
+                        ],
+                        "submission_dataset_uuid": "28fbaf55-ad7d-4ebb-a04e-869b80fa76ea",
+                        "subject_uuid": "0c0074e3-45f5-4fad-af78-69d005623a7a"
+                    },
+                    {
+                        "uuid": "0f332f7a-dbfd-4b00-bdb4-4a6e1da9e566",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Figure #": "EC2C",
+                            "Image Notes ": "See FigEV2C-Image Notes file for more details"
+                        },
+                        "acquisition_process_uuid": [
+                            "2d856d25-b0bf-434e-8c79-206d789806c6"
+                        ],
+                        "submission_dataset_uuid": "28fbaf55-ad7d-4ebb-a04e-869b80fa76ea",
+                        "subject_uuid": "0c0074e3-45f5-4fad-af78-69d005623a7a"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1130": {
+        "uuid": "ffb68344-1abd-4fba-8223-5942497816de",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1130",
+        "licence": "CC_BY_4.0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-1508-664X",
+                "display_name": "Davis Laundon",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Southampton"
+                    }
+                ],
+                "contact_email": "d.j.laundon@soton.ac.uk",
+                "role": null
+            }
+        ],
+        "title": "Quantitative microCT imaging of a whole equine placenta and its blood vessel network",
+        "release_date": "2024-04-18",
+        "description": "Whole organ microCT dataset and segmented labels of an entire pony placenta",
+        "keyword": [
+            "microCT"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 2,
+                "image_count": 2,
+                "file_type_aggregation": [
+                    ".tif"
+                ],
+                "title_id": "Whole pony placenta",
+                "uuid": "52b50425-2ebb-40f1-b29f-06513f405c0a",
+                "version": 6,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "Imaging Dataset",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Pony",
+                            "image_acquisition": "Image Acquisition",
+                            "specimen": "Specimen 1"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "f3a6c15d-7083-40d7-ae04-0eaed6d111c7"
+                    ],
+                    "subject_uuid": "b51bb315-0bb8-4abd-ba66-2f2f4eb8d0de",
+                    "biosample_uuid": "[UUID('f6558bbf-d02c-406c-9a18-9ffc7b351bfa')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1130/11412efc-528d-4cf9-932b-8e9b82565945/222acf41-0188-463e-9557-39e7e4a3ec21.png"
+                ],
+                "submitted_in_study_uuid": "ffb68344-1abd-4fba-8223-5942497816de",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Image Acquisition",
+                        "uuid": "f3a6c15d-7083-40d7-ae04-0eaed6d111c7",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Imaging was carried out at 160 kVp / 470 \u03bcA with 2 mm of aluminium being used to pre-filter the X-ray beam. The source to detector and source to object distances were set at 1519 mm and 940 mm respectively, which combined with a 3000 x 3000 dexels detector resulted in an isotropic voxel (edge) size of 86 \u03bcm. Acquisition was conducted using both horizontal and vertical field extension modes.  The horizontal field extension offsets the detector so only half the width of the sample is in field of view at any time. This allows for a sample that is wider than the detector to be imaged. This results in part (half) of the specimen being sampled during the initial 0 -180 degrees rotation, and the rest of the specimen scanned during the second 180 -360 degrees rotation, with an appropriate overlap (10-20%). The process was then repeated 3 times to cover the vertical height of the specimen, with overlaps to eliminate cone-beam beam artefacts. This gave a total scan time of approximately 1 hour 40 minutes. The collected radiographs are then combined in silico to provide the information required for the full field of horizontal view reconstruction by the diondo diControl software (v 1.9.1.62), and then the scans concatenated to provide the full vertical field of view. During the reconstruction ring artefact, bad pixel, beam hardening and truncation corrections were applied.",
+                        "imaging_instrument_description": "diondo d5 system",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "X-ray microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen 1",
+                        "uuid": "dd716929-eb8f-492b-91d9-f4484920a5d7",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Placenta is formalin fixed and stained with 10% Lugol's iodine solution",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Pony",
+                        "uuid": "f6558bbf-d02c-406c-9a18-9ffc7b351bfa",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "horse",
+                                "scientific_name": "Equus caballus",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Term delivered placenta",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen 1",
+                        "uuid": "652b414d-1bd5-4058-bd22-e488e008d34a",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "ade3d96d-126d-4fa8-aaef-ceddffbb2dbe",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Data Type": "Source image",
+                            "Modality": "microCT",
+                            "XY (um)": "172",
+                            "Z (um)": "172"
+                        },
+                        "acquisition_process_uuid": [
+                            "f3a6c15d-7083-40d7-ae04-0eaed6d111c7"
+                        ],
+                        "submission_dataset_uuid": "52b50425-2ebb-40f1-b29f-06513f405c0a",
+                        "subject_uuid": "b51bb315-0bb8-4abd-ba66-2f2f4eb8d0de"
+                    },
+                    {
+                        "uuid": "11412efc-528d-4cf9-932b-8e9b82565945",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Data Type": "Label",
+                            "Modality": "microCT",
+                            "XY (um)": "172",
+                            "Z (um)": "172"
+                        },
+                        "acquisition_process_uuid": [
+                            "f3a6c15d-7083-40d7-ae04-0eaed6d111c7"
+                        ],
+                        "submission_dataset_uuid": "52b50425-2ebb-40f1-b29f-06513f405c0a",
+                        "subject_uuid": "b51bb315-0bb8-4abd-ba66-2f2f4eb8d0de"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1133": {
+        "uuid": "92c336a3-ae92-41ad-b335-cc55241c434a",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1133",
+        "licence": "CC_BY_4.0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-5376-339X",
+                "display_name": "Nataly Hastings",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "nh564@cam.ac.uk",
+                "role": "first author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-6811-5133",
+                "display_name": "Saifur Rahman",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "msr43@cam.ac.uk",
+                "role": "investigator"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-9464-7475",
+                "display_name": "Przemyslaw A. Stempor",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "pstempor@gmail.com",
+                "role": "data analyst"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-8095-858X",
+                "display_name": "Matthew Wayland",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "mw283@cam.ac.uk",
+                "role": "software development"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-0273-1320",
+                "display_name": "Wei-Li Kuan",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "wlk21@medschl.cam.ac.uk",
+                "role": "investigator"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0001-5145-7199",
+                "display_name": "Mark Kotter",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "mrk25@medschl.cam.ac.uk",
+                "role": "principal investigator"
+            }
+        ],
+        "title": "Connexin 43 in the cortex and basal ganglia in late-stage Parkinson\u2019s disease and age-matched controls",
+        "release_date": "2024-04-30",
+        "description": "Astrocytic dysfunction has been previously described in Parkinson's, but the role of astrocytic gap junctional networks has not been explored. Connexin 43 is the major protein linking astrocytes in networks across the brain. In the present dataset, images from three cortical areas (parietal, frontal, and insular) and basal ganglia (putamen, globus pallidus, caudate, midbrain substantia nigra) were collected from 20 people with Parkinson's and 20 age-matched controls to reveal downregulation in connexin 43 punctate staining in Parkinson's. Punctate pattern was specifically affected in disease, which may indicate dysfunction in gap junctional coupling.",
+        "keyword": [
+            "Parkinson's",
+            "Connexin43",
+            "Astrocyte",
+            "Cerebral Cortex",
+            "Brain",
+            "Basal ganglia"
+        ],
+        "acknowledgement": "We would like to thank our colleagues at the Wellcome-MRC Cambridge Stem Cell Institute Core Microscopy Facility, and specifically Mr Darran Clements and Mr Louis Elfari for their support and assistance with the imaging work. We wish to thank Prof Maria Spillantini and her group, in particular Dr Mehtap Bacioglu for her invaluable support with tissue processing. We acknowledge the kind advice of Dr Antonina Kouli and Dr Annelies Quaegebeur on anatomical brain region identification. Brain tissue samples were supplied by Parkinson's UK Brain Bank at Imperial College London, funded by Parkinson's UK, a charity registered in England and Wales (258197) and in Scotland (SC037554).",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [
+            {
+                "id": "Seedcorn2020\\100084",
+                "funder": [
+                    {
+                        "display_name": "Rosetrees Trust",
+                        "id": null
+                    }
+                ]
+            }
+        ],
+        "funding_statement": "The imaging work was supported by the Addenbrooke\u2019s Charitable Trust (ACT), Ferblanc Foundation, and Rosetrees Trust.",
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 3535,
+                "file_type_aggregation": [
+                    ".jpg",
+                    ".lif"
+                ],
+                "title_id": "Study of connexin 43 staining in the human brain",
+                "uuid": "e1a10db2-26c4-477a-b4d0-669fb7ed7116",
+                "version": 10,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "Pattern of connexin 43 distribution in Parkinson's and control brains was analysed using the present dataset",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": "Analysis of connexin 43 staining in the human brain",
+                            "image_correlation": null,
+                            "biosample": "Connexin 43 puncta images in the human brain",
+                            "image_acquisition": "Imaging of connexin 43 in the human brain",
+                            "specimen": "Connexin 43 staining in human brain tissue"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "1229441d-a3bb-4da0-939e-a384d4d96944"
+                    ],
+                    "subject_uuid": "2dab53a6-fe2d-4a76-9c1c-719d470abadf",
+                    "biosample_uuid": "[UUID('014b0c9b-2ff8-49ba-b06c-7adaf2d4559d')]"
+                },
+                "analysis_method": [
+                    {
+                        "protocol_description": "Analysis of connexin 43 staining in the human brain",
+                        "features_analysed": "Gap junctional puncta containing connexin 43 protein were identified in Fiji/ImageJ using the \u201c3D object counter\u201d functionality. Thresholds were set on the raw confocal stacks to 10-100 voxels (size threshold) and 150 (intensity threshold) using a negative staining control sample (secondary antibody only) as a guide, then the same intensity and particle size thresholds were propagated to analyse all stacks. Astrocytes were identified in selected sections by their nuclear Sox9 staining."
+                    }
+                ],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1133/c0859084-d1eb-4121-b077-20e9e3367d16/4d717122-d2fe-4228-b0d7-68a39b557689.png"
+                ],
+                "submitted_in_study_uuid": "92c336a3-ae92-41ad-b335-cc55241c434a",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Imaging of connexin 43 in the human brain",
+                        "uuid": "1229441d-a3bb-4da0-939e-a384d4d96944",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Relevant anatomical structures were identified in the nuclear DAPI field, and confocal images of connexin 43 as well as DAPI were collected in the photon-counting mode to minimise batch-to-batch variability; x40 magnification was used. Patients\u2019 identities and disease status were coded, and researchers conducting the imaging were blinded to the experimental conditions. \nIn the present dataset, snapshots of maximal intensity stack projections are shown in addition to the raw files.",
+                        "imaging_instrument_description": "Leica Stellaris 8",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "confocal microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Connexin 43 staining in human brain tissue",
+                        "uuid": "cc27f695-d032-43e4-b959-e231052a6e46",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Human brain samples for imaging were supplied as PFA-fixed paraffin-embedded (FFPE) 5um-thick brain slices (three sections per patient per brain region). Sections were deparaffiised and rehydrated by incubation at 60C for 2h followed by 10min room temperature incubations in xylene x2, 100% ethanol, 96% ethanol, 70% ethanol, 50% ethanol, and PBS. Antigen retrieval was performed in the Tris-EDTA pH9 buffer (Abcam) followed by blocking and permeabilization in the buffer containing 5% donkey serum (Abcam), 5% BSA (Sigma), and 0.5% tritonX-100 (Sigma) in PBS for 1h at room temperature. Primary antibody incubation was conducted in a staining buffer containing 2% donkey serum, 2% BSA, and 0.3% tritonX-100 for 48h at 4C followed by three 1h PBS washes. Lipofuscin quenching was performed using TrueBlack (Biotium), followed by a secondary antibody incubation in a staining buffer containing 2% donkey serum and 2% BSA for 20h at 4C. Nuclei were visualised with DAPI (ThermoFisherScientific) added to the secondary antibody solution. Stained brain slices were mounted in FluoroMount-G (ThermoFisherScientific), coverslipped, and dried at room temperature overnight.\n\nPrimary antibody used for fluorescent immunostaining:\n-\tRabbit anti-connexin43 (Abcam ab11370) 1:500\n-      Mouse anti-Sox9 (Abcam ab76997) 1:250 - astrocytic nuclear staining, present in selected sections only \n\nSecondary antibody used for fluorescent staining:\n-\tAlexaFluor488 raised in donkey (Invitrogen) 1:500\n-      AlexaFluor568 raised in donkey (Invitrogen) 1:500\n\nDyes used for fluorescent staining:\n-\tDAPI (Sigma D9542) 10ug/ml",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Connexin 43 puncta images in the human brain",
+                        "uuid": "014b0c9b-2ff8-49ba-b06c-7adaf2d4559d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "FFPE 5um sections of the human brain from:\nFrontal cortex (Front cort); Parietal cortex (Par cort); Insular cortex (Ins cort); Putamen; Caudate; Globus pallidus internal / external (Globus p, int / ext); Midbrain substantia nigra (Mid SN).",
+                        "experimental_variable_description": [
+                            "Parkinson's disease (P1-20) vs Control age-matched (C1-20)"
+                        ],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Connexin 43 staining in human brain tissue",
+                        "uuid": "3f0b66a6-6743-40b4-a07f-6577b9422d9f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "0a3b5b06-0061-4e32-a75d-899de41bf20a",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Parkinson's or Control": "Control",
+                            "Brain region": "Globus pallidus - internal",
+                            "Composite / Signle channel / Raw file": "Single channel - DAPI",
+                            "Scale bar?": "No"
+                        },
+                        "acquisition_process_uuid": [
+                            "1229441d-a3bb-4da0-939e-a384d4d96944"
+                        ],
+                        "submission_dataset_uuid": "e1a10db2-26c4-477a-b4d0-669fb7ed7116",
+                        "subject_uuid": "2dab53a6-fe2d-4a76-9c1c-719d470abadf"
+                    },
+                    {
+                        "uuid": "b7f5aba5-6ed7-4414-90c3-61ec9f53bd38",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Parkinson's or Control": "Parkinson's",
+                            "Brain region": "Insular cortex",
+                            "Composite / Signle channel / Raw file": "Composite - connexin43 + DAPI",
+                            "Scale bar?": "No"
+                        },
+                        "acquisition_process_uuid": [
+                            "1229441d-a3bb-4da0-939e-a384d4d96944"
+                        ],
+                        "submission_dataset_uuid": "e1a10db2-26c4-477a-b4d0-669fb7ed7116",
+                        "subject_uuid": "2dab53a6-fe2d-4a76-9c1c-719d470abadf"
+                    },
+                    {
+                        "uuid": "c0859084-d1eb-4121-b077-20e9e3367d16",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Parkinson's or Control": "Parkinson's",
+                            "Brain region": "Putamen",
+                            "Composite / Signle channel / Raw file": "Raw file",
+                            "Scale bar?": "No"
+                        },
+                        "acquisition_process_uuid": [
+                            "1229441d-a3bb-4da0-939e-a384d4d96944"
+                        ],
+                        "submission_dataset_uuid": "e1a10db2-26c4-477a-b4d0-669fb7ed7116",
+                        "subject_uuid": "2dab53a6-fe2d-4a76-9c1c-719d470abadf"
+                    },
+                    {
+                        "uuid": "8e797873-386c-41cf-a5cb-537b20c6709e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Parkinson's or Control": "Control",
+                            "Brain region": "Midbrain substantia nigra",
+                            "Composite / Signle channel / Raw file": "Composite - connexin43 + DAPI",
+                            "Scale bar?": "Yes"
+                        },
+                        "acquisition_process_uuid": [
+                            "1229441d-a3bb-4da0-939e-a384d4d96944"
+                        ],
+                        "submission_dataset_uuid": "e1a10db2-26c4-477a-b4d0-669fb7ed7116",
+                        "subject_uuid": "2dab53a6-fe2d-4a76-9c1c-719d470abadf"
+                    },
+                    {
+                        "uuid": "b4c8e364-838a-4c99-896f-9b670c758b90",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Parkinson's or Control": "Parkinson's",
+                            "Brain region": "Caudate",
+                            "Composite / Signle channel / Raw file": "Single channel - DAPI",
+                            "Scale bar?": "No"
+                        },
+                        "acquisition_process_uuid": [
+                            "1229441d-a3bb-4da0-939e-a384d4d96944"
+                        ],
+                        "submission_dataset_uuid": "e1a10db2-26c4-477a-b4d0-669fb7ed7116",
+                        "subject_uuid": "2dab53a6-fe2d-4a76-9c1c-719d470abadf"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1152": {
+        "uuid": "9c0a177f-6f75-42b9-82f9-432692b0dc05",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1152",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Dylan Fingerman",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Washington University"
+                    }
+                ],
+                "contact_email": "d.f.fingerman@wustl.edu",
+                "role": "first author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Abby Green",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Washington University"
+                    }
+                ],
+                "contact_email": "abby.green@wustl.edu",
+                "role": "corresponding author"
+            }
+        ],
+        "title": "The SMC5/6 complex prevents genotoxicity upon APOBEC3A-mediated replication stress",
+        "release_date": "2024-04-29",
+        "description": "Immunofluorescence images for the aforementioned study. ",
+        "keyword": [
+            "SMC5",
+            "APOBEC3A"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 594,
+                "file_type_aggregation": [
+                    ".csv",
+                    ".jpg",
+                    ".tif",
+                    ".tsv",
+                    ".xlsx"
+                ],
+                "title_id": "Figure 5A",
+                "uuid": "a56380c3-7b87-42be-986b-c051ac9b9287",
+                "version": 9,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "Raw images for figure 5",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "K562-A3A",
+                            "image_acquisition": "K562-A3A",
+                            "specimen": "K562-A3A"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "3d54e018-7bf9-434b-91e3-84d81189d70e"
+                    ],
+                    "subject_uuid": "b00d98b4-aa6a-463f-856f-91ce2b3e2c84",
+                    "biosample_uuid": "[UUID('f6ff6761-28f7-40f7-bfd3-5b45d2329fab')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1152/caedddd0-1681-4bba-9c7c-cd9918f508f4/d3460aa6-d4b9-499a-bd79-03ecef507858.png"
+                ],
+                "submitted_in_study_uuid": "9c0a177f-6f75-42b9-82f9-432692b0dc05",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "K562-A3A",
+                        "uuid": "3d54e018-7bf9-434b-91e3-84d81189d70e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "741 mg/mL propidium iodide (Biotum).Data were collected using an Accuri C6 Flow Cytometerand analyzed by FlowJo software. Immunoblotting and Immunofluorescence. For immunofluorescence, cells were cultured on cover slips. Following treatment, cells were pre-extracted using 0.5% Triton-X in PBS for 15 minutes on ice to visualize chromatin-bound proteins (i.e. RPA). All other immunofluorescence experiments proceeded as followed: cells were fixed with 4% paraformaldehyde for 15 minutes at room temperature(RT), permeabilized with 0.5% Triton-X for 10 minutes at RT, and blocked with 5% BS for 1 hour at RT. Primary antibodies were diluted in 5% BSA and incubated with slides for1 hour to overnight. Secondary antibodies used were anti-mouse or rabbit Alexa Fluor488 and 568 (BD Biosciences). Nuclei were visualized by 4.6-diamidino-2-phenylindole (DAPI, ThermoFisher). Images were acquired using an inverted fluorescent microscope with attached camera(Leica)and processed using ImageJ. Protein foci and cell staining were analyzed in a blinded fashion",
+                        "imaging_instrument_description": "LEICA",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "741 mg/mL propidium iodide (Biotum).Data were collected using an Accuri C6 Flow Cytometerand analyzed by FlowJo software. Immunoblotting and Immunofluorescence. For immunofluorescence, cells were cultured on cover slips. Following treatment, cells were pre-extracted using 0.5% Triton-X in PBS for 15 minutes on ice to visualize chromatin-bound proteins (i.e. RPA). All other immunofluorescence experiments proceeded as followed: cells were fixed with 4% paraformaldehyde for 15 minutes at room temperature(RT), permeabilized with 0.5% Triton-X for 10 minutes at RT, and blocked with 5% BS for 1 hour at RT. Primary antibodies were diluted in 5% BSA and incubated with slides for1 hour to overnight. Secondary antibodies used were anti-mouse or rabbit Alexa Fluor488 and 568 (BD Biosciences). Nuclei were visualized by 4.6-diamidino-2-phenylindole (DAPI, ThermoFisher). Images were acquired using aninverted fluorescent microscope with attached camera(Leica)and processed using ImageJ. Protein foci and cell staining were analyzed in a blinded fashion"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "K562-A3A",
+                        "uuid": "e021f441-b149-4338-9fcd-f0865f877f58",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Immunofluorescence ",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "K562-A3A",
+                        "uuid": "f6ff6761-28f7-40f7-bfd3-5b45d2329fab",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Cultured Cells",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "K562-A3A",
+                        "uuid": "496c12f9-9b08-4b3f-81d1-ab58c6756c59",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "72610cb8-0afc-4dec-95ec-fce63960052f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "3d54e018-7bf9-434b-91e3-84d81189d70e"
+                        ],
+                        "submission_dataset_uuid": "a56380c3-7b87-42be-986b-c051ac9b9287",
+                        "subject_uuid": "b00d98b4-aa6a-463f-856f-91ce2b3e2c84"
+                    },
+                    {
+                        "uuid": "90c55275-14e3-4645-8fb8-88230d5e53b0",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "3d54e018-7bf9-434b-91e3-84d81189d70e"
+                        ],
+                        "submission_dataset_uuid": "a56380c3-7b87-42be-986b-c051ac9b9287",
+                        "subject_uuid": "b00d98b4-aa6a-463f-856f-91ce2b3e2c84"
+                    },
+                    {
+                        "uuid": "352b86d6-7836-4351-a4f2-432dd34dd743",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "3d54e018-7bf9-434b-91e3-84d81189d70e"
+                        ],
+                        "submission_dataset_uuid": "a56380c3-7b87-42be-986b-c051ac9b9287",
+                        "subject_uuid": "b00d98b4-aa6a-463f-856f-91ce2b3e2c84"
+                    },
+                    {
+                        "uuid": "bf9bff01-303d-4a18-8c7f-ac338d247efc",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "3d54e018-7bf9-434b-91e3-84d81189d70e"
+                        ],
+                        "submission_dataset_uuid": "a56380c3-7b87-42be-986b-c051ac9b9287",
+                        "subject_uuid": "b00d98b4-aa6a-463f-856f-91ce2b3e2c84"
+                    },
+                    {
+                        "uuid": "caedddd0-1681-4bba-9c7c-cd9918f508f4",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "3d54e018-7bf9-434b-91e3-84d81189d70e"
+                        ],
+                        "submission_dataset_uuid": "a56380c3-7b87-42be-986b-c051ac9b9287",
+                        "subject_uuid": "b00d98b4-aa6a-463f-856f-91ce2b3e2c84"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1155": {
+        "uuid": "8d867138-55ff-4888-9f9c-8f81c99c5a43",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1155",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Brenda Andrews",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "brenda.andrews@utoronto.ca",
+                "role": "corresponding author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Anastasia Razdaibiedina",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "anastasia.razdaibiedina@mail.utoronto.ca",
+                "role": "first author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Alexander Brechalov",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "brainchalov@gmail.com",
+                "role": "author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Helena Friesen",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "helena.friesen@utoronto.ca",
+                "role": "author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Mojca Mattiazzi Usaj",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/05g13zd79",
+                        "address": null,
+                        "website": null,
+                        "display_name": "Toronto Metropolitan University"
+                    }
+                ],
+                "contact_email": "mattiazzi@torontomu.ca",
+                "role": "author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Myra Paz David Masinas",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "myra.masinas@utoronto.ca",
+                "role": "author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Harsha Garadi Suresh",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "harsha.garadisuresh@utoronto.ca",
+                "role": "author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Kyle Wang",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "kyle.wang@mail.utoronto.ca",
+                "role": "author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Charles Boone",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "charlie.boone@utoronto.ca",
+                "role": "corresponding author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Jimmy Ba",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/03dbr7087",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Toronto"
+                    }
+                ],
+                "contact_email": "jimmy.lei.ba@gmail.com",
+                "role": "corresponding author"
+            }
+        ],
+        "title": "PIFiA: self-supervised approach for protein functional annotation from single-cell imaging data",
+        "release_date": "2024-05-02",
+        "description": "Wild type yeast cells expressing the ORF-GFP collection",
+        "keyword": [
+            "self-supervised",
+            "machine learning",
+            "single-cell",
+            "imaging",
+            "protein"
+        ],
+        "acknowledgement": "Harsha Garadi Suresh",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [
+            {
+                "id": "PJT-180259",
+                "funder": [
+                    {
+                        "display_name": "Canadian Institutes of Health Research",
+                        "id": null
+                    }
+                ]
+            }
+        ],
+        "funding_statement": "This work was supported by grants from the National Institutes of Health (R01HG005853 to BA and CB), and the Canadian Institutes of Health Research (PJT-180259 to BA). Equipment for automated image acquisition and analysis was purchased using funds from the Canadian Foundation for Innovation and the Ontario Research Fund. ",
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 110590,
+                "file_type_aggregation": [
+                    ".tiff"
+                ],
+                "title_id": "S. cerevisiae ORF-GFP",
+                "uuid": "f11d598a-76a0-4546-b557-2419c42d91a9",
+                "version": 10,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "Wild type yeast ORF-GFP collection",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "S. cerevisiae biosample",
+                            "image_acquisition": "S. cerevisiae microscopy images",
+                            "specimen": "S. cerevisiae cells"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "cf2478ab-19c0-4705-b8d0-d6a19932e32b"
+                    ],
+                    "subject_uuid": "e8fb166f-8bda-4059-87e2-0cb178f462a3",
+                    "biosample_uuid": "[UUID('1320620c-dbaf-4661-aa65-51287ad521f2')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1155/b2554101-ff95-40a6-aa3c-f64cd27f5967/9b3708d1-e053-4e60-a128-717647bb1fd2.png"
+                ],
+                "submitted_in_study_uuid": "8d867138-55ff-4888-9f9c-8f81c99c5a43",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "S. cerevisiae microscopy images",
+                        "uuid": "cf2478ab-19c0-4705-b8d0-d6a19932e32b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Micrographs were obtained on an Opera Phenix (PerkinElmer) automated spinning disc confocal microscope. All imaging was done with a 63\u00d7 water immersion objective. GFP was excited using a 488\u2009nm laser and emission collected through a 520/35\u2009nm filter. tdTomato was excited using a 561\u2009nm laser, and emission collected through a 600/40\u2009nm filter. E2Crimson was excited using a 640\u2009nm laser, and emission collected through a 690/50\u2009nm filter.",
+                        "imaging_instrument_description": "Opera Phenix (PerkinElmer)",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "fluorescence microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "S. cerevisiae cells",
+                        "uuid": "3c8636bc-5a58-4db5-b50b-09742690ad7b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Cells were transferred to 384-well PerkinElmer CellCarrier Ultra imaging plates and centrifuged for 1\u2009min at 500\u2009g before imaging. Micrographs were obtained on an Opera Phenix (PerkinElmer) automated spinning disc confocal microscope. All imaging was done with a 63\u00d7 water immersion objective. GFP was excited using a 488\u2009nm laser and emission collected through a 520/35\u2009nm filter. tdTomato was excited using a 561\u2009nm laser, and emission collected through a 600/40\u2009nm filter. E2Crimson was excited using a 640\u2009nm laser, and emission collected through a 690/50\u2009nm filter.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "S. cerevisiae biosample",
+                        "uuid": "1320620c-dbaf-4661-aa65-51287ad521f2",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "brewer's yeast",
+                                "scientific_name": "Saccharomyces cerevisiae",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "S. cerevisiae",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "S. cerevisiae cells",
+                        "uuid": "7646c89b-a37e-4603-85d6-fcea3760f29b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Briefly, haploid wild-type MATa strains expressing fluorescent protein fusions from SGA final selection plates were grown at 30\u2009\u00b0C in low fluorescence synthetic minimal medium with Geneticin (200\u2009\u03bcg/mL) and Noursoethricin (100\u2009\u03bcg/ml)."
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "bd3544bc-6e4b-4e23-867e-3b2790f1913a",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Replicate": "2",
+                            "Plate": "10",
+                            "Row": "11",
+                            "Column": "18",
+                            "Field": "4",
+                            "Channel": "2",
+                            "ORF": "YDL095W",
+                            "Gene Name": "PMT1"
+                        },
+                        "acquisition_process_uuid": [
+                            "cf2478ab-19c0-4705-b8d0-d6a19932e32b"
+                        ],
+                        "submission_dataset_uuid": "f11d598a-76a0-4546-b557-2419c42d91a9",
+                        "subject_uuid": "e8fb166f-8bda-4059-87e2-0cb178f462a3"
+                    },
+                    {
+                        "uuid": "df0bd798-be04-43ed-a8f9-1deead82933e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Replicate": "1",
+                            "Plate": "2",
+                            "Row": "3",
+                            "Column": "17",
+                            "Field": "1",
+                            "Channel": "2",
+                            "ORF": "YLR382C",
+                            "Gene Name": "NAM2"
+                        },
+                        "acquisition_process_uuid": [
+                            "cf2478ab-19c0-4705-b8d0-d6a19932e32b"
+                        ],
+                        "submission_dataset_uuid": "f11d598a-76a0-4546-b557-2419c42d91a9",
+                        "subject_uuid": "e8fb166f-8bda-4059-87e2-0cb178f462a3"
+                    },
+                    {
+                        "uuid": "27e6d807-4c34-426d-82d2-b57eab8d825c",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Replicate": "2",
+                            "Plate": "3",
+                            "Row": "6",
+                            "Column": "11",
+                            "Field": "1",
+                            "Channel": "1",
+                            "ORF": "YCR088W",
+                            "Gene Name": "ABP1"
+                        },
+                        "acquisition_process_uuid": [
+                            "cf2478ab-19c0-4705-b8d0-d6a19932e32b"
+                        ],
+                        "submission_dataset_uuid": "f11d598a-76a0-4546-b557-2419c42d91a9",
+                        "subject_uuid": "e8fb166f-8bda-4059-87e2-0cb178f462a3"
+                    },
+                    {
+                        "uuid": "1b016df5-2c50-4150-badc-37461c04fa33",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Replicate": "1",
+                            "Plate": "9",
+                            "Row": "15",
+                            "Column": "23",
+                            "Field": "3",
+                            "Channel": "1",
+                            "ORF": "YKL056C",
+                            "Gene Name": "TMA19"
+                        },
+                        "acquisition_process_uuid": [
+                            "cf2478ab-19c0-4705-b8d0-d6a19932e32b"
+                        ],
+                        "submission_dataset_uuid": "f11d598a-76a0-4546-b557-2419c42d91a9",
+                        "subject_uuid": "e8fb166f-8bda-4059-87e2-0cb178f462a3"
+                    },
+                    {
+                        "uuid": "b2554101-ff95-40a6-aa3c-f64cd27f5967",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Replicate": "1",
+                            "Plate": "9",
+                            "Row": "15",
+                            "Column": "17",
+                            "Field": "4",
+                            "Channel": "1",
+                            "ORF": "YDR155C",
+                            "Gene Name": "CPR1"
+                        },
+                        "acquisition_process_uuid": [
+                            "cf2478ab-19c0-4705-b8d0-d6a19932e32b"
+                        ],
+                        "submission_dataset_uuid": "f11d598a-76a0-4546-b557-2419c42d91a9",
+                        "subject_uuid": "e8fb166f-8bda-4059-87e2-0cb178f462a3"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1159": {
+        "uuid": "5bb92891-0de4-4633-be00-81eba4abcf4b",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1159",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-1779-9309",
+                "display_name": "D\u00e9sir\u00e9e A. Schmitz ",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Zurich"
+                    }
+                ],
+                "contact_email": "schmitz.desiree.a@gmail.com",
+                "role": "first author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0009-0004-1262-8425",
+                "display_name": "Tobias Wechsler",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Zurich"
+                    }
+                ],
+                "contact_email": "tobias.wechsler@uzh.ch",
+                "role": "data analyst"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Hongwei Bran Li",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Zurich"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": "software development"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-4136-5690",
+                "display_name": "Bjoern Menze",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Zurich"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": null
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-4084-6679",
+                "display_name": "Rolf K\u00fcmmerli",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Zurich"
+                    }
+                ],
+                "contact_email": "rolf.kuemmerli@uzh.ch",
+                "role": null
+            }
+        ],
+        "title": "A new protocol for multispecies bacterial infections in zebrafish and their monitoring through automated image analysis",
+        "release_date": "2024-05-06",
+        "description": "The zebrafish Danio rerio has become a popular model host to explore disease pathology caused by infectious agents. A main advantage is its transparency at an early age, which enables live imaging of infection dynamics. While multispecies infections are common in patients, the zebrafish model is rarely used to study them, although the model would be ideal for investigating pathogen-pathogen and pathogen-host interactions. This may be due to the absence of an established multispecies infection protocol for a defined organ and the lack of suitable image analysis pipelines for automated image processing. To address these issues, we developed a protocol for establishing and tracking single and multispecies bacterial infections in the inner ear structure (otic vesicle) of the zebrafish by imaging. Subsequently, we generated an image analysis pipeline that involved deep learning for the automated segmentation of the otic vesicle, and scripts for the quantification of pathogen frequencies through fluorescence intensity measures. We used Pseudomonas aeruginosa, Acinetobacter baumannii, and Klebsiella pneumoniae, three of the difficult-to-treat ESKAPE pathogens, to show that our infection protocol and image analysis pipeline work both for single pathogens and pairwise pathogen combinations. Thus, our protocols provide a comprehensive toolbox for studying single and multispecies infections in real-time in zebrafish.",
+        "keyword": [
+            "Danio rerio",
+            "multispecies bacterial infections",
+            "image analysis",
+            "automated segmentation"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [
+            {
+                "id": "310030_212266 ",
+                "funder": [
+                    {
+                        "display_name": "Swiss National Science Foundation",
+                        "id": null
+                    }
+                ]
+            }
+        ],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 11052,
+                "file_type_aggregation": [
+                    ".tif"
+                ],
+                "title_id": "Zebrafish bright-field and fluorescence images",
+                "uuid": "efd77b12-b2ad-44c2-a1d5-134e8a591fe3",
+                "version": 9,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "Multispecies infections within the otic vesicle of zebrafish",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Biosample 1",
+                            "image_acquisition": "Leica",
+                            "specimen": "Specimen 1"
+                        },
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Biosample 1",
+                            "image_acquisition": "Nikon",
+                            "specimen": "Specimen 1"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                        "2ff149bc-8142-48a6-9b29-725d9b1cddd6"
+                    ],
+                    "subject_uuid": "3c64cf7c-2680-4175-ae80-1d3bf1a03510",
+                    "biosample_uuid": "[UUID('cca37cfa-f59d-480d-8cb0-ccf45bed1899')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1159/e3e1a165-b699-44d6-a5b7-64c446d4f7e1/6ea389ba-bac5-42c9-9ac2-78972246b066.png"
+                ],
+                "submitted_in_study_uuid": "5bb92891-0de4-4633-be00-81eba4abcf4b",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Leica",
+                        "uuid": "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "For imaging, zebrafish were embedded in low-melting-point agarose in an 8-well Ibidi \u00b5-slide, adding water on top for proper hydration. An inverted widefield microscope, with an objective that has a long working distance, was used for imaging. Up to 4 Ibidi slides were placed into the slide holder in the widefield microscope. The brightfield and all required fluorescence channels, e.g., GFP (excitation at 475 nm & emission 520 nm), and mCherry (excitation at 555 nm & emission at 605 nm) were set up. The positions of all otic vesicles were set with a 20X objective that has a long working distance (minimum 1 mm) and all zebrafish were imaged within the brightfield and fluorescence channels.",
+                        "imaging_instrument_description": "Leica Thunder DMi8 widefield microscope with the Leica monochrome fluorescence DFC9000 GTC camera system",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "bright-field microscopy",
+                            "fluorescence microscopy"
+                        ]
+                    },
+                    {
+                        "default_open": true,
+                        "title_id": "Nikon",
+                        "uuid": "2ff149bc-8142-48a6-9b29-725d9b1cddd6",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "For imaging, zebrafish were embedded in low-melting-point agarose in an 8-well Ibidi \u00b5-slide, adding water on top for proper hydration. An inverted widefield microscope, with an objective that has a long working distance, was used for imaging. Up to 4 Ibidi slides were placed into the slide holder in the widefield microscope. The brightfield and all required fluorescence channels, e.g., GFP (excitation at 475 nm & emission 520 nm), and mCherry (excitation at 555 nm & emission at 605 nm) were set up. The positions of all otic vesicles were set with a 20X objective that has a long working distance (minimum 1 mm) and all zebrafish were imaged within the brightfield and fluorescence channels.",
+                        "imaging_instrument_description": "Nikon Eclipse Ti2-E with the camera system Orca Fusion CoaXpress\u00a0sCMOS",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "bright-field microscopy",
+                            "fluorescence microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen 1",
+                        "uuid": "cc2e8c3d-e26a-4b13-945d-b402d43cee64",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Embedding zebrafish in low-melting point agarose\n1. Heat 1.5% low-melting point agarose in 1.5 mL Eppendorf tube aliquots to 90\u00b0C in a heating block. Once the agarose has melted, reduce the heat to 42\u00b0C.\n2. To increase the number of zebrafish with fluorescently tagged bacteria in the otic vesicle, check fluorescence using any microscope with sufficient sensitivity, magnification, and fluorescence.\n3. Add approximately 9 mL of E3 medium with PTU (final PTU concentration: 0.003%) and10 drops of thawed tricaine (ethyl 3-aminobenzoate methanesulfonate salt analytical standard, 4000 mg/L) using a Pasteur pipette (LLG Labware, 3 mL, unsterile) into a small petri dish (Greiner, 60x15mm, sterile). Add this solution into the wells of a 48-well plate, filling 1-2 times the number of wells as treatments.\n4. Move the zebrafish of the first treatment into one or two wells of the 38-well plate, a maximum of five zebrafish per well. \u2192 Careful: try to add as little liquid as possible with\nthe zebrafish into each well to avoid diluting the tricaine concentration.\n5. Add 4-5 zebrafish of one treatment into an 8-well Ibidi \u03bc slide (Vitaris). \u2192 Careful: again, try to add as little liquid as possible with the zebrafish into the well to avoid diluting the tricaine concentration.\n6. Using a Pasteur pipette, add about 5 drops of the low-melting point agarose (from the 42\u00b0C in the heating block) to the zebrafish in a well. Note: the more agarose is added, the more time is for positioning the zebrafish.\n7. Using an insect pin tool, mix the agarose and E3 medium from moving the zebrafish well so that the agarose concentration is the same throughout. \u2192 Careful: do not damage the zebrafish with the insect pin.\n8. Position the zebrafish with an insect pin tool so that the injected otic vesicle (see protocol A) is on the bottom of the slide to enable the use of an inverted widefield microscope for imaging. Note: press the zebrafish onto the bottom of the well to reduce the working distance for the microscope, i.e., to improve the quality of the images.\n9. Wait approximately 5 min until the agarose has hardened, then add E3 medium very carefully on top.\n10. Repeat steps 4-9 for all zebrafish that need to be embedded for imaging.\n11. Add a positive control for each tagged bacterial species/strain, i.e., 10 \u03bcL overnight culture mixed with a drop of agarose into one or half a well.\n\nImage Acquisition:\nTitle:\nImaging instrument:\nLeica Thunder DMi8 widefield microscope with the Leica monochrome fluorescence DFC9000 GTC camera system\nNikon Eclipse Ti2-E with the camera system Orca Fusion CoaXpress sCMOS\nImage acquisition parameters:\nFor imaging, zebrafish were embedded in low-melting-point agarose in an 8-well Ibidi \u00b5-slide, adding water on top for proper hydration. An inverted widefield microscope, with an objective that has a long working distance, was used for imaging. Up to 4 Ibidi slides were placed into the slide holder in the widefield microscope. The brightfield and all required fluorescence channels, e.g., GFP (excitation at 475 nm & emission 520 nm), and mCherry (excitation at 555 nm & emission at 605 nm) were set up. The positions of all otic vesicles were set with a 20X objective that has a long working distance (minimum 1 mm) and all zebrafish were imaged within the brightfield and fluorescence channels.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Biosample 1",
+                        "uuid": "cca37cfa-f59d-480d-8cb0-ccf45bed1899",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "zebrafish",
+                                "scientific_name": "Danio rerio",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Zebrafish otic vesicle",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen 1",
+                        "uuid": "7436fab8-5ec0-49ad-a32d-fe310f8507ee",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "6e6d14ed-41f6-4b39-b975-eed3352a8ec7",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "is_training_data": "No",
+                            "species1": "A (GFP)",
+                            "species2": "K (mCherry)",
+                            "slice": "13",
+                            "microscope": "NIKON",
+                            "Channel": "brightfield"
+                        },
+                        "acquisition_process_uuid": [
+                            "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                            "2ff149bc-8142-48a6-9b29-725d9b1cddd6"
+                        ],
+                        "submission_dataset_uuid": "efd77b12-b2ad-44c2-a1d5-134e8a591fe3",
+                        "subject_uuid": "3c64cf7c-2680-4175-ae80-1d3bf1a03510"
+                    },
+                    {
+                        "uuid": "b6a509b5-0bd1-4325-89dc-1dbc95904b81",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "is_training_data": "No",
+                            "species1": "A (GFP)",
+                            "species2": "K (mCherry)",
+                            "slice": "6",
+                            "microscope": "NIKON",
+                            "Channel": "GFP"
+                        },
+                        "acquisition_process_uuid": [
+                            "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                            "2ff149bc-8142-48a6-9b29-725d9b1cddd6"
+                        ],
+                        "submission_dataset_uuid": "efd77b12-b2ad-44c2-a1d5-134e8a591fe3",
+                        "subject_uuid": "3c64cf7c-2680-4175-ae80-1d3bf1a03510"
+                    },
+                    {
+                        "uuid": "eafecb9d-80f1-4c8f-9cf1-afaf6db55b7e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "is_training_data": "No",
+                            "species1": "A (GFP)",
+                            "species2": "K (mCherry)",
+                            "slice": "12",
+                            "microscope": "NIKON",
+                            "Channel": "GFP"
+                        },
+                        "acquisition_process_uuid": [
+                            "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                            "2ff149bc-8142-48a6-9b29-725d9b1cddd6"
+                        ],
+                        "submission_dataset_uuid": "efd77b12-b2ad-44c2-a1d5-134e8a591fe3",
+                        "subject_uuid": "3c64cf7c-2680-4175-ae80-1d3bf1a03510"
+                    },
+                    {
+                        "uuid": "028be3b2-e77b-4f70-90eb-966deb7b09fb",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "is_training_data": "No",
+                            "species1": "A (GFP)",
+                            "species2": "K (mCherry)",
+                            "slice": "3",
+                            "microscope": "NIKON",
+                            "Channel": "mCherry"
+                        },
+                        "acquisition_process_uuid": [
+                            "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                            "2ff149bc-8142-48a6-9b29-725d9b1cddd6"
+                        ],
+                        "submission_dataset_uuid": "efd77b12-b2ad-44c2-a1d5-134e8a591fe3",
+                        "subject_uuid": "3c64cf7c-2680-4175-ae80-1d3bf1a03510"
+                    },
+                    {
+                        "uuid": "e3e1a165-b699-44d6-a5b7-64c446d4f7e1",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "is_training_data": "No",
+                            "species1": "A (GFP)",
+                            "species2": "K (mCherry)",
+                            "slice": "4",
+                            "microscope": "NIKON",
+                            "Channel": "mCherry"
+                        },
+                        "acquisition_process_uuid": [
+                            "8d4d67f3-5260-4563-887a-39ad67a2282a",
+                            "2ff149bc-8142-48a6-9b29-725d9b1cddd6"
+                        ],
+                        "submission_dataset_uuid": "efd77b12-b2ad-44c2-a1d5-134e8a591fe3",
+                        "subject_uuid": "3c64cf7c-2680-4175-ae80-1d3bf1a03510"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": [
+            {
+                "file_count": 0,
+                "image_count": 240,
+                "file_type_aggregation": [
+                    ".tif"
+                ],
+                "title_id": "Manual segmentation",
+                "uuid": "32d98f0d-f29c-470d-a575-8a5086fc2191",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageAnnotationDataset",
+                    "version": 1
+                },
+                "description": null,
+                "attribute": {},
+                "example_image_uri": [],
+                "submitted_in_study_uuid": "5bb92891-0de4-4633-be00-81eba4abcf4b",
+                "annotation_method": [],
+                "image": []
+            }
+        ]
+    },
+    "S-BIAD1162": {
+        "uuid": "f34a6cf0-fb29-4288-b734-7ba61650185d",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1162",
+        "licence": "CC_BY_4.0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Elizabeth Lieschke",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "The Francis Crick Institute"
+                    }
+                ],
+                "contact_email": "liesche@crick.ac.uk",
+                "role": "experiment performer"
+            }
+        ],
+        "title": "Mouse models to investigate in situ cell fate decisions induced by TP53 and other factors",
+        "release_date": "2024-06-30",
+        "description": "Imaging data set from p21-IRES-GFP and Puma-tdTomato mice associated with the manuscript EMBOJ-2023-114787\n\nInvestigating how transcription factors control complex cellular processes requires tools that enable responses to be visualised at the single-cell level and their fate to be followed over time. For example, the tumour suppressor TP53/TRP53 can initiate diverse cellular responses by transcriptional activation of its target genes: Puma to induce apoptotic cell death and p21 to induce cell cycle arrest/cell senescence. However, it is not known how these processes are regulated and initiated in different cell types. To be able to examine this, we developed triple-FLAG TRP53 knock-in mice for TRP53 pull-down and two TRP53 response reporter mice, knocking tdTomato or GFP into the Puma/Bbc3 or p21 gene loci, respectively. By crossing the reporter mice onto a TRP53-deficient background, we could show that these reporters reliably inform on TRP53-dependent and TRP53-independent initiation of the apoptotic as well as the cell cycle arrest/senescence programs in vitro and even in vivo. ",
+        "keyword": [
+            "cdkn1a/p21",
+            "p53/TRP53/TP53",
+            "Puma/BBC3",
+            "fluorescent reporter"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 93,
+                "file_type_aggregation": [
+                    "",
+                    ".tif",
+                    ".xlsx",
+                    ".zip"
+                ],
+                "title_id": "Manuscript ",
+                "uuid": "af14d975-b0a6-46cb-80c0-4e7842a435d1",
+                "version": 6,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "source data for manuscript",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Biosample",
+                            "image_acquisition": "Imaging",
+                            "specimen": "Specimen"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "d8702485-b837-4491-9cc1-7a82ed82760b"
+                    ],
+                    "subject_uuid": "504f2675-6b68-4196-8b82-a5c7d873ea6f",
+                    "biosample_uuid": "[UUID('19fc0be0-463c-4391-819e-d22293b72dc5')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1162/c9e557e8-c2fa-41b1-b98f-614cc937a396/01df6c95-3f66-4e44-9359-9b1281d630c2.png"
+                ],
+                "submitted_in_study_uuid": "f34a6cf0-fb29-4288-b734-7ba61650185d",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Imaging",
+                        "uuid": "d8702485-b837-4491-9cc1-7a82ed82760b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "See methods of manuscript",
+                        "imaging_instrument_description": "FVMPE-RS two-photon upright microscope",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "multi-photon microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen",
+                        "uuid": "4fc76956-2ccb-495a-aaa3-33d0a720718b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "See methods of manuscript",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Biosample",
+                        "uuid": "19fc0be0-463c-4391-819e-d22293b72dc5",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "mouse",
+                                "scientific_name": "Mus musculus",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Calvarium, or organs",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen",
+                        "uuid": "2f9533ef-4e61-4d98-a67e-280dfbc764dd",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "09d0acd3-464d-4ce9-8256-842079bdda30",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "d8702485-b837-4491-9cc1-7a82ed82760b"
+                        ],
+                        "submission_dataset_uuid": "af14d975-b0a6-46cb-80c0-4e7842a435d1",
+                        "subject_uuid": "504f2675-6b68-4196-8b82-a5c7d873ea6f"
+                    },
+                    {
+                        "uuid": "06ad326d-49b8-4784-b4ad-158b60f7575c",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "d8702485-b837-4491-9cc1-7a82ed82760b"
+                        ],
+                        "submission_dataset_uuid": "af14d975-b0a6-46cb-80c0-4e7842a435d1",
+                        "subject_uuid": "504f2675-6b68-4196-8b82-a5c7d873ea6f"
+                    },
+                    {
+                        "uuid": "1c3e557e-95b3-41d5-8047-569ea3798315",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "d8702485-b837-4491-9cc1-7a82ed82760b"
+                        ],
+                        "submission_dataset_uuid": "af14d975-b0a6-46cb-80c0-4e7842a435d1",
+                        "subject_uuid": "504f2675-6b68-4196-8b82-a5c7d873ea6f"
+                    },
+                    {
+                        "uuid": "9a85a219-162d-465b-9d2b-880f606deb80",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "d8702485-b837-4491-9cc1-7a82ed82760b"
+                        ],
+                        "submission_dataset_uuid": "af14d975-b0a6-46cb-80c0-4e7842a435d1",
+                        "subject_uuid": "504f2675-6b68-4196-8b82-a5c7d873ea6f"
+                    },
+                    {
+                        "uuid": "c9e557e8-c2fa-41b1-b98f-614cc937a396",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "d8702485-b837-4491-9cc1-7a82ed82760b"
+                        ],
+                        "submission_dataset_uuid": "af14d975-b0a6-46cb-80c0-4e7842a435d1",
+                        "subject_uuid": "504f2675-6b68-4196-8b82-a5c7d873ea6f"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1163": {
+        "uuid": "1cc1738e-8eef-4afb-8481-b28ccc2a782e",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1163",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0009-0004-4720-0402",
+                "display_name": "Xinyu Wu",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Jilin University"
+                    }
+                ],
+                "contact_email": "wuxinyu20@mails.jlu.edu.cn",
+                "role": null
+            }
+        ],
+        "title": "The RhoB p.S73F mutation leads to cerebral palsy through dysregulation of lipid homeostasis",
+        "release_date": "2024-05-12",
+        "description": "Cerebral palsy (CP) is a prevalent neurological disorder that imposes a significant burden on children, families, and society worldwide. Recently, the RhoB p.S73F mutation was identified as a de novo mutation associated with CP. However, the mechanism by which the RhoB p.S73F mutation causes CP is currently unclear. In this study, rabbit models were generated to mimic the human RhoB p.S73F mutation using the SpG-BE4max system, and exhibited the typical symptoms of human CP, such as periventricular leukomalacia and spastic-dystonic diplegia. Further investigation revealed that the RhoB p.S73F mutation could activate ACAT1 through the LYN pathway, and the subsequently altered lipid levels may lead to neuronal and white matter damage resulting in the development of CP. This study presented the first mammalian model of genetic CP that accurately replicates RhoB p.S73F mutation in humans, provided further insights between RhoB and lipid metabolism, and novel therapeutic targets for human CP.",
+        "keyword": [
+            "Cerebral Palsy; RhoB; Rabbit model; Neuromotor Impairment; Lipid metabolism"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 164,
+                "file_type_aggregation": [
+                    ".tif",
+                    ".xlsx"
+                ],
+                "title_id": "Source Image",
+                "uuid": "f2f11e24-df0a-4a17-80e5-aa4358f426c7",
+                "version": 8,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "Source Image",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "The RhoB p.S73F mutation leads to cerebral palsy through dysregulation of lipid homeostasis",
+                            "image_acquisition": "Image acquisition",
+                            "specimen": "Specimen"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "2065cad1-4540-423a-8e81-200693522997"
+                    ],
+                    "subject_uuid": "2034dfaf-be47-466a-b267-26664a887e27",
+                    "biosample_uuid": "[UUID('eb51ae09-fd65-4845-a2a0-9fc28f26cc54')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1163/08a8424d-381d-4b02-b9f4-dcf629c34283/b6b8065b-8cba-42c2-b0fb-c748785a53ee.png"
+                ],
+                "submitted_in_study_uuid": "1cc1738e-8eef-4afb-8481-b28ccc2a782e",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Image acquisition",
+                        "uuid": "2065cad1-4540-423a-8e81-200693522997",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Three randomly selected fields of view imaged at 200\u00d7 magnification within the region of interest of each brain section on anatomically defined coronal sections were quantitatively analysed by ImageJ software (ImageJ 1.5, NIH, USA) by a blind observer. ",
+                        "imaging_instrument_description": "Sections were imaged using an Olympus IX73 inverted microscope (Olympus, Tokyo, Japan) and Olympus cellSens software (cellSens Standard 1.9). ",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "fluorescence microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen",
+                        "uuid": "c3ed67f5-639d-4ef1-89b0-153726377f72",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Nerve tissue, including brain and spinal cord, was collected from WT and RhoBS73F/S73F rabbits. The tissues were fixed, dehydrated, embedded, and 5 \u03bcm paraffin sections were cut from corresponding sections of each nerve region selected for subsequent histological examination.\nFor hematoxylin and eosin (HE) stain, paraffin sections were stained with hematoxylin and eosin (Solarbio, G1120) and examined by microscopy.\nFor luxol fast blue (LFB) myelin stain stain, paraffin sections were stained with LFB staining solution (Servicebio, G1044) and examined by microscopy.\nFor immunohistochemical (IHC) stain, paraffin sections were stained with SP Kit (Solarbio, SP0041) with appropriate primary antibodies and examined by microscopy.\nFor immunofluorescence (IF) stain, paraffin sections were deparaffinized and rehydrated, and antigen retrieval was performed using pH 6.0 citrate buffer (Servicebio, G1202). Tissue sections are incubated in 10% goat serum blocking solution, then incubated overnight at 4\u00b0C with primary antibodies, followed by 1 hour of incubation at room temperature with appropriate fluorescently labeled secondary antibodies. Sections were then rinsed, mounted and cover slipped with antifade mounting medium containing DAPI (Beyotime, P0131).",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "The RhoB p.S73F mutation leads to cerebral palsy through dysregulation of lipid homeostasis",
+                        "uuid": "eb51ae09-fd65-4845-a2a0-9fc28f26cc54",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "rabbit",
+                                "scientific_name": "Oryctolagus cuniculus",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Rabbit brain tissue",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen",
+                        "uuid": "ef39ed4f-0504-45ad-8cdc-46e20993a130",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "Rabbits were kept on a 12-hour light and dark cycle, with lights turning on at 7 am. Food and water were provided ad libitum. The Institutional Animal Care and Use Committee of Jilin University, China provided ethical approval for this research (SY202301001)."
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "0322ec09-ffa4-40c4-86bf-81fcfb10a582",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "2065cad1-4540-423a-8e81-200693522997"
+                        ],
+                        "submission_dataset_uuid": "f2f11e24-df0a-4a17-80e5-aa4358f426c7",
+                        "subject_uuid": "2034dfaf-be47-466a-b267-26664a887e27"
+                    },
+                    {
+                        "uuid": "e96706c8-4799-4600-b9ba-8c6c5ebb59ff",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "2065cad1-4540-423a-8e81-200693522997"
+                        ],
+                        "submission_dataset_uuid": "f2f11e24-df0a-4a17-80e5-aa4358f426c7",
+                        "subject_uuid": "2034dfaf-be47-466a-b267-26664a887e27"
+                    },
+                    {
+                        "uuid": "a77db424-4d1c-4fe5-88c8-b73d3bd96821",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "2065cad1-4540-423a-8e81-200693522997"
+                        ],
+                        "submission_dataset_uuid": "f2f11e24-df0a-4a17-80e5-aa4358f426c7",
+                        "subject_uuid": "2034dfaf-be47-466a-b267-26664a887e27"
+                    },
+                    {
+                        "uuid": "c147127a-4645-4b2f-aca7-3b0f2fe0a7be",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "2065cad1-4540-423a-8e81-200693522997"
+                        ],
+                        "submission_dataset_uuid": "f2f11e24-df0a-4a17-80e5-aa4358f426c7",
+                        "subject_uuid": "2034dfaf-be47-466a-b267-26664a887e27"
+                    },
+                    {
+                        "uuid": "08a8424d-381d-4b02-b9f4-dcf629c34283",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "2065cad1-4540-423a-8e81-200693522997"
+                        ],
+                        "submission_dataset_uuid": "f2f11e24-df0a-4a17-80e5-aa4358f426c7",
+                        "subject_uuid": "2034dfaf-be47-466a-b267-26664a887e27"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1169": {
+        "uuid": "76053cbe-0350-4ce4-a24d-46e7d68671d1",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1169",
+        "licence": "CC_BY_4.0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-8177-3878",
+                "display_name": "Sophie Bromberger",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Medical University of Vienna"
+                    }
+                ],
+                "contact_email": "sophie.bromberger@muv.ac.at",
+                "role": "first author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Klaudia Schossleitner",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Medical University of Vienna"
+                    }
+                ],
+                "contact_email": "klaudia.schossleitner@muv.ac.at",
+                "role": "corresponding author"
+            }
+        ],
+        "title": "Immunofluorescence of endothelial cells treated with BRAFi",
+        "release_date": "2024-06-01",
+        "description": "Confluent dermal microvascular endothelial cells were treated with the indicated concentrations of BRAFi and stained for markers of endothelial cell-cell junction integrity.",
+        "keyword": [
+            "endothelial cells",
+            "BRAFi",
+            "Vemurafenib",
+            "VE-Cadherin"
+        ],
+        "acknowledgement": null,
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": null,
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 104,
+                "file_type_aggregation": [
+                    ".tif"
+                ],
+                "title_id": "Single-channel immunofluorescent images",
+                "uuid": "41af244b-941c-4d69-b12c-5a0568a9cd2f",
+                "version": 9,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "We provide images of single channels as well as a merged image including DAPI counterstain. Images used for Figure 5 do not include the Prox1 channel, whereas images for Supplementary Figures include all channels.",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Endothelial cell culture",
+                            "image_acquisition": "Image acquisition",
+                            "specimen": "Immunofluorescence staining"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "15514c10-74de-45f0-b32d-e7998bab14c5"
+                    ],
+                    "subject_uuid": "8854de8f-e8fe-4f19-b065-33745be04770",
+                    "biosample_uuid": "[UUID('b999a3db-1e96-4f64-96d7-09151a797a3c')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1169/aac239bd-7b9c-4b15-a7e7-08581d38a453/5ed9ec1c-01bb-4c6c-ae81-5b7e3f1a0441.png"
+                ],
+                "submitted_in_study_uuid": "76053cbe-0350-4ce4-a24d-46e7d68671d1",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Image acquisition",
+                        "uuid": "15514c10-74de-45f0-b32d-e7998bab14c5",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Cells were imaged using a confocal laser scanning microscope (LSM-980; Carl Zeiss, Jena, Germany) equipped with a Plan-Apochromat 63\u00d7/1.40 oil lens. Images of the following channels were taken: DAPI (405 nm), Claudin-5 (488 nm), F-actin (514 nm), VE-Cadherin (594 nm) and Prox1 (639 nm). Scale bars of 50 \u00b5m were added to each image.",
+                        "imaging_instrument_description": "LSM-980 (Zeiss)",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "confocal microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Immunofluorescence staining",
+                        "uuid": "607319d8-1011-45f3-8a79-f9e313172352",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "DMEC were fixed with 4% paraformaldehyde (PFA) for 15 min at RT. Following permeabilization in a solution of 20mM HEPES, 300mM sucrose, 50mM NaCl and 0,5% Triton X-100 for 5 min at \u221220\u00b0C, cells were stained with primary antibodies diluted in PBS containing 1% BSA overnight at 4\u00b0C and appropriate secondary antibodies for 1 h at RT. Nuclei were stained with DAPI (D9542, 1:1000, Sigma-Aldrich).",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Endothelial cell culture",
+                        "uuid": "b999a3db-1e96-4f64-96d7-09151a797a3c",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "primary dermal microvascular endothelial cells",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Immunofluorescence staining",
+                        "uuid": "7dc7a418-b987-4a07-8c06-88161688be0f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "DMEC were seeded on \u00b5-Slide chamber slides (ibidi) and grown to 100% confluence in Endothelial Cell Growth Medium MV (EGM-MV; C-22020, Promocell, Heidelberg, Germany) with the respective supplement mix, 15% fetal calf serum (FCS; 10500-064, Gibco, Karlsruhe, Germany), and 50 \u00b5g/ml Gentamicin (15710-049, Gibco)."
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "a56522ec-cb5f-4a0c-838a-6a754a26dc7b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Compound": "Vemurafenib",
+                            "Concentration": "10 \u00b5M",
+                            "Time": "1 h",
+                            "Plate": "1",
+                            "Well": "A3",
+                            "Channel": "DAPI",
+                            "Figure in manuscript": "S6"
+                        },
+                        "acquisition_process_uuid": [
+                            "15514c10-74de-45f0-b32d-e7998bab14c5"
+                        ],
+                        "submission_dataset_uuid": "41af244b-941c-4d69-b12c-5a0568a9cd2f",
+                        "subject_uuid": "8854de8f-e8fe-4f19-b065-33745be04770"
+                    },
+                    {
+                        "uuid": "dcb0a6e0-b6bc-49fe-9fdb-a45fb13155d4",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Compound": "PLX8394",
+                            "Concentration": "1 \u00b5M",
+                            "Time": "1 h",
+                            "Plate": "2",
+                            "Well": "B2",
+                            "Channel": "Prox1",
+                            "Figure in manuscript": "S7"
+                        },
+                        "acquisition_process_uuid": [
+                            "15514c10-74de-45f0-b32d-e7998bab14c5"
+                        ],
+                        "submission_dataset_uuid": "41af244b-941c-4d69-b12c-5a0568a9cd2f",
+                        "subject_uuid": "8854de8f-e8fe-4f19-b065-33745be04770"
+                    },
+                    {
+                        "uuid": "cc997665-f97c-4a07-b590-380ec59db654",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Compound": "Vemurafenib",
+                            "Concentration": "1 \u00b5M",
+                            "Time": "1 h",
+                            "Plate": "1",
+                            "Well": "A2",
+                            "Channel": "Merge",
+                            "Figure in manuscript": "S6"
+                        },
+                        "acquisition_process_uuid": [
+                            "15514c10-74de-45f0-b32d-e7998bab14c5"
+                        ],
+                        "submission_dataset_uuid": "41af244b-941c-4d69-b12c-5a0568a9cd2f",
+                        "subject_uuid": "8854de8f-e8fe-4f19-b065-33745be04770"
+                    },
+                    {
+                        "uuid": "3f5c489d-1445-40bf-9a86-e82d980587d8",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Compound": "Vemurafenib",
+                            "Concentration": "10 \u00b5M",
+                            "Time": "1 h",
+                            "Plate": "1",
+                            "Well": "A3",
+                            "Channel": "Prox1",
+                            "Figure in manuscript": "S6"
+                        },
+                        "acquisition_process_uuid": [
+                            "15514c10-74de-45f0-b32d-e7998bab14c5"
+                        ],
+                        "submission_dataset_uuid": "41af244b-941c-4d69-b12c-5a0568a9cd2f",
+                        "subject_uuid": "8854de8f-e8fe-4f19-b065-33745be04770"
+                    },
+                    {
+                        "uuid": "aac239bd-7b9c-4b15-a7e7-08581d38a453",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Compound": "Dabrafenib",
+                            "Concentration": "10 \u00b5M",
+                            "Time": "1 h",
+                            "Plate": "1",
+                            "Well": "B3",
+                            "Channel": "Merge",
+                            "Figure in manuscript": "5A"
+                        },
+                        "acquisition_process_uuid": [
+                            "15514c10-74de-45f0-b32d-e7998bab14c5"
+                        ],
+                        "submission_dataset_uuid": "41af244b-941c-4d69-b12c-5a0568a9cd2f",
+                        "subject_uuid": "8854de8f-e8fe-4f19-b065-33745be04770"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1175": {
+        "uuid": "f088abe6-f48f-4c4b-b7b5-d49f81689b9f",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1175",
+        "licence": "CC_BY_4.0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-2068-9856",
+                "display_name": "Olivia Tidswell",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Royal Society Te Ap\u0101rangi"
+                    }
+                ],
+                "contact_email": "oliviatidswell@gmail.com",
+                "role": "corresponding author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-0063-2297",
+                "display_name": "Michael Akam",
+                "affiliation": [
+                    {
+                        "rorid": "https://ror.org/013meh722",
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Cambridge"
+                    }
+                ],
+                "contact_email": "mea2@cam.ac.uk",
+                "role": null
+            }
+        ],
+        "title": "Expression of gap and gap-like genes during segmentation in Tribolium castaneum",
+        "release_date": "2024-05-24",
+        "description": "This dataset comprises 200 multichannel images of gap and gap-like gene expression (visualised using Hybridisation Chain Reaction fluorescent in situ hybridisation, HCR FISH) in Tribolium castaneum embryos spanning from the beginning to the end of axial segmentation. More information is available in the Readme file. ",
+        "keyword": [
+            "segmentation",
+            "gap gene",
+            "HCR",
+            "gene expression",
+            "Tribolium castaneum",
+            "insect"
+        ],
+        "acknowledgement": "The data in this dataset were generated by Olivia Tidswell with advice and supervision from Michael Akam, Matt Benton, Erik Clark, Andrew Peel, and Rahul Sharma.",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [
+            {
+                "id": "109147/Z/15/Z",
+                "funder": [
+                    {
+                        "display_name": "Wellcome Trust",
+                        "id": null
+                    }
+                ]
+            }
+        ],
+        "funding_statement": "These data were generated as part of projects supported by Wellcome Trust PhD Studentship 109147/Z/15/Z and DFG Research Fellowship BE 6732/1-1.",
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 202,
+                "file_type_aggregation": [
+                    ".docx",
+                    ".tif",
+                    ".xlsx"
+                ],
+                "title_id": "Study component 1",
+                "uuid": "5488f20a-2493-4217-9c0d-4f613d2fc15c",
+                "version": 6,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "HCR FISH against gap and gap-like genes in Tribolium castaneum embryos during axial segmentation. ",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Biosample 1",
+                            "image_acquisition": "Image acquisition 1",
+                            "specimen": "Specimen 1"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "93d0fd88-6f00-4ba9-acba-3a0b4d308f53"
+                    ],
+                    "subject_uuid": "0bfb6b52-1619-4dd6-8b07-f11457b618c1",
+                    "biosample_uuid": "[UUID('92a662b0-f61d-46dc-bb88-feee8a6a6a7d')]"
+                },
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1175/f4535300-2bfe-49d8-93e3-1e0ce5cf2396/ad1b96eb-6813-473b-9173-50cb40bf14a3.png"
+                ],
+                "submitted_in_study_uuid": "f088abe6-f48f-4c4b-b7b5-d49f81689b9f",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Image acquisition 1",
+                        "uuid": "93d0fd88-6f00-4ba9-acba-3a0b4d308f53",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "16 bit images were taken using an Olympus FV3000 confocal microscope using a UPLSAPO 20X objective (NA=0.75). The pixel and Z step size used for each imaging batch are detailed in the Excel file \u201cExperiments_and_Imaging_Settings.xlsx\u201d. ",
+                        "imaging_instrument_description": "Olympus FV3000 confocal microscope ",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "confocal microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen 1",
+                        "uuid": "c87b2099-3637-4148-9ab6-3a8263c6b221",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "See Tidswell et al. (2021) for detailed methods. \n\nTribolium castaneum embryos (8-22 hours after egg lay) were bleached, fixed for 30 minutes in formaldehyde, devitellinised and stored in methanol. \n\nHCR RNA ISH v3.0 (Choi et al., 2018) was used to label expression patterns for the gap and gap-like genes Tc-tailless (tll), Tc-hunchback (hb), Tc-Kr\u00fcppel (Kr), Tc-mille-pattes (mlpt), Tc-shavenbaby (svb), Tc-giant (gt), Tc-Knirps (kni), Tc-nubbin (nub) and Tc-castor (cas), as well as three stage and tissue markers \u2013 Tc-wingless (wg), Tc-Toll10 (toll10) and Tc-single-minded (sim). Wg is expressed at the posterior border of mature parasegments, toll10 in even-numbered immature parasegments and at the anterior border of all mature parasegments, and sim is expressed in cells of the ventral midline and can be used to demarcate ectoderm and mesoderm. The hairpins that were used to visualise each gene in each experiment are listed in the Excel file \u201cExperiments_and_Imaging_Settings.xslx\u201d.\n\nEmbryos were mounted in Prolong Gold Antifade Mountant either in glass-bottomed petri dishes (blastoderm stage) or on glass slides (dissected germ bands). \n",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Biosample 1",
+                        "uuid": "92a662b0-f61d-46dc-bb88-feee8a6a6a7d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "",
+                                "scientific_name": "Tribolium castaneum",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Tribolium castaneum embryos 8-22 hours after egg lay",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Specimen 1",
+                        "uuid": "b7532f98-91f7-4922-bbf3-28c51d2cbb21",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "ee4a51b3-5a6d-4b38-a122-50c6d79a801e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Blastoderm/Germband": "Germband"
+                        },
+                        "acquisition_process_uuid": [
+                            "93d0fd88-6f00-4ba9-acba-3a0b4d308f53"
+                        ],
+                        "submission_dataset_uuid": "5488f20a-2493-4217-9c0d-4f613d2fc15c",
+                        "subject_uuid": "0bfb6b52-1619-4dd6-8b07-f11457b618c1"
+                    },
+                    {
+                        "uuid": "eb455e16-2c7b-4a08-b054-bf059d6322dd",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Blastoderm/Germband": "Blastoderm"
+                        },
+                        "acquisition_process_uuid": [
+                            "93d0fd88-6f00-4ba9-acba-3a0b4d308f53"
+                        ],
+                        "submission_dataset_uuid": "5488f20a-2493-4217-9c0d-4f613d2fc15c",
+                        "subject_uuid": "0bfb6b52-1619-4dd6-8b07-f11457b618c1"
+                    },
+                    {
+                        "uuid": "f4535300-2bfe-49d8-93e3-1e0ce5cf2396",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Blastoderm/Germband": "Germband"
+                        },
+                        "acquisition_process_uuid": [
+                            "93d0fd88-6f00-4ba9-acba-3a0b4d308f53"
+                        ],
+                        "submission_dataset_uuid": "5488f20a-2493-4217-9c0d-4f613d2fc15c",
+                        "subject_uuid": "0bfb6b52-1619-4dd6-8b07-f11457b618c1"
+                    },
+                    {
+                        "uuid": "7a468be6-5d3c-4394-ab98-2737a547335a",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Blastoderm/Germband": "Blastoderm"
+                        },
+                        "acquisition_process_uuid": [
+                            "93d0fd88-6f00-4ba9-acba-3a0b4d308f53"
+                        ],
+                        "submission_dataset_uuid": "5488f20a-2493-4217-9c0d-4f613d2fc15c",
+                        "subject_uuid": "0bfb6b52-1619-4dd6-8b07-f11457b618c1"
+                    },
+                    {
+                        "uuid": "f52569d7-c79d-4a4a-a106-f8c398af412d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {
+                            "Blastoderm/Germband": "Germband"
+                        },
+                        "acquisition_process_uuid": [
+                            "93d0fd88-6f00-4ba9-acba-3a0b4d308f53"
+                        ],
+                        "submission_dataset_uuid": "5488f20a-2493-4217-9c0d-4f613d2fc15c",
+                        "subject_uuid": "0bfb6b52-1619-4dd6-8b07-f11457b618c1"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
+    },
+    "S-BIAD1184": {
+        "uuid": "2e085da0-b189-48a8-a523-1c7c1318a30b",
+        "version": 0,
+        "model": {
+            "type_name": "Study",
+            "version": 1
+        },
+        "accession_id": "S-BIAD1184",
+        "licence": "CC0",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-8089-5638",
+                "display_name": "Nirmala V. Balasenthilkumaran",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of California, San Diego"
+                    }
+                ],
+                "contact_email": "nvb223@ucsd.edu",
+                "role": "first author"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Jennifer C. Whitesell",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Colorado Anschutz Medical Campus"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": "experiment performer"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Laura Pyle",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "Colorado School of Public Health"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": "data analyst"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Rachel S. Friedman",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of Colorado Anschutz Medical Campus"
+                    }
+                ],
+                "contact_email": "not@supplied.com",
+                "role": "data acquisition"
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Vira Kravets",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "University of California, San Diego"
+                    }
+                ],
+                "contact_email": "vkravets@ucsd.edu",
+                "role": "corresponding author"
+            }
+        ],
+        "title": "Whole slide images of pancreatic cross-sections of NOD mice stained with antibodies: CD11c, CD113, DAPI, F4/80, glucagon, insulin and IL-1\u03b2.",
+        "release_date": "2024-05-23",
+        "description": "We provide a dataset of 11 whole-slide images of pancreatic cross-sections of non-obese diabetic (NOD) mice that were stained for CD11c (for myeloid cells), CD3 (for T-cells), DAPI (for nuclei), F4/80 (for macrophages), glucagon (for \u03b1-cells), insulin (for \u03b2-cells), and IL-1\u03b2. We performed 7 color multispectral imaging using the Akoya Biosciences Vectra Polaris instrument under 20X magnification and a pixel size of 0.5 \u03bcm/px. We also provide clinical data including the age of surgery, highest blood glucose recording, number of intact islets in the cross section, and the range of insulitis degrees (T-/\u03b2-cell count ratios - calculated for each islet).  ",
+        "keyword": [
+            "alpha-cells",
+            "beta-cells",
+            "NOD mice",
+            "type-1 diabetes",
+            "network analysis",
+            "t-cells",
+            "macrophages",
+            "myeloid cells",
+            "islet physiology"
+        ],
+        "acknowledgement": "We are grateful for constructive suggestions from Dr. Marko Gosak who provided his feedback at the early stage of this project, Kimberly Jordan and Angela Minic in the Human Immune Shared Resource, and Brittany Basta for support of our animal colony.",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": "This work was funded by Burroughs Wellcome Fund CASI award (Project 25B1756) and Human Islets Research Network subaward (HIRN, RRID:SCR_014393; UC24 DK104162) to Vira Kravets; R01-DK111733 to Rachel Friedman; and the Colorado Diabetes Research Center (P30DK116073). ",
+        "attribute": {},
+        "experimental_imaging_component": [
+            {
+                "file_count": 5,
+                "image_count": 13,
+                "file_type_aggregation": [
+                    ".pdf",
+                    ".tif",
+                    ".xlsx"
+                ],
+                "title_id": "Whole slide images",
+                "uuid": "b4a490a8-4025-4ec6-bee2-1169f9bf8788",
+                "version": 6,
+                "model": {
+                    "type_name": "ExperimentalImagingDataset",
+                    "version": 1
+                },
+                "description": "We stain 11 pancreatic cross sections of NOD mice for various markers as detailed in prior sections. We provide the whole slide images in TIF format. ",
+                "attribute": {
+                    "associations": [
+                        {
+                            "image_analysis": "Image Analysis",
+                            "image_correlation": null,
+                            "biosample": "Biosample",
+                            "image_acquisition": "Image acquisition",
+                            "specimen": "Pancreatic cross sections"
+                        }
+                    ],
+                    "acquisition_process_uuid": [
+                        "0721b6c6-c42c-443b-9dba-aa627fc9cefe"
+                    ],
+                    "subject_uuid": "bcf12584-1b44-4948-b412-ff5102b35e45",
+                    "biosample_uuid": "[UUID('0bf64cb2-a60b-43e8-8ea5-25215ced7a57')]"
+                },
+                "analysis_method": [
+                    {
+                        "protocol_description": "Image Analysis",
+                        "features_analysed": "inForm software was used to unmix the 7 color images and subtract autofluorescence."
+                    }
+                ],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1184/cb77d565-c6f3-42b5-9c7b-9cc5cbba1453/9d297686-20e5-460a-b2d3-c82ebbdf738f.png"
+                ],
+                "submitted_in_study_uuid": "2e085da0-b189-48a8-a523-1c7c1318a30b",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "title_id": "Image acquisition",
+                        "uuid": "0721b6c6-c42c-443b-9dba-aa627fc9cefe",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisition",
+                            "version": 1
+                        },
+                        "protocol_description": "Objective of 0.75, and a pixel size of 0.5 microns/pixel. ",
+                        "imaging_instrument_description": "Akoya Biosciences Vectra Polaris instrument",
+                        "fbbi_id": [],
+                        "imaging_method_name": [
+                            "Widefield fluorescent imaging"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Pancreatic cross sections",
+                        "uuid": "9cf78cdb-8526-49ff-97a7-056923bf5d24",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": "The whole pancreas was excised and fixed in formalin (VWR) for 24 hours. After fixation, samples were stored in 70% ethanol until paraffin embedding. 4-\u00b5m sections were cut. The slides were stained on the Leica Bond RX autostainer according to standard protocols provided by Leica and Akoya Biosciences.  Briefly, the slides were deparaffinized, heat treated in antigen retrieval buffer, blocked, and incubated with primary antibody, followed by horseradish peroxidase (HRP)-conjugated secondary antibody polymer (Akoya), and HRP-reactive OPAL fluorescent reagents (Akoya) that use TSA chemistry to deposit dyes on the tissue immediately surrounding each HRP molecule. To prevent further deposition of fluorescent dyes in subsequent staining steps, the slides were stripped in between each stain with heat treatment in antigen retrieval buffer (Akoya). We performed 7 color multispectral imaging using the Akoya Biosciences Vectra Polaris instrument. Six markers were utilized, including insulin (\u03b2-cells) (OPAL: 480), glucagon (\u03b1-cells) (OPAL: 620), CD11c (for myeloid cells) (OPAL: 520), CD3 (for T cells) (OPAL: 570), and F4/80 (for macrophages) (OPAL: 780). ",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "title_id": "Biosample",
+                        "uuid": "0bf64cb2-a60b-43e8-8ea5-25215ced7a57",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 1
+                        },
+                        "organism_classification": [
+                            {
+                                "common_name": "NOD) mice",
+                                "scientific_name": "Non obese diabetic",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "4 \u00b5m thick pancreatic cross sections ",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": []
+                    }
+                ],
+                "specimen_growth_protocol": [
+                    {
+                        "default_open": true,
+                        "title_id": "Pancreatic cross sections",
+                        "uuid": "8d9f8cda-641b-4730-a72c-ee97512b50c2",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenGrowthProtocol",
+                            "version": 1
+                        },
+                        "protocol_description": ""
+                    }
+                ],
+                "image": [
+                    {
+                        "uuid": "9edb9fef-5bc7-4780-987b-13c185b51791",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "0721b6c6-c42c-443b-9dba-aa627fc9cefe"
+                        ],
+                        "submission_dataset_uuid": "b4a490a8-4025-4ec6-bee2-1169f9bf8788",
+                        "subject_uuid": "bcf12584-1b44-4948-b412-ff5102b35e45"
+                    },
+                    {
+                        "uuid": "3462c74e-e983-4416-8bd4-e4a23b5630a5",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "0721b6c6-c42c-443b-9dba-aa627fc9cefe"
+                        ],
+                        "submission_dataset_uuid": "b4a490a8-4025-4ec6-bee2-1169f9bf8788",
+                        "subject_uuid": "bcf12584-1b44-4948-b412-ff5102b35e45"
+                    },
+                    {
+                        "uuid": "38f4371c-2eba-4963-9474-58830247946b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "0721b6c6-c42c-443b-9dba-aa627fc9cefe"
+                        ],
+                        "submission_dataset_uuid": "b4a490a8-4025-4ec6-bee2-1169f9bf8788",
+                        "subject_uuid": "bcf12584-1b44-4948-b412-ff5102b35e45"
+                    },
+                    {
+                        "uuid": "cb77d565-c6f3-42b5-9c7b-9cc5cbba1453",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "0721b6c6-c42c-443b-9dba-aa627fc9cefe"
+                        ],
+                        "submission_dataset_uuid": "b4a490a8-4025-4ec6-bee2-1169f9bf8788",
+                        "subject_uuid": "bcf12584-1b44-4948-b412-ff5102b35e45"
+                    },
+                    {
+                        "uuid": "ba4ecff3-920a-4647-88d8-c13952c3053d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ExperimentallyCapturedImage",
+                            "version": 1
+                        },
+                        "attribute": {},
+                        "acquisition_process_uuid": [
+                            "0721b6c6-c42c-443b-9dba-aa627fc9cefe"
+                        ],
+                        "submission_dataset_uuid": "b4a490a8-4025-4ec6-bee2-1169f9bf8788",
+                        "subject_uuid": "bcf12584-1b44-4948-b412-ff5102b35e45"
+                    }
+                ]
+            }
+        ],
+        "image_annotation_component": []
     }
 }
