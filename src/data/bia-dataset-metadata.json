@@ -1,4 +1,5142 @@
 {
+  "a522e1f7-7553-40c1-adf0-f1578d111e44": {
+    "title_id": "Figure 7E/H/L",
+    "uuid": "a522e1f7-7553-40c1-adf0-f1578d111e44",
+    "version": 6,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Microscope images",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Figure 7",
+          "image_acquisition": "Livertumor sections",
+          "specimen": "Livertumors"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "5269cf42-d7ef-4f45-90d7-992945874c02"
+      ],
+      "subject_uuid": "747ac32f-058a-44fb-a839-977952ef6df2",
+      "biosample_uuid": "[UUID('46ce552e-428e-4402-90ef-14a8739123f8')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1250/d4594493-c335-43a4-83c9-2d3a5ef52538/abb918d0-635d-4d75-993c-53e8c6a13b3c.png"
+    ],
+    "submitted_in_study_uuid": "38b1b1aa-d3e6-43b8-8f24-e8ec9e494530",
+    "submitted_in_study": {
+      "uuid": "38b1b1aa-d3e6-43b8-8f24-e8ec9e494530",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1250",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Bjoern von Eyss",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "bjoern.voneyss@leibniz-fli.de",
+          "role": "corresponding author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Yuliya Kurlishchuk",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Anita Cindric Vranesic",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Marco Jessen",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Alexandra Kipping",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Christin Ritter",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "KyungMok Kim",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Paul Cramer",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Leibniz Institute on Aging \u2013 Fritz Lipmann Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "experiment performer"
+        }
+      ],
+      "title": "A noncanonical repressor function of JUN restrains YAP activity and suppresses YAP-dependent liver cancer growth",
+      "release_date": "2024-07-02",
+      "description": "Yes-associated protein (YAP) and its homologue, transcriptional coactivator with PDZ-binding motif (TAZ), are the main transcriptional downstream effectors of the Hippo pathway. Decreased Hippo pathway activity leads to nuclear translocation of YAP/TAZ where they interact with TEAD transcription factors to induce target gene expression. Unrestrained YAP/TAZ activity can lead to excessive growth and tumor formation in a short time, underscoring the evolutionary need for tight control of these two transcriptional coactivators. \nHere, we report that the AP-1 component JUN acts as specific repressor of YAP/TAZ at joint target sites to decrease YAP/TAZ activity. This function of JUN is independent of its heterodimeric AP-1 partner FOS and the canonical AP-1 function. Since JUN is itself induced by YAP/TAZ, our work identifies a JUN-dependent negative feedback loop that buffers YAP/TAZ activity at joint sites. This negative feedback loop gets disrupted in liver cancer to unlock the full oncogenic potential of YAP/TAZ.\nOur results thus demonstrate an additional layer of control for the important interplay of YAP/TAZ and AP-1. \n",
+      "keyword": [
+        "AP-1/Hippo/Liver cancer/JUN/YAP"
+      ],
+      "acknowledgement": "B.v.E. was supported by grants from the Wilhelm Sander-Stiftung (2022.084.1), BMBF (16GW0271K), DFG (EY 120/4-1), and the German Cancer Aid (Deutsche Krebshilfe; 70113138). YK was supported by Alexander von Humboldt Stiftung. The FLI is a member of the Leibniz Association and is financially supported by the Federal Government of Germany and the State of Thuringia. The DNA Sequencing, the Proteomics, and the Flow Cytometry core facilities as well as the core service histology of the FLI are gratefully acknowledged. We would like to thank all the members of the von Eyss lab, von Maltzahn lab, and Kaether lab for helpful discussion and Tom H\u00fcnniger and all the animal care takers at FLI for excellent technical support. We would like to thank Tae-Won Kang for hydrodynamic tail vein injection training. Some of the figures were created with BioRender.com",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "DFG (EY 120/4-1), and the German Cancer Aid (Deutsche Krebshilfe; 70113138)",
+      "attribute": {}
+    }
+  },
+  "2b9e522c-0c79-4004-a89d-92de2c4f161c": {
+    "title_id": "Figure 2, 3, S3 plate 2",
+    "uuid": "2b9e522c-0c79-4004-a89d-92de2c4f161c",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Volumetric characterisation of spheroids grown on micropatterned plates. Cells were grown on a CYTOO DC45-P300-FN plate for three days. Spheroids were fixed and stained with Hoechst 33342 (nuclei). Images were acquired with an Opera Phenix High-Content Screening microscope with a 63x/1.15 NA water immersion objective.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCS spheroids",
+          "image_acquisition": "HCA image acquisition",
+          "specimen": "Immunofluorescence of HeLa Kyoto cell spheroids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c771e670-df38-43ba-b257-8d883ddb114b"
+      ],
+      "subject_uuid": "87ccb3be-b012-478f-b753-e4b69f5f9d3a",
+      "biosample_uuid": "[UUID('be71631b-c35e-4f94-b8d3-d9a533e060d4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+    "submitted_in_study": {
+      "uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1259",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-7956-7805",
+          "display_name": "Jeremy Simpson",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "jeremy.simpson@ucd.ie",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5096-2361",
+          "display_name": "Margaritha Mysior",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "margaritha.mysior@ucd.ie",
+          "role": "first author"
+        }
+      ],
+      "title": "An automated high-content screening and assay platform for the analysis of spheroids at subcellular resolution",
+      "release_date": "2024-07-04",
+      "description": "This is the primary image data underpinning the above manuscript. The data set are 16-bit TIFF files acquired on a fully automated spinning disk confocal microscope. Each image is a single colour channel, single optical slice, of a single position in a well, containing a spheroid of HeLa Kyoto cells.",
+      "keyword": [
+        "membrane traffic; Spheroid; high-content screening microscopy; high-content screening analysis; Golgi; Rab GTPases"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "ab6e1a4e-5280-45e7-b032-2e04fa5cc4f6": {
+    "title_id": "Figure 4, 5, S4, S5 plate 2",
+    "uuid": "ab6e1a4e-5280-45e7-b032-2e04fa5cc4f6",
+    "version": 3,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "BFA-induced Golgi perturbation in spheroids. ",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCS spheroids",
+          "image_acquisition": "HCA image acquisition",
+          "specimen": "Immunofluorescence of HeLa Kyoto cell spheroids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c771e670-df38-43ba-b257-8d883ddb114b"
+      ],
+      "subject_uuid": "87ccb3be-b012-478f-b753-e4b69f5f9d3a",
+      "biosample_uuid": "[UUID('be71631b-c35e-4f94-b8d3-d9a533e060d4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+    "submitted_in_study": {
+      "uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1259",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-7956-7805",
+          "display_name": "Jeremy Simpson",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "jeremy.simpson@ucd.ie",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5096-2361",
+          "display_name": "Margaritha Mysior",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "margaritha.mysior@ucd.ie",
+          "role": "first author"
+        }
+      ],
+      "title": "An automated high-content screening and assay platform for the analysis of spheroids at subcellular resolution",
+      "release_date": "2024-07-04",
+      "description": "This is the primary image data underpinning the above manuscript. The data set are 16-bit TIFF files acquired on a fully automated spinning disk confocal microscope. Each image is a single colour channel, single optical slice, of a single position in a well, containing a spheroid of HeLa Kyoto cells.",
+      "keyword": [
+        "membrane traffic; Spheroid; high-content screening microscopy; high-content screening analysis; Golgi; Rab GTPases"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "5fb1942b-11f6-4928-b351-2c19c2b604a2": {
+    "title_id": "Figure 1 Plate 2",
+    "uuid": "5fb1942b-11f6-4928-b351-2c19c2b604a2",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Primary characterisation of spheroids grown on micropatterned plates. Cells were grown on a CYTOO DC45-P300-FN plate for three days. Spheroids were fixed and stained with Hoechst 33342 (nuclei). Images were acquired with an Opera Phenix High-Content Screening microscope with a 20x/1.0 NA water immersion objective.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCS spheroids",
+          "image_acquisition": "HCA image acquisition",
+          "specimen": "Immunofluorescence of HeLa Kyoto cell spheroids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c771e670-df38-43ba-b257-8d883ddb114b"
+      ],
+      "subject_uuid": "87ccb3be-b012-478f-b753-e4b69f5f9d3a",
+      "biosample_uuid": "[UUID('be71631b-c35e-4f94-b8d3-d9a533e060d4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+    "submitted_in_study": {
+      "uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1259",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-7956-7805",
+          "display_name": "Jeremy Simpson",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "jeremy.simpson@ucd.ie",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5096-2361",
+          "display_name": "Margaritha Mysior",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "margaritha.mysior@ucd.ie",
+          "role": "first author"
+        }
+      ],
+      "title": "An automated high-content screening and assay platform for the analysis of spheroids at subcellular resolution",
+      "release_date": "2024-07-04",
+      "description": "This is the primary image data underpinning the above manuscript. The data set are 16-bit TIFF files acquired on a fully automated spinning disk confocal microscope. Each image is a single colour channel, single optical slice, of a single position in a well, containing a spheroid of HeLa Kyoto cells.",
+      "keyword": [
+        "membrane traffic; Spheroid; high-content screening microscopy; high-content screening analysis; Golgi; Rab GTPases"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "09eb31c3-5803-40cd-9f5b-f1b9dbb4e949": {
+    "title_id": "Figure 4, 5, S4, S5 plate 1",
+    "uuid": "09eb31c3-5803-40cd-9f5b-f1b9dbb4e949",
+    "version": 4,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "BFA-induced Golgi perturbation in spheroids. ",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCS spheroids",
+          "image_acquisition": "HCA image acquisition",
+          "specimen": "Immunofluorescence of HeLa Kyoto cell spheroids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c771e670-df38-43ba-b257-8d883ddb114b"
+      ],
+      "subject_uuid": "87ccb3be-b012-478f-b753-e4b69f5f9d3a",
+      "biosample_uuid": "[UUID('be71631b-c35e-4f94-b8d3-d9a533e060d4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1259/2ed12a91-ac56-435c-8fe1-5402fa02a17f/42855692-a786-4a6f-b701-a43a5f27908f.png"
+    ],
+    "submitted_in_study_uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+    "submitted_in_study": {
+      "uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1259",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-7956-7805",
+          "display_name": "Jeremy Simpson",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "jeremy.simpson@ucd.ie",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5096-2361",
+          "display_name": "Margaritha Mysior",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "margaritha.mysior@ucd.ie",
+          "role": "first author"
+        }
+      ],
+      "title": "An automated high-content screening and assay platform for the analysis of spheroids at subcellular resolution",
+      "release_date": "2024-07-04",
+      "description": "This is the primary image data underpinning the above manuscript. The data set are 16-bit TIFF files acquired on a fully automated spinning disk confocal microscope. Each image is a single colour channel, single optical slice, of a single position in a well, containing a spheroid of HeLa Kyoto cells.",
+      "keyword": [
+        "membrane traffic; Spheroid; high-content screening microscopy; high-content screening analysis; Golgi; Rab GTPases"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "6bb172e7-34ea-4ef4-8107-1307ee03dea6": {
+    "title_id": "Figure 1 Plate 1",
+    "uuid": "6bb172e7-34ea-4ef4-8107-1307ee03dea6",
+    "version": 4,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Primary characterisation of spheroids grown on micropatterned plates. Cells were grown on a CYTOO DC45-P300-FN plate for three days. Spheroids were fixed and stained with Hoechst 33342 (nuclei). Images were acquired with an Opera Phenix High-Content Screening microscope with a 20x/1.0 NA water immersion objective.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCS spheroids",
+          "image_acquisition": "HCA image acquisition",
+          "specimen": "Immunofluorescence of HeLa Kyoto cell spheroids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c771e670-df38-43ba-b257-8d883ddb114b"
+      ],
+      "subject_uuid": "87ccb3be-b012-478f-b753-e4b69f5f9d3a",
+      "biosample_uuid": "[UUID('be71631b-c35e-4f94-b8d3-d9a533e060d4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+    "submitted_in_study": {
+      "uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1259",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-7956-7805",
+          "display_name": "Jeremy Simpson",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "jeremy.simpson@ucd.ie",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5096-2361",
+          "display_name": "Margaritha Mysior",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "margaritha.mysior@ucd.ie",
+          "role": "first author"
+        }
+      ],
+      "title": "An automated high-content screening and assay platform for the analysis of spheroids at subcellular resolution",
+      "release_date": "2024-07-04",
+      "description": "This is the primary image data underpinning the above manuscript. The data set are 16-bit TIFF files acquired on a fully automated spinning disk confocal microscope. Each image is a single colour channel, single optical slice, of a single position in a well, containing a spheroid of HeLa Kyoto cells.",
+      "keyword": [
+        "membrane traffic; Spheroid; high-content screening microscopy; high-content screening analysis; Golgi; Rab GTPases"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "b9bbd2c6-01ee-49c7-83c1-5726f1260913": {
+    "title_id": "Figure 2, 3, S2 plate 1",
+    "uuid": "b9bbd2c6-01ee-49c7-83c1-5726f1260913",
+    "version": 6,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Volumetric characterisation of spheroids grown on micropatterned plates. Cells were grown on a CYTOO DC45-P300-FN plate for three days. Spheroids were fixed and stained with Hoechst 33342 (nuclei). Images were acquired with an Opera Phenix High-Content Screening microscope with a 63x/1.15 NA water immersion objective.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCS spheroids",
+          "image_acquisition": "HCA image acquisition",
+          "specimen": "Immunofluorescence of HeLa Kyoto cell spheroids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c771e670-df38-43ba-b257-8d883ddb114b"
+      ],
+      "subject_uuid": "87ccb3be-b012-478f-b753-e4b69f5f9d3a",
+      "biosample_uuid": "[UUID('be71631b-c35e-4f94-b8d3-d9a533e060d4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+    "submitted_in_study": {
+      "uuid": "19601cc5-bdff-4aa8-8c29-87674f284672",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1259",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-7956-7805",
+          "display_name": "Jeremy Simpson",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "jeremy.simpson@ucd.ie",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5096-2361",
+          "display_name": "Margaritha Mysior",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University College Dublin"
+            }
+          ],
+          "contact_email": "margaritha.mysior@ucd.ie",
+          "role": "first author"
+        }
+      ],
+      "title": "An automated high-content screening and assay platform for the analysis of spheroids at subcellular resolution",
+      "release_date": "2024-07-04",
+      "description": "This is the primary image data underpinning the above manuscript. The data set are 16-bit TIFF files acquired on a fully automated spinning disk confocal microscope. Each image is a single colour channel, single optical slice, of a single position in a well, containing a spheroid of HeLa Kyoto cells.",
+      "keyword": [
+        "membrane traffic; Spheroid; high-content screening microscopy; high-content screening analysis; Golgi; Rab GTPases"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "788677dd-4f1c-48f7-bdb6-3b70fbc54fe2": {
+    "title_id": "Figure 6B",
+    "uuid": "788677dd-4f1c-48f7-bdb6-3b70fbc54fe2",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Source data images to accompany EMBO submission",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Figure 6B",
+          "image_acquisition": "Fluorescence microscopy ",
+          "specimen": "ATG9A "
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Figure 6F",
+          "image_acquisition": "Brightfield illumination",
+          "specimen": "H&E"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Figure 6G",
+          "image_acquisition": "Brightfield illumination",
+          "specimen": "H&E"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Figure 8B",
+          "image_acquisition": "Brightfield illumination",
+          "specimen": "H&E"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "498990cf-b157-4253-affc-a92a71218867",
+        "f48b6e0f-2871-4532-a9a3-6bcf84ed4285"
+      ],
+      "subject_uuid": "65735cba-20be-443d-8103-6a12289e7100",
+      "biosample_uuid": "[UUID('3363447e-4e94-4023-ba57-5f692fe093b4'), UUID('a4f11168-eddc-467d-a642-d26955c8fc2d'), UUID('b2ef660c-f91e-4e03-afb1-2fdae0538236'), UUID('bcf80aa0-37c1-48b7-a251-9ea8709e2c8d')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1267/1b56d699-3ab1-4d9c-94ba-67baadd6882f/ab941663-2475-48b6-9f24-99116495f4af.png"
+    ],
+    "submitted_in_study_uuid": "3c2db2f5-d198-40e9-ab9c-f8e169faf2ed",
+    "submitted_in_study": {
+      "uuid": "3c2db2f5-d198-40e9-ab9c-f8e169faf2ed",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1267",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Jessica Wiseman",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Sheffield"
+            }
+          ],
+          "contact_email": "wisemajp30@gmail.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Mimoun Azzouz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Sheffield"
+            }
+          ],
+          "contact_email": "m.azzouz@sheffield.ac.uk",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Pre-clinical Development Of AP4B1 Gene Replacement Therapy For Hereditary Spastic Paraplegia Type 47 ",
+      "release_date": "2024-08-09",
+      "description": "Image source data for figures 6 and 8 in manuscript submission.",
+      "keyword": [
+        "Gene replacement therapy"
+      ],
+      "acknowledgement": "This work was supported by two awards from LifeArc (No. 163978 and P2022-0004, Recipient: 176666), CureAP4 and IMI2-Call18 (ARDAT: NO. 945473). MA is also supported by the European Research Council grant (ERC Advanced Award no. 294745), MRC DPFS Award (129016), JPND-MRC (MR/V000470/1), ARUK award (ARUK-PG2018B-005) and MRC/LifeArc award (MR/V030140/1). D.E.-F. has received support from by the Spastic Paraplegia Foundation, the CureAP4 Foundation, the Boston Children\u2019s Hospital Translational Research Program, the Boston Children\u2019s Hospital Office of Faculty Development, and the National Institutes of Health / National Institute of Neurological Disorders and Stroke (K08NS123552-01). PJS is supported by the NIHR Sheffield Biomedical Research Centre. LF is also supported by the MRC (MR/W00416X/10). Histopathology assessment was completed with support from the histology core facility at SITraN, University of Sheffield. ",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "f8da68fa-d263-4e30-b228-96b2d87c8c5d": {
+    "title_id": "Imaging of mitotic RPE1 and U251 cells",
+    "uuid": "f8da68fa-d263-4e30-b228-96b2d87c8c5d",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Imaging of mitotic RPE1 and U251 cells in mitosis with various markers.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Imaging of mitotic RPE1 and U251 cells",
+          "image_acquisition": "Imaging of mitotic RPE1 and U251 cells",
+          "specimen": "Imaging of mitotic RPE1 and U251 cells"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "42aad0f3-24cc-4b0c-ae14-fca8232f919b"
+      ],
+      "subject_uuid": "ecc79c90-c2c3-4136-aa46-7262ac0e9fbc",
+      "biosample_uuid": "[UUID('5fffa749-0173-4760-be54-41ba5bdc94de')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1268/297b0867-8e4c-43b2-8f96-878f271e30f8/261d1d67-76fb-443f-97b7-32b4ed70ae14.png"
+    ],
+    "submitted_in_study_uuid": "300c7dd2-542b-497f-a827-ceeaa9183ea5",
+    "submitted_in_study": {
+      "uuid": "300c7dd2-542b-497f-a827-ceeaa9183ea5",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1268",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-7597-3104",
+          "display_name": "James Holder",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Oxford"
+            }
+          ],
+          "contact_email": "james.holder@bioch.ox.ac.uk",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Fanni Gergely",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Oxford"
+            }
+          ],
+          "contact_email": "fanni.gergely@bioch.ox.ac.uk",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "CEP192 drives spatio-temporal control of mitotic Aurora-A",
+      "release_date": "2024-07-12",
+      "description": "Imaging source data used to create figures in the papaer \"CEP192 drives spatio-temporal control of mitotic Aurora-A\".",
+      "keyword": [
+        "Aurora-A",
+        "mitosis",
+        "CEP192",
+        "centrosome",
+        "cell cycle",
+        "phosphorylation"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This work was performed as part of a strategic Longer and Larger grant (sLoLa) funded by UKRI.",
+      "attribute": {}
+    }
+  },
+  "7441b0e9-8c28-416d-85bf-1cadc9a63bce": {
+    "title_id": "File List",
+    "uuid": "7441b0e9-8c28-416d-85bf-1cadc9a63bce",
+    "version": 15,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "File List",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Mammalian placental structures",
+          "image_acquisition": "Image modality",
+          "specimen": "Tissue preparation"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "bc50e5eb-d3cc-4fe2-be32-8a775527e5db"
+      ],
+      "subject_uuid": "851543fe-5359-4a07-8244-1d34055ac15e",
+      "biosample_uuid": "[UUID('0959919a-8581-40db-bba8-8bb703db7e27')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1270/a8c1abf4-fee1-4b47-8e55-79d47d95873b/64c2151c-59fc-4718-b099-0713b16ef244.png"
+    ],
+    "submitted_in_study_uuid": "cb2f47f0-5313-424d-a59c-3f7b004d4236",
+    "submitted_in_study": {
+      "uuid": "cb2f47f0-5313-424d-a59c-3f7b004d4236",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1270",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-1508-664X",
+          "display_name": "Davis Laundon",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Southampton"
+            }
+          ],
+          "contact_email": "d.j.laundon@soton.ac.uk",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Correlative three-dimensional X-ray histology (3D-XRH) as a tool for quantifying mammalian placental structure",
+      "release_date": "2024-07-11",
+      "description": "Correlative 3D microCT-2D H&E Histology datasets associated with the publication 'Correlative three-dimensional X-ray histology (3D-XRH) as a tool for quantifying mammalian placental structure'",
+      "keyword": [
+        "microCT ",
+        "H&E Histology",
+        "Immunofluorescence"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "96497c7f-3529-42c2-822f-b8c0c8d2ebe9": {
+    "title_id": "ATUM and ATUM-Tomo data",
+    "uuid": "96497c7f-3529-42c2-822f-b8c0c8d2ebe9",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "correlative confocal, ATUM and ET data sets",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "fixed mouse brain after traumatic brain injury",
+          "image_acquisition": "confocal imaging",
+          "specimen": "ATUM sample (Fig. 1)"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "fixed mouse brain after traumatic brain injury",
+          "image_acquisition": "array tomography ",
+          "specimen": "ATUM sample (Fig. 1)"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "fixed mouse brain after traumatic brain injury",
+          "image_acquisition": "confocal imaging",
+          "specimen": "ATUM-Tomo sample (Fig. 3)"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "fixed mouse brain after traumatic brain injury",
+          "image_acquisition": "array tomography ",
+          "specimen": "ATUM-Tomo sample (Fig. 3)"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "fixed mouse brain after traumatic brain injury",
+          "image_acquisition": "electron tomography",
+          "specimen": "ATUM-Tomo sample (Fig. 3)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "fbbb7e88-9f0f-468e-9763-a9c78d46fd26",
+        "4885a83d-80ec-4f22-980f-998ebfc0c0bc",
+        "17fd716f-92c2-445e-bef1-ff785370c779"
+      ],
+      "subject_uuid": "f1b85f31-71a6-429d-92f7-098b97f1efce",
+      "biosample_uuid": "[UUID('974ae0ff-e63a-4edd-b30f-51bb2a8ac23d')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1274/86106193-a0c7-40c2-b54d-4eb49ce22b1c/29c15a65-6a9c-4f4f-92db-787a8c5b4bba.png"
+    ],
+    "submitted_in_study_uuid": "d2d6d499-13b0-4c7d-bbdb-3335b7d602d5",
+    "submitted_in_study": {
+      "uuid": "d2d6d499-13b0-4c7d-bbdb-3335b7d602d5",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1274",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-0500-8218",
+          "display_name": "Martina Schifferer",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "German Center for Neurodegenerative Diseases"
+            }
+          ],
+          "contact_email": "martina.schifferer@dzne.de",
+          "role": "corresponding author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Lucia Rodriguez",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Technical University of Munich"
+            }
+          ],
+          "contact_email": "lucia.rodriguez@tum.de",
+          "role": "data analyst"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Georg Kislinger",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Technical University of Munich"
+            }
+          ],
+          "contact_email": "georg.kislinger@dzne.de",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gunar Fabig",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "TU Dresden"
+            }
+          ],
+          "contact_email": "gunar.fabig@tu-dresden.de",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Antonia Wehn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "LMU Klinikum"
+            }
+          ],
+          "contact_email": "Antonia.Wehn@med.uni-muenchen.de",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hanyi Jiang",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Technical University of Munich"
+            }
+          ],
+          "contact_email": "hanyi_jiang1997@hotmail.com",
+          "role": "data analyst"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Cornelia Niemann",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Technical University of Munich"
+            }
+          ],
+          "contact_email": "cornelia.niemann@tum.de",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Andrey S. Klymchenko",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Universit\u00e9 de Strasbourg"
+            }
+          ],
+          "contact_email": "andrey.klymchenko@unistra.fr",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Nikolaus Plesnila",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "LMU Klinikum"
+            }
+          ],
+          "contact_email": "Nikolaus.Plesnila@med.uni-muenchen.de",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Thomas Misgeld",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Technical University of Munich"
+            }
+          ],
+          "contact_email": "thomas.misgeld@tum.de",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Thomas M\u00fcller-Reichert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "TU Dresden"
+            }
+          ],
+          "contact_email": "mueller-reichert@tu-dresden.de",
+          "role": "principal investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Igor Khalin",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "LMU Klinikum"
+            }
+          ],
+          "contact_email": "Igor.Khalin@med.uni-muenchen.de",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "ATUM-Tomo: A multi-scale approach to cellular ultrastructure by combined volume scanning electron microscopy and electron tomography ",
+      "release_date": "2024-08-15",
+      "description": "Like other volume electron microscopy approaches, Automated Tape Collecting Ultramicrotomy (ATUM) enables imaging of serial sections deposited on thick plastic tapes by scanning electron microscopy (SEM). ATUM is unique in enabling hierarchical imaging and thus efficient screening for target structures, as needed for correlative light and electron microscopy. However, SEM of sections on tape can only access the section surface, thereby limiting the axial resolution to the typical size of cellular vesicles with an order of magnitude lower than the acquired xy resolution. In contrast, serial-section electron tomography (ET), a transmission electron microscopy-based approach, yields isotropic voxels at full EM resolution, but requires deposition of sections on electron-stable thin and fragile films, thus making screening of large section libraries difficult and prone to section loss. To combine the strength of both approaches, we developed \u2018ATUM-Tomo\u2019, a hybrid method, where sections are first reversibly attached to plastic tape via a dissolvable coating, and after screening detached and transferred to the ET-compatible thin films. ATUM-SEM of serial semi-thick sections and consecutive ET of selected re-mounted sections combines SEM\u2019s fast target recognition and coarse rendering capability with high-resolution volume visualizations, respectively, thus enabling multi-scale interrogation of cellular ultrastructure. As a proof-of-principle, we applied correlative ATUM-Tomo to study ultrastructural features of blood brain barrier (BBB) leakiness around microthrombi in a mouse model of traumatic brain injury. Microthrombi and associated sites of BBB leakiness were identified by confocal imaging of injected fluorescent and electron-dense nanoparticles, then relocalized by ATUM-SEM, and finally interrogated by correlative ATUM-Tomo. This workflow is a seamless zoom-in on structural BBB pathology from the micro- to the nanometer scale. Overall, our new ATUM-Tomo approach will substantially advance ultrastructural analysis of biological phenomena that require cell- and tissue-level contextualization of the finest subcellular textures.",
+      "keyword": [
+        "Array tomography, electron tomography, blood brain barrier, ATUM, volume electron microscopy, fluorescence microscopy, CLEM"
+      ],
+      "acknowledgement": "We thank Felix Beyer and Gero Finck (TUM, SyNergy NeuroCore), Dr. Tobias F\u00fcrstenhaupt (EM facility at MPI-CBG, Dresden) for excellent technical assistance and Th\u00e9o Cerciat (TUM) for segmentation.",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "457586042",
+          "funder": [
+            {
+              "display_name": "DFG",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": "This work was supported by the DFG under Germany\u2019s Excellence Strategy within the framework of the Munich Cluster for Systems Neurology (SyNergy; EXC 2145 \u2013 ID 390857198), TRR 274/1 2020 (projects Z01 and B03 \u2013 ID 408885537) and FOR Immunostroke (Mi 694/9-1 A03 \u2013 ID 428663564). Research in the M\u00fcller-Reichert lab was funded by the DFG (grant MU 1423/8-2 and 8-3 to TMR). All animal experiments were supported by DFG grant 457586042. ",
+      "attribute": {}
+    }
+  },
+  "32bcd710-ce63-4cd3-9fe4-a555fc5a3db8": {
+    "title_id": "Confocal images for murine PCLS ",
+    "uuid": "32bcd710-ce63-4cd3-9fe4-a555fc5a3db8",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Each condition and timepoint has a Raw Data file which can be directly imported into any software which has Bio-Formats to read .lif files (e.g. ImageJ/FIJI) as well as a corresponding LASX (.lifext) file for import into the LASX software together with the .lif file. The metadata describes the experimental conditions, PCLS and animal. Treatment conditions are described in all corresponding publications. ",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Precision cut lung slice from mice",
+          "image_acquisition": "Confocal microscopy",
+          "specimen": "Individual PCLS"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "d2be8d42-00cc-429e-b71b-785de0158fb1"
+      ],
+      "subject_uuid": "e78c3a7c-f8cb-4c0e-afc7-2f265a8f87ff",
+      "biosample_uuid": "[UUID('2f60ed34-cdd6-4f1c-b961-1b4a17a7b33e')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1284/122a29f2-b43e-4c5a-9447-8e0ab33f7776/94f0812d-6cfc-4cef-aafa-08ed40ac45cf.png"
+    ],
+    "submitted_in_study_uuid": "1c26a67e-0ec6-42b4-9239-d1f397c98bd7",
+    "submitted_in_study": {
+      "uuid": "1c26a67e-0ec6-42b4-9239-d1f397c98bd7",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1284",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-8586-2192",
+          "display_name": "Nika Gvazava",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Lund University"
+            }
+          ],
+          "contact_email": "nika.gvazava@med.lu.se",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-3794-1309",
+          "display_name": "Darcy Wagner",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "McGill University"
+            }
+          ],
+          "contact_email": "darcy.wagner@med.lu.se",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Visualization of cellular membrane damage and apoptosis in murine precision cut lung slices after vibratome slicing",
+      "release_date": "2024-07-22",
+      "description": "Precision cut lung slices (PCLS) are increasingly being utilized to reduce animal usage (as more experiments can be performed on complex and multicellular tissues from a single animal) but also offer the potential to study cellular and tissue level processes directly in human tissue ex vivo. PCLS can be generated using several different techniques including a vibrating microtome (vibratome) or other commercial devices such as a Krumdieck slicer or Compresstome. Due to the potential damage from mechanical cutting of the tissue and from the cold ischemic time associated with tissue preparation, some labs report letting PCLS rest overnight or for 24 hours prior to starting experiments. However, there is limited data on what occurs immediately after slicing and what time window is optimal for PCLS recovery prior to the start of experiments. This is particularly important to determine if PCLS are to be used for evaluation of targeted therapies, such as nanoparticle therapies. Non-specific uptake due to cell membrane damage may obfuscate the interpretation of results. Previous papers in the PCLS field have utilized live/dead staining which relies on Calcein AM staining which is cleaved cleaved by intracellular esterases to yield Calcein fluorescence, which is only retained in live cells. In parallel, Ethidium homodimer I (or III) are used to label dead or dying cells as this dye is impermeant to intact cell membranes. Ethidium homodimer is weakly fluorescent at baseline but becomes highly fluorescent when complexed with nucleic acids. However, this approach has several drawbacks. 1) It does not yield insight into whether cell damage detected with Calcein AM is due to apoptosis or necrosis 2) Both dyes have excitation and emission spectra in ranges that overlap with lung tissue autofluorescence (Calcein AM ex=494nm and em=514nm; EtHD ex 527nm and em=624nm). Therefore, we sought to establish the feasibility of utilizing an active caspase3/7 sensitive dye (NucView\u00ae488) and a far red cell impermeable dye which more specifically labels nuclei (RedDot\u21222) to complement the information available in the literature to better understand the early dynamics in PCLS. These results help to establish suitable time windows for letting PCLS recover prior to beginning experiments, provide insight into the potential for apoptotic pathways to be initiated after slicing and help to establish when such live staining agents should be administered to evaluate potential cell death. We generated 300\u03bcm thick PCLS from agarose filled murine lungs and either immediately administered apoptosis/necrosis dyes or administered them 24 hours later. To test for dye stability and as a positive control for cellular damage, we administered 150\u03bcM hydrogen peroxide to some slices. Images were acquired using confocal microscopy using identical laser and microscope settings over multiple days. There was no internal calibration performed between days. ",
+      "keyword": [
+        "PCLS, lung tissue, precision cut lung slicing, membrane damage, apoptosis"
+      ],
+      "acknowledgement": "The authors are grateful to Dr. Emmanuela Monni at the Lund Stem Cell Center Imaging Core for technical support and assistance with live confocal imaging.",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": null,
+          "funder": [
+            {
+              "display_name": "Knut and Alice Wallenberg Foundation",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": "The Knut and Alice Wallenberg Foundation, the Medical Faculty at Lund University, and Region Sk\u00e5ne are acknowledged for financial support (D.E.W.). This project has received funding from the European Research Council (ERC) under the European Union\u2019s Horizon 2020 research and innovation program (grant agreement no. 805361) (D.E.W.). Lund University and the Strategic Research Area \u201cEmerging Research Topics\u201d are also acknowledged for support (D.E.W. and O.K.).",
+      "attribute": {}
+    }
+  },
+  "bb5edcfa-7340-407f-aaf3-72192b1fe0bf": {
+    "title_id": "intracellular lipid transport in U-2 OS and HCT 116 cells",
+    "uuid": "bb5edcfa-7340-407f-aaf3-72192b1fe0bf",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Usage of bifunctional lipids to track retrograde lipid transport in U-2 OS, HCT 116 and TMEM30A KO HCT 166 cells.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "U-2 OS",
+          "image_acquisition": "spinning disk confocal microscopy",
+          "specimen": "cell culture"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "HCT 116",
+          "image_acquisition": "spinning disk confocal microscopy",
+          "specimen": "cell culture"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "fa79e828-f66e-4737-8719-88073d7821af"
+      ],
+      "subject_uuid": "d3ed9b29-7b41-47eb-8e08-f43b6a473fe4",
+      "biosample_uuid": "[UUID('aba9f4b2-0c73-4d20-95ef-710c29f868df'), UUID('e3b7363b-e72f-4609-b38a-e9262f2d62e1')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1293/49761116-4d8f-4fd3-95b5-393f51420105/b1844626-efd6-45fa-9593-0876a6b5852f.png"
+    ],
+    "submitted_in_study_uuid": "5c9b93a0-b046-471c-bbc0-0bf164bf5a5e",
+    "submitted_in_study": {
+      "uuid": "5c9b93a0-b046-471c-bbc0-0bf164bf5a5e",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1293",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Kristin B\u00f6hlig",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Max Planck Institute of Molecular Cell Biology and Genetics"
+            }
+          ],
+          "contact_email": "bohlig@mpi-cbg.de",
+          "role": null
+        }
+      ],
+      "title": "Bifunctional probes reveal the rules of intracellular ether lipid transport",
+      "release_date": "2024-07-26",
+      "description": "images for publication with title: Bifunctional probes reveal the rules of intracellular ether lipid transport",
+      "keyword": [
+        "lipid transport",
+        "U-2 OS",
+        "lipid",
+        "vesicular",
+        "transport",
+        "transfer protein",
+        "hCT 116"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "6b2f65f2-0657-48ee-9b7d-fcbf7b468ff4": {
+    "title_id": "AMID-05_CC-124_wells",
+    "uuid": "6b2f65f2-0657-48ee-9b7d-fcbf7b468ff4",
+    "version": 2,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Study component corresponds to the dataset of time lapses of C. reinhardtii cells that were confined to wells of a 384-well plate.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Cell segmentation and cell tracking",
+          "image_correlation": null,
+          "biosample": "Chlamydomonas reinhardtii",
+          "image_acquisition": "Brightfield time-lapse microscopy of cells in 384-well plate",
+          "specimen": "Cells in 384-well plate"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "a5b42af9-bbdf-4669-8665-1228c6f69124"
+      ],
+      "subject_uuid": "7f71f633-e041-4438-b06a-af4353fc2a78",
+      "biosample_uuid": "[UUID('a9a53f0b-78b2-48cb-a4c8-85ea9995df5c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Cell segmentation and cell tracking",
+        "features_analysed": "We developed a Python-based image processing pipeline to calculate cell trajectories. Samples in agar microchambers and microtiter plates were processed identically, with the addition that the individual pools were automatically detected and cropped prior to cell segmentation and trajectory calculation. Individual pools were detected by first applying a Sobel edge filter to the mean intensity projection of the raw time-lapse. A Hough transform was then applied to the edge-enhanced image to identify and locate individual circles. The uniform, grid-like arrangement of pools was used through extrapolation to determine the locations of pools missed by the initial segmentation.\nCells were segmented from time-lapse data of both individual pools and wells to facilitate cell tracking. First, the mean intensity for each time-lapse dataset is subtracted from the full video to enhance the cell contrast. Then, these videos were binarized using Otsu thresholding. Finally, we performed cell tracking using btrack (version 0.6.5) using the default configurations. We output the trajectories for each segmented cell in comma-separated value (CSV) format for subsequent analysis."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1298/a4db83b0-71ae-4229-84df-57ac10f6b9f9/0c9e1547-560e-4ea7-8937-35c509ef93d8.png"
+    ],
+    "submitted_in_study_uuid": "dfb0f9b3-deb6-4374-834e-43a5b2ef5e26",
+    "submitted_in_study": {
+      "uuid": "dfb0f9b3-deb6-4374-834e-43a5b2ef5e26",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1298",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5887-2069",
+          "display_name": "Ryan Lane",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "ryan.lane@arcadiascience.com",
+          "role": "submitter"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Tara Essock-Burns",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "tara.essock-burns@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Audrey Bell",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "audrey.bell@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Keith Cheveralls",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "keith.cheveralls@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Megan Hochstrasser",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "megan.hochstrasser@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "David Mets",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "david.mets@arcadiascience.com",
+          "role": null
+        }
+      ],
+      "title": "A high-throughput imaging assay for phenotyping unicellular swimming",
+      "release_date": "2024-07-30",
+      "description": "Motility is a phenotypic readout that indicates an organism\u2019s integration of sensory input from its environment with its ability to move. We developed a microscopy workflow and image analysis pipeline to track motility phenotypes from unicellular algae in high-throughput.",
+      "keyword": [
+        "motility",
+        "Chlamydomonas",
+        "high-throughput",
+        "brightfield microscopy",
+        "cell tracking",
+        "cell tracking"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "edcd9481-3353-4f01-8e28-ad18f74e0213": {
+    "title_id": "AMID-04_CC-124_pools",
+    "uuid": "edcd9481-3353-4f01-8e28-ad18f74e0213",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Study component corresponds to the dataset of time lapses of C. reinhardtii cells that were confined to agar microchamber pools.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Cell segmentation and cell tracking",
+          "image_correlation": null,
+          "biosample": "Chlamydomonas reinhardtii",
+          "image_acquisition": "Brightfield time-lapse microscopy of cells in agar microchamber pools",
+          "specimen": "Cells in agar microchamber pools"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "f09fe96b-a475-4ed6-b45c-dd63dc721761"
+      ],
+      "subject_uuid": "e0c2785d-efc7-4dac-9796-2f1ed540bec0",
+      "biosample_uuid": "[UUID('a9a53f0b-78b2-48cb-a4c8-85ea9995df5c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Cell segmentation and cell tracking",
+        "features_analysed": "We developed a Python-based image processing pipeline to calculate cell trajectories. Samples in agar microchambers and microtiter plates were processed identically, with the addition that the individual pools were automatically detected and cropped prior to cell segmentation and trajectory calculation. Individual pools were detected by first applying a Sobel edge filter to the mean intensity projection of the raw time-lapse. A Hough transform was then applied to the edge-enhanced image to identify and locate individual circles. The uniform, grid-like arrangement of pools was used through extrapolation to determine the locations of pools missed by the initial segmentation.\nCells were segmented from time-lapse data of both individual pools and wells to facilitate cell tracking. First, the mean intensity for each time-lapse dataset is subtracted from the full video to enhance the cell contrast. Then, these videos were binarized using Otsu thresholding. Finally, we performed cell tracking using btrack (version 0.6.5) using the default configurations. We output the trajectories for each segmented cell in comma-separated value (CSV) format for subsequent analysis."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1298/57d591cc-92d3-4742-97b6-5775721a267a/a2854c32-1f94-43f6-b9a5-56b5485f7579.png"
+    ],
+    "submitted_in_study_uuid": "dfb0f9b3-deb6-4374-834e-43a5b2ef5e26",
+    "submitted_in_study": {
+      "uuid": "dfb0f9b3-deb6-4374-834e-43a5b2ef5e26",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1298",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5887-2069",
+          "display_name": "Ryan Lane",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "ryan.lane@arcadiascience.com",
+          "role": "submitter"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Tara Essock-Burns",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "tara.essock-burns@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Audrey Bell",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "audrey.bell@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Keith Cheveralls",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "keith.cheveralls@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Megan Hochstrasser",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "megan.hochstrasser@arcadiascience.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "David Mets",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Arcadia Science"
+            }
+          ],
+          "contact_email": "david.mets@arcadiascience.com",
+          "role": null
+        }
+      ],
+      "title": "A high-throughput imaging assay for phenotyping unicellular swimming",
+      "release_date": "2024-07-30",
+      "description": "Motility is a phenotypic readout that indicates an organism\u2019s integration of sensory input from its environment with its ability to move. We developed a microscopy workflow and image analysis pipeline to track motility phenotypes from unicellular algae in high-throughput.",
+      "keyword": [
+        "motility",
+        "Chlamydomonas",
+        "high-throughput",
+        "brightfield microscopy",
+        "cell tracking",
+        "cell tracking"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "f7bd84f2-b701-4d9f-a781-1917750a2fff": {
+    "title_id": "Expanded View Figures",
+    "uuid": "f7bd84f2-b701-4d9f-a781-1917750a2fff",
+    "version": 8,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Expanded view figures for the manuscript \"The novel bacterial effector protein CbEPF1 mediates ER-LD membrane contacts to regulate host lipid droplet metabolism \"",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Nikon NIS-elements software",
+          "image_correlation": null,
+          "biosample": "Expanded View Figures",
+          "image_acquisition": "Live Cell imaging",
+          "specimen": "HeLa cells"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "b17d6d3d-609e-4429-915b-db596d3b76cf"
+      ],
+      "subject_uuid": "0846d2de-4a5c-4842-bdd2-c568bbd3c2c0",
+      "biosample_uuid": "[UUID('9c395143-eac8-4dd1-abbe-2a8db762e127')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Nikon NIS-elements software",
+        "features_analysed": "Image processing were carried out using the Nikon NIS-elements software. Intensity plots were generated using 'Intensity Profile' option in the Nikon NIS-elements software"
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1300/ba2e7839-2e74-4ae9-b9b4-bd22e217d6e1/3cbfe121-3f8a-47a7-a976-2425790a7370.png"
+    ],
+    "submitted_in_study_uuid": "e87cfd25-1d5c-4f35-8d4c-9691151b8016",
+    "submitted_in_study": {
+      "uuid": "e87cfd25-1d5c-4f35-8d4c-9691151b8016",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1300",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Stacey Gilk",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/00thqtb16",
+              "address": null,
+              "website": null,
+              "display_name": "University of Nebraska Medical Center"
+            }
+          ],
+          "contact_email": "sgilk@unmc.edu",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "The novel bacterial effector protein CbEPF1 mediates ER-LD membrane contacts to regulate host lipid droplet metabolism ",
+      "release_date": "2024-08-02",
+      "description": "Expanded view Figures for the manuscript",
+      "keyword": [
+        "Coxiella burnetii",
+        "Lipid Droplets",
+        "Inter-organelle contact sites",
+        "FFAT motifs"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "5006635f-a28b-49d8-a9f7-9f6f6754d9a4": {
+    "title_id": "The novel bacterial effector protein CbEPF1 mediates ER-LD membrane contacts to regulate host lipid droplet metabolism ",
+    "uuid": "5006635f-a28b-49d8-a9f7-9f6f6754d9a4",
+    "version": 8,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Figures for manuscript",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Nikon NIS-elements ",
+          "image_correlation": null,
+          "biosample": "HeLa cells",
+          "image_acquisition": "Nikon Eclipse Ti2 spinning disc and TEM",
+          "specimen": "Live cell imaging"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "45062aaa-2591-4297-b20d-8f15fe30a5ed"
+      ],
+      "subject_uuid": "7d34f546-0652-48d1-9e3e-4838335029af",
+      "biosample_uuid": "[UUID('7a48a8ce-d375-42d3-ace9-3c3ec005de8c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Nikon NIS-elements ",
+        "features_analysed": "Data quantification and image processing were carried out using the Nikon NIS-elements software. Images were denoised or deconvoluted using Nikon NIS-elements software. The Alpha-blending algorithm in NIS elements software was used for 3D rendering. Transmission electron microscope data was analyzed using Fiji/ImageJ"
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1302/a05c82a0-c141-4f88-9a8c-f7a4c4f0bb85/e8066c3b-7af5-4db1-b8b8-18701ae86306.png"
+    ],
+    "submitted_in_study_uuid": "97685fa9-80d4-4192-a8d4-1760e49a1faa",
+    "submitted_in_study": {
+      "uuid": "97685fa9-80d4-4192-a8d4-1760e49a1faa",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1302",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Stacey Gilk",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Nebraska Medical Center"
+            }
+          ],
+          "contact_email": "sgilk@unmc.edu",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "CbEPF1 induces ER-LD membrane contacts to regulate host lipid droplet metabolism",
+      "release_date": "2024-08-02",
+      "description": "CbEPF1, a Coxiella burnetii effector protein, induces inter-organelle contact sites in the host cells. Submitted images are source files for manuscript figures",
+      "keyword": [
+        "Coxiella burnetii",
+        "Lipid droplets",
+        "FFAT motif",
+        "Molecular Tethers"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This work was supported National Institutes of Health (AI139176 to S.D.G.) and the American Heart Association (906475 to R.K.A.). ",
+      "attribute": {}
+    }
+  },
+  "80c6e9be-2c22-4d40-98ad-aaf2f9b6e24c": {
+    "title_id": "Microscopy dataset used for the study Chatzitheodoridou et al. 2024",
+    "uuid": "80c6e9be-2c22-4d40-98ad-aaf2f9b6e24c",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Microscopy dataset used for the study Chatzitheodoridou et al. 2024 containing single-molecule FISH and timelapse fluorescence microscopy images of budding yeast",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Image analysis of single-molecule FISH and timelapse fluorescence microscopy of budding yeast",
+          "image_correlation": null,
+          "biosample": "Various budding yeast strains",
+          "image_acquisition": "Imaging budding yeast",
+          "specimen": "Imaging single-molecule RNAs and histone proteins"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "b8707df4-fa94-4a2b-86ce-56258b770594"
+      ],
+      "subject_uuid": "6e9e97f9-cb64-412f-aa03-6f62a1a56822",
+      "biosample_uuid": "[UUID('989e2c4b-22d3-40bf-8a94-2864c69cab80')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Image analysis of single-molecule FISH and timelapse fluorescence microscopy of budding yeast",
+        "features_analysed": "Cell segmentation with Cell-ACDC using Cellpose and YeaZ and custom Matlab scripts\nSpot detection with custom Python script\nFluorescence quantification with Cell-ACDC and custom Matlab scripts"
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1308/3b81f104-008e-4402-9d78-598ae32a2b40/8ce72180-2e04-4cb0-877f-225eac7bef65.png"
+    ],
+    "submitted_in_study_uuid": "6c098d7e-1607-4ebc-8ae4-5002fc29e91b",
+    "submitted_in_study": {
+      "uuid": "6c098d7e-1607-4ebc-8ae4-5002fc29e91b",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1308",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Dimitra Chatzitheodoridou",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Helmholtz Zentrum M\u00fcnchen"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Daniela Bureik",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Helmholtz Zentrum M\u00fcnchen"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-2540-8240",
+          "display_name": "Francesco Padovani",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Helmholtz Zentrum M\u00fcnchen"
+            }
+          ],
+          "contact_email": "francesco.padovani@helmholtz-munich.de",
+          "role": "submitter"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Kalyan Varma Nadimpalli",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Helmholtz Zentrum M\u00fcnchen"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-5790-5204",
+          "display_name": "Kurt M. Schmoller",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Helmholtz Zentrum M\u00fcnchen"
+            }
+          ],
+          "contact_email": "kurt.schmoller@helmholtz-munich.de",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Decoupled transcript and protein concentrations ensure histone homeostasis in different nutrients",
+      "release_date": "2024-08-12",
+      "description": "Raw microscopy data for Chatzitheodoridou et al. 2024",
+      "keyword": [
+        "Budding yeast, histones, protein homeostasis, nutrients, cell cycle"
+      ],
+      "acknowledgement": "We thank Christopher Bruhn, Marco Foiani and Jennifer Ewald for sharing strains, and Pascal Falter-Braun, Christof Osman and members of the Institute of Functional Epigenetics for insightful scientific discussions. We thank Matthew Swaffer for helpful comments on the manuscript. ",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": null,
+          "funder": [
+            {
+              "display_name": "Helmholtz Association",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": "This work was funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) through projects 416098229 and 431480687, by the Human Frontier Science Program (career development award to K.M.S.), and the Helmholtz Association.",
+      "attribute": {}
+    }
+  },
+  "1771194c-6c17-4c71-a742-ee5aa544bbb4": {
+    "title_id": "Calcium imaging",
+    "uuid": "1771194c-6c17-4c71-a742-ee5aa544bbb4",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "calcium imaging ",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Calcium imaging Zhu et. al 2024 elife Figure 4A",
+          "image_acquisition": "2P micrsocsope",
+          "specimen": "Sample preparation"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "1fc80dc3-7170-4e1d-a292-5b06f31a4183"
+      ],
+      "subject_uuid": "17b86e27-7d35-414b-bee0-5693e418380d",
+      "biosample_uuid": "[UUID('82452962-44c5-489d-8906-2aa7c33f3d8e')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1314/fcdd561b-904a-4f96-83de-efae594dfdb9/d59709d5-aa8a-439f-99a8-476a2c001b32.png"
+    ],
+    "submitted_in_study_uuid": "61517057-49b7-4833-9b09-7345b570cfd2",
+    "submitted_in_study": {
+      "uuid": "61517057-49b7-4833-9b09-7345b570cfd2",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1314",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-1697-1138",
+          "display_name": "Tomoko Ohyama",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "McGill University"
+            }
+          ],
+          "contact_email": "tomoko.ohyama@mcgill.ca",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "Calcium Imaging data for Zhu et. al 2024 elife",
+      "release_date": "2024-08-11",
+      "description": "This is row data for Figure 4 and 6 data for Zhu et.al 2024 elife. ",
+      "keyword": [
+        "GCaMP imaging"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": null,
+          "funder": [
+            {
+              "display_name": "FRQS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "990caa63-8d4b-45b8-a84b-1de43f4470e2": {
+    "title_id": "Msb2 & Opy2 GFP Images",
+    "uuid": "990caa63-8d4b-45b8-a84b-1de43f4470e2",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "TIF image files for yeast Msb2-GFP and Opy2-GFP samples.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "S. cerevisae BY4147",
+          "image_acquisition": "scProtein-GFP Image Acquisition",
+          "specimen": "S. cerevisae w/ GFP tagged Msb2 & Opy2"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "689f5497-e994-48c2-8b7e-3bc59c9cc607"
+      ],
+      "subject_uuid": "a450a444-5668-417a-925e-6c7c30301b60",
+      "biosample_uuid": "[UUID('bbc81df2-afe4-4f18-a6d5-676777b21b14')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "ea52fea2-7e22-4533-b9a9-ae09281590b7": {
+    "title_id": "Sim-FISH Output Data",
+    "uuid": "ea52fea2-7e22-4533-b9a9-ae09281590b7",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "MAT files containing original Sim-FISH output arrays, processed versions used for benchmarking, ground truth keys, and simulation parameters (where applicable).",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "Sim-FISH Simulations",
+          "image_acquisition": "Sim-FISH Image Simulation",
+          "specimen": "Simulated Images (Sim-FISH)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "dd1fcd39-aa6a-48d9-a20d-c63983598e32"
+      ],
+      "subject_uuid": "097018d3-361b-421e-b893-ac009d737453",
+      "biosample_uuid": "[UUID('46854516-8059-4cec-a98e-47726f237d89')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "ed8abc19-25ca-4bb3-86af-f18a90201644": {
+    "title_id": "HeLa CY5 FISH/MS2",
+    "uuid": "ed8abc19-25ca-4bb3-86af-f18a90201644",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Analysis files for images obtained from simultaneous MS2 and CY5 FISH in HeLa cells. Images sourced from the lab of Brian Munsky at Colorado State (Vo, H. D., Forero-Quintero, L. S., Aguilera, L. U., & Munsky, B. (2023). Analysis and design of single-cell experiments to harvest fluctuation information while rejecting measurement noise. Frontiers in Cell and Developmental Biology, 11. https://doi.org/10.3389/fcell.2023.1133994). Available upon request to Munsky Lab.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "H-128 (HeLa)",
+          "image_acquisition": "HeLa CY5/MS2 Image Acquisition",
+          "specimen": "HeLa H-128 Cells"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "cfc874fb-95a2-4d34-a9db-888a5e966a6f"
+      ],
+      "subject_uuid": "b55362dd-713b-4851-93bb-d5857e5451af",
+      "biosample_uuid": "[UUID('3132b6e4-b518-4c36-a19b-29049a8c9630')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "39bc2a30-95b4-4320-8781-b4748fa36491": {
+    "title_id": "S. cerevisiae w/ GFP tagged osmotic stress response proteins (scProtein)",
+    "uuid": "39bc2a30-95b4-4320-8781-b4748fa36491",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "GFP tagged Msb2 and Opy2 after NaCl stimulation. Subsample of 1024x1024x13 image stacks from experiment and benchmarking analysis results.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "S. cerevisae BY4147",
+          "image_acquisition": "scProtein-GFP Image Acquisition",
+          "specimen": "S. cerevisae w/ GFP tagged Msb2 & Opy2"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "689f5497-e994-48c2-8b7e-3bc59c9cc607"
+      ],
+      "subject_uuid": "a450a444-5668-417a-925e-6c7c30301b60",
+      "biosample_uuid": "[UUID('bbc81df2-afe4-4f18-a6d5-676777b21b14')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "263eb164-1bd4-486d-8014-1f9187773d68": {
+    "title_id": "deepBlink Retraining Data & Model",
+    "uuid": "263eb164-1bd4-486d-8014-1f9187773d68",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Model and model input data for retraining deepBlink on Sim-FISH simulated image set.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "Sim-FISH Simulations",
+          "image_acquisition": "Sim-FISH Image Simulation",
+          "specimen": "Simulated Images (Sim-FISH)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "dd1fcd39-aa6a-48d9-a20d-c63983598e32"
+      ],
+      "subject_uuid": "097018d3-361b-421e-b893-ac009d737453",
+      "biosample_uuid": "[UUID('46854516-8059-4cec-a98e-47726f237d89')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "61179c24-8a80-4295-8749-57a11c43b962": {
+    "title_id": "mESC Exonic lncRNA FISH",
+    "uuid": "61179c24-8a80-4295-8749-57a11c43b962",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Analysis files and cell segmentation masks for exonic lncRNA (Xist, Tsix, days 0-4) image batch.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "mESC 16.7",
+          "image_acquisition": "mESC Exonic lncRNA Image Acquisition",
+          "specimen": "Fixed mESCs"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "a06038c5-3fa6-485d-9e14-022798d31555"
+      ],
+      "subject_uuid": "bd6e13a2-5e13-4d5e-a5d9-732faec63c26",
+      "biosample_uuid": "[UUID('31536d07-5f1a-4582-900f-dc66a844fb8c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "450785c6-a8b3-4fe5-a930-fadcb7925380": {
+    "title_id": "Sim-FISH Analysis Dataset",
+    "uuid": "450785c6-a8b3-4fe5-a930-fadcb7925380",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Call set & analysis files for all Sim-FISH images",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "Sim-FISH Simulations",
+          "image_acquisition": "Sim-FISH Image Simulation",
+          "specimen": "Simulated Images (Sim-FISH)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "dd1fcd39-aa6a-48d9-a20d-c63983598e32"
+      ],
+      "subject_uuid": "097018d3-361b-421e-b893-ac009d737453",
+      "biosample_uuid": "[UUID('46854516-8059-4cec-a98e-47726f237d89')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "54a79170-2536-48c4-853c-42d3752fdc53": {
+    "title_id": "Misc. Image Results",
+    "uuid": "54a79170-2536-48c4-853c-42d3752fdc53",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Callset/results files for additional analyzed images such as the Preibisch lab RS-FISH set.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "RS-FISH Simulated Images",
+          "image_acquisition": "RS-FISH Image Simulation",
+          "specimen": "Simulated Images (RS-FISH)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "1e2e3822-bb96-4741-97a0-b38304d55722"
+      ],
+      "subject_uuid": "bc1147fe-90ca-478c-9993-8080aeb93980",
+      "biosample_uuid": "[UUID('88a56c31-bcc6-44ff-bd1f-6ef73e3ebe9d')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "dd34dfd1-8b09-4fca-a6cb-c3f89bc2011d": {
+    "title_id": "mESC Intronic lncRNA/Histone IF Samples - Cell Segmentation Masks",
+    "uuid": "dd34dfd1-8b09-4fca-a6cb-c3f89bc2011d",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "2D cell segmentation masks used in tool benchmarking and analysis for mESC Intronic RNA/histone IF image groups.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "mESC 16.7",
+          "image_acquisition": "mESC Intronic lncRNA/ Histone Mark Image Acquisition",
+          "specimen": "Fixed mESCs"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "f438f649-1e10-47ed-a5ae-1028097ec397"
+      ],
+      "subject_uuid": "bd6e13a2-5e13-4d5e-a5d9-732faec63c26",
+      "biosample_uuid": "[UUID('31536d07-5f1a-4582-900f-dc66a844fb8c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "cd9f7179-5956-484a-b088-86fb049b43f7": {
+    "title_id": "mESC Exonic lncRNA Samples - Cell Segmentation Masks",
+    "uuid": "cd9f7179-5956-484a-b088-86fb049b43f7",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "2D cell segmentation masks used in tool benchmarking and analysis for mESC Exonic image groups.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "mESC 16.7",
+          "image_acquisition": "mESC Exonic lncRNA Image Acquisition",
+          "specimen": "Fixed mESCs"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "a06038c5-3fa6-485d-9e14-022798d31555"
+      ],
+      "subject_uuid": "bd6e13a2-5e13-4d5e-a5d9-732faec63c26",
+      "biosample_uuid": "[UUID('31536d07-5f1a-4582-900f-dc66a844fb8c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "6575480c-9663-4afc-818f-ee5b4819380e": {
+    "title_id": "mESC intronic lncRNA & histone IF TIFs",
+    "uuid": "6575480c-9663-4afc-818f-ee5b4819380e",
+    "version": 2,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "TIF image stacks for mESC intronic lncRNA imaging (Xist & Tsix, 0d & 2d) and histone mark IF (H3K36me3 & H3K4me2, 0d & 2d)",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "mESC 16.7",
+          "image_acquisition": "mESC Intronic lncRNA/ Histone Mark Image Acquisition",
+          "specimen": "Fixed mESCs"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "f438f649-1e10-47ed-a5ae-1028097ec397"
+      ],
+      "subject_uuid": "bd6e13a2-5e13-4d5e-a5d9-732faec63c26",
+      "biosample_uuid": "[UUID('31536d07-5f1a-4582-900f-dc66a844fb8c')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1316/34b9efc1-2649-4c54-8534-635918345164/6c31d40b-c8cf-425b-88d8-7cbc4b6dfd26.png"
+    ],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "2b60072b-2385-4d33-b30e-0825b7415932": {
+    "title_id": "S. cerevisiae STL1/CTT1 osmotic stress time course",
+    "uuid": "2b60072b-2385-4d33-b30e-0825b7415932",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Analysis files for S. cerevisiae STL1/CTT1 time course images - all 5 biological replicates across 2 NaCl concentrations. Images can be found at: (https://www.ebi.ac.uk/biostudies/studies/S-BIAD1)",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "S. cerevisae BY4147",
+          "image_acquisition": "S. cerevisiae STL1/CTT1 time course image acquisition",
+          "specimen": "BY4741 (STL1/CTT1 timecourses)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "15e3f0c3-d0db-4538-9fcc-fc728c1afd06"
+      ],
+      "subject_uuid": "b936abf9-a12e-46a5-aefb-3847030636bc",
+      "biosample_uuid": "[UUID('bbc81df2-afe4-4f18-a6d5-676777b21b14')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "08d22f62-3051-4cd1-949c-8cdb5759c8e3": {
+    "title_id": "Yeast Timecourse - Cell Segmentation Masks",
+    "uuid": "08d22f62-3051-4cd1-949c-8cdb5759c8e3",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "2D cell segmentation masks used in tool benchmarking and analysis for yeast time course image groups.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "S. cerevisae BY4147",
+          "image_acquisition": "S. cerevisiae STL1/CTT1 time course image acquisition",
+          "specimen": "BY4741 (STL1/CTT1 timecourses)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "15e3f0c3-d0db-4538-9fcc-fc728c1afd06"
+      ],
+      "subject_uuid": "b936abf9-a12e-46a5-aefb-3847030636bc",
+      "biosample_uuid": "[UUID('bbc81df2-afe4-4f18-a6d5-676777b21b14')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "f1024393-a586-463c-aad7-76f92a7206b4": {
+    "title_id": "mESC exonic lncRNA TIFs",
+    "uuid": "f1024393-a586-463c-aad7-76f92a7206b4",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "TIF image stacks for mESC exonic lncRNA imaging (Xist & Tsix, 0d, 0.5d, 1d, and 4d)",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "mESC 16.7",
+          "image_acquisition": "mESC Exonic lncRNA Image Acquisition",
+          "specimen": "Fixed mESCs"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "a06038c5-3fa6-485d-9e14-022798d31555"
+      ],
+      "subject_uuid": "bd6e13a2-5e13-4d5e-a5d9-732faec63c26",
+      "biosample_uuid": "[UUID('31536d07-5f1a-4582-900f-dc66a844fb8c')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "7182d238-543b-4b69-b7c5-015ff503d13e": {
+    "title_id": "Sim-FISH TIF Files",
+    "uuid": "7182d238-543b-4b69-b7c5-015ff503d13e",
+    "version": 8,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "TIF files for simulated images generated with Sim-FISH that were used for benchmarking.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "Sim-FISH Simulations",
+          "image_acquisition": "Sim-FISH Image Simulation",
+          "specimen": "Simulated Images (Sim-FISH)"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "dd1fcd39-aa6a-48d9-a20d-c63983598e32"
+      ],
+      "subject_uuid": "097018d3-361b-421e-b893-ac009d737453",
+      "biosample_uuid": "[UUID('46854516-8059-4cec-a98e-47726f237d89')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "6002c7da-6cba-478a-953c-f340609e7922": {
+    "title_id": "mESC Intronic lncRNA FISH & Histone mark IF",
+    "uuid": "6002c7da-6cba-478a-953c-f340609e7922",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Analysis files and cell segmentation masks for intronic lncRNA (Xist, Tsix) and H3K36me3/H3K4me2 image batch.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+          "image_correlation": null,
+          "biosample": "mESC 16.7",
+          "image_acquisition": "mESC Intronic lncRNA/ Histone Mark Image Acquisition",
+          "specimen": "Fixed mESCs"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "f438f649-1e10-47ed-a5ae-1028097ec397"
+      ],
+      "subject_uuid": "bd6e13a2-5e13-4d5e-a5d9-732faec63c26",
+      "biosample_uuid": "[UUID('31536d07-5f1a-4582-900f-dc66a844fb8c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Detection & threshold selection benchmarking analysis of puncta quantification tools",
+        "features_analysed": "MAT files (one per image channel) containing metadata, reference sets, callsets, automated threshold selections, and performance metrics for four tools: TrueSpot, Big-FISH, RS-FISH, and deepBlink."
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+    "submitted_in_study": {
+      "uuid": "5de147f9-673e-477d-8d8a-54dd68bcb44a",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1316",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Blythe Hospelhorn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Kesler",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Hossein Jashnasz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Gregor Neuert",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Vanderbilt University"
+            }
+          ],
+          "contact_email": "gregor.neuert@vanderbilt.edu",
+          "role": "principal investigator"
+        }
+      ],
+      "title": "TrueSpot: A robust automated tool for quantifying signal puncta in fluorescent imaging",
+      "release_date": "2024-08-13",
+      "description": "Images (not externally cited), callsets, benchmarking measures, and analysis results used for testing fluorescence quantification software tools including Neuert Lab's TrueSpot tool.",
+      "keyword": [
+        "RNA-FISH",
+        "Benchmarking",
+        "IF",
+        "Software",
+        "TrueSpot"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "5R01GM140240",
+          "funder": [
+            {
+              "display_name": "NIGMS",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "3e53cec4-03df-4b9a-91ad-623d183bd0a2": {
+    "title_id": "Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus",
+    "uuid": "3e53cec4-03df-4b9a-91ad-623d183bd0a2",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Image datasets used in: \"Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus\"",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus",
+          "image_acquisition": "Imaging conditions used in: \"Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus\" by Glenn et al., 2024.",
+          "specimen": "Imaging protocol for: \"Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus\" by Glenn et al., 2024."
+        }
+      ],
+      "acquisition_process_uuid": [
+        "12e106dd-ce54-4b62-aeeb-0874253486eb"
+      ],
+      "subject_uuid": "c6a4dde5-530e-4d4b-a6f8-e5a3ffd4c6bf",
+      "biosample_uuid": "[UUID('d0b94599-8b5f-4340-a2ce-997b1d66dfde')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1327/daecb930-a583-4484-a860-8935723905e5/1cbd3033-4ac7-4561-80ae-1c00191dac46.png"
+    ],
+    "submitted_in_study_uuid": "07bd97f1-6b58-4a9d-824c-f360a10a7472",
+    "submitted_in_study": {
+      "uuid": "07bd97f1-6b58-4a9d-824c-f360a10a7472",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1327",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Skye Glenn",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Stanford University"
+            }
+          ],
+          "contact_email": "skyeg@stanford.edu",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-8366-2998",
+          "display_name": "Alessio Fragasso",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Stanford University"
+            }
+          ],
+          "contact_email": "fragasso@stanford.edu",
+          "role": "data analyst"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-8177-5892",
+          "display_name": "Wei-Hsiang Lin",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Institute of Molecular Biology, Academia Sinica"
+            }
+          ],
+          "contact_email": "whl243@gate.sinica.edu.tw",
+          "role": "data analyst"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-6363-804X",
+          "display_name": "Alexandros Papagiannakis",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Stanford University"
+            }
+          ],
+          "contact_email": "alexpapa@stanford.edu",
+          "role": "data analyst"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Setsu Kato",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Yale University"
+            }
+          ],
+          "contact_email": "setsukato@hiroshima-u.ac.jp",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-0980-5334",
+          "display_name": "Christine Jacobs-Wagner",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Stanford University"
+            }
+          ],
+          "contact_email": "jacobs-wagner@stanford.edu",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus",
+      "release_date": "2024-08-20",
+      "description": "Image dataset used in: \"Coupling of cell growth modulation to asymmetric division and cell cycle regulation in Caulobacter crescentus\" by Glenn et al., 2024.",
+      "keyword": [
+        "Caulobacter Crescentus, growth rate, asymmetric division, G1 phase"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": null,
+          "funder": [
+            {
+              "display_name": "Howard Hughes Medical Institute",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": "This research was supported in part by the Netherlands Organization for Scientific Research (NWO), Rubicon 2022-2 Science programme, 019.222EN.001 (A.F.). C.J.W. is an investigator of the Howard Hughes Medical Institute.\n",
+      "attribute": {}
+    }
+  },
+  "5a5d4166-553b-4be9-8fcf-23d99a690d32": {
+    "title_id": "fluorescent confocal images",
+    "uuid": "5a5d4166-553b-4be9-8fcf-23d99a690d32",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Condensates images",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Microscopy images",
+          "image_acquisition": "Image acquisition",
+          "specimen": "images"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "a2e5484b-c7a0-4947-87a8-2587b1ca0ff5"
+      ],
+      "subject_uuid": "d8b33092-9517-4967-9dd0-d1ed259b3679",
+      "biosample_uuid": "[UUID('8d4f44b4-6d61-4a51-805a-52c51b4ae8df')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1333/63ff42c4-614a-4cc1-9060-1071e0079a6c/e4aa2140-0209-4337-982c-d57b7fb3a742.png"
+    ],
+    "submitted_in_study_uuid": "b354701b-0bcb-44c0-8dd9-4e36f81a0b0b",
+    "submitted_in_study": {
+      "uuid": "b354701b-0bcb-44c0-8dd9-4e36f81a0b0b",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD1333",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Yang Tang",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Shanghai Tenth People's Hospital"
+            }
+          ],
+          "contact_email": "tangyang@tongji.edu.cn",
+          "role": null
+        }
+      ],
+      "title": "Identification of a Repressive Type of TF Condensation and Engineering a Glue Peptide Therapy Against Cancer",
+      "release_date": "2024-08-24",
+      "description": "Transcriptional factors (TFs) act as key determinants of the coordination of cell death and survival by differentially modulating gene expression. Here, we systematically identified many TFs including condensate-forming TEAD4 in stressed cells. In sharp contrast to YAP-induced transcription-activating condensation of TEAD4, we found that co-factors such as VGLL4 and RFXANK could alternatively induce repressive condensation of TEAD4 to trigger cell death. Illustrated using VGLL4 as the cofactor, we mechanistically revealed that the heterotypic interactions between TEAD4 and VGLL4 favor the oligomerization and assembly of large condensates of TEAD4 to manifest a nonclassical inhibitory function of this transcription factor, i.e., causing DNA/chromatin to be aggregated and entangled, which eventually impede gene expression. Based on these findings, we engineered a linker peptide to selectively \u201cglue\u201d TEAD4 molecules together, thereby forcefully driving its condensation-induced repression of YAP-induced activation. This glue peptide displayed a strong antitumor effect via inhibition of TEAD4-related gene transcription. Collectively, this work revealed a new type of phase separation, i.e., repressive condensation of TFs, revealed how cofactor-induced differential condensation can orchestrate opposite functions of a given TF, and further developed a new class of antitumor strategies involving artificially inducing repressive condensation. ",
+      "keyword": [
+        "Repressive condensation, TEAD4, VGLL family of proteins, Glue peptide, Cancer"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "67a02e47-ce01-4db1-b95e-ce6328a5e54b": {
+    "title_id": "Experiments",
+    "uuid": "67a02e47-ce01-4db1-b95e-ce6328a5e54b",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "This contains all data described in the associated article",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Not included",
+          "image_correlation": "None",
+          "biosample": "Drosophila",
+          "image_acquisition": "Two photon",
+          "specimen": "Embryos"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "b36b1625-03b1-43f8-9a04-4dea55622dcf"
+      ],
+      "subject_uuid": "390312fe-5e7f-4a01-8ee1-eb9170bba2cb",
+      "biosample_uuid": "[UUID('f9f95778-3fd0-45c4-b5bd-d7898f617de0')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD602/dbdc5f4e-bd64-4f04-8eae-eef1cd11f0b3/1835ec41-8eff-49c3-b04d-4141f5774242.png"
+    ],
+    "submitted_in_study_uuid": "29ecc9f4-4c4d-4d7f-9d97-e4047a291b4b",
+    "submitted_in_study": {
+      "uuid": "29ecc9f4-4c4d-4d7f-9d97-e4047a291b4b",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD602",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-4185-2467",
+          "display_name": "Emily Gehrels",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/02me5cy06",
+              "address": null,
+              "website": null,
+              "display_name": "Developmental Biology Institute of Marseille"
+            }
+          ],
+          "contact_email": "emily.gehrels@univ-amu.fr",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Bandan Chakrabortty",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/02me5cy06",
+              "address": null,
+              "website": null,
+              "display_name": "Developmental Biology Institute of Marseille"
+            }
+          ],
+          "contact_email": "bandan.chakrabortty@univ-amu.fr",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Marc-Eric Perrin",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/02me5cy06",
+              "address": null,
+              "website": null,
+              "display_name": "Developmental Biology Institute of Marseille"
+            }
+          ],
+          "contact_email": "marc-eric.perrin@univ-amu.fr",
+          "role": "software development"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Matthias Merkel",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/052bbtn31",
+              "address": null,
+              "website": null,
+              "display_name": "Centre de Physique Th\u00e9orique"
+            }
+          ],
+          "contact_email": "matthias.merkel@univ-amu.fr",
+          "role": "corresponding author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Thomas Lecuit",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/04ex24z53",
+              "address": null,
+              "website": null,
+              "display_name": "Coll\u00e8ge de France"
+            }
+          ],
+          "contact_email": "thomas.lecuit@univ-amu.fr",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Data repository for \"Curvature gradient drives polarized tissue flow in the Drosophila embryo\"",
+      "release_date": "2022-12-17",
+      "description": "Two photon microscopy time series and lightsheet microscopy z-stack and time series of early Drosophila embryogenesis during posterior midgut invagination. ",
+      "keyword": [
+        "Drosophila",
+        "morphogenesis",
+        "two-photon",
+        "lightsheet",
+        "myosin",
+        "GAP43"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "825defe7-8c61-4cdc-992a-3e0ed0095a52": {
+    "title_id": "\u00b5CT data",
+    "uuid": "825defe7-8c61-4cdc-992a-3e0ed0095a52",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Raw image stacks (3D tiff file format) of Pycnogonum litorale complete specimens and ROIs",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Pycnogonida (sea spiders)",
+          "image_acquisition": "Pycnogonum litorale \u00b5CT",
+          "specimen": "Pycnogonum litorale amputees"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c6701b23-ae16-4bcb-93f2-27c8a717379e"
+      ],
+      "subject_uuid": "3cecb71f-0a39-4eb3-9ee8-4e6975a574f2",
+      "biosample_uuid": "[UUID('3d29afb5-38a2-4de9-b34b-5bb30c944801')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD606/38026912-4a13-406d-9751-3bdb444f729b/cd1c3ba0-dd52-4b7c-9244-53689fc9ee76.png"
+    ],
+    "submitted_in_study_uuid": "4dce18a2-2a47-44b7-8e0b-e3ab66abf398",
+    "submitted_in_study": {
+      "uuid": "4dce18a2-2a47-44b7-8e0b-e3ab66abf398",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD606",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Georg Brenneis",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Vienna"
+            }
+          ],
+          "contact_email": "georg.brenneis@univie.ac.at",
+          "role": null
+        }
+      ],
+      "title": "The sea spider Pycnogonum litorale overturns the paradigm of the absence of axial regeneration in molting animals",
+      "release_date": "2023-01-31",
+      "description": "\u00b5CT datasets of Pycnogonum litorale specimens that had been subjected to various degrees of posterior amputation.",
+      "keyword": [
+        "Pycnogonida",
+        "sea spider",
+        "Pantopoda",
+        "Arthropoda",
+        "regeneration",
+        "evolution",
+        "\u00b5CT",
+        "development",
+        "segmentation"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "Deutsche Forschungsgemeinschaft grant BR5039/3-1\nAssemble Plus grant as part of the European Union\u2019s Horizon 2020 research and innovation programme under grant agreement no. 730984",
+      "attribute": {}
+    }
+  },
+  "5af23f45-2c99-4936-a16f-d0f31b2711b0": {
+    "title_id": "Fluorescent images",
+    "uuid": "5af23f45-2c99-4936-a16f-d0f31b2711b0",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "In this study, we investigated the impact of gut microbiota and SCFAs on brain barrier integrity and Alzheimer's disease pathology via different immunostainings.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Biosamples",
+          "image_acquisition": "Image acquisition",
+          "specimen": "Specimen"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "ffde62dc-120c-45bf-a584-c7c9afa331d7"
+      ],
+      "subject_uuid": "ae4ed96d-8e83-4a69-be4f-bb40898bbc22",
+      "biosample_uuid": "[UUID('9dcb5003-5315-4a27-b9ab-9be8435aa880')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD609/6ff7b0a8-6cc4-4131-bd1b-b78fb8e276f0/ed9f6d05-23ca-4d95-9b8d-6db70e499402.png"
+    ],
+    "submitted_in_study_uuid": "88d36abc-c77f-4127-9551-b8409cb5d4a6",
+    "submitted_in_study": {
+      "uuid": "88d36abc-c77f-4127-9551-b8409cb5d4a6",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD609",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Junhua Xie",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "junhuax@irc.vib-ugent.be",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Arnout Bruggeman",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "Arnout.Bruggeman@irc.vib-ugent.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Clint De Nolf",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "clint.denolf@irc.vib-ugent.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Charysse Vandendriessche",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "charyssevdd@irc.vib-ugent.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Griet Van Imschoot",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "grietv@irc.vib-ugent.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Elien Van Wonterghem",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "elienvw@irc.ugent.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Lars Vereecke",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "lars.vereecke@irc.vib-ugent.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Roosmarijn E. Vandenbroucke",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "VIB-UGent Center for Inflammation Research"
+            }
+          ],
+          "contact_email": "Roosmarijn.Vandenbroucke@irc.vib-ugent.be",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "The importance of the blood-cerebrospinal fluid interface in the gut-brain axis and A\u03b2 pathology",
+      "release_date": "2022-12-14",
+      "description": "In this study, we found that mice lacking gut microbiota displayed increased blood-cerebrospinal fluid (CSF) barrier permeability associated with disorganized tight junctions (TJs), which can be rescued by recolonization with gut microbiota or supplementation with short-chain fatty acids (SCFAs). We further confirmed that the vagus nerve plays an important role in this process but SCFAs can also bypass the vagus nerve and affect blood-CSF barrier functionality. Strikingly, the administration of SCFAs in AppNL-G-F AD mice also improved the localization of TJs in the blood-CSF barrier. This was accompanied by a pronounced reduction in \u03b2-amyloid (A\u03b2) burden, which could be achieved by regulating microglial phenotype. Altogether, our results suggest that modulating the microbiota or administering SCFAs might have therapeutic potential in AD via tightening blood-CSF barrier and maintaining microglial activity.",
+      "keyword": [
+        "Gut microbiota",
+        "short-chain fatty acids",
+        "blood-cerebrospinal fluid barrier",
+        "Alzheimer\u2019s disease"
+      ],
+      "acknowledgement": "We thank the VIB BioImaging Core for training, support and access to the instrument park. This work was supported by the Research Foundation-Flanders (FWO), Chinese Scholarship Council (CSC), the Foundation for Alzheimer\u2019s Research Belgium (SAO-FRA) and the Baillet Latour Fund.",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
   "5546f16c-273d-4465-ab09-351cf34545f0": {
     "title_id": "A2058 GRC(Talin Rod)",
     "uuid": "5546f16c-273d-4465-ab09-351cf34545f0",
