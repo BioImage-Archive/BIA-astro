@@ -48103,5 +48103,3312 @@
       }
     ],
     "image_annotation_component": []
+  },
+  "S-BIAD890": {
+    "uuid": "4638fc5d-4a7e-4d26-9b66-ff9441e87987",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD890",
+    "licence": "CC_BY_4.0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0001-6395-8142",
+        "display_name": "Timothy Birkle",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Cambridge"
+          }
+        ],
+        "contact_email": "timjyb@gmail.com",
+        "role": "first author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Henriette Willems",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "ALBORADA Drug Discovery Institute"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "John Skidmore",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "ALBORADA Drug Discovery Institute"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Guy Brown",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Cambridge"
+          }
+        ],
+        "contact_email": "gcb3@cam.ac.uk",
+        "role": "corresponding author"
+      }
+    ],
+    "title": "Disease phenotypic screening in neuron-glia co-cultures identifies blockers of inflammatory neurodegeneration",
+    "release_date": "2024-03-10",
+    "description": "Neurophysiology and neuropathology are mediated by the interaction of neurons and glial cells, which cannot be modelled by monocultures. However, mixed cultures are difficult to use and analyse for high-throughput screening. Here, we show the utility of compound and target screening using primary neuron-glia cultures to model inflammatory neurodegeneration alongside live-cell stains and automated classification of neurons, astrocytes or microglia using open-source analysis software. Out of 227 compounds with known bioactivities, 29 protected against lipopolysaccharide-induced neuronal loss, including drugs affecting adrenergic, steroid, inflammatory and MAP kinase signalling. The screen also identified physiological compounds, such as noradrenaline and progesterone, that protected, and identified neurotoxic compounds, such as a TLR7 agonist, that induced microglial proliferation. Thus, combining automated image analysis of complex cultures with high-throughput screening of known compounds in a cellular model of disease allows identification of important biology, as well as potential targets and drugs for treatment.",
+    "keyword": [
+      "Microglia",
+      "Machine learning",
+      "Coculture",
+      "Neurodegeneration",
+      "Inflammation",
+      "High-content",
+      "Screening"
+    ],
+    "acknowledgement": "We are grateful to the staff and animals of Cambridge's University Biomedical Services. We would particularly like to thank David Winpenny and Jon Clarke of the ADDI, as well as all members of the GB lab and William Kuan, David Allendorf, David Harrison, Esperanza Agullo Pascual, and Nikhita Annaiyappa of the ADDI for their helpful advice and training during this project.\n",
+    "see_also": [],
+    "related_publication": [],
+    "grant": [
+      {
+        "id": "ARUK-2023DDI-CAM",
+        "funder": [
+          {
+            "display_name": "ALBORADA Drug Discovery Institute",
+            "id": null
+          }
+        ]
+      }
+    ],
+    "funding_statement": "This work was supported by Medical Research Council UK funding to GB (MR/L010593), and by core funding to the ALBORADA Drug Discovery Institute (ARUK-2023DDI-CAM) with support from the ALBORADA Trust. ",
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 91856,
+        "file_type_aggregation": [
+          ".tif"
+        ],
+        "title_id": "High-content screen",
+        "uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+        "version": 6,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "High-content screen for compounds that are protective against LPS-induced neuronal loss in primary neuron-glia cocultures",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": "Image Analysis",
+              "image_correlation": "Image Correlation",
+              "biosample": "Coculture screen",
+              "image_acquisition": "Image Acquisition",
+              "specimen": "Culture preparation"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "bf5455e2-dc26-4dc0-84e9-51453338350b"
+          ],
+          "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3",
+          "biosample_uuid": "[UUID('75fdb8a4-072e-4882-8825-65a7debca770')]"
+        },
+        "analysis_method": [
+          {
+            "protocol_description": "Image Analysis",
+            "features_analysed": "The final CellProfiler pipeline used to process images and generate cell object measurements from the screen can be found on GitHub at timjyb/Birkle-et-al-2023-HTS (Pipe1). Background subtraction was omitted owing to the uniformity of image illumination achieved on the high-content imager, which helped reduce computation time. A Cellpose module was used for segmentation of nuclei (Hoechst), and the resulting objects were shrunk by 1px to more accurately mask the nuclear area. Intensity and shape measurements were derived for each objects. The pipeline saves object images suitable for reloading into CellProfiler for further analysis, which avoids the need to rerun the computationally costly Cellpose segmentation again. Object outline images are also saved, which can be loaded into CellProfiler Analyst (CPA) alongside the original images for clear visualisation of objects (and mis-segmentation events) during classifier training. Object measurements were stored in an SQLite database, which was handled using the freely available DB Browser for SQLite software (https://sqlitebrowser.org/). \n\nA randomly selected subset of the final object set from each repeat was then loaded into CPA (this reduced the tile fetch times while fetching objects for classification in CPA), and randomly selected objects from this set were classified manually into 7 classes, aiming for 400 objects each: Neuron, Microglia, Astrocyte, Other, Condensed, Necrotic or Debris. Once all four repeats were completed, object sets and training sets were combined, resulting in 1,600 total objects annotated per class and spread evenly across repeats such that the final classifier should be robust to any variation in cells, staining, or image quality over the entire screen (11,274 objects in total). The training set was therefore balanced across the 4 biological repeats, and otherwise was randomly sampled such that there should be roughly equal representation of cells from LPS- and LPS+ wells (and roughly equal contribution from each compound treatment as well)\n\nAccording to internal accuracy validation (k-fold validation), a Random Trees Classifier performed the best, and this was used for final analysis (validation data can be found in the publication)\n\nCellProfiler version was 4.2.4 (built from source). CellProfiler Analyst version was 3.0\n"
+          }
+        ],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD890/722569cf-083f-4ef5-8520-4dd9585ab05a/92b0d1a6-fc42-4228-9821-5df39542b92e.png"
+        ],
+        "submitted_in_study_uuid": "4638fc5d-4a7e-4d26-9b66-ff9441e87987",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Image Acquisition",
+            "uuid": "bf5455e2-dc26-4dc0-84e9-51453338350b",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "10x objective. 4 non-overlapping fields per well. Appropriate focus offsets for each channel for good focus. Autofocus on the first field of each well. 100% laser power used for all channels, with varying exposures",
+            "imaging_instrument_description": "IN Cell Analyzer 6000 (GE Healthcare)",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Culture preparation",
+            "uuid": "f1fe48ad-53c4-4588-8e5c-98073272084f",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "P4 rat cerebella were dissected in ice-cold HBSS, finely diced, and incubated in Versene for 5-10 minutes at 37C. Cells were then mechanically dissociated by trituration, transferred to warm media, pelleted, resuspended, and 40\u00b5m-strained. Live cells were counted using trypan blue. Cultures were seeded at 30,000 live cells/well in 384-well high-content imaging plates (6057302) coated with 0.01% PLL, in 30\u00b5L media. Media consisted of high-glucose DMEM supplemented with 5% certified foetal bovine serum (FBS; Gibco; 10082147), 5% horse serum (Gibco; 26050088), 2mM L-glutamine, 13mM glucose, 5mM HEPES, and 20mM KCl. Cells were cultured for 7 days before treatment.\n\nOn day of treatment, DIV7, assay-ready compound plates (prepared by the Echo dispenser, randomised compound layouts, 7.5nL each at 10mM in DMSO) were warmed to room temperature and 6.25\u00b5L culture media was added per well. Plates were centrifuged to settle media and mix with the previously dispensed compound drops, resulting in 12\u00b5M final concentration for each compound/control. Using a custom program on a Viaflo384 (Integra) instrument, 3\u00b5L was transferred from each compound plate well to matching wells in a 384-well plate of DIV7 neuron-glia cultures. After 30 minutes incubation, 3\u00b5L was then transferred to the same cultures from a \u00b1LPS stock plate, with PBS or 1.2\u00b5g/mL LPS (in PBS, after 30 minutes water-bath sonication) arranged in the desired chequerboard pattern. This resulted in a final culture volume of 36\u00b5L, with 1\u00b5M of each treatment and \u00b1100ng/mL LPS per well. Cells were then incubated for another 3 days.\n\nOn DIV10, after 3 days of treatment, culture plates were sequentially taken for staining and imaging. For each plate, a fresh stain mix was prepared from identical stocks, distributed to one column of a 384-well intermediate plate, and then 4\u00b5L was added into each well via multichannel pipetting. This gave a final volume of 40\u00b5L per well. The final stain concentrations were 1\u00b5g/mL Hoechst 33342 (1mg/mL stocks prepared fresh on each repeat; 62249), 1\u00b5g/mL Isolectin IB4-AF594 (I21413), 100nM NeuroFluor NeuO (01801), and 0.75\u00b5M DRAQ7 (DR71000). Plates were incubated at 37\u2070C for 1 hour and then, without removal of staining media, imaged at 37\u2070C on an IN Cell Analyzer 6000 instrument (GE Healthcare), with 4 fields of view captured per well (covering approximately 80% of the well) and taking around 30 minutes per plate.\n\n",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "Coculture screen",
+            "uuid": "75fdb8a4-072e-4882-8825-65a7debca770",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "brown rat",
+                "scientific_name": "Rattus norvegicus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "2D culture of neurons and glia prepared from P4 rat cerebellum, cultured for 7 days, then treated for 3 further days. Staining was for 1 hour with 1ug/mL Hoechst 33342, 1ug/mL Isolectin IB4-AF594, 100nM Neurofluor NeuO, and 0.75uM DRAQ7",
+            "experimental_variable_description": [
+              "3 day treatment with or without LPS (100ng/mL), and with 1uM library compounds (or DMSO control)"
+            ],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Culture preparation",
+            "uuid": "98985952-c922-46ce-a019-2393847606cc",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "5394fdc0-70cf-4c0d-bcba-47bd29654d04",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Plate": "B028264",
+              "Row": "L",
+              "Column": "04",
+              "Well_long": "L04",
+              "Well_short": "L4",
+              "Field": "3",
+              "Channel": "Cy5",
+              "Well_ID": "B028264_L04",
+              "Field_ID": "B028264_L04_3",
+              "Treatment_ID": "BAY61",
+              "Treatment_ChEMBL": "CHEMBL1242100",
+              "LPS": "-"
+            },
+            "acquisition_process_uuid": [
+              "bf5455e2-dc26-4dc0-84e9-51453338350b"
+            ],
+            "submission_dataset_uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+            "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3"
+          },
+          {
+            "uuid": "2b2a266f-4f49-4c13-8b4b-ec46cfb27bc1",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Plate": "B012464",
+              "Row": "J",
+              "Column": "18",
+              "Well_long": "J18",
+              "Well_short": "J18",
+              "Field": "3",
+              "Channel": "dsRed",
+              "Well_ID": "B012464_J18",
+              "Field_ID": "B012464_J18_3",
+              "Treatment_ID": "101",
+              "Treatment_ChEMBL": "CHEMBL553",
+              "LPS": "-"
+            },
+            "acquisition_process_uuid": [
+              "bf5455e2-dc26-4dc0-84e9-51453338350b"
+            ],
+            "submission_dataset_uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+            "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3"
+          },
+          {
+            "uuid": "58a89e48-9803-491d-b7d0-7216fa3bbc82",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Plate": "B012450",
+              "Row": "F",
+              "Column": "13",
+              "Well_long": "F13",
+              "Well_short": "F13",
+              "Field": "3",
+              "Channel": "DAPI",
+              "Well_ID": "B012450_F13",
+              "Field_ID": "B012450_F13_3",
+              "Treatment_ID": "194",
+              "Treatment_ChEMBL": "CHEMBL3646801",
+              "LPS": "+"
+            },
+            "acquisition_process_uuid": [
+              "bf5455e2-dc26-4dc0-84e9-51453338350b"
+            ],
+            "submission_dataset_uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+            "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3"
+          },
+          {
+            "uuid": "faf5c4ba-1a2d-4230-b676-bbc7bcf4db64",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Plate": "B012458",
+              "Row": "J",
+              "Column": "16",
+              "Well_long": "J16",
+              "Well_short": "J16",
+              "Field": "1",
+              "Channel": "FITC",
+              "Well_ID": "B012458_J16",
+              "Field_ID": "B012458_J16_1",
+              "Treatment_ID": "75",
+              "Treatment_ChEMBL": "CHEMBL3188597",
+              "LPS": "-"
+            },
+            "acquisition_process_uuid": [
+              "bf5455e2-dc26-4dc0-84e9-51453338350b"
+            ],
+            "submission_dataset_uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+            "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3"
+          },
+          {
+            "uuid": "722569cf-083f-4ef5-8520-4dd9585ab05a",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Plate": "B028264",
+              "Row": "F",
+              "Column": "16",
+              "Well_long": "F16",
+              "Well_short": "F16",
+              "Field": "3",
+              "Channel": "DAPI",
+              "Well_ID": "B028264_F16",
+              "Field_ID": "B028264_F16_3",
+              "Treatment_ID": "31",
+              "Treatment_ChEMBL": "CHEMBL1451",
+              "LPS": "-"
+            },
+            "acquisition_process_uuid": [
+              "bf5455e2-dc26-4dc0-84e9-51453338350b"
+            ],
+            "submission_dataset_uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+            "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD900": {
+    "uuid": "e61786ef-50b7-4378-b258-327b54511e02",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD900",
+    "licence": "CC_BY_4.0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "CATILLON",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Luxembourg"
+          }
+        ],
+        "contact_email": "marie.catillon@uni.lu",
+        "role": "data acquisition"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0001-7109-6802",
+        "display_name": "OHNMACHT",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Luxembourg"
+          }
+        ],
+        "contact_email": "jochen.ohnmacht@lih.lu",
+        "role": "data analyst"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0002-0450-9301",
+        "display_name": "ANTONY",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Luxembourg"
+          }
+        ],
+        "contact_email": "paul.antony@uni.lu",
+        "role": "data analyst"
+      }
+    ],
+    "title": "LBX1, NHLH1 and NR2Fs knock-down effects on midbrain dopaminergic neurons populations derived from 4 different iPSC lines",
+    "release_date": "2023-10-05",
+    "description": "Acquisition of neuron (TH and MAP2) and nuclei (DAPI) ICC images with a Yokogawa high content imaging system. \nSignal masks for both TH and MAP2 were generated by using in-house Matlab analysis pipeline",
+    "keyword": [
+      "knock-down",
+      "midbrain dopaminergic neurons",
+      "transcription factors ",
+      "high content imaging",
+      "tyrosine hydroxylase"
+    ],
+    "acknowledgement": "We thank Dr. Jochen Ohnmacht and Dr. Paul Anthony",
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": "This work was supported by the Luxembourg National Research Fund within the National Centre of Excellence in Research on Parkinson's Disease (NCER-PD; FNR/NCER13/BM/11264123) and the PEARL program (FNR/P13/6682797 to R.K.). B.G.R. and N.d.L were funded by the Luxembourg National Research Fund through the PARK-QC doctoral training unit (PRIDE17/12244779/PARK-QC).; L.S., B.G.R. and J.O. have received funding from Fondation du P\u00e9lican de Mie et Pierre Hippert-Faber and Luxembourg Rotary Foundation. The genome-editing platform in L\u00fcbeck is supported by the DFG (FOR 2488 to A.R.). D.F. and S.B. were supported by Luxembourg National Research Fund (CORE C21/DM/15839823/Astraging). G.A. is supported by the Luxembourg National Research Fund CORE grant C21/BM/15850547/PINK1-DiaPDs.",
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 127,
+        "file_type_aggregation": [
+          ".png",
+          ".tif"
+        ],
+        "title_id": "ICC images and mask shRNA transduced neurons",
+        "uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+        "version": 9,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "high-content imaging + mask",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": "program code for Yokogawa masks",
+              "image_correlation": null,
+              "biosample": "TH-Rep1",
+              "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+              "specimen": "staining of neurons and imaging"
+            },
+            {
+              "image_analysis": "program code for Yokogawa masks",
+              "image_correlation": null,
+              "biosample": "TH-Rep2",
+              "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+              "specimen": "staining of neurons and imaging"
+            },
+            {
+              "image_analysis": "program code for Yokogawa masks",
+              "image_correlation": null,
+              "biosample": "17608",
+              "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+              "specimen": "staining of neurons and imaging"
+            },
+            {
+              "image_analysis": "program code for Yokogawa masks",
+              "image_correlation": null,
+              "biosample": "K2135",
+              "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+              "specimen": "staining of neurons and imaging"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+          ],
+          "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1",
+          "biosample_uuid": "[UUID('05299a8e-00e5-4cc5-91ea-6b5538a388a4'), UUID('d16a7297-e5dc-4241-becb-ce2e4ad558d2'), UUID('de746299-cf7a-4ec6-b524-b9fa1a4de686'), UUID('e394e9c0-daa1-4ebc-b7ab-7521350a85d5')]"
+        },
+        "analysis_method": [
+          {
+            "protocol_description": "program code for Yokogawa masks",
+            "features_analysed": "https://github.com/johnmacht/daneuron_quantification_matlab"
+          }
+        ],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD900/334c4cb3-b183-4020-9b54-bef91520a4ae/228393ce-e604-4092-b7a1-0cdaaf0a4784.png"
+        ],
+        "submitted_in_study_uuid": "e61786ef-50b7-4378-b258-327b54511e02",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "High-content imaging of differentiated dopaminergic neurons",
+            "uuid": "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Twelve image z-stacks per well were taken at 20x magnification . The z-stacks include three planes separated by 3.2 \u03bcm\nsteps. Only 1 stack is shown.\nDAPI was excited with a 405 nm laser and detected behind a 445/45 bandpass filter. Alexa568\nwas excited with a 561 nm laser and detected behind a 600/37 bandpass filter. Alexa647 was excited\nwith a 640 nm laser and detected behind a 676/29 bandpass filter. \nUsing an in-house Matlab analysis pipeline, signal masks for both TH and MAP2 were generated after\nthresholding. Area with signal above threshold was quantified for TH, MAP2, and DAPI signal. ",
+            "imaging_instrument_description": "CellVoyager CV8000 High-Content Screening System (Yokogawa)",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "confocal microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "staining of neurons and imaging",
+            "uuid": "be742b06-e52c-485f-acab-a184939323d9",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "PhenoPlate 96-well (PerkinElmer) previously coated with geltrex was used for immunocytochemistry. Cells were fixed in 4% paraformaldehyde for 15 min at RT. Then, cells were washed three times with PBS. For permeabilization, cells were incubated 1 hr at RT in PBS, 0.4% Triton-X, 10% goat serum and 2% BSA. After 1 hr, cells were washed twice with PBS. Primary antibody was diluted in PBS, 0.1% Triton-X, 1% goat serum and 0.2% BSA. Cells were incubated with primary antibody shaking overnight at 4\u00b0C. Next day, cells were washed three times with PBS. Then, secondary antibody was diluted in the same buffer as the primary and incubated for 2-3 hrs at RT. Finally, cells were washed three times with PBS. In the first wash, DAPI was added to the PBS (5 \u00b5g/ml) and incubated for 15 min at RT. Images were taken using a High content Yokogawa confocal microscope. Image processing was done in ImageJ. ",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "TH-Rep2",
+            "uuid": "05299a8e-00e5-4cc5-91ea-6b5538a388a4",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "neurons derived from iPSCs ",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          },
+          {
+            "default_open": true,
+            "title_id": "17608",
+            "uuid": "d16a7297-e5dc-4241-becb-ce2e4ad558d2",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "neurons derived fro iPSCs",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          },
+          {
+            "default_open": true,
+            "title_id": "TH-Rep1",
+            "uuid": "de746299-cf7a-4ec6-b524-b9fa1a4de686",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "neurons derived from iPSCs ",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          },
+          {
+            "default_open": true,
+            "title_id": "K2135",
+            "uuid": "e394e9c0-daa1-4ebc-b7ab-7521350a85d5",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "neurons derived iPSCs",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "staining of neurons and imaging",
+            "uuid": "b6ac7f53-55c5-4cca-a4ab-29ad2b8c223b",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "17540fd8-e58e-4fdc-86d3-95650a557e94",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "type": "processed data",
+              "biological replicate": "N5",
+              "well": "G04",
+              "field ": "1",
+              "stack ": "Z2",
+              "antibody": "Goat anti-Chicken Alexa Fluor 568 "
+            },
+            "acquisition_process_uuid": [
+              "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+            ],
+            "submission_dataset_uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+            "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1"
+          },
+          {
+            "uuid": "6818b858-e574-4507-a5d6-2bbc2dc65536",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "type": "mask",
+              "biological replicate": "N3",
+              "well": "A02",
+              "field ": "4",
+              "stack ": "Z2",
+              "antibody": "Goat anti-Chicken Alexa Fluor 568 "
+            },
+            "acquisition_process_uuid": [
+              "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+            ],
+            "submission_dataset_uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+            "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1"
+          },
+          {
+            "uuid": "56b6950b-c5ca-4eff-8df6-5b436f7101c8",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "type": "raw data",
+              "biological replicate": "N5",
+              "well": "G04",
+              "field ": "1",
+              "stack ": "Z2",
+              "antibody": "DAPI "
+            },
+            "acquisition_process_uuid": [
+              "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+            ],
+            "submission_dataset_uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+            "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1"
+          },
+          {
+            "uuid": "43fe95cc-feb0-49f9-bc42-116390321ed2",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "type": "processed data",
+              "biological replicate": "N5",
+              "well": "C05",
+              "field ": "4",
+              "stack ": "Z2",
+              "antibody": "Goat anti-Rabbit IgG Alexa Fluor 647"
+            },
+            "acquisition_process_uuid": [
+              "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+            ],
+            "submission_dataset_uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+            "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1"
+          },
+          {
+            "uuid": "334c4cb3-b183-4020-9b54-bef91520a4ae",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "type": "processed data",
+              "biological replicate": "N5",
+              "well": "C04",
+              "field ": "2",
+              "stack ": "Z2",
+              "antibody": "Goat anti-Rabbit IgG Alexa Fluor 647"
+            },
+            "acquisition_process_uuid": [
+              "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+            ],
+            "submission_dataset_uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+            "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD901": {
+    "uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD901",
+    "licence": "CC_BY_4.0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0003-2856-3369",
+        "display_name": "J\u00f6rg Renkawitz",
+        "affiliation": [
+          {
+            "rorid": "https://ror.org/05591te55",
+            "address": null,
+            "website": null,
+            "display_name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen"
+          }
+        ],
+        "contact_email": "joerg.renkawitz@med.uni-muenchen.de",
+        "role": null
+      }
+    ],
+    "title": "Adaptive Pathfinding by Nucleokinesis during Amoeboid Migration",
+    "release_date": "2023-10-13",
+    "description": "Motile cells encounter microenvironments of locally heterogeneous mechanochemical composition. Individual compositional parameters like chemokines and pore sizes are well known to provide guidance cues for pathfinding. However, motile cells face diverse cues at the same time, raising the question of how they respond to diverse and potentially competing signals on their paths. Here, we reveal that amoeboid cells require nuclear repositioning, termed nucleokinesis, for adaptive pathfinding in heterogeneous mechanochemical micro-environments. Using mammalian immune cells and the amoeba Dictyostelium discoideum, we discover that frequent, rapid and long-distance nucleokinesis is a basic component of amoeboid pathfinding, enabling cells to reorientate quickly between locally competing cues. Amoeboid nucleokinesis comprises a two-step polarity switch and is driven by myosin-II forces, readjusting the nuclear to the cellular path. Impaired nucleokinesis distorts path adaptions and causes cellular arrest in the microenvironment. Our findings establish that nucleokinesis is required for amoeboid cell navigation. Given that many immune cells, amoebae, and some cancer cells utilize an amoeboid migration strategy, these results suggest that nucleokinesis underlies cellular navigation during unicellular biology, immunity, and disease.\ndoi: https://doi.org/10.1101/2023.05.19.540965. Contains image data for Figure 1 and 4. Remaining source data are available on the journal website.",
+    "keyword": [
+      "cell migration ",
+      "nucleokinesis",
+      "nuclear positioning",
+      "myosin",
+      "amoeboid migration",
+      "dendritic cell",
+      "Dictyostelium"
+    ],
+    "acknowledgement": null,
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": "This study was supported by the Peter Hans Hofschneider Professorship of the foundation \u2018Stiftung Experimentelle Biomedizin\u2019, the LMU Institutional Strategy LMU-Excellent within the framework of the German Excellence Initiative, and the Deutsche Forschungsgemeinschaft (DFG; German Research Foundation; SFB914 project A12). This [publication, dataset, software etc.] has been made possible in part by CZI grant DAF2020-225401 and grant DOI https://doi.org/10.37921/120055ratwvi from the Chan Zuckerberg Initiative DAF, an advised fund of Silicon Valley Community Foundation (funder DOI 10.13039/100014989). ",
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 3,
+        "image_count": 17,
+        "file_type_aggregation": [
+          ".tif",
+          ".txt"
+        ],
+        "title_id": "Actin and myosin localisation",
+        "uuid": "6479f70a-a11f-4007-8edf-b97ae2601e19",
+        "version": 4,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Actin- or myosin labelled DCs in microchannels",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "Hoxb8-derived DC",
+              "image_acquisition": "Microchannels",
+              "specimen": "Hoechst staining"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+          ],
+          "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc",
+          "biosample_uuid": "[UUID('6f806056-12c4-4d1d-8833-c67f5d0e2db6')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD901/8bd1e828-607f-4e6d-b40c-af565d9d89b1/b154fc7c-7b12-468a-98e8-1344285d56de.png"
+        ],
+        "submitted_in_study_uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Microchannels",
+            "uuid": "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Live-cell imaging of dendritic cells and T cells was performed at 37\u00b0C and with 5 % CO2 in a humidified chamber. Data were recorded using inverted DMi8 microscopes (Leica) with a HC PL APO 20x/0.80 PH2 air objective. Additionally, the microscope was equipped with an LED5 (Leica) or pE-4000 (CoolLED) light source, an incubation chamber, a heated stage, and a CO2 mixer (Pecon). ",
+            "imaging_instrument_description": "wide-field, inverted Leica DMi8",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Hoechst staining",
+            "uuid": "1a7e4ead-6590-435c-8d02-6e6987ce3930",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "To visualize the nucleus for live-cell migration assays, cells were incubated with 1 drop of NucBlue (Invitrogen) in 1ml of cell/media mixture for at least 30 min.",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "Hoxb8-derived DC",
+            "uuid": "6f806056-12c4-4d1d-8833-c67f5d0e2db6",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Hoxb8-derived dendritic cell",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Hoechst staining",
+            "uuid": "ab1837d6-700c-4a8b-8c70-c6ef5edf0d4d",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "8bd1e828-607f-4e6d-b40c-af565d9d89b1",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Description": "Timelapse recording"
+            },
+            "acquisition_process_uuid": [
+              "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+            ],
+            "submission_dataset_uuid": "6479f70a-a11f-4007-8edf-b97ae2601e19",
+            "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc"
+          },
+          {
+            "uuid": "41cd397a-9303-4c9d-bb6a-95ad1aecc93e",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Description": "Timelapse recording"
+            },
+            "acquisition_process_uuid": [
+              "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+            ],
+            "submission_dataset_uuid": "6479f70a-a11f-4007-8edf-b97ae2601e19",
+            "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc"
+          },
+          {
+            "uuid": "4018df75-af79-427d-bdd1-4feb70700ce7",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Description": "Timelapse recording"
+            },
+            "acquisition_process_uuid": [
+              "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+            ],
+            "submission_dataset_uuid": "6479f70a-a11f-4007-8edf-b97ae2601e19",
+            "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc"
+          }
+        ]
+      },
+      {
+        "file_count": 1,
+        "image_count": 3,
+        "file_type_aggregation": [
+          ".tif",
+          ".txt"
+        ],
+        "title_id": "Protrusion Retraction",
+        "uuid": "dbdaa44d-e286-4d5b-ba9e-d713304d73c1",
+        "version": 2,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Protrusion retraction duration in microchannels",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "Hoxb8-derived DC",
+              "image_acquisition": "Microchannels",
+              "specimen": "Hoechst staining"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+          ],
+          "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc",
+          "biosample_uuid": "[UUID('6f806056-12c4-4d1d-8833-c67f5d0e2db6')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD901/3a94e8fe-9ae5-4316-b516-d93c6fde6d87/704ffff9-83ea-4edd-a110-d0e896dd20f3.png"
+        ],
+        "submitted_in_study_uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+        "acquisition_process": [
+          {
+            "default_open": false,
+            "title_id": "Microchannels",
+            "uuid": "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Live-cell imaging of dendritic cells and T cells was performed at 37\u00b0C and with 5 % CO2 in a humidified chamber. Data were recorded using inverted DMi8 microscopes (Leica) with a HC PL APO 20x/0.80 PH2 air objective. Additionally, the microscope was equipped with an LED5 (Leica) or pE-4000 (CoolLED) light source, an incubation chamber, a heated stage, and a CO2 mixer (Pecon). ",
+            "imaging_instrument_description": "wide-field, inverted Leica DMi8",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": false,
+            "title_id": "Hoechst staining",
+            "uuid": "1a7e4ead-6590-435c-8d02-6e6987ce3930",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "To visualize the nucleus for live-cell migration assays, cells were incubated with 1 drop of NucBlue (Invitrogen) in 1ml of cell/media mixture for at least 30 min.",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": false,
+            "title_id": "Hoxb8-derived DC",
+            "uuid": "6f806056-12c4-4d1d-8833-c67f5d0e2db6",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Hoxb8-derived dendritic cell",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": false,
+            "title_id": "Hoechst staining",
+            "uuid": "ab1837d6-700c-4a8b-8c70-c6ef5edf0d4d",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "3a94e8fe-9ae5-4316-b516-d93c6fde6d87",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Description": "Timelapse recording"
+            },
+            "acquisition_process_uuid": [
+              "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+            ],
+            "submission_dataset_uuid": "dbdaa44d-e286-4d5b-ba9e-d713304d73c1",
+            "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc"
+          }
+        ]
+      },
+      {
+        "file_count": 1,
+        "image_count": 4,
+        "file_type_aggregation": [
+          ".tif",
+          ".txt"
+        ],
+        "title_id": "Collagen recordings",
+        "uuid": "d4cbc95e-c374-4aa7-8479-1c839fb790f3",
+        "version": 2,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Fluorescence microscopy of DCs and T cells in collagen",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "T cell",
+              "image_acquisition": "Collagen",
+              "specimen": "Hoechst staining"
+            },
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "bmDC",
+              "image_acquisition": "Collagen",
+              "specimen": "Hoechst staining"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "eb47209f-2ee4-4022-83b9-9f4df774aaa8"
+          ],
+          "subject_uuid": "01168bae-790d-4cd0-a390-92caba4ee6c7",
+          "biosample_uuid": "[UUID('9e67c5f5-fbd7-4f48-9329-3ed51b5cca7c'), UUID('fb51dd24-872f-44b6-9f09-50c4462597cd')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD901/ab96071c-3bad-466d-aa57-28ef8a643f9b/9b783763-eae7-4dd5-9a9b-e0ed34ca39e8.png"
+        ],
+        "submitted_in_study_uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Collagen",
+            "uuid": "eb47209f-2ee4-4022-83b9-9f4df774aaa8",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Live-cell imaging of dendritic cells and T cells was performed at 37\u00b0C and with 5 % CO2 in a humidified chamber.",
+            "imaging_instrument_description": "wide-field, inverted Leica DMi8",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": false,
+            "title_id": "Hoechst staining",
+            "uuid": "1a7e4ead-6590-435c-8d02-6e6987ce3930",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "To visualize the nucleus for live-cell migration assays, cells were incubated with 1 drop of NucBlue (Invitrogen) in 1ml of cell/media mixture for at least 30 min.",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "bmDC",
+            "uuid": "9e67c5f5-fbd7-4f48-9329-3ed51b5cca7c",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Bone marrow derived dendritic cell",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          },
+          {
+            "default_open": true,
+            "title_id": "T cell",
+            "uuid": "fb51dd24-872f-44b6-9f09-50c4462597cd",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "T cell",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": false,
+            "title_id": "Hoechst staining",
+            "uuid": "ab1837d6-700c-4a8b-8c70-c6ef5edf0d4d",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "ab96071c-3bad-466d-aa57-28ef8a643f9b",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Cell type": "Dendritic cell",
+              "Description": "Timelapse recording"
+            },
+            "acquisition_process_uuid": [
+              "eb47209f-2ee4-4022-83b9-9f4df774aaa8"
+            ],
+            "submission_dataset_uuid": "d4cbc95e-c374-4aa7-8479-1c839fb790f3",
+            "subject_uuid": "01168bae-790d-4cd0-a390-92caba4ee6c7"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD910": {
+    "uuid": "e8e208ae-246d-4cb7-9c3a-cda48a4c1c92",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD910",
+    "licence": "CC_BY_4.0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0003-4738-0701",
+        "display_name": "Akefe Isaac Oluwatobi",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "i.akefe@uq.edu.au",
+        "role": "first author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Saber H. Saber",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Benjamin Matthews",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Bharat G. Venkatesh",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Bharat G. Venkatesh",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Rachel S. Gormal",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Daniel G. Blackmore",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Suzy Alexander",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Emma Sieriecki",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "UNSW Sydney"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Yann Gambin",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "UNSW Sydney"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Jesus Bertran-Gonzalez",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "UNSW Sydney"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Nicolas Vitale",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Strasbourg"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Yann Humeau",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Bordeaux"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Sevannah Ellis",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Alysee A. Michaels",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Baylor College of Medicine"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Mingshan Xue",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Baylor College of Medicine"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Benjamin Cravatt",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Scripps Research Institute"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Merja Joensuu",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Tristan P. Wallis",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Fr\u00e9d\u00e9ric A. Meunier",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Queensland"
+          }
+        ],
+        "contact_email": "f.meunier@uq.edu.au",
+        "role": "corresponding author"
+      }
+    ],
+    "title": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+    "release_date": "2023-11-04",
+    "description": "Data for Immunofluorescence experiments - \nThe phospholipid and free fatty acid (FFA) composition of neuronal membranes plays a crucial role in learning and memory, but the mechanisms through which neuronal activity affects the brain's lipid landscape remain largely unexplored. Saturated FFAs, particularly myristic acid (C14:0), strongly increase during neuronal stimulation and memory acquisition, suggesting the involvement of phospholipase A1 (PLA1) activity in synaptic plasticity. Here, we show that genetic ablation of the DDHD2 isoform of PLA1 in mice markedly reduced saturated FFAs across the brain and memory performance in reward-based learning and spatial memory models prior to the development of neuromuscular deficits. DDHD2 was shown to bind to the key synaptic protein STXBP1. Using STXBP1/2 knockout neurosecretory cells and a haploinsufficient STXBP1+/- mouse model of STXBP1 encephalopathy that is also associated with intellectual disability and motor dysfunction, we show that STXBP1 controls the targeting of DDHD2 to the plasma membrane and the generation of saturated FFAs in the brain. Our findings suggest key roles for DDHD2 and STXBP1 in the lipid metabolism underlying synaptic plasticity, learning and memory.",
+    "keyword": [
+      "Lipids, Phospholipase A1; Free Fatty Acids; Myristic Acid; Learning and Memory "
+    ],
+    "acknowledgement": "This work was also supported by an NHMRC Ideas Grant (2010901) awarded to F.A.M. and T.P.W., Clem Jones Centre for Ageing Dementia (CJCADR) Flagship Grant awarded to F.A.M and The Academy of Finland Project Funding to M.J. (298124). F.A.M. is a National Health and Medical Research Council (NHMRC) Senior Research Fellow (GNT1155794). M.J. was supported by an Australian Research Council\u2019s (ARC) Discovery Early Career Research Award (DECRA) to (DE190100565). The Australian Government Research Training Program (RTP) Scholarship awarded to I.O.A. by The University of Queensland, and a top-up scholarship courtesy of the Queensland Brain Institute (QBI) also supported this research. M.X. is a Caroline DeLuca Scholar. The authors thank the University of Queensland Centre for Clinical Research Mass Spectrometry Facility (UQCCR-MSF) for provision of analytical services and technical advice. The University of Queensland Biological Resources Facility is also appreciated for the provision of support services and technical advice. We thank Alex McCann (QBI) for the critical reading of this manuscript and Vanesa Lanoue for her technical assistance with cell culture. Figure 1a and Appendix Figure 1A-B were created using BioRender.",
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": null,
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 33,
+        "file_type_aggregation": [
+          ".pzfx",
+          ".tif",
+          ".zip"
+        ],
+        "title_id": "Immunofluorescence experiment data",
+        "uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+        "version": 4,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Immunofluorescence data for figures 5, 6, and 7 showing DDHD2 interaction with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+              "image_acquisition": "Immunofluorescence data - DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+              "specimen": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+          ],
+          "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789",
+          "biosample_uuid": "[UUID('6047d2f1-a266-44ce-aac5-bd67bbe213f4')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD910/e469d303-8273-40f6-9f05-0dbd86364021/8a7352b8-55ce-4e5f-baac-f4d4b3c9c823.png"
+        ],
+        "submitted_in_study_uuid": "e8e208ae-246d-4cb7-9c3a-cda48a4c1c92",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Immunofluorescence data - DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+            "uuid": "ec8d3f63-7318-4b9a-8418-49c89e7eb406",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Using a UPLXAPO60XO (NA 1.42, WD 0.15 mm) objective, coherent OBIS lasers (405nm LX 50mW, 488nm LS 150 mW, 561nm LS 150 mW, 640nm LX 140 mW) at 20% intensity using the SoRa spinning disk and the 3.2x magnifier with constant exposure times for each channel (405 nm: 50ms, 488/561/640nm: 200ms) on a Hamamatsu ORCA-Fusion BT sCMOS camera",
+            "imaging_instrument_description": "Olympus spinSR10 confocal microscope",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+            "uuid": "6800476e-74af-4973-9e3b-3488cacaae45",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "C57BL6/J and DDHD2-/- hippocampal neurons at DIV21 were stimulated with High K+ buffer or incubated in low K+ buffer (non-stimulated condition), for 5 minutes. Cells were then fixed in 4% paraformaldehyde, 0.1 mM MgCl2, 0.1 mM CaCl2 in PBS for 20 minutes at room temperature (RT). Cells were washed in PBS and permeabilized with 0.1% Triton x100 for 4 minutes. After permeabilization, non-specific binding sites were blocked with 1 % BSA in PBS for 30 min at RT. Primary and secondary antibodies were applied in blocking buffer (1 % BSA in PBS) for 1 hour and 30 minutes at RT, respectively. The following antibodies were used: anti-DDHD2 (1:100; ThermoFischer, 25203-1-AP), anti-DDHD1 (1:100; Novus biologicals, NBP2-13903), anti-Munc18-1 (STXBP1 1:100; BD Transduction Laboratories, 610336), anti-syntaxin (1:100: Origene, OTI2D11), and anti-SV2A (1:100; Abcam, ab77177).  ",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+            "uuid": "6047d2f1-a266-44ce-aac5-bd67bbe213f4",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Neuronal Cells",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+            "uuid": "f951512e-a3e1-43ea-901c-67e4517a7c4f",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "c8c97d96-056b-415b-8df1-7c05ade2f276",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+            ],
+            "submission_dataset_uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+            "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789"
+          },
+          {
+            "uuid": "b239897c-d049-4002-b344-0f4970ae6347",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+            ],
+            "submission_dataset_uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+            "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789"
+          },
+          {
+            "uuid": "73257bdb-9080-4336-abff-2d64dfb25319",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+            ],
+            "submission_dataset_uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+            "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789"
+          },
+          {
+            "uuid": "e469d303-8273-40f6-9f05-0dbd86364021",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+            ],
+            "submission_dataset_uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+            "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789"
+          },
+          {
+            "uuid": "957b149e-3274-4ba1-b168-c3571bef819a",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+            ],
+            "submission_dataset_uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+            "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD914": {
+    "uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD914",
+    "licence": "CC0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0002-5712-2776",
+        "display_name": "Daniel Fulton",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Birmingham"
+          }
+        ],
+        "contact_email": "d.fulton@bham.ac.uk",
+        "role": "corresponding author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0002-3860-5035",
+        "display_name": "Sayed Muhammed Rassul",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Birmingham"
+          }
+        ],
+        "contact_email": "s.m.rassul.09@aberdeen.ac.uk",
+        "role": "first author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0001-8764-1617",
+        "display_name": "Masahiro Otsu",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Birmingham"
+          }
+        ],
+        "contact_email": "motsu@braizon.com",
+        "role": "experiment performer"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0002-6755-0299",
+        "display_name": "Iain B Styles",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Queen's University"
+          }
+        ],
+        "contact_email": "i.styles@qub.ac.uk",
+        "role": "investigator"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0002-5023-8960",
+        "display_name": "Robert K Neely",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Birmingham"
+          }
+        ],
+        "contact_email": "r.k.neely@bham.ac.uk",
+        "role": "investigator"
+      }
+    ],
+    "title": "Single molecule tracking of myelin basic protein during oligodendrocyte differentiation\n",
+    "release_date": "2023-11-10",
+    "description": "This study aimed to expand our understanding of myelin basic protein (MBP), a key component of central nervous system myelin, by tracking and quantifying individual MBP particles during oligodendrocyte differentiation. MBP particle directionality, confinement and diffusion were tracked by rapid TIRF and HILO imaging of dendra2 tagged MBP in three stages of mouse oligodendroglia: oligodendrocyte precursors, early myelinating oligodendrocytes, and mature myelinating oligodendrocytes. The directionality and confinement of MBP particles increased at each stage consistent with the progressive transport towards, and recruitment into, emerging myelin structures. Unexpectedly, diffusion data presented a more complex pattern with sub-populations of the most diffusive particles disappearing at the transition between the precursor and early myelinating stage, before re-emerging in the membrane sheets of mature oligodendrocytes. This diversity of particle behaviours, which would be undetectable by conventional ensemble averaged methods, are consistent with a multifunctional view of MBP involving roles in myelin expansion and compaction.\n",
+    "keyword": [
+      "Oligodendrocyte",
+      "myelin",
+      "single molecule imaging",
+      "TIRF imaging",
+      "single molecule tracking",
+      "myelin basic protein "
+    ],
+    "acknowledgement": null,
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": null,
+    "attribute": {
+      "Study Type": "time-lapse imaging",
+      "Organism": "Mus musculus (mouse)"
+    },
+    "experimental_imaging_component": [
+      {
+        "file_count": 0,
+        "image_count": 101,
+        "file_type_aggregation": [
+          ".png",
+          ".tif",
+          ".xls"
+        ],
+        "title_id": "Time-lapse HILO imaging of mOL sheets",
+        "uuid": "8b899aca-faf7-4ed5-b32a-cb79d92758e0",
+        "version": 0,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Time-lapse HILO imaging of mOL sheets",
+        "attribute": {
+          "associations": []
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [],
+        "submitted_in_study_uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+        "acquisition_process": [],
+        "specimen_imaging_preparation_protocol": [],
+        "biological_entity": [],
+        "specimen_growth_protocol": [],
+        "image": []
+      },
+      {
+        "file_count": 0,
+        "image_count": 176,
+        "file_type_aggregation": [
+          ".png",
+          ".tif",
+          ".xls",
+          ".xml"
+        ],
+        "title_id": "Time-lapse TIRF imaging of eOL processes",
+        "uuid": "83aedd4b-fc80-4317-a6e8-0ac1e01bb6e2",
+        "version": 0,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Time-lapse TIRF imaging of eOL processes",
+        "attribute": {
+          "associations": []
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [],
+        "submitted_in_study_uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+        "acquisition_process": [],
+        "specimen_imaging_preparation_protocol": [],
+        "biological_entity": [],
+        "specimen_growth_protocol": [],
+        "image": []
+      },
+      {
+        "file_count": 0,
+        "image_count": 156,
+        "file_type_aggregation": [
+          ".png",
+          ".tif",
+          ".xls"
+        ],
+        "title_id": "Time-lapse TIRF imaging of OPC processes",
+        "uuid": "2708ff2c-f95c-4756-8616-731683a9091f",
+        "version": 0,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Time-lapse TIRF imaging of OPC processes",
+        "attribute": {
+          "associations": []
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [],
+        "submitted_in_study_uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+        "acquisition_process": [],
+        "specimen_imaging_preparation_protocol": [],
+        "biological_entity": [],
+        "specimen_growth_protocol": [],
+        "image": []
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD915": {
+    "uuid": "4b4ed158-067b-4caa-bcc9-a86cac7b2acc",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD915",
+    "licence": "CC_BY_4.0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0002-3688-1474",
+        "display_name": "Jean-L\u00e9on Ma\u00eetre",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "French National Centre for Scientific Research"
+          }
+        ],
+        "contact_email": "jean-leon.maitre@curie.fr",
+        "role": "corresponding author"
+      }
+    ],
+    "title": "Mechanics of human embryo compaction",
+    "release_date": "2023-12-22",
+    "description": "The shaping of human embryos begins with compaction, during which cells come into close contact. Assisted reproductive technology (ART) studies suggest that human embryos fail compaction primarily because of defective adhesion. Based on our current understanding of animal morphogenesis, other morphogenetic engines, such as cell contractility, could be involved in shaping human embryos. However, the molecular, cellular and physical mechanisms driving human embryo morphogenesis remain uncharacterized. Using micropipette aspiration on human embryos donated to research, we have mapped cell surface tensions during compaction. This reveals a 4-fold increase of tension at the cell-medium interface while cell-cell contacts keep a steady tension. Therefore, increased tension at the cell-medium interface drives human embryo compaction, which is qualitatively similar to compaction in mouse embryos. Further comparison between human and mouse reveals qualitatively similar but quantitively different mechanical strategies, with human embryos being mechanically least efficient. Inhibition of cell contractility and cell-cell adhesion in human embryos reveals that, while both cellular processes are required for compaction, only contractility controls the surface tensions responsible for compaction. Interestingly, cell contractility and cell-cell adhesion exhibit distinct mechanical signatures when faulty. Analyzing the mechanical signature of naturally failing embryos, we find evidence that non-compacting or partially compacting embryos containing excluded cells have defective contractility. Together, our study reveals that an evolutionarily conserved increase in cell contractility is required to generate the forces driving the first morphogenetic movement shaping the human body.",
+    "keyword": [
+      "human embryo, preimplantation development"
+    ],
+    "acknowledgement": null,
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": null,
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 104,
+        "file_type_aggregation": [
+          ".TIF",
+          ".ims",
+          ".tif",
+          ".xlsx",
+          ".zip"
+        ],
+        "title_id": "Microscopy data",
+        "uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+        "version": 6,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Microscopy data",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": "Timelapse of development, surface tension mapping and immunostaining analysis",
+              "image_correlation": null,
+              "biosample": "Timelapse of embryos during surface tension mapping",
+              "image_acquisition": "Timelapse imaging of embryos during surface tension mapping",
+              "specimen": "Embryo thawing, culture and preparation"
+            },
+            {
+              "image_analysis": "Timelapse of development, surface tension mapping and immunostaining analysis",
+              "image_correlation": null,
+              "biosample": "Timelapse of embryos during surface tension mapping",
+              "image_acquisition": "Confocal imaging of immunostained embryos",
+              "specimen": "Embryo thawing, culture and preparation"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+            "63b48f47-f1eb-4076-941d-a474fe2cb703",
+            "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+          ],
+          "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79",
+          "biosample_uuid": "[UUID('4a57b680-078d-48c9-88e4-168570a28e0a')]"
+        },
+        "analysis_method": [
+          {
+            "protocol_description": "Timelapse of development, surface tension mapping and immunostaining analysis",
+            "features_analysed": "Image analysis\nPipette size, cell radii of curvature, contact angles were measured using Fiji with the line, circle and angle tools respectively43. In brief, the equatorial plane of the object is taken to manually draw a line between the inner walls of the pipette or a circle fitting the cell-medium interface of cells. To measure external contact angles, two line segments are drawn tangentially to the cell-medium interfaces of two contacting cells with their intersection located at the cell-cell contact edge (Fig 1a). Similarly, to measure internal contact angles, two line segments are drawn: one along the cell-cell contact and another tangentially to the cell-medium interface of one of the contacting cells (Fig 1a). As an internal control of the measurement, we verify that the three angles roughly sum up to 360\u00b0 (with a tolerance of 10\u00b0).\nTo measure cortical intensity, as done previously7, we picked confocal slices cutting through the equatorial plane of two contacting cells using Fiji. We drew a 1 \u03bcm thick line along the cell-medium interface or cell-cell contact, measured the mean intensity and divided the contact intensity by the sum of the cell-medium intensities of contacting cells.\nTo measure the volume of cells, we use Bitplane Imaris to draw the contour of cells along the F-actin signal on confocal slices of stained embryos, as done previously7.\n"
+          }
+        ],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD915/bfd71f50-4af9-4cf6-94cb-6e40d740dd9f/0967cd82-4d56-46cb-9629-d00b5e1604f7.png"
+        ],
+        "submitted_in_study_uuid": "4b4ed158-067b-4caa-bcc9-a86cac7b2acc",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Timelapse imaging of embryos during surface tension mapping",
+            "uuid": "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Illumination is set to minimum and exposure time to 500-900 ms.",
+            "imaging_instrument_description": "Microscopy\nPipette-scope\nSurface tension measurements were performed on a Leica DMI6000 B inverted microscope equipped with a 40x/0.8 DRY HC PL APO Ph2 (11506383) objective. A 0.7x lens is mounted in front of a Retina R3 camera. The microscope is equipped with a custom incubation chamber (EMBLEM) to keep the sample at 37\u00b0C and maintain the atmosphere at 5% CO2 and 5% O2.\n\nTime lapse imaging\nFor time-lapse imaging, embryos were placed after thawing within the chamber of a CellDiscoverer 7 (Zeiss) humidified 37\uf0b0C, 5% O2, 5% CO2 atmosphere. Embryos were imaged every 30 min at 5 to 8 focal planes separated by 10 \u00b5m using IR-LED (725 nm) transmitted light through a 20x/0.95 objective. Images were acquired using either an ORCA-Flash 4.0 camera (Hamamatsu, C11440) or a 506 axiovert (Zeiss) camera.\n",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "light microscopy"
+            ]
+          },
+          {
+            "default_open": true,
+            "title_id": "Confocal imaging of immunostained embryos",
+            "uuid": "63b48f47-f1eb-4076-941d-a474fe2cb703",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Exposure 50 ms\nAcquisition every 1 \u00b5m",
+            "imaging_instrument_description": "Spinning disc microscope\nImmunostainings were imaged on a Zeiss Observer Z1 microscope with a CSU-X1 spinning disc unit (Yokogawa) using 405, 488, 561, and 642 nm laser lines through a 63x/1.2 C Apo Korr water immersion objective; emission was collected through 450/ 50 nm, 525/50 nm, 595/50 band pass or 610 nm low pass filters onto an ORCA-Flash 4.0 camera (C11440, Hamamatsu).\n",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "confocal microscopy"
+            ]
+          },
+          {
+            "default_open": true,
+            "title_id": "Confocal imaging of immunostained embryos",
+            "uuid": "41ccf20c-143c-40a4-a72a-9eb7698537b9",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "1 \u00b5m z steps",
+            "imaging_instrument_description": "Spinning disc microscope\nImmunostainings were imaged on a Zeiss Observer Z1 microscope with a CSU-X1 spinning disc unit (Yokogawa) using 405, 488, 561, and 642 nm laser lines through a 63x/1.2 C Apo Korr water immersion objective; emission was collected through 450/ 50 nm, 525/50 nm, 595/50 band pass or 610 nm low pass filters onto an ORCA-Flash 4.0 camera (C11440, Hamamatsu).\n",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "confocal microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Embryo thawing, culture and preparation",
+            "uuid": "6bb4f969-3779-456c-8841-c541e7e276f2",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "Embryo work\nThawing\nEmbryos were handled using Stripper micropipettes (Origio) on binoculars (Leica M80) equipped with heating plates (Leica MATS-Type TL base) set to 37\u00b0C when needed.\nCryopreserved embryos were thawed according to manufacturer\u2019s instructions. Embryo thawing packs (Origio) were used for slow-freeze embryos. Vit Kit (Irvine Scientific) was used for vitrified embryos. The intact survival rate, defined as the percentage of embryos without any cell lysis immediately after thawing, was 89% (48/54) for the embryos further considered for experimentation. All embryos survived the warming process with at least 50% of intact cells.\n\nCulture\nEmbryos were handled using Stripper micropipettes (Origio) on binoculars (Leica M80) equipped with heating plates (Leica MATS-Type TL base) set to 37\u00b0C. Embryos are placed in pre-equilibrated (at least 4 h at 37\uf0b0C, 5% O2, 5% CO2) CSCM-C medium (Irvine Scientific) covered with mineral oil (Irvine Scientific) in 50 mm glass bottom dishes (MatTek Corporation P50G-1,5-30-F) within an incubator (New Brunswick Galaxy 48 R) or the incubation chamber of the microscopes (Leica DMI6000 B with custom incubation from EMBLEM or Zeiss CellDiscoverer 7 with a 37\u00b0C humidified atmosphere supplemented with 5% CO2 and depleted to 5% O2 by supplementing N2.\n\nZona pellucida dissection\nBefore surface tension measurements, embryos were dissected out of their zona pellucidae (ZP) on the day of their thawing using a holding pipette and a glass needle41. \nThe holding pipette and needle were custom-made from glass capillaries (Harvard apparatus, GC100TF-15) pulled using a P-97 Flaming Brown needle puller (Sutter Instrument) with the following settings: Ramp +25, Pull 65, Velocity 80, Time 175 and Pressure 200. To forge the holding pipette, the glass needle was cut to a ~120 \u03bcm diameter using a microforge (Narishige, MF-900) and the tip was fire-polished to a ~20 \u03bcm inner diameter. To forge the needle, the tip was melted onto the glass bead and pulled back to obtain a solid pointed tip. Both needle and pipette were bent to a 20\u00b0 degrees angle to be parallel to the dish surface when mounted on the micromanipulator (Leica, AM6000). The holding pipette can apply controlled pressures using mineral oil-filled tubing coupled to a piston of which the position is moved using a microscale translating stage (Eppendorf, CellTram Oil 5176). \nChemical reagents\nML7 (Sigma-Aldrich, I2764) was diluted in 50% ethanol (EtOH) to 10 mM. Day 4 compacted embryos were placed into medium containing 1:2000 EtOH for 15 min before surface tension measurements for an additional 30 min. Embryos were then moved into medium containing 10 \u00b5M ML7 for 15 min before surface tension measurements taking another 30 min. Embryos were then placed back into normal culture medium CSCM-C to recover. 6/6 embryos recompacted and 5/6 embryos formed a blastocyst.\nSimilarly, day 4 compacted embryos were placed into Embryo Biopsie Medium (IrvineScientific), a commercial medium without Ca2+ and supplemented with 0.5 mM EDTA for 10 min before surface tension measurements taking another 20 min. Embryos were then placed back into normal culture medium CSCM to recover. 6/6 embryos recompacted and 4/6 embryos formed a blastocyst.\n\n",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "Timelapse of embryos during surface tension mapping",
+            "uuid": "4a57b680-078d-48c9-88e4-168570a28e0a",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "human preimplantation embryos",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Embryo thawing, culture and preparation",
+            "uuid": "df8ab0df-25a4-47ed-8334-879877006ede",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "3b58326f-9d4e-4c2a-bae9-ca625b3fc21c",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+              "63b48f47-f1eb-4076-941d-a474fe2cb703",
+              "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+            ],
+            "submission_dataset_uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+            "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79"
+          },
+          {
+            "uuid": "f4e1356f-b498-4d06-8882-7af714e7dcff",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+              "63b48f47-f1eb-4076-941d-a474fe2cb703",
+              "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+            ],
+            "submission_dataset_uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+            "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79"
+          },
+          {
+            "uuid": "ebf21b51-e2f2-4d8e-a093-f69dfaa9043d",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+              "63b48f47-f1eb-4076-941d-a474fe2cb703",
+              "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+            ],
+            "submission_dataset_uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+            "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79"
+          },
+          {
+            "uuid": "bfd71f50-4af9-4cf6-94cb-6e40d740dd9f",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+              "63b48f47-f1eb-4076-941d-a474fe2cb703",
+              "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+            ],
+            "submission_dataset_uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+            "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79"
+          },
+          {
+            "uuid": "0178be3d-91c7-4fbc-98a7-24136af70a03",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+              "63b48f47-f1eb-4076-941d-a474fe2cb703",
+              "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+            ],
+            "submission_dataset_uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+            "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD922": {
+    "uuid": "5a786e68-d3ea-49ec-b151-8ab319950716",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD922",
+    "licence": "CC0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Craig A. Hill",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Washington University in St. Louis"
+          }
+        ],
+        "contact_email": "craig.hill@wustl.edu",
+        "role": "first author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": " Benjamin W. Casterline",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Chicago"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": "first author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Ezequiel Valguarnera",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Washington University in St. Louis"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": "investigator"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": " Aaron L. Hecht",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "University of Chicago"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": "investigator"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Elizabeth S. Shepherd",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Novome Biotechnologies"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": "investigator"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": " Justin L. Sonnenburg",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Stanford University"
+          }
+        ],
+        "contact_email": "not@supplied.com",
+        "role": "investigator"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Juliane Bubeck Wardenburg",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Washington University in St. Louis"
+          }
+        ],
+        "contact_email": "jbubeck@wustl.edu",
+        "role": "corresponding author"
+      }
+    ],
+    "title": "Bacteroides fragilis toxin expression enables lamina propria niche acquisition in the developing mouse gut",
+    "release_date": "2024-01-01",
+    "description": "Toxin-enabled niche-establishment in the neonatal colon",
+    "keyword": [
+      "Mouse",
+      "Bacteroides fragilis",
+      "Vertical Transmission",
+      "Niche Acquisition"
+    ],
+    "acknowledgement": "Math1 fl/fl Vil-Cre-ERT2 mice were a gift from Dr. Rodney D. Newberry",
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": "This work was supported by a Pilot and Feasibility Award from the Digestive Diseases Research Core Center at the University of Chicago (NIDDK P30DK42086), NIH Award DK085025 to JLS, and NIH Awards AI138565 and AI157196 to JBW. BWC was supported by the National Institute of Allergy and Infectious Diseases of the National Institutes of Health (F30AI126791). BWC and ALH were trainees of the National Institutes of Health Medical Scientist Training Program at the University of Chicago \n(GM007281).",
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 2799,
+        "file_type_aggregation": [
+          ".czi",
+          ".jpg",
+          ".ndpi",
+          ".pptx",
+          ".txt"
+        ],
+        "title_id": "Mouse neonatal colon",
+        "uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+        "version": 9,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Mouse neonatal colon",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "Neonatal and adult mouse colons",
+              "image_acquisition": "Confocal, fluorescence, and brightfield imaging",
+              "specimen": "Bacteria and Mice"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+          ],
+          "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7",
+          "biosample_uuid": "[UUID('9dc814af-dd09-499c-81e5-23d68c5923f7')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD922/e9864fb2-a218-4efe-9f50-9ed8afc60dde/18fb0f77-37ba-4857-97ff-d3da4619d1b2.png"
+        ],
+        "submitted_in_study_uuid": "5a786e68-d3ea-49ec-b151-8ab319950716",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Confocal, fluorescence, and brightfield imaging",
+            "uuid": "b79b16f2-e33c-4e48-b3ec-146a074260c8",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Confocal microscopy and image processing\n\n\tAll confocal microscopy was carried out on an LSM 880 Airyscan. For general image acquisition, image size was set to 4096 x 4096 pixels, with a per-pixel scaling of 0.10 \u03bcm x 0.10 \u03bcm on a Plan-Apochromat 20x/0.8 M27 objective at 1X zoom. Unidirectional scan speed was set to provide a 0.68 \u03bcs pixel-dwell, and bit-depth and averaging were set to 16. Per fluorophore, the following emission wavelength cutoffs were used: NucBlue (411-450 nm), sfGFP (491-534 nm), mCherry (580-632 nm), and Alexa iFluor 647 phalloidin (640-701 nm). Pinholes were set to 1 Airy Unit (AU). To generate 3D models, a 40X variant of this method with z-stacks (10 \u03bcm of tissue; 0.33 \u03bcm slice spacing) and tiling was used. In replicating GAP studies, a Zeiss Axio Observer was also used.\n\n\tImage processing was performed in Zen Blue and Zen Black, with deconvolution of sfGFP and mCherry performed in ImageJ. Diffraction PSF 3D was used to generate PSFs, and Deconvolution Lab (Sage et al., 2017) was used to perform Fast Iterative Shrinkage Thresholding (5 iterations, \u03b3 = 1, \u03bb = 0.1, wavelets = spline 3, and scale = 3). A bandpass Fast Fourier Transform (FFT) was used for size-based exclusion of lumen background. In Zen Blue, the following sequential steps and corresponding thresholds were used: Background Subtraction (150), Single Pixel Filter (1.5), Gauss (1.15), and Unsharp Mask (0.5). After Min/Max autoscaling of the histograms, this file was saved as a TIFF to have HDR applied in sampling mode with an intensity of 2 in Zen Black.\n\n\tFor RNAScope-based assays, an Airyscan (CO) protocol was developed. Image size was set to 1024 x 1024 pixels, with a per-pixel scaling of 0.07 \u03bcm x 0.07 \u03bcm on a Plan-Apochromat 63X/1.4 Oil DIC M27 objective at 2X zoom, with 0.02 \u03bcm x 0.02 \u03bcm per-pixel scaling and 8X zoom used for inset magnifications. Pixel dwell was set to 2.05 \u03bcs and averaging was set to 8 for acquisition of 16-bit images. Per laser line, the following pinholes were used: 405 nm (2.94 AU), 514 nm (2.21 AU), 543 nm (1 AU), and 633 nm (1 AU). Images were processed with four-component linear unmixing and bandpass FFT prior to saving as TIFF for HDR application.\n\n        For histopathological image generation and analysis (AB/PAS), Hamamatsu Photonics NDP.scan was employed for complete slide scanning. For counting goblet cells and determining crypt lengths, resulting images were analyzed with Hamamatsu Photonics NDP-view2.\n",
+            "imaging_instrument_description": "LSM 880 Airyscan, Axio Observer, and Hamamatsu Photonics NDP.scan\n",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "confocal microscopy",
+              "fluorescence microscopy",
+              "brightfield microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Bacteria and Mice",
+            "uuid": "42b59b20-2e90-47a2-afa9-9ecf14c62c0e",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "Bacterial culture and manipulation\n\n\tBacterial strains, culture conditions, and antibiotics. Supplementary Table 1 lists the bacterial strains used in these studies. B. fragilis strains were grown in Brain Heart Infusion (BHI) media supplemented with hemin (0.0005%) and vitamin K1 (0.5 \u03bcg/mL) under anaerobic conditions at 37\u00b0C with a gas mix of 5% H2, 10% CO2 and 85% N2 (CK Purity Plus, St. Louis, MO) in a Coy Vinyl Anaerobic Chamber (Coy Laboratory Products, Grass Lake, MI). E. coli S17-1\u03bbpir was used for cloning of shuttle and suicide plasmids and conjugation into B. fragilis. E. coli strains were grown aerobically at 37\u00b0C in LB media. The following antibiotic concentrations were used throughout these studies: ampicillin (100 \u03bcg/ml), gentamicin (200 \u03bcg/ml), clindamycin (5 \u03bcg/ml), tetracycline (10 \u03bcg/ml), and rifampicin (20 \u03bcg/ml).\n\n\tStrain variants and heterologous expression. Fluorescent B. fragilis strains were generated via conjugation with E. coli S17-1\u03bbpir maintaining a pNBU2 integrative vector that encodes either sfGFP (pWW3452) or mCherry (pWW3515) under control of a phage promoter that enables high-level expression (Whitaker et al., 2017). All conjugations were performed as previously described (Hecht et al., 2016), with a modification that both donor and recipient strains were grown overnight to early stationary phase and mixed 1:1 prior to spot plating for aerobic conjugation. N2 \u0394tssC and E2 \u0394bft strains were generated prior to this study (Hecht et al., 2016 and 2017). To generate NTBF gain-of-function strain variants that express wild-type BFT (bftWT) or a BFT variant devoid of catalytic activity (bftE349A) (Choi et al., 2016) under control of the native bft promoter, constructs were generated in the pWW3452 integrative vector for maintenance in E. coli S17-1\u03bbpir, sequence verified, and conjugated into NCTC 9343. Western blot and in vitro metalloprotease assays were performed as previously described to confirm expression and secretion of the two bft variants (Choi et al., 2016). To generate dual expressor strains, a construct consisting of the native bft promoter driving gfp was inserted upstream of the phage promoter in the pWW3515 integrative vector.\n\nAnimal studies\n\n\tAll animal studies were conducted in accord with ethical regulations using protocols approved by the Institutional Animal Care and Use Committees and Institutional Biosafety Committees at The University of Chicago and Washington University School of Medicine. C57BL/6 mice were purchased from Jackson Laboratory or bred and maintained in-house in a specific pathogen-free facility at 20-26\u00b0C and 30-70% humidity with a standard light:dark cycle of 12 hours on:12 hours off. Sample size estimates for animal experiments were based on prior animal modeling studies utilized within the laboratory for investigation of colonization (Hecht et al., 2016). \n\n\tVertical transmission modeling. B. fragilis strains for animal inoculation were grown overnight under anaerobic conditions to reach stationary phase (16 hours). Cultures were then subcultured at a 1:50 ratio in 35 mL of fresh BHIS and grown until they reached OD600 \u2248 1.2. Bacteria from 35 mL of culture were sedimented at 5,000 x g for 8 minutes at 4\u00b0C, decanted, and resuspended in 2 mL of 0.1 N sodium bicarbonate. For vertical transmission studies, pregnant dams that were 8-10 weeks old at the time of mating received water containing 100 mg/L clindamycin from E14 through E17. On E15, dams were gavaged with 100 \u03bcL of 0.1 N sodium bicarbonate containing 5x10e9 B. fragilis. Induction and stability of colonization was assessed by collecting stool at multiple time intervals from pups.\n\n\tAdult colonization modeling. To evaluate adult colonization, six-week-old mice were provided drinking water with 100 mg/L clindamycin for 24 hours, gavaged with 100 \u03bcL of 0.1 N sodium bicarbonate containing 5x10e9 CFU of ETBF or NTBF, and then maintained on 100 mg/L clindamycin for an additional 48 hours. Sampling of mice to examine biological endpoints was performed two weeks after colonization.\n\n        Exogenous toxin complementation studies. Five-week-old mice born to dams colonized with \u0394bft were anesthetized with intraperitoneal (I.P.) injection of a mix of ketamine (100 mg/kg) and xylazine (2 mg/kg) in normal saline in a 100 \u03bcL volume. For apical exposure of toxin, a 0.5 mL enema containing 0.5 \u03bcg of either active BFT or inactive BFT (iBFT) was administered per rectum via a flexible feeding tube. To simulate basolateral exposure of toxin, mice received a retro-orbital intravenous injection of 0.5 \u03bcg BFT or iBFT in 100 \u03bcL normal saline. Mice were sacrificed 24-48 hours later for tissue collection.\n\n\tGoblet-cell-associated-passage (GAP) studies. To delete intestinal goblet cells, Math1fl/fl Vil-Cre-ERT2 pups colonized with ETBF were injected with 100 \u03bcg of tamoxifen dissolved in sunflower seed oil daily for five days spanning P5-P10. At P15, pups were anesthetized and the cecum was accessed for injection of Alexa555-labeled dextran (35 mg/kg; <50 \u03bcL). Mice were closed with suture silk. After 30 minutes, mice were sacrificed for genotyping, tissue analysis of bacterial burden, and AB/PAS staining of GCs. ETBF-colonized mice were also sacrificed at P23 for genotyping and CFU enumeration. \n\n\tIn vivo probiotic competition studies. In probiotic interventions, pups were gavaged with 50 \u03bcL of 0.1 N sodium bicarbonate containing 5x10e9 of either NTBF or its \u0394tssC isogenic mutant at postnatal days 12, 16, or 20 and sacrificed on P23 for tissue collection. Sham controls received only 0.1 N sodium bicarbonate.\n\t\n        For all in vivo studies, there was no investigator blinding in animal experimentation, and animals were only excluded from analyses if the corresponding dam was not sufficiently colonized (B. fragilis CFU/g in fecal samples < 1x10e8) to facilitate vertical transmission. All mice in these studies were euthanized by carbon dioxide followed by cervical dislocation in accord with established protocols.\n\nTissue collection, preparation, and analysis\n\n\tColons were harvested from euthanized animals, photographed for gross pathology and length analyses, and then divided into the following sections for tissue mass and CFU analyses: cecum, proximal colon (most proximal 2 cm), distal colon (most distal 2 cm), and stool. Colon sections were washed three times with 2 mL of sterile PBS before being gently blotted of excess PBS with sterile gauze and placed into pre-weighed sterile 2 mL screw-cap tubes containing 1 mL of sterile PBS and a 1:1:1 mix of 2 mm, 1 mm, and 0.1 mm beads. Homogenization was performed three times in an MP Biomedicals FastPrep 24 at 6 m/s for 30 s at 4\u00b0C, with a five-minute cool-down between homogenizations. Homogenates were then serially diluted and plated for CFU enumeration on BHIS agar containing gentamicin and clindamycin, with either tetracycline or rifampicin added for differential selection. Differential strain growth was also confirmed by verifying fluorescence in a Bio-Rad ChemiDoc MP Imaging System. CFU counts were log10 transformed prior to plotting with a limit of detection set at 1,000.\n\n\tFor histopathological analysis, cecum, proximal colon, and distal colon were preserved in Carnoy\u2019s methanol fixative. All tissue processing was performed with anhydrous reagents. Preserved samples were embedded, sectioned, and stained by Nationwide Histology (Missoula, MT). Histology of fixed-frozen samples was performed with a H-3502 Hematoxylin and Eosin Stain Kit (Vector Laboratories, Burlingame, CA). AB/PAS staining of goblet cells in fixed-frozen sections was performed with the 91022B Alcian Blue/PAS Stain Kit (Newcomer Supply, Middleton, WI).\n\n\tIn preparation for confocal imaging-based analyses, complete colons were submerged in 4% PFA in PBS for 48 hours at 4\u00b0C, and then placed in 20% sucrose in PBS for 48 hours at 4\u00b0C. Colons were frozen in liquid nitrogen, and then divided into sections on a cold plate before orienting and embedding in O.C.T. (Sakura Finetek, Nagano, Japan). Blocks were stored wrapped in air-tight containment at -80\u00b0C. For routine confocal microscopy, block slices (30 \u03bcm) were transferred onto Fisher Scientific Superfrost Plus slides, mounted with ProLong Glass Antifade containing NucBlue (DAPI) and Alexa iFluor 647 phalloidin, and then cured at room temperature in the dark for 72 hours. For RNA in situ hybridization, the RNAScope system was utilized. For these assays, 14 \u03bcm slices were processed according to the manufacturer\u2019s fixed-frozen protocol with probes for gfp and bft mRNA (ACDBio, Newark, CA). In this workflow, Alexa iFluor 514 was assigned to phalloidin/actin, ATTO 550 to gfp mRNA, and ATTO 647 to bft mRNA.\n",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "Neonatal and adult mouse colons",
+            "uuid": "9dc814af-dd09-499c-81e5-23d68c5923f7",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Neonatal and adult mouse colons",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Bacteria and Mice",
+            "uuid": "451dc9b7-44d7-4a78-861b-a9806d52dc5f",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "29ec555d-c593-4f06-a187-4421435f2817",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+            ],
+            "submission_dataset_uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+            "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7"
+          },
+          {
+            "uuid": "460ac41f-371c-4d58-9e6e-309a655ad3d4",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+            ],
+            "submission_dataset_uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+            "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7"
+          },
+          {
+            "uuid": "92d03834-900c-4210-bd7e-e48722166709",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+            ],
+            "submission_dataset_uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+            "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7"
+          },
+          {
+            "uuid": "d190f734-494c-4fb6-8147-1503b87dff35",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+            ],
+            "submission_dataset_uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+            "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7"
+          },
+          {
+            "uuid": "e9864fb2-a218-4efe-9f50-9ed8afc60dde",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+            ],
+            "submission_dataset_uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+            "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD928": {
+    "uuid": "665e0b75-0077-4f6b-89f2-e780ab415a3e",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD928",
+    "licence": "CC0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0001-6328-1485",
+        "display_name": "Keiichiro Tanaka",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Yale University"
+          }
+        ],
+        "contact_email": "keiichiro.tanaka@yale.edu",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Martin Schwartz",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Yale University"
+          }
+        ],
+        "contact_email": "martin.schwartz@yale.edu",
+        "role": null
+      }
+    ],
+    "title": "Latrophilins are essential mediators of endothelial junctional fluid shear stress mechanotransduction",
+    "release_date": "2023-11-27",
+    "description": "Original data for our Latrophilin paper",
+    "keyword": [
+      "endothelial cell",
+      "mechanotransduction",
+      "shear stress"
+    ],
+    "acknowledgement": null,
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": null,
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 324,
+        "file_type_aggregation": [
+          ".pzfx",
+          ".tif",
+          ".xls",
+          ".xlsx",
+          ".zip"
+        ],
+        "title_id": "Study components",
+        "uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+        "version": 10,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Study components of latrophilin paper",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "Biosample descriptions",
+              "image_acquisition": "Imaging acquision protocol",
+              "specimen": "Specimen description"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+          ],
+          "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94",
+          "biosample_uuid": "[UUID('b35de396-bef4-4f1c-b9f4-a710e7964346')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD928/8e867bb2-e8f2-4612-92e2-bd83e1ece63a/f7bc5cf4-e86f-47e0-aba6-fdeeeeffe66d.png"
+        ],
+        "submitted_in_study_uuid": "665e0b75-0077-4f6b-89f2-e780ab415a3e",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Imaging acquision protocol",
+            "uuid": "1ceb2541-9978-47a7-9d30-adb79bdfd128",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "20x or 60x objective.  Exposure time are optimized automatically by microscope application",
+            "imaging_instrument_description": "PerkinElmer spinning disk confocal microscope or a Leica Sp8 confocal microscope with the Leica Application Suite (LAS) software. ",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy",
+              "microscopy",
+              "spinning disk confocal microscopy",
+              "time lapse microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Specimen description",
+            "uuid": "c96d7a70-0f68-4e07-9b33-86ad6d49c184",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "All specimen were isolated from C57BL/6 strain.",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "Biosample descriptions",
+            "uuid": "b35de396-bef4-4f1c-b9f4-a710e7964346",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Human endothelial cells",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Specimen description",
+            "uuid": "f3eb52ee-8b6f-46d8-afcc-d7e4b9068042",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "d8a360d5-d715-45e0-8893-aa197abd4def",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Type": "Raw data"
+            },
+            "acquisition_process_uuid": [
+              "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+            ],
+            "submission_dataset_uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+            "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94"
+          },
+          {
+            "uuid": "34a41b1b-ca64-4955-8f67-e55225901808",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Type": "Raw data"
+            },
+            "acquisition_process_uuid": [
+              "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+            ],
+            "submission_dataset_uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+            "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94"
+          },
+          {
+            "uuid": "a80f46e2-d2d3-4a40-ae70-954eda2bf2a0",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Type": "Raw data"
+            },
+            "acquisition_process_uuid": [
+              "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+            ],
+            "submission_dataset_uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+            "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94"
+          },
+          {
+            "uuid": "9afc5b44-ae20-432d-beec-7a42165f4b09",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Type": "Raw data"
+            },
+            "acquisition_process_uuid": [
+              "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+            ],
+            "submission_dataset_uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+            "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94"
+          },
+          {
+            "uuid": "8e867bb2-e8f2-4612-92e2-bd83e1ece63a",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "Type": "Raw data"
+            },
+            "acquisition_process_uuid": [
+              "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+            ],
+            "submission_dataset_uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+            "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD930": {
+    "uuid": "828d0392-ecb5-4f07-ac5a-1e7853ae79a1",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD930",
+    "licence": "CC0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Anita Bodac",
+        "affiliation": [
+          {
+            "rorid": "https://ror.org/02s376052",
+            "address": null,
+            "website": null,
+            "display_name": "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne"
+          }
+        ],
+        "contact_email": "anita.bodac@epfl.ch",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Etienne Meylan ",
+        "affiliation": [
+          {
+            "rorid": "https://ror.org/01r9htc13",
+            "address": null,
+            "website": null,
+            "display_name": "Universit\u00e9 Libre de Bruxelles"
+          }
+        ],
+        "contact_email": "etienne.meylan@ulb.be",
+        "role": null
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Abdullah Mayet ",
+        "affiliation": [
+          {
+            "rorid": "https://ror.org/01r9htc13",
+            "address": null,
+            "website": null,
+            "display_name": "Universit\u00e9 Libre de Bruxelles"
+          }
+        ],
+        "contact_email": "abudllah.mayet@ulb.be",
+        "role": null
+      }
+    ],
+    "title": "Analysis of Bcl-xL blockade in mice with lung tumors and Bcl-xL expression in human LUAD ",
+    "release_date": "2023-11-20",
+    "description": "Mice were treated with A-1331852 and lung tumor growth was analyzed with uCT scan of the lung and with Ki67 staining of lung tumors ",
+    "keyword": [
+      "Bcl-xL, LUAD, KP mouse "
+    ],
+    "acknowledgement": null,
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": null,
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 1,
+        "image_count": 11,
+        "file_type_aggregation": [
+          ".czi",
+          ".mov",
+          ".vsi"
+        ],
+        "title_id": "Fig 4C and 4D",
+        "uuid": "9fda3a06-1d9b-4899-9770-8ce536358187",
+        "version": 1,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "Images obtained from CT scans of mouse lungs with tumors and Ki67 analysis of lung tumors in these mice ",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": null,
+              "image_correlation": null,
+              "biosample": "KP mouse lung sections and CT scans ",
+              "image_acquisition": "CT scan image aquisition and Ki67 staining image acquisition",
+              "specimen": "Mice with KP lung tumors "
+            }
+          ],
+          "acquisition_process_uuid": [
+            "c37b9f54-69f1-495d-812c-7e046edb91e9"
+          ],
+          "subject_uuid": "f3260207-48bf-4be7-8568-f32eeeb24d84",
+          "biosample_uuid": "[UUID('54b18b75-aab8-452c-83c5-9c6014c1dc0a')]"
+        },
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [],
+        "submitted_in_study_uuid": "828d0392-ecb5-4f07-ac5a-1e7853ae79a1",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "CT scan image aquisition and Ki67 staining image acquisition",
+            "uuid": "c37b9f54-69f1-495d-812c-7e046edb91e9",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "\nThe IHC images were aquired at 20X magnification and quantification of positive cells on IHCs was performed using the QuPath software.",
+            "imaging_instrument_description": "Lung images were captured using an X-Ray microtomography machine (\u00b5CT) (Quantum FX; PerkinElmer)\n\nFor ki67 IHC staining image acquisition, tissue slides were scanned with the VS120-SL Olympus slide scanner \n",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "X-ray computed tomography"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Mice with KP lung tumors ",
+            "uuid": "d32238bf-56c4-4c9d-8d1e-c15a552e4206",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "Lung images were captured using an X-Ray microtomography machine (\u00b5CT) (Quantum FX; PerkinElmer) with a voxel size of 50 \u03bcm, using retrospective respiratory gating. \nFor ki67 staining: After dissection, lungs with tumors were isolated, the lobes were separated, fixed with 3.7% formaldehyde solution (Sigma) overnight and then paraffin embedded. Blocks of tissues were cut into sections of 4 \u00b5m of thickness. For immunohistochemistry (IHC), slides were dewaxed and antigen retrieval was performed using 10 mM sodium citrate. Blocking was performed with 5% goat serum. The slides were then stained with primary antibodies overnight at 4\u00b0C, washed and incubated with secondary antibodies for 1h at room temperature. Antibody used for IHC is anti-Ki67 (ThermoFisher, MA5-14520). After washing, slides were incubated for 40 minutes with anti-rabbit Immpress horseradish peroxidase (HRP, Vector Laboratories, RRID:AB_2336529). The positive cells were then revealed using 3-3\u2019-Diaminobenzidine (DAB) substrate. Harris hematoxylin counterstain of the nuclei was subsequentially performed. ",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "KP mouse lung sections and CT scans ",
+            "uuid": "54b18b75-aab8-452c-83c5-9c6014c1dc0a",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "mouse",
+                "scientific_name": "Mus musculus",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "Lungs with tumors ",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Mice with KP lung tumors ",
+            "uuid": "c0ba95f1-e66c-4187-8716-e48eb4ad885d",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "2070c2aa-4eff-43ef-bd9c-6520e5a64ef7",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {
+              "description": "Immunofluorescence staining of Bcl-xL and MPO in human LUAD samples "
+            },
+            "acquisition_process_uuid": [
+              "c37b9f54-69f1-495d-812c-7e046edb91e9"
+            ],
+            "submission_dataset_uuid": "9fda3a06-1d9b-4899-9770-8ce536358187",
+            "subject_uuid": "f3260207-48bf-4be7-8568-f32eeeb24d84"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
+  },
+  "S-BIAD931": {
+    "uuid": "1ffbf364-4692-4797-b95d-d9a3bca14e2b",
+    "version": 0,
+    "model": {
+      "type_name": "Study",
+      "version": 1
+    },
+    "accession_id": "S-BIAD931",
+    "licence": "CC0",
+    "author": [
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": "0000-0001-7898-6795",
+        "display_name": "Faure-Dupuy",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Institut Cochin"
+          }
+        ],
+        "contact_email": "suzanne.faure-dupuy@inserm.fr",
+        "role": "first author"
+      },
+      {
+        "rorid": null,
+        "address": null,
+        "website": null,
+        "orcid": null,
+        "display_name": "Niedergang",
+        "affiliation": [
+          {
+            "rorid": null,
+            "address": null,
+            "website": null,
+            "display_name": "Institut Cochin"
+          }
+        ],
+        "contact_email": "florence.niedergang@inserm.fr",
+        "role": "corresponding author"
+      }
+    ],
+    "title": "ARL5b inhibits human rhinovirus 16 propagation and impairs macrophage-mediated bacterial clearance",
+    "release_date": "2024-01-18",
+    "description": "Human rhinovirus is the most frequently isolated virus during severe exacerbations of chronic respiratory diseases, like chronic obstructive pulmonary disease. In this disease, alveolar macrophages display significantly diminished phagocytic functions that could be associated with bacterial superinfections. However, how human rhinovirus affects the functions of macrophages is largely unknown. Macrophages treated with HRV16 demonstrated deficient bacteria killing activity, impaired phagolysosome biogenesis and altered intracellular compartments. Using RNA sequencing, we identified the small GTPase ARL5b to be upregulated by the virus in primary human macrophages. Importantly, depletion of ARL5b rescued bacterial clearance and localization of endosomal markers in macrophages upon HRV16 exposure. In permissive cells, depletion of ARL5b increased the secretion of HRV16 virions. Thus, we identify ARL5b as a novel regulator of intracellular trafficking dynamics and phagolysosomal biogenesis in macrophages and as a restriction factor of HRV16 in permissive cells. ",
+    "keyword": [
+      "macrophages",
+      "rhinovirus",
+      "endosomes",
+      "ARL5b",
+      "bacteria",
+      "clearance",
+      "phagosome maturation",
+      "restriction factor"
+    ],
+    "acknowledgement": "We acknowledge the contribution of Ana Filipa Azevedo Campos (ERASMUS+ programme, University of Porto) and Prof. Juliana Felix de Melo (University of Piaui, Bresil) for their contribution to some set up experiments. We thank Dr. Celine Plainvert and Prof. Claire Poyart for providing bacterial strains, Prof. David Russell for providing the DQ-BSA and H2DCFDA-Oxyburst beads, Dr. Lisa Parker for providing tables to calculate HRV16 TCID50 and Prof. Paul Gleeson for the ARL5b plasmids. We thank the CYBIO facility and the IMAG\u2019IC facility of Institut Cochin that is part of the national France-BioImaging infrastructure supported by the French National Research Agency (ANR-10-INBS-04). ",
+    "see_also": [],
+    "related_publication": [],
+    "grant": [],
+    "funding_statement": "Work in the laboratory of FN was supported by grants from CNRS, INSERM, Universit\u00e9 Paris Descartes (now Universit\u00e9 Paris Cit\u00e9), and a collaborative grant with AstraZeneca/ Inserm Transfert. SFD work was supported by a grant from FRM (ARF202110013926) and a Marie Sk\u0142odowska-Curie Actions postdoctoral fellowship (Project MacroRhino). CD work was supported by the French National Research Agency through the \"Investments for the Future\" program (France-BioImaging, ANR-10-INSB-04) and we acknowledge the PICT-IBiSA, member of the France-BioImaging infrastructure, supported by the French National Research Agency (ANR-10-INBS-04) and supported by the CelTisPhyBio Labex (N\u00b0 ANR-11-LABX-0038) part of the IDEX PSL (N\u00b0ANR-10-IDEX-0001-02 PSL).",
+    "attribute": {},
+    "experimental_imaging_component": [
+      {
+        "file_count": 5,
+        "image_count": 123,
+        "file_type_aggregation": [
+          ".TIF",
+          ".Tif",
+          ".docx",
+          ".pptx",
+          ".tif",
+          ".tiff"
+        ],
+        "title_id": "Experiments for the study",
+        "uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+        "version": 8,
+        "model": {
+          "type_name": "ExperimentalImagingDataset",
+          "version": 1
+        },
+        "description": "this study aim at understunding the effect of HRV16 on phagosome maturation.",
+        "attribute": {
+          "associations": [
+            {
+              "image_analysis": "Image analysis for the publication",
+              "image_correlation": null,
+              "biosample": "Images present in the publication",
+              "image_acquisition": "Image acquisition of the publication",
+              "specimen": "Specimen present in the publication"
+            }
+          ],
+          "acquisition_process_uuid": [
+            "b390b063-92d1-4476-b4b9-85b64661cb0b"
+          ],
+          "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3",
+          "biosample_uuid": "[UUID('73cea4af-b86e-44a1-acb0-ee02a61a290c')]"
+        },
+        "analysis_method": [
+          {
+            "protocol_description": "Image analysis for the publication",
+            "features_analysed": "To analyse EEA1 or CD63 staining after HRV16 challenge and overnight rest, cultures were washed in PBS1X/2% FCS/0.05% saponin (permeabilization buffer) and labelled for 45 minutes with anti-EEA1 or anti-CD63 in the same buffer. Cells were then washed with permeabilization buffer and incubated with Cy3-labelled F(ab\u2019)2 anti-mouse IgG in the same buffer for 30 min. After washing, cells were stained with DAPI for 5 min and mounted using Fluormount G (Interchim). Images were acquired with the conditions described above. "
+          }
+        ],
+        "correlation_method": [],
+        "example_image_uri": [
+          "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD931/3c3fea27-66f4-47a4-80a7-35f2fb3da310/4d946cbd-537d-44db-a4d4-5cafa7ad6d20.png"
+        ],
+        "submitted_in_study_uuid": "1ffbf364-4692-4797-b95d-d9a3bca14e2b",
+        "acquisition_process": [
+          {
+            "default_open": true,
+            "title_id": "Image acquisition of the publication",
+            "uuid": "b390b063-92d1-4476-b4b9-85b64661cb0b",
+            "version": 0,
+            "model": {
+              "type_name": "ImageAcquisition",
+              "version": 1
+            },
+            "protocol_description": "Image acquisition was performed with a 100x (1.4 NA) objective and an Orca Flash 4LT+ camera (Hamamatsu Photonics). Z series of images were taken at 0.3 \u03bcm z-step increments. ",
+            "imaging_instrument_description": "Image acquisition was performed on an inverted wide-field DMI6000 microscope (Leica Microsystems, Wetzlar).",
+            "fbbi_id": [],
+            "imaging_method_name": [
+              "fluorescence microscopy"
+            ]
+          }
+        ],
+        "specimen_imaging_preparation_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Specimen present in the publication",
+            "uuid": "d0fde15e-12f5-40f9-84b2-06fffb844152",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenImagingPreparationProtocol",
+              "version": 1
+            },
+            "protocol_description": "Human peripheral blood mononuclear cells (PBMCs) were isolated from whole blood of healthy donors (Etablissement Fran\u00e7ais du Sang Ile-de-France, Site Trinit\u00e9, Inserm agreement #15/EFS/012 and #18/EFS/030) ensuring that all donors gave a written informed consent and providing anonymized samples, with no gender discrimination and no genetic modification) by density gradient sedimentation using Ficoll-Plaque (GE Healthcare). This was followed by adhesion on plastic at 37\u00b0C for 2 h and culture in the presence of adhesion medium (RPMI 1640 (Life Technologies) supplemented with 100 \u00b5g/ml streptomycin/penicillin and 2 mM L-glutamine (Invitrogen/Gibco)). Then, the adhered cells were washed once with warm adhesion medium and left to rest in macrophage culture medium (adhesion medium supplemented with 10% FCS (Eurobio)) at 37\u00b0C. The next day, cultures were washed with adhesion medium and then supplemented every 2 days with fresh macrophage culture medium. The adherent monocytes were left to differentiate at 37\u00b0C into macrophages as described previously (Jubrail et al., 2020) and used after 10 days.\nMacrophages were washed once in PBS and rested in virus medium. HRV16, HRV16UV or mock infected (MI) supernatants were added to the macrophages and placed at room temperature for 1 h with agitation to achieve 1 x 107 TCID50/ml. Cultures were then washed with virus medium and rested in macrophage medium overnight. \n\n",
+            "signal_channel_information": []
+          }
+        ],
+        "biological_entity": [
+          {
+            "default_open": true,
+            "title_id": "Images present in the publication",
+            "uuid": "73cea4af-b86e-44a1-acb0-ee02a61a290c",
+            "version": 0,
+            "model": {
+              "type_name": "BioSample",
+              "version": 1
+            },
+            "organism_classification": [
+              {
+                "common_name": "human",
+                "scientific_name": "Homo sapiens",
+                "ncbi_id": null
+              }
+            ],
+            "biological_entity_description": "human monocytes derived macrophages",
+            "experimental_variable_description": [],
+            "extrinsic_variable_description": [],
+            "intrinsic_variable_description": []
+          }
+        ],
+        "specimen_growth_protocol": [
+          {
+            "default_open": true,
+            "title_id": "Specimen present in the publication",
+            "uuid": "2451c32a-d3e4-405a-bd67-685264543716",
+            "version": 0,
+            "model": {
+              "type_name": "SpecimenGrowthProtocol",
+              "version": 1
+            },
+            "protocol_description": ""
+          }
+        ],
+        "image": [
+          {
+            "uuid": "943ac2e5-e4ef-4ee8-a886-e4541c0b4d37",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b390b063-92d1-4476-b4b9-85b64661cb0b"
+            ],
+            "submission_dataset_uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+            "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3"
+          },
+          {
+            "uuid": "6af7cdaa-7dd4-410e-b37c-36dd1dcd906c",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b390b063-92d1-4476-b4b9-85b64661cb0b"
+            ],
+            "submission_dataset_uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+            "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3"
+          },
+          {
+            "uuid": "9e90d1ee-4795-4950-a3b6-9986bf8ab055",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b390b063-92d1-4476-b4b9-85b64661cb0b"
+            ],
+            "submission_dataset_uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+            "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3"
+          },
+          {
+            "uuid": "3c3fea27-66f4-47a4-80a7-35f2fb3da310",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b390b063-92d1-4476-b4b9-85b64661cb0b"
+            ],
+            "submission_dataset_uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+            "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3"
+          },
+          {
+            "uuid": "8a4c5814-b7a1-4908-8559-4244bb7dd9a4",
+            "version": 0,
+            "model": {
+              "type_name": "ExperimentallyCapturedImage",
+              "version": 1
+            },
+            "attribute": {},
+            "acquisition_process_uuid": [
+              "b390b063-92d1-4476-b4b9-85b64661cb0b"
+            ],
+            "submission_dataset_uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+            "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3"
+          }
+        ]
+      }
+    ],
+    "image_annotation_component": []
   }
 }

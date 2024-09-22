@@ -35571,5 +35571,1893 @@
       "funding_statement": null,
       "attribute": {}
     }
+  },
+  "7904f38a-380d-4d25-8d91-aa850e667bcf": {
+    "title_id": "High-content screen",
+    "uuid": "7904f38a-380d-4d25-8d91-aa850e667bcf",
+    "version": 6,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "High-content screen for compounds that are protective against LPS-induced neuronal loss in primary neuron-glia cocultures",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Image Analysis",
+          "image_correlation": "Image Correlation",
+          "biosample": "Coculture screen",
+          "image_acquisition": "Image Acquisition",
+          "specimen": "Culture preparation"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "bf5455e2-dc26-4dc0-84e9-51453338350b"
+      ],
+      "subject_uuid": "5179338a-4c6a-4de9-a689-27b69779a6f3",
+      "biosample_uuid": "[UUID('75fdb8a4-072e-4882-8825-65a7debca770')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Image Analysis",
+        "features_analysed": "The final CellProfiler pipeline used to process images and generate cell object measurements from the screen can be found on GitHub at timjyb/Birkle-et-al-2023-HTS (Pipe1). Background subtraction was omitted owing to the uniformity of image illumination achieved on the high-content imager, which helped reduce computation time. A Cellpose module was used for segmentation of nuclei (Hoechst), and the resulting objects were shrunk by 1px to more accurately mask the nuclear area. Intensity and shape measurements were derived for each objects. The pipeline saves object images suitable for reloading into CellProfiler for further analysis, which avoids the need to rerun the computationally costly Cellpose segmentation again. Object outline images are also saved, which can be loaded into CellProfiler Analyst (CPA) alongside the original images for clear visualisation of objects (and mis-segmentation events) during classifier training. Object measurements were stored in an SQLite database, which was handled using the freely available DB Browser for SQLite software (https://sqlitebrowser.org/). \n\nA randomly selected subset of the final object set from each repeat was then loaded into CPA (this reduced the tile fetch times while fetching objects for classification in CPA), and randomly selected objects from this set were classified manually into 7 classes, aiming for 400 objects each: Neuron, Microglia, Astrocyte, Other, Condensed, Necrotic or Debris. Once all four repeats were completed, object sets and training sets were combined, resulting in 1,600 total objects annotated per class and spread evenly across repeats such that the final classifier should be robust to any variation in cells, staining, or image quality over the entire screen (11,274 objects in total). The training set was therefore balanced across the 4 biological repeats, and otherwise was randomly sampled such that there should be roughly equal representation of cells from LPS- and LPS+ wells (and roughly equal contribution from each compound treatment as well)\n\nAccording to internal accuracy validation (k-fold validation), a Random Trees Classifier performed the best, and this was used for final analysis (validation data can be found in the publication)\n\nCellProfiler version was 4.2.4 (built from source). CellProfiler Analyst version was 3.0\n"
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD890/722569cf-083f-4ef5-8520-4dd9585ab05a/92b0d1a6-fc42-4228-9821-5df39542b92e.png"
+    ],
+    "submitted_in_study_uuid": "4638fc5d-4a7e-4d26-9b66-ff9441e87987",
+    "submitted_in_study": {
+      "uuid": "4638fc5d-4a7e-4d26-9b66-ff9441e87987",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD890",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-6395-8142",
+          "display_name": "Timothy Birkle",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Cambridge"
+            }
+          ],
+          "contact_email": "timjyb@gmail.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Henriette Willems",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "ALBORADA Drug Discovery Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "John Skidmore",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "ALBORADA Drug Discovery Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Guy Brown",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Cambridge"
+            }
+          ],
+          "contact_email": "gcb3@cam.ac.uk",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Disease phenotypic screening in neuron-glia co-cultures identifies blockers of inflammatory neurodegeneration",
+      "release_date": "2024-03-10",
+      "description": "Neurophysiology and neuropathology are mediated by the interaction of neurons and glial cells, which cannot be modelled by monocultures. However, mixed cultures are difficult to use and analyse for high-throughput screening. Here, we show the utility of compound and target screening using primary neuron-glia cultures to model inflammatory neurodegeneration alongside live-cell stains and automated classification of neurons, astrocytes or microglia using open-source analysis software. Out of 227 compounds with known bioactivities, 29 protected against lipopolysaccharide-induced neuronal loss, including drugs affecting adrenergic, steroid, inflammatory and MAP kinase signalling. The screen also identified physiological compounds, such as noradrenaline and progesterone, that protected, and identified neurotoxic compounds, such as a TLR7 agonist, that induced microglial proliferation. Thus, combining automated image analysis of complex cultures with high-throughput screening of known compounds in a cellular model of disease allows identification of important biology, as well as potential targets and drugs for treatment.",
+      "keyword": [
+        "Microglia",
+        "Machine learning",
+        "Coculture",
+        "Neurodegeneration",
+        "Inflammation",
+        "High-content",
+        "Screening"
+      ],
+      "acknowledgement": "We are grateful to the staff and animals of Cambridge's University Biomedical Services. We would particularly like to thank David Winpenny and Jon Clarke of the ADDI, as well as all members of the GB lab and William Kuan, David Allendorf, David Harrison, Esperanza Agullo Pascual, and Nikhita Annaiyappa of the ADDI for their helpful advice and training during this project.\n",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [
+        {
+          "id": "ARUK-2023DDI-CAM",
+          "funder": [
+            {
+              "display_name": "ALBORADA Drug Discovery Institute",
+              "id": null
+            }
+          ]
+        }
+      ],
+      "funding_statement": "This work was supported by Medical Research Council UK funding to GB (MR/L010593), and by core funding to the ALBORADA Drug Discovery Institute (ARUK-2023DDI-CAM) with support from the ALBORADA Trust. ",
+      "attribute": {}
+    }
+  },
+  "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf": {
+    "title_id": "ICC images and mask shRNA transduced neurons",
+    "uuid": "0c7c2924-4caf-4c10-8a8f-10c6a3601dbf",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "high-content imaging + mask",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "program code for Yokogawa masks",
+          "image_correlation": null,
+          "biosample": "TH-Rep1",
+          "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+          "specimen": "staining of neurons and imaging"
+        },
+        {
+          "image_analysis": "program code for Yokogawa masks",
+          "image_correlation": null,
+          "biosample": "TH-Rep2",
+          "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+          "specimen": "staining of neurons and imaging"
+        },
+        {
+          "image_analysis": "program code for Yokogawa masks",
+          "image_correlation": null,
+          "biosample": "17608",
+          "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+          "specimen": "staining of neurons and imaging"
+        },
+        {
+          "image_analysis": "program code for Yokogawa masks",
+          "image_correlation": null,
+          "biosample": "K2135",
+          "image_acquisition": "High-content imaging of differentiated dopaminergic neurons",
+          "specimen": "staining of neurons and imaging"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "5bf2411f-70c3-4e5f-bcc7-b681c73cfdfe"
+      ],
+      "subject_uuid": "28ce059d-3029-4de6-a681-a9dd5a1660e1",
+      "biosample_uuid": "[UUID('05299a8e-00e5-4cc5-91ea-6b5538a388a4'), UUID('d16a7297-e5dc-4241-becb-ce2e4ad558d2'), UUID('de746299-cf7a-4ec6-b524-b9fa1a4de686'), UUID('e394e9c0-daa1-4ebc-b7ab-7521350a85d5')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "program code for Yokogawa masks",
+        "features_analysed": "https://github.com/johnmacht/daneuron_quantification_matlab"
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD900/334c4cb3-b183-4020-9b54-bef91520a4ae/228393ce-e604-4092-b7a1-0cdaaf0a4784.png"
+    ],
+    "submitted_in_study_uuid": "e61786ef-50b7-4378-b258-327b54511e02",
+    "submitted_in_study": {
+      "uuid": "e61786ef-50b7-4378-b258-327b54511e02",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD900",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "CATILLON",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Luxembourg"
+            }
+          ],
+          "contact_email": "marie.catillon@uni.lu",
+          "role": "data acquisition"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-7109-6802",
+          "display_name": "OHNMACHT",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Luxembourg"
+            }
+          ],
+          "contact_email": "jochen.ohnmacht@lih.lu",
+          "role": "data analyst"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-0450-9301",
+          "display_name": "ANTONY",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Luxembourg"
+            }
+          ],
+          "contact_email": "paul.antony@uni.lu",
+          "role": "data analyst"
+        }
+      ],
+      "title": "LBX1, NHLH1 and NR2Fs knock-down effects on midbrain dopaminergic neurons populations derived from 4 different iPSC lines",
+      "release_date": "2023-10-05",
+      "description": "Acquisition of neuron (TH and MAP2) and nuclei (DAPI) ICC images with a Yokogawa high content imaging system. \nSignal masks for both TH and MAP2 were generated by using in-house Matlab analysis pipeline",
+      "keyword": [
+        "knock-down",
+        "midbrain dopaminergic neurons",
+        "transcription factors ",
+        "high content imaging",
+        "tyrosine hydroxylase"
+      ],
+      "acknowledgement": "We thank Dr. Jochen Ohnmacht and Dr. Paul Anthony",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This work was supported by the Luxembourg National Research Fund within the National Centre of Excellence in Research on Parkinson's Disease (NCER-PD; FNR/NCER13/BM/11264123) and the PEARL program (FNR/P13/6682797 to R.K.). B.G.R. and N.d.L were funded by the Luxembourg National Research Fund through the PARK-QC doctoral training unit (PRIDE17/12244779/PARK-QC).; L.S., B.G.R. and J.O. have received funding from Fondation du P\u00e9lican de Mie et Pierre Hippert-Faber and Luxembourg Rotary Foundation. The genome-editing platform in L\u00fcbeck is supported by the DFG (FOR 2488 to A.R.). D.F. and S.B. were supported by Luxembourg National Research Fund (CORE C21/DM/15839823/Astraging). G.A. is supported by the Luxembourg National Research Fund CORE grant C21/BM/15850547/PINK1-DiaPDs.",
+      "attribute": {}
+    }
+  },
+  "6479f70a-a11f-4007-8edf-b97ae2601e19": {
+    "title_id": "Actin and myosin localisation",
+    "uuid": "6479f70a-a11f-4007-8edf-b97ae2601e19",
+    "version": 4,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Actin- or myosin labelled DCs in microchannels",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Hoxb8-derived DC",
+          "image_acquisition": "Microchannels",
+          "specimen": "Hoechst staining"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+      ],
+      "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc",
+      "biosample_uuid": "[UUID('6f806056-12c4-4d1d-8833-c67f5d0e2db6')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD901/8bd1e828-607f-4e6d-b40c-af565d9d89b1/b154fc7c-7b12-468a-98e8-1344285d56de.png"
+    ],
+    "submitted_in_study_uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+    "submitted_in_study": {
+      "uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD901",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-2856-3369",
+          "display_name": "J\u00f6rg Renkawitz",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/05591te55",
+              "address": null,
+              "website": null,
+              "display_name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen"
+            }
+          ],
+          "contact_email": "joerg.renkawitz@med.uni-muenchen.de",
+          "role": null
+        }
+      ],
+      "title": "Adaptive Pathfinding by Nucleokinesis during Amoeboid Migration",
+      "release_date": "2023-10-13",
+      "description": "Motile cells encounter microenvironments of locally heterogeneous mechanochemical composition. Individual compositional parameters like chemokines and pore sizes are well known to provide guidance cues for pathfinding. However, motile cells face diverse cues at the same time, raising the question of how they respond to diverse and potentially competing signals on their paths. Here, we reveal that amoeboid cells require nuclear repositioning, termed nucleokinesis, for adaptive pathfinding in heterogeneous mechanochemical micro-environments. Using mammalian immune cells and the amoeba Dictyostelium discoideum, we discover that frequent, rapid and long-distance nucleokinesis is a basic component of amoeboid pathfinding, enabling cells to reorientate quickly between locally competing cues. Amoeboid nucleokinesis comprises a two-step polarity switch and is driven by myosin-II forces, readjusting the nuclear to the cellular path. Impaired nucleokinesis distorts path adaptions and causes cellular arrest in the microenvironment. Our findings establish that nucleokinesis is required for amoeboid cell navigation. Given that many immune cells, amoebae, and some cancer cells utilize an amoeboid migration strategy, these results suggest that nucleokinesis underlies cellular navigation during unicellular biology, immunity, and disease.\ndoi: https://doi.org/10.1101/2023.05.19.540965. Contains image data for Figure 1 and 4. Remaining source data are available on the journal website.",
+      "keyword": [
+        "cell migration ",
+        "nucleokinesis",
+        "nuclear positioning",
+        "myosin",
+        "amoeboid migration",
+        "dendritic cell",
+        "Dictyostelium"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This study was supported by the Peter Hans Hofschneider Professorship of the foundation \u2018Stiftung Experimentelle Biomedizin\u2019, the LMU Institutional Strategy LMU-Excellent within the framework of the German Excellence Initiative, and the Deutsche Forschungsgemeinschaft (DFG; German Research Foundation; SFB914 project A12). This [publication, dataset, software etc.] has been made possible in part by CZI grant DAF2020-225401 and grant DOI https://doi.org/10.37921/120055ratwvi from the Chan Zuckerberg Initiative DAF, an advised fund of Silicon Valley Community Foundation (funder DOI 10.13039/100014989). ",
+      "attribute": {}
+    }
+  },
+  "dbdaa44d-e286-4d5b-ba9e-d713304d73c1": {
+    "title_id": "Protrusion Retraction",
+    "uuid": "dbdaa44d-e286-4d5b-ba9e-d713304d73c1",
+    "version": 2,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Protrusion retraction duration in microchannels",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Hoxb8-derived DC",
+          "image_acquisition": "Microchannels",
+          "specimen": "Hoechst staining"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "f4cae2d8-f7f0-484b-984c-aeb7948c5a4a"
+      ],
+      "subject_uuid": "47295417-b4bb-4b09-84a9-9ae18cf099cc",
+      "biosample_uuid": "[UUID('6f806056-12c4-4d1d-8833-c67f5d0e2db6')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD901/3a94e8fe-9ae5-4316-b516-d93c6fde6d87/704ffff9-83ea-4edd-a110-d0e896dd20f3.png"
+    ],
+    "submitted_in_study_uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+    "submitted_in_study": {
+      "uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD901",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-2856-3369",
+          "display_name": "J\u00f6rg Renkawitz",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/05591te55",
+              "address": null,
+              "website": null,
+              "display_name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen"
+            }
+          ],
+          "contact_email": "joerg.renkawitz@med.uni-muenchen.de",
+          "role": null
+        }
+      ],
+      "title": "Adaptive Pathfinding by Nucleokinesis during Amoeboid Migration",
+      "release_date": "2023-10-13",
+      "description": "Motile cells encounter microenvironments of locally heterogeneous mechanochemical composition. Individual compositional parameters like chemokines and pore sizes are well known to provide guidance cues for pathfinding. However, motile cells face diverse cues at the same time, raising the question of how they respond to diverse and potentially competing signals on their paths. Here, we reveal that amoeboid cells require nuclear repositioning, termed nucleokinesis, for adaptive pathfinding in heterogeneous mechanochemical micro-environments. Using mammalian immune cells and the amoeba Dictyostelium discoideum, we discover that frequent, rapid and long-distance nucleokinesis is a basic component of amoeboid pathfinding, enabling cells to reorientate quickly between locally competing cues. Amoeboid nucleokinesis comprises a two-step polarity switch and is driven by myosin-II forces, readjusting the nuclear to the cellular path. Impaired nucleokinesis distorts path adaptions and causes cellular arrest in the microenvironment. Our findings establish that nucleokinesis is required for amoeboid cell navigation. Given that many immune cells, amoebae, and some cancer cells utilize an amoeboid migration strategy, these results suggest that nucleokinesis underlies cellular navigation during unicellular biology, immunity, and disease.\ndoi: https://doi.org/10.1101/2023.05.19.540965. Contains image data for Figure 1 and 4. Remaining source data are available on the journal website.",
+      "keyword": [
+        "cell migration ",
+        "nucleokinesis",
+        "nuclear positioning",
+        "myosin",
+        "amoeboid migration",
+        "dendritic cell",
+        "Dictyostelium"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This study was supported by the Peter Hans Hofschneider Professorship of the foundation \u2018Stiftung Experimentelle Biomedizin\u2019, the LMU Institutional Strategy LMU-Excellent within the framework of the German Excellence Initiative, and the Deutsche Forschungsgemeinschaft (DFG; German Research Foundation; SFB914 project A12). This [publication, dataset, software etc.] has been made possible in part by CZI grant DAF2020-225401 and grant DOI https://doi.org/10.37921/120055ratwvi from the Chan Zuckerberg Initiative DAF, an advised fund of Silicon Valley Community Foundation (funder DOI 10.13039/100014989). ",
+      "attribute": {}
+    }
+  },
+  "d4cbc95e-c374-4aa7-8479-1c839fb790f3": {
+    "title_id": "Collagen recordings",
+    "uuid": "d4cbc95e-c374-4aa7-8479-1c839fb790f3",
+    "version": 2,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Fluorescence microscopy of DCs and T cells in collagen",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "T cell",
+          "image_acquisition": "Collagen",
+          "specimen": "Hoechst staining"
+        },
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "bmDC",
+          "image_acquisition": "Collagen",
+          "specimen": "Hoechst staining"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "eb47209f-2ee4-4022-83b9-9f4df774aaa8"
+      ],
+      "subject_uuid": "01168bae-790d-4cd0-a390-92caba4ee6c7",
+      "biosample_uuid": "[UUID('9e67c5f5-fbd7-4f48-9329-3ed51b5cca7c'), UUID('fb51dd24-872f-44b6-9f09-50c4462597cd')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD901/ab96071c-3bad-466d-aa57-28ef8a643f9b/9b783763-eae7-4dd5-9a9b-e0ed34ca39e8.png"
+    ],
+    "submitted_in_study_uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+    "submitted_in_study": {
+      "uuid": "b3fdff60-4eb7-4b35-ba8c-deb859cb00c2",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD901",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-2856-3369",
+          "display_name": "J\u00f6rg Renkawitz",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/05591te55",
+              "address": null,
+              "website": null,
+              "display_name": "Ludwig-Maximilians-Universit\u00e4t M\u00fcnchen"
+            }
+          ],
+          "contact_email": "joerg.renkawitz@med.uni-muenchen.de",
+          "role": null
+        }
+      ],
+      "title": "Adaptive Pathfinding by Nucleokinesis during Amoeboid Migration",
+      "release_date": "2023-10-13",
+      "description": "Motile cells encounter microenvironments of locally heterogeneous mechanochemical composition. Individual compositional parameters like chemokines and pore sizes are well known to provide guidance cues for pathfinding. However, motile cells face diverse cues at the same time, raising the question of how they respond to diverse and potentially competing signals on their paths. Here, we reveal that amoeboid cells require nuclear repositioning, termed nucleokinesis, for adaptive pathfinding in heterogeneous mechanochemical micro-environments. Using mammalian immune cells and the amoeba Dictyostelium discoideum, we discover that frequent, rapid and long-distance nucleokinesis is a basic component of amoeboid pathfinding, enabling cells to reorientate quickly between locally competing cues. Amoeboid nucleokinesis comprises a two-step polarity switch and is driven by myosin-II forces, readjusting the nuclear to the cellular path. Impaired nucleokinesis distorts path adaptions and causes cellular arrest in the microenvironment. Our findings establish that nucleokinesis is required for amoeboid cell navigation. Given that many immune cells, amoebae, and some cancer cells utilize an amoeboid migration strategy, these results suggest that nucleokinesis underlies cellular navigation during unicellular biology, immunity, and disease.\ndoi: https://doi.org/10.1101/2023.05.19.540965. Contains image data for Figure 1 and 4. Remaining source data are available on the journal website.",
+      "keyword": [
+        "cell migration ",
+        "nucleokinesis",
+        "nuclear positioning",
+        "myosin",
+        "amoeboid migration",
+        "dendritic cell",
+        "Dictyostelium"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This study was supported by the Peter Hans Hofschneider Professorship of the foundation \u2018Stiftung Experimentelle Biomedizin\u2019, the LMU Institutional Strategy LMU-Excellent within the framework of the German Excellence Initiative, and the Deutsche Forschungsgemeinschaft (DFG; German Research Foundation; SFB914 project A12). This [publication, dataset, software etc.] has been made possible in part by CZI grant DAF2020-225401 and grant DOI https://doi.org/10.37921/120055ratwvi from the Chan Zuckerberg Initiative DAF, an advised fund of Silicon Valley Community Foundation (funder DOI 10.13039/100014989). ",
+      "attribute": {}
+    }
+  },
+  "fb856359-9c08-4242-bada-4738067aa06b": {
+    "title_id": "Immunofluorescence experiment data",
+    "uuid": "fb856359-9c08-4242-bada-4738067aa06b",
+    "version": 4,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Immunofluorescence data for figures 5, 6, and 7 showing DDHD2 interaction with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+          "image_acquisition": "Immunofluorescence data - DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+          "specimen": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "ec8d3f63-7318-4b9a-8418-49c89e7eb406"
+      ],
+      "subject_uuid": "9bb80b57-720d-4bfb-aa07-c4a5f482e789",
+      "biosample_uuid": "[UUID('6047d2f1-a266-44ce-aac5-bd67bbe213f4')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD910/e469d303-8273-40f6-9f05-0dbd86364021/8a7352b8-55ce-4e5f-baac-f4d4b3c9c823.png"
+    ],
+    "submitted_in_study_uuid": "e8e208ae-246d-4cb7-9c3a-cda48a4c1c92",
+    "submitted_in_study": {
+      "uuid": "e8e208ae-246d-4cb7-9c3a-cda48a4c1c92",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD910",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0003-4738-0701",
+          "display_name": "Akefe Isaac Oluwatobi",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "i.akefe@uq.edu.au",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Saber H. Saber",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Matthews",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Bharat G. Venkatesh",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Bharat G. Venkatesh",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Rachel S. Gormal",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Daniel G. Blackmore",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Suzy Alexander",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Emma Sieriecki",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "UNSW Sydney"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Yann Gambin",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "UNSW Sydney"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Jesus Bertran-Gonzalez",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "UNSW Sydney"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Nicolas Vitale",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Strasbourg"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Yann Humeau",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Bordeaux"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Sevannah Ellis",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Alysee A. Michaels",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Baylor College of Medicine"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Mingshan Xue",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Baylor College of Medicine"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Benjamin Cravatt",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Scripps Research Institute"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Merja Joensuu",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Tristan P. Wallis",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Fr\u00e9d\u00e9ric A. Meunier",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Queensland"
+            }
+          ],
+          "contact_email": "f.meunier@uq.edu.au",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "DDHD2 interacts with STXBP1 to mediate long-term memory via the generation of saturated free fatty acids",
+      "release_date": "2023-11-04",
+      "description": "Data for Immunofluorescence experiments - \nThe phospholipid and free fatty acid (FFA) composition of neuronal membranes plays a crucial role in learning and memory, but the mechanisms through which neuronal activity affects the brain's lipid landscape remain largely unexplored. Saturated FFAs, particularly myristic acid (C14:0), strongly increase during neuronal stimulation and memory acquisition, suggesting the involvement of phospholipase A1 (PLA1) activity in synaptic plasticity. Here, we show that genetic ablation of the DDHD2 isoform of PLA1 in mice markedly reduced saturated FFAs across the brain and memory performance in reward-based learning and spatial memory models prior to the development of neuromuscular deficits. DDHD2 was shown to bind to the key synaptic protein STXBP1. Using STXBP1/2 knockout neurosecretory cells and a haploinsufficient STXBP1+/- mouse model of STXBP1 encephalopathy that is also associated with intellectual disability and motor dysfunction, we show that STXBP1 controls the targeting of DDHD2 to the plasma membrane and the generation of saturated FFAs in the brain. Our findings suggest key roles for DDHD2 and STXBP1 in the lipid metabolism underlying synaptic plasticity, learning and memory.",
+      "keyword": [
+        "Lipids, Phospholipase A1; Free Fatty Acids; Myristic Acid; Learning and Memory "
+      ],
+      "acknowledgement": "This work was also supported by an NHMRC Ideas Grant (2010901) awarded to F.A.M. and T.P.W., Clem Jones Centre for Ageing Dementia (CJCADR) Flagship Grant awarded to F.A.M and The Academy of Finland Project Funding to M.J. (298124). F.A.M. is a National Health and Medical Research Council (NHMRC) Senior Research Fellow (GNT1155794). M.J. was supported by an Australian Research Council\u2019s (ARC) Discovery Early Career Research Award (DECRA) to (DE190100565). The Australian Government Research Training Program (RTP) Scholarship awarded to I.O.A. by The University of Queensland, and a top-up scholarship courtesy of the Queensland Brain Institute (QBI) also supported this research. M.X. is a Caroline DeLuca Scholar. The authors thank the University of Queensland Centre for Clinical Research Mass Spectrometry Facility (UQCCR-MSF) for provision of analytical services and technical advice. The University of Queensland Biological Resources Facility is also appreciated for the provision of support services and technical advice. We thank Alex McCann (QBI) for the critical reading of this manuscript and Vanesa Lanoue for her technical assistance with cell culture. Figure 1a and Appendix Figure 1A-B were created using BioRender.",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "8b899aca-faf7-4ed5-b32a-cb79d92758e0": {
+    "title_id": "Time-lapse HILO imaging of mOL sheets",
+    "uuid": "8b899aca-faf7-4ed5-b32a-cb79d92758e0",
+    "version": 0,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Time-lapse HILO imaging of mOL sheets",
+    "attribute": {
+      "associations": []
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+    "submitted_in_study": {
+      "uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD914",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5712-2776",
+          "display_name": "Daniel Fulton",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "d.fulton@bham.ac.uk",
+          "role": "corresponding author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-3860-5035",
+          "display_name": "Sayed Muhammed Rassul",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "s.m.rassul.09@aberdeen.ac.uk",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-8764-1617",
+          "display_name": "Masahiro Otsu",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "motsu@braizon.com",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-6755-0299",
+          "display_name": "Iain B Styles",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Queen's University"
+            }
+          ],
+          "contact_email": "i.styles@qub.ac.uk",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5023-8960",
+          "display_name": "Robert K Neely",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "r.k.neely@bham.ac.uk",
+          "role": "investigator"
+        }
+      ],
+      "title": "Single molecule tracking of myelin basic protein during oligodendrocyte differentiation\n",
+      "release_date": "2023-11-10",
+      "description": "This study aimed to expand our understanding of myelin basic protein (MBP), a key component of central nervous system myelin, by tracking and quantifying individual MBP particles during oligodendrocyte differentiation. MBP particle directionality, confinement and diffusion were tracked by rapid TIRF and HILO imaging of dendra2 tagged MBP in three stages of mouse oligodendroglia: oligodendrocyte precursors, early myelinating oligodendrocytes, and mature myelinating oligodendrocytes. The directionality and confinement of MBP particles increased at each stage consistent with the progressive transport towards, and recruitment into, emerging myelin structures. Unexpectedly, diffusion data presented a more complex pattern with sub-populations of the most diffusive particles disappearing at the transition between the precursor and early myelinating stage, before re-emerging in the membrane sheets of mature oligodendrocytes. This diversity of particle behaviours, which would be undetectable by conventional ensemble averaged methods, are consistent with a multifunctional view of MBP involving roles in myelin expansion and compaction.\n",
+      "keyword": [
+        "Oligodendrocyte",
+        "myelin",
+        "single molecule imaging",
+        "TIRF imaging",
+        "single molecule tracking",
+        "myelin basic protein "
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {
+        "Study Type": "time-lapse imaging",
+        "Organism": "Mus musculus (mouse)"
+      }
+    }
+  },
+  "83aedd4b-fc80-4317-a6e8-0ac1e01bb6e2": {
+    "title_id": "Time-lapse TIRF imaging of eOL processes",
+    "uuid": "83aedd4b-fc80-4317-a6e8-0ac1e01bb6e2",
+    "version": 0,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Time-lapse TIRF imaging of eOL processes",
+    "attribute": {
+      "associations": []
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+    "submitted_in_study": {
+      "uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD914",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5712-2776",
+          "display_name": "Daniel Fulton",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "d.fulton@bham.ac.uk",
+          "role": "corresponding author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-3860-5035",
+          "display_name": "Sayed Muhammed Rassul",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "s.m.rassul.09@aberdeen.ac.uk",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-8764-1617",
+          "display_name": "Masahiro Otsu",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "motsu@braizon.com",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-6755-0299",
+          "display_name": "Iain B Styles",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Queen's University"
+            }
+          ],
+          "contact_email": "i.styles@qub.ac.uk",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5023-8960",
+          "display_name": "Robert K Neely",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "r.k.neely@bham.ac.uk",
+          "role": "investigator"
+        }
+      ],
+      "title": "Single molecule tracking of myelin basic protein during oligodendrocyte differentiation\n",
+      "release_date": "2023-11-10",
+      "description": "This study aimed to expand our understanding of myelin basic protein (MBP), a key component of central nervous system myelin, by tracking and quantifying individual MBP particles during oligodendrocyte differentiation. MBP particle directionality, confinement and diffusion were tracked by rapid TIRF and HILO imaging of dendra2 tagged MBP in three stages of mouse oligodendroglia: oligodendrocyte precursors, early myelinating oligodendrocytes, and mature myelinating oligodendrocytes. The directionality and confinement of MBP particles increased at each stage consistent with the progressive transport towards, and recruitment into, emerging myelin structures. Unexpectedly, diffusion data presented a more complex pattern with sub-populations of the most diffusive particles disappearing at the transition between the precursor and early myelinating stage, before re-emerging in the membrane sheets of mature oligodendrocytes. This diversity of particle behaviours, which would be undetectable by conventional ensemble averaged methods, are consistent with a multifunctional view of MBP involving roles in myelin expansion and compaction.\n",
+      "keyword": [
+        "Oligodendrocyte",
+        "myelin",
+        "single molecule imaging",
+        "TIRF imaging",
+        "single molecule tracking",
+        "myelin basic protein "
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {
+        "Study Type": "time-lapse imaging",
+        "Organism": "Mus musculus (mouse)"
+      }
+    }
+  },
+  "2708ff2c-f95c-4756-8616-731683a9091f": {
+    "title_id": "Time-lapse TIRF imaging of OPC processes",
+    "uuid": "2708ff2c-f95c-4756-8616-731683a9091f",
+    "version": 0,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Time-lapse TIRF imaging of OPC processes",
+    "attribute": {
+      "associations": []
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+    "submitted_in_study": {
+      "uuid": "595e90cc-3961-4ea5-9242-5f6b1401a189",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD914",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5712-2776",
+          "display_name": "Daniel Fulton",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "d.fulton@bham.ac.uk",
+          "role": "corresponding author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-3860-5035",
+          "display_name": "Sayed Muhammed Rassul",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "s.m.rassul.09@aberdeen.ac.uk",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-8764-1617",
+          "display_name": "Masahiro Otsu",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "motsu@braizon.com",
+          "role": "experiment performer"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-6755-0299",
+          "display_name": "Iain B Styles",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Queen's University"
+            }
+          ],
+          "contact_email": "i.styles@qub.ac.uk",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-5023-8960",
+          "display_name": "Robert K Neely",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Birmingham"
+            }
+          ],
+          "contact_email": "r.k.neely@bham.ac.uk",
+          "role": "investigator"
+        }
+      ],
+      "title": "Single molecule tracking of myelin basic protein during oligodendrocyte differentiation\n",
+      "release_date": "2023-11-10",
+      "description": "This study aimed to expand our understanding of myelin basic protein (MBP), a key component of central nervous system myelin, by tracking and quantifying individual MBP particles during oligodendrocyte differentiation. MBP particle directionality, confinement and diffusion were tracked by rapid TIRF and HILO imaging of dendra2 tagged MBP in three stages of mouse oligodendroglia: oligodendrocyte precursors, early myelinating oligodendrocytes, and mature myelinating oligodendrocytes. The directionality and confinement of MBP particles increased at each stage consistent with the progressive transport towards, and recruitment into, emerging myelin structures. Unexpectedly, diffusion data presented a more complex pattern with sub-populations of the most diffusive particles disappearing at the transition between the precursor and early myelinating stage, before re-emerging in the membrane sheets of mature oligodendrocytes. This diversity of particle behaviours, which would be undetectable by conventional ensemble averaged methods, are consistent with a multifunctional view of MBP involving roles in myelin expansion and compaction.\n",
+      "keyword": [
+        "Oligodendrocyte",
+        "myelin",
+        "single molecule imaging",
+        "TIRF imaging",
+        "single molecule tracking",
+        "myelin basic protein "
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {
+        "Study Type": "time-lapse imaging",
+        "Organism": "Mus musculus (mouse)"
+      }
+    }
+  },
+  "8393b45e-2364-4a1b-9c15-1f0adee6a049": {
+    "title_id": "Microscopy data",
+    "uuid": "8393b45e-2364-4a1b-9c15-1f0adee6a049",
+    "version": 6,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Microscopy data",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Timelapse of development, surface tension mapping and immunostaining analysis",
+          "image_correlation": null,
+          "biosample": "Timelapse of embryos during surface tension mapping",
+          "image_acquisition": "Timelapse imaging of embryos during surface tension mapping",
+          "specimen": "Embryo thawing, culture and preparation"
+        },
+        {
+          "image_analysis": "Timelapse of development, surface tension mapping and immunostaining analysis",
+          "image_correlation": null,
+          "biosample": "Timelapse of embryos during surface tension mapping",
+          "image_acquisition": "Confocal imaging of immunostained embryos",
+          "specimen": "Embryo thawing, culture and preparation"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "6ad3aadc-e7bb-4f71-9cd7-9c44f6ea3391",
+        "63b48f47-f1eb-4076-941d-a474fe2cb703",
+        "41ccf20c-143c-40a4-a72a-9eb7698537b9"
+      ],
+      "subject_uuid": "013c189a-0bee-4975-824c-e64a1e953c79",
+      "biosample_uuid": "[UUID('4a57b680-078d-48c9-88e4-168570a28e0a')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Timelapse of development, surface tension mapping and immunostaining analysis",
+        "features_analysed": "Image analysis\nPipette size, cell radii of curvature, contact angles were measured using Fiji with the line, circle and angle tools respectively43. In brief, the equatorial plane of the object is taken to manually draw a line between the inner walls of the pipette or a circle fitting the cell-medium interface of cells. To measure external contact angles, two line segments are drawn tangentially to the cell-medium interfaces of two contacting cells with their intersection located at the cell-cell contact edge (Fig 1a). Similarly, to measure internal contact angles, two line segments are drawn: one along the cell-cell contact and another tangentially to the cell-medium interface of one of the contacting cells (Fig 1a). As an internal control of the measurement, we verify that the three angles roughly sum up to 360\u00b0 (with a tolerance of 10\u00b0).\nTo measure cortical intensity, as done previously7, we picked confocal slices cutting through the equatorial plane of two contacting cells using Fiji. We drew a 1 \u03bcm thick line along the cell-medium interface or cell-cell contact, measured the mean intensity and divided the contact intensity by the sum of the cell-medium intensities of contacting cells.\nTo measure the volume of cells, we use Bitplane Imaris to draw the contour of cells along the F-actin signal on confocal slices of stained embryos, as done previously7.\n"
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD915/bfd71f50-4af9-4cf6-94cb-6e40d740dd9f/0967cd82-4d56-46cb-9629-d00b5e1604f7.png"
+    ],
+    "submitted_in_study_uuid": "4b4ed158-067b-4caa-bcc9-a86cac7b2acc",
+    "submitted_in_study": {
+      "uuid": "4b4ed158-067b-4caa-bcc9-a86cac7b2acc",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD915",
+      "licence": "CC_BY_4.0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0002-3688-1474",
+          "display_name": "Jean-L\u00e9on Ma\u00eetre",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "French National Centre for Scientific Research"
+            }
+          ],
+          "contact_email": "jean-leon.maitre@curie.fr",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Mechanics of human embryo compaction",
+      "release_date": "2023-12-22",
+      "description": "The shaping of human embryos begins with compaction, during which cells come into close contact. Assisted reproductive technology (ART) studies suggest that human embryos fail compaction primarily because of defective adhesion. Based on our current understanding of animal morphogenesis, other morphogenetic engines, such as cell contractility, could be involved in shaping human embryos. However, the molecular, cellular and physical mechanisms driving human embryo morphogenesis remain uncharacterized. Using micropipette aspiration on human embryos donated to research, we have mapped cell surface tensions during compaction. This reveals a 4-fold increase of tension at the cell-medium interface while cell-cell contacts keep a steady tension. Therefore, increased tension at the cell-medium interface drives human embryo compaction, which is qualitatively similar to compaction in mouse embryos. Further comparison between human and mouse reveals qualitatively similar but quantitively different mechanical strategies, with human embryos being mechanically least efficient. Inhibition of cell contractility and cell-cell adhesion in human embryos reveals that, while both cellular processes are required for compaction, only contractility controls the surface tensions responsible for compaction. Interestingly, cell contractility and cell-cell adhesion exhibit distinct mechanical signatures when faulty. Analyzing the mechanical signature of naturally failing embryos, we find evidence that non-compacting or partially compacting embryos containing excluded cells have defective contractility. Together, our study reveals that an evolutionarily conserved increase in cell contractility is required to generate the forces driving the first morphogenetic movement shaping the human body.",
+      "keyword": [
+        "human embryo, preimplantation development"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "3fcdacc9-867c-41b6-89c5-55eb3603d877": {
+    "title_id": "Mouse neonatal colon",
+    "uuid": "3fcdacc9-867c-41b6-89c5-55eb3603d877",
+    "version": 9,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Mouse neonatal colon",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Neonatal and adult mouse colons",
+          "image_acquisition": "Confocal, fluorescence, and brightfield imaging",
+          "specimen": "Bacteria and Mice"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "b79b16f2-e33c-4e48-b3ec-146a074260c8"
+      ],
+      "subject_uuid": "eb62112c-2dd2-4e2f-a640-bbc6c1fe00a7",
+      "biosample_uuid": "[UUID('9dc814af-dd09-499c-81e5-23d68c5923f7')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD922/e9864fb2-a218-4efe-9f50-9ed8afc60dde/18fb0f77-37ba-4857-97ff-d3da4619d1b2.png"
+    ],
+    "submitted_in_study_uuid": "5a786e68-d3ea-49ec-b151-8ab319950716",
+    "submitted_in_study": {
+      "uuid": "5a786e68-d3ea-49ec-b151-8ab319950716",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD922",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Craig A. Hill",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Washington University in St. Louis"
+            }
+          ],
+          "contact_email": "craig.hill@wustl.edu",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": " Benjamin W. Casterline",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Chicago"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Ezequiel Valguarnera",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Washington University in St. Louis"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": " Aaron L. Hecht",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "University of Chicago"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Elizabeth S. Shepherd",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Novome Biotechnologies"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": " Justin L. Sonnenburg",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Stanford University"
+            }
+          ],
+          "contact_email": "not@supplied.com",
+          "role": "investigator"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Juliane Bubeck Wardenburg",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Washington University in St. Louis"
+            }
+          ],
+          "contact_email": "jbubeck@wustl.edu",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "Bacteroides fragilis toxin expression enables lamina propria niche acquisition in the developing mouse gut",
+      "release_date": "2024-01-01",
+      "description": "Toxin-enabled niche-establishment in the neonatal colon",
+      "keyword": [
+        "Mouse",
+        "Bacteroides fragilis",
+        "Vertical Transmission",
+        "Niche Acquisition"
+      ],
+      "acknowledgement": "Math1 fl/fl Vil-Cre-ERT2 mice were a gift from Dr. Rodney D. Newberry",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "This work was supported by a Pilot and Feasibility Award from the Digestive Diseases Research Core Center at the University of Chicago (NIDDK P30DK42086), NIH Award DK085025 to JLS, and NIH Awards AI138565 and AI157196 to JBW. BWC was supported by the National Institute of Allergy and Infectious Diseases of the National Institutes of Health (F30AI126791). BWC and ALH were trainees of the National Institutes of Health Medical Scientist Training Program at the University of Chicago \n(GM007281).",
+      "attribute": {}
+    }
+  },
+  "c6158677-24f9-45b5-a3b0-0e3a29997ffc": {
+    "title_id": "Study components",
+    "uuid": "c6158677-24f9-45b5-a3b0-0e3a29997ffc",
+    "version": 10,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Study components of latrophilin paper",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "Biosample descriptions",
+          "image_acquisition": "Imaging acquision protocol",
+          "specimen": "Specimen description"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "1ceb2541-9978-47a7-9d30-adb79bdfd128"
+      ],
+      "subject_uuid": "dafa71bc-06d5-4f75-9e37-0bc8f9cdad94",
+      "biosample_uuid": "[UUID('b35de396-bef4-4f1c-b9f4-a710e7964346')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD928/8e867bb2-e8f2-4612-92e2-bd83e1ece63a/f7bc5cf4-e86f-47e0-aba6-fdeeeeffe66d.png"
+    ],
+    "submitted_in_study_uuid": "665e0b75-0077-4f6b-89f2-e780ab415a3e",
+    "submitted_in_study": {
+      "uuid": "665e0b75-0077-4f6b-89f2-e780ab415a3e",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD928",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-6328-1485",
+          "display_name": "Keiichiro Tanaka",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Yale University"
+            }
+          ],
+          "contact_email": "keiichiro.tanaka@yale.edu",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Martin Schwartz",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Yale University"
+            }
+          ],
+          "contact_email": "martin.schwartz@yale.edu",
+          "role": null
+        }
+      ],
+      "title": "Latrophilins are essential mediators of endothelial junctional fluid shear stress mechanotransduction",
+      "release_date": "2023-11-27",
+      "description": "Original data for our Latrophilin paper",
+      "keyword": [
+        "endothelial cell",
+        "mechanotransduction",
+        "shear stress"
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "9fda3a06-1d9b-4899-9770-8ce536358187": {
+    "title_id": "Fig 4C and 4D",
+    "uuid": "9fda3a06-1d9b-4899-9770-8ce536358187",
+    "version": 1,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "Images obtained from CT scans of mouse lungs with tumors and Ki67 analysis of lung tumors in these mice ",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": null,
+          "image_correlation": null,
+          "biosample": "KP mouse lung sections and CT scans ",
+          "image_acquisition": "CT scan image aquisition and Ki67 staining image acquisition",
+          "specimen": "Mice with KP lung tumors "
+        }
+      ],
+      "acquisition_process_uuid": [
+        "c37b9f54-69f1-495d-812c-7e046edb91e9"
+      ],
+      "subject_uuid": "f3260207-48bf-4be7-8568-f32eeeb24d84",
+      "biosample_uuid": "[UUID('54b18b75-aab8-452c-83c5-9c6014c1dc0a')]"
+    },
+    "analysis_method": [],
+    "correlation_method": [],
+    "example_image_uri": [],
+    "submitted_in_study_uuid": "828d0392-ecb5-4f07-ac5a-1e7853ae79a1",
+    "submitted_in_study": {
+      "uuid": "828d0392-ecb5-4f07-ac5a-1e7853ae79a1",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD930",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Anita Bodac",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/02s376052",
+              "address": null,
+              "website": null,
+              "display_name": "\u00c9cole Polytechnique F\u00e9d\u00e9rale de Lausanne"
+            }
+          ],
+          "contact_email": "anita.bodac@epfl.ch",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Etienne Meylan ",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/01r9htc13",
+              "address": null,
+              "website": null,
+              "display_name": "Universit\u00e9 Libre de Bruxelles"
+            }
+          ],
+          "contact_email": "etienne.meylan@ulb.be",
+          "role": null
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Abdullah Mayet ",
+          "affiliation": [
+            {
+              "rorid": "https://ror.org/01r9htc13",
+              "address": null,
+              "website": null,
+              "display_name": "Universit\u00e9 Libre de Bruxelles"
+            }
+          ],
+          "contact_email": "abudllah.mayet@ulb.be",
+          "role": null
+        }
+      ],
+      "title": "Analysis of Bcl-xL blockade in mice with lung tumors and Bcl-xL expression in human LUAD ",
+      "release_date": "2023-11-20",
+      "description": "Mice were treated with A-1331852 and lung tumor growth was analyzed with uCT scan of the lung and with Ki67 staining of lung tumors ",
+      "keyword": [
+        "Bcl-xL, LUAD, KP mouse "
+      ],
+      "acknowledgement": null,
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": null,
+      "attribute": {}
+    }
+  },
+  "25904db8-9b0f-48f0-a12a-46710f58b642": {
+    "title_id": "Experiments for the study",
+    "uuid": "25904db8-9b0f-48f0-a12a-46710f58b642",
+    "version": 8,
+    "model": {
+      "type_name": "ExperimentalImagingDataset",
+      "version": 1
+    },
+    "description": "this study aim at understunding the effect of HRV16 on phagosome maturation.",
+    "attribute": {
+      "associations": [
+        {
+          "image_analysis": "Image analysis for the publication",
+          "image_correlation": null,
+          "biosample": "Images present in the publication",
+          "image_acquisition": "Image acquisition of the publication",
+          "specimen": "Specimen present in the publication"
+        }
+      ],
+      "acquisition_process_uuid": [
+        "b390b063-92d1-4476-b4b9-85b64661cb0b"
+      ],
+      "subject_uuid": "f1a81f68-2def-4666-8333-a1c341c72fb3",
+      "biosample_uuid": "[UUID('73cea4af-b86e-44a1-acb0-ee02a61a290c')]"
+    },
+    "analysis_method": [
+      {
+        "protocol_description": "Image analysis for the publication",
+        "features_analysed": "To analyse EEA1 or CD63 staining after HRV16 challenge and overnight rest, cultures were washed in PBS1X/2% FCS/0.05% saponin (permeabilization buffer) and labelled for 45 minutes with anti-EEA1 or anti-CD63 in the same buffer. Cells were then washed with permeabilization buffer and incubated with Cy3-labelled F(ab\u2019)2 anti-mouse IgG in the same buffer for 30 min. After washing, cells were stained with DAPI for 5 min and mounted using Fluormount G (Interchim). Images were acquired with the conditions described above. "
+      }
+    ],
+    "correlation_method": [],
+    "example_image_uri": [
+      "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD931/3c3fea27-66f4-47a4-80a7-35f2fb3da310/4d946cbd-537d-44db-a4d4-5cafa7ad6d20.png"
+    ],
+    "submitted_in_study_uuid": "1ffbf364-4692-4797-b95d-d9a3bca14e2b",
+    "submitted_in_study": {
+      "uuid": "1ffbf364-4692-4797-b95d-d9a3bca14e2b",
+      "version": 0,
+      "model": {
+        "type_name": "Study",
+        "version": 1
+      },
+      "accession_id": "S-BIAD931",
+      "licence": "CC0",
+      "author": [
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": "0000-0001-7898-6795",
+          "display_name": "Faure-Dupuy",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Institut Cochin"
+            }
+          ],
+          "contact_email": "suzanne.faure-dupuy@inserm.fr",
+          "role": "first author"
+        },
+        {
+          "rorid": null,
+          "address": null,
+          "website": null,
+          "orcid": null,
+          "display_name": "Niedergang",
+          "affiliation": [
+            {
+              "rorid": null,
+              "address": null,
+              "website": null,
+              "display_name": "Institut Cochin"
+            }
+          ],
+          "contact_email": "florence.niedergang@inserm.fr",
+          "role": "corresponding author"
+        }
+      ],
+      "title": "ARL5b inhibits human rhinovirus 16 propagation and impairs macrophage-mediated bacterial clearance",
+      "release_date": "2024-01-18",
+      "description": "Human rhinovirus is the most frequently isolated virus during severe exacerbations of chronic respiratory diseases, like chronic obstructive pulmonary disease. In this disease, alveolar macrophages display significantly diminished phagocytic functions that could be associated with bacterial superinfections. However, how human rhinovirus affects the functions of macrophages is largely unknown. Macrophages treated with HRV16 demonstrated deficient bacteria killing activity, impaired phagolysosome biogenesis and altered intracellular compartments. Using RNA sequencing, we identified the small GTPase ARL5b to be upregulated by the virus in primary human macrophages. Importantly, depletion of ARL5b rescued bacterial clearance and localization of endosomal markers in macrophages upon HRV16 exposure. In permissive cells, depletion of ARL5b increased the secretion of HRV16 virions. Thus, we identify ARL5b as a novel regulator of intracellular trafficking dynamics and phagolysosomal biogenesis in macrophages and as a restriction factor of HRV16 in permissive cells. ",
+      "keyword": [
+        "macrophages",
+        "rhinovirus",
+        "endosomes",
+        "ARL5b",
+        "bacteria",
+        "clearance",
+        "phagosome maturation",
+        "restriction factor"
+      ],
+      "acknowledgement": "We acknowledge the contribution of Ana Filipa Azevedo Campos (ERASMUS+ programme, University of Porto) and Prof. Juliana Felix de Melo (University of Piaui, Bresil) for their contribution to some set up experiments. We thank Dr. Celine Plainvert and Prof. Claire Poyart for providing bacterial strains, Prof. David Russell for providing the DQ-BSA and H2DCFDA-Oxyburst beads, Dr. Lisa Parker for providing tables to calculate HRV16 TCID50 and Prof. Paul Gleeson for the ARL5b plasmids. We thank the CYBIO facility and the IMAG\u2019IC facility of Institut Cochin that is part of the national France-BioImaging infrastructure supported by the French National Research Agency (ANR-10-INBS-04). ",
+      "see_also": [],
+      "related_publication": [],
+      "grant": [],
+      "funding_statement": "Work in the laboratory of FN was supported by grants from CNRS, INSERM, Universit\u00e9 Paris Descartes (now Universit\u00e9 Paris Cit\u00e9), and a collaborative grant with AstraZeneca/ Inserm Transfert. SFD work was supported by a grant from FRM (ARF202110013926) and a Marie Sk\u0142odowska-Curie Actions postdoctoral fellowship (Project MacroRhino). CD work was supported by the French National Research Agency through the \"Investments for the Future\" program (France-BioImaging, ANR-10-INSB-04) and we acknowledge the PICT-IBiSA, member of the France-BioImaging infrastructure, supported by the French National Research Agency (ANR-10-INBS-04) and supported by the CelTisPhyBio Labex (N\u00b0 ANR-11-LABX-0038) part of the IDEX PSL (N\u00b0ANR-10-IDEX-0001-02 PSL).",
+      "attribute": {}
+    }
   }
 }
