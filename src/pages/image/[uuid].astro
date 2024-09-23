@@ -27,6 +27,7 @@ const image_dataset = DatasetMetdata[image.submission_dataset_uuid]
 const image_study = image_dataset.submitted_in_study
 const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
 const vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
+const itk_link = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + interactive_image.file_uri[0]
 
 function format_physical_dimensions(img_rep) {
     const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
@@ -105,17 +106,17 @@ function pixel_dimensions(value, text) {
                 <h3>Access images</h3>
                 License: {image_study.licence} <br/>
                 <br/>
-                <a href={image.vizarr_uri}>
+                <!-- <a href={image.vizarr_uri}>
                     <button class="vf-button vf-button--primary vf-button--sm">Download file</button>
-                </a> 
+                </a>  -->
                 <a href={image.vizarr_uri}>
                     <button class="vf-button vf-button--primary vf-button--sm">Copy OME-Zarr URI</button>
                 </a>
                 <h3>Visualise</h3>
-                <a href={image.vizarr_uri}>
+                <a href={vizarr_iframe_source}>
                     <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
                 </a>
-                <a href={image.itk_uri}>
+                <a href={itk_link}>
                     <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
                 </a>
             </div>
