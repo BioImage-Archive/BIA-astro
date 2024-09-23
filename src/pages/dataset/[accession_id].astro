@@ -132,16 +132,16 @@ function get_study_image(study_info) {
         <thead>
           <tr>
             <th>Preview</th>
-            <th>Filename</th>
+            <th>UUID</th>
             <th>Dataset</th>
-            <th>Download Size</th>
+            <th>Download Size (bytes)</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} study_title={study_info.experimental_imaging_component.find((dataset) => dataset.uuid === image.submission_dataset_uuid ).title_id}/>
+              <ImageRow image={image} dataset_title={study_info.experimental_imaging_component.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
             ))
           }
         </tbody>

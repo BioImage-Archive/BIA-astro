@@ -93,7 +93,7 @@ function pixel_dimensions(value, text) {
                 <b>Physical Image size: </b> {format_physical_dimensions(interactive_image)}<br>
                 <b>Pixel Image size: </b> {format_pixel_dimensions(interactive_image)}<br>
                 {interactive_image.size_c != null && (<><b>Number of channels:</b> {interactive_image.size_c}<br/></>)}
-                {interactive_image.size_t != null && (<><b>Number of timesteps:</b> {interactive_image.size_c}<br/></>)}
+                {interactive_image.size_t != null && (<><b>Number of timesteps:</b> {interactive_image.size_t}<br/></>)}
                 {Object.entries(image.attribute).map(([key, value]) => (
                     <p>{key}: {value}</p>
                 ))}
