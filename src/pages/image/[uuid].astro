@@ -128,7 +128,7 @@ function pixel_dimensions(value, text) {
 
                     async function copyUrl(url, button, originalText) {
                         await navigator.clipboard.writeText(url);
-                        button.innerText = "Url Copied";
+                        button.innerText = "URI Copied";
                         setTimeout(() => {
                             button.innerText = originalText;
                         }, 700);
