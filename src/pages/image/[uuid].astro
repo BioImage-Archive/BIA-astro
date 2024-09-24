@@ -109,9 +109,7 @@ function pixel_dimensions(value, text) {
                 <!-- <a href={image.vizarr_uri}>
                     <button class="vf-button vf-button--primary vf-button--sm">Download file</button>
                 </a>  -->
-                <a href={image.vizarr_uri}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Copy OME-Zarr URI</button>
-                </a>
+                <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactive_image.file_uri[0]}>Copy OME-Zarr URI</button>
                 <h3>Visualise</h3>
                 <a href={vizarr_iframe_source}>
                     <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
@@ -119,6 +117,24 @@ function pixel_dimensions(value, text) {
                 <a href={itk_link}>
                     <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
                 </a>
+
+                <script>
+
+                    let copyUrlButton = document.getElementById("CopyURLButton")
+                    let originalText = copyUrlButton.innerText;
+                    copyUrlButton.onclick=async() => {
+                        await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
+                    };
+
+                    async function copyUrl(url, button, originalText) {
+                        await navigator.clipboard.writeText(url);
+                        button.innerText = "URI Copied";
+                        setTimeout(() => {
+                            button.innerText = originalText;
+                        }, 700);
+                    }
+
+                </script>
             </div>
         </section>
 
