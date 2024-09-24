@@ -15,7 +15,7 @@ jobs:
         uses: jakepartusch/wait-for-netlify-action@v1.4
         with:
           site_name: ${{ env.site_name }}
-          max_timeout: 60
+          max_timeout: 180
 
   link-check:
     needs: wait-for-deploy
