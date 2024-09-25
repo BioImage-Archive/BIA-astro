@@ -20,13 +20,18 @@ function taxon_render(taxon) {
     }
 }
 
+export function multiline_text_render(value) {
+    const output = value.toString().trim().replace(/(?:[\r\n|\r|\n]+)/g, "<br/><br/>")
+    return output
+}
+
 function render_value(key, value) {
     if (key === "organism_classification") {
         return `<ul>
             ${value.map((taxon) => taxon_render(taxon)).join("")} 
             </ul>`;
     } else {
-        return value;
+        return multiline_text_render(value)
     }
 }
 
