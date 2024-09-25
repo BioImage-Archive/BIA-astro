@@ -29037,7 +29037,9 @@
                 },
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1327/21269576-8fb8-4de3-b190-882594300fa7/eee7cc7c-21ec-457f-a1bc-fda746b57dfb.png"
+                ],
                 "submitted_in_study_uuid": "07bd97f1-6b58-4a9d-824c-f360a10a7472",
                 "acquisition_process": [
                     {
