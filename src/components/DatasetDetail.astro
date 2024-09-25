@@ -32,7 +32,7 @@ function render_value(key, value) {
 
 const render_field = Object.keys(data).map((key) => {
     if (key in field_map && !(data[key] == null)) {
-        return `<div><b>${field_map[key]}:</b>&nbsp; ${render_value(key, data[key])}</div>`;
+        return `<div style="overflow-wrap: anywhere;"><b>${field_map[key]}:</b>&nbsp; ${render_value(key, data[key])}</div>`;
     }
 });
 
