@@ -7,6 +7,7 @@ import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ImageRow from "../../components/ImageRow.astro";
 import default_img from "../../assets/bioimage-archive/default_hero/default_hero_1.png"
+import {multiline_text_render} from "../../components/DatasetDetail.astro"
 
 export function getStaticPaths() {
   return Object.values(StudyMetadata).map((dataset) => {
@@ -92,8 +93,8 @@ function get_study_image(study_info) {
         <h2 class="vf-section-header__heading">Study Information</h2>
       </div>
 
-      <div>
-        <div><b>Description: </b>{study_info.description}</div>
+      <div style="overflow-wrap: anywhere;">
+        <div><b>Description: </b> <Fragment set:html={multiline_text_render(study_info.description)}></Fragment></div>
         <div><b>Licence: </b> {study_info.licence}<div>
       </div>
     </section>
