@@ -211,8 +211,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 2,
-                "image_count": 12,
+                "file_count": 12,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -344,8 +344,8 @@
                 ]
             },
             {
-                "file_count": 4,
-                "image_count": 18,
+                "file_count": 18,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -506,8 +506,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -628,8 +628,8 @@
                 ]
             },
             {
-                "file_count": 4,
-                "image_count": 9,
+                "file_count": 9,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -790,8 +790,8 @@
                 ]
             },
             {
-                "file_count": 4,
-                "image_count": 19,
+                "file_count": 19,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -1130,8 +1130,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 7,
-                "image_count": 23,
+                "file_count": 23,
+                "image_count": 7,
                 "file_type_aggregation": [
                     ".czi",
                     ".ims",
@@ -1435,8 +1435,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 6,
-                "image_count": 843,
+                "file_count": 843,
+                "image_count": 6,
                 "file_type_aggregation": [
                     "",
                     ".csv",
@@ -1799,8 +1799,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 2,
+                "file_count": 2,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".csv"
                 ],
@@ -1844,8 +1844,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 105,
+                "file_count": 105,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -1972,8 +1972,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 8,
+                "file_count": 8,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".zip"
                 ],
@@ -2017,8 +2017,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 37,
+                "file_count": 37,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -2144,8 +2144,8 @@
                 ]
             },
             {
-                "file_count": 4,
-                "image_count": 55,
+                "file_count": 55,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".csv",
                     ".png",
@@ -2333,8 +2333,8 @@
         ],
         "image_annotation_component": [
             {
-                "file_count": 0,
-                "image_count": 105,
+                "file_count": 105,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -2353,8 +2353,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 37,
+                "file_count": 37,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -2804,8 +2804,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 26,
+                "file_count": 26,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".RData",
                     ".csv",
@@ -3163,8 +3163,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 57,
+                "file_count": 57,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".h5",
                     ".tif",
@@ -3445,8 +3445,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 4,
-                "image_count": 18,
+                "file_count": 18,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".avi",
                     ".czi",
@@ -4030,8 +4030,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 3,
-                "image_count": 24,
+                "file_count": 24,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".gsf",
                     ".tif"
@@ -4412,8 +4412,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 5,
+                "file_count": 5,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".csv",
                     ".npz"
@@ -5192,8 +5192,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 4,
+                "file_count": 4,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".pdf"
                 ],
@@ -5351,8 +5351,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".TIF"
                 ],
@@ -5484,8 +5484,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 2,
+                "file_count": 2,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mp4"
                 ],
@@ -5524,8 +5524,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 1,
+                "file_count": 1,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".pdf"
                 ],
@@ -5721,8 +5721,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".TIF",
                     ".tif"
@@ -5843,8 +5843,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 5,
+                "file_count": 5,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".pdf"
                 ],
@@ -5988,8 +5988,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 949,
+                "file_count": 949,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".db",
@@ -6265,8 +6265,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 36,
+                "file_count": 36,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -6604,8 +6604,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 30,
+                "file_count": 30,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -6734,8 +6734,8 @@
                 ]
             },
             {
-                "file_count": 3,
-                "image_count": 47,
+                "file_count": 47,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".czi",
                     ".lsm"
@@ -6898,8 +6898,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 6,
+                "file_count": 6,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -7067,8 +7067,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 52,
+                "file_count": 52,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".lsm"
@@ -7352,8 +7352,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 39,
+                "file_count": 39,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -7693,8 +7693,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 4,
-                "image_count": 150,
+                "file_count": 150,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".czi",
                     ".lsm"
@@ -7957,8 +7957,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 23,
+                "file_count": 23,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".nd2"
                 ],
@@ -8193,8 +8193,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 135,
+                "file_count": 135,
+                "image_count": 5,
                 "file_type_aggregation": [
                     "",
                     ".czi",
@@ -8436,8 +8436,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 13,
+                "file_count": 13,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".docx",
                     ".nd2"
@@ -8660,8 +8660,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 35,
+                "file_count": 35,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -8943,8 +8943,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 52,
+                "file_count": 52,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".czi",
                     ".jpg"
@@ -8989,8 +8989,8 @@
                 "image": []
             },
             {
-                "file_count": 5,
-                "image_count": 98,
+                "file_count": 98,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".jpg"
@@ -9197,8 +9197,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 1,
+                "file_count": 1,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".ijm"
                 ],
@@ -9306,8 +9306,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 721,
+                "file_count": 721,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".db",
@@ -9680,8 +9680,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 252,
+                "file_count": 252,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".png"
                 ],
@@ -10147,8 +10147,8 @@
         ],
         "image_annotation_component": [
             {
-                "file_count": 0,
-                "image_count": 252,
+                "file_count": 252,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".png"
                 ],
@@ -10249,8 +10249,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 74,
+                "file_count": 74,
+                "image_count": 5,
                 "file_type_aggregation": [
                     "",
                     ".rtf",
@@ -10475,8 +10475,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 22,
+                "file_count": 22,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".pptx",
                     ".tif",
@@ -10800,8 +10800,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 63,
+                "file_count": 63,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -10840,8 +10840,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 8,
+                "file_count": 8,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".nd2",
                     ".tif"
@@ -10881,8 +10881,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 2,
+                "file_count": 2,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".avi",
                     ".nd2"
@@ -10960,8 +10960,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 14,
+                "file_count": 14,
+                "image_count": 0,
                 "file_type_aggregation": [
                     "",
                     ".tif"
@@ -11001,8 +11001,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".avi",
                     ".nd2"
@@ -11042,8 +11042,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 270,
+                "file_count": 270,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -11161,8 +11161,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".avi",
                     ".nd2"
@@ -11202,8 +11202,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 16,
+                "file_count": 16,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -11242,8 +11242,8 @@
                 "image": []
             },
             {
-                "file_count": 2,
-                "image_count": 201,
+                "file_count": 201,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".mp4",
                     ".nd2",
@@ -11379,8 +11379,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 457,
+                "file_count": 457,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -11498,8 +11498,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 4,
+                "file_count": 4,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".nd2"
                 ],
@@ -11538,8 +11538,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".avi",
                     ".nd2"
@@ -11660,8 +11660,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 19,
+                "file_count": 19,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mp4",
                     ".nd2",
@@ -11702,8 +11702,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mov",
                     ".nd2"
@@ -11743,8 +11743,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 146,
+                "file_count": 146,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -11922,8 +11922,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 1102,
+                "file_count": 1102,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".tif"
@@ -12909,8 +12909,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 616,
+                "file_count": 616,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mp4",
                     ".pdf",
@@ -12953,8 +12953,8 @@
                 "image": []
             },
             {
-                "file_count": 2,
-                "image_count": 580,
+                "file_count": 580,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".csv",
                     ".npy",
@@ -13099,8 +13099,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 578,
+                "file_count": 578,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".mp4",
                     ".pdf",
@@ -13239,8 +13239,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 631,
+                "file_count": 631,
+                "image_count": 1,
                 "file_type_aggregation": [
                     "",
                     ".mp4",
@@ -13410,8 +13410,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 391,
+                "file_count": 391,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".jpg",
@@ -13730,8 +13730,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 5515,
+                "file_count": 5515,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".bin",
                     ".csv",
@@ -14102,8 +14102,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 29,
+                "file_count": 29,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".ipynb",
                     ".tif"
@@ -14473,8 +14473,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 4,
-                "image_count": 2762,
+                "file_count": 2762,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".pdf",
                     ".png"
@@ -14642,8 +14642,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 80,
+                "file_count": 80,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -14687,8 +14687,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 70,
+                "file_count": 70,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -14732,8 +14732,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 122,
+                "file_count": 122,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".bmp",
                     ".roi",
@@ -14780,8 +14780,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 63,
+                "file_count": 63,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -14825,8 +14825,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 105,
+                "file_count": 105,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -14953,8 +14953,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 331,
+                "file_count": 331,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".pdf",
                     ".png"
@@ -14999,8 +14999,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 41,
+                "file_count": 41,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".czi",
                     ".tsv"
@@ -15045,8 +15045,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 84,
+                "file_count": 84,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -15090,8 +15090,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 508,
+                "file_count": 508,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".bmp",
                     ".jpg",
@@ -15142,8 +15142,8 @@
         ],
         "image_annotation_component": [
             {
-                "file_count": 0,
-                "image_count": 21,
+                "file_count": 21,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -15162,8 +15162,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 7,
+                "file_count": 7,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -15182,8 +15182,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 7,
+                "file_count": 7,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -15245,8 +15245,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 8,
+                "file_count": 8,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".ndpi"
                 ],
@@ -15649,8 +15649,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 168,
+                "file_count": 168,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".ims",
@@ -16076,8 +16076,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 62,
+                "file_count": 62,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -16363,8 +16363,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 387,
+                "file_count": 387,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -16484,8 +16484,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 864,
+                "file_count": 864,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -16524,8 +16524,8 @@
                 "image": []
             },
             {
-                "file_count": 4,
-                "image_count": 13206,
+                "file_count": 13206,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -16885,8 +16885,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 164,
+                "file_count": 164,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".txt"
@@ -17411,8 +17411,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 3535,
+                "file_count": 3535,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".lif"
@@ -17683,8 +17683,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 594,
+                "file_count": 594,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".csv",
                     ".jpg",
@@ -18075,8 +18075,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 110590,
+                "file_count": 110590,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -18422,8 +18422,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 11052,
+                "file_count": 11052,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -18667,8 +18667,8 @@
         ],
         "image_annotation_component": [
             {
-                "file_count": 0,
-                "image_count": 240,
+                "file_count": 240,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -18733,8 +18733,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 93,
+                "file_count": 93,
+                "image_count": 5,
                 "file_type_aggregation": [
                     "",
                     ".tif",
@@ -18957,8 +18957,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 164,
+                "file_count": 164,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -19199,8 +19199,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 104,
+                "file_count": 104,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -19492,8 +19492,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 202,
+                "file_count": 202,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".docx",
                     ".tif",
@@ -19801,8 +19801,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 13,
+                "file_count": 13,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".pdf",
                     ".tif",
@@ -20029,8 +20029,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 476,
+                "file_count": 476,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".tsv",
@@ -20283,8 +20283,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 1275,
+                "file_count": 1275,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -20328,8 +20328,8 @@
                 "image": []
             },
             {
-                "file_count": 2,
-                "image_count": 1500,
+                "file_count": 1500,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -20473,8 +20473,8 @@
                 ]
             },
             {
-                "file_count": 3,
-                "image_count": 1485,
+                "file_count": 1485,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -20746,8 +20746,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 5216,
+                "file_count": 5216,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".m",
                     ".ome",
@@ -21078,8 +21078,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 12763,
+                "file_count": 12763,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -21197,8 +21197,8 @@
                 ]
             },
             {
-                "file_count": 3,
-                "image_count": 35972,
+                "file_count": 35972,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -21346,8 +21346,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 9024,
+                "file_count": 9024,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -21386,8 +21386,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 2826,
+                "file_count": 2826,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -21597,8 +21597,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 148,
+                "file_count": 148,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".avi",
                     ".ini",
@@ -21891,8 +21891,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 67,
+                "file_count": 67,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".zip"
@@ -22147,8 +22147,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 1283,
+                "file_count": 1283,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".classifier",
                     ".jpg",
@@ -22562,8 +22562,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 3529,
+                "file_count": 3529,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -23100,8 +23100,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 6,
+                "file_count": 6,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -23440,8 +23440,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 42,
+                "file_count": 42,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -23713,8 +23713,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 24960,
+                "file_count": 24960,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -23753,8 +23753,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 43940,
+                "file_count": 43940,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -23872,8 +23872,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 588,
+                "file_count": 588,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -23912,8 +23912,8 @@
                 "image": []
             },
             {
-                "file_count": 2,
-                "image_count": 46800,
+                "file_count": 46800,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -24047,8 +24047,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 588,
+                "file_count": 588,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -24166,8 +24166,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 21060,
+                "file_count": 21060,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -24346,8 +24346,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 572,
+                "file_count": 572,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".lif",
@@ -24722,8 +24722,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 100,
+                "file_count": 100,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".tif"
@@ -24947,8 +24947,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 26,
+                "file_count": 26,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".vsi"
@@ -25401,8 +25401,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 1854,
+                "file_count": 1854,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".lsm",
@@ -25771,8 +25771,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 68,
+                "file_count": 68,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".lif",
                     ".lifext"
@@ -26038,8 +26038,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 1883,
+                "file_count": 1883,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -26432,8 +26432,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 105,
+                "file_count": 105,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".csv",
                     ".mp4",
@@ -26568,8 +26568,8 @@
                 ]
             },
             {
-                "file_count": 4,
-                "image_count": 937,
+                "file_count": 937,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".csv",
                     ".jpg",
@@ -26815,8 +26815,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 32,
+                "file_count": 32,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".docx",
                     ".nd2",
@@ -27046,8 +27046,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 175,
+                "file_count": 175,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".docx",
@@ -27355,8 +27355,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 2448,
+                "file_count": 2448,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".csv",
                     ".czi",
@@ -27608,8 +27608,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 20,
+                "file_count": 20,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -27906,8 +27906,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 10,
+                "file_count": 10,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -27951,8 +27951,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 1558,
+                "file_count": 1558,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -27996,8 +27996,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 80,
+                "file_count": 80,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28041,8 +28041,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 10,
+                "file_count": 10,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28086,8 +28086,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".h5",
                     ".npz",
@@ -28133,8 +28133,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 20,
+                "file_count": 20,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28178,8 +28178,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 1558,
+                "file_count": 1558,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28223,8 +28223,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 42,
+                "file_count": 42,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28268,8 +28268,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 28,
+                "file_count": 28,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28313,8 +28313,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 11,
+                "file_count": 11,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28358,8 +28358,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 28,
+                "file_count": 28,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -28490,8 +28490,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 682,
+                "file_count": 682,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28535,8 +28535,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 337,
+                "file_count": 337,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28580,8 +28580,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 11,
+                "file_count": 11,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -28620,8 +28620,8 @@
                 "image": []
             },
             {
-                "file_count": 4,
-                "image_count": 1558,
+                "file_count": 1558,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -28814,8 +28814,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 84,
+                "file_count": 84,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".mat"
                 ],
@@ -28998,8 +28998,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 2222,
+                "file_count": 2222,
+                "image_count": 5,
                 "file_type_aggregation": [
                     "",
                     ".db",
@@ -29037,9 +29037,7 @@
                 },
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1327/21269576-8fb8-4de3-b190-882594300fa7/eee7cc7c-21ec-457f-a1bc-fda746b57dfb.png"
-                ],
+                "example_image_uri": [],
                 "submitted_in_study_uuid": "07bd97f1-6b58-4a9d-824c-f360a10a7472",
                 "acquisition_process": [
                     {
@@ -29227,8 +29225,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 200,
+                "file_count": 200,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".png",
@@ -29523,8 +29521,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 6,
+                "file_count": 6,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".rtf",
                     ".tif"
@@ -29785,8 +29783,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 25,
+                "file_count": 25,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -30153,8 +30151,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 163,
+                "file_count": 163,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -30483,8 +30481,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 1020,
+                "file_count": 1020,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -30662,8 +30660,8 @@
         ],
         "image_annotation_component": [
             {
-                "file_count": 0,
-                "image_count": 2,
+                "file_count": 2,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".csv"
                 ],
@@ -30726,8 +30724,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 9,
+                "file_count": 9,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".jpg"
@@ -30948,8 +30946,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 84,
+                "file_count": 84,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".nd2"
                 ],
@@ -31305,8 +31303,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 10,
+                "file_count": 10,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".lif"
                 ],
@@ -31526,8 +31524,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 150,
+                "file_count": 150,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -31785,8 +31783,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 208,
+                "file_count": 208,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -32179,8 +32177,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 4488,
+                "file_count": 4488,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif",
                     ".xml"
@@ -32225,8 +32223,8 @@
                 "image": []
             },
             {
-                "file_count": 2,
-                "image_count": 6900,
+                "file_count": 6900,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".tif",
                     ".xml"
@@ -32388,8 +32386,8 @@
                 ]
             },
             {
-                "file_count": 3,
-                "image_count": 2623,
+                "file_count": 2623,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".tif",
                     ".xml"
@@ -32575,8 +32573,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 2178,
+                "file_count": 2178,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif",
                     ".xml"
@@ -32818,8 +32816,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 102,
+                "file_count": 102,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".PNG",
                     ".czi",
@@ -33190,8 +33188,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 32,
+                "file_count": 32,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".jpg"
                 ],
@@ -33331,8 +33329,8 @@
                 ]
             },
             {
-                "file_count": 4,
-                "image_count": 95,
+                "file_count": 95,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".jpg"
                 ],
@@ -33599,8 +33597,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 247,
+                "file_count": 247,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".tiff"
@@ -33823,8 +33821,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 16882,
+                "file_count": 16882,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".png",
@@ -34176,8 +34174,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 109,
+                "file_count": 109,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".avi",
                     ".csv",
@@ -34420,8 +34418,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 271,
+                "file_count": 271,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".bmp",
                     ".jpg",
@@ -34655,8 +34653,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 75,
+                "file_count": 75,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -34918,8 +34916,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 593,
+                "file_count": 593,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".db",
                     ".docx",
@@ -35171,8 +35169,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 57,
+                "file_count": 57,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -35440,8 +35438,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 14,
+                "file_count": 14,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".mov",
                     ".roi",
@@ -35563,8 +35561,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 6,
+                "file_count": 6,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".mov",
                     ".roi",
@@ -35686,8 +35684,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 11,
+                "file_count": 11,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".roi",
                     ".tif"
@@ -35827,8 +35825,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 19,
+                "file_count": 19,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".mov",
                     ".roi",
@@ -36008,8 +36006,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 19159,
+                "file_count": 19159,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".png"
@@ -36773,8 +36771,8 @@
                 "image": []
             },
             {
-                "file_count": 5,
-                "image_count": 30,
+                "file_count": 30,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -37150,8 +37148,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 45,
+                "file_count": 45,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -37417,8 +37415,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 163,
+                "file_count": 163,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".nd2"
                 ],
@@ -37670,8 +37668,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 35,
+                "file_count": 35,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -38008,8 +38006,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 815,
+                "file_count": 815,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".roi",
@@ -38362,8 +38360,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 1954,
+                "file_count": 1954,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -38754,8 +38752,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 539,
+                "file_count": 539,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".JPG",
                     ".tif"
@@ -39053,8 +39051,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 47,
+                "file_count": 47,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -39345,8 +39343,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 226,
+                "file_count": 226,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".csv",
                     ".tif"
@@ -39861,8 +39859,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 14,
+                "file_count": 14,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -40094,8 +40092,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 341,
+                "file_count": 341,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -40329,8 +40327,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 196,
+                "file_count": 196,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpeg",
                     ".jpg",
@@ -40580,8 +40578,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 32,
+                "file_count": 32,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".tif"
@@ -40807,8 +40805,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 6,
+                "file_count": 6,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".nd2"
                 ],
@@ -41058,8 +41056,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 97,
+                "file_count": 97,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -41491,8 +41489,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 450,
+                "file_count": 450,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".tif"
@@ -41968,8 +41966,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 3772,
+                "file_count": 3772,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42017,8 +42015,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 8046,
+                "file_count": 8046,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42066,8 +42064,8 @@
                 "image": []
             },
             {
-                "file_count": 2,
-                "image_count": 7708,
+                "file_count": 7708,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42216,8 +42214,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 6612,
+                "file_count": 6612,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42265,8 +42263,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 6474,
+                "file_count": 6474,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR3",
                     ".HEIC",
@@ -42313,8 +42311,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 8390,
+                "file_count": 8390,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42362,8 +42360,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 4342,
+                "file_count": 4342,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR3",
                     ".HEIC",
@@ -42410,8 +42408,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 4180,
+                "file_count": 4180,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42544,8 +42542,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 8490,
+                "file_count": 8490,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR3",
                     ".HEIC",
@@ -42592,8 +42590,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 5374,
+                "file_count": 5374,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42641,8 +42639,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 7817,
+                "file_count": 7817,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -42691,8 +42689,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 2180,
+                "file_count": 2180,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR3",
                     ".xmp"
@@ -42737,8 +42735,8 @@
                 "image": []
             },
             {
-                "file_count": 1,
-                "image_count": 5432,
+                "file_count": 5432,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".CR3",
                     ".HEIC",
@@ -42871,8 +42869,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 9274,
+                "file_count": 9274,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -43006,8 +43004,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 7306,
+                "file_count": 7306,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR3",
                     ".HEIC",
@@ -43054,8 +43052,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 6978,
+                "file_count": 6978,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".CR2",
                     ".CR3",
@@ -43586,8 +43584,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 20,
+                "file_count": 20,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".csv",
                     ".tif",
@@ -44555,8 +44553,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 83,
+                "file_count": 83,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".csv",
                     ".tif"
@@ -45500,8 +45498,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 11,
+                "file_count": 11,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -45802,8 +45800,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 4006,
+                "file_count": 4006,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".fits",
                     ".tif"
@@ -46487,8 +46485,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 471,
+                "file_count": 471,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".tif"
@@ -46771,8 +46769,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 33410,
+                "file_count": 33410,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".nd2",
                     ".png"
@@ -47134,8 +47132,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 178,
+                "file_count": 178,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".tiff"
@@ -47419,8 +47417,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 17,
+                "file_count": 17,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".tif"
@@ -47859,8 +47857,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 363,
+                "file_count": 363,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".ics",
@@ -48098,8 +48096,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 5352,
+                "file_count": 5352,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".jpg",
                     ".tiff"
@@ -48365,8 +48363,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 12,
+                "file_count": 12,
+                "image_count": 1,
                 "file_type_aggregation": [
                     "",
                     ".jpg",
@@ -48559,8 +48557,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 4,
-                "image_count": 3012,
+                "file_count": 3012,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -48840,8 +48838,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 11,
+                "file_count": 11,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -49098,8 +49096,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 438,
+                "file_count": 438,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -49383,8 +49381,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 12,
+                "file_count": 12,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".tiff"
@@ -49696,8 +49694,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 91856,
+                "file_count": 91856,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -50027,8 +50025,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 127,
+                "file_count": 127,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".png",
                     ".tif"
@@ -50379,8 +50377,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 3,
-                "image_count": 17,
+                "file_count": 17,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".tif",
                     ".txt"
@@ -50535,8 +50533,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 3,
+                "file_count": 3,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif",
                     ".txt"
@@ -50659,8 +50657,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 4,
+                "file_count": 4,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif",
                     ".txt"
@@ -51179,8 +51177,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 33,
+                "file_count": 33,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".pzfx",
                     ".tif",
@@ -51402,8 +51400,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 104,
+                "file_count": 104,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".ims",
@@ -51788,8 +51786,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 2799,
+                "file_count": 2799,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".czi",
                     ".jpg",
@@ -52034,8 +52032,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 324,
+                "file_count": 324,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".pzfx",
                     ".tif",
@@ -52296,8 +52294,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 123,
+                "file_count": 123,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".TIF",
                     ".Tif",
@@ -52642,8 +52640,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 5358,
+                "file_count": 5358,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".bmp",
                     ".json"
@@ -54163,8 +54161,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 2,
-                "image_count": 21,
+                "file_count": 21,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".h5",
                     ".tif",
@@ -54372,8 +54370,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 18,
+                "file_count": 18,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".csv",
                     ".png",
@@ -54500,8 +54498,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 75,
+                "file_count": 75,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".png",
                     ".tif",
@@ -54746,8 +54744,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 237,
+                "file_count": 237,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif",
                     ".xlsx"
@@ -55013,8 +55011,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 3,
-                "image_count": 414,
+                "file_count": 414,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".ims",
                     ".nd2"
@@ -55332,8 +55330,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 144,
+                "file_count": 144,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".lif",
                     ".tif"
@@ -55695,8 +55693,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 40320,
+                "file_count": 40320,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tiff"
                 ],
@@ -56222,8 +56220,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 140827,
+                "file_count": 140827,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".csv",
                     ".gif",
@@ -56411,8 +56409,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 10108,
+                "file_count": 10108,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".avi"
                 ],
@@ -56451,8 +56449,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 71418,
+                "file_count": 71418,
+                "image_count": 0,
                 "file_type_aggregation": [
                     "",
                     ".blobs",
@@ -56582,8 +56580,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 3,
-                "image_count": 109,
+                "file_count": 109,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".tif",
                     ".zip"
@@ -56760,8 +56758,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 1081,
+                "file_count": 1081,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".tif",
                     ".zip"
@@ -57282,8 +57280,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 96,
+                "file_count": 96,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".cloupe",
                     ".h5",
@@ -57652,8 +57650,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 188,
+                "file_count": 188,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -57775,8 +57773,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 155,
+                "file_count": 155,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -57898,8 +57896,8 @@
                 ]
             },
             {
-                "file_count": 2,
-                "image_count": 307,
+                "file_count": 307,
+                "image_count": 2,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -58035,8 +58033,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 67,
+                "file_count": 67,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".czi"
                 ],
@@ -58270,8 +58268,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 994,
+                "file_count": 994,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -58576,8 +58574,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 1,
-                "image_count": 4,
+                "file_count": 4,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".jpg"
                 ],
@@ -58783,8 +58781,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 4,
+                "file_count": 4,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".jpg"
                 ],
@@ -58844,8 +58842,8 @@
                 "image": []
             },
             {
-                "file_count": 4,
-                "image_count": 438,
+                "file_count": 438,
+                "image_count": 4,
                 "file_type_aggregation": [
                     ".ibd",
                     ".imzml",
@@ -59152,8 +59150,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 5,
-                "image_count": 122,
+                "file_count": 122,
+                "image_count": 5,
                 "file_type_aggregation": [
                     ".mph",
                     ".tif",
@@ -59421,8 +59419,8 @@
         "attribute": {},
         "experimental_imaging_component": [
             {
-                "file_count": 0,
-                "image_count": 21,
+                "file_count": 21,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59461,8 +59459,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 20,
+                "file_count": 20,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59501,8 +59499,8 @@
                 "image": []
             },
             {
-                "file_count": 3,
-                "image_count": 29,
+                "file_count": 29,
+                "image_count": 3,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59653,8 +59651,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 54,
+                "file_count": 54,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59777,8 +59775,8 @@
                 ]
             },
             {
-                "file_count": 1,
-                "image_count": 20,
+                "file_count": 20,
+                "image_count": 1,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59901,8 +59899,8 @@
                 ]
             },
             {
-                "file_count": 0,
-                "image_count": 16,
+                "file_count": 16,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59941,8 +59939,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 22,
+                "file_count": 22,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -59981,8 +59979,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 33,
+                "file_count": 33,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],
@@ -60021,8 +60019,8 @@
                 "image": []
             },
             {
-                "file_count": 0,
-                "image_count": 36,
+                "file_count": 36,
+                "image_count": 0,
                 "file_type_aggregation": [
                     ".tif"
                 ],

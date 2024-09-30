@@ -56,8 +56,10 @@ function format_comma_separate_list(item, i, item_list) {
 
 
 const total_image_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
-const total_file_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
 
+const total_eid_file_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
+const total_annotation_file_count = study_info.image_annotation_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
+const total_file_count = total_eid_file_count + total_annotation_file_count
 
 function get_file_types(study_info) {
     var file_type_list = new Array()
@@ -115,7 +117,7 @@ const total_file_type_list = get_file_types(study_info)
 
     <section class="vf-content">
       <div class="vf-grid | vf-grid__col-3 ">
-        <div style="text-align: center;">Total Images<br /> {total_image_count}</div>
+        <div style="text-align: center;">Total Viewable Images<br /> {total_image_count}</div>
         <div style="text-align: center;">Total files <br /> {total_file_count}</div>
         <div style="text-align: center;">File Types <br />{total_file_type_list.map((type, i)=>(format_comma_separate_list(type, i, total_file_type_list)))}</div>
       </div>
