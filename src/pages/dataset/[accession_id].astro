@@ -45,6 +45,35 @@ function get_study_image(study_info) {
   }
 }
 
+
+function format_comma_separate_list(item, i, item_list) {
+    if (i + 1 === item_list.length) {
+        return item;
+    } else {
+        return item + ", ";
+    }
+}
+
+
+const total_image_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
+
+const total_eid_file_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
+const total_annotation_file_count = study_info.image_annotation_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
+const total_file_count = total_eid_file_count + total_annotation_file_count
+
+function get_file_types(study_info) {
+    var file_type_list = new Array()
+    for (var eic of study_info.experimental_imaging_component) {
+        for (const file_type of eic.file_type_aggregation) {
+            if (!file_type_list.includes(file_type)) {
+              file_type_list.push(file_type)
+            }
+        }
+    }
+    return file_type_list
+}
+
+const total_file_type_list = get_file_types(study_info)
 ---
 
 <BaseLayout pageTitle={study_info.accession_id}>
@@ -83,6 +112,14 @@ function get_study_image(study_info) {
             >Original study</button
           >
         </a>
+      </div>
+    </section>
+
+    <section class="vf-content">
+      <div class="vf-grid | vf-grid__col-3 ">
+        <div style="text-align: center;">Total Viewable Images<br /> {total_image_count}</div>
+        <div style="text-align: center;">Total files <br /> {total_file_count}</div>
+        <div style="text-align: center;">File Types <br />{total_file_type_list.map((type, i)=>(format_comma_separate_list(type, i, total_file_type_list)))}</div>
       </div>
     </section>
 
