@@ -1,14 +1,15 @@
 import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
 import yaml from '@rollup/plugin-yaml';
-
-//import preact from "@astrojs/preact";
+import preact from "@astrojs/preact";
 
 // https://astro.build/config
 export default defineConfig({
   //output: 'hybrid',
-  //integrations: [mdx(), preact()]
-  integrations: [mdx()],
+  integrations: [
+    mdx(),
+    preact()
+  ],
   outDir: './dist/bioimage-archive',
   vite: {
     plugins: [yaml()]

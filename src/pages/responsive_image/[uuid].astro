@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import field_map from "../../data/metadata-field-name-mapping.json";
+import DatasetMetdata from "../../data/bia-dataset-metadata.json";
+import image_data from "../../data/bia-image-export.json";
+import SourceImage from "../../components/SourceImage.astro"
+import DatasetDetail from '../../components/DatasetDetail.astro';
+import ImageDatasetInfo from '../../components/ImageDatasetInfo';
+
+const biosample_map = field_map["biosample"];
+const sipp_map = field_map["specimen_imaging_preparation_protocol"];
+const sgp_map = field_map["specimen_growth_protocol"];
+const image_acquisition_map = field_map["image_acquisition"];
+
+export function getStaticPaths() {
+  return Object.keys(image_data).map((uuid) => {
+    return {
+      params:  { uuid: uuid }
+    };
+  });
+}
+
+const { uuid } = Astro.params;
+
+const image = image_data[uuid];
+
+const image_dataset = DatasetMetdata[image.submission_dataset_uuid]
+const image_study = image_dataset.submitted_in_study
+const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
+const vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
+const itk_link = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + interactive_image.file_uri[0]
+
+function format_physical_dimensions(img_rep) {
+    const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
+    return fields.reduce((text, field) => physical_dimensions(img_rep[field], text), "")
+}
+
+function physical_dimensions(value, text) {
+    if (text === "") {
+        if (value != null) {
+            return value + "m"
+        } else {
+            return text
+        }
+    } else {
+        if (value != null) {
+            return text + " x " + value + "m"
+        } else {
+            return text
+        }
+    }
+}
+
+function format_pixel_dimensions(img_rep) {
+    const fields = [ "size_x", "size_y", "size_z"]
+    return fields.reduce((text, field) => pixel_dimensions(img_rep[field], text), "")
+}
+
+function pixel_dimensions(value, text) {
+    if (text === "") {
+        if (value != null) {
+            return value
+        } else {
+            return text
+        }
+    } else {
+        if (value != null) {
+            return text + " x " + value
+        } else {
+            return text
+        }
+    }
+}
+
+---
+
+<BaseLayout pageTitle={image["accession_id"] + ":" + image["alias"]}>
+  <body>
+    <div class="vf-stack vf-stack--500">
+        <section class="vf-content | embl-grid embl-grid--has-centered-content">
+            <div></div>
+            <div>
+                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image_study.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+                <h2 class="vf-intro__subheading">{image_study.title}</h2>
+                <p class="studytitle">{image_dataset.title_id}</p>
+                <a href={ "/bioimage-archive/dataset/" + image_study.accession_id}>
+                    <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
+                </a> 
+            </div>
+        </section>
+        <section class="vf-content | embl-grid embl-grid--has-centered-content">
+            <div>
+                <h3>Image metadata</h3>
+
+                <b>Physical Image size: </b> {format_physical_dimensions(interactive_image)}<br>
+                <b>Pixel Image size: </b> {format_pixel_dimensions(interactive_image)}<br>
+                {interactive_image.size_c != null && (<><b>Number of channels:</b> {interactive_image.size_c}<br/></>)}
+                {interactive_image.size_t != null && (<><b>Number of timesteps:</b> {interactive_image.size_t}<br/></>)}
+                {Object.entries(image.attribute).map(([key, value]) => (
+                    <p>{key}: {value}</p>
+                ))}
+            </div>
+            <div>
+                <iframe style="width: 100%; height: 500px" name="vizarr" src={vizarr_iframe_source}></iframe>
+            </div>
+            <div>
+                <h3>Access images</h3>
+                License: {image_study.licence} <br/>
+                <br/>
+                <!-- <a href={image.vizarr_uri}>
+                    <button class="vf-button vf-button--primary vf-button--sm">Download file</button>
+                </a>  -->
+                <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactive_image.file_uri[0]}>Copy OME-Zarr URI</button>
+                <h3>Visualise</h3>
+                <a href={vizarr_iframe_source}>
+                    <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
+                </a>
+                <a href={itk_link}>
+                    <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
+                </a>
+
+                <script>
+
+                    let copyUrlButton = document.getElementById("CopyURLButton")
+                    let originalText = copyUrlButton.innerText;
+                    copyUrlButton.onclick=async() => {
+                        await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
+                    };
+
+                    async function copyUrl(url, button, originalText) {
+                        await navigator.clipboard.writeText(url);
+                        button.innerText = "URI Copied";
+                        setTimeout(() => {
+                            button.innerText = originalText;
+                        }, 700);
+                    }
+
+                </script>
+            </div>
+        </section>
+
+        <!-- TODO: Include links to source images using  <SourceImage image={ image}/> for derived images -->
+
+        <hr/>
+
+        <section class="vf-content | embl-grid embl-grid--has-centered-content">
+            <div>
+                <h3>Study</h3>
+            </div>
+            <div style="overflow-wrap: anywhere;">
+                <b>Title</b>: {image_study.title}<br/>
+                <b>Description:</b> {image_study.description} <br/>
+                <b>Licence:</b> {image_study.licence} <br/>
+            </div>
+        </section>
+
+        <hr/>
+
+        <ImageDatasetInfo uuid={image.submission_dataset_uuid} client:only="preact"></ImageDatasetInfo>
+
+        <hr/>
+        
+        <section class="vf-content | embl-grid embl-grid--has-centered-content">
+            <div>
+                <h3>Specimen</h3>div>
+            </div>
+            <div>
+            {
+                "sample_of" in image.subject &&
+                    image.subject.sample_of.length > 0 && (
+                        <b>Biosamples:</b>
+                        <ul>
+                            {image.subject.sample_of.map((biosample) => (
+                                <DatasetDetail
+                                    data={biosample}
+                                    field_map={biosample_map}
+                                />
+                            ))}
+                        </ul>
+                    )
+            }
+            {
+                "growth_protocol" in image.subject &&
+                    image.subject.growth_protocol.length > 0 && (
+                        <b>Specimen Preparation Protocols:</b>
+                        <ul>
+                            {image.subject.imaging_preparation_protocol.map(
+                                (sipp) => (
+                                    <DatasetDetail
+                                        data={sipp}
+                                        field_map={sipp_map}
+                                    />
+                                ),
+                            )}
+                        </ul>
+                    )
+            }
+            {
+                "growth_protocol" in image.subject &&
+                    image.subject.growth_protocol.length > 0 && (
+                        <b>Specimen Growth Protocols:</b>
+                        <ul>
+                            {image.subject.growth_protocol.map(
+                                (sgp) => (
+                                    <DatasetDetail
+                                        data={sgp}
+                                        field_map={sgp_map}
+                                    />
+                                ),
+                            )}
+                        </ul>
+                    )
+            }
+            </div>
+        </section>
+
+        <hr/>
+
+        <section class="vf-content | embl-grid embl-grid--has-centered-content">
+            <div>
+                <h3>Image Acquisition</h3>
+            </div>
+            <div>
+                <ul>
+                    {image.acquisition_process.map(
+                        (image_acquisition) => (
+                            <DatasetDetail
+                                data={image_acquisition}
+                                field_map={image_acquisition_map}
+                            />
+                        ),
+                    )}
+                </ul>
+            </div>
+        </section>
+    </body>
+</BaseLayout>
