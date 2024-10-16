@@ -156,13 +156,13 @@ function pixel_dimensions(value, text) {
 
         <hr/>
 
-        <ImageDatasetInfo uuid={image.submission_dataset_uuid} client:only="preact"></ImageDatasetInfo>
+        <ImageDatasetInfo uuid={image.submission_dataset_uuid} dataset={image_dataset} client:only="react"/>
 
         <hr/>
         
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div>
-                <h3>Specimen</h3>div>
+                <h3>Specimen</h3><div/>
             </div>
             <div>
             {
