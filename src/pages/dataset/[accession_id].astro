@@ -187,11 +187,95 @@ const total_file_type_list = get_file_types(study_info)
     </div>
   </section>
 
+  <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="file_references">
+        All files
+      </h2>
+    </div>
+    <div>
+      <table id="file_references_table" class="display">
+        <thead>
+          <tr>
+            <th>UUID</th>
+            <th>File path</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </section>
+
     <script>
+
       document.addEventListener("DOMContentLoaded", function () {
         $("#viewable_images_table").DataTable({
           scrollX: true,
           columnDefs: [{ type: "natural", targets: 0 }],
+        });
+      });
+      document.addEventListener("DOMContentLoaded",function () {
+        $('#file_references_table').DataTable({
+          serverSide: true,
+          processing: true,
+          scrollX: true,
+          ajax: function (data, callback) {
+            const baseApiUrl =
+              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference?page_size=100&start_from_uuid=';
+            const initialApiUrl =
+              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference?page_size=100';
+
+            // Determine URL based on start_from_uuid
+            let apiUrl;
+            if (!data.uuid || data.uuid === 'null') {
+              apiUrl = initialApiUrl; // Use a different URL when no UUID is provided
+            } else {
+              const params = {
+                page_size: 100,
+                start_from_uuid: data.uuid,
+              };
+              const queryString = new URLSearchParams(params).toString();
+              apiUrl = `${baseApiUrl}${queryString}`;
+            }
+
+            // Fetch data from the API
+            fetch(apiUrl)
+              .then((response) => response.json())
+              .then((result) => {
+                // Map API data to DataTables format
+                const rows = result.map((item) => [
+                  item.uuid,
+                  item.file_path,
+                  item.uri,
+                ]);
+
+                callback({
+                  draw: data.draw,
+                  recordsTotal: result.total,
+                  recordsFiltered: result.total,
+                  data: rows,
+                });
+              })
+              .catch((error) => {
+                console.error('API Error:', error);
+                callback({ data: [] });
+              });
+          },
+          columns: [
+            { data: 0 },
+            { data: 1 },
+            { data: 2 },
+          ],
+          pageLength: 10, 
+          search: {
+            return: true
+          },
+          "drawCallback": function (settings) { 
+
+            var response = settings.json;
+            console.log(response);
+          },
         });
       });
     </script>
