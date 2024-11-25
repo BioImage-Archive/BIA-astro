@@ -78,6 +78,7 @@ const total_file_type_list = get_file_types(study_info)
 
 <BaseLayout pageTitle={study_info.accession_id}>
   <body>
+    window.totalFileCount = {JSON.stringify(total_file_count)};
     <section class="vf-content | embl-grid embl-grid--has-centered-content">
       <StudyTitleInfo study_info={study_info} />
     </section>
@@ -208,7 +209,7 @@ const total_file_type_list = get_file_types(study_info)
   </section>
 
     <script>
-
+      let lastUuid = null; 
       document.addEventListener("DOMContentLoaded", function () {
         $("#viewable_images_table").DataTable({
           scrollX: true,
@@ -219,62 +220,55 @@ const total_file_type_list = get_file_types(study_info)
         $('#file_references_table').DataTable({
           serverSide: true,
           processing: true,
-          scrollX: true,
           ajax: function (data, callback) {
-            const baseApiUrl =
-              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference?page_size=100&start_from_uuid=';
-            const initialApiUrl =
-              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference?page_size=100';
+            // Define API URL
+            const baseUrl =
+              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference';
 
-            // Determine URL based on start_from_uuid
             let apiUrl;
-            if (!data.uuid || data.uuid === 'null') {
-              apiUrl = initialApiUrl; // Use a different URL when no UUID is provided
+            if (lastUuid) {
+              apiUrl = `${baseUrl}?page_size=${data.length || 25}&start_from_uuid=${lastUuid}`;
             } else {
-              const params = {
-                page_size: 100,
-                start_from_uuid: data.uuid,
-              };
-              const queryString = new URLSearchParams(params).toString();
-              apiUrl = `${baseApiUrl}${queryString}`;
+              apiUrl = `${baseUrl}?page_size=${data.length || 25}`;
             }
 
-            // Fetch data from the API
             fetch(apiUrl)
               .then((response) => response.json())
               .then((result) => {
-                // Map API data to DataTables format
-                const rows = result.map((item) => [
-                  item.uuid,
-                  item.file_path,
-                  item.uri,
-                ]);
-
+                // Update the lastUuid for pagination
+                if (result.data && result.data.length > 0) {
+                  lastUuid = result.data[result.data.length - 1].uuid; // Last UUID in the current set
+                }
                 callback({
                   draw: data.draw,
-                  recordsTotal: result.total,
-                  recordsFiltered: result.total,
-                  data: rows,
+                  recordsTotal: result.total || 500000, //need to fetch the total number of files either from frontmatter or api
+                  recordsFiltered: result.total || 500000,
+                  data: result,
                 });
               })
               .catch((error) => {
-                console.error('API Error:', error);
+                console.error('Error fetching data:', error);
                 callback({ data: [] });
               });
           },
-          columns: [
-            { data: 0 },
-            { data: 1 },
-            { data: 2 },
-          ],
-          pageLength: 10, 
-          search: {
-            return: true
-          },
-          "drawCallback": function (settings) { 
 
-            var response = settings.json;
-            console.log(response);
+          columns: [
+            { data: 'uuid', title: 'File UUID' },
+            { data: 'file_path', title: 'File Name' },
+            { data: 'uri', title: 'Link' },
+          ],
+          pageLength: 25, // Rows per page
+          searching: false,
+          ordering: false,
+          drawCallback: function (settings) {
+            // Find the UUID of the last row after table redraw
+            const api = this.api();
+            const rowsData = api.rows({ page: 'current' }).data();
+            if (rowsData.length > 0) {
+              // Update lastUuid to the UUID of the last row
+              lastUuid = rowsData[rowsData.length - 1].uuid;
+              console.log('Updated lastUuid:', lastUuid); 
+            }
           },
         });
       });
