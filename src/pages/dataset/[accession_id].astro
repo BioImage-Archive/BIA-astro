@@ -54,6 +54,15 @@ function format_comma_separate_list(item, i, item_list) {
     }
 }
 
+function get_dataset_uuids(study_info) {
+  var dataset_uuids = new Array()
+  for (var dataset of study_info.experimental_imaging_component) {
+    dataset_uuids.push(dataset.uuid)
+}
+  return dataset_uuids
+}
+
+const dataset_uuids = get_dataset_uuids(study_info)
 
 const total_image_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
 
@@ -78,7 +87,6 @@ const total_file_type_list = get_file_types(study_info)
 
 <BaseLayout pageTitle={study_info.accession_id}>
   <body>
-    window.totalFileCount = {JSON.stringify(total_file_count)};
     <section class="vf-content | embl-grid embl-grid--has-centered-content">
       <StudyTitleInfo study_info={study_info} />
     </section>
@@ -196,7 +204,7 @@ const total_file_type_list = get_file_types(study_info)
       </h2>
     </div>
     <div>
-      <table id="file_references_table" class="display">
+      <table id="file_references_table" class="display" data-total-file-count={total_file_count} data-dataset-uuids={JSON.stringify(dataset_uuids)}>
         <thead>
           <tr>
             <th>UUID</th>
@@ -217,13 +225,21 @@ const total_file_type_list = get_file_types(study_info)
         });
       });
       document.addEventListener("DOMContentLoaded",function () {
+        const tableElement = document.getElementById("file_references_table");
+        const totalFileCount = parseInt(
+        document.getElementById('file_references_table').dataset.totalFileCount,
+        10
+      );
+      console.log('Total file count (from data attribute):', totalFileCount); //Debug log to make sure it gets the totalfilecount
+      const datasetUuids = JSON.parse(tableElement.dataset.datasetUuids);
+      console.log('Dataset uuid (from data attribute):', datasetUuids); //Debug log 
         $('#file_references_table').DataTable({
           serverSide: true,
           processing: true,
           ajax: function (data, callback) {
             // Define API URL
             const baseUrl =
-              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference';
+              'https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/46f64a7c-02c9-4046-aef4-20a3dbaa1b6c/file_reference'; //change it to include dataset uuids
 
             let apiUrl;
             if (lastUuid) {
@@ -241,8 +257,8 @@ const total_file_type_list = get_file_types(study_info)
                 }
                 callback({
                   draw: data.draw,
-                  recordsTotal: result.total || 500000, //need to fetch the total number of files either from frontmatter or api
-                  recordsFiltered: result.total || 500000,
+                  recordsTotal: totalFileCount || 500000, 
+                  recordsFiltered: totalFileCount || 500000,
                   data: result,
                 });
               })
