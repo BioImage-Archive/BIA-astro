@@ -57,7 +57,7 @@ function format_comma_separate_list(item, i, item_list) {
 function get_dataset_uuids_lengths(study_info) {
   var dataset_uuids = new Array()
   for (var dataset of study_info.experimental_imaging_component) {
-    dataset_uuids.push([dataset.uuid,dataset.file_count])
+    dataset_uuids.push([dataset.uuid,dataset.file_count,dataset.title_id])
 }
   return dataset_uuids
 }
@@ -204,15 +204,11 @@ const total_file_type_list = get_file_types(study_info)
       </h2>
     </div>
     <div>
-      <table id="file_references_table" class="display" data-total-file-count={total_file_count} data-dataset-uuids={JSON.stringify(dataset_uuids)}>
-        <thead>
-          <tr>
-            <th>UUID</th>
-            <th>File path</th>
-            <th>Link</th>
-            <th>Dataset</th>
-          </tr>
-        </thead>
+      <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(dataset_uuids)}>
+        <option value="" disabled selected>Select a Dataset</option>
+      </select>
+      
+      <table id="file_references_table" class="display" style="width:100%">
       </table>
     </div>
   </section>
@@ -225,113 +221,97 @@ const total_file_type_list = get_file_types(study_info)
           columnDefs: [{ type: "natural", targets: 0 }],
         });
       });
-      document.addEventListener("DOMContentLoaded",function () {
-        let currentUuidIndex = 0;
-        let startFromUuid = null; // For pagination within each dataset UUID
-        let allDataFetched = false; // Tracks when all data has been fetched
-        const tableElement = document.getElementById("file_references_table");
-        const totalFileCount = parseInt(
-        document.getElementById('file_references_table').dataset.totalFileCount,
-        10
-      );
-      console.log('Total file count (from data attribute):', totalFileCount); //Debug log to make sure it gets the totalfilecount
-      const datasetUuids = JSON.parse(tableElement.dataset.datasetUuids);
-      console.log('Dataset uuid (from data attribute):', datasetUuids); //Debug log 
-        $('#file_references_table').DataTable({
-          serverSide: true,
-          processing: true,
-          ajax: function (data, callback) {
-            const fetchData = () => {
-                if (allDataFetched) {
-                    callback({
-                        draw: data.draw,
-                        recordsTotal: totalFileCount,
-                        recordsFiltered: totalFileCount,
-                        data: [],
-                    });
-                    return;
-                }
+      document.addEventListener("DOMContentLoaded", function () {
+      const tableElement = document.getElementById("dataset_selector");
+      const datasetDetails = JSON.parse(tableElement.dataset.datasetUuids);
 
-                const currentUuid = datasetUuids[currentUuidIndex][0];
-                const datalength = datasetUuids[currentUuidIndex][1];
-                let apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${currentUuid}/file_reference?page_size=25`;
+      // Populate the dropdown menu
+      const dropdown = document.getElementById("dataset_selector");
+      datasetDetails.forEach(([uuid, fileCount, title], index) => {
+          const option = document.createElement("option");
+          option.value = uuid;
+          option.text = `${title} (${fileCount} files)`; // Title with file count
+          dropdown.appendChild(option);
+      });
+
+      let dataTable;
+      let pageUuidMap = {}; // Map of page numbers to startFromUuid
+      let currentDatasetUuid = null;
+
+      // Function to initialize or update the DataTable
+      const initializeDataTable = (datasetUuid, totalFiles) => {
+        const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference`;
+
+        // Reset `pageUuidMap` for the selected dataset
+        pageUuidMap = {};
+        currentDatasetUuid = datasetUuid;
+
+        // Destroy the existing DataTable instance if it exists
+        if (dataTable) {
+            dataTable.destroy();
+            document.getElementById("file_references_table").innerHTML = ""; // Clear table content
+        }
+
+        // Initialize a new DataTable
+        dataTable = $('#file_references_table').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: function (data, callback) {
+                const pageStart = data.start || 0;
+                const pageLength = data.length || 25;
+                const pageNumber = pageStart / pageLength;
+
+                // Determine `startFromUuid` for the current page
+                let startFromUuid = pageUuidMap[pageNumber] || null;
+
+                // Construct the API URL
+                let url = `${apiUrl}?page_size=${pageLength}`;
                 if (startFromUuid) {
-                    apiUrl += `&start_from_uuid=${startFromUuid}`;
+                    url += `&start_from_uuid=${startFromUuid}`;
                 }
 
-                fetch(apiUrl)
+                fetch(url)
                     .then((response) => response.json())
                     .then((result) => {
                         const fileData = Array.isArray(result) ? result : [];
                         const recordsFetched = fileData.length;
 
-                        if (recordsFetched === 0) {
-                            // Move to the next dataset UUID
-                            currentUuidIndex++;
-                            startFromUuid = null;
-
-                            if (currentUuidIndex >= datasetUuids.length) {
-                                allDataFetched = true; // All datasets processed
-                                callback({
-                                    draw: data.draw,
-                                    recordsTotal: totalFileCount,
-                                    recordsFiltered: totalFileCount,
-                                    data: [],
-                                });
-                            } else {
-                                // Retry fetching with the next dataset UUID
-                                fetchData();
-                            }
-                            return;
+                        // Update `pageUuidMap` for the next page
+                        if (recordsFetched > 0) {
+                            pageUuidMap[pageNumber + 1] = fileData[fileData.length - 1].uuid;
                         }
 
-                        // Enhance data with currentUuid
-                        const enhancedData = fileData.map((row) => ({
-                            ...row,
-                            currentUuid: currentUuid,
-                        }));
-
-                        // Update pagination variables
-                        startFromUuid = fileData[fileData.length - 1].uuid;
-
                         callback({
-                            draw: data.draw,
-                            recordsTotal: totalFileCount || 500000,
-                            recordsFiltered: totalFileCount || 500000,
-                            data: enhancedData,
+                            recordsTotal: totalFiles,
+                            recordsFiltered: totalFiles,
+                            data: fileData,
                         });
                     })
                     .catch((error) => {
-                        console.error('Error fetching data:', error);
+                        console.error("Error fetching data:", error);
                         callback({ data: [] });
                     });
-            };
-
-            fetchData(); // Start the fetching process
-        },
-      columns: [
-            { data: 'uuid', title: 'File UUID' },
-            { data: 'file_path', title: 'File Name' },
-            { data: 'uri', title: 'Link' },
-            { data: 'currentUuid', title: 'Dataset UUID' }, 
-        ],
-          pageLength: 10, // Rows per page
-          searching: false,
-          ordering: false,
-          drawCallback: function (settings) {
-            const api = this.api();
-            const rowsData = api.rows({ page: 'current' }).data();
-
-            if (rowsData.length > 0) {
-                const lastRow = rowsData[rowsData.length - 1]; // Get the last row
-                lastUuid = lastRow.uuid; // Update lastUuid with the last row's uuid
-                console.log('Updated lastUuid:', lastUuid);
-            } else {
-                console.log('No rows in the current page.');
-            }
-        },
+            },
+            columns: [
+                { data: "uuid", title: "File UUID" },
+                { data: "file_path", title: "File Name" },
+                { data: "uri", title: "Link" },
+            ],
+            pageLength: 25,
+            searching: false,
+            ordering: false,
         });
-      });
+    };
+
+    // Event listener for dropdown menu selection
+    dropdown.addEventListener("change", (event) => {
+        const selectedIndex = dropdown.selectedIndex - 1; // Dropdown options are 1-based
+        if (selectedIndex >= 0) {
+            const [selectedUuid, totalFiles] = datasetDetails[selectedIndex];
+            initializeDataTable(selectedUuid, totalFiles);
+        }
+    });
+});
     </script>
   </body>
 </BaseLayout>
