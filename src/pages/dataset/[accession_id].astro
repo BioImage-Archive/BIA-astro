@@ -54,6 +54,15 @@ function format_comma_separate_list(item, i, item_list) {
     }
 }
 
+function get_dataset_uuids_lengths(study_info) {
+  var dataset_uuids = new Array()
+  for (var dataset of study_info.experimental_imaging_component) {
+    dataset_uuids.push([dataset.uuid,dataset.file_count,dataset.title_id])
+}
+  return dataset_uuids
+}
+
+const dataset_uuids = get_dataset_uuids_lengths(study_info)
 
 const total_image_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
 
@@ -187,6 +196,23 @@ const total_file_type_list = get_file_types(study_info)
     </div>
   </section>
 
+  <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="file_references">
+        All files
+      </h2>
+    </div>
+    <div>All files of dataset
+      <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(dataset_uuids)}>
+        <option value="" disabled selected>Select a Dataset</option>
+      </select>
+      
+      <table id="file_references_table" class="display">
+      </table>
+    </div>
+  </section>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         $("#viewable_images_table").DataTable({
@@ -194,6 +220,77 @@ const total_file_type_list = get_file_types(study_info)
           columnDefs: [{ type: "natural", targets: 0 }],
         });
       });
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropdown = document.getElementById("dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
+        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids as string); // Ensure datasetUuids is parsed correctly
+
+
+        // Populate the dropdown menu with dataset details
+        datasetDetails.forEach(([uuid, fileCount, title]) => {
+            const option = document.createElement("option");
+            option.value = uuid;
+            option.text = `${title} (${fileCount} files)`; 
+            dropdown.appendChild(option);
+        });
+
+        let dataTable;
+
+        // Function to initialize or update the DataTable
+        const initializeDataTable = (datasetUuid: string, totalFiles: number) => {
+            // set page size parameter of the api url with an upper limit of 1000
+            const pageSize = totalFiles < 1000 ? totalFiles : 1000;
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+
+            // Destroy the existing DataTable instance if it exists
+            if (dataTable) {
+                dataTable.destroy();
+                document.getElementById("file_references_table")!.innerHTML = ""; // Clear the table's HTML content
+            }
+
+            // Fetch data and initialize the DataTable
+            fetch(apiUrl)
+                .then((response) => response.json())
+                .then((fileData) => {
+                    fileData = Array.isArray(fileData) ? fileData : [];
+
+                    // Initialize the DataTable
+                    dataTable = $('#file_references_table').DataTable({
+                        data: fileData,
+                        columns: [
+                            { data: "uuid", title: "File UUID" },
+                            { data: "file_path", title: "File Name" },
+                            { data: "uri", title: "Link" },
+                        ],
+                        pageLength: 25, 
+                        searching: true,
+                        ordering: true,
+                        processing: true,
+                        scrollX: true,
+                        columnDefs: [{ type: "natural", targets: 0 }],
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
+        };
+
+        // Event listener for dropdown menu selection
+        dropdown.addEventListener("change", () => {
+            const selectedIndex = dropdown.selectedIndex; // Get the selected index
+            if (selectedIndex > 0) { // Ignore the first "placeholder" option
+                const [selectedUuid, totalFiles] = datasetDetails[selectedIndex - 1]; // Adjust for 0-based index
+                initializeDataTable(selectedUuid, totalFiles); // Initialize the table with selected dataset
+            }
+        });
+
+        // Trigger a default load for the first dataset 
+        if (datasetDetails.length > 0) {
+            dropdown.selectedIndex = 1; // Automatically select the first dataset
+            const [defaultUuid, defaultTotalFiles] = datasetDetails[0];
+            initializeDataTable(defaultUuid, defaultTotalFiles);
+        }
+    });
+
     </script>
   </body>
 </BaseLayout>
