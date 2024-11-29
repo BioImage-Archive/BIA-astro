@@ -221,8 +221,9 @@ const total_file_type_list = get_file_types(study_info)
         });
       });
       document.addEventListener("DOMContentLoaded", function () {
-        const dropdown = document.getElementById("dataset_selector");
-        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); 
+        const dropdown = document.getElementById("dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
+        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids as string); // Ensure datasetUuids is parsed correctly
+
 
         // Populate the dropdown menu with dataset details
         datasetDetails.forEach(([uuid, fileCount, title]) => {
@@ -232,10 +233,10 @@ const total_file_type_list = get_file_types(study_info)
             dropdown.appendChild(option);
         });
 
-        let dataTable; 
+        let dataTable;
 
         // Function to initialize or update the DataTable
-        const initializeDataTable = (datasetUuid, totalFiles) => {
+        const initializeDataTable = (datasetUuid: string, totalFiles: number) => {
             // set page size parameter of the api url with an upper limit of 1000
             const pageSize = totalFiles < 1000 ? totalFiles : 1000;
             const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
@@ -243,7 +244,7 @@ const total_file_type_list = get_file_types(study_info)
             // Destroy the existing DataTable instance if it exists
             if (dataTable) {
                 dataTable.destroy();
-                document.getElementById("file_references_table").innerHTML = ""; // Clear the table's HTML content
+                document.getElementById("file_references_table")!.innerHTML = ""; // Clear the table's HTML content
             }
 
             // Fetch data and initialize the DataTable
