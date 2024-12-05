@@ -30,14 +30,14 @@ accession_id in StudyMetadata
     : DefaultDataSetMetatadata;
 
 var images = new Array()
-for (var dataset of study_info.experimental_imaging_component) {
+for (var dataset of study_info.dataset) {
   for (var image of dataset.image) {
     images.push(image)
   }
 }
 
 function get_study_image(study_info) {
-  const dataset_with_img = study_info.experimental_imaging_component.find((dataset) => dataset.example_image_uri.length > 0)
+  const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
   if (dataset_with_img == undefined) {
     return default_img.src
   } else {
@@ -56,7 +56,7 @@ function format_comma_separate_list(item, i, item_list) {
 
 function get_dataset_uuids_lengths(study_info) {
   var dataset_uuids = new Array()
-  for (var dataset of study_info.experimental_imaging_component) {
+  for (var dataset of study_info.dataset) {
     dataset_uuids.push([dataset.uuid,dataset.file_count,dataset.title_id])
 }
   return dataset_uuids
@@ -64,15 +64,13 @@ function get_dataset_uuids_lengths(study_info) {
 
 const dataset_uuids = get_dataset_uuids_lengths(study_info)
 
-const total_image_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
+const total_image_count = study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
 
-const total_eid_file_count = study_info.experimental_imaging_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
-const total_annotation_file_count = study_info.image_annotation_component.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
-const total_file_count = total_eid_file_count + total_annotation_file_count
+const total_file_count = study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
 
 function get_file_types(study_info) {
     var file_type_list = new Array()
-    for (var eic of study_info.experimental_imaging_component) {
+    for (var eic of study_info.dataset) {
         for (const file_type of eic.file_type_aggregation) {
             if (!file_type_list.includes(file_type)) {
               file_type_list.push(file_type)
@@ -153,13 +151,8 @@ const total_file_type_list = get_file_types(study_info)
       </div>
       <div>
         {
-          study_info.experimental_imaging_component.map((eic_data) => (
-            <DatasetInfo eic={eic_data} />
-          ))
-        }
-        {
-          study_info.image_annotation_component.map((eic_data) => (
-            <DatasetInfo eic={eic_data} />
+          study_info.dataset.map((dataset) => (
+            <DatasetInfo dataset={dataset} />
           ))
         }
       </div>
@@ -188,7 +181,7 @@ const total_file_type_list = get_file_types(study_info)
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} dataset_title={study_info.experimental_imaging_component.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
+              <ImageRow image={image} dataset_title={study_info.dataset.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
             ))
           }
         </tbody>

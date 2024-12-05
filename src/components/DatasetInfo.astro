@@ -2,7 +2,7 @@
 import field_map from "../data/metadata-field-name-mapping.json";
 import DatasetDetail from "./DatasetDetail.astro";
 
-const { eic } = Astro.props;
+const { dataset } = Astro.props;
 const biosample_map = field_map["biosample"];
 const sipp_map = field_map["specimen_imaging_preparation_protocol"];
 const sgp_map = field_map["specimen_growth_protocol"];
@@ -13,18 +13,18 @@ const annotation_method_map = field_map["annotation_method"];
 
 <div style="margin-bottom: 1rem;">
     <div>
-        <b style="font-size: 14pt;">{eic.title_id}</b>
+        <b style="font-size: 14pt;">{dataset.title_id}</b>
     </div>
     <ul>
         <div>
-            <b>Description:</b>&nbsp;{eic.description}
+            <b>Description:</b>&nbsp;{dataset.description}
         </div>
         {
-            "biological_entity" in eic &&
-                eic.biological_entity.length > 0 && (
+            "biological_entity" in dataset &&
+                dataset.biological_entity.length > 0 && (
                     <b>Biosamples:</b>
                     <ul>
-                        {eic.biological_entity.map((biosample) => (
+                        {dataset.biological_entity.map((biosample) => (
                             <DatasetDetail
                                 data={biosample}
                                 field_map={biosample_map}
@@ -34,11 +34,11 @@ const annotation_method_map = field_map["annotation_method"];
                 )
         }
         {
-            "specimen_imaging_preparation_protocol" in eic &&
-                eic.specimen_imaging_preparation_protocol.length > 0 && (
+            "specimen_imaging_preparation_protocol" in dataset &&
+                dataset.specimen_imaging_preparation_protocol.length > 0 && (
                     <b>Specimen Preparation Protocols:</b>
                     <ul>
-                        {eic.specimen_imaging_preparation_protocol.map(
+                        {dataset.specimen_imaging_preparation_protocol.map(
                             (sipp) => (
                                 <DatasetDetail
                                     data={sipp}
@@ -50,27 +50,11 @@ const annotation_method_map = field_map["annotation_method"];
                 )
         }
         {
-            "specimen_growth_protocol" in eic &&
-                eic.specimen_growth_protocol.length > 0 && (
-                    <b>Specimen Growth Protocols:</b>
-                    <ul>
-                        {eic.specimen_growth_protocol.map(
-                            (sgp) => (
-                                <DatasetDetail
-                                    data={sgp}
-                                    field_map={sgp_map}
-                                />
-                            ),
-                        )}
-                    </ul>
-                )
-        }
-        {
-            "acquisition_process" in eic &&
-                eic.acquisition_process.length > 0 && (
+            "acquisition_process" in dataset &&
+                dataset.acquisition_process.length > 0 && (
                     <b>Image Acquisition Processes:</b>
                     <ul>
-                        {eic.acquisition_process.map(
+                        {dataset.acquisition_process.map(
                             (image_acquisition) => (
                                 <DatasetDetail
                                     data={image_acquisition}
@@ -82,10 +66,26 @@ const annotation_method_map = field_map["annotation_method"];
                 )
         }
         {
-            "analysis_method" in eic && eic.analysis_method.length > 0 && (
+            "other_creation_process" in dataset &&
+                dataset.other_creation_process.length > 0 && (
+                    <b>Creation Protocols:</b>
+                    <ul>
+                        {dataset.other_creation_process.map(
+                            (sgp) => (
+                                <DatasetDetail
+                                    data={sgp}
+                                    field_map={sgp_map}
+                                />
+                            ),
+                        )}
+                    </ul>
+                )
+        }
+        {
+            "analysis_method" in dataset && dataset.analysis_method.length > 0 && (
                 <b>Image Analysis Methods:</b>
                 <ul>
-                    {eic.acquisition_process.map((analysis_method) => (
+                    {dataset.acquisition_process.map((analysis_method) => (
                         <DatasetDetail
                             data={analysis_method}
                             field_map={analysis_method_map}
@@ -95,10 +95,10 @@ const annotation_method_map = field_map["annotation_method"];
             )
         }
         {
-            "annotation_method" in eic && eic.annotation_method.length > 0 && (
+            "annotation_method" in dataset && dataset.annotation_method.length > 0 && (
                 <b>Annotation Methods:</b>
                 <ul>
-                    {eic.annotation_method.map((annotation_method) => (
+                    {dataset.annotation_method.map((annotation_method) => (
                         <DatasetDetail
                             data={annotation_method}
                             field_map={annotation_method_map}
