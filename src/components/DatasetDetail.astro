@@ -20,6 +20,10 @@ function taxon_render(taxon) {
     }
 }
 
+function growth_protocol_render(growth_protocol) {
+    return growth_protocol["protocol_description"]
+}
+
 export function multiline_text_render(value) {
     const output = value.toString().trim().replace(/(?:[\r\n|\r|\n]+)/g, "<br/><br/>")
     return output
@@ -30,6 +34,9 @@ function render_value(key, value) {
         return `<ul>
             ${value.map((taxon) => taxon_render(taxon)).join("")} 
             </ul>`;
+    } else if (key === "growth_protocol") {
+        return `${growth_protocol_render(value)}`;
+
     } else {
         return multiline_text_render(value)
     }

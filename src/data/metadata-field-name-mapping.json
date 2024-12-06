@@ -1,7 +1,8 @@
 {
     "biosample": {
         "organism_classification": "Organism(s) taxonomic information",
-        "biological_entity_description": "Description of biological entity"
+        "biological_entity_description": "Description of biological entity",
+        "growth_protocol": "Growth Protocol"
     },
     "specimen_imaging_preparation_protocol": {
         "protocol_description": "Protocol description"
