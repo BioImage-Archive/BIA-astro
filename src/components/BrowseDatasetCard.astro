@@ -84,8 +84,13 @@ function display_taxon(dataset) {
     const taxon_list = get_taxons(dataset)
     return taxon_list.reduce(format_list_item, "")
 }
+
+function filter_data(dataset) {
+    var data_string = dataset.accession_id + "; " + dataset.release_date + "; " + dataset.title + display_taxon(dataset) + "; " + display_img_type(dataset);
+    return data_string
+}
 ---
-<article class="vf-card vf-card--brand vf-card--bordered">
+<article class="vf-card vf-card--brand vf-card--bordered" data-message={filter_data(dataset)} style="max-width:400px">
     <img src={ get_study_image(dataset) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
