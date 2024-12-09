@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DatasetCard from '../components/BrowseDatasetCard.astro';
-import study_info from "../data/bia-study-metadata.json"
+import study_info from "../data/bia-study-metadata.json";
 ---
 <BaseLayout pageTitle="Datasets">
   <body>
@@ -15,10 +15,53 @@ import study_info from "../data/bia-study-metadata.json"
         </div>
         <div></div>
     </section> 
-    <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
-        <div class="vf-card-container__inner">
+
+
+    <input type="text" id="searchInput" placeholder="Filter studies..">
+    <script>
+    
+      var input = document.getElementById('searchInput') as HTMLInputElement;
+      input.addEventListener('keyup', () => filterElements(input.value));
+
+      function filterElements(input_text) {
+        const cards = document.querySelectorAll('.vf-card')
+        console.log(cards)
+        
+        console.log(input_text)
+        if (input_text == "") {
+          cards.forEach((card) => displayElement(card as HTMLElement));
+        } else {
+          cards.forEach((card) => toggleCard(input_text.toLowerCase(), card as HTMLElement));
+        }
+      }
+
+      function toggleCard(input: string, card: HTMLElement) {
+        if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
+          displayElement(card)
+        } else {
+          hideElement(card)
+        }
+      }
+
+      function displayElement(card: HTMLElement) {            
+        card.style.display = ""
+        return console.log(card)
+      }
+
+      function hideElement(card: HTMLElement) {
+        card.style.display = "none"
+        return console.log(card)
+      }
+
+
+    </script>
+
+    <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+       
+        <div class="vf-card-container__inner" >
             { Object.values(study_info).map((study) => ( <DatasetCard dataset={study} dataset_path="dataset"/> )) }
         </div>
     </section>
+
   </body>
 </BaseLayout>
