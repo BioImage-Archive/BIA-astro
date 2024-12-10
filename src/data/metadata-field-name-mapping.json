@@ -23,5 +23,8 @@
         "annotation_criteria": "Criteria",
         "annotation_coverage": "Coverage",
         "method_type": "Method Type"
+    },
+    "protocol": {
+        "protocol_description": "Protocol description"
     }
 }
