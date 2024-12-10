@@ -8,8 +8,9 @@ import DatasetDetail from '../../components/DatasetDetail.astro';
 
 const biosample_map = field_map["biosample"];
 const sipp_map = field_map["specimen_imaging_preparation_protocol"];
-const sgp_map = field_map["specimen_growth_protocol"];
 const image_acquisition_map = field_map["image_acquisition"];
+const annotation_method_map = field_map["annotation_method"];
+const protocol_map = field_map["protocol"];
 
 export function getStaticPaths() {
   return Object.keys(image_data).map((uuid) => {
@@ -28,6 +29,16 @@ const image_study = image_dataset.submitted_in_study
 const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
 const vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
 const itk_link = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + interactive_image.file_uri[0]
+const creation_process = image.creation_process
+
+let specimen
+if ("subject" in creation_process && creation_process.subject != null) {
+    specimen = creation_process.subject
+}
+console.log(creation_process)
+
+console.log(specimen)
+
 
 function format_physical_dimensions(img_rep) {
     const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
@@ -169,15 +180,15 @@ function pixel_dimensions(value, text) {
         
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div>
-                <h3>Specimen</h3>
+                <h3>Subject</h3>
             </div>
             <div>
             {
-                "sample_of" in image.subject &&
-                    image.subject.sample_of.length > 0 && (
+                specimen != null && "sample_of" in specimen &&
+                    specimen.sample_of.length > 0 && (
                         <b>Biosamples:</b>
                         <ul>
-                            {image.subject.sample_of.map((biosample) => (
+                            {specimen.sample_of.map((biosample) => (
                                 <DatasetDetail
                                     data={biosample}
                                     field_map={biosample_map}
@@ -187,34 +198,16 @@ function pixel_dimensions(value, text) {
                     )
             }
             {
-                "growth_protocol" in image.subject &&
-                    image.subject.growth_protocol.length > 0 && (
+                specimen != null && "imaging_preparation_protocol" in specimen &&
+                    specimen.imaging_preparation_protocol.length > 0 && (
                         <b>Specimen Preparation Protocols:</b>
                         <ul>
-                            {image.subject.imaging_preparation_protocol.map(
-                                (sipp) => (
-                                    <DatasetDetail
-                                        data={sipp}
-                                        field_map={sipp_map}
-                                    />
-                                ),
-                            )}
-                        </ul>
-                    )
-            }
-            {
-                "growth_protocol" in image.subject &&
-                    image.subject.growth_protocol.length > 0 && (
-                        <b>Specimen Growth Protocols:</b>
-                        <ul>
-                            {image.subject.growth_protocol.map(
-                                (sgp) => (
-                                    <DatasetDetail
-                                        data={sgp}
-                                        field_map={sgp_map}
-                                    />
-                                ),
-                            )}
+                            {specimen.imaging_preparation_protocol.map((sipp) => (
+                                <DatasetDetail
+                                    data={sipp}
+                                    field_map={sipp_map}
+                                />
+                            ))}
                         </ul>
                     )
             }
@@ -225,19 +218,57 @@ function pixel_dimensions(value, text) {
 
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div>
-                <h3>Image Acquisition</h3>
+                <h3>Creation</h3>
             </div>
             <div>
-                <ul>
-                    {image.acquisition_process.map(
-                        (image_acquisition) => (
-                            <DatasetDetail
-                                data={image_acquisition}
-                                field_map={image_acquisition_map}
-                            />
-                        ),
-                    )}
-                </ul>
+                {
+                    "acquisition_process" in creation_process &&
+                        creation_process.acquisition_process.length > 0 && (
+                            <b>Image Acquisition Protocols:</b>
+                            <ul>
+                                {creation_process.acquisition_process.map(
+                                    (image_acquisition) => (
+                                        <DatasetDetail
+                                            data={image_acquisition}
+                                            field_map={image_acquisition_map}
+                                        />
+                                    ),
+                                )}
+                            </ul>
+                        )
+                }
+                {
+                    "annotation_method" in creation_process &&
+                        creation_process.annotation_method.length > 0 && (
+                            <b>Image Acquisition Protocols:</b>
+                            <ul>
+                                {creation_process.annotation_method.map(
+                                    (annotation_method) => (
+                                        <DatasetDetail
+                                            data={annotation_method}
+                                            field_map={image_acquisition_map}
+                                        />
+                                    ),
+                                )}
+                            </ul>
+                        )
+                }
+                {
+                    "protocol" in creation_process &&
+                        creation_process.protocol.length > 0 && (
+                            <b>Image Acquisition Protocols:</b>
+                            <ul>
+                                {creation_process.protocol.map(
+                                    (protocol) => (
+                                        <DatasetDetail
+                                            data={protocol}
+                                            field_map={protocol_map}
+                                        />
+                                    ),
+                                )}
+                            </ul>
+                        )
+                }
             </div>
         </section>
     </body>
