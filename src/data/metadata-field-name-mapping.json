@@ -18,6 +18,9 @@
     "analysis_method": {
         "protocol_description": "Protocol description"
     },
+    "correlation_method": {
+        "protocol_description": "Protocol description"
+    },
     "annotation_method": {
         "protocol_description": "Protocol description",
         "annotation_criteria": "Criteria",
