@@ -9,6 +9,7 @@ const sgp_map = field_map["specimen_growth_protocol"];
 const image_acquisition_map = field_map["image_acquisition"];
 const analysis_method_map = field_map["analysis_method"];
 const annotation_method_map = field_map["annotation_method"];
+const correlation_method_map = field_map["correlation_method"];
 ---
 
 <div style="margin-bottom: 1rem;">
@@ -95,10 +96,23 @@ const annotation_method_map = field_map["annotation_method"];
             )
         }
         {
-            "annotation_method" in dataset && dataset.annotation_method.length > 0 && (
+            "correlation_method" in dataset && dataset.correlation_method.length > 0 && (
+                <b>Correlation Methods:</b>
+                <ul>
+                    {dataset.correlation_method.map((correlation_method) => (
+                        <DatasetDetail
+                            data={correlation_method}
+                            field_map={correlation_method_map}
+                        />
+                    ))}
+                </ul>
+            )
+        }
+        {
+            "annotation_process" in dataset && dataset.annotation_process.length > 0 && (
                 <b>Annotation Methods:</b>
                 <ul>
-                    {dataset.annotation_method.map((annotation_method) => (
+                    {dataset.annotation_process.map((annotation_method) => (
                         <DatasetDetail
                             data={annotation_method}
                             field_map={annotation_method_map}
