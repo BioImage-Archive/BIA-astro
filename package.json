@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "node_options": "export NODE_OPTIONS='--max-old-space-size=8192'",
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro NODE_OPTIONS=--max-old-space-size=8192 build",
+    "build": "astro node_options && astro check && astro --optimize_for_size --max_executable_size=4096 --stack_size=4096 build",
     "preview": "astro preview",
     "astro": "astro",
     "local": "astro check && astro build && astro preview"
