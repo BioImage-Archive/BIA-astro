@@ -86,7 +86,7 @@ const correlation_method_map = field_map["correlation_method"];
             "analysis_method" in dataset && dataset.analysis_method.length > 0 && (
                 <b>Image Analysis Methods:</b>
                 <ul>
-                    {dataset.acquisition_process.map((analysis_method) => (
+                    {dataset.analysis_method.map((analysis_method) => (
                         <DatasetDetail
                             data={analysis_method}
                             field_map={analysis_method_map}
