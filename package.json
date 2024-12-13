@@ -5,18 +5,18 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro --optimize-for-size --max-executable-size=8192 --stack-size=8192 build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "local": "astro check && astro build && astro preview"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
-    "@astrojs/mdx": "^1.1.5",
-    "astro": "^3.4.0",
+    "@astrojs/mdx": "^4.0.2",
+    "astro": "^5.0.5",
     "datatables.net": "^2.1.0",
     "datatables.net-dt": "^2.1.0",
-    "jquery":"^3.7.1",
+    "jquery": "^3.7.1",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
