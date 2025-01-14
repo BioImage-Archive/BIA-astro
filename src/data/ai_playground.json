@@ -1,0 +1,18 @@
+{
+    "name": "AI Playground",
+    "title": "BioImage Archive AI Playground",
+    "collections": [
+      {
+        "name":"benchmark-datasets",
+        "title":"Benchmark Datasets",
+        "subtitle":"A selection of AI related datasets which were benchmarked",
+        "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
+      },
+      {
+        "name":"benchmark-models",
+        "title":"Benchmark Models",
+        "subtitle":"A selection of Bioimage Model Zoo models benchmarked on BioImage Archive datasets",
+        "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/EMPIAR-10967/IM1/IM1-representative-512-512.png"
+      }
+    ]
+  }

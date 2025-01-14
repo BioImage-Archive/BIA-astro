@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+import collection from '../../data/collections/benchmark-datasets.json';
+import exports from "../../data/old-export-format/bia-benchmark-dataset-export.json";
+import DatasetCard from '../../components/GalleryDatasetCard.astro';
+
+const datasets = exports["datasets"];
+
+---
+<BaseLayout pageTitle={ collection.name }>
+  <body>
+    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
+        <div></div>
+        <div>
+            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ collection.title }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+            <h2 class="vf-intro__subheading">{ collection.subtitle }</h2>
+            <p class="vf-hero__text">{ collection.description }</p>
+            <p></p>
+            <p class="vf-hero__text"> <a href="/bioimage-archive/help/galleries-contribute">Check here </a> for how to contribute</p>
+        </div>
+        <div></div>
+    </section> 
+    <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+        <div class="vf-card-container__inner">
+          { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_page_url={"/bioimage-archive/galleries/benchmark-datasets/dataset/" + dataset.accession_id} /> )) }
+        </div>
+    </section>
+  </body>
+</BaseLayout>
