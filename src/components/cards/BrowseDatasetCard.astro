@@ -60,8 +60,15 @@ function display_taxon(dataset) {
     return taxon_list.reduce(format_list_item, "")
 }
 
-function filter_data(dataset) {
-    var data_string = dataset.accession_id + "; " + dataset.release_date + "; " + dataset.title + display_taxon(dataset) + "; " + display_img_type(dataset);
+function filter_data(study_info) {
+    const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
+    var has_image
+    if (dataset_with_img == undefined) {
+        has_image = false
+    } else {
+        has_image = true
+    }
+    var data_string = study_info.accession_id + "; " + study_info.release_date + "; " + study_info.title + display_taxon(study_info) + "; " + display_img_type(study_info) + "; has_img: " + has_image;
     return data_string
 }
 ---
