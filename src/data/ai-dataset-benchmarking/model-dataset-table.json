@@ -1,0 +1,24 @@
+[
+    {
+        "model": "MODEL NAME",
+        "study": "S-BIAD1137",
+        "dataset_uuid": "ABCID",
+        "score 1": "9.8",
+        "score 2": "100",
+        "example image": "link/file_name",
+        "example ground truth": "link/file_name",
+        "example process image": "link/file_name",
+        "notes": ""
+    },
+    {
+        "model": "MODEL NAME",
+        "study": "S-BIAD1137",
+        "dataset_uuid": "ABCID",
+        "score 1": "...",
+        "score 2": "...",
+        "example image": "link/file_name",
+        "example ground truth": "link/file_name",
+        "example process image": "link/file_name",
+        "notes": ""
+    }
+]

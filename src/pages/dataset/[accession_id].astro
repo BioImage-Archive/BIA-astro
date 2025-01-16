@@ -1,11 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import StudyMetadata from "../../data/bia-study-metadata.json";
-import ImageMetadata from "../../data/bia-image-export.json";
-import DefaultDataSetMetatadata from "../../data/bia-test-study-metadata.json";
-import StudyTitleInfo from "../../components/StudyTitleInfo.astro";
+import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
+import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
-import ImageRow from "../../components/ImageRow.astro";
+import ImageRow from "../../components/ImageTableRow.astro";
 import default_img from "../../assets/bioimage-archive/default_hero/default_hero_1.png"
 import {multiline_text_render} from "../../components/DatasetDetail.astro"
 
@@ -27,7 +26,7 @@ const { accession_id } = Astro.params;
 const study_info =
 accession_id in StudyMetadata
     ? StudyMetadata[accession_id]
-    : DefaultDataSetMetatadata;
+    : undefined;
 
 var images = new Array()
 for (var dataset of study_info.dataset) {
@@ -81,54 +80,32 @@ function get_file_types(study_info) {
 }
 
 const total_file_type_list = get_file_types(study_info)
+
+
+const headline_stats = {
+  "Total Viewable Images":  study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
+  "Total files": study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0),
+  "File Types": total_file_type_list.map((type, i)=>(format_comma_separate_list(type, i, total_file_type_list)))
+};
+
+
 ---
 
 <BaseLayout pageTitle={study_info.accession_id}>
   <body>
-    <section class="vf-content | embl-grid embl-grid--has-centered-content">
-      <StudyTitleInfo study_info={study_info} />
-    </section>
+    <StudyTitleInfo study_info={study_info} />
 
-    <section class="vf-content | embl-grid embl-grid--has-centered-content">
-      <div>
-        <div>
-          <h2 class="vf-section-header__heading">On this page</h2>
-          <ul class="vf-list">
-            {
-              Object.entries(table_of_contents).map(([text_title, id]) => (
-                <li class="vf-list__item">
-                  <a class="vf-list__link" href={"#" + id}>
-                    {text_title}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-
-      <div>
+    <StudyContentsSummary 
+      table_of_contents={table_of_contents} 
+      original_study_link={"https://www.ebi.ac.uk/biostudies/BioImages/studies/"+study_info.accession_id} 
+      headline_stats={headline_stats}
+    >
+      <div slot="hero-image">
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
           <img class="vf-figure__image" src={get_study_image(study_info)} />
         </figure>
       </div>
-
-      <div>
-        <a href={"https://www.ebi.ac.uk/biostudies/BioImages/studies/"+study_info.accession_id}>
-          <button class="vf-button vf-button--primary vf-button--sm"
-            >Original study</button
-          >
-        </a>
-      </div>
-    </section>
-
-    <section class="vf-content">
-      <div class="vf-grid | vf-grid__col-3 ">
-        <div style="text-align: center;">Total Viewable Images<br /> {total_image_count}</div>
-        <div style="text-align: center;">Total files <br /> {total_file_count}</div>
-        <div style="text-align: center;">File Types <br />{total_file_type_list.map((type, i)=>(format_comma_separate_list(type, i, total_file_type_list)))}</div>
-      </div>
-    </section>
+    </StudyContentsSummary>
 
     <hr/>
 

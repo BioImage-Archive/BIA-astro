@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-import collection from '../../data/collections/benchmark-datasets.json';
-import exports from "../../data/old-export-format/bia-benchmark-dataset-export.json";
-import DatasetCard from '../../components/GalleryDatasetCard.astro';
+import collection from '../../data/collections/ai-benchmark-datasets.json';
+import DatasetCard from '../../components/cards/BrowseDatasetCard.astro';
+import StudyInfo from '../../data/bia-study-metadata.json'
+import AdditionalStudyInfo from '../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
-const datasets = exports["datasets"];
+const datasets_ids = collection["accession_ids"];
 
 ---
 <BaseLayout pageTitle={ collection.name }>
@@ -21,9 +22,10 @@ const datasets = exports["datasets"];
         </div>
         <div></div>
     </section> 
-    <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+
+    <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_page_url={"/bioimage-archive/galleries/benchmark-datasets/dataset/" + dataset.accession_id} /> )) }
+          { Object.values(datasets_ids).map((acc_id) => ( <DatasetCard dataset={ StudyInfo[acc_id] } dataset_path={"ai-playground/dataset"} taglist={AdditionalStudyInfo[acc_id]?.tags || []}/> )) }
         </div>
     </section>
   </body>

@@ -1,0 +1,136 @@
+---
+//import field_map from "../data/metadata-field-name-mapping.json";
+import DatasetDetail from "./../DatasetDetail.astro";
+
+const { dataset } = Astro.props;
+// const biosample_map = field_map["biosample"];
+// const sipp_map = field_map["specimen_imaging_preparation_protocol"];
+// const sgp_map = field_map["specimen_growth_protocol"];
+// const image_acquisition_map = field_map["image_acquisition"];
+// const analysis_method_map = field_map["analysis_method"];
+// const annotation_method_map = field_map["annotation_method"];
+// const correlation_method_map = field_map["correlation_method"];
+
+function taxon_render(taxon) {
+   if (taxon["common_name"] && taxon["scientific_name"]){
+       return `<i>${taxon.scientific_name}</i> (${taxon["common_name"]})`
+   } else if (taxon["common_name"]) {
+       return `${taxon.common_name}`
+   } else if (taxon["scientific_name"]) {
+       return `<i>${taxon.scientific_name}</i>`
+   }
+}
+
+
+
+function get_taxons(dataset) {
+    var taxons
+    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
+        taxons = [];
+    }
+
+    taxons = dataset.biological_entity
+        .flatMap(entity => entity.organism_classification || [])
+        .filter(item => typeof item === "object"); 
+
+    var taxon_html_list = new Array()
+    for (var taxon of taxons) {
+        taxon_html_list.push(taxon_render(taxon))
+    }
+
+    return taxon_html_list
+};
+
+
+
+
+function get_biological_entity(dataset) {
+    var bio_entities
+    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
+        bio_entities = [];
+    }
+
+    bio_entities = dataset.biological_entity
+        .flatMap(entity => entity.biological_entity_description || []); 
+
+
+    return bio_entities.reduce(format_list_item, "")
+};
+
+
+
+
+
+function get_imaging_type(dataset) {
+    var imaging_type_list = new Array()
+    for (var ia of dataset.acquisition_process) {
+        for (var method_names of ia.imaging_method_name) {
+            if (!imaging_type_list.includes(method_names)) {
+                imaging_type_list.push(method_names)
+            }
+        }
+    }
+    return imaging_type_list
+}
+
+
+
+function display_img_type(dataset) {
+    const image_type_list = get_imaging_type(dataset)
+    const img_type_display = image_type_list.reduce(format_list_item, "")
+    if (img_type_display.length > 50 * image_type_list.length) {
+        // Avoid displaying full method text on dataset cards.
+        return 'See details of study'
+    } else {
+        return img_type_display
+    }
+}
+
+
+function format_list_item(output_string, item, i, list) {
+    if (i + 1 === list.length) {
+        return output_string + item ;
+    } else {
+        return output_string + item + ", " ;
+    }
+}
+
+function display_taxon(taxon_list) {
+    return taxon_list.reduce(format_list_item, "");
+}
+
+const taxons = get_taxons(dataset)
+
+---
+
+<div style="margin-bottom: 1rem;">
+    <div>
+        <b style="font-size: 14pt;">{dataset.title_id}</b>
+    </div>
+    <ul>
+        {
+            taxons && taxons.length > 0 && 
+                (
+                    <div>
+                        <b>Organism:</b> <Fragment set:html={display_taxon(taxons)}/>
+                    </div>
+                )
+        }
+        {
+            taxons && taxons.length > 0 && 
+                (
+                    <div>
+                    <b>Biological Entity:</b> {get_biological_entity(dataset)}
+                    </div>
+                )
+        }
+        {
+            taxons && taxons.length > 0 && 
+                (
+                    <div>
+                    <b>Imaging Method:</b> {display_img_type(dataset)}
+                    </div>
+                )
+        }
+    </ul>
+</div>

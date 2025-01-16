@@ -1,0 +1,16 @@
+{
+    "BMZ-MODEL1": {
+        "model_id": "BMZ-MODEL1",
+        "name": "loyal_squid",
+        "description": "A 3D U-Net model trained on the Human Lung dataset",
+        "licence": "CC-BY-4.0",
+        "model_link": "link",
+        "hero_image": "link/file_name",
+        "tags": [
+            "str1",
+            "str3",
+            "str countable infinity",
+            "str uncountable infinity"
+        ]
+    }
+}
