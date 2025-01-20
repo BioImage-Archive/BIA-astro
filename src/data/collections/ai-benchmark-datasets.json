@@ -1,0 +1,10 @@
+{
+    "name": "Benchmark Datasets",
+    "title": "BioImage Archive Benchmarked datasets",
+    "subtitle": "  ",
+    "description": "This is a collection of  AI/Machine Learning datasets from the BioImage Archive on which one or more Bioimage Model Zoo models have been applied.",
+    "accession_ids": [
+      "S-BIAD1026",
+      "S-BIAD1196"
+    ]
+  }

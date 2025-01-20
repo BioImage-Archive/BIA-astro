@@ -1,8 +1,8 @@
 ---
 import CasestudiesLayout from "../layouts/CasestudiesLayout.astro";
 import { getCollection } from "astro:content";
-import CasestudiesCard from "../components/CasestudiesCard.astro";
-import CaseStudyImageCard from "../components/CaseStudyImageCard.astro";
+import CasestudiesCard from "../components/CaseStudyArticle.astro";
+import CaseStudyImageCard from "../components/CaseStudy.astro";
 const allPosts = await getCollection("case_studies");
 ---
 <CasestudiesLayout>

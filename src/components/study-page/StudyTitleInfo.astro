@@ -1,0 +1,40 @@
+---
+const { study_info } = Astro.props;
+
+const authors = "author" in study_info ? study_info.author : [{display_name: ""}];
+
+function author_format(author_name, i, author_list) {
+    if (i + 1 === author_list.length) {
+        return author_name;
+    } else {
+        return author_name + ", ";
+    }
+}
+
+// TODO: Organisation information - note this may be hard with current datamodels.
+// Javascript considers objects to be unique, so two objects with the same fields do not === each other.
+// In order to get a list of unique organisations as biostudies does we may need to do the filtering in the export
+// or consider changing the models.
+---
+<section class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+
+    </div>
+    <div>
+        <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+            {study_info.accession_id}<a
+                href="JavaScript:Void(0);"
+                class="vf-badge vf-badge--primary vf-badge--phases">alpha</a
+            >
+        </h1>
+        <h2 class="vf-intro__subheading">{study_info.title}</h2>
+        <p>Released {study_info.release_date}</p>
+        <p>
+            {
+                authors.map((contributor, i) =>
+                    author_format(contributor.display_name, i, authors),
+                )
+            }
+        </p>
+    </div>
+</section>

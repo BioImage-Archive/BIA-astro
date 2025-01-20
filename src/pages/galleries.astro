@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import GalleryCard from "../components/GalleryCard.astro";
+import GalleryCard from "../components/cards/GalleryRoundImageCard.astro";
 import galleries from "../data/galleries.json";
 ---
 
@@ -18,7 +18,7 @@ import galleries from "../data/galleries.json";
             <div class="vf-news-container__content | vf-grid vf-grid__col-4">
                 {
                     Object.values(galleries.collections).map((collection) => (
-                        <GalleryCard collection={collection} />
+                        <GalleryCard collection={collection} link_path="/bioimage-archive/galleries/" />
                     ))
                 }
             </div>

@@ -1,18 +1,11 @@
 ---
-import default_img_1 from "../assets/bioimage-archive/default_hero/default_hero_1.png"
-import default_img_2 from "../assets/bioimage-archive/default_hero/default_hero_2.png"
-import default_img_3 from "../assets/bioimage-archive/default_hero/default_hero_3.png"
-import default_img_4 from "../assets/bioimage-archive/default_hero/default_hero_4.png"
-
-const { dataset, dataset_path } = Astro.props;
+import {get_placeholder_hero_image} from "../../components/PlaceholderHeroImage.js"
+const { dataset, dataset_path, taglist} = Astro.props;
 
 function get_study_image(study_info) {
   const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
   if (dataset_with_img == undefined) {
-    // Note these images are just to get an idea of the display in dev whilst also being obviously not actual images from the study.
-    // Will switch to actual images once we have these.
-    const images = {"0": default_img_1, "1": default_img_2, "2": default_img_3, "3": default_img_4}
-    return images[Math.floor(Math.random()*4)].src 
+    return get_placeholder_hero_image(dataset.accession_id)
   } else {
     return dataset_with_img.example_image_uri[0]
   }
@@ -105,5 +98,13 @@ function filter_data(dataset) {
         <b>Imaging method: </b>{display_img_type(dataset)}<br>
         <b>Organism: </b><Fragment set:html={display_taxon(dataset)}></Fragment>
         </p>
+
+        {taglist && taglist.length > 0 && (
+            <>
+            <p class="vf-card__text">
+                <b>Tags:</b> {taglist.reduce(format_list_item, "")}
+            </p>
+            </>
+        )}
     </div>
 </article>

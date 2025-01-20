@@ -1,0 +1,10 @@
+{
+    "name": "Benchmarking Models",
+    "title": "BioImage Archive AI Models",
+    "subtitle": "  ",
+    "description": "This is a collection of  AI/Machine Learning models from the Bioimage Model Zoo which have been applied on one or more BioImage Archive datasets.",
+    "model_names": [
+      "BMZ-MODEL1",
+      "BMZ-MODEL2"
+    ]
+  }

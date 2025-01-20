@@ -1,0 +1,12 @@
+{
+    "name": "AI Playground",
+    "title": "BioImage Archive AI Playground",
+    "collections": [
+      {
+        "name":"datasets",
+        "title":"Benchmark Datasets",
+        "subtitle":"A selection of AI related datasets which were benchmarked",
+        "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
+      }
+    ]
+  }

@@ -1,0 +1,50 @@
+---
+
+const { table_of_contents, original_study_link, headline_stats} = Astro.props;
+
+
+
+---
+<section class="vf-content | embl-grid embl-grid--has-centered-content">
+  <div>
+    <div>
+      <h2 class="vf-section-header__heading">On this page</h2>
+      <ul class="vf-list">
+        {
+          Object.entries(table_of_contents).map(([text_title, id]) => (
+            <li class="vf-list__item">
+              <a class="vf-list__link" href={"#" + id}>
+                {text_title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <slot name="hero-image"/>
+
+  <div>
+    <a href={original_study_link}>
+      <button class="vf-button vf-button--primary vf-button--sm"
+        >Original study</button
+      >
+    </a>
+  </div>
+</section>
+{
+    headline_stats && (
+        <section class="vf-content">
+            <div class="vf-grid | vf-grid__col-3 ">
+                {Object.entries(headline_stats).map(([key, value]) => (
+                    <div style="text-align: center;">
+                        {key}
+                        <br />
+                        {value}
+                    </div>
+                ))}
+            </div>
+        </section>
+    )
+}

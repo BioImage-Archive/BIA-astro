@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import exports from "../../../../data/old-export-format/bia-ai-export.json";
-import StudyTitleInfo from "../../../../components/StudyTitleInfo.astro";
+import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
 
 import studyImage from "../../../../assets/bioimage-archive/study.png";
 import biosampleImage from "../../../../assets/bioimage-archive/biosample.png";
@@ -41,9 +41,7 @@ const viewable_annotation_images = study.image_uuids
 
 <BaseLayout pageTitle={study.accession_id}>
   <body>
-    <section class="vf-content | embl-grid embl-grid--has-centered-content">
-      <StudyTitleInfo study_info={study} />
-    </section>
+    <StudyTitleInfo study_info={study} />
 
     <section class="vf-content | vf-sidebar vf-sidebar--start">
       <div class="vf-sidebar__inner">
