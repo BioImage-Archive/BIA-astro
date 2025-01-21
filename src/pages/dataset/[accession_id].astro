@@ -6,7 +6,7 @@ import StudyContentsSummary from "../../components/study-page/StudyContentsSumma
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ImageRow from "../../components/ImageTableRow.astro";
 import {multiline_text_render} from "../../components/DatasetDetail.astro"
-import {get_placeholder_hero_image} from "../../components/PlaceholderHeroImage.js"
+import {get_placeholder_hero_image, format_list_item} from "../../components/SharedJSFunctions.js"
 
 
 export function getStaticPaths() {
@@ -45,15 +45,6 @@ function get_study_image(study_info) {
   }
 }
 
-
-function format_comma_separate_list(item, i, item_list) {
-    if (i + 1 === item_list.length) {
-        return item;
-    } else {
-        return item + ", ";
-    }
-}
-
 function get_dataset_uuids_lengths(study_info) {
   var dataset_uuids = new Array()
   for (var dataset of study_info.dataset) {
@@ -86,7 +77,7 @@ const total_file_type_list = get_file_types(study_info)
 const headline_stats = {
   "Total Viewable Images":  study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
   "Total files": study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0),
-  "File Types": total_file_type_list.map((type, i)=>(format_comma_separate_list(type, i, total_file_type_list)))
+  "File Types": total_file_type_list.reduce(format_list_item, "")
 };
 
 

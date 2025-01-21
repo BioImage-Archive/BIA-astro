@@ -1,27 +1,6 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import GalleryCard from "../components/cards/GalleryRoundImageCard.astro";
-import galleries from "../data/galleries.json";
+import Gallery from "../components/GalleryCollection.astro";
+import data from "../data/galleries.json";
 ---
 
-<BaseLayout pageTitle="Galleries">
-    <body>
-        <section
-            class="vf-news-container vf-news-container--featured | vf-stack"
-        >
-            <div class="vf-section-header">
-                <h2 class="vf-section-header__heading">
-                    <br />
-                    {galleries.title}
-                </h2>
-            </div>
-            <div class="vf-news-container__content | vf-grid vf-grid__col-4">
-                {
-                    Object.values(galleries.collections).map((collection) => (
-                        <GalleryCard collection={collection} link_path="/bioimage-archive/galleries/" />
-                    ))
-                }
-            </div>
-        </section>
-    </body>
-</BaseLayout>
+<Gallery gallery_data={data} />

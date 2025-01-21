@@ -3,7 +3,7 @@ import external_link from  "../assets/bioimage-archive/external-link-svgrepo-com
 
 var { data, field_map } = Astro.props;
 
-function taxon_render(taxon) {
+function taxon_render_with_link(taxon) {
    
     var string_text = ""
     if (taxon["common_name"] && taxon["scientific_name"]){
@@ -32,7 +32,7 @@ export function multiline_text_render(value) {
 function render_value(key, value) {
     if (key === "organism_classification") {
         return `<ul>
-            ${value.map((taxon) => taxon_render(taxon)).join("")} 
+            ${value.map((taxon) => taxon_render_with_link(taxon)).join("")} 
             </ul>`;
     } else if (key === "growth_protocol") {
         return `${growth_protocol_render(value)}`;

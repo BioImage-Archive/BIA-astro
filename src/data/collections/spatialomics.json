@@ -1,6 +1,6 @@
 {
     "name": "spatialomics",
-    "title": "BioImage Archive Spatial-omics datasets",
+    "title": "Spatial-omics datasets",
     "subtitle": "A selection of spatial-omics studies",
     "description": "This is a collection of spatial-omics datasets from the BioImage Archive from which one or more images have been converted to OME-Zarr. It is intended to present the spatial-omics datasets with relevant tags and visualisation of images from the archive's collection, and to provide easy access to spatial-omics datasets and encourage tool development.",
     "accession_ids": [

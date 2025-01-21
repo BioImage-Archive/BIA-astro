@@ -1,10 +1,10 @@
 {
     "name": "Benchmarking Models",
-    "title": "BioImage Archive AI Models",
-    "subtitle": "  ",
-    "description": "This is a collection of  AI/Machine Learning models from the Bioimage Model Zoo which have been applied on one or more BioImage Archive datasets.",
+    "title": "Tested AI models",
+    "subtitle": "",
+    "description": "This is a collection of AI models from the BioImage Model Zoo that have been applied to several datasets from the BIA. Here you can visualise the prediction of the models for different images.",
     "model_names": [
-      "BMZ-MODEL1",
-      "BMZ-MODEL2"
+      "loyal-squid",
+      "noisy-fish"
     ]
   }

@@ -1,6 +1,7 @@
 {
   "name": "Galleries",
   "title": "BioImage Archive Explorer",
+  "gallery_item_basepath": "/bioimage-archive/galleries/",
   "collections": [
     {
       "name":"ai",

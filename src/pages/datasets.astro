@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DatasetCard from '../components/cards/BrowseDatasetCard.astro';
 import study_info from "../data/bia-study-metadata.json";
+import BrowseDatasetHeading from '../components/BrowseDatasetsHeading.astro';
 
 const totalStudies = Object.keys(study_info).length;
 
@@ -25,23 +26,25 @@ const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayout pageTitle="Datasets">
   <body>
-    <section class="vf-intro | embl-grid | embl-grid--has-centered-content">
-        <div></div>
-        <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">Browse the BioImage Archive<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
-            <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
-            <p></p>
-            <p class="vf-hero__text">
-              Number of Studies: {formattedTotalStudies}<br>
-              Number of Files: {formattedTotalFiles}<br>
-              Number of OME-NGFF Images: {formattedTotalImages}</p>
-              <p></p>
-              <p class="vf-hero__text">
-            All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
-            <p class="vf-hero__text"> Check <a href="/bioimage-archive/submit">here </a>for how to submit data to the archive</p>
-        </div>
-        <div></div>
-    </section> 
+
+    <BrowseDatasetHeading
+      heading="Browse the BioImage Archive"
+      contribute_link={"/bioimage-archive/submit"}
+    > 
+      <div slot="body_text">
+        <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
+        <p></p>
+        <p class="vf-hero__text">
+          Number of Studies: {formattedTotalStudies}<br>
+          Number of Files: {formattedTotalFiles}<br>
+          Number of OME-NGFF Images: {formattedTotalImages}</p>
+          <p></p>
+          <p class="vf-hero__text">
+        All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
+
+      </div>
+    </BrowseDatasetHeading>
+  
 
 
     <input type="text" id="searchInput" placeholder="Filter studies..">

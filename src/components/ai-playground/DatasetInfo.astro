@@ -1,26 +1,7 @@
 ---
-//import field_map from "../data/metadata-field-name-mapping.json";
-import DatasetDetail from "./../DatasetDetail.astro";
+import { format_list_item, taxon_render } from "../SharedJSFunctions";
 
 const { dataset } = Astro.props;
-// const biosample_map = field_map["biosample"];
-// const sipp_map = field_map["specimen_imaging_preparation_protocol"];
-// const sgp_map = field_map["specimen_growth_protocol"];
-// const image_acquisition_map = field_map["image_acquisition"];
-// const analysis_method_map = field_map["analysis_method"];
-// const annotation_method_map = field_map["annotation_method"];
-// const correlation_method_map = field_map["correlation_method"];
-
-function taxon_render(taxon) {
-   if (taxon["common_name"] && taxon["scientific_name"]){
-       return `<i>${taxon.scientific_name}</i> (${taxon["common_name"]})`
-   } else if (taxon["common_name"]) {
-       return `${taxon.common_name}`
-   } else if (taxon["scientific_name"]) {
-       return `<i>${taxon.scientific_name}</i>`
-   }
-}
-
 
 
 function get_taxons(dataset) {
@@ -86,14 +67,6 @@ function display_img_type(dataset) {
     }
 }
 
-
-function format_list_item(output_string, item, i, list) {
-    if (i + 1 === list.length) {
-        return output_string + item ;
-    } else {
-        return output_string + item + ", " ;
-    }
-}
 
 function display_taxon(taxon_list) {
     return taxon_list.reduce(format_list_item, "");

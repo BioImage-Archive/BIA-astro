@@ -1,12 +1,21 @@
 {
-    "name": "AI Playground",
-    "title": "BioImage Archive AI Playground",
-    "collections": [
-      {
-        "name":"datasets",
-        "title":"Benchmark Datasets",
-        "subtitle":"A selection of AI related datasets which were benchmarked",
-        "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
-      }
-    ]
-  }
+  "name": "AI Playground",
+  "title": "BioImage Archive AI Playground",
+  "subtitle": "Explore how AI models perform on different datasets",
+  "body_text": "This is a collection of models from the BioImage Model zoo that have been applied to datasets from the BioImage Archive. You can explore the outputs of several models on a dataset to get an idea of what is the most suitable model for a specific image. Or you can investigate how a model works on different datasets and see how widely-applicable the model is.",
+  "gallery_item_basepath": "/bioimage-archive/ai-playground/",
+  "collections": [
+    {
+      "name":"datasets",
+      "title":"Analysed datasets",
+      "subtitle":"A selection of datasets analysed using different models",
+      "summary_image":"/bioimage-archive/ai-benchmarking-galleries/ai_pg_dataset.png"
+    },
+    {
+      "name":"models",
+      "title":"Tested AI models",
+      "subtitle":"A selection of BioImage Model Zoo models applied to BioImage Archive datasets",
+      "summary_image":"/bioimage-archive/ai-benchmarking-galleries/ai_pg_model.png"
+    }
+  ]
+}
