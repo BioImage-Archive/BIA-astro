@@ -37,6 +37,9 @@ const table_of_contents = {
         </h1>
         <h2 class="vf-intro__subheading">{model_info.name}</h2>
         <p>
+          {model_info.author.reduce(format_list_item, "")}
+        </p>
+        <p>
           {model_info.model_id}
         </p>
     </div>
