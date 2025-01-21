@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-
+import BrowseDatasetHeading from '../../components/BrowseDatasetsHeading.astro';
 import collection from '../../data/collections/ai.json';
 import exports from "../../data/old-export-format/bia-ai-export.json";
 import DatasetCard from '../../components/cards/GalleryDatasetCard.astro';
@@ -10,17 +10,14 @@ const datasets = exports["datasets"];
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>
-    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-        <div></div>
-        <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ collection.title }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
-            <h2 class="vf-intro__subheading">{ collection.subtitle }</h2>
-            <p class="vf-hero__text">{ collection.description }</p>
-            <p></p>
-            <p class="vf-hero__text"> <a href="/bioimage-archive/help/galleries-contribute">Check here </a> for how to contribute</p>
-        </div>
-        <div></div>
-    </section> 
+    <BrowseDatasetHeading
+    heading={collection.title }
+    subheading={collection.subtitle}
+    contribute_link={"/bioimage-archive/help/galleries-contribute"}
+  > 
+     <p class="vf-hero__text" slot="body_text">{ collection.description }</p>
+  </BrowseDatasetHeading>
+
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
           { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_page_url={"/bioimage-archive/galleries/ai/dataset/" + dataset.accession_id} /> )) }

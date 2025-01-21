@@ -1,5 +1,6 @@
 ---
-import {get_placeholder_hero_image} from "../../components/PlaceholderHeroImage.js"
+import {get_placeholder_hero_image} from "../SharedJSFunctions.js"
+import { format_list_item, taxon_render } from "../SharedJSFunctions.js";
 const { dataset, dataset_path, taglist} = Astro.props;
 
 function get_study_image(study_info) {
@@ -42,25 +43,6 @@ function get_taxons(study_info) {
     return taxon_html_list
 }
 
-
-function taxon_render(taxon) {
-   if (taxon["common_name"] && taxon["scientific_name"]){
-       return `<i>${taxon.scientific_name}</i> (${taxon["common_name"]})`
-   } else if (taxon["common_name"]) {
-       return `${taxon.common_name}`
-   } else if (taxon["scientific_name"]) {
-       return `<i>${taxon.scientific_name}</i>`
-   }
-}
-
-
-function format_list_item(output_string, item, i, list) {
-    if (i + 1 === list.length) {
-        return output_string + item ;
-    } else {
-        return output_string + item + ", " ;
-    }
-}
 
 function display_img_type(dataset) {
     const image_type_list = get_imaging_type(dataset)

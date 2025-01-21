@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import GalleryCard from "./cards/GalleryRoundImageCard.astro";
+
+const { gallery_data } = Astro.props;
+
+---
+
+
+<BaseLayout>
+    <body>
+        <section
+            class="vf-news-container vf-news-container--featured | vf-stack "
+        >
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading">
+                    <br />
+                    {gallery_data.title}
+                </h2>
+            </div>
+
+            {
+                gallery_data.subtitle && (
+                    <div>
+                        <h3 class="vf-section-subheader__heading">
+                            {gallery_data.subtitle}
+                        </h3>
+                    </div>
+                )
+            }
+
+            {
+                gallery_data.body_text && (
+                    <div class=" vf-grid | vf-grid__col-3 |">
+                        <p class="vf-grid__col--span-2 | vf-content">
+                            {gallery_data.body_text}
+                        </p>
+                    </div>
+                )
+            }
+
+            <div class="vf-news-container__content | vf-grid | vf-grid__col-4 |">
+                {
+                    Object.values(gallery_data.collections).map((collection) => (
+                        <GalleryCard collection={collection} link_path={gallery_data.gallery_item_basepath} />
+                    ))
+                }
+            </div>
+        </section>
+    </body>
+</BaseLayout>

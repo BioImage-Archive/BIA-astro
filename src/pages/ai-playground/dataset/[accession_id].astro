@@ -16,14 +16,6 @@ export function getStaticPaths() {
   });
 }
 
-function format_comma_separate_list(item, i, item_list) {
-    if (i + 1 === item_list.length) {
-        return item;
-    } else {
-        return item + ", ";
-    }
-}
-
 const table_of_contents = {
   "Study Information": "study",
 };
@@ -34,19 +26,6 @@ const study_info = StudyMetadata[accession_id]
 
 const example_img_uri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1388/2563e244-377d-4d80-b833-868a59dfb903/8a3e9dfb-9406-48df-90e9-2d0872050352.png";
 const example_annotation_uri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1388/2563e244-377d-4d80-b833-868a59dfb903/8a3e9dfb-9406-48df-90e9-2d0872050352.png";
-
-
-function get_file_types(study_info) {
-    var file_type_list = new Array()
-    for (var eic of study_info.dataset) {
-        for (const file_type of eic.file_type_aggregation) {
-            if (!file_type_list.includes(file_type)) {
-              file_type_list.push(file_type)
-            }
-        }
-    }
-    return file_type_list
-}
 
 ---
 
