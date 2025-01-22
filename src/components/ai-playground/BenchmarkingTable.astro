@@ -19,6 +19,16 @@ for (var acc_id of study_ids) {
     }
 }
 
+function format_param(acc, keyvalue) {
+    return acc + keyvalue[0] + ": " + keyvalue[1]  + "<br/>" 
+}
+
+
+function format_analysis_param(analysis_params) {
+
+    return Object.entries(analysis_params).reduce(format_param, "")
+}
+
 console.log(dataset_uuid_name_map)
 ---
 
@@ -71,7 +81,7 @@ console.log(dataset_uuid_name_map)
                     <th>{row.recall}</th>
                     <th>{row.IoU}</th>
                     <th>{row.dice}</th>
-                    <th>bla</th>
+                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
                 </tr>
                 ))
             }
