@@ -1,12 +1,12 @@
-{
-    "loyal-squid": {
+[
+    {
         "model": "loyal-squid",
         "study": "S-BIAD1026",
         "dataset_uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
-        "Precision": "0.994",
-        "Recall": "0.392",
+        "precision": "0.994",
+        "recall": "0.392",
         "IoU": "0.391",
-        "Dice": "0.563",
+        "dice": "0.563",
         "example_image": "/src/assets/bioimage-archive/example_image_table.png",
         "example_ground_truth": "/src/assets/bioimage-archive/example_annotation_table.png",
         "example_process_image": "/src/assets/bioimage-archive/example_prediction_table.png",
@@ -18,14 +18,14 @@
             "prediction_channel_benchmarked": "0"
         }
     },
-    "noisy-fish": {
+    {
         "model": "noisy-fish",
         "study": "S-BIAD1026",
         "dataset_uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
-        "Precision": "0.920",
-        "Recall": "0.839",
+        "precision": "0.920",
+        "recall": "0.839",
         "IoU": "0.782",
-        "Dice": "0.878",
+        "dice": "0.878",
         "example_image": "/src/assets/bioimage-archive/example_image_table.png",
         "example_ground_truth": "/src/assets/bioimage-archive/example_annotation_table.png",
         "example_process_image": "/src/assets/bioimage-archive/example_prediction_table.png",
@@ -37,4 +37,4 @@
             "prediction_channel_benchmarked": "0"
         }
     }
-}
+]

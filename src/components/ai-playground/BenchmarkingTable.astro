@@ -1,0 +1,100 @@
+---
+import study_metadata from "../../data/bia-study-metadata.json"
+const { table_rows, study_or_model } = Astro.props;
+
+var study_ids: Set<string> = new Set()
+for (var row of table_rows) {
+    study_ids.add(row.study)
+}
+console.log(study_ids)
+
+const dataset_uuid_name_map = new Map();
+for (var acc_id of study_ids) {
+    console.log(acc_id)
+
+    for (var dataset of study_metadata[acc_id].dataset) {
+        console.log(dataset)
+
+        dataset_uuid_name_map.set(dataset.uuid, dataset.title_id)
+    }
+}
+
+function format_param(acc, keyvalue) {
+    return acc + keyvalue[0] + ": " + keyvalue[1]  + "<br/>" 
+}
+
+
+function format_analysis_param(analysis_params) {
+
+    return Object.entries(analysis_params).reduce(format_param, "")
+}
+
+console.log(dataset_uuid_name_map)
+---
+
+<section class="vf-intro | embl-grid | embl-grid--has-centered-content | section-spacing">
+
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="benchmarking">
+        Benchmarking
+      </h2>
+    </div>
+
+    <div>
+        <table id="benchmarking_table" class="display">
+            <thead class="vf-table__header">
+                <tr class="vf-table__header">
+                    {
+                        study_or_model == 'model' && (
+                            <th class="vf-table__heading" >Study</th>
+                        )
+                    }
+                    <th class="vf-table__heading" >Dataset</th>
+                    {
+                        study_or_model == 'study' && (
+                            <th class="vf-table__heading" >Model</th>
+                        )
+                    }
+                    <th class="vf-table__heading" >Precision</th>
+                    <th class="vf-table__heading" >Recall</th>
+                    <th class="vf-table__heading" >IoU</th>
+                    <th class="vf-table__heading" >Dice</th>
+                    <th class="vf-table__heading" >Analysis parameters</th>
+                </tr>
+            </thead>
+            <tbody class="vf_table__body">
+            {
+                table_rows.map((row) => (
+                <tr>
+                    {
+                        study_or_model == 'model' && (
+                            <th>{row.study}</th>
+                        )
+                    }
+                    <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
+                    {
+                        study_or_model == 'study' && (
+                            <th>{row.model}</th>
+                        )
+                    }
+                    <th>{row.precision}</th>
+                    <th>{row.recall}</th>
+                    <th>{row.IoU}</th>
+                    <th>{row.dice}</th>
+                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
+                </tr>
+                ))
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          $("#benchmarking_table").DataTable({
+            scrollX: true,
+            columnDefs: [{ type: "natural", targets: 0 }],
+          });
+        });
+    </script>
+</section>

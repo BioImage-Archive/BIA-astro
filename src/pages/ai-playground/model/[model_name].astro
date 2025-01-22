@@ -1,9 +1,15 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import BenchmarkingTable from "../../../components/ai-playground/BenchmarkingTable.astro"
+
 import CollectionList from "../../../data/collections/ai-benchmark-models.json"
 import ModelMetadata from "../../../data/ai-dataset-benchmarking/model-metadata.json"
-import {multiline_text_render} from "../../../components/DatasetDetail.astro"
+import TableInfo from "../../../data/ai-dataset-benchmarking/model-dataset-table.json"
+
+import { multiline_text_render } from "../../../components/DatasetDetail.astro"
 import { format_list_item } from "../../../components/SharedJSFunctions";
+
+
 
 export function getStaticPaths() {
   return Object.values(CollectionList["model_names"]).map((id) => {
@@ -21,6 +27,11 @@ const model_info = ModelMetadata[model_name]
 const table_of_contents = {
   "Model Information": "model",
 };
+
+
+const filtered_table_info = TableInfo.filter( row =>
+  row.model == model_name
+)
 
 ---
 <BaseLayout pageTitle={model_name}>
@@ -94,5 +105,7 @@ const table_of_contents = {
       <div><b>Tags: </b> {model_info.tags.reduce(format_list_item, "")}<div></div>
     </div>
   </section>
+
+  <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='model'/>
 
 </BaseLayout>
