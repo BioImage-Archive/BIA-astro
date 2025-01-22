@@ -1,7 +1,8 @@
 ---
-import { format_list_item, taxon_render } from "../SharedJSFunctions";
+import { format_list_item, taxon_render, multiline_text_render } from "../SharedJSFunctions";
+import StudyMetadata from "../../data/bia-study-metadata.json"
 
-const { dataset } = Astro.props;
+const { dataset, dataset_ai_info, study_acc_id } = Astro.props;
 
 
 function get_taxons(dataset) {
@@ -22,9 +23,6 @@ function get_taxons(dataset) {
     return taxon_html_list
 };
 
-
-
-
 function get_biological_entity(dataset) {
     var bio_entities
     if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
@@ -39,9 +37,6 @@ function get_biological_entity(dataset) {
 };
 
 
-
-
-
 function get_imaging_type(dataset) {
     var imaging_type_list = new Array()
     for (var ia of dataset.acquisition_process) {
@@ -54,8 +49,6 @@ function get_imaging_type(dataset) {
     return imaging_type_list
 }
 
-
-
 function display_img_type(dataset) {
     const image_type_list = get_imaging_type(dataset)
     const img_type_display = image_type_list.reduce(format_list_item, "")
@@ -67,13 +60,28 @@ function display_img_type(dataset) {
     }
 }
 
-
 function display_taxon(taxon_list) {
     return taxon_list.reduce(format_list_item, "");
 }
 
 const taxons = get_taxons(dataset)
 
+
+function get_annotation_info() {
+    if (Object.keys(dataset_ai_info).includes("annotation_study")) {
+        const annotation_dataset = StudyMetadata[dataset_ai_info.annotation_study].dataset.filter(dataset => dataset.uuid == dataset_ai_info.annotation_dataset)[0]
+        return annotation_dataset.annotation_method[0].protocol_description
+    } else if (Object.keys(dataset_ai_info).includes("annotation_dataset")) {
+        const annotation_dataset = StudyMetadata[study_acc_id].dataset.filter(dataset => dataset.uuid == dataset_ai_info.annotation_dataset)[0]
+        return annotation_dataset.annotation_process[0].protocol_description
+    } else if (Object.keys(dataset_ai_info).includes("annotation_method_override")) {
+
+        return dataset_ai_info.annotation_method_override
+    } else {
+        return null
+    }
+}
+const annotation_info = get_annotation_info()
 ---
 
 <div style="margin-bottom: 1rem;">
@@ -104,6 +112,13 @@ const taxons = get_taxons(dataset)
                     <b>Imaging Method:</b> {display_img_type(dataset)}
                     </div>
                 )
+        }
+        {
+            annotation_info && (
+                    <div>
+                    <b>Annotation Method:</b> {multiline_text_render(annotation_info)}
+                    </div>
+            )
         }
     </ul>
 </div>
