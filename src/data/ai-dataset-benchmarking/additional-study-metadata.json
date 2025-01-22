@@ -1,8 +1,34 @@
 {
-    "S-BIAD1026": {
-        "tags": [
-            "3D",
-            "Segmentation"
-        ]
-    }
+	"S-BIAD1026": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"Arabidopsis thaliana",
+            "fluorescence microscopy"
+		],
+		"dataset": [
+			{
+				"uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
+				"annotation_method_override": [
+                    "3D segmentation of the strong tdTomato nuclei reporter signal was performed using the default Cellpose nuclei model. It was then proofread and used as the ‘initial ground truth’. Initial model training was performed using the initial ground truths and trained on the weak TO-PRO-3 channel. The StarDist-ResNet_3Dnuc_initial model was then used to segment the original weak TO-PRO-3-based nuclear stain channel resulting in a modified ground truth which was then human proofread, resulting in the ‘gold ground truth’. "
+                ]
+			}
+		]
+	},
+    "S-BIAD1196": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"human",
+            "fluorescence microscopy"
+		],
+		"dataset": [
+			{
+				"uuid": "e15c585a-5539-4b0a-9575-244e4cebf2da",
+				"annotation_dataset": "2537a3bd-0787-4524-a144-535805065c6a"
+			}
+		]
+	}
 }

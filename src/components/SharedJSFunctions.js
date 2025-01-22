@@ -23,3 +23,9 @@ export function taxon_render(taxon) {
         return `<i>${taxon.scientific_name}</i>`
     }
  }
+
+
+export function multiline_text_render(value) {
+    const output = value.toString().trim().replace(/(?:[\r\n|\r|\n]+)/g, "<br/><br/>")
+    return output
+}

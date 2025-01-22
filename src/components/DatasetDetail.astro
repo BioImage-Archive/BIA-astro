@@ -1,5 +1,7 @@
 ---
 import external_link from  "../assets/bioimage-archive/external-link-svgrepo-com.png";
+import { multiline_text_render} from "./SharedJSFunctions.js"
+
 
 var { data, field_map } = Astro.props;
 
@@ -24,10 +26,6 @@ function growth_protocol_render(growth_protocol) {
     return growth_protocol["protocol_description"]
 }
 
-export function multiline_text_render(value) {
-    const output = value.toString().trim().replace(/(?:[\r\n|\r|\n]+)/g, "<br/><br/>")
-    return output
-}
 
 function render_value(key, value) {
     if (key === "organism_classification") {
