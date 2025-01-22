@@ -2,34 +2,32 @@
 import study_metadata from "../../data/bia-study-metadata.json"
 const { table_rows, study_or_model } = Astro.props;
 
-var study_ids: Set<string> = new Set()
-for (var row of table_rows) {
-    study_ids.add(row.study)
-}
-console.log(study_ids)
-
-const dataset_uuid_name_map = new Map();
-for (var acc_id of study_ids) {
-    console.log(acc_id)
-
-    for (var dataset of study_metadata[acc_id].dataset) {
-        console.log(dataset)
-
-        dataset_uuid_name_map.set(dataset.uuid, dataset.title_id)
+export function get_dataset_uuid_name_map(table_rows) {
+    var study_ids: Set<string> = new Set()
+    for (var row of table_rows) {
+        study_ids.add(row.study)
     }
+    const dataset_uuid_name_map = new Map();
+    for (var acc_id of study_ids) {
+        for (var dataset of study_metadata[acc_id].dataset) {
+            dataset_uuid_name_map.set(dataset.uuid, dataset.title_id)
+        }
+    }
+    return dataset_uuid_name_map
 }
 
-function format_param(acc, keyvalue) {
+const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
+
+export function format_param(acc, keyvalue) {
     return acc + keyvalue[0] + ": " + keyvalue[1]  + "<br/>" 
 }
 
 
-function format_analysis_param(analysis_params) {
+export function format_analysis_param(analysis_params) {
 
     return Object.entries(analysis_params).reduce(format_param, "")
 }
 
-console.log(dataset_uuid_name_map)
 ---
 
 <section class="vf-intro | embl-grid | embl-grid--has-centered-content | section-spacing">
@@ -68,13 +66,14 @@ console.log(dataset_uuid_name_map)
                 <tr>
                     {
                         study_or_model == 'model' && (
-                            <th>{row.study}</th>
+                       
+                            <th> <a href={"/bioimage-archive/ai-playground/dataset/" + row.study}>{row.study}</a> </th>
                         )
                     }
                     <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
                     {
                         study_or_model == 'study' && (
-                            <th>{row.model}</th>
+                            <th> <a href={"/bioimage-archive/ai-playground/model/" + row.model}>{row.model}</a></th>
                         )
                     }
                     <th>{row.precision}</th>

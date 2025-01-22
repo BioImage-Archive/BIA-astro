@@ -1,0 +1,117 @@
+---
+import { format_analysis_param , get_dataset_uuid_name_map} from "./BenchmarkingTable.astro" 
+const { table_rows, study_or_model } = Astro.props;
+
+
+const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
+
+console.log(dataset_uuid_name_map)
+---
+
+<section class="vf-intro | embl-grid | embl-grid--has-centered-content | section-spacing">
+
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="benchmarking">
+        Model predictions
+      </h2>
+    </div>
+
+    <div>
+        <table id="model_prediction_table" class="display">
+            <thead class="vf-table__header">
+                <tr class="vf-table__header">
+                    {
+                        study_or_model == 'model' && (
+                            <th class="vf-table__heading" >Study</th>
+                        )
+                    }
+                    <th class="vf-table__heading" >Dataset</th>
+                    {
+                        study_or_model == 'study' && (
+                            <th class="vf-table__heading" >Model</th>
+                        )
+                    }
+                    <th class="vf-table__heading" >Analysis parameters</th>
+                    <th class="vf-table__heading" >Original image</th>
+                    <th class="vf-table__heading" >Reference annotation</th>
+                    <th class="vf-table__heading" >Prediciton</th>
+                    <th class="vf-table__heading" >Actions</th>
+                </tr>
+            </thead>
+            <tbody class="vf_table__body">
+            {
+                table_rows.map((row) => (
+                <tr>
+                    {
+                        study_or_model == 'model' && (
+                       
+                            <th> <a href={"/bioimage-archive/ai-playground/dataset/" + row.study}>{row.study}</a></th>
+                        )
+                    }
+                    <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
+                    {
+                        study_or_model == 'study' && (
+                            <th> <a href={"/bioimage-archive/ai-playground/model/" + row.model}>{row.model}</a></th>
+                        )
+                    }
+                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
+                    <th>{
+                        row.example_image && (
+                            <a href={row.example_image} target="_blank" rel="noopener noreferrer">
+                                <img src={row.example_image} style="max-width: 100px;"/>
+                            </a>
+                        )
+                    }</th>
+                    <th>{
+                        row.example_ground_truth && (
+                            <a href={row.example_ground_truth} target="_blank" rel="noopener noreferrer">
+                                <img src={row.example_ground_truth} style="max-width: 100px;"/>
+                            </a>
+                        )
+                    }</th>
+                    <th>{
+                        row.example_process_image && (
+                            <a href={row.example_process_image} target="_blank" rel="noopener noreferrer">
+                                <img src={row.example_process_image} style="max-width: 100px;"/>
+                            </a>
+                        )
+                    }</th>
+                    <th> 
+                        {
+                            row.example_image && (
+                                <a href={row.example_image} download>
+                                    Download original image
+                                </a> <br/> <br/>
+                        )
+                        }
+                        {
+                            row.example_ground_truth && (
+                                <a href={row.example_ground_truth} download>
+                                    Download reference annotation
+                                </a> <br/> <br/>
+                        )
+                        }
+                        {
+                            row.example_process_image && (
+                                <a href={row.example_process_image} download>
+                                    Download prediction
+                                </a> <br/> <br/>
+                        )
+                        }
+                    </th>
+                </tr>
+                ))
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          $("#model_prediction_table").DataTable({
+            scrollX: true,
+            columnDefs: [{ type: "natural", targets: 0 }],
+          });
+        });
+    </script>
+</section>
