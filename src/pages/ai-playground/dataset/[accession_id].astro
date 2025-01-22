@@ -2,11 +2,15 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import StudyTitleInfo from "../../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../../components/study-page/StudyContentsSummary.astro";
+import DatasetInfo from "../../../components/ai-playground/DatasetInfo.astro"
+import BenchmarkingTable from "../../../components/ai-playground/BenchmarkingTable.astro"
+
 
 import CollectionList from "../../../data/collections/ai-benchmark-datasets.json"
 import StudyMetadata from "../../../data/bia-study-metadata.json"
+import TableInfo from "../../../data/ai-dataset-benchmarking/model-dataset-table.json"
+
 import {multiline_text_render} from "../../../components/DatasetDetail.astro"
-import DatasetInfo from "../../../components/ai-playground/DatasetInfo.astro"
 
 export function getStaticPaths() {
   return Object.values(CollectionList["accession_ids"]).map((id) => {
@@ -26,6 +30,10 @@ const study_info = StudyMetadata[accession_id]
 
 const example_img_uri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1388/2563e244-377d-4d80-b833-868a59dfb903/8a3e9dfb-9406-48df-90e9-2d0872050352.png";
 const example_annotation_uri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1388/2563e244-377d-4d80-b833-868a59dfb903/8a3e9dfb-9406-48df-90e9-2d0872050352.png";
+
+const filtered_table_info = TableInfo.filter( row =>
+  row.study == accession_id
+)
 
 ---
 
@@ -92,19 +100,9 @@ const example_annotation_uri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-d
 
   <hr/>
 
+  <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='study', study_info={study_info}/>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      $("#viewable_images").DataTable({
-        scrollX: true,
-        columnDefs: [{ type: "natural", targets: 0 }],
-      });
-      $("#viewable_annotations").DataTable({
-        scrollX: true,
-        columnDefs: [{ type: "natural", targets: 0 }],
-      });
-    });
-  </script>
+
 </BaseLayout>
 
 
