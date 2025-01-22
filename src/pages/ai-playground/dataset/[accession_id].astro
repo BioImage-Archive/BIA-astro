@@ -4,6 +4,7 @@ import StudyTitleInfo from "../../../components/study-page/StudyTitleInfo.astro"
 import StudyContentsSummary from "../../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../../components/ai-playground/DatasetInfo.astro"
 import BenchmarkingTable from "../../../components/ai-playground/BenchmarkingTable.astro"
+import ModelPredictionTable from "../../../components/ai-playground/ModelPredictionTable.astro"
 
 
 import CollectionList from "../../../data/collections/ai-benchmark-datasets.json"
@@ -100,8 +101,11 @@ const filtered_table_info = TableInfo.filter( row =>
 
   <hr/>
 
-  <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='study', study_info={study_info}/>
+  <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='study'/>
 
+  <hr/>
+
+  <ModelPredictionTable  table_rows={filtered_table_info}, study_or_model='study'/>
 
 </BaseLayout>
 

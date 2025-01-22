@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import BenchmarkingTable from "../../../components/ai-playground/BenchmarkingTable.astro"
+import ModelPredictionTable from "../../../components/ai-playground/ModelPredictionTable.astro"
 
 import CollectionList from "../../../data/collections/ai-benchmark-models.json"
 import ModelMetadata from "../../../data/ai-dataset-benchmarking/model-metadata.json"
@@ -106,6 +107,13 @@ const filtered_table_info = TableInfo.filter( row =>
     </div>
   </section>
 
+  <hr/>
+
   <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='model'/>
+
+
+  <hr/>
+
+  <ModelPredictionTable  table_rows={filtered_table_info}, study_or_model='study'/>
 
 </BaseLayout>
