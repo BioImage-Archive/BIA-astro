@@ -66,13 +66,14 @@ export function format_analysis_param(analysis_params) {
                 <tr>
                     {
                         study_or_model == 'model' && (
-                            <th>{row.study}</th>
+                       
+                            <th> <a href={"/bioimage-archive/ai-playground/dataset/" + row.study}>{row.study}</a> </th>
                         )
                     }
                     <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
                     {
                         study_or_model == 'study' && (
-                            <th>{row.model}</th>
+                            <th> <a href={"/bioimage-archive/ai-playground/model/" + row.model}>{row.model}</a></th>
                         )
                     }
                     <th>{row.precision}</th>
