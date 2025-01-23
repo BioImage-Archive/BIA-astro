@@ -61,14 +61,14 @@ function display_taxon(dataset) {
 }
 
 function filter_data(study_info) {
-    const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
+    const dataset_with_img = study_info.dataset.find((dataset) => dataset.image?.length > 0)
     var has_image
     if (dataset_with_img == undefined) {
         has_image = false
     } else {
         has_image = true
     }
-    var data_string = study_info.accession_id + "; " + study_info.release_date + "; " + study_info.title + display_taxon(study_info) + "; " + display_img_type(study_info) + "; has_img: " + has_image;
+    const data_string = `${study_info.accession_id}; ${study_info.release_date}; ${study_info.title}; ${display_taxon(study_info)}; ${display_img_type(study_info)}; has_img: ${has_image}`
     return data_string
 }
 ---
