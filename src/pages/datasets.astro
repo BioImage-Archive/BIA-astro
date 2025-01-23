@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import DatasetCard from '../components/cards/BrowseDatasetCard.astro';
 import study_info from "../data/bia-study-metadata.json";
 import BrowseDatasetHeading from '../components/BrowseDatasetsHeading.astro';
+import  "../styles/toggle.css"
 
 const totalStudies = Object.keys(study_info).length;
 
@@ -46,45 +47,66 @@ const formattedTotalImages = totalImages.toLocaleString();
     </BrowseDatasetHeading>
   
 
+    <div  style="margin-bottom: 8px">
+      <input type="text" id="searchInput" placeholder="Filter studies..">
 
-    <input type="text" id="searchInput" placeholder="Filter studies..">
-    <script>
-    
-      var input = document.getElementById('searchInput') as HTMLInputElement;
-      input.addEventListener('keyup', () => filterElements(input.value));
 
-      function filterElements(input_text) {
-        const cards = document.querySelectorAll('.vf-card')
-        console.log(cards)
-        
-        console.log(input_text)
-        if (input_text == "") {
-          cards.forEach((card) => displayElement(card as HTMLElement));
-        } else {
-          cards.forEach((card) => toggleCard(input_text.toLowerCase(), card as HTMLElement));
+      <span style="float: right;">
+        <text> Filter studies with viewable images:  </text>
+        <label class="switch" id="image_toggle_switch">
+          <input type="checkbox" id="image_toggle">
+          <span class="slider round"></span>
+        </label>
+      </span>
+      <script>
+      
+        var input = document.getElementById('searchInput') as HTMLInputElement;
+        var toggle = document.getElementById('image_toggle') as HTMLInputElement;
+
+        toggle.addEventListener('change', () => filterElements(input.value, toggle));
+        input.addEventListener('keyup', () => filterElements(input.value, toggle));
+
+        function filterElements(input_text, toggle) {
+          const cards = document.querySelectorAll('.vf-card')
+          if (input_text == "" && !toggle.checked) {
+            cards.forEach((card) => displayElement(card as HTMLElement));
+          } else {
+            cards.forEach((card) => toggleCard(input_text.toLowerCase(), toggle.checked, card as HTMLElement));
+          }
         }
-      }
 
-      function toggleCard(input: string, card: HTMLElement) {
-        if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
-          displayElement(card)
-        } else {
-          hideElement(card)
+        function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
+          var card_data = card.dataset.message;
+          var has_image = card_data.substring(card_data.lastIndexOf("has_img") + 9);
+          console.log(has_image)
+          console.log(toggle)
+          if (requires_image) {
+            if (has_image =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
+              displayElement(card)
+            } else {
+              hideElement(card)
+            }
+          } else {
+              if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
+              displayElement(card)
+            } else {
+              hideElement(card)
+            }
+          }
         }
-      }
 
-      function displayElement(card: HTMLElement) {            
-        card.style.display = ""
-        return console.log(card)
-      }
+        function displayElement(card: HTMLElement) {            
+          card.style.display = ""
+        }
 
-      function hideElement(card: HTMLElement) {
-        card.style.display = "none"
-        return console.log(card)
-      }
+        function hideElement(card: HTMLElement) {
+          card.style.display = "none"
+        }
 
 
-    </script>
+      </script>
+
+    </div>
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
        
