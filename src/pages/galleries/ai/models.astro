@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
+import collection from '../../../data/collections/ai-benchmark-models.json';
+import ModelCard from '../../../components/cards/AIModelCard.astro';
+import ModelInfo from '../../../data/ai-dataset-benchmarking/model-metadata.json'
+
+const model_names = collection["model_names"];
+
+---
+<BaseLayout pageTitle={ collection.name }>
+  <body>
+    <BrowseDatasetHeading
+    heading={collection.title }
+  > 
+     <p class="vf-hero__text" slot="body_text">{ collection.description }</p>
+  </BrowseDatasetHeading>
+
+    <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+        <div class="vf-card-container__inner">
+          { Object.values(model_names).map((model_name) => ( <ModelCard model={ ModelInfo[model_name] } model_page_url={"/bioimage-archive/galleries/ai/model/" + model_name} taglist={ModelInfo[model_name]?.tags || []}/> )) }
+        </div>
+    </section>
+  </body>
+</BaseLayout>
