@@ -1,14 +1,14 @@
 {
   "name": "AI Playground",
-  "title": "BioImage Archive AI Playground",
-  "subtitle": "Explore how AI models perform on different datasets",
-  "body_text": "This is a collection of models from the BioImage Model zoo that have been applied to datasets from the BioImage Archive. You can explore the outputs of several models on a dataset to get an idea of what is the most suitable model for a specific image. Or you can investigate how a model works on different datasets and see how widely-applicable the model is.",
+  "title": "The BioImage Archive AI Gallery",
+  "subtitle": "Explore AI-ready image data and how AI models perform on different datasets",
+  "body_text": "In this page you can explore AI-related datasets and models. You can browse a selection of AI-ready datasets curated to facilitate model development. You can also explore the outputs of several models from the BioImage Model Zoo on a dataset to get an idea of what is the most suitable model for a specific image. Or you can investigate how a model works on different datasets and see how widely applicable the model is.",
   "gallery_item_basepath": "/bioimage-archive/galleries/ai/",
   "collections": [
     {
       "name":"ai-ready-datasets",
-      "title":"AI Ready datasets",
-      "subtitle":"A selection of AI related datasets",
+      "title":"AI-ready datasets",
+      "subtitle":"A collection of AI-ready annotated datasets",
       "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
     },
     {
