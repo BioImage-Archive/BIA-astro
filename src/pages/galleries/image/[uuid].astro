@@ -35,6 +35,8 @@ function get_study_data(accession_id, StudyData, AIStudyData, SpatialomicsStudyD
 
 const study_data = get_study_data(image.study_accession_id, StudyData, AIStudyData, SpatialomicsStudyData)
 
+const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
+
 ---
 
 <BaseLayout pageTitle={image["accession_id"] + ":" + image["alias"]}>
@@ -71,12 +73,11 @@ const study_data = get_study_data(image.study_accession_id, StudyData, AIStudyDa
                 <h3>Access images</h3>
                 License: CC0 <br/>
                 <br/>
-                <a href={image.vizarr_uri}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Download file</button>
-                </a> 
-                <a href={image.vizarr_uri}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Copy OME-Zarr URI</button>
-                </a>
+                <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a>
+                <br/>
+                <br/>
+
+                <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={base_img_s3_url}>Copy OME-Zarr URI</button>
                 <h3>Visualise</h3>
                 <a href={image.vizarr_uri}>
                     <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
@@ -84,6 +85,24 @@ const study_data = get_study_data(image.study_accession_id, StudyData, AIStudyDa
                 <a href={image.itk_uri}>
                     <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
                 </a>
+
+                <script>
+
+                    let copyUrlButton = document.getElementById("CopyURLButton")
+                    let originalText = copyUrlButton.innerText;
+                    copyUrlButton.onclick=async() => {
+                        await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
+                    };
+
+                    async function copyUrl(url, button, originalText) {
+                        await navigator.clipboard.writeText(url);
+                        button.innerText = "URI Copied";
+                        setTimeout(() => {
+                            button.innerText = originalText;
+                        }, 700);
+                    }
+
+                </script>
             </div>
         </section>
         { ( image.source_image_uuid != null ) &&

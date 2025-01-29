@@ -1,16 +1,22 @@
 ---
 title: Downloading data
 layout: ../../layouts/HelpLayout.astro
+
 ---
+import s3_image_uri from "/src/assets/bioimage-archive/accessing_s3_image_uri.png" ;
+
+
+## Downloading data
 
 Data of submission in the BioImage Archive can be downloaded via web browser, ftp or Aspera.  All three methods are explained below. We recommend ftp or Aspera for large download sizes.
-## Downloading via web browser
+
+### Downloading via web browser
 
 Data of a submission can be downloaded via a web browser. First, go to the web page of the specific submission you want to download. Select individual files you like and download by clicking the download button. Otherwise, use the “Download all files” button without selecting any files.
 
 You can also download files that belong to a particular study component of a submission.
 
-## Downloading via ftp
+### Downloading via ftp
 
 The BioImage Archive FTP path is `ftp://ftp.ebi.ac.uk/biostudies`. Anonymous downloads are enabled. For each study, you can click on the FTP button to access it. 
 
@@ -22,23 +28,23 @@ You can also use your favourite FTP client such as FileZilla to download a study
 `<path>` is the path of the accession as described above
 
 You can get the FTP link for a study from the /info REST API endpoint, e.g.,
-
+```
     $ curl https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD570/info -s \| jq -r .ftpLink
-
+```
 All data files for a study are in the `ftp://ftp.ebi.ac.uk/biostudies/<mode>/<path>/Files` directory, e.g., to download the file STAN0B0F6_2022-02-25.tiff from S-BIAD570, you can use the command line
-
+```
     $ wget ftp://ftp.ebi.ac.uk/biostudies/fire/S-BIAD/570/S-BIAD570/Files/STAN0B0F6_2022-02-25.tiff
-
+```
 or, for interactive access:
-
+```
     $ ftp ftp.ebi.ac.uk Name: anonymous ftp> cd biostudies/fire/S-BIAD/570/S-BIAD570/Files/ ftp> get STAN0B0F6_2022-02-25.tiff 
-
-## Downloading data via Aspera
+```
+### Downloading data via Aspera
 
 When downloading large volumes of data, the Aspera protocol can be useful. You will need to [download the Aspera ascp command line interface](https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm~Other\%20software&product=ibm/Other\%20software/IBM\%20Aspera\%20CLI&release=All&platform=All&function=all). Please select the correct operating system. The ascp command line client is present in the bin folder in the installation directory. Your command for download should be like this:
-
+```
     ascp -P33001 -i <key> bsaspera@fasp-beta.ebi.ac.uk:<files to download> <download location on your machine>
-
+```
 where:
 
 * `-P33001` and `bsaspera@fasp-beta.ebi.ac.uk` define the port, user and server for the Aspera connection.
@@ -46,9 +52,24 @@ where:
 * `<files to download>` might be all files for a certain study, as explained above. Please note that Aspera paths do not need to have pub as the root folder.
 
 For instance, here's the command line to download the file `aeipf_denoised_reads.fna` from submission `S-BSST12` to the directory `C:\Temp` on Windows:
-
+```
     "C:\cli\bin\ascp.exe" -P33001 -i "C:\cli\etc\asperaweb_id_dsa.openssh" bsaspera@fasp-beta.ebi.ac.uk:/S-BSST/012/S-BSST12/Files/aeipf_denoised_reads.fna C:\Temp\
-
-## Downloading data using Globus
+```
+### Downloading data using Globus
 
 The BioImage Archive supports file downloads through Globus as well. You can click on the Globus icon to open up the [EMBL-EBI Public Data collection](https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=%2Fbiostudies%2F) in the Globus File Manager app. You may want to install [Globus Connect Personal](https://www.globus.org/globus-connect-personal) which creates a personal collection on your machine for [transferring multiple files](https://docs.globus.org/how-to/get-started/).
+
+<h3 id="aws_client_download">Downloading data with the AWS client </h3>
+
+It is possible to access the datasets through any tool that can read from S3. We recommend using the AWS command line interface.
+The S3 uri of the ome-ngff images can be found by clicking on the “Copy S3 uri to clipboard” button on the image webpage.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 550px">
+  <img src={s3_image_uri.src} alt="Screenshot of an image page on the BIA website, highlighting the 'Copy OME-Zarr URI' button to the left of the image"/>
+</figure>
+
+The first part of the s3 uri, starting with https is the s3 endpoint, and the rest is the s3 path of the image. When run from the command line, this command lists the contents of the ome-ngff image folder:
+```
+    aws --endpoint-url https://uk1s3.embassy.ebi.ac.uk s3 ls s3://bia-integrator-data/S-BIAD463/00cddbf9-1282-4a49-94d9-481b7a43cc0c/00cddbf9-1282-4a49-94d9-481b7a43cc0c.zarr/ --no-sign-request
+```        
+The AWS client can also copy data from S3 to local storage. Detailed instructions for using this tool can be found in the [AWS user guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
