@@ -1,6 +1,7 @@
 {
   "name": "Galleries",
   "title": "The BioImage Archive Galleries",
+  "subtitle": "Browse collections of curated datasets",
   "gallery_item_basepath": "/bioimage-archive/galleries/",
   "collections": [
     {
