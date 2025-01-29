@@ -9,19 +9,19 @@
       "name":"ai-ready-datasets",
       "title":"AI-ready datasets",
       "subtitle":"A collection of AI-ready annotated datasets",
-      "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
+      "summary_image":"/bioimage-archive/ai-galleries/ai_ready_datasets.png"
     },
     {
       "name":"analysed-datasets",
       "title":"Analysed datasets",
       "subtitle":"A selection of datasets analysed using different models",
-      "summary_image":"/bioimage-archive/ai-benchmarking-galleries/ai_pg_dataset.png"
+      "summary_image":"/bioimage-archive/ai-galleries/ai_pg_dataset.png"
     },
     {
       "name":"models",
       "title":"Tested AI models",
       "subtitle":"A selection of BioImage Model Zoo models applied to BioImage Archive datasets",
-      "summary_image":"/bioimage-archive/ai-benchmarking-galleries/ai_pg_model.png"
+      "summary_image":"/bioimage-archive/ai-galleries/ai_pg_model.png"
     }
   ]
 }

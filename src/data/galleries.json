@@ -7,7 +7,7 @@
       "name":"ai",
       "title":"AI Gallery",
       "subtitle":"Explore AI-ready image data and how AI models perform on different datasets",
-      "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
+      "summary_image":"/bioimage-archive/ai-galleries/ai_gallery.png"
     },
     {
       "name":"vem",
