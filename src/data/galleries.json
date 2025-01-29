@@ -1,13 +1,14 @@
 {
   "name": "Galleries",
-  "title": "BioImage Archive Explorer",
+  "title": "The BioImage Archive Galleries",
+  "subtitle": "Browse collections of curated datasets",
   "gallery_item_basepath": "/bioimage-archive/galleries/",
   "collections": [
     {
       "name":"ai",
       "title":"AI Gallery",
-      "subtitle":"A selection of AI related datasets",
-      "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD493-example.png"
+      "subtitle":"Explore AI-ready image data and how AI models perform on different datasets",
+      "summary_image":"/bioimage-archive/ai-galleries/ai_gallery.png"
     },
     {
       "name":"vem",
@@ -17,8 +18,8 @@
     },
     {
       "name":"spatialomics",
-      "title":"Spatial-omics Gallery",
-      "subtitle":"A selection of spatial-omics datasets",
+      "title":"Spatial Omics Gallery",
+      "subtitle":"A selection of spatial omics datasets",
       "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD570-example.png"
     }
   ]

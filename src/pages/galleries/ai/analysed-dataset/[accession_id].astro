@@ -1,18 +1,18 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import StudyTitleInfo from "../../../components/study-page/StudyTitleInfo.astro";
-import StudyContentsSummary from "../../../components/study-page/StudyContentsSummary.astro";
-import DatasetInfo from "../../../components/ai-playground/DatasetInfo.astro"
-import BenchmarkingTable from "../../../components/ai-playground/BenchmarkingTable.astro"
-import ModelPredictionTable from "../../../components/ai-playground/ModelPredictionTable.astro"
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
+import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro";
+import DatasetInfo from "../../../../components/ai-benchmarking/DatasetInfo.astro"
+import BenchmarkingTable from "../../../../components/ai-benchmarking/BenchmarkingTable.astro"
+import ModelPredictionTable from "../../../../components/ai-benchmarking/ModelPredictionTable.astro"
 
 
-import CollectionList from "../../../data/collections/ai-benchmark-datasets.json"
-import StudyMetadata from "../../../data/bia-study-metadata.json"
-import AdditionalStudyMetadata from "../../../data/ai-dataset-benchmarking/additional-study-metadata.json"
-import TableInfo from "../../../data/ai-dataset-benchmarking/model-dataset-table.json"
+import CollectionList from "../../../../data/collections/ai-benchmark-datasets.json"
+import StudyMetadata from "../../../../data/bia-study-metadata.json"
+import AdditionalStudyMetadata from "../../../../data/ai-dataset-benchmarking/additional-study-metadata.json"
+import TableInfo from "../../../../data/ai-dataset-benchmarking/model-dataset-table.json"
 
-import { format_list_item, multiline_text_render } from "../../../components/SharedJSFunctions";
+import { format_list_item, multiline_text_render } from "../../../../components/SharedJSFunctions";
 
 export function getStaticPaths() {
   return Object.values(CollectionList["accession_ids"]).map((id) => {

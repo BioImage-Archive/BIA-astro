@@ -1,27 +1,6 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import BrowseDatasetHeading from '../../components/BrowseDatasetsHeading.astro';
-import collection from '../../data/collections/ai.json';
-import exports from "../../data/old-export-format/bia-ai-export.json";
-import DatasetCard from '../../components/cards/GalleryDatasetCard.astro';
-
-const datasets = exports["datasets"];
-
+import Gallery from "../../components/GalleryCollection.astro";
+import data from "../../data/ai-galleries.json";
 ---
-<BaseLayout pageTitle={ collection.name }>
-  <body>
-    <BrowseDatasetHeading
-    heading={collection.title }
-    subheading={collection.subtitle}
-    contribute_link={"/bioimage-archive/help/galleries-contribute"}
-  > 
-     <p class="vf-hero__text" slot="body_text">{ collection.description }</p>
-  </BrowseDatasetHeading>
 
-    <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
-        <div class="vf-card-container__inner">
-          { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_page_url={"/bioimage-archive/galleries/ai/dataset/" + dataset.accession_id} /> )) }
-        </div>
-    </section>
-  </body>
-</BaseLayout>
+<Gallery gallery_data={data}/>

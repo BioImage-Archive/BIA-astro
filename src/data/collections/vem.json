@@ -1,6 +1,6 @@
 {
   "name": "vem",
-  "title": "Volume EM OME-NGFF examples",
+  "title": "The BioImage Archive Volume EM Gallery",
   "subtitle": "A selection of EMPIAR Volume EM depositions converted to OME-NGFF",
   "description": "This collection contains a selection of examples from different volume electron microscopy techniques converted to OME-Zarr and available for interactive exploration or download",
   "attributes": {
