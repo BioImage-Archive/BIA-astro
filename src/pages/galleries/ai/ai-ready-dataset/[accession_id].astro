@@ -187,9 +187,6 @@ const viewable_annotation_images = study.image_uuids
   <section class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
       <h3 class="vf-section-header__heading">Viewable Images</h3>
-      <b>
-        <a href="access_data_help.html">How to access the data </a>
-      </b>
     </div>
     <div>
       <table id="viewable_images" class="display">
@@ -206,13 +203,12 @@ const viewable_annotation_images = study.image_uuids
             viewable_non_annotation_images.map((image) => (
               <tr class="vf-table__row">
                 <th>
-                  <img class="vf-figure__image" src={image.thumbnail_uri} />
+                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri} /></a>
                 </th>
                 <th>{image.name}</th>
                 <th>Unknown</th>
                 <th>
                   <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
-                  Download
                 </th>
               </tr>
             ))

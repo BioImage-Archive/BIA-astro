@@ -44,13 +44,13 @@ const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
                     {
                         study_or_model == 'model' && (
                        
-                            <th> <a href={"/bioimage-archive/ai-playground/dataset/" + row.study}>{row.study}</a></th>
+                            <th> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a></th>
                         )
                     }
                     <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
                     {
                         study_or_model == 'study' && (
-                            <th> <a href={"/bioimage-archive/ai-playground/model/" + row.model}>{row.model}</a></th>
+                            <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
                         )
                     }
                     <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>

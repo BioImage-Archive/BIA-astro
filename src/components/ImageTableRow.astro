@@ -26,7 +26,7 @@ function get_download_size(uuid, ImageMetadata) {
 ---
 <tr>
   <th>
-    <img class="vf-figure__image" src={get_thumbnail(image.uuid, ImageMetadata)}/>
+    <a href={"/bioimage-archive/image/" + image.uuid}><img class="vf-figure__image" src={get_thumbnail(image.uuid, ImageMetadata)}/></a>
   </th>
   <th>{image.uuid}</th>
   <th>{dataset_title}</th>

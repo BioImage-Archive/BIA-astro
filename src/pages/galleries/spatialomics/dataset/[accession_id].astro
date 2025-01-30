@@ -201,13 +201,12 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
         images.map((image) => (
           <tr>
             <th>
-              <img class="vf-figure__image" src={image.thumbnail_uri}/>
+              <a href={"/bioimage-archive/galleries/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri}/></a> 
             </th>
             <th>{image.name}</th>
             <th>Unknown</th>
             <th>
               <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
-              Download
             </th>
           </tr>
         ))
