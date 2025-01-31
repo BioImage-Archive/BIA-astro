@@ -5,6 +5,7 @@ import DatasetMetdata from "../../data/bia-dataset-metadata-for-images.json";
 import image_data from "../../data/bia-image-metadata.json";
 import SourceImage from "../../components/SourceImage.astro"
 import DatasetDetail from '../../components/DatasetDetail.astro';
+import image_fallback from "../../assets/bioimage-archive/image_fallback.png"
 
 const biosample_map = field_map["biosample"];
 const sipp_map = field_map["specimen_imaging_preparation_protocol"];
@@ -27,8 +28,34 @@ const image = image_data[uuid];
 const image_dataset = DatasetMetdata[image.submission_dataset_uuid]
 const image_study = image_dataset.submitted_in_study
 const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
-const vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
-const itk_link = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + interactive_image.file_uri[0]
+const static_display = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
+const thumbnail = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
+const user_submitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
+
+var primary_image_rep
+if (interactive_image != null) {
+    primary_image_rep = interactive_image
+} else if (static_display != null) {
+    primary_image_rep = static_display
+} else if (thumbnail != null) {
+    primary_image_rep = thumbnail
+} else if (user_submitted != null) {
+    primary_image_rep = user_submitted
+} else {
+    primary_image_rep = null
+}
+
+
+var vizarr_iframe_source
+var itk_link
+if (interactive_image != null) {
+    vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
+    itk_link = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + interactive_image.file_uri[0]
+} else {
+    vizarr_iframe_source = null
+    itk_link = null
+}
+
 const creation_process = image.creation_process
 
 let specimen
@@ -80,6 +107,19 @@ function pixel_dimensions(value, text) {
     }
 }
 
+function display_image() {
+    if (vizarr_iframe_source) {
+        return ` <iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarr_iframe_source}"></iframe>`
+    }
+
+    if (primary_image_rep && primary_image_rep.use_type !== "UPLOADED_BY_SUBMITTER" && primary_image_rep.file_uri?.[0]) {
+        return ` <img style="width: 100%; height: 500px" src="${primary_image_rep.file_uri[0]}" />`;
+    }
+
+    return `<img style="height: 500px;" src="${image_fallback.src}" />`;
+}
+
+
 ---
 
 <BaseLayout pageTitle={image["accession_id"] + ":" + image["alias"]}>
@@ -100,32 +140,44 @@ function pixel_dimensions(value, text) {
             <div>
                 <h3>Image metadata</h3>
 
-                <b>Physical Image size: </b> {format_physical_dimensions(interactive_image)}<br>
-                <b>Pixel Image size: </b> {format_pixel_dimensions(interactive_image)}<br>
-                {interactive_image.size_c != null && (<><b>Number of channels:</b> {interactive_image.size_c}<br/></>)}
-                {interactive_image.size_t != null && (<><b>Number of timesteps:</b> {interactive_image.size_t}<br/></>)}
-                {Object.entries(image.attribute).map(([key, value]) => (
-                    <p>{key}: {value}</p>
-                ))}
+                <b>Physical Image size: </b> {format_physical_dimensions(primary_image_rep)}<br>
+                <b>Pixel Image size: </b> {format_pixel_dimensions(primary_image_rep)}<br>
+                {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
+                {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
             </div>
-            <div>
-                <iframe style="width: 100%; height: 500px" name="vizarr" src={vizarr_iframe_source}></iframe>
-            </div>
+            <div set:html={display_image()} style="display: flex; justify-content: center;"></div>
+
             <div>
                 <h3>Access images</h3>
                 License: {image_study.licence} <br/>
                 <br/>
                 <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a><br/>
                 <br/>
-                <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactive_image.file_uri[0]}>Copy OME-Zarr URI</button>
-                <h3>Visualise</h3>
-                <a href={vizarr_iframe_source}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
-                </a>
-                <a href={itk_link}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
-                </a>
-
+                {
+                    primary_image_rep && (
+                        <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={primary_image_rep.file_uri[0]}>Copy OME-Zarr URI</button>
+                    )
+                }
+                {
+                    ( vizarr_iframe_source || itk_link ) && (
+                        <h3>Visualise</h3>
+                    )
+                }
+                {
+                    vizarr_iframe_source && (
+                        <a href={vizarr_iframe_source}>
+                            <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
+                        </a>
+                    )
+                }
+                {
+                    itk_link && (
+                        <a href={itk_link}>
+                            <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
+                        </a>
+                    )
+                }
+            
                 <script>
 
                     let copyUrlButton = document.getElementById("CopyURLButton")
