@@ -31,7 +31,7 @@ export function multiline_text_render(value) {
 }
 
 
-export function humanFileSize(size) {
+export function humanFileSizeBytes(size) {
     var i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
     return `${Number(size / Math.pow(1024, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
 }
