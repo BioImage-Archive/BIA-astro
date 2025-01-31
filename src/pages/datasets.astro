@@ -9,7 +9,7 @@ const totalStudies = Object.keys(study_info).length;
 
 const totalFiles = Object.values(study_info).reduce((acc, study) => {
   const studyFiles = study.dataset?.reduce((fileAcc, component) => {
-    return fileAcc + (component.file_count || 0);
+    return fileAcc + (component.file_reference_count || 0);
   }, 0) || 0;
   return acc + studyFiles;
 }, 0);
