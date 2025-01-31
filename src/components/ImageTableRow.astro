@@ -1,5 +1,7 @@
 ---
 import ImageMetadata from "../data/bia-image-metadata.json";
+import image_fallback from "../assets/bioimage-archive/image_fallback.png"
+
 const { image , dataset_title} = Astro.props;
 
 function get_thumbnail(uuid, ImageMetadata) {
@@ -10,7 +12,7 @@ function get_thumbnail(uuid, ImageMetadata) {
         }
     }
     //Default for testing purposes
-    return "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD144/55b79a6d-f679-4b5f-ace4-79074ab68bf8/55b79a6d-f679-4b5f-ace4-79074ab68bf8-thumbnail-128-128.png"
+    return image_fallback.src
 }
 
 function get_download_size(uuid, ImageMetadata) {
