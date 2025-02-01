@@ -12,7 +12,7 @@ const { image } = Astro.props;
             Method: { image.imaging_method }<br>
             Organism: { image.organism }<br>
             Size: { image.size_x }x{ image.size_y }x{ image.size_z }<br>
-            Voxel size: { Number(image.voxel_size_x).toPrecision(2) }x{ Number(image.voxel_size_y).toPrecision(2) }x{ Number(image.voxel_size_z).toPrecision(2) } m
+            Voxel size: { Number(image.voxel_size_x * 1e9).toPrecision(2) }x{ Number(image.voxel_size_y * 1e9).toPrecision(2) }x{ Number(image.voxel_size_z * 1e9).toPrecision(2) } nm
         </p>
         <hr>
         <p class="vf-card__text">
