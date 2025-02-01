@@ -5,15 +5,19 @@ const { image } = Astro.props;
     <img src={ image.thumbnail_uri } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
-            { image.name }
+            Volume EM Image
         </h3>
-        { image.uuid }<hr>
         <p class="vf-card__text">
-        View: 
-        <button><a href={ image.neuroglancer_link }>Neuroglancer</a></button>
-        <button><a href={ image.vizarr_link }>Vizarr</a></button>
-        <br>
-        <button><a href={ image.download_uri }>Download image</a></button>
+            ID: { image.uuid }<br>
+            Method: { image.imaging_method }<br>
+            Organism: { image.organism }<br>
+            Size: { image.size_x }x{ image.size_y }x{ image.size_z }<br>
+            Voxel size: { image.voxel_size_x }x{ image.voxel_size_y }x{ image.voxel_size_z } m
+        </p>
+        <hr>
+        <p class="vf-card__text">
+            View: 
+            <button><a href={ image.view_link }>Neuroglancer</a></button>
         </p>
     </div>
 </article>
@@ -21,5 +25,8 @@ const { image } = Astro.props;
 <style>
     .row {
         margin-bottom: 5px;
+    }
+    button {
+        margin: 5px;
     }
 </style>
