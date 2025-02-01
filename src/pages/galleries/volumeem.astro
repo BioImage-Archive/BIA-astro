@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TomogramCard from '../../components/cards/TomogramCard.astro';
+import tomoproj from "../../data/collections/tomp.json";
+const tomograms = tomoproj["tomograms"];
+---
+<BaseLayout pageTitle="Tomograms">
+  <body>
+    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
+        <div></div>
+        <div>
+            <h1 class="vf-intro__heading vf-intro__heading--has-tag"> EMPIAR-11756 <a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+            <h2 class="vf-intro__subheading">Individual tomograms with visualisation links</h2>
+            <!-- <p class="vf-hero__text">{ collection.description }</p> -->
+            <p></p>
+
+        </div>
+        <div></div>
+    </section> 
+    <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+        <div class="vf-card-container__inner">
+            { Object.values(tomograms).map((tomogram) => ( <TomogramCard tomogram={ tomogram } /> )) }
+        </div>
+    </section>
+  </body>
+</BaseLayout>
