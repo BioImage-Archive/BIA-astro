@@ -1,0 +1,25 @@
+---
+const { image } = Astro.props;
+---
+<article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px">
+    <img src={ image.thumbnail_uri } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading">
+            { image.name }
+        </h3>
+        { image.uuid }<hr>
+        <p class="vf-card__text">
+        View: 
+        <button><a href={ image.neuroglancer_link }>Neuroglancer</a></button>
+        <button><a href={ image.vizarr_link }>Vizarr</a></button>
+        <br>
+        <button><a href={ image.download_uri }>Download image</a></button>
+        </p>
+    </div>
+</article>
+
+<style>
+    .row {
+        margin-bottom: 5px;
+    }
+</style>
