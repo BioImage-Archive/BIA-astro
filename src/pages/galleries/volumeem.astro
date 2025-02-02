@@ -4,22 +4,24 @@ import VolumeEMImage from '../../components/cards/VolumeEMImage.astro';
 import VolumeEMTable from '../../components/VolumeEMTable.astro';
 import vemImages from "../../data/collections/vem_image_summaries.json";
 ---
-<script>
-    function toggleView() {
-        const cardView = document.getElementById('card-view');
-        const tableView = document.getElementById('table-view');
-        const toggleButton = document.getElementById('view-toggle');
-        
-        if (cardView.style.display === 'none') {
-            cardView.style.display = 'block';
-            tableView.style.display = 'none';
-            toggleButton.textContent = 'Switch to Table View';
-        } else {
-            cardView.style.display = 'none';
-            tableView.style.display = 'block';
-            toggleButton.textContent = 'Switch to Card View';
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        window.toggleView = function() {
+            const cardView = document.getElementById('card-view');
+            const tableView = document.getElementById('table-view');
+            const toggleButton = document.getElementById('view-toggle');
+            
+            if (cardView.style.display === 'none') {
+                cardView.style.display = 'block';
+                tableView.style.display = 'none';
+                toggleButton.textContent = 'Switch to Table View';
+            } else {
+                cardView.style.display = 'none';
+                tableView.style.display = 'block';
+                toggleButton.textContent = 'Switch to Card View';
+            }
         }
-    }
+    });
 </script>
 <BaseLayout pageTitle="Volume EM Gallery">
   <body>
