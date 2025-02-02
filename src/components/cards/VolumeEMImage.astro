@@ -1,7 +1,7 @@
 ---
 const { image } = Astro.props;
 ---
-<article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px">
+<article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:400px">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading title-container">
             <div class="title-text">{ image.label }</div>
@@ -82,5 +82,15 @@ const { image } = Astro.props;
     .unit-text {
         font-size: 0.8em;
         color: #666;
+    }
+    .custom-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .custom-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
 </style>
