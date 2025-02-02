@@ -43,7 +43,12 @@ const { image } = Astro.props;
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <p class="vf-card__text">
-            <i>{ image.organism }</i>, { image.imaging_method }
+            <i>{ image.organism }</i>, { 
+                image.imaging_method === "Focused Ion Beam Scanning Electron Microscopy" ? "FIB-SEM" :
+                image.imaging_method === "Serial Block Face Scanning Electron Microscopy" ? "SBF-SEM" :
+                image.imaging_method === "Serial Block-Face Scanning Electron Microscopy" ? "SBF-SEM" :
+                image.imaging_method
+            }
         </p>
         <hr>
         <p class="vf-card__text">
