@@ -4,6 +4,7 @@ const { images } = Astro.props;
 <table class="vf-table">
     <thead>
         <tr>
+            <th></th>
             <th>Label</th>
             <th>Organism</th>
             <th>Method</th>
@@ -16,6 +17,9 @@ const { images } = Astro.props;
     <tbody>
         {Object.entries(images).map(([uuid, image]) => (
             <tr>
+                <td style="width: 100px;">
+                    <img src={image.thumbnail_src} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                </td>
                 <td>
                     <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>
                         {image.label}
@@ -62,6 +66,7 @@ const { images } = Astro.props;
         padding: 0.5em;
         border: 1px solid #ddd;
         text-align: left;
+        vertical-align: middle;
     }
     .vf-table th {
         background-color: #f5f5f5;
