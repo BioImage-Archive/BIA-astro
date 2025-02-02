@@ -12,6 +12,9 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         const dataTable = new DataTable('.vf-table', {
             pageLength: 25,
             order: [[1, 'asc']], // Sort by Label column by default
+            columnDefs: [
+                { orderable: false, targets: [4, 5, 6] } // Disable sorting for dimensions, physical size, and voxel size columns
+            ]
         });
 
         window.toggleView = function() {
