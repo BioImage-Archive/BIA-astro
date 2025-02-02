@@ -32,6 +32,7 @@ const { image } = Astro.props;
         <p class="vf-card__text">
             View: 
             <button><a href={ image.view_link }>Neuroglancer</a></button>
+            <button><a href={"/bioimage-archive/image/" + image.uuid}>Metadata</a></button>
         </p>
     </div>
 </article>
