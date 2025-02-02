@@ -1,8 +1,26 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import VolumeEMImage from '../../components/cards/VolumeEMImage.astro';
+import VolumeEMTable from '../../components/VolumeEMTable.astro';
 import vemImages from "../../data/collections/vem_image_summaries.json";
 ---
+<script>
+    function toggleView() {
+        const cardView = document.getElementById('card-view');
+        const tableView = document.getElementById('table-view');
+        const toggleButton = document.getElementById('view-toggle');
+        
+        if (cardView.style.display === 'none') {
+            cardView.style.display = 'block';
+            tableView.style.display = 'none';
+            toggleButton.textContent = 'Switch to Table View';
+        } else {
+            cardView.style.display = 'none';
+            tableView.style.display = 'block';
+            toggleButton.textContent = 'Switch to Card View';
+        }
+    }
+</script>
 <BaseLayout pageTitle="Volume EM Gallery">
   <body>
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
@@ -14,12 +32,35 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         </div>
         <div></div>
     </section> 
-    <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
-        <div class="vf-card-container__inner">
-            { Object.entries(vemImages).map(([uuid, image]) => (
-                <VolumeEMImage image={{...image, uuid}} />
-            ))}
-        </div>
-    </section>
+    <div class="view-toggle-container">
+        <button id="view-toggle" class="vf-button vf-button--primary" onclick="toggleView()">Switch to Table View</button>
+    </div>
+    
+    <div id="card-view">
+        <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+            <div class="vf-card-container__inner">
+                { Object.entries(vemImages).map(([uuid, image]) => (
+                    <VolumeEMImage image={{...image, uuid}} />
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <div id="table-view" style="display: none;">
+        <VolumeEMTable images={vemImages} />
+    </div>
+
+    <style>
+        .view-toggle-container {
+            text-align: right;
+            padding: 1em;
+            margin-right: 1em;
+        }
+        #view-toggle {
+            padding: 0.5em 1em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
   </body>
 </BaseLayout>
