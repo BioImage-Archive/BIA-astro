@@ -134,8 +134,9 @@ const { image } = Astro.props;
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transform: translateZ(-15px) rotateX(-20deg) rotateY(-45deg);
+        transform: translateZ(-25px) rotateX(-20deg) rotateY(-45deg);
         animation: rotate 20s infinite linear;
+        transform-origin: center center;
     }
 
     .cube__face {
@@ -165,10 +166,10 @@ const { image } = Astro.props;
 
     @keyframes rotate {
         from {
-            transform: translateZ(-15px) rotateX(-20deg) rotateY(0deg);
+            transform: translateZ(-25px) rotateX(-20deg) rotateY(0deg);
         }
         to {
-            transform: translateZ(-15px) rotateX(-20deg) rotateY(360deg);
+            transform: translateZ(-25px) rotateX(-20deg) rotateY(360deg);
         }
     }
 </style>
