@@ -23,6 +23,16 @@ const { image } = Astro.props;
                 <code>{ Math.round(image.voxel_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_y * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_z * 1e9) }</code><span class="unit-text"> nm voxels</span>
             </span>
         </div>
+        <div class="cube-wrapper">
+            <div class="cube" style={`--scale-x: ${image.size_x/Math.max(image.size_x, image.size_y, image.size_z)}; --scale-y: ${image.size_y/Math.max(image.size_x, image.size_y, image.size_z)}; --scale-z: ${image.size_z/Math.max(image.size_x, image.size_y, image.size_z)};`}>
+                <div class="cube__face cube__face--front"></div>
+                <div class="cube__face cube__face--back"></div>
+                <div class="cube__face cube__face--right"></div>
+                <div class="cube__face cube__face--left"></div>
+                <div class="cube__face cube__face--top"></div>
+                <div class="cube__face cube__face--bottom"></div>
+            </div>
+        </div>
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <p class="vf-card__text">
