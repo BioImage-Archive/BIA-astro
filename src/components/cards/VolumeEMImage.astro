@@ -51,13 +51,12 @@ const { image } = Astro.props;
         </div>
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
-        <p class="vf-card__text">
-            View: 
+        <div class="button-container">
             <button><a href={ image.view_link }>Neuroglancer</a></button>
             <button><a href={"/bioimage-archive/image/" + image.uuid}>Metadata</a></button>
             <button onclick="this.textContent='Copied!'; setTimeout(() => this.textContent='Copy OME-Zarr URI', 2000); navigator.clipboard.writeText(this.getAttribute('data-uri'))" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
             <button><a href={`https://ftp.ebi.ac.uk/empiar/world_availability/${image.submitted_in_study_accession.split('-')[1]}/data/`}>Raw data</a></button>
-        </p>
+        </div>
     </div>
 </article>
 
@@ -65,8 +64,27 @@ const { image } = Astro.props;
     .row {
         margin-bottom: 5px;
     }
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+        justify-content: center;
+    }
     button {
-        margin: 5px;
+        padding: 6px 12px;
+        border: 1px solid #666;
+        border-radius: 4px;
+        background: #f5f5f5;
+        transition: all 0.2s ease;
+    }
+    button:hover {
+        background: #e0e0e0;
+        transform: translateY(-1px);
+    }
+    button a {
+        text-decoration: none;
+        color: #333;
     }
     .title-container {
         height: 2em;  /* Approximately 3 lines of text */
