@@ -55,7 +55,7 @@ const { image } = Astro.props;
             View: 
             <button><a href={ image.view_link }>Neuroglancer</a></button>
             <button><a href={"/bioimage-archive/image/" + image.uuid}>Metadata</a></button>
-            <button onclick="navigator.clipboard.writeText(this.getAttribute('data-uri'))" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
+            <button onclick="this.textContent='Copied!'; setTimeout(() => this.textContent='Copy OME-Zarr URI', 2000); navigator.clipboard.writeText(this.getAttribute('data-uri'))" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
         </p>
     </div>
 </article>
