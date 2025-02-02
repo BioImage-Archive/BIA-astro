@@ -59,16 +59,20 @@ const { image } = Astro.props;
     .size-bar {
         background: #f3f3f3;
         padding: 8px 12px;
-        font-size: 1.2em;
+        font-size: 0.9em;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
     }
-    .physical-size {
-        float: left;
-    }
-    .voxel-size {
-        float: right;
+    .physical-size, .voxel-size {
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .x-text {
         font-size: 0.8em;
