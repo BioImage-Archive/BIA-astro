@@ -6,12 +6,12 @@ const { image } = Astro.props;
         <h3 class="vf-card__heading title-container">
             <div class="title-text">{ image.label }</div>
         </h3>
-        <p class="vf-card__text">
-            <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
-        </p>
     </div>
     <div class="image-container">
         <img src={ image.thumbnail_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+        <div class="dataset-link">
+            <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+        </div>
         <div class="size-bar">
             <span class="physical-size">
                 <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
@@ -117,6 +117,22 @@ const { image } = Astro.props;
         box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     }
 
+    .dataset-link {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    .dataset-link a {
+        color: #333;
+        text-decoration: none;
+    }
+    .dataset-link a:hover {
+        text-decoration: underline;
+    }
     .cube-wrapper {
         width: 60px;
         height: 60px;
