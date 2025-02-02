@@ -10,7 +10,9 @@ const { image } = Astro.props;
             <a href={"/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </p>
     </div>
-    <img src={ image.thumbnail_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <div class="image-container">
+        <img src={ image.thumbnail_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    </div>
     <div class="size-bar">
         <span class="physical-size">
             <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
@@ -49,6 +51,10 @@ const { image } = Astro.props;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .image-container {
+        width: 100%;
+        overflow: hidden;
     }
     .size-bar {
         background: #f3f3f3;
