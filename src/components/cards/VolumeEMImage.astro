@@ -10,7 +10,7 @@ const { image } = Astro.props;
     <img src={ image.thumbnail_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <p class="vf-card__text">
-            { image.imaging_method }, <i>{ image.organism }</i><br>
+            <i>{ image.organism }</i>, { image.imaging_method }<br>
             <strong>Size:</strong> <code>{ image.size_x }x{ image.size_y }x{ image.size_z }</code><br>
             <strong>Physical size:</strong> <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }x{ Number(image.physical_dim_y * 1e6).toPrecision(2) }x{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code> µm<br>
             <strong>Voxel size:</strong> <code>{ Number(image.voxel_size_x * 1e9).toPrecision(2) }x{ Number(image.voxel_size_y * 1e9).toPrecision(2) }x{ Number(image.voxel_size_z * 1e9).toPrecision(2) }</code> nm
