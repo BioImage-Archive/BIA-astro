@@ -11,6 +11,7 @@ const { image } = Astro.props;
                 image.imaging_method === "Focused Ion Beam Scanning Electron Microscopy" ? "FIB-SEM" :
                 image.imaging_method === "Serial Block Face Scanning Electron Microscopy" ? "SBF-SEM" :
                 image.imaging_method === "Serial Block-Face Scanning Electron Microscopy" ? "SBF-SEM" :
+                image.imaging_method === "Serial Block-face Scanning Electron Microscopy (SBF-SEM)" ? "SBF-SEM" :
                 image.imaging_method
             }
         </p>
