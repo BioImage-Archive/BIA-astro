@@ -21,8 +21,10 @@ const { image } = Astro.props;
             </span>
             <span class="voxel-size">
                 <code>{ Math.round(image.voxel_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_y * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_z * 1e9) }</code><span class="unit-text"> nm voxels</span>
-                <div class="cube-wrapper">
-                    <div class="cube" style={`--scale-x: ${image.voxel_size_x/Math.max(image.voxel_size_x, image.voxel_size_y, image.voxel_size_z)}; --scale-y: ${image.voxel_size_y/Math.max(image.voxel_size_x, image.voxel_size_y, image.voxel_size_z)}; --scale-z: ${image.voxel_size_z/Math.max(image.voxel_size_x, image.voxel_size_y, image.voxel_size_z)};`}>
+            </span>
+        </div>
+        <div class="cube-wrapper">
+            <div class="cube" style={`--scale-x: ${image.size_x/Math.max(image.size_x, image.size_y, image.size_z)}; --scale-y: ${image.size_y/Math.max(image.size_x, image.size_y, image.size_z)}; --scale-z: ${image.size_z/Math.max(image.size_x, image.size_y, image.size_z)};`}>
                         <div class="cube__face cube__face--front"></div>
                         <div class="cube__face cube__face--back"></div>
                         <div class="cube__face cube__face--right"></div>
@@ -111,12 +113,15 @@ const { image } = Astro.props;
     }
 
     .cube-wrapper {
-        width: 30px;
-        height: 30px;
-        perspective: 100px;
-        display: inline-block;
-        margin-left: 8px;
-        vertical-align: middle;
+        width: 40px;
+        height: 40px;
+        perspective: 120px;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 8px;
+        border-radius: 4px;
     }
 
     .cube {
