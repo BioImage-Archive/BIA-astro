@@ -24,7 +24,14 @@ const { image } = Astro.props;
             </span>
         </div>
         <div class="cube-wrapper">
-            <div class="cube" style={`--scale-x: ${image.size_x/Math.max(image.size_x, image.size_y, image.size_z)}; --scale-y: ${image.size_y/Math.max(image.size_x, image.size_y, image.size_z)}; --scale-z: ${image.size_z/Math.max(image.size_x, image.size_y, image.size_z)};`}>
+            <div class="cube" style={`
+                --scale-x: ${image.size_x/Math.max(image.size_x, image.size_y, image.size_z)}; 
+                --scale-y: ${image.size_y/Math.max(image.size_x, image.size_y, image.size_z)}; 
+                --scale-z: ${image.size_z/Math.max(image.size_x, image.size_y, image.size_z)};
+                --grid-lines-x: ${Math.min(10, Math.max(3, Math.floor(image.size_x/1000)))};
+                --grid-lines-y: ${Math.min(10, Math.max(3, Math.floor(image.size_y/1000)))};
+                --grid-lines-z: ${Math.min(10, Math.max(3, Math.floor(image.size_z/1000)))};
+            `}>
                 <div class="cube__face cube__face--front"></div>
                 <div class="cube__face cube__face--back"></div>
                 <div class="cube__face cube__face--right"></div>
@@ -136,6 +143,16 @@ const { image } = Astro.props;
         height: 30px;
         border: 1px solid rgba(0, 0, 0, 0.3);
         background: rgba(200, 200, 200, 0.2);
+        background-image: repeating-linear-gradient(0deg, 
+            rgba(0, 0, 0, 0.1) 0px, 
+            rgba(0, 0, 0, 0.1) 1px, 
+            transparent 1px, 
+            transparent calc((30px * var(--scale-y)) / var(--grid-lines-y))),
+        repeating-linear-gradient(90deg, 
+            rgba(0, 0, 0, 0.1) 0px, 
+            rgba(0, 0, 0, 0.1) 1px, 
+            transparent 1px, 
+            transparent calc((30px * var(--scale-x)) / var(--grid-lines-x)));
     }
 
     .cube__face--front  { transform: rotateY(0deg) translateZ(calc(15px * var(--scale-z))); }
