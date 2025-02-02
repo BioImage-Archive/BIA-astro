@@ -21,6 +21,16 @@ const { image } = Astro.props;
             </span>
             <span class="voxel-size">
                 <code>{ Math.round(image.voxel_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_y * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_z * 1e9) }</code><span class="unit-text"> nm voxels</span>
+                <div class="cube-wrapper">
+                    <div class="cube" style={`--scale-x: ${image.voxel_size_x/Math.max(image.voxel_size_x, image.voxel_size_y, image.voxel_size_z)}; --scale-y: ${image.voxel_size_y/Math.max(image.voxel_size_x, image.voxel_size_y, image.voxel_size_z)}; --scale-z: ${image.voxel_size_z/Math.max(image.voxel_size_x, image.voxel_size_y, image.voxel_size_z)};`}>
+                        <div class="cube__face cube__face--front"></div>
+                        <div class="cube__face cube__face--back"></div>
+                        <div class="cube__face cube__face--right"></div>
+                        <div class="cube__face cube__face--left"></div>
+                        <div class="cube__face cube__face--top"></div>
+                        <div class="cube__face cube__face--bottom"></div>
+                    </div>
+                </div>
             </span>
         </div>
     </div>
@@ -99,4 +109,36 @@ const { image } = Astro.props;
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     }
+
+    .cube-wrapper {
+        width: 30px;
+        height: 30px;
+        perspective: 100px;
+        display: inline-block;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    .cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: translateZ(-15px) rotateX(-20deg) rotateY(-45deg);
+    }
+
+    .cube__face {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background: rgba(200, 200, 200, 0.2);
+    }
+
+    .cube__face--front  { transform: rotateY(0deg) translateZ(calc(15px * var(--scale-z))); }
+    .cube__face--right  { transform: rotateY(90deg) translateZ(calc(15px * var(--scale-x))); }
+    .cube__face--back   { transform: rotateY(180deg) translateZ(calc(15px * var(--scale-z))); }
+    .cube__face--left   { transform: rotateY(-90deg) translateZ(calc(15px * var(--scale-x))); }
+    .cube__face--top    { transform: rotateX(90deg) translateZ(calc(15px * var(--scale-y))); }
+    .cube__face--bottom { transform: rotateX(-90deg) translateZ(calc(15px * var(--scale-y))); }
 </style>
