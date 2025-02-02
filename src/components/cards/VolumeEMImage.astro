@@ -18,7 +18,7 @@ const { image } = Astro.props;
             <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
         </span>
         <span class="voxel-size">
-            <code>{ Math.round(image.voxel_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_y * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_z * 1e9) }</code><span class="unit-text"> nm</span>
+            <code>{ Math.round(image.voxel_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_y * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_z * 1e9) }</code><span class="unit-text"> nm voxels</span>
         </span>
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
