@@ -4,8 +4,16 @@ import VolumeEMImage from '../../components/cards/VolumeEMImage.astro';
 import VolumeEMTable from '../../components/VolumeEMTable.astro';
 import vemImages from "../../data/collections/vem_image_summaries.json";
 ---
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
+        const dataTable = new DataTable('.vf-table', {
+            pageLength: 25,
+            order: [[1, 'asc']], // Sort by Label column by default
+        });
+
         window.toggleView = function() {
             const cardView = document.getElementById('card-view');
             const tableView = document.getElementById('table-view');
@@ -19,6 +27,8 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                 cardView.style.display = 'none';
                 tableView.style.display = 'block';
                 toggleButton.textContent = 'Switch to Card View';
+                // Adjust table columns when shown
+                dataTable.columns.adjust();
             }
         }
     });
