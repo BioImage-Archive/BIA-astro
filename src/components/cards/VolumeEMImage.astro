@@ -7,7 +7,7 @@ const { image } = Astro.props;
             <div class="title-text">{ image.label }</div>
         </h3>
         <p class="vf-card__text">
-            <a href={"/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+            <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </p>
     </div>
     <div class="image-container">
