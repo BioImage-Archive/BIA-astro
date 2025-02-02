@@ -14,7 +14,7 @@ const { image } = Astro.props;
     <div class="vf-card__content | vf-stack vf-stack--400">
         <p class="vf-card__text">
             <i>{ image.organism }</i>, { image.imaging_method }<br>
-            <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }x{ Number(image.physical_dim_y * 1e6).toPrecision(2) }x{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code> µm, <code>{ Number(image.voxel_size_x * 1e9).toPrecision(2) }x{ Number(image.voxel_size_y * 1e9).toPrecision(2) }x{ Number(image.voxel_size_z * 1e9).toPrecision(2) }</code> nm voxels
+            <span class="size-text"><code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>, <code>{ Number(image.voxel_size_x * 1e9).toPrecision(2) }<span class="x-text">×</span>{ Number(image.voxel_size_y * 1e9).toPrecision(2) }<span class="x-text">×</span>{ Number(image.voxel_size_z * 1e9).toPrecision(2) }</code><span class="unit-text"> nm</span> voxels</span>
         </p>
         <hr>
         <p class="vf-card__text">
@@ -42,5 +42,15 @@ const { image } = Astro.props;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .size-text {
+        font-size: 0.9em;
+    }
+    .x-text {
+        font-size: 0.7em;
+        vertical-align: middle;
+    }
+    .unit-text {
+        font-size: 0.8em;
     }
 </style>
