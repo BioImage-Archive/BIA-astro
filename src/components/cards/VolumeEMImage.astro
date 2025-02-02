@@ -3,8 +3,8 @@ const { image } = Astro.props;
 ---
 <article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px">
     <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading">
-            { image.label }
+        <h3 class="vf-card__heading title-container">
+            <div class="title-text">{ image.label }</div>
         </h3>
         <p class="vf-card__text">
             <a href={"/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
@@ -32,5 +32,17 @@ const { image } = Astro.props;
     }
     button {
         margin: 5px;
+    }
+    .title-container {
+        height: 4.5em;  /* Approximately 3 lines of text */
+        margin: 0;
+        overflow: hidden;
+    }
+    .title-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>
