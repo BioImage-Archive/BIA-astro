@@ -14,7 +14,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         </div>
         <div></div>
     </section> 
-    <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+    <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
             { Object.entries(vemImages).map(([uuid, image]) => (
                 <VolumeEMImage image={{...image, uuid}} />
