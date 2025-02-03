@@ -1,0 +1,46 @@
+{
+    "loyal-squid": {
+        "nickname": "loyal-squid",
+        "model_id": "10.5281/zenodo.6383429/7774505",
+        "name": "3D UNet Mouse Embryo Fixed",
+        "author": ["V. Bondarenko", "A. Wolny"],
+        "description": "A 3D U-Net trained to predict the nuclei and their boundaries in fixed confocal images of developing mouse embryo.Voxel size: (0.2×0.2×1 µm^3) (XYZ).",
+        "licence": "MIT",
+        "model_link": "https://bioimage.io/#/p/zenodo:6383430?tags=loyal-squid&id=10.5281%2Fzenodo.6383429",
+        "hero_image": "/bioimage-archive/galleries/assets/model-images/loyal-squid_combined.png",
+        "tags": [
+            "3D",
+            "nuclei",
+            "mouse embryo",
+            "fixed tissue",
+            "confocal microscopy",
+            "semantic segmentation",
+            "torchscript",
+            "ilastik",
+            "U-Net",
+            "plantseg",
+            "deepimagej",
+            "pytorch"
+        ]
+    },
+    "noisy-fish": {
+        "nickname": "noisy-fish",
+        "model_id": "10.5281/zenodo.7772662/7781091",
+        "name": "3D UNet Arabidopsis Ovules Nuclei",
+        "author": ["Qin Yu", "Adrian Wolny"],
+        "description": "Unet trained on confocal images of Arabidopsis Ovules nuclei.",
+        "licence": "MIT",
+        "model_link": "https://bioimage.io/#/p/zenodo:6383430?type=model&tags=noisy-fish&id=10.5281%2Fzenodo.7772662",
+        "hero_image": "/bioimage-archive/galleries/assets/model-images/noisy-fish_combined.png",
+        "tags": [
+            "3D",
+            "nuclei",
+            "arabidopsis ovule",
+            "confocal microscopy",
+            "semantic segmentation",
+            "plantseg",
+            "U-Net",
+            "pytorch"
+        ]
+    }
+}

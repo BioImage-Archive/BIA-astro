@@ -1,0 +1,40 @@
+[
+    {
+        "model": "loyal-squid",
+        "study": "S-BIAD1026",
+        "dataset_uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
+        "precision": "0.994",
+        "recall": "0.392",
+        "IoU": "0.391",
+        "dice": "0.563",
+        "example_image": "/bioimage-archive/galleries/assets/example-images/placeholder_logo_1.png",
+        "example_ground_truth": "/bioimage-archive/galleries/assets/example-images/placeholder_logo_16.png",
+        "example_process_image": "/bioimage-archive/galleries/assets/example-images/placeholder_logo_31.png",
+        "analysis_parameters": {
+            "z_slices_analysed": "[70, 78]",
+            "xy_image_crop_size": "[250, 250]",
+            "input_channel_analysed": "1",
+            "t_slices_analysed": "[20, 150]",
+            "prediction_channel_benchmarked": "0"
+        }
+    },
+    {
+        "model": "noisy-fish",
+        "study": "S-BIAD1026",
+        "dataset_uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
+        "precision": "0.920",
+        "recall": "0.839",
+        "IoU": "0.782",
+        "dice": "0.878",
+        "example_image": "/bioimage-archive/galleries/assets/example-images/placeholder_logo_1.png",
+        "example_ground_truth": "/bioimage-archive/galleries/assets/example-images/placeholder_logo_16.png",
+        "example_process_image": "/bioimage-archive/galleries/assets/example-images/placeholder_logo_31.png",
+        "analysis_parameters": {
+            "z_slices_analysed": "[70, 78]",
+            "xy_image_crop_size": "[250, 250]",
+            "input_channel_analysed": "1",
+            "t_slices_analysed": "[20, 150]",
+            "prediction_channel_benchmarked": "0"
+        }
+    }
+]
