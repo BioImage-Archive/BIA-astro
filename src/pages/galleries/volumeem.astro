@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import VolumeEMImage from '../../components/cards/VolumeEMImage.astro';
 import VolumeEMTable from '../../components/VolumeEMTable.astro';
+import VolumeEMImageCompact from '../../components/cards/VolumeEMImageCompact.astro';
 import vemImages from "../../data/collections/vem_image_summaries.json";
 ---
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
@@ -22,15 +23,22 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             const tableView = document.getElementById('table-view');
             const toggleButton = document.getElementById('view-toggle');
             
-            if (cardView.style.display === 'none') {
-                cardView.style.display = 'block';
-                tableView.style.display = 'none';
-                toggleButton.textContent = 'Switch to Table View';
-            } else {
-                cardView.style.display = 'none';
-                tableView.style.display = 'block';
-                toggleButton.textContent = 'Switch to Card View';
-                // Adjust table columns when shown
+            const gridView = document.getElementById('grid-view');
+            const currentView = [cardView, tableView, gridView].find(view => view.style.display !== 'none');
+            const views = {
+                'card-view': { text: 'Switch to Table View', next: 'table-view' },
+                'table-view': { text: 'Switch to Grid View', next: 'grid-view' },
+                'grid-view': { text: 'Switch to Card View', next: 'card-view' }
+            };
+            
+            const currentId = currentView.id;
+            const nextId = views[currentId].next;
+            
+            [cardView, tableView, gridView].forEach(view => view.style.display = 'none');
+            document.getElementById(nextId).style.display = 'block';
+            toggleButton.textContent = views[nextId].text;
+            
+            if (nextId === 'table-view') {
                 dataTable.columns.adjust();
             }
         }
@@ -63,6 +71,16 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 
     <div id="table-view" style="display: none;">
         <VolumeEMTable images={vemImages} />
+    </div>
+
+    <div id="grid-view" style="display: none;">
+        <section class="vf-card-container vf-card-container__col-6 | vf-u-background-color-ui--white vf-u-fullbleed">
+            <div class="vf-card-container__inner">
+                { Object.entries(vemImages).map(([uuid, image]) => (
+                    <VolumeEMImageCompact image={{...image, uuid}} />
+                ))}
+            </div>
+        </section>
     </div>
 
     <style>
