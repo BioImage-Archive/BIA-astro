@@ -4,6 +4,12 @@ const { image } = Astro.props;
 <article class="compact-card custom-card">
     <div class="image-container">
         <img src={ image.static_display_src } alt="" loading="lazy">
+        <a href={ image.view_link } class="view-link" title="View in Neuroglancer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>
+        </a>
         <div class="dataset-link">
             <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
@@ -91,6 +97,24 @@ const { image } = Astro.props;
     }
     .dataset-link a:hover {
         text-decoration: underline;
+    }
+    .view-link {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+    .view-link:hover {
+        background: rgba(243, 243, 243, 1);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .cube-wrapper {
         width: 60px;
