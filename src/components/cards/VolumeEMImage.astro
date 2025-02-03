@@ -188,30 +188,69 @@ const { image } = Astro.props;
         transform-origin: center center;
     }
 
-    .cube__face {
+    /* Front and back faces */
+    .cube__face--front, .cube__face--back {
         position: absolute;
+        left: 50%;
+        top: 50%;
         width: calc(50px * var(--scale-x));
         height: calc(50px * var(--scale-y));
-        border: 1px solid rgba(0, 0, 0, 0.3);
+        margin-left: calc(50px * var(--scale-x) / -2);
+        margin-top: calc(50px * var(--scale-y) / -2);
         background: rgba(200, 200, 200, 0.2);
-        background-image: repeating-linear-gradient(0deg, 
-            rgba(0, 0, 0, 0.1) 0px, 
-            rgba(0, 0, 0, 0.1) 1px, 
-            transparent 1px, 
-            transparent calc((30px * var(--scale-y)) / var(--grid-lines-y))),
-        repeating-linear-gradient(90deg, 
-            rgba(0, 0, 0, 0.1) 0px, 
-            rgba(0, 0, 0, 0.1) 1px, 
-            transparent 1px, 
-            transparent calc((30px * var(--scale-x)) / var(--grid-lines-x)));
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-x)) / var(--grid-lines-x)) 
+            calc((50px * var(--scale-y)) / var(--grid-lines-y));
+        border: 1px solid rgba(0, 0, 0, 0.3);
     }
 
-    .cube__face--front  { transform: rotateY(0deg) translateZ(calc(25px * var(--scale-z))); }
-    .cube__face--right  { transform: rotateY(90deg) translateZ(calc(25px * var(--scale-x))); }
-    .cube__face--back   { transform: rotateY(180deg) translateZ(calc(25px * var(--scale-z))); }
-    .cube__face--left   { transform: rotateY(-90deg) translateZ(calc(25px * var(--scale-x))); }
-    .cube__face--top    { transform: rotateX(90deg) translateZ(calc(25px * var(--scale-y))); }
-    .cube__face--bottom { transform: rotateX(-90deg) translateZ(calc(25px * var(--scale-y))); }
+    /* Right and left faces */
+    .cube__face--right, .cube__face--left {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(50px * var(--scale-z));
+        height: calc(50px * var(--scale-y));
+        margin-left: calc(50px * var(--scale-z) / -2);
+        margin-top: calc(50px * var(--scale-y) / -2);
+        background: rgba(200, 200, 200, 0.2);
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-z)) / var(--grid-lines-z)) 
+            calc((50px * var(--scale-y)) / var(--grid-lines-y));
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    /* Top and bottom faces */
+    .cube__face--top, .cube__face--bottom {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(50px * var(--scale-x));
+        height: calc(50px * var(--scale-z));
+        margin-left: calc(50px * var(--scale-x) / -2);
+        margin-top: calc(50px * var(--scale-z) / -2);
+        background: rgba(200, 200, 200, 0.2);
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-x)) / var(--grid-lines-x)) 
+            calc((50px * var(--scale-z)) / var(--grid-lines-z));
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .cube__face--front  { transform: translateZ(calc(50px * var(--scale-z) / 2)); }
+    .cube__face--back   { transform: translateZ(calc(50px * var(--scale-z) / -2)) rotateY(180deg); }
+    .cube__face--right  { transform: translateX(calc(50px * var(--scale-x) / 2)) rotateY(90deg); }
+    .cube__face--left   { transform: translateX(calc(50px * var(--scale-x) / -2)) rotateY(-90deg); }
+    .cube__face--top    { transform: translateY(calc(50px * var(--scale-y) / -2)) rotateX(90deg); }
+    .cube__face--bottom { transform: translateY(calc(50px * var(--scale-y) / 2)) rotateX(-90deg); }
 
     @keyframes rotate {
         from {
