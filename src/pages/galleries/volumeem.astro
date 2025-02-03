@@ -43,24 +43,26 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             <h2 class="vf-intro__subheading">3D volume images, browsable, downloadable and streamable</h2>
             <p>Individual volume images across a range of species, vEM imaging methods and reconstruction approaches. Each volume has background information, and can be viewed in the browser, or accessed remotely.</p>
         </div>
-        <div></div>
-    </section> 
-    <div class="view-toggle-container">
-        <div class="toggle-switch">
-            <label class="toggle-option">
-                <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
-                <span class="toggle-label">Cards</span>
-            </label>
-            <label class="toggle-option">
-                <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
-                <span class="toggle-label">Table</span>
-            </label>
-            <label class="toggle-option">
-                <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
-                <span class="toggle-label">Grid</span>
-            </label>
+        <div>
+            <div class="view-toggle-container">
+                <div class="toggle-switch">
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
+                        <span class="toggle-label">Cards</span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
+                        <span class="toggle-label">Table</span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
+                        <span class="toggle-label">Grid</span>
+                    </label>
+                </div>
+            </div>
         </div>
-    </div>
+    </section> 
+
     
     <div id="card-view">
         <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
@@ -103,6 +105,9 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
     </div>
 
     <style>
+        .vf-intro {
+                margin-bottom: 1rem; /* or a smaller value like 1rem */
+        }
         .view-toggle-container {
             text-align: center;
             padding: 1em;
