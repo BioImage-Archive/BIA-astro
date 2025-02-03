@@ -18,27 +18,13 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             ]
         });
 
-        window.toggleView = function() {
-            const cardView = document.getElementById('card-view');
-            const tableView = document.getElementById('table-view');
-            const toggleButton = document.getElementById('view-toggle');
+        window.toggleView = function(viewId) {
+            const views = ['card-view', 'table-view', 'grid-view'];
+            views.forEach(id => {
+                document.getElementById(id).style.display = id === viewId ? 'block' : 'none';
+            });
             
-            const gridView = document.getElementById('grid-view');
-            const currentView = [cardView, tableView, gridView].find(view => view.style.display !== 'none');
-            const views = {
-                'card-view': { text: 'Switch to Table View', next: 'table-view' },
-                'table-view': { text: 'Switch to Grid View', next: 'grid-view' },
-                'grid-view': { text: 'Switch to Card View', next: 'card-view' }
-            };
-            
-            const currentId = currentView.id;
-            const nextId = views[currentId].next;
-            
-            [cardView, tableView, gridView].forEach(view => view.style.display = 'none');
-            document.getElementById(nextId).style.display = 'block';
-            toggleButton.textContent = views[nextId].text;
-            
-            if (nextId === 'table-view') {
+            if (viewId === 'table-view') {
                 dataTable.columns.adjust();
             }
         }
@@ -56,7 +42,20 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         <div></div>
     </section> 
     <div class="view-toggle-container">
-        <button id="view-toggle" class="vf-button vf-button--primary" onclick="toggleView()">Switch to Table View</button>
+        <div class="toggle-switch">
+            <label class="toggle-option">
+                <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
+                <span class="toggle-label">Cards</span>
+            </label>
+            <label class="toggle-option">
+                <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
+                <span class="toggle-label">Table</span>
+            </label>
+            <label class="toggle-option">
+                <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
+                <span class="toggle-label">Grid</span>
+            </label>
+        </div>
     </div>
     
     <div id="card-view">
@@ -85,14 +84,37 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 
     <style>
         .view-toggle-container {
-            text-align: right;
+            text-align: center;
             padding: 1em;
-            margin-right: 1em;
         }
-        #view-toggle {
-            padding: 0.5em 1em;
-            border-radius: 4px;
+        .toggle-switch {
+            display: inline-flex;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 20px;
+            gap: 4px;
+        }
+        .toggle-option {
+            position: relative;
             cursor: pointer;
+        }
+        .toggle-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .toggle-label {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .toggle-option input:checked + .toggle-label {
+            background: #3b6fb6;
+            color: white;
+        }
+        .toggle-option:hover input:not(:checked) + .toggle-label {
+            background: #e0e0e0;
         }
     </style>
   </body>
