@@ -95,7 +95,7 @@ const { image } = Astro.props;
     .cube-wrapper {
         width: 60px;
         height: 60px;
-        perspective: 200px;
+        perspective: 1000px;
         position: absolute;
         bottom: 10px;
         right: 10px;
@@ -108,36 +108,34 @@ const { image } = Astro.props;
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transform: translateZ(-25px) rotateX(-20deg) rotateY(-45deg);
-        animation: rotate 20s infinite linear;
-        transform-origin: center center;
+        animation: spin 8s linear infinite;
     }
     .cube__face {
         position: absolute;
+        left: 50%;
+        top: 50%;
         width: calc(50px * var(--scale-x));
         height: calc(50px * var(--scale-y));
-        border: 1px solid rgba(0, 0, 0, 0.3);
+        margin-left: calc((50px * var(--scale-x)) / -2);
+        margin-top: calc((50px * var(--scale-y)) / -2);
         background: rgba(200, 200, 200, 0.2);
-        background-image: repeating-linear-gradient(0deg, 
-            rgba(0, 0, 0, 0.1) 0px, 
-            rgba(0, 0, 0, 0.1) 1px, 
-            transparent 1px, 
-            transparent calc((30px * var(--scale-y)) / var(--grid-lines-y))),
-        repeating-linear-gradient(90deg, 
-            rgba(0, 0, 0, 0.1) 0px, 
-            rgba(0, 0, 0, 0.1) 1px, 
-            transparent 1px, 
-            transparent calc((30px * var(--scale-x)) / var(--grid-lines-x)));
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-x)) / var(--grid-lines-x)) 
+            calc((50px * var(--scale-y)) / var(--grid-lines-y));
+        border: 1px solid rgba(0, 0, 0, 0.3);
     }
-    .cube__face--front  { transform: rotateY(0deg) translateZ(calc(25px * var(--scale-z))); }
-    .cube__face--right  { transform: rotateY(90deg) translateZ(calc(25px * var(--scale-x))); }
-    .cube__face--back   { transform: rotateY(180deg) translateZ(calc(25px * var(--scale-z))); }
-    .cube__face--left   { transform: rotateY(-90deg) translateZ(calc(25px * var(--scale-x))); }
-    .cube__face--top    { transform: rotateX(90deg) translateZ(calc(25px * var(--scale-y))); }
-    .cube__face--bottom { transform: rotateX(-90deg) translateZ(calc(25px * var(--scale-y))); }
-    @keyframes rotate {
-        from { transform: translateZ(-25px) rotateX(-20deg) rotateY(0deg); }
-        to { transform: translateZ(-25px) rotateX(-20deg) rotateY(360deg); }
+    .cube__face--front  { transform: translateZ(calc((50px * var(--scale-z)) / 2)); }
+    .cube__face--back   { transform: translateZ(calc((50px * var(--scale-z)) / -2)) rotateY(180deg); }
+    .cube__face--right  { transform: translateX(calc((50px * var(--scale-x)) / 2)) rotateY(90deg); }
+    .cube__face--left   { transform: translateX(calc((50px * var(--scale-x)) / -2)) rotateY(-90deg); }
+    .cube__face--top    { transform: translateY(calc((50px * var(--scale-y)) / -2)) rotateX(90deg); }
+    .cube__face--bottom { transform: translateY(calc((50px * var(--scale-y)) / 2)) rotateX(-90deg); }
+    @keyframes spin {
+        from { transform: rotateX(0) rotateY(0); }
+        to { transform: rotateX(360deg) rotateY(360deg); }
     }
     .x-text {
         font-size: 0.7em;
