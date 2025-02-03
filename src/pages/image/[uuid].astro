@@ -32,7 +32,7 @@ const static_display = image.representation.find((rep) => rep.use_type === "STAT
 const thumbnail = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
 const user_submitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
 
-const ng_link_attribute = image.attribute.find((attr) => attr.name === "neuroglancer_view_link")
+const ng_link_attribute = image.attribute?.find((attr) => attr.name === "neuroglancer_view_link")
 
 var primary_image_rep
 if (interactive_image != null) {
