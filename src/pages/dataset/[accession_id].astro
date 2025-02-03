@@ -5,7 +5,7 @@ import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ImageRow from "../../components/ImageTableRow.astro";
-import {get_placeholder_hero_image, format_list_item, multiline_text_render, humanFileSizeBytes} from "../../components/SharedJSFunctions.js"
+import {get_placeholder_hero_image, format_list_item, multiline_text_render, human_size_bytes} from "../../components/SharedJSFunctions.js"
 
 
 export function getStaticPaths() {
@@ -74,7 +74,7 @@ function get_file_types(study_info) {
 const headline_stats = {
   "Total Viewable Images":  study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
   "Total files": study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0),
-  "Total size of files": humanFileSizeBytes(study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0)),
+  "Total size of files": human_size_bytes(study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0)),
 };
 
 
