@@ -60,7 +60,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
     </div>
     
     <div id="card-view">
-        <section class="vf-card-container vf-card-container__col-5 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
+        <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
             <div class="vf-card-container__inner">
                 { Object.entries(vemImages).map(([uuid, image]) => (
                     <VolumeEMImage image={{...image, uuid}} />
@@ -74,7 +74,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
     </div>
 
     <div id="grid-view" style="display: none;">
-        <section class="vf-card-container vf-card-container__col-5 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card-container__inner--grid-gap: 0.5rem;">
+        <section class="vf-card-container vf-card-container__col-5 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card-container__inner--grid-gap: 0.25rem;">
             <div class="vf-card-container__inner">
                 { Object.entries(vemImages).map(([uuid, image]) => (
                     <VolumeEMImageCompact image={{...image, uuid}} />
