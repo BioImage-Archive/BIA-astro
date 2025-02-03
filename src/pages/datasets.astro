@@ -9,7 +9,7 @@ const totalStudies = Object.keys(study_info).length;
 
 const totalFiles = Object.values(study_info).reduce((acc, study) => {
   const studyFiles = study.dataset?.reduce((fileAcc, component) => {
-    return fileAcc + (component.file_count || 0);
+    return fileAcc + (component.file_reference_count || 0);
   }, 0) || 0;
   return acc + studyFiles;
 }, 0);
@@ -47,17 +47,16 @@ const formattedTotalImages = totalImages.toLocaleString();
     </BrowseDatasetHeading>
   
 
-    <div  style="margin-bottom: 8px">
-      <input type="text" id="searchInput" placeholder="Filter studies..">
+    <div style="display: flex;  justify-content: space-between; flex-wrap: wrap; width: 100%;">
+        <input type="text" id="searchInput" placeholder="Filter studies..">
+        <span>
+          <text> Filter studies with viewable images:  </text>
+          <label class="switch" id="image_toggle_switch">
+            <input type="checkbox" id="image_toggle">
+            <span class="slider round"></span>
+          </label>
+        </span>
 
-
-      <span style="float: right;">
-        <text> Filter studies with viewable images:  </text>
-        <label class="switch" id="image_toggle_switch">
-          <input type="checkbox" id="image_toggle">
-          <span class="slider round"></span>
-        </label>
-      </span>
       <script>
       
         var input = document.getElementById('searchInput') as HTMLInputElement;
@@ -105,10 +104,11 @@ const formattedTotalImages = totalImages.toLocaleString();
 
 
       </script>
-
     </div>
 
-    <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+    <div style="clear: both;"></div>
+
+    <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
        
         <div class="vf-card-container__inner" >
             { Object.values(study_info).map((study) => ( <DatasetCard dataset={study} dataset_path="dataset"/> )) }

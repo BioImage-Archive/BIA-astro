@@ -22,6 +22,7 @@ const correlation_method_map = field_map["correlation_method"];
         </div>
         {
             "biological_entity" in dataset &&
+                dataset.biological_entity &&
                 dataset.biological_entity.length > 0 && (
                     <b>Biosamples:</b>
                     <ul>
@@ -36,6 +37,7 @@ const correlation_method_map = field_map["correlation_method"];
         }
         {
             "specimen_imaging_preparation_protocol" in dataset &&
+                dataset.specimen_imaging_preparation_protocol &&
                 dataset.specimen_imaging_preparation_protocol.length > 0 && (
                     <b>Specimen Preparation Protocols:</b>
                     <ul>
@@ -52,6 +54,7 @@ const correlation_method_map = field_map["correlation_method"];
         }
         {
             "acquisition_process" in dataset &&
+                dataset.acquisition_process &&
                 dataset.acquisition_process.length > 0 && (
                     <b>Image Acquisition Processes:</b>
                     <ul>
@@ -68,6 +71,7 @@ const correlation_method_map = field_map["correlation_method"];
         }
         {
             "other_creation_process" in dataset &&
+                dataset.other_creation_process &&
                 dataset.other_creation_process.length > 0 && (
                     <b>Creation Protocols:</b>
                     <ul>
@@ -83,7 +87,7 @@ const correlation_method_map = field_map["correlation_method"];
                 )
         }
         {
-            "analysis_method" in dataset && dataset.analysis_method.length > 0 && (
+            "analysis_method" in dataset && dataset.analysis_method && dataset.analysis_method.length > 0 && (
                 <b>Image Analysis Methods:</b>
                 <ul>
                     {dataset.analysis_method.map((analysis_method) => (
@@ -96,7 +100,7 @@ const correlation_method_map = field_map["correlation_method"];
             )
         }
         {
-            "correlation_method" in dataset && dataset.correlation_method.length > 0 && (
+            "correlation_method" in dataset && dataset.correlation_method && dataset.correlation_method.length > 0 && (
                 <b>Correlation Methods:</b>
                 <ul>
                     {dataset.correlation_method.map((correlation_method) => (
@@ -109,7 +113,7 @@ const correlation_method_map = field_map["correlation_method"];
             )
         }
         {
-            "annotation_process" in dataset && dataset.annotation_process.length > 0 && (
+            "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0 && (
                 <b>Annotation Methods:</b>
                 <ul>
                     {dataset.annotation_process.map((annotation_method) => (
