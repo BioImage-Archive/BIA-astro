@@ -28,6 +28,10 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                 dataTable.columns.adjust();
             }
         }
+
+        window.setGridColumns = function(columns) {
+            document.querySelector('.grid-inner').style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+        }
     });
 </script>
 <BaseLayout pageTitle="Volume EM Gallery">
@@ -73,6 +77,22 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
     </div>
 
     <div id="grid-view" style="display: none;">
+        <div class="column-toggle-container">
+            <div class="column-toggle">
+                <label class="column-option">
+                    <input type="radio" name="columns" value="3" onclick="setGridColumns(3)">
+                    <span class="column-label">3 Columns</span>
+                </label>
+                <label class="column-option">
+                    <input type="radio" name="columns" value="4" onclick="setGridColumns(4)">
+                    <span class="column-label">4 Columns</span>
+                </label>
+                <label class="column-option">
+                    <input type="radio" name="columns" value="5" checked onclick="setGridColumns(5)">
+                    <span class="column-label">5 Columns</span>
+                </label>
+            </div>
+        </div>
         <section class="grid-container">
             <div class="grid-inner">
                 { Object.entries(vemImages).map(([uuid, image]) => (
@@ -123,10 +143,45 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         }
         .grid-inner {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 0.25rem;
             max-width: var(--vf-content-max-width, 1200px);
             margin: 0 auto;
+        }
+        .column-toggle-container {
+            text-align: center;
+            padding: 0.5em;
+        }
+        .column-toggle {
+            display: inline-flex;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 20px;
+            gap: 4px;
+            margin-bottom: 1em;
+        }
+        .column-option {
+            position: relative;
+            cursor: pointer;
+        }
+        .column-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .column-label {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        .column-option input:checked + .column-label {
+            background: #3b6fb6;
+            color: white;
+        }
+        .column-option:hover input:not(:checked) + .column-label {
+            background: #e0e0e0;
         }
     </style>
   </body>
