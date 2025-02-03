@@ -34,9 +34,9 @@ const { image } = Astro.props;
         </div>
         <div class="cube-wrapper">
             <div class="cube" style={`
-                --scale-x: ${image.size_x/Math.max(image.size_x, image.size_y, image.size_z)}; 
-                --scale-y: ${image.size_y/Math.max(image.size_x, image.size_y, image.size_z)}; 
-                --scale-z: ${image.size_z/Math.max(image.size_x, image.size_y, image.size_z)};
+                --scale-x: ${image.physical_dim_x/Math.max(image.physical_dim_x, image.physical_dim_y, image.physical_dim_z)}; 
+                --scale-y: ${image.physical_dim_y/Math.max(image.physical_dim_x, image.physical_dim_y, image.physical_dim_z)}; 
+                --scale-z: ${image.physical_dim_z/Math.max(image.physical_dim_x, image.physical_dim_y, image.physical_dim_z)};
                 --grid-lines-x: ${Math.min(10, Math.max(3, Math.floor(image.size_x/1000)))};
                 --grid-lines-y: ${Math.min(10, Math.max(3, Math.floor(image.size_y/1000)))};
                 --grid-lines-z: ${Math.min(10, Math.max(3, Math.floor(image.size_z/1000)))};
