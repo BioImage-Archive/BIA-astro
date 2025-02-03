@@ -73,8 +73,8 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
     </div>
 
     <div id="grid-view" style="display: none;">
-        <section class="vf-card-container vf-card-container__col-5 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card-container__inner--grid-gap: 0.25rem;">
-            <div class="vf-card-container__inner">
+        <section class="grid-container">
+            <div class="grid-inner">
                 { Object.entries(vemImages).map(([uuid, image]) => (
                     <VolumeEMImageCompact image={{...image, uuid}} />
                 ))}
@@ -115,6 +115,18 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         }
         .toggle-option:hover input:not(:checked) + .toggle-label {
             background: #e0e0e0;
+        }
+        .grid-container {
+            background-color: var(--vf-u-background-color-ui--white);
+            width: 100%;
+            padding: 0 1rem;
+        }
+        .grid-inner {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.25rem;
+            max-width: var(--vf-content-max-width, 1200px);
+            margin: 0 auto;
         }
     </style>
   </body>
