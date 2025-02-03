@@ -1,7 +1,7 @@
 ---
 const { image } = Astro.props;
 ---
-<article class="compact-card">
+<article class="compact-card custom-card">
     <div class="image-container">
         <img src={ image.static_display_src } alt="" loading="lazy">
         <div class="dataset-link">
@@ -40,10 +40,18 @@ const { image } = Astro.props;
 
 <style>
     .compact-card {
-        border: 2px solid #999;
-        border-radius: 8px;
         overflow: hidden;
         aspect-ratio: 1/1;
+    }
+    .custom-card {
+        border: 2px solid #999;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .custom-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     }
     .image-container {
         width: 100%;
