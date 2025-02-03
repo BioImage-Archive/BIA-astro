@@ -31,7 +31,7 @@ export function multiline_text_render(value) {
 }
 
 
-export function human_size_bytes(size) {
-    var i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
-    return `${Number(size / Math.pow(1024, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+export function format_bytes_to_human_size(size_bytes) {
+    var i = size_bytes == 0 ? 0 : Math.floor(Math.log(size_bytes) / Math.log(1000));
+    return `${Number(size_bytes / Math.pow(1024, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
 }
