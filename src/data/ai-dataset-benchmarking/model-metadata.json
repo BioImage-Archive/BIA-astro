@@ -8,6 +8,7 @@
         "licence": "MIT",
         "model_link": "https://bioimage.io/#/p/zenodo:6383430?tags=loyal-squid&id=10.5281%2Fzenodo.6383429",
         "hero_image": "/bioimage-archive/ai-galleries/model-images/loyal-squid_combined.png",
+        "task": "nucleus segmentation",
         "tags": [
             "3D",
             "nuclei",
@@ -32,6 +33,7 @@
         "licence": "MIT",
         "model_link": "https://bioimage.io/#/p/zenodo:6383430?type=model&tags=noisy-fish&id=10.5281%2Fzenodo.7772662",
         "hero_image": "/bioimage-archive/ai-galleries/model-images/noisy-fish_combined.png",
+        "task": "nucleus segmentation",
         "tags": [
             "3D",
             "nuclei",
