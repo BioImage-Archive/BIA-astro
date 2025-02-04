@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
+
+import Navigation from './Navigation.astro';
+
 import bannerImage from "../assets/bioimage-archive/empiar_local_banner.jpg";
 import empiarLogo from "../assets/bioimage-archive/EMPIAR_logo.png";
-import { Image } from 'astro:assets';
-const bannerUri = bannerImage.src;
 ---
 
 <header>
@@ -21,8 +23,9 @@ const bannerUri = bannerImage.src;
                 </div>
                 <div>
                     <h2 class="vf-hero__heading">EMPIAR</h2>
-                    <p class="vf-hero__subheading">The Electon Microscopy Public Image Archive</p>
+                    <p class="vf-hero__subheading">The Electron Microscopy Public Image Archive</p>
                 </div>
         </div>
     </section>
+    <Navigation />
 </header>
