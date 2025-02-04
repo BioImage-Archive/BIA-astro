@@ -21,11 +21,6 @@ const { image } = Astro.props;
         <div class="dataset-link">
             <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
-        <div class="license-badge">
-            <a href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
-                <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0 License">
-            </a>
-        </div>
         <div class="size-bar">
             <span class="physical-size">
                 <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
@@ -56,6 +51,11 @@ const { image } = Astro.props;
         </div>
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
+        <div class="license-badge">
+            <a href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
+                <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0 License">
+            </a>
+        </div>
         <div class="button-container">
             <button><a href={ image.view_link }>Neuroglancer</a></button>
             <button><a href={"/bioimage-archive/image/" + image.uuid}>Metadata</a></button>
@@ -172,12 +172,8 @@ const { image } = Astro.props;
         text-decoration: underline;
     }
     .license-badge {
-        position: absolute;
-        bottom: 80px;
-        right: 10px;
-        background: rgba(243, 243, 243, 0.9);
-        padding: 4px;
-        border-radius: 4px;
+        text-align: right;
+        padding: 4px 12px 0 12px;
     }
     .license-badge img {
         height: 20px;
