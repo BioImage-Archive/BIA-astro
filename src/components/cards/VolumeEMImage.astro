@@ -173,10 +173,11 @@ const { image } = Astro.props;
     }
     .license-badge {
         text-align: right;
-        padding: 4px 12px 0 12px;
+        padding: var(--license-badge-padding, 0 12px);
+        margin: var(--license-badge-margin, 0);
     }
     .license-badge img {
-        height: 20px;
+        height: var(--license-badge-height, 20px);
         width: auto;
     }
     .cube-wrapper {
