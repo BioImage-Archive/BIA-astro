@@ -1,24 +1,24 @@
 ---
 import bannerImage from "../assets/bioimage-archive/empiar_local_banner.jpg";
-import Navigation from './Navigation.astro';
-
+import empiarLogo from "../assets/bioimage-archive/EMPIAR_logo.png";
+import { Image } from 'astro:assets';
 const bannerUri = bannerImage.src;
 ---
 
 <header>
   <section 
     class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
-    style={"--vf-hero--bg-image: url(" + bannerUri +");"}>
+    style={"--vf-hero--bg-image: url(" + bannerImage.src +");"}>
         <div class="vf-hero__content | vf-box | vf-stack vf-stack--400" style="opacity: 0.9;">
             <section style="display: flex; gap: 10px;">
                 <div>
-                    <img src="/src/assets/bioimage_archive/EMPIAR_logo.png" style="width:80px">
+                    <!-- <img src="/src/assets/bioimage_archive/EMPIAR_logo.png" style="width:80px"> -->
+                     <Image src={empiarLogo} alt="EMPIAR banner image"></>
                 </div>
                 <div>
                     <h2 class="vf-hero__heading">EMPIAR</h2>
-                    <p class="vf-hero__subheading">A resource for open, FAIR life science imaging data</p>
+                    <p class="vf-hero__subheading">The Electon Microscopy Public Image Archive</p>
                 </div>
         </div>
     </section>
-    <Navigation />
 </header>
