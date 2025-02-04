@@ -190,9 +190,11 @@ const { image } = Astro.props;
         position: absolute;
         bottom: 10px;
         right: 10px;
-        background: rgba(243, 243, 243, 0.9);
+        background: rgb(243, 243, 243);
         padding: 8px;
         border-radius: 4px;
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
 
     .cube {
@@ -271,10 +273,10 @@ const { image } = Astro.props;
 
     @keyframes rotate {
         from {
-            transform: translateZ(-25px) rotateX(-20deg) rotateY(0deg);
+            transform: translate3d(0, 0, -25px) rotateX(-20deg) rotateY(0deg);
         }
         to {
-            transform: translateZ(-25px) rotateX(-20deg) rotateY(360deg);
+            transform: translate3d(0, 0, -25px) rotateX(-20deg) rotateY(360deg);
         }
     }
 </style>
