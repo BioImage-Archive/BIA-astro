@@ -8,7 +8,11 @@ const bannerUri = bannerImage.src;
 <header>
   <section 
     class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
-    style={"--vf-hero--bg-image: url(" + bannerImage.src +");"}>
+    style={{
+      backgroundImage: `url(${bannerImage.src})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
         <div class="vf-hero__content | vf-box | vf-stack vf-stack--400" style="opacity: 0.9;">
             <section style="display: flex; gap: 10px;">
                 <div>
