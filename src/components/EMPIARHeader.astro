@@ -1,8 +1,8 @@
 ---
-import bannerImage from "../assets/bioimage-archive/banner.png";
+import bannerImage from "../assets/bioimage-archive/empiar_local_banner.jpg";
 import Navigation from './Navigation.astro';
 
-const bannerUri = "https://github.com/emdb-empiar/emdb_django/blob/master/static/images/empiar_local_banner.jpg";
+const bannerUri = bannerImage.src;
 ---
 
 <header>
@@ -12,7 +12,7 @@ const bannerUri = "https://github.com/emdb-empiar/emdb_django/blob/master/static
         <div class="vf-hero__content | vf-box | vf-stack vf-stack--400" style="opacity: 0.9;">
             <section style="display: flex; gap: 10px;">
                 <div>
-                    <img src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png" style="width:80px">
+                    <img src="/src/assets/bioimage_archive/EMPIAR_logo.png" style="width:80px">
                 </div>
                 <div>
                     <h2 class="vf-hero__heading">EMPIAR</h2>
