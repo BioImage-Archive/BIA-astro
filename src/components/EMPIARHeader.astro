@@ -1,0 +1,24 @@
+---
+import bannerImage from "../assets/bioimage-archive/banner.png";
+import Navigation from './Navigation.astro';
+
+const bannerUri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png";
+---
+
+<header>
+  <section 
+    class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
+    style={"--vf-hero--bg-image: url(" + bannerUri +");"}>
+        <div class="vf-hero__content | vf-box | vf-stack vf-stack--400" style="opacity: 0.9;">
+            <section style="display: flex; gap: 10px;">
+                <div>
+                    <img src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png" style="width:80px">
+                </div>
+                <div>
+                    <h2 class="vf-hero__heading">EMPIAR</h2>
+                    <p class="vf-hero__subheading">A resource for open, FAIR life science imaging data</p>
+                </div>
+        </div>
+    </section>
+    <Navigation />
+</header>
