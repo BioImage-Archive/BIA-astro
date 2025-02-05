@@ -1,11 +1,12 @@
 ---
-import {get_placeholder_hero_image} from "../SharedJSFunctions.js"
-import { format_list_item, taxon_render } from "../SharedJSFunctions.js";
-const { dataset, dataset_path, taglist} = Astro.props;
+import { get_placeholder_hero_image, format_list_item, taxon_render } from "../SharedJSFunctions.js";
+const { dataset, dataset_path, taglist, card_img_override} = Astro.props;
 
-function get_study_image(study_info) {
+function get_study_image(study_info, card_img_override) {
   const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-  if (dataset_with_img == undefined) {
+  if (card_img_override != null) {
+    return card_img_override
+  } else if (dataset_with_img == undefined) {
     return get_placeholder_hero_image(dataset.accession_id)
   } else {
     return dataset_with_img.example_image_uri[0]
@@ -73,7 +74,7 @@ function filter_data(study_info) {
 }
 ---
 <article class="vf-card vf-card--brand vf-card--bordered" data-message={filter_data(dataset)} style="max-width:400px">
-    <img src={ get_study_image(dataset) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <img src={ get_study_image(dataset, card_img_override) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
             <a class="vf-card__link" href={ "/bioimage-archive/"+ dataset_path + "/" + dataset.accession_id } >

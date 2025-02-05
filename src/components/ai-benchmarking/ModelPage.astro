@@ -1,0 +1,116 @@
+---
+import BenchmarkingTable from "./BenchmarkingTable.astro"
+import ModelPredictionTable from "./ModelPredictionTable.astro"
+import { format_list_item, multiline_text_render } from "../SharedJSFunctions";
+
+
+const { model_name, ModelMetadata, TableInfo} = Astro.props;
+
+
+const model_info = ModelMetadata[model_name]
+
+
+const table_of_contents = {
+  "Model Information": "model",
+  "Benchmarking": "benchmarking",
+  "Model Predictions": "predictions"
+};
+
+
+const filtered_table_info = TableInfo.filter( row =>
+  row.model == model_name
+)
+---
+<body>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+
+    </div>
+    <div>
+        <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+            {model_info.nickname}<a
+                href="JavaScript:Void(0);"
+                class="vf-badge vf-badge--primary vf-badge--phases">alpha</a
+            >
+        </h1>
+        <h2 class="vf-intro__subheading">{model_info.name}</h2>
+
+
+        <p>
+          {model_info.author.reduce(format_list_item, "")}
+        </p>
+        <p>
+          {model_info.model_id}
+        </p>
+
+         <span style="display: flex; justify-content: space-evenly; flex-wrap: wrap; padding-top:8px">
+            <a href="https://ai4life.eurobioimaging.eu/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
+                <img src="/bioimage-archive/ai-galleries/AI4Life_logo_neg_giraffe_solid.png" style="max-height:140%; padding-top:-40%">
+            </a>
+            <a href="https://bioimage.io/#/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
+                <img src="/bioimage-archive/ai-galleries/bioimage-io-logo-white.png" style="max-height:80%; padding:10px">  
+            </a>
+         </span>
+
+    </div>
+  </section>
+
+
+  <section class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <div>
+        <h2 class="vf-section-header__heading">On this page</h2>
+        <ul class="vf-list">
+          {
+            Object.entries(table_of_contents).map(([text_title, id]) => (
+              <li class="vf-list__item">
+                <a class="vf-list__link" href={"#" + id}>
+                  {text_title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  
+    <figure class="vf-figure vf-figure--align vf-figure--align-centered">
+      <img
+        class="vf-figure__image"
+        src={model_info.hero_image}
+        alt="Example image containing both original image data and after applying the model to it."
+      />
+    </figure>
+  
+    <div>
+      <a href={model_info.model_link}>
+        <button class="vf-button vf-button--primary vf-button--sm"
+          >Link to model</button
+        >
+      </a>
+    </div>
+  </section>
+
+  <hr/>
+
+  <section id="model" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Model Information</h2>
+    </div>
+
+    <div style="overflow-wrap: anywhere;">
+      <div><b>Description: </b> <Fragment set:html={multiline_text_render(model_info.description)}></Fragment></div>
+      <div><b>Licence: </b> {model_info.licence}<div>
+      <div><b>Tags: </b> {model_info.tags.reduce(format_list_item, "")}<div></div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='model'/>
+
+
+  <hr/>
+
+  <ModelPredictionTable  table_rows={filtered_table_info}, study_or_model='model'/>
+</body>
