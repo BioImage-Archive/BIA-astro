@@ -1,4 +1,6 @@
 ---
+import "/src/styles/bars_and_sections.css"
+
 const { pageTitle } = Astro.props;
 const content = await Astro.slots.render('default')
 const header_raw_html = `
