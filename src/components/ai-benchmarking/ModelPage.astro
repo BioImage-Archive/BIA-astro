@@ -4,7 +4,7 @@ import ModelPredictionTable from "./ModelPredictionTable.astro"
 import { format_list_item, multiline_text_render } from "../SharedJSFunctions";
 
 
-const { model_name, ModelMetadata, TableInfo} = Astro.props;
+const { model_name, ModelMetadata, TableInfo, logo_basepath} = Astro.props;
 
 
 const model_info = ModelMetadata[model_name]
@@ -45,10 +45,10 @@ const filtered_table_info = TableInfo.filter( row =>
 
          <span style="display: flex; justify-content: space-evenly; flex-wrap: wrap; padding-top:8px">
             <a href="https://ai4life.eurobioimaging.eu/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
-                <img src="/bioimage-archive/ai-galleries/AI4Life_logo_neg_giraffe_solid.png" style="max-height:140%; padding-top:-40%">
+                <img src={logo_basepath + "AI4Life_logo_neg_giraffe_solid.png"} style="max-height:140%; padding-top:-40%">
             </a>
             <a href="https://bioimage.io/#/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
-                <img src="/bioimage-archive/ai-galleries/bioimage-io-logo-white.png" style="max-height:80%; padding:10px">  
+                <img src={logo_basepath + "bioimage-io-logo-white.png"} style="max-height:80%; padding:10px">  
             </a>
          </span>
 
