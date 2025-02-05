@@ -27,8 +27,10 @@ export function format_param(acc, keyvalue) {
 
 export function format_analysis_param(analysis_params) {
 
-    return Object.entries(analysis_params).reduce(format_param, "")
+    return Object.entries(analysis_params).filter(([key, value]) => value != null).reduce(format_param, "")
 }
+
+const filtered_table_rows = table_rows.filter(row => row.precision != null)
 
 ---
 
@@ -65,7 +67,7 @@ export function format_analysis_param(analysis_params) {
             </thead>
             <tbody class="vf_table__body">
             {
-                table_rows.map((row) => (
+                filtered_table_rows.map((row) => (
                 <tr>
                     {
                         study_or_model == 'model' && (
