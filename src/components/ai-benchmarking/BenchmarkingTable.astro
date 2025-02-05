@@ -1,5 +1,7 @@
 ---
 import study_metadata from "../../data/bia-study-metadata.json"
+import model_metadata from "../../data/ai-dataset-benchmarking/model-metadata.json"
+
 const { table_rows, study_or_model } = Astro.props;
 
 export function get_dataset_uuid_name_map(table_rows) {
@@ -51,6 +53,7 @@ export function format_analysis_param(analysis_params) {
                     {
                         study_or_model == 'study' && (
                             <th class="vf-table__heading" >Model</th>
+                            <th class="vf-table__heading" >Task</th>
                         )
                     }
                     <th class="vf-table__heading" >Precision</th>
@@ -68,12 +71,14 @@ export function format_analysis_param(analysis_params) {
                         study_or_model == 'model' && (
                        
                             <th> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a> </th>
+
                         )
                     }
                     <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
                     {
                         study_or_model == 'study' && (
                             <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
+                            <th>{model_metadata[row.model].task}</th>
                         )
                     }
                     <th>{row.precision}</th>

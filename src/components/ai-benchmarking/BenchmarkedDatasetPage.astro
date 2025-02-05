@@ -1,0 +1,113 @@
+---
+import StudyTitleInfo from "../study-page/StudyTitleInfo.astro";
+import StudyContentsSummary from "../study-page/StudyContentsSummary.astro";
+import DatasetInfo from "./DatasetInfo.astro"
+import BenchmarkingTable from "./BenchmarkingTable.astro"
+import ModelPredictionTable from "./ModelPredictionTable.astro"
+
+import { format_list_item, multiline_text_render } from "../SharedJSFunctions";
+
+
+const { accession_id, StudyMetadata, AdditionalStudyMetadata, TableInfo} = Astro.props;
+
+
+const table_of_contents = {
+  "Model Information": "model",
+  "Benchmarking": "benchmarking",
+  "Model Predictions": "predictions"
+};
+
+const study_info = StudyMetadata[accession_id]
+const study_ai_info = AdditionalStudyMetadata[accession_id]
+
+const filtered_table_info = TableInfo.filter( row =>
+  row.study == accession_id
+)
+const ai_dataset_uuids = study_ai_info.dataset.reduce((ai_dataset_uuids, dataset) => {ai_dataset_uuids.push(dataset.uuid); return ai_dataset_uuids}, [])
+const relevant_datasets = study_info.dataset.filter(
+  dataset => ai_dataset_uuids.includes(dataset.uuid)
+)
+
+const example_img_uri = study_ai_info.hero_image 
+const example_annotation_uri = study_ai_info.hero_image_gt
+
+---
+
+<body>
+    <StudyTitleInfo study_info={study_info} />
+
+    <StudyContentsSummary 
+      table_of_contents={table_of_contents} 
+      original_study_link={"https://www.ebi.ac.uk/biostudies/BioImages/studies/"+study_info.accession_id} 
+    >
+    <div slot="hero-image" style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+      <figure class="vf-figure" style="max-width:300px">
+        <img
+          class="vf-figure__image"
+          src={example_img_uri}
+          alt="Example image for this dataset"
+        />
+        <figcaption class="vf-figure__caption">
+          Example image for this dataset
+        </figcaption>
+      </figure>
+
+      {
+        example_annotation_uri && (
+          <figure class="vf-figure" style="max-width:300px">
+            <img
+              class="vf-figure__image"
+              src={example_annotation_uri}
+              alt="Example annotation for this dataset"
+            />
+            <figcaption class="vf-figure__caption">
+              Example annotation for this dataset
+            </figcaption>
+          </figure>
+        )
+      }
+      
+    </div>
+    </StudyContentsSummary>
+
+    <hr/>
+
+  <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Study Information</h2>
+    </div>
+
+    <div style="overflow-wrap: anywhere;">
+      <div><b>Description: </b> <Fragment set:html={multiline_text_render(study_info.description)}></Fragment></div>
+      <div><b>Licence: </b> {study_info.licence}<div>
+      {
+        study_ai_info.tags && (
+          <div><b>Tags:</b> {study_ai_info.tags.reduce(format_list_item, "")}</div>
+        )
+      }
+    </div>
+  </section>
+
+  <hr/>
+
+  <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Study Components</h2>
+    </div>
+    <div>
+      {
+       relevant_datasets.map((dataset) => (
+          <DatasetInfo dataset={dataset} dataset_ai_info={study_ai_info.dataset.filter(ai_dataset => ai_dataset.uuid == dataset.uuid)[0]} study_acc_id={accession_id}/>
+        ))
+      }
+    </div>
+  </section>
+
+  <hr/>
+
+  <BenchmarkingTable  table_rows={filtered_table_info}, study_or_model='study'/>
+
+  <hr/>
+
+  <ModelPredictionTable  table_rows={filtered_table_info}, study_or_model='study'/>
+</body>
