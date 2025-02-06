@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SourceImage from "../../components/SourceImage.astro"
 import DatasetDetail from '../../components/DatasetDetail.astro';
+import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import datasetMetadata from "../../data/bia-dataset-metadata-for-images.json";
@@ -119,7 +120,10 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
             <div>
-                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ imageStudy.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+                <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+                    { imageStudy.accession_id }
+                    <WebsiteStateButton/>
+                </h1>
                 <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
                 <p class="studytitle">{imageDataset.title_id}</p>
                 <a href={ "/bioimage-archive/dataset/" + imageStudy.accession_id}>

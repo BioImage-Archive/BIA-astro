@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
+
 import exports from "../../../../data/old-export-format/bia-spatialomics-export.json";
 
 import studyImage from '../../../../assets/bioimage-archive/study.png';
@@ -29,7 +31,9 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
         <div></div>
         <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ study.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ study.accession_id }
+              <WebsiteStateButton/>
+            </h1>
             <h2 class="vf-intro__subheading">{ study.title }</h2>
             Released { study.release_date }<br>
             <!-- {{ authors }} -->

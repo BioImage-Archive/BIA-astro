@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SourceImage from "../../../components/SourceImage.astro"
+import WebsiteStateButton from '../../../components/WebsiteStateButton.astro';
 
 import exports from "../../../data/old-export-format/bia-images-export.json";
 import studyData from "../../../data/old-export-format/bia-export.json";
@@ -46,7 +47,9 @@ const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.u
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
             <div>
-                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image.study_accession_id }:{ image.alias }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image.study_accession_id }:{ image.alias }
+                    <WebsiteStateButton/>
+                </h1>
                 <h2 class="vf-intro__subheading">{image.name}</h2>
                 {image.original_relpath}
                 <p class="studytitle">{image.study_title}</p>
