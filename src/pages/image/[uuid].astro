@@ -21,6 +21,12 @@ export function getStaticPaths() {
   });
 }
 
+const get_simple_attr_value = function(obj, attrName) {
+  return obj?.attribute
+    ?.find(attr => attr.name === attrName)
+    ?.value[attrName] ?? null;
+}
+
 const { uuid } = Astro.params;
 
 const image = image_data[uuid];
@@ -45,7 +51,6 @@ if (interactive_image != null) {
     primary_image_rep = null
 }
 
-
 var vizarr_iframe_source
 var itk_link
 if (interactive_image != null) {
@@ -55,6 +60,10 @@ if (interactive_image != null) {
     vizarr_iframe_source = null
     itk_link = null
 }
+
+const pref_ng_image_rep_uuid = get_simple_attr_value(image, "preferred_neuroglancer_image_representation_uuid")
+const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
+const ng_link = pref_ng_image_rep ? get_simple_attr_value(pref_ng_image_rep, "neuroglancer_view_link") : null
 
 const creation_process = image.creation_process
 
@@ -159,7 +168,7 @@ function display_image() {
                     )
                 }
                 {
-                    ( vizarr_iframe_source || itk_link ) && (
+                    ( vizarr_iframe_source || itk_link || ng_link ) && (
                         <h3>Visualise</h3>
                     )
                 }
@@ -177,7 +186,13 @@ function display_image() {
                         </a>
                     )
                 }
-            
+                {
+                    ng_link && (
+                        <a href={ng_link}>
+                            <button class="vf-button vf-button--primary vf-button--sm">Open in neuroglancer</button>
+                        </a>
+                    )
+                }
                 <script>
 
                     let copyUrlButton = document.getElementById("CopyURLButton")
