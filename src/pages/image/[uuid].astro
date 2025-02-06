@@ -61,7 +61,7 @@ if (interactive_image != null) {
     itk_link = null
 }
 
-const pref_ng_image_rep_uuid = image.attribute?.find((attr) => attr.name === "preferred_neuroglancer_image_representation_uuid")?.value["preferred_neuroglancer_image_representation_uuid"]
+const pref_ng_image_rep_uuid = get_simple_attr_value(image, "preferred_neuroglancer_image_representation_uuid")
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
 const ng_link = pref_ng_image_rep ? get_simple_attr_value(pref_ng_image_rep, "neuroglancer_view_link") : null
 
