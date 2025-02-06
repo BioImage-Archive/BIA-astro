@@ -21,6 +21,12 @@ export function getStaticPaths() {
   });
 }
 
+const get_simple_attr_value = function(obj, attrName) {
+  return obj?.attribute
+    ?.find(attr => attr.name === attrName)
+    ?.value[attrName] ?? null;
+}
+
 const { uuid } = Astro.params;
 
 const image = image_data[uuid];
@@ -31,8 +37,6 @@ const interactive_image = image.representation.find((rep) => rep.use_type === "I
 const static_display = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
 const thumbnail = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
 const user_submitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
-
-const ng_link_attribute = image.attribute?.find((attr) => attr.name === "neuroglancer_view_link")
 
 var primary_image_rep
 if (interactive_image != null) {
@@ -47,7 +51,6 @@ if (interactive_image != null) {
     primary_image_rep = null
 }
 
-
 var vizarr_iframe_source
 var itk_link
 if (interactive_image != null) {
@@ -57,6 +60,10 @@ if (interactive_image != null) {
     vizarr_iframe_source = null
     itk_link = null
 }
+
+const pref_ng_image_rep_uuid = image.attribute?.find((attr) => attr.name === "preferred_neuroglancer_image_representation_uuid")?.value["preferred_neuroglancer_image_representation_uuid"]
+const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
+const ng_link = pref_ng_image_rep ? get_simple_attr_value(pref_ng_image_rep, "neuroglancer_view_link") : null
 
 const creation_process = image.creation_process
 
@@ -161,7 +168,7 @@ function display_image() {
                     )
                 }
                 {
-                    ( vizarr_iframe_source || itk_link || ng_link_attribute ) && (
+                    ( vizarr_iframe_source || itk_link || ng_link ) && (
                         <h3>Visualise</h3>
                     )
                 }
@@ -180,8 +187,8 @@ function display_image() {
                     )
                 }
                 {
-                    ng_link_attribute && (
-                        <a href={ng_link_attribute.value['neuroglancer_view_link']}>
+                    ng_link && (
+                        <a href={ng_link}>
                             <button class="vf-button vf-button--primary vf-button--sm">Open in neuroglancer</button>
                         </a>
                     )
