@@ -1,0 +1,22 @@
+---
+import OldLayout from "../../../../../layouts/OldLayout.astro";
+import ModelPage from "../../../../../components/ai-benchmarking/ModelPage.astro"
+
+import collectionList from "../../../../../data/collections/ai-benchmark-models.json"
+import modelMetadata from "../../../../../data/ai-dataset-benchmarking/model-metadata-old-website.json"
+import tableInfo from "../../../../../data/ai-dataset-benchmarking/model-dataset-table-old-website.json"
+
+export function getStaticPaths() {
+  return Object.values(collectionList["model_names"]).map((id) => {
+    return {
+      params: { modelName: id },
+    };
+  });
+}
+
+const { modelName } = Astro.params;
+
+---
+<OldLayout title={modelName}>
+  <ModelPage modelName={modelName} modelMetadata={modelMetadata} tableInfo={tableInfo} aiProjectLogosBasepath="/bioimage-archive/galleries/assets/" />
+</Layout>
