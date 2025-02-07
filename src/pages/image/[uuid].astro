@@ -3,19 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SourceImage from "../../components/SourceImage.astro"
 import DatasetDetail from '../../components/DatasetDetail.astro';
 
-import field_map from "../../data/metadata-field-name-mapping.json";
-import dataset_metdata from "../../data/bia-dataset-metadata-for-images.json";
-import image_data from "../../data/bia-image-metadata.json";
-import image_fallback from "../../assets/bioimage-archive/image_fallback.png"
+import fieldMap from "../../data/metadata-field-name-mapping.json";
+import datasetMetadata from "../../data/bia-dataset-metadata-for-images.json";
+import imageMetadata from "../../data/bia-image-metadata.json";
+import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
 
-const biosample_map = field_map["biosample"];
-const sipp_map = field_map["specimen_imaging_preparation_protocol"];
-const image_acquisition_map = field_map["image_acquisition"];
-const annotation_method_map = field_map["annotation_method"];
-const protocol_map = field_map["protocol"];
+const biosampleMap = fieldMap["biosample"];
+const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
+const imageAcquisitionMap = fieldMap["image_acquisition"];
+const annotationMethodMap = fieldMap["annotation_method"];
+const protocolMap = fieldMap["protocol"];
 
 export function getStaticPaths() {
-  return Object.keys(image_data).map((uuid) => {
+  return Object.keys(imageMetadata).map((uuid) => {
     return {
       params:  { uuid: uuid }
     };
@@ -30,37 +30,25 @@ function getSimpleAttributeValue(obj, attrName) {
 
 const { uuid } = Astro.params;
 
-const image = image_data[uuid];
+const image = imageMetadata[uuid];
 
-const image_dataset = dataset_metdata[image.submission_dataset_uuid]
-const image_study = image_dataset.submitted_in_study
-const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
-const static_display = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
-const thumbnail = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
-const user_submitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
+const imageDataset = datasetMetadata[image.submission_dataset_uuid]
+const imageStudy = imageDataset.submitted_in_study
+const interactiveImage = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
+const staticDisplay = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
+const thumbnailImage = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
+const userSubmitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
 
-var primary_image_rep
-if (interactive_image != null) {
-    primary_image_rep = interactive_image
-} else if (static_display != null) {
-    primary_image_rep = static_display
-} else if (thumbnail != null) {
-    primary_image_rep = thumbnail
-} else if (user_submitted != null) {
-    primary_image_rep = user_submitted
-} else {
-    primary_image_rep = null
-}
+const primary_image_rep = interactiveImage != null ? interactiveImage :
+    staticDisplay != null ? staticDisplay :
+    thumbnailImage != null ? thumbnailImage :
+    userSubmitted != null ? userSubmitted : null
 
-var vizarr_iframe_source
-var itk_link
-if (interactive_image != null) {
-    vizarr_iframe_source = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=" + interactive_image.file_uri[0]
-    itk_link = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + interactive_image.file_uri[0]
-} else {
-    vizarr_iframe_source = null
-    itk_link = null
-}
+
+
+const vizarrIFrameSource = interactiveImage != null ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImage.file_uri[0]}` : null
+const itkLink = interactiveImage != null ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImage.file_uri[0]}` : null
+
 
 const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
@@ -72,8 +60,6 @@ let specimen
 if ("subject" in creation_process && creation_process.subject != null) {
     specimen = creation_process.subject
 }
-
-
 
 
 function formatPhysicalDimension(value, text) {
@@ -92,11 +78,10 @@ function formatPhysicalDimension(value, text) {
     }
 }
 
-function formatPhysicalDimensions(img_rep) {
+function formatPhysicalDimensions(imageRepresentation) {
     const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
-    return fields.reduce((text, field) => formatPhysicalDimension(img_rep[field], text), "")
+    return fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
 }
-
 
 
 function formatPixelDimension(value, text) {
@@ -121,17 +106,9 @@ function formatPixelDimensions(img_rep) {
 }
 
 
-function getDisplayImage() {
-    if (vizarr_iframe_source) {
-        return ` <iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarr_iframe_source}"></iframe>`
-    }
-
-    if (primary_image_rep && primary_image_rep.use_type !== "UPLOADED_BY_SUBMITTER" && primary_image_rep.file_uri?.[0]) {
-        return ` <img style="width: 100%; height: 500px" src="${primary_image_rep.file_uri[0]}" />`;
-    }
-
-    return `<img style="height: 500px;" src="${image_fallback.src}" />`;
-}
+const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarrIFrameSource}"></iframe>` :
+    (primary_image_rep && primary_image_rep.use_type !== "UPLOADED_BY_SUBMITTER" && primary_image_rep.file_uri?.[0]) ? `<img style="width: 100%; height: 500px" src="${primary_image_rep.file_uri[0]}" />` :
+    `<img style="height: 500px;" src="${fallbackImage.src}" />`
 
 
 ---
@@ -142,10 +119,10 @@ function getDisplayImage() {
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
             <div>
-                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image_study.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
-                <h2 class="vf-intro__subheading">{image_study.title}</h2>
-                <p class="studytitle">{image_dataset.title_id}</p>
-                <a href={ "/bioimage-archive/dataset/" + image_study.accession_id}>
+                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ imageStudy.accession_id }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+                <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
+                <p class="studytitle">{imageDataset.title_id}</p>
+                <a href={ "/bioimage-archive/dataset/" + imageStudy.accession_id}>
                     <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                 </a> 
             </div>
@@ -159,11 +136,11 @@ function getDisplayImage() {
                 {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
                 {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
             </div>
-            <div set:html={getDisplayImage()} style="display: flex; justify-content: center;"></div>
+            <div set:html={displayImageHTML} style="display: flex; justify-content: center;"></div>
 
             <div>
                 <h3>Access images</h3>
-                License: {image_study.licence} <br/>
+                License: {imageStudy.licence} <br/>
                 <br/>
                 <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a><br/>
                 <br/>
@@ -173,20 +150,20 @@ function getDisplayImage() {
                     )
                 }
                 {
-                    ( vizarr_iframe_source || itk_link || ng_link ) && (
+                    ( vizarrIFrameSource || itkLink || ng_link ) && (
                         <h3>Visualise</h3>
                     )
                 }
                 {
-                    vizarr_iframe_source && (
-                        <a href={vizarr_iframe_source}>
+                    vizarrIFrameSource && (
+                        <a href={vizarrIFrameSource}>
                             <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
                         </a>
                     )
                 }
                 {
-                    itk_link && (
-                        <a href={itk_link}>
+                    itkLink && (
+                        <a href={itkLink}>
                             <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
                         </a>
                     )
@@ -227,9 +204,9 @@ function getDisplayImage() {
                 <h3>Study</h3>
             </div>
             <div style="overflow-wrap: anywhere;">
-                <b>Title</b>: {image_study.title}<br/>
-                <b>Description:</b> {image_study.description} <br/>
-                <b>Licence:</b> {image_study.licence} <br/>
+                <b>Title</b>: {imageStudy.title}<br/>
+                <b>Description:</b> {imageStudy.description} <br/>
+                <b>Licence:</b> {imageStudy.licence} <br/>
             </div>
         </section>
 
@@ -240,8 +217,8 @@ function getDisplayImage() {
                 <h3>Dataset</h3>
             </div>
             <div>
-                <b>Title</b>: {image_dataset.title_id}<br/>
-                <b>Description:</b> {image_dataset.description}<br/>
+                <b>Title</b>: {imageDataset.title_id}<br/>
+                <b>Description:</b> {imageDataset.description}<br/>
             </div> 
         </section>
 
@@ -260,7 +237,7 @@ function getDisplayImage() {
                             {specimen.sample_of.map((biosample) => (
                                 <DatasetDetail
                                     data={biosample}
-                                    field_map={biosample_map}
+                                    fieldMap={biosampleMap}
                                 />
                             ))}
                         </ul>
@@ -274,7 +251,7 @@ function getDisplayImage() {
                             {specimen.imaging_preparation_protocol.map((sipp) => (
                                 <DatasetDetail
                                     data={sipp}
-                                    field_map={sipp_map}
+                                    fieldMap={sippMap}
                                 />
                             ))}
                         </ul>
@@ -299,7 +276,7 @@ function getDisplayImage() {
                                     (image_acquisition) => (
                                         <DatasetDetail
                                             data={image_acquisition}
-                                            field_map={image_acquisition_map}
+                                            fieldMap={imageAcquisitionMap}
                                         />
                                     ),
                                 )}
@@ -315,7 +292,7 @@ function getDisplayImage() {
                                     (annotation_method) => (
                                         <DatasetDetail
                                             data={annotation_method}
-                                            field_map={annotation_method_map}
+                                            fieldMap={annotationMethodMap}
                                         />
                                     ),
                                 )}
@@ -331,7 +308,7 @@ function getDisplayImage() {
                                     (protocol) => (
                                         <DatasetDetail
                                             data={protocol}
-                                            field_map={protocol_map}
+                                            fieldMap={protocolMap}
                                         />
                                     ),
                                 )}

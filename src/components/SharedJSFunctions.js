@@ -1,15 +1,15 @@
-export function getPlaceholderHeroImage(accession_id) {
-    const match = accession_id.match(/(\d{1,5})$/);
-    const acc_id_number = parseInt(match[1]);
-    const imageNumber = (acc_id_number % 45) + 1;
+export function getPlaceholderHeroImage(accessionID) {
+    const match = accessionID.match(/(\d{1,5})$/);
+    const accessionIDNumber = parseInt(match[1]);
+    const imageNumber = (accessionIDNumber % 45) + 1;
     return `/bioimage-archive/default-hero/placeholder_logo_${imageNumber}.png`
 }
 
-export function formatListItem(output_string, item, i, list) {
+export function formatListItem(outputString, item, i, list) {
     if (i + 1 === list.length) {
-        return output_string + item ;
+        return `${outputString}${item}` ;
     } else {
-        return output_string + item + ", " ;
+        return `${outputString}${item}, ` ;
     }
 }
 
@@ -31,7 +31,7 @@ export function multilineTextRender(value) {
 }
 
 
-export function formatBytesToHumanSize(size_bytes) {
-    var i = size_bytes == 0 ? 0 : Math.floor(Math.log(size_bytes) / Math.log(1000));
-    return `${Number(size_bytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+export function formatBytesToHumanSize(sizeBytes) {
+    var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
+    return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
 }

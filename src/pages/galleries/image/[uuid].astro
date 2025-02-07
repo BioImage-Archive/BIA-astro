@@ -3,7 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import SourceImage from "../../../components/SourceImage.astro"
 
 import exports from "../../../data/old-export-format/bia-images-export.json";
-import study_data from "../../../data/old-export-format/bia-export.json";
+import studyData from "../../../data/old-export-format/bia-export.json";
 import AIStudyData from "../../../data/old-export-format/bia-ai-export.json";
 import SpatialomicsStudyData from "../../../data/old-export-format/bia-spatialomics-export.json";
 
@@ -24,17 +24,17 @@ const tissue_x = (1e6 * image.PhysicalSizeX * image.sizeX).toPrecision(2);
 const tissue_y = (1e6 * image.PhysicalSizeY * image.sizeY).toPrecision(2);
 
 
-function getStudyData(accession_id, StudyData, AIStudyData, SpatialomicsStudyData) {
-    if (accession_id in StudyData["datasets"]) {
-        return StudyData["datasets"][accession_id]
-    } else if (accession_id in AIStudyData["datasets"]) {
-        return AIStudyData["datasets"][accession_id]
-    } else if (accession_id in SpatialomicsStudyData["datasets"]) {
-        return SpatialomicsStudyData["datasets"][accession_id]
+function getStudyData(accessionID, StudyData, AIStudyData, SpatialomicsStudyData) {
+    if (accessionID in StudyData["datasets"]) {
+        return StudyData["datasets"][accessionID]
+    } else if (accessionID in AIStudyData["datasets"]) {
+        return AIStudyData["datasets"][accessionID]
+    } else if (accessionID in SpatialomicsStudyData["datasets"]) {
+        return SpatialomicsStudyData["datasets"][accessionID]
     }
 }
 
-const study_info = getStudyData(image.study_accession_id, study_data, AIStudyData, SpatialomicsStudyData)
+const study_info = getStudyData(image.study_accession_id, studyData, AIStudyData, SpatialomicsStudyData)
 
 const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
 

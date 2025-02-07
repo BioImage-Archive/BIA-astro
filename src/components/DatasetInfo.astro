@@ -1,15 +1,15 @@
 ---
-import field_map from "../data/metadata-field-name-mapping.json";
+import fieldMap from "../data/metadata-field-name-mapping.json";
 import DatasetDetail from "./DatasetDetail.astro";
 
 const { dataset } = Astro.props;
-const biosample_map = field_map["biosample"];
-const sipp_map = field_map["specimen_imaging_preparation_protocol"];
-const sgp_map = field_map["specimen_growth_protocol"];
-const image_acquisition_map = field_map["image_acquisition"];
-const analysis_method_map = field_map["analysis_method"];
-const annotation_method_map = field_map["annotation_method"];
-const correlation_method_map = field_map["correlation_method"];
+const biosampleMap = fieldMap["biosample"];
+const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
+const sgpMap = fieldMap["specimen_growth_protocol"];
+const imageAcquisitionMap = fieldMap["image_acquisition"];
+const analysisMethodMap = fieldMap["analysis_method"];
+const annotationMethodMap = fieldMap["annotation_method"];
+const correlationMethodMap = fieldMap["correlation_method"];
 ---
 
 <div style="margin-bottom: 1rem;">
@@ -29,7 +29,7 @@ const correlation_method_map = field_map["correlation_method"];
                         {dataset.biological_entity.map((biosample) => (
                             <DatasetDetail
                                 data={biosample}
-                                field_map={biosample_map}
+                                fieldMap={biosampleMap}
                             />
                         ))}
                     </ul>
@@ -45,7 +45,7 @@ const correlation_method_map = field_map["correlation_method"];
                             (sipp) => (
                                 <DatasetDetail
                                     data={sipp}
-                                    field_map={sipp_map}
+                                    fieldMap={sippMap}
                                 />
                             ),
                         )}
@@ -62,7 +62,7 @@ const correlation_method_map = field_map["correlation_method"];
                             (image_acquisition) => (
                                 <DatasetDetail
                                     data={image_acquisition}
-                                    field_map={image_acquisition_map}
+                                    fieldMap={imageAcquisitionMap}
                                 />
                             ),
                         )}
@@ -79,7 +79,7 @@ const correlation_method_map = field_map["correlation_method"];
                             (sgp) => (
                                 <DatasetDetail
                                     data={sgp}
-                                    field_map={sgp_map}
+                                    fieldMap={sgpMap}
                                 />
                             ),
                         )}
@@ -93,7 +93,7 @@ const correlation_method_map = field_map["correlation_method"];
                     {dataset.analysis_method.map((analysis_method) => (
                         <DatasetDetail
                             data={analysis_method}
-                            field_map={analysis_method_map}
+                            fieldMap={analysisMethodMap}
                         />
                     ))}
                 </ul>
@@ -106,7 +106,7 @@ const correlation_method_map = field_map["correlation_method"];
                     {dataset.correlation_method.map((correlation_method) => (
                         <DatasetDetail
                             data={correlation_method}
-                            field_map={correlation_method_map}
+                            fieldMap={correlationMethodMap}
                         />
                     ))}
                 </ul>
@@ -119,7 +119,7 @@ const correlation_method_map = field_map["correlation_method"];
                     {dataset.annotation_process.map((annotation_method) => (
                         <DatasetDetail
                             data={annotation_method}
-                            field_map={annotation_method_map}
+                            fieldMap={annotationMethodMap}
                         />
                     ))}
                 </ul>

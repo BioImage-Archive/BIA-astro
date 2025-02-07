@@ -1,92 +1,87 @@
 ---
 import { getPlaceholderHeroImage, formatListItem, taxonRender } from "../SharedJSFunctions.js";
-const { study_info, study_page_path, taglist, card_img_override} = Astro.props;
+const { study, studyPageRoot, taglist, cardImageOverride} = Astro.props;
 
-function getStudyImage(study_info, card_img_override) {
-  const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-  if (card_img_override != null) {
-    return card_img_override
-  } else if (dataset_with_img == undefined) {
-    return getPlaceholderHeroImage(study_info.accession_id)
+function getStudyImage(study, cardImageOverride) {
+  const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
+  if (cardImageOverride != null) {
+    return cardImageOverride
+  } else if (datasetWithImage == undefined) {
+    return getPlaceholderHeroImage(study.accession_id)
   } else {
-    return dataset_with_img.example_image_uri[0]
+    return datasetWithImage.example_image_uri[0]
   }
 }
 
-function getImagingMethodType(study_info) {
-    var imaging_type_list = new Array()
-    for (var dataset of study_info.dataset) {
+function getImagingMethodType(study) {
+    const imagingTypeList = []
+    for (var dataset of study.dataset) {
         for (var ia of dataset.acquisition_process) {
-            for (var method_names of ia.imaging_method_name) {
-                if (!imaging_type_list.includes(method_names)) {
-                    imaging_type_list.push(method_names)
+            for (var methodNames of ia.imaging_method_name) {
+                if (!imagingTypeList.includes(methodNames)) {
+                    imagingTypeList.push(methodNames)
                 }
             }
         }
     }
-    return imaging_type_list
+    return imagingTypeList
 }
 
 
-function getTaxons(study_info) {
-    var taxon_html_list = new Array()
-    var taxon_list = new Array()
-    for (var dataset of study_info.dataset) {
+function getTaxons(study) {
+    const taxonHtmlList = []
+    const taxonList = []
+    for (var dataset of study.dataset) {
         for (var biosample of dataset.biological_entity) {
             for (var taxon of biosample.organism_classification) {
-                if (!taxon_list.some(txn_final => txn_final.common_name === taxon.common_name || txn_final.scientific_name === taxon.scientific_name )) {
-                    taxon_list.push(taxon)
-                    taxon_html_list.push(taxonRender(taxon))
+                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
+                    taxonList.push(taxon)
+                    taxonHtmlList.push(taxonRender(taxon))
                 }
             }
         }
     }
-    return taxon_html_list
+    return taxonHtmlList
 }
 
 
-function getImagingType(study_info) {
-    const image_type_list = getImagingMethodType(study_info)
-    const img_type_display = image_type_list.reduce(formatListItem, "")
-    if (img_type_display.length > 50 * image_type_list.length) {
+function getImagingType(study) {
+    const imageTypeList = getImagingMethodType(study)
+    const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
+    if (imgTypeDisplay.length > 50 * imageTypeList.length) {
         // Avoid displaying full method text on dataset cards.
         return 'See details of study'
     } else {
-        return img_type_display
+        return imgTypeDisplay
     }
 }
 
 function renderTaxonList(dataset) {
-    const taxon_list = getTaxons(dataset)
-    return taxon_list.reduce(formatListItem, "")
+    const taxonList = getTaxons(dataset)
+    return taxonList.reduce(formatListItem, "")
 }
 
-function getDataForCardFilter(study_info) {
-    const dataset_with_img = study_info.dataset.find((dataset) => dataset.image?.length > 0)
-    var has_image
-    if (dataset_with_img == undefined) {
-        has_image = false
-    } else {
-        has_image = true
-    }
-    const data_string = `${study_info.accession_id}; ${study_info.release_date}; ${study_info.title}; ${renderTaxonList(study_info)}; ${getImagingType(study_info)}; has_img: ${has_image}`
-    return data_string
+function getDataForCardFilter(study) {
+    const datasetWithImage = study.dataset.find((dataset) => dataset.image?.length > 0)
+    var hasImage = datasetWithImage !== undefined
+    const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
+    return dataString
 }
 ---
-<article class="vf-card vf-card--brand vf-card--bordered" data-message={getDataForCardFilter(study_info)} style="max-width:400px">
-    <img src={ getStudyImage(study_info, card_img_override) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+<article class="vf-card vf-card--brand vf-card--bordered" data-message={getDataForCardFilter(study)} style="max-width:400px">
+    <img src={ getStudyImage(study, cardImageOverride) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
-            <a class="vf-card__link" href={ "/bioimage-archive/"+ study_page_path + "/" + study_info.accession_id } >
-                { study_info.accession_id }
+            <a class="vf-card__link" href={`/bioimage-archive/${studyPageRoot}/${study.accession_id}`} >
+                { study.accession_id }
                 <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
             </a>
         </h3>
         <p class="vf-card__text">
-        { study_info.title }<br><br>
-        <b>Release date: </b>{ study_info.release_date }<br>
-        <b>Imaging method: </b>{getImagingType(study_info)}<br>
-        <b>Organism: </b><Fragment set:html={renderTaxonList(study_info)}></Fragment>
+        { study.title }<br><br>
+        <b>Release date: </b>{ study.release_date }<br>
+        <b>Imaging method: </b>{getImagingType(study)}<br>
+        <b>Organism: </b><Fragment set:html={renderTaxonList(study)}></Fragment>
         </p>
 
         {taglist && taglist.length > 0 && (

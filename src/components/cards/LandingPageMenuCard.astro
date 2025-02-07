@@ -1,6 +1,6 @@
 ---
 
-const { label, description, icon_src, target } = Astro.props;
+const { label, description, icon_src: icon, target } = Astro.props;
 ---
 <article class="vf-card vf-card--brand vf-card--bordered">
     <div class="vf-card__content | vf-stack vf-stack--400">
@@ -15,7 +15,7 @@ const { label, description, icon_src, target } = Astro.props;
             <p class="vf-card__text">{ description }</p>
         </div>
         <div>
-            <img src={icon_src} alt="Browse" style="width: 70px">
+            <img src={icon} alt="Browse" style="width: 70px">
         </div>
     </div>
 </article>

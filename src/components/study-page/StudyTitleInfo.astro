@@ -1,7 +1,7 @@
 ---
-const { study_info } = Astro.props;
+const { study_info: studyInfo } = Astro.props;
 
-const authors = "author" in study_info ? study_info.author : [{display_name: ""}];
+const authors = "author" in studyInfo ? studyInfo.author : [{display_name: ""}];
 
 function authorFormat(author_name, i, author_list) {
     if (i + 1 === author_list.length) {
@@ -22,13 +22,13 @@ function authorFormat(author_name, i, author_list) {
     </div>
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
-            {study_info.accession_id}<a
+            {studyInfo.accession_id}<a
                 href="JavaScript:Void(0);"
                 class="vf-badge vf-badge--primary vf-badge--phases">alpha</a
             >
         </h1>
-        <h2 class="vf-intro__subheading">{study_info.title}</h2>
-        <p>Released {study_info.release_date}</p>
+        <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
+        <p>Released {studyInfo.release_date}</p>
         <p>
             {
                 authors.map((contributor, i) =>

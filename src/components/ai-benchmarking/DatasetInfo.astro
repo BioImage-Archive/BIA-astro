@@ -1,8 +1,8 @@
 ---
 import { formatListItem, taxonRender, multilineTextRender } from "../SharedJSFunctions";
-import study_metadata from "../../data/bia-study-metadata.json"
+import studyMetadata from "../../data/bia-study-metadata.json"
 
-const { dataset, dataset_ai_info, study_acc_id } = Astro.props;
+const { dataset, datasetAIInfo, studyAccessionID } = Astro.props;
 
 
 function getTaxons(dataset) {
@@ -15,47 +15,47 @@ function getTaxons(dataset) {
         .flatMap(entity => entity.organism_classification || [])
         .filter(item => typeof item === "object"); 
 
-    var taxon_html_list = new Array()
+    var taxonHTMLList = new Array()
     for (var taxon of taxons) {
-        taxon_html_list.push(taxonRender(taxon))
+        taxonHTMLList.push(taxonRender(taxon))
     }
 
-    return taxon_html_list
+    return taxonHTMLList
 };
 
 function getBiologicalEntity(dataset) {
-    var bio_entities
+    var biosamples
     if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
-        bio_entities = [];
+        biosamples = [];
     }
 
-    bio_entities = dataset.biological_entity
+    biosamples = dataset.biological_entity
         .flatMap(entity => entity.biological_entity_description || []); 
 
-    return bio_entities.reduce(formatListItem, "")
+    return biosamples.reduce(formatListItem, "")
 };
 
 
 function getImagingType(dataset) {
-    var imaging_type_list = new Array()
+    var imagingTypeList = new Array()
     for (var ia of dataset.acquisition_process) {
         for (var method_names of ia.imaging_method_name) {
-            if (!imaging_type_list.includes(method_names)) {
-                imaging_type_list.push(method_names)
+            if (!imagingTypeList.includes(method_names)) {
+                imagingTypeList.push(method_names)
             }
         }
     }
-    return imaging_type_list
+    return imagingTypeList
 }
 
-function display_img_type(dataset) {
-    const image_type_list = getImagingType(dataset)
-    const img_type_display = image_type_list.reduce(formatListItem, "")
-    if (img_type_display.length > 50 * image_type_list.length) {
+function displayImagingType(dataset) {
+    const imageTypeList = getImagingType(dataset)
+    const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
+    if (imgTypeDisplay.length > 50 * imageTypeList.length) {
         // Avoid displaying full method text on dataset cards.
         return 'See details of study'
     } else {
-        return img_type_display
+        return imgTypeDisplay
     }
 }
 
@@ -67,15 +67,15 @@ const taxons = getTaxons(dataset)
 
 
 function getAnnotationMethodInformation() {
-    if (Object.keys(dataset_ai_info).includes("annotation_study")) {
-        const annotation_dataset = study_metadata[dataset_ai_info.annotation_study].dataset.filter(dataset => dataset.uuid == dataset_ai_info.annotation_dataset)[0]
+    if (Object.keys(datasetAIInfo).includes("annotation_study")) {
+        const annotation_dataset = studyMetadata[datasetAIInfo.annotation_study].dataset.filter(dataset => dataset.uuid == datasetAIInfo.annotation_dataset)[0]
         return annotation_dataset.annotation_method[0].protocol_description
-    } else if (Object.keys(dataset_ai_info).includes("annotation_dataset")) {
-        const annotation_dataset = study_metadata[study_acc_id].dataset.filter(dataset => dataset.uuid == dataset_ai_info.annotation_dataset)[0]
+    } else if (Object.keys(datasetAIInfo).includes("annotation_dataset")) {
+        const annotation_dataset = studyMetadata[studyAccessionID].dataset.filter(dataset => dataset.uuid == datasetAIInfo.annotation_dataset)[0]
         return annotation_dataset.annotation_process[0].protocol_description
-    } else if (Object.keys(dataset_ai_info).includes("annotation_method_override")) {
+    } else if (Object.keys(datasetAIInfo).includes("annotation_method_override")) {
 
-        return dataset_ai_info.annotation_method_override
+        return datasetAIInfo.annotation_method_override
     } else {
         return null
     }
@@ -108,7 +108,7 @@ const annotation_info = getAnnotationMethodInformation()
             taxons && taxons.length > 0 && 
                 (
                     <div>
-                    <b>Imaging Method:</b> {display_img_type(dataset)}
+                    <b>Imaging Method:</b> {displayImagingType(dataset)}
                     </div>
                 )
         }

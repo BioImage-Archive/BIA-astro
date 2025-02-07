@@ -1,6 +1,6 @@
 ---
 
-const { heading, subheading, contribute_link } = Astro.props;
+const { heading, subheading, contributeLink } = Astro.props;
 
 ---
 <section class="vf-intro | embl-grid embl-grid--has-centered-content">
@@ -21,8 +21,8 @@ const { heading, subheading, contribute_link } = Astro.props;
         <br/>
 
         {
-          contribute_link && (
-            <p class="vf-hero__text"> <a href={contribute_link}>Check here </a> for how to contribute</p>
+          contributeLink && (
+            <p class="vf-hero__text"> <a href={contributeLink}>Check here </a> for how to contribute</p>
           )
         }
         

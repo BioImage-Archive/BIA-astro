@@ -21,7 +21,7 @@ const datasets = exports["datasets"];
 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(datasets).map((dataset) => ( <DatasetCard study_info={ dataset } study_page_path={"/bioimage-archive/galleries/ai/ai-ready-dataset/" + dataset.accession_id} /> )) }
+          { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } datasetPagePath={`/bioimage-archive/galleries/ai/ai-ready-dataset/${dataset.accession_id}`} /> )) }
         </div>
     </section>
   </body>

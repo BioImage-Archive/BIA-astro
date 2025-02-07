@@ -1,12 +1,12 @@
 ---
-const { study_info, study_page_path } = Astro.props;
+const { dataset, datasetPagePath } = Astro.props;
 ---
 <article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px">
-    <img src={ study_info.example_image_uri } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <img src={ dataset.example_image_uri } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
-            <a class="vf-card__link" href={study_page_path} >
-                { study_info.accession_id }
+            <a class="vf-card__link" href={datasetPagePath} >
+                { dataset.accession_id }
                 <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero">
                     </path>
@@ -14,10 +14,10 @@ const { study_info, study_page_path } = Astro.props;
             </a>
         </h3>
         <p class="vf-card__text">
-        { study_info.title }<br><br>
-        <b>Release date: </b>{ study_info.release_date }<br>
-        <b>Imaging method: </b>{ study_info.imaging_type }<br>
-        <b>Organism: </b>{ study_info.organism }
+        { dataset.title }<br><br>
+        <b>Release date: </b>{ dataset.release_date }<br>
+        <b>Imaging method: </b>{ dataset.imaging_type }<br>
+        <b>Organism: </b>{ dataset.organism }
         </p>
     </div>
 </article>

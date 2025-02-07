@@ -2,11 +2,11 @@
 import image_metadata from "../data/bia-image-metadata.json";
 import image_fallback from "../assets/bioimage-archive/image_fallback.png"
 
-const { image , dataset_title} = Astro.props;
+const { image , datasetTitle} = Astro.props;
 
-function getThumbnail(uuid, image_metadata) {
-    if (uuid in image_metadata) {
-        const thumbnail = image_metadata[uuid].representation.find((rep)=>rep.use_type == "THUMBNAIL")
+function getThumbnail(uuid, imageMetadata) {
+    if (uuid in imageMetadata) {
+        const thumbnail = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "THUMBNAIL")
         if (thumbnail != undefined) {
             return thumbnail.file_uri[0]
         }
@@ -14,9 +14,9 @@ function getThumbnail(uuid, image_metadata) {
     return image_fallback.src
 }
 
-function getDownloadSize(uuid, image_metadata) {
-    if (uuid in image_metadata) {
-        const submitter_data = image_metadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
+function getDownloadSize(uuid, imageMetadata) {
+    if (uuid in imageMetadata) {
+        const submitter_data = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
         if (submitter_data != undefined) {
             return submitter_data.total_size_in_bytes
         }
@@ -30,7 +30,7 @@ function getDownloadSize(uuid, image_metadata) {
     <a href={"/bioimage-archive/image/" + image.uuid}><img class="vf-figure__image" src={getThumbnail(image.uuid, image_metadata)}/></a>
   </th>
   <th>{image.uuid}</th>
-  <th>{dataset_title}</th>
+  <th>{datasetTitle}</th>
   <th>{getDownloadSize(image.uuid, image_metadata)}</th>
   <th>
     <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
