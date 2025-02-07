@@ -8,7 +8,7 @@ const pageData = {
   "supporting-tools": "Supporting Tools",
   "galleries-contribute": "Contribute to Galleries"
 }
-const submHelp = {
+const submissionHelp = {
   "file-list": "File List Guide",
   "submit-annotations": "Submit Annotations",
   "ai-glossary": "Annotation Types",
@@ -29,30 +29,30 @@ function addTrailingSlash(pathname: String) {
     return pathname
 }
 
-const pathname = addTrailingSlash(Astro.url.pathname)
-const pagename = pathname.split('/').at(-2);
+const pathName = addTrailingSlash(Astro.url.pathname)
+const pageName = pathName.split('/').at(-2);
 ---
   <ul class="vf-list vf-list--l">
-    <li class={pagename === "help" ? "vf-list__item | active" : "vf-list__item"}>
+    <li class={pageName === "help" ? "vf-list__item | active" : "vf-list__item"}>
       <a href={`/bioimage-archive/help`} class="vf-navigation__link">Help Overview</a>
   </li>
   </ul>
-  <details class="vf-details" open={pagename in submHelp ? true : false}>
+  <details class="vf-details" open={pageName in submissionHelp ? true : false}>
     <summary class="vf-details--summary">Submission Help</summary>
   <ul class="vf-list vf-list--l">
-    {Object.entries(submHelp).map(([key, value]) => (
-      <li class={pagename === key ? "vf-list__item | active" : "vf-list__item"}>
+    {Object.entries(submissionHelp).map(([key, value]) => (
+      <li class={pageName === key ? "vf-list__item | active" : "vf-list__item"}>
           <a href={`/bioimage-archive/help/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )
     )}
   </ul> 
 </details>   
-  <details class="vf-details" open={pagename in metadataHelp ? true : false}>
+  <details class="vf-details" open={pageName in metadataHelp ? true : false}>
     <summary class="vf-details--summary">Metadata Help</summary>
   <ul class="vf-list vf-list--l">
     {Object.entries(metadataHelp).map(([key, value]) => (
-      <li class={pagename === key ? "vf-list__item | active" : "vf-list__item"}>
+      <li class={pageName === key ? "vf-list__item | active" : "vf-list__item"}>
           <a href={`/bioimage-archive/help/${key}`} class="vf-navigation__link">{value}</a>
       </li>
       )
@@ -61,7 +61,7 @@ const pagename = pathname.split('/').at(-2);
 </details>  
     <ul class="vf-list vf-list--l">
       {Object.entries(pageData).map(([key, value]) => (
-        <li class={pagename === key ? "vf-list__item | active" : "vf-list__item"}>
+        <li class={pageName === key ? "vf-list__item | active" : "vf-list__item"}>
             <a href={`/bioimage-archive/help/${key}`} class="vf-navigation__link">{value}</a>
         </li>
         )

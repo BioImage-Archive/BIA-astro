@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+
+import BenchmarkedDatasetPage from "../../../../components/ai-benchmarking/BenchmarkedDatasetPage.astro"
+
+import collectionList from "../../../../data/collections/ai-benchmark-datasets.json"
+import studyMetadata from "../../../../data/bia-study-metadata.json"
+import additionalStudyMetadata from "../../../../data/ai-dataset-benchmarking/additional-study-metadata.json"
+import tableInfo from "../../../../data/ai-dataset-benchmarking/model-dataset-table.json"
+
+
+export function getStaticPaths() {
+  return Object.values(collectionList["accession_ids"]).map((id) => {
+    return {
+      params: { accessionID: id },
+    };
+  });
+}
+
+const { accessionID } = Astro.params;
+
+---
+
+<BaseLayout pageTitle={accessionID}>
+  <BenchmarkedDatasetPage accessionID={accessionID} studyMetadata={studyMetadata} additionalStudyMetadata={additionalStudyMetadata} tableInfo={tableInfo}/>
+</BaseLayout>
+
+

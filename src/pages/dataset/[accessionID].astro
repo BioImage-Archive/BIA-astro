@@ -1,97 +1,96 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import StudyMetadata from "../../data/bia-study-metadata.json";
 import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ImageRow from "../../components/ImageTableRow.astro";
-import {get_placeholder_hero_image, format_list_item, multiline_text_render, format_bytes_to_human_size} from "../../components/SharedJSFunctions.js"
+
+import studyMetadata from "../../data/bia-study-metadata.json";
+
+import {getPlaceholderHeroImage, formatListItem, multilineTextRender, formatBytesToHumanSize} from "../../components/SharedJSFunctions.js"
 
 
 export function getStaticPaths() {
-  return Object.values(StudyMetadata).map((dataset) => {
+  return Object.values(studyMetadata).map((study) => {
     return {
-      params: { accession_id: dataset.accession_id },
+      params: { accessionID: study.accession_id },
     };
   });
 }
 
-const table_of_contents = {
+const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
   "All Images": "all_images",
 };
 
-const { accession_id } = Astro.params;
-const study_info =
-accession_id in StudyMetadata
-    ? StudyMetadata[accession_id]
-    : undefined;
+const { accessionID } = Astro.params;
+const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
 
-var images = new Array()
-for (var dataset of study_info.dataset) {
+const images = []
+for (var dataset of study.dataset) {
   for (var image of dataset.image) {
     images.push(image)
   }
 }
 
-function get_study_image(study_info) {
-  const dataset_with_img = study_info.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-  if (dataset_with_img == undefined) {
-    return get_placeholder_hero_image(study_info.accession_id)
+function getStudyImage(study) {
+  const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
+  if (datasetWithImage === undefined) {
+    return getPlaceholderHeroImage(study.accession_id)
   } else {
-    return dataset_with_img.example_image_uri[0]
+    return datasetWithImage.example_image_uri[0]
   }
 }
 
-function get_dataset_uuids_lengths(study_info) {
-  var dataset_uuids = new Array()
+function getDatasetStatsByUUID(study_info) {
+  const dataset_uuids = []
   for (var dataset of study_info.dataset) {
     dataset_uuids.push([dataset.uuid,dataset.file_count,dataset.title_id])
-}
+  }
   return dataset_uuids
 }
 
-const dataset_uuids = get_dataset_uuids_lengths(study_info)
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 
-const total_image_count = study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
+const totalImageCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
 
-const total_file_count = study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
+const totalFileCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
 
-function get_file_types(study_info) {
-    var file_type_list = new Array()
-    for (var eic of study_info.dataset) {
-        for (const file_type of eic.file_type_aggregation) {
-            if (!file_type_list.includes(file_type)) {
-              file_type_list.push(file_type)
+function getFileTypes(study) {
+    const fileTypeList = []
+    for (var dataset of study.dataset) {
+        for (const file_type of dataset.file_type_aggregation) {
+            if (!fileTypeList.includes(file_type)) {
+              fileTypeList.push(file_type)
             }
         }
     }
-    return file_type_list
+    return fileTypeList
 }
 
 
-const headline_stats = {
-  "Total Viewable Images":  study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
-  "Total files": study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0),
-  "Total size of files": format_bytes_to_human_size(study_info.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0)),
+const headlineStats = {
+  "Total Viewable Images":  study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
+  "Total files": study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0),
+  "Total size of files": formatBytesToHumanSize(study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0)),
 };
 
 
 ---
 
-<BaseLayout pageTitle={study_info.accession_id}>
+<BaseLayout pageTitle={study.accession_id}>
   <body>
-    <StudyTitleInfo study_info={study_info} />
+    <StudyTitleInfo study_info={study} />
 
     <StudyContentsSummary 
-      table_of_contents={table_of_contents} 
-      original_study_link={"https://www.ebi.ac.uk/biostudies/BioImages/studies/"+study_info.accession_id} 
-      headline_stats={headline_stats}
+      tableOfContents={tableOfContents} 
+      originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
+      headlineStats={headlineStats}
     >
       <div slot="hero-image">
         <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-          <img class="vf-figure__image" src={get_study_image(study_info)} />
+          <img class="vf-figure__image" src={getStudyImage(study)} />
         </figure>
       </div>
     </StudyContentsSummary>
@@ -104,8 +103,8 @@ const headline_stats = {
       </div>
 
       <div style="overflow-wrap: anywhere;">
-        <div><b>Description: </b> <Fragment set:html={multiline_text_render(study_info.description)}></Fragment></div>
-        <div><b>Licence: </b> {study_info.licence}<div>
+        <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div>
+        <div><b>Licence: </b> {study.licence}<div>
       </div>
     </section>
 
@@ -117,7 +116,7 @@ const headline_stats = {
       </div>
       <div>
         {
-          study_info.dataset.map((dataset) => (
+          study.dataset.map((dataset) => (
             <DatasetInfo dataset={dataset} />
           ))
         }
@@ -147,7 +146,7 @@ const headline_stats = {
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} dataset_title={study_info.dataset.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
+              <ImageRow image={image} dataset_title={study.dataset.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
             ))
           }
         </tbody>
@@ -164,7 +163,7 @@ const headline_stats = {
       </h2>
     </div>
     <div>Dataset 
-      <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(dataset_uuids)}>
+      <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
         <option value="" disabled selected>Select a Dataset</option>
       </select>
       

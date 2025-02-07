@@ -1,48 +1,45 @@
 ---
 import external_link from  "../assets/bioimage-archive/external-link-svgrepo-com.png";
-import { multiline_text_render} from "./SharedJSFunctions.js"
+import { multilineTextRender} from "./SharedJSFunctions.js"
 
 
-var { data, field_map } = Astro.props;
+var { data, fieldMap } = Astro.props;
 
-function taxon_render_with_link(taxon) {
+function taxonRenderWithLink(taxon) {
    
-    var string_text = ""
-    if (taxon["common_name"] && taxon["scientific_name"]){
-        string_text =  "<i>".concat(taxon["scientific_name"], "</i> (", taxon["common_name"], ")")
-    } else if (taxon["common_name"]) {
-        string_text = taxon["common_name"]
-    } else if (taxon["scientific_name"]) {
-        string_text = "<i>".concat(taxon["scientific_name"], "</i>")
-    }
+    const stringText = 
+        taxon["common_name"] && taxon["scientific_name"] ? `<i>${taxon["scientific_name"]}</i> (${taxon["common_name"]})` :
+        taxon["common_name"] ? taxon["common_name"] :
+        taxon["scientific_name"] ? `<i>${taxon["scientific_name"]}</i>` : null
+
     if (taxon["ncbi_id"]) {
-        return `<li class="vf-content"> ${string_text} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">NCBI:txid${taxon["ncbi_id"]} <img src=\"${external_link.src}\" width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
+        return `<li class="vf-content"> ${stringText} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">NCBI:txid${taxon["ncbi_id"]} <img src=\"${external_link.src}\" width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
     } else {
-        return `<li class="vf-content"> ${string_text}</li>`;
+        return `<li class="vf-content"> ${stringText}</li>`;
     }
 }
 
-function growth_protocol_render(growth_protocol) {
-    return growth_protocol["protocol_description"]
+function growthProtocolRender(growthProtocol) {
+    return growthProtocol["protocol_description"]
 }
 
 
-function render_value(key, value) {
+function renderValue(key, value) {
     if (key === "organism_classification") {
         return `<ul>
-            ${value.map((taxon) => taxon_render_with_link(taxon)).join("")} 
+            ${value.map((taxon) => taxonRenderWithLink(taxon)).join("")} 
             </ul>`;
     } else if (key === "growth_protocol") {
-        return `${growth_protocol_render(value)}`;
+        return `${growthProtocolRender(value)}`;
 
     } else {
-        return multiline_text_render(value)
+        return multilineTextRender(value)
     }
 }
 
-const render_field = Object.keys(data).map((key) => {
-    if (key in field_map && !(data[key] == null)) {
-        return `<div style="overflow-wrap: anywhere;"><b>${field_map[key]}:</b>&nbsp; ${render_value(key, data[key])}</div>`;
+const renderField = Object.keys(data).map((key) => {
+    if (key in fieldMap && !(data[key] == null)) {
+        return `<div style="overflow-wrap: anywhere;"><b>${fieldMap[key]}:</b>&nbsp; ${renderValue(key, data[key])}</div>`;
     }
 });
 
@@ -57,6 +54,6 @@ if (!("default_open" in data) ) {
     </summary>
 
     <ul>
-        <Fragment set:html={render_field} ` />
+        <Fragment set:html={renderField} ` />
     </ul>
 </details>

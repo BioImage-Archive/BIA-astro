@@ -10,13 +10,13 @@ import collection from '../../data/collections/vem.json';
     <BrowseDatasetHeading
       heading={collection.title }
       subheading={collection.subtitle}
-      contribute_link={"/bioimage-archive/help/galleries-contribute"}
+      contributeLink={"/bioimage-archive/help/galleries-contribute"}
     > 
       <p class="vf-hero__text" slot="body_text">{ collection.description }</p>
     </BrowseDatasetHeading>
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-            { Object.values(collection.accession_ids).map((accession_id) => ( <DatasetCard dataset={datasets[accession_id]} dataset_page_url={"https://www.ebi.ac.uk/empiar/"+accession_id}/>)) }
+            { Object.values(collection.accession_ids).map((accessionID) => ( <DatasetCard dataset={datasets[accessionID]} datasetPagePath={`https://www.ebi.ac.uk/empiar/${accessionID}`}/>)) }
         </div>
     </section>
   </body>

@@ -1,9 +1,9 @@
 ---
-import { format_analysis_param , get_dataset_uuid_name_map} from "./BenchmarkingTable.astro" 
-const { table_rows, study_or_model } = Astro.props;
+import { formatRowAnalysisParameters , getDatasetUUIDNameMap} from "./BenchmarkingTable.astro" 
+const { tableRows, studyOrModel } = Astro.props;
 
 
-const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
+const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
 
 ---
 
@@ -20,13 +20,13 @@ const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
             <thead class="vf-table__header">
                 <tr class="vf-table__header">
                     {
-                        study_or_model == 'model' && (
+                        studyOrModel == 'model' && (
                             <th class="vf-table__heading" >Study</th>
                         )
                     }
                     <th class="vf-table__heading" >Dataset</th>
                     {
-                        study_or_model == 'study' && (
+                        studyOrModel == 'study' && (
                             <th class="vf-table__heading" >Model</th>
                         )
                     }
@@ -39,21 +39,21 @@ const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
             </thead>
             <tbody class="vf_table__body">
             {
-                table_rows.map((row) => (
+                tableRows.map((row) => (
                 <tr>
                     {
-                        study_or_model == 'model' && (
+                        studyOrModel == 'model' && (
                        
-                            <th> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a></th>
+                            <th> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></th>
                         )
                     }
-                    <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
+                    <th>{datasetUUIDNameMap.get(row.dataset_uuid)}</th>
                     {
-                        study_or_model == 'study' && (
+                        studyOrModel == 'study' && (
                             <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
                         )
                     }
-                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
+                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
                     <th>{
                         row.example_image && (
                             <a href={row.example_image} target="_blank" rel="noopener noreferrer">

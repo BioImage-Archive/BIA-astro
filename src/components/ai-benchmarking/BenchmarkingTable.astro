@@ -1,36 +1,34 @@
 ---
-import study_metadata from "../../data/bia-study-metadata.json"
-import model_metadata from "../../data/ai-dataset-benchmarking/model-metadata.json"
+import studyMetadata from "../../data/bia-study-metadata.json"
+import modelMetadata from "../../data/ai-dataset-benchmarking/model-metadata.json"
 
-const { table_rows, study_or_model } = Astro.props;
+const { tableRows, studyOrModelPageMode } = Astro.props;
 
-export function get_dataset_uuid_name_map(table_rows) {
-    var study_ids: Set<string> = new Set()
-    for (var row of table_rows) {
-        study_ids.add(row.study)
+export function getDatasetUUIDNameMap(tableRows) {
+    var studyIDs: Set<string> = new Set()
+    for (var row of tableRows) {
+        studyIDs.add(row.study)
     }
-    const dataset_uuid_name_map = new Map();
-    for (var acc_id of study_ids) {
-        for (var dataset of study_metadata[acc_id].dataset) {
-            dataset_uuid_name_map.set(dataset.uuid, dataset.title_id)
+    const datasetUUIDNameMap = new Map();
+    for (var accessionID of studyIDs) {
+        for (var dataset of studyMetadata[accessionID].dataset) {
+            datasetUUIDNameMap.set(dataset.uuid, dataset.title_id)
         }
     }
-    return dataset_uuid_name_map
+    return datasetUUIDNameMap
 }
 
-const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
+const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
 
-export function format_param(acc, keyvalue) {
-    return acc + keyvalue[0] + ": " + keyvalue[1]  + "<br/>" 
+export function formatSingleParameter(acc, key_value) {
+    return `${acc}${key_value[0]}: ${key_value[1]}<br/>`
 }
 
-
-export function format_analysis_param(analysis_params) {
-
-    return Object.entries(analysis_params).filter(([key, value]) => value != null).reduce(format_param, "")
+export function formatRowAnalysisParameters(analysisParameters) {
+    return Object.entries(analysisParameters).filter(([key, value]) => value != null).reduce(formatSingleParameter, "")
 }
 
-const filtered_table_rows = table_rows.filter(row => row.precision != null)
+const filtered_table_rows = tableRows.filter(row => row.precision != null)
 
 ---
 
@@ -47,13 +45,13 @@ const filtered_table_rows = table_rows.filter(row => row.precision != null)
             <thead class="vf-table__header">
                 <tr class="vf-table__header">
                     {
-                        study_or_model == 'model' && (
+                        studyOrModelPageMode == 'model' && (
                             <th class="vf-table__heading" >Study</th>
                         )
                     }
                     <th class="vf-table__heading" >Dataset</th>
                     {
-                        study_or_model == 'study' && (
+                        studyOrModelPageMode == 'study' && (
                             <th class="vf-table__heading" >Model</th>
                             <th class="vf-table__heading" >Task</th>
                         )
@@ -70,24 +68,24 @@ const filtered_table_rows = table_rows.filter(row => row.precision != null)
                 filtered_table_rows.map((row) => (
                 <tr>
                     {
-                        study_or_model == 'model' && (
+                        studyOrModelPageMode == 'model' && (
                        
                             <th> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a> </th>
 
                         )
                     }
-                    <th>{dataset_uuid_name_map.get(row.dataset_uuid)}</th>
+                    <th>{datasetUUIDNameMap.get(row.dataset_uuid)}</th>
                     {
-                        study_or_model == 'study' && (
+                        studyOrModelPageMode == 'study' && (
                             <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
-                            <th>{model_metadata[row.model].task}</th>
+                            <th>{modelMetadata[row.model].task}</th>
                         )
                     }
                     <th>{row.precision}</th>
                     <th>{row.recall}</th>
                     <th>{row.IoU}</th>
                     <th>{row.dice}</th>
-                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
+                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
                 </tr>
                 ))
             }

@@ -1,5 +1,5 @@
 ---
-const { collection , link_path} = Astro.props;
+const { collection , link_path: linkPath} = Astro.props;
 ---
 <article class="vf-summary vf-summary--news">
     <span class="vf-summary__date text-center">
@@ -7,7 +7,7 @@ const { collection , link_path} = Astro.props;
     </span>
     <img src={ collection.summary_image } alt="" class="vf-summary__image" loading="lazy" style="border-radius: 50%">
     <h3 class="vf-summary__title text-center" >
-        <a class="vf-summary__link" href={ link_path + collection.name } >
+        <a class="vf-summary__link" href={ linkPath + collection.name } >
                 { collection.title }
                 </path></svg>
             </a>

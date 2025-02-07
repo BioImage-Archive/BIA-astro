@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HelpNavigation from '../../components/HelpNavigation.astro';
 import ModelHelpCard from '../../components/ModelFieldInfoTable.astro';
-import rembi_types from '../../data/rembi_types.yaml';
+import rembiTypes from '../../data/rembi_types.yaml';
 
-const rembiModels = rembi_types.models;  // Correctly access the models array
+const rembiModels = rembiTypes.models;  // Correctly access the models array
 ---
 
 <BaseLayout pageTitle="REMBI Model Reference">
@@ -20,7 +20,7 @@ const rembiModels = rembi_types.models;  // Correctly access the models array
         <p>
           If your data requires more information in order to be Findable, Accessible, Interoperable and Reusable, <a href="/bioimage-archive/contact-us">contact us</a> to discuss your use-case.
         </p>
-        <p><b>REMBI version: {rembi_types.rembi_version} </b></p>
+        <p><b>REMBI version: {rembiTypes.rembi_version} </b></p>
 
       {rembiModels && rembiModels.length > 0 ? (
         rembiModels.map((model) => (

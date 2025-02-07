@@ -14,13 +14,13 @@ import codeImage from '../../../../assets/bioimage-archive/code_icon.png';
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {
     return {
-      params:  {accession_id: dataset.accession_id }
+      params:  {accessionID: dataset.accession_id }
     };
   });
 }
 
-const { accession_id } = Astro.params;
-const study = exports["datasets"][accession_id];
+const { accessionID } = Astro.params;
+const study = exports["datasets"][accessionID];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
 ---

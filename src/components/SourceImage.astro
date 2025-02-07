@@ -2,22 +2,22 @@
 const { image } = Astro.props;
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Source image</h3>
-                This image is a segmentation of a parent image.
-            </div>
-            <div style="center;">
-                <div style="float: left;">
-                    <img class="vf-figure__image" src={ image.source_image_thumbnail_uri }>
-                </div>
-                <div style="float: left;">
-                    <img class="vf-figure__image" style="max-width: 256px;" src={ image.overlay_image_uri }>
-                </div>
+    <div>
+        <h3>Source image</h3>
+        This image is a segmentation of a parent image.
+    </div>
+    <div style="center;">
+        <div style="float: left;">
+            <img class="vf-figure__image" src={ image.source_image_thumbnail_uri }>
+        </div>
+        <div style="float: left;">
+            <img class="vf-figure__image" style="max-width: 256px;" src={ image.overlay_image_uri }>
+        </div>
 
-            </div>
-            <div>
-                <a href={ "/bioimage-archive/image/" + image.source_image_uuid }>
-                    <button class="vf-button vf-button--primary vf-button--sm">View source image</button>
-                </a>
-            </div>
-        </section>
+    </div>
+    <div>
+        <a href={ "/bioimage-archive/image/" + image.source_image_uuid }>
+            <button class="vf-button vf-button--primary vf-button--sm">View source image</button>
+        </a>
+    </div>
+</section>

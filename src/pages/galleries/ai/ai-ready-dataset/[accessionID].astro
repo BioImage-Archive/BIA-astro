@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
-import exports from "../../../../data/old-export-format/bia-ai-export.json";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
 
+import exports from "../../../../data/old-export-format/bia-ai-export.json";
 import studyImage from "../../../../assets/bioimage-archive/study.png";
 import biosampleImage from "../../../../assets/bioimage-archive/biosample.png";
 import imacqImage from "../../../../assets/bioimage-archive/im_acquisition.png";
@@ -12,12 +12,12 @@ import annotationsImage from "../../../../assets/bioimage-archive/annotations.pn
 export function getStaticPaths() {
   return Object.values(exports["datasets"]).map((dataset) => {
     return {
-      params: { accession_id: dataset.accession_id },
+      params: { accessionID: dataset.accession_id },
     };
   });
 }
 
-const table_of_contents = {
+const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
   "Viewable Annotations": "viewable_annotations",
@@ -25,12 +25,12 @@ const table_of_contents = {
   "All Annotations": "annotations",
 };
 
-const { accession_id } = Astro.params;
-const study = exports["datasets"][accession_id];
+const { accessionID } = Astro.params;
+const study = exports["datasets"][accessionID];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
 
-const viewable_non_annotation_images = study.image_uuids
+const viewableNonAnnotationImages = study.image_uuids
   .filter((item) => !Object.values(study.annotation_images).includes(item))
   .map((uuid) => exports["images"][uuid]);
 
@@ -49,7 +49,7 @@ const viewable_annotation_images = study.image_uuids
           <h2 class="vf-section-header__heading">On this page</h2>
           <ul class="vf-list">
             {
-              Object.entries(table_of_contents).map(([text_title, id]) => (
+              Object.entries(tableOfContents).map(([text_title, id]) => (
                 <li class="vf-list__item">
                   <a class="vf-list__link" href={"#" + id}>
                     {text_title}
@@ -200,7 +200,7 @@ const viewable_annotation_images = study.image_uuids
         </thead>
         <tbody class="vf_table__body">
           {
-            viewable_non_annotation_images.map((image) => (
+            viewableNonAnnotationImages.map((image) => (
               <tr class="vf-table__row">
                 <th>
                   <a href={"/bioimage-archive/galleries/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri} /></a>
