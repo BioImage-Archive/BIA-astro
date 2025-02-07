@@ -1,7 +1,7 @@
 ---
 import OldLayout from "../../../layouts/OldLayout.astro";
 import GalleryCard from "../../../components/cards/GalleryRoundImageCard.astro"
-const gallery_data = {
+const galleryData = {
   "name": "AI Playground",
   "title": "The BioImage Archive AI Gallery",
   "subtitle": "Explore AI-ready image data and how AI models perform on different datasets",
@@ -37,25 +37,25 @@ const gallery_data = {
             <div class="vf-section-header">
                 <h2 class="vf-section-header__heading">
                     <br />
-                    {gallery_data.title}
+                    {galleryData.title}
                 </h2>
             </div>
 
             {
-                gallery_data.subtitle && (
+                galleryData.subtitle && (
                     <div>
                         <h3 class="vf-section-subheader__heading">
-                            {gallery_data.subtitle}
+                            {galleryData.subtitle}
                         </h3>
                     </div>
                 )
             }
 
             {
-                gallery_data.body_text && (
+                galleryData.body_text && (
                     <div class=" vf-grid | vf-grid__col-3 |">
                         <p class="vf-grid__col--span-2 | vf-content">
-                            {gallery_data.body_text}
+                            {galleryData.body_text}
                         </p>
                     </div>
                 )
@@ -63,8 +63,8 @@ const gallery_data = {
 
             <div class="vf-news-container__content | vf-grid | vf-grid__col-4 |">
                 {
-                    Object.values(gallery_data.collections).map((collection) => (
-                        <GalleryCard collection={collection} link_path={gallery_data.gallery_item_basepath} />
+                    Object.values(galleryData.collections).map((collection) => (
+                        <GalleryCard collection={collection} linkPath={galleryData.gallery_item_basepath} />
                     ))
                 }
             </div>
