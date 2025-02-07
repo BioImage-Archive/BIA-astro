@@ -42,7 +42,7 @@ const { galleryData } = Astro.props;
             <div class="vf-news-container__content | vf-grid | vf-grid__col-4 |">
                 {
                     Object.values(galleryData.collections).map((collection) => (
-                        <GalleryCard collection={collection} link_path={galleryData.gallery_item_basepath} />
+                        <GalleryCard collection={collection} linkPath={galleryData.gallery_item_basepath} />
                     ))
                 }
             </div>
