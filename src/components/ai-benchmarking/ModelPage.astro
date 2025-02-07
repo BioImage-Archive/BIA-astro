@@ -1,6 +1,8 @@
 ---
 import BenchmarkingTable from "./BenchmarkingTable.astro"
 import ModelPredictionTable from "./ModelPredictionTable.astro"
+import WebsiteStateButton from "../WebsiteStateButton.astro";
+
 import { formatListItem, multilineTextRender } from "../SharedJSFunctions";
 
 
@@ -26,10 +28,8 @@ const filteredTableInfo = tableInfo.filter( row => row.model === modelName)
     </div>
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
-            {modelInfo.nickname}<a
-                href="JavaScript:Void(0);"
-                class="vf-badge vf-badge--primary vf-badge--phases">alpha</a
-            >
+            {modelInfo.nickname}
+            <WebsiteStateButton/>
         </h1>
         <h2 class="vf-intro__subheading">{modelInfo.name}</h2>
 

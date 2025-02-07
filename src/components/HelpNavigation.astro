@@ -32,13 +32,16 @@ function addTrailingSlash(pathname: String) {
 const pathName = addTrailingSlash(Astro.url.pathname)
 const pageName = pathName.split('/').at(-2);
 ---
-  <ul class="vf-list vf-list--l">
-    <li class={pageName === "help" ? "vf-list__item | active" : "vf-list__item"}>
-      <a href={`/bioimage-archive/help`} class="vf-navigation__link">Help Overview</a>
+<ul class="vf-list vf-list--l">
+  <li class={pageName === "help" ? "vf-list__item | active" : "vf-list__item"}>
+    <a href={`/bioimage-archive/help`} class="vf-navigation__link">Help Overview</a>
   </li>
-  </ul>
-  <details class="vf-details" open={pageName in submissionHelp ? true : false}>
-    <summary class="vf-details--summary">Submission Help</summary>
+  <li class={pageName === "about-the-new-website" ? "vf-list__item | active" : "vf-list__item"}>
+    <a href=`/bioimage-archive/help/about-the-new-website` class="vf-navigation__link">About the new website</a>
+  </li>
+</ul>
+<details class="vf-details" open={pageName in submissionHelp ? true : false}>
+  <summary class="vf-details--summary">Submission Help</summary>
   <ul class="vf-list vf-list--l">
     {Object.entries(submissionHelp).map(([key, value]) => (
       <li class={pageName === key ? "vf-list__item | active" : "vf-list__item"}>

@@ -1,4 +1,5 @@
 ---
+import WebsiteStateButton from "./WebsiteStateButton.astro";
 
 const { heading, subheading, contributeLink } = Astro.props;
 
@@ -8,7 +9,8 @@ const { heading, subheading, contributeLink } = Astro.props;
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
           {heading}
-          <a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+          <WebsiteStateButton/>
+        </h1>
         {
           subheading && (
             <h2 class="vf-intro__subheading">
