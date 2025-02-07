@@ -1,4 +1,6 @@
 ---
+import modelMetadata from "../../data/ai-dataset-benchmarking/model-metadata.json"
+
 import { formatRowAnalysisParameters , getDatasetUUIDNameMap} from "./BenchmarkingTable.astro" 
 const { tableRows, studyOrModelPageMode } = Astro.props;
 
@@ -28,13 +30,14 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
                     {
                         studyOrModelPageMode == 'study' && (
                             <th class="vf-table__heading" >Model</th>
+                            <th class="vf-table__heading" >Task</th>
+
                         )
                     }
-                    <th class="vf-table__heading" >Analysis parameters</th>
                     <th class="vf-table__heading" >Original image</th>
                     <th class="vf-table__heading" >Reference annotation</th>
                     <th class="vf-table__heading" >Prediction</th>
-                    <th class="vf-table__heading" >Actions</th>
+                    <th class="vf-table__heading" >Analysis parameters</th>
                 </tr>
             </thead>
             <tbody class="vf_table__body">
@@ -43,61 +46,48 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
                 <tr>
                     {
                         studyOrModelPageMode == 'model' && (
-                       
                             <th> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></th>
                         )
                     }
                     <th>{datasetUUIDNameMap.get(row.dataset_uuid)}</th>
                     {
                         studyOrModelPageMode == 'study' && (
-                            <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
+                            <th> <a href={`/bioimage-archive/galleries/ai/model/${row.model}`}>{row.model}</a></th>
+                            <th> {modelMetadata[row.model]?.task}</th>
+
                         )
                     }
-                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
                     <th>{
                         row.example_image && (
                             <a href={row.example_image} target="_blank" rel="noopener noreferrer">
-                                <img src={row.example_image} style="max-width: 100px;"/>
+                                <img src={row.example_image} style="max-width: 180px;"/>
+                            </a>
+                            <a href={row.example_image} download>
+                                    Download
                             </a>
                         )
                     }</th>
                     <th>{
                         row.example_ground_truth && (
                             <a href={row.example_ground_truth} target="_blank" rel="noopener noreferrer">
-                                <img src={row.example_ground_truth} style="max-width: 100px;"/>
+                                <img src={row.example_ground_truth} style="max-width: 180px;"/>
+                            </a>
+                            <a href={row.example_ground_truth} download>
+                                Download 
                             </a>
                         )
                     }</th>
                     <th>{
                         row.example_process_image && (
                             <a href={row.example_process_image} target="_blank" rel="noopener noreferrer">
-                                <img src={row.example_process_image} style="max-width: 100px;"/>
+                                <img src={row.example_process_image} style="max-width: 180px;"/>
                             </a>
+                            <a href={row.example_process_image} download>
+                                Download 
+                            </a> 
                         )
                     }</th>
-                    <th> 
-                        {
-                            row.example_image && (
-                                <a href={row.example_image} download>
-                                    Download original image
-                                </a> <br/> <br/>
-                        )
-                        }
-                        {
-                            row.example_ground_truth && (
-                                <a href={row.example_ground_truth} download>
-                                    Download reference annotation
-                                </a> <br/> <br/>
-                        )
-                        }
-                        {
-                            row.example_process_image && (
-                                <a href={row.example_process_image} download>
-                                    Download prediction
-                                </a> <br/> <br/>
-                        )
-                        }
-                    </th>
+                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
                 </tr>
                 ))
             }
