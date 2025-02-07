@@ -1,6 +1,6 @@
 ---
 import { formatRowAnalysisParameters , getDatasetUUIDNameMap} from "./BenchmarkingTable.astro" 
-const { tableRows, studyOrModel } = Astro.props;
+const { tableRows, studyOrModelPageMode } = Astro.props;
 
 
 const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
@@ -20,13 +20,13 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
             <thead class="vf-table__header">
                 <tr class="vf-table__header">
                     {
-                        studyOrModel == 'model' && (
+                        studyOrModelPageMode == 'model' && (
                             <th class="vf-table__heading" >Study</th>
                         )
                     }
                     <th class="vf-table__heading" >Dataset</th>
                     {
-                        studyOrModel == 'study' && (
+                        studyOrModelPageMode == 'study' && (
                             <th class="vf-table__heading" >Model</th>
                         )
                     }
@@ -42,14 +42,14 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
                 tableRows.map((row) => (
                 <tr>
                     {
-                        studyOrModel == 'model' && (
+                        studyOrModelPageMode == 'model' && (
                        
                             <th> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></th>
                         )
                     }
                     <th>{datasetUUIDNameMap.get(row.dataset_uuid)}</th>
                     {
-                        studyOrModel == 'study' && (
+                        studyOrModelPageMode == 'study' && (
                             <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
                         )
                     }
