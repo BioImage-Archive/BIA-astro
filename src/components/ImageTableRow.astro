@@ -1,6 +1,6 @@
 ---
-import image_metadata from "../data/bia-image-metadata.json";
-import image_fallback from "../assets/bioimage-archive/image_fallback.png"
+import imageMetadata from "../data/bia-image-metadata.json";
+import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 const { image , datasetTitle} = Astro.props;
 
@@ -11,7 +11,7 @@ function getThumbnail(uuid, imageMetadata) {
             return thumbnail.file_uri[0]
         }
     }
-    return image_fallback.src
+    return imageFallback.src
 }
 
 function getDownloadSize(uuid, imageMetadata) {
@@ -27,11 +27,11 @@ function getDownloadSize(uuid, imageMetadata) {
 ---
 <tr>
   <th>
-    <a href={"/bioimage-archive/image/" + image.uuid}><img class="vf-figure__image" src={getThumbnail(image.uuid, image_metadata)}/></a>
+    <a href={"/bioimage-archive/image/" + image.uuid}><img class="vf-figure__image" src={getThumbnail(image.uuid, imageMetadata)}/></a>
   </th>
   <th>{image.uuid}</th>
   <th>{datasetTitle}</th>
-  <th>{getDownloadSize(image.uuid, image_metadata)}</th>
+  <th>{getDownloadSize(image.uuid, imageMetadata)}</th>
   <th>
     <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
   </th>
