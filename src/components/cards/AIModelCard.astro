@@ -1,5 +1,5 @@
 ---
-import { format_list_item } from "../SharedJSFunctions";
+import { formatListItem } from "../SharedJSFunctions";
 
 const { model, model_page_url, taglist } = Astro.props;
 
@@ -23,7 +23,7 @@ const { model, model_page_url, taglist } = Astro.props;
         {taglist && taglist.length > 0 && (
             <>
             <p class="vf-card__text">
-                <b>Tags:</b> {taglist.reduce(format_list_item, "")}
+                <b>Tags:</b> {taglist.reduce(formatListItem, "")}
             </p>
             </>
         )}

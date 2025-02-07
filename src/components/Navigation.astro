@@ -1,5 +1,5 @@
 ---
-const pageData = {
+const page_data = {
     "": "Home",
     datasets: "Browse",
     submit: "Submit",
@@ -9,7 +9,7 @@ const pageData = {
     "about-us": "About"
 }
 const pathname = Astro.url.pathname;
-const basePath = pathname.split('/')[2];
+const base_path = pathname.split('/')[2];
 
 ---
 
@@ -25,9 +25,9 @@ const basePath = pathname.split('/')[2];
     }
   </style>
   <ul class="vf-navigation__list | vf-list" style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0px;">
-    {Object.entries(pageData).map(([key, value]) => (
-      <li class={basePath === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
-          <a href={`/bioimage-archive/${key}`} class={basePath === key ? "vf-navigation__link | active" : "vf-navigation__link"}>{value}</a>
+    {Object.entries(page_data).map(([key, value]) => (
+      <li class={base_path === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
+          <a href={`/bioimage-archive/${key}`} class={base_path === key ? "vf-navigation__link | active" : "vf-navigation__link"}>{value}</a>
       </li>
       )
     )}

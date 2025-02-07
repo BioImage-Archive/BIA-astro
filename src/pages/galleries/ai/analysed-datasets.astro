@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
-import collection from '../../../data/collections/ai-benchmark-datasets.json';
 import DatasetCard from '../../../components/cards/BrowseDatasetCard.astro';
-import StudyInfo from '../../../data/bia-study-metadata.json'
-import AdditionalStudyInfo from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
+
+import collection from '../../../data/collections/ai-benchmark-datasets.json';
+import study_info from '../../../data/bia-study-metadata.json'
+import additional_study_info from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
 const datasets_ids = collection["accession_ids"];
 
@@ -19,7 +20,7 @@ const datasets_ids = collection["accession_ids"];
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(datasets_ids).map((acc_id) => ( <DatasetCard dataset={ StudyInfo[acc_id] } dataset_path={"galleries/ai/analysed-dataset"} taglist={AdditionalStudyInfo[acc_id]?.tags || []} card_img_override={AdditionalStudyInfo[acc_id].hero_image}/> )) }
+          { Object.values(datasets_ids).map((acc_id) => ( <DatasetCard study_info={ study_info[acc_id] } study_page_path={"galleries/ai/analysed-dataset"} taglist={additional_study_info[acc_id]?.tags || []} card_img_override={additional_study_info[acc_id].hero_image}/> )) }
         </div>
     </section>
   </body>

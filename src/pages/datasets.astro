@@ -14,7 +14,7 @@ const totalFiles = Object.values(study_info).reduce((acc, study) => {
   return acc + studyFiles;
 }, 0);
 
-const totalImages = Object.values(study_info).reduce((acc, study) => {
+const total_images = Object.values(study_info).reduce((acc, study) => {
   const studyImages = study.dataset?.reduce((imgAcc, component) => {
     return imgAcc + (component.image_count || 0);
   }, 0) || 0;
@@ -23,7 +23,7 @@ const totalImages = Object.values(study_info).reduce((acc, study) => {
 
 const formattedTotalStudies = totalStudies.toLocaleString();
 const formattedTotalFiles = totalFiles.toLocaleString();
-const formattedTotalImages = totalImages.toLocaleString();
+const formattedTotalImages = total_images.toLocaleString();
 ---
 <BaseLayout pageTitle="Datasets">
   <body>
@@ -111,7 +111,7 @@ const formattedTotalImages = totalImages.toLocaleString();
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
        
         <div class="vf-card-container__inner" >
-            { Object.values(study_info).map((study) => ( <DatasetCard dataset={study} dataset_path="dataset"/> )) }
+            { Object.values(study_info).map((study) => ( <DatasetCard study_info={study} study_page_path="dataset"/> )) }
         </div>
     </section>
 

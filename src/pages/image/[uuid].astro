@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import field_map from "../../data/metadata-field-name-mapping.json";
-import DatasetMetdata from "../../data/bia-dataset-metadata-for-images.json";
-import image_data from "../../data/bia-image-metadata.json";
 import SourceImage from "../../components/SourceImage.astro"
 import DatasetDetail from '../../components/DatasetDetail.astro';
+
+import field_map from "../../data/metadata-field-name-mapping.json";
+import dataset_metdata from "../../data/bia-dataset-metadata-for-images.json";
+import image_data from "../../data/bia-image-metadata.json";
 import image_fallback from "../../assets/bioimage-archive/image_fallback.png"
 
 const biosample_map = field_map["biosample"];
@@ -21,7 +22,7 @@ export function getStaticPaths() {
   });
 }
 
-const get_simple_attr_value = function(obj, attrName) {
+function getSimpleAttributeValue(obj, attrName) {
   return obj?.attribute
     ?.find(attr => attr.name === attrName)
     ?.value[attrName] ?? null;
@@ -31,7 +32,7 @@ const { uuid } = Astro.params;
 
 const image = image_data[uuid];
 
-const image_dataset = DatasetMetdata[image.submission_dataset_uuid]
+const image_dataset = dataset_metdata[image.submission_dataset_uuid]
 const image_study = image_dataset.submitted_in_study
 const interactive_image = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
 const static_display = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
@@ -61,9 +62,9 @@ if (interactive_image != null) {
     itk_link = null
 }
 
-const pref_ng_image_rep_uuid = get_simple_attr_value(image, "preferred_neuroglancer_image_representation_uuid")
+const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
-const ng_link = pref_ng_image_rep ? get_simple_attr_value(pref_ng_image_rep, "neuroglancer_view_link") : null
+const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link") : null
 
 const creation_process = image.creation_process
 
@@ -74,12 +75,8 @@ if ("subject" in creation_process && creation_process.subject != null) {
 
 
 
-function format_physical_dimensions(img_rep) {
-    const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
-    return fields.reduce((text, field) => physical_dimensions(img_rep[field], text), "")
-}
 
-function physical_dimensions(value, text) {
+function formatPhysicalDimension(value, text) {
     if (text === "") {
         if (value != null) {
             return value + "m"
@@ -95,12 +92,14 @@ function physical_dimensions(value, text) {
     }
 }
 
-function format_pixel_dimensions(img_rep) {
-    const fields = [ "size_x", "size_y", "size_z"]
-    return fields.reduce((text, field) => pixel_dimensions(img_rep[field], text), "")
+function formatPhysicalDimensions(img_rep) {
+    const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
+    return fields.reduce((text, field) => formatPhysicalDimension(img_rep[field], text), "")
 }
 
-function pixel_dimensions(value, text) {
+
+
+function formatPixelDimension(value, text) {
     if (text === "") {
         if (value != null) {
             return value
@@ -116,7 +115,13 @@ function pixel_dimensions(value, text) {
     }
 }
 
-function display_image() {
+function formatPixelDimensions(img_rep) {
+    const fields = [ "size_x", "size_y", "size_z"]
+    return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
+}
+
+
+function getDisplayImage() {
     if (vizarr_iframe_source) {
         return ` <iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarr_iframe_source}"></iframe>`
     }
@@ -149,12 +154,12 @@ function display_image() {
             <div>
                 <h3>Image metadata</h3>
 
-                <b>Physical Image size: </b> {format_physical_dimensions(primary_image_rep)}<br>
-                <b>Pixel Image size: </b> {format_pixel_dimensions(primary_image_rep)}<br>
+                <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep)}<br>
+                <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
                 {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
                 {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
             </div>
-            <div set:html={display_image()} style="display: flex; justify-content: center;"></div>
+            <div set:html={getDisplayImage()} style="display: flex; justify-content: center;"></div>
 
             <div>
                 <h3>Access images</h3>

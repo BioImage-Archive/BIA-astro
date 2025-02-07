@@ -1,9 +1,9 @@
 ---
-import { format_analysis_param , get_dataset_uuid_name_map} from "./BenchmarkingTable.astro" 
+import { formatRowAnalysisParameters , getDatasetUUIDNameMap} from "./BenchmarkingTable.astro" 
 const { table_rows, study_or_model } = Astro.props;
 
 
-const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
+const dataset_uuid_name_map = getDatasetUUIDNameMap(table_rows)
 
 ---
 
@@ -53,7 +53,7 @@ const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
                             <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
                         )
                     }
-                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
+                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
                     <th>{
                         row.example_image && (
                             <a href={row.example_image} target="_blank" rel="noopener noreferrer">

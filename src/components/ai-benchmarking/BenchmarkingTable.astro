@@ -4,7 +4,7 @@ import model_metadata from "../../data/ai-dataset-benchmarking/model-metadata.js
 
 const { table_rows, study_or_model } = Astro.props;
 
-export function get_dataset_uuid_name_map(table_rows) {
+export function getDatasetUUIDNameMap(table_rows) {
     var study_ids: Set<string> = new Set()
     for (var row of table_rows) {
         study_ids.add(row.study)
@@ -18,16 +18,14 @@ export function get_dataset_uuid_name_map(table_rows) {
     return dataset_uuid_name_map
 }
 
-const dataset_uuid_name_map = get_dataset_uuid_name_map(table_rows)
+const dataset_uuid_name_map = getDatasetUUIDNameMap(table_rows)
 
-export function format_param(acc, keyvalue) {
-    return acc + keyvalue[0] + ": " + keyvalue[1]  + "<br/>" 
+export function formatSingleParameter(acc, key_value) {
+    return acc + key_value[0] + ": " + key_value[1]  + "<br/>" 
 }
 
-
-export function format_analysis_param(analysis_params) {
-
-    return Object.entries(analysis_params).filter(([key, value]) => value != null).reduce(format_param, "")
+export function formatRowAnalysisParameters(analysis_params) {
+    return Object.entries(analysis_params).filter(([key, value]) => value != null).reduce(formatSingleParameter, "")
 }
 
 const filtered_table_rows = table_rows.filter(row => row.precision != null)
@@ -87,7 +85,7 @@ const filtered_table_rows = table_rows.filter(row => row.precision != null)
                     <th>{row.recall}</th>
                     <th>{row.IoU}</th>
                     <th>{row.dice}</th>
-                    <th> <Fragment set:html={format_analysis_param(row.analysis_parameters)}/></th>
+                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
                 </tr>
                 ))
             }
