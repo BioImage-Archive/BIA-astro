@@ -1,15 +1,16 @@
 ---
+import WebsiteStateButton from "./WebsiteStateButton.astro";
 
-const { heading, subheading, contribute_link } = Astro.props;
+const { heading, subheading, contributeLink } = Astro.props;
 
-const link =  "/bioimage-archive/help/galleries-contribute"
 ---
 <section class="vf-intro | embl-grid embl-grid--has-centered-content">
     <div></div>
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
           {heading}
-          <a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+          <WebsiteStateButton/>
+        </h1>
         {
           subheading && (
             <h2 class="vf-intro__subheading">
@@ -22,8 +23,8 @@ const link =  "/bioimage-archive/help/galleries-contribute"
         <br/>
 
         {
-          contribute_link && (
-            <p class="vf-hero__text"> <a href={contribute_link}>Check here </a> for how to contribute</p>
+          contributeLink && (
+            <p class="vf-hero__text"> <a href={contributeLink}>Check here </a> for how to contribute</p>
           )
         }
         

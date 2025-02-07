@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HelpNavigation from '../../components/HelpNavigation.astro';
 import ModelHelpCard from '../../components/ModelFieldInfoTable.astro';
-import mifa_types from '../../data/mifa_types.yaml';
+import mifaTypes from '../../data/mifa_types.yaml';
 
-const mifaModels = mifa_types.models;  // Correctly access the models array
+const mifaModels = mifaTypes.models;  // Correctly access the models array
 ---
 
 <BaseLayout pageTitle="MIFA Model Reference">
@@ -19,7 +19,7 @@ const mifaModels = mifa_types.models;  // Correctly access the models array
     </p>
           If your data requires more information in order to be Findable, Accessible, Interoperable and Reusable, <a href='/bioimage-archive/contact-us'>contact us</a> to discuss your use-case.
         </p>
-        <p><b>REMBI version: {mifa_types.rembi_version} </b></p>
+        <p><b>REMBI version: {mifaTypes.rembi_version} </b></p>
 
       {mifaModels && mifaModels.length > 0 ? (
         mifaModels.map((model) => (

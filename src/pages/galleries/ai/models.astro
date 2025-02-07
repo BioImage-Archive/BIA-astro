@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
-import collection from '../../../data/collections/ai-benchmark-models.json';
 import ModelCard from '../../../components/cards/AIModelCard.astro';
-import ModelInfo from '../../../data/ai-dataset-benchmarking/model-metadata.json'
 
-const model_names = collection["model_names"];
+import modelMetadata from '../../../data/ai-dataset-benchmarking/model-metadata.json'
+import collection from '../../../data/collections/ai-benchmark-models.json';
+
+
+const modelNames = collection["model_names"];
 
 ---
 <BaseLayout pageTitle={ collection.name }>
@@ -13,12 +15,22 @@ const model_names = collection["model_names"];
     <BrowseDatasetHeading
     heading={collection.title }
   > 
-     <p class="vf-hero__text" slot="body_text">{ collection.description }</p>
+     <p class="vf-hero__text" slot="body_text">{ collection.description }
+      <br/>
+      <span style="display: flex; justify-content: space-evenly; flex-wrap: wrap; padding-top:8px">
+        <a href="https://ai4life.eurobioimaging.eu/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
+            <img src="/bioimage-archive/ai-galleries/AI4Life_logo_neg_giraffe_solid.png" style="max-height:140%; padding-top:-40%">
+        </a>
+        <a href="https://bioimage.io/#/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
+            <img src="/bioimage-archive/ai-galleries/bioimage-io-logo-white.png" style="max-height:80%; padding:10px">  
+        </a>
+     </span>
+     </p>
   </BrowseDatasetHeading>
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(model_names).map((model_name) => ( <ModelCard model={ ModelInfo[model_name] } model_page_url={"/bioimage-archive/galleries/ai/model/" + model_name} taglist={ModelInfo[model_name]?.tags || []}/> )) }
+          { Object.values(modelNames).map((modelName) => ( <ModelCard model={ modelMetadata[modelName] } modelPageUrl={`/bioimage-archive/galleries/ai/model/${modelName}`} taglist={modelMetadata[modelName]?.tags || []}/> )) }
         </div>
     </section>
   </body>

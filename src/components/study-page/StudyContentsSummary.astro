@@ -1,8 +1,5 @@
 ---
-
-const { table_of_contents, original_study_link, headline_stats} = Astro.props;
-
-
+const { tableOfContents, originalStudyLink, headlineStats} = Astro.props;
 
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -11,7 +8,7 @@ const { table_of_contents, original_study_link, headline_stats} = Astro.props;
       <h2 class="vf-section-header__heading">On this page</h2>
       <ul class="vf-list">
         {
-          Object.entries(table_of_contents).map(([text_title, id]) => (
+          Object.entries(tableOfContents).map(([text_title, id]) => (
             <li class="vf-list__item">
               <a class="vf-list__link" href={"#" + id}>
                 {text_title}
@@ -26,7 +23,7 @@ const { table_of_contents, original_study_link, headline_stats} = Astro.props;
   <slot name="hero-image"/>
 
   <div>
-    <a href={original_study_link}>
+    <a href={originalStudyLink}>
       <button class="vf-button vf-button--primary vf-button--sm"
         >Original study</button
       >
@@ -34,10 +31,10 @@ const { table_of_contents, original_study_link, headline_stats} = Astro.props;
   </div>
 </section>
 {
-    headline_stats && (
+    headlineStats && (
         <section class="vf-content">
             <div class="vf-grid | vf-grid__col-3 ">
-                {Object.entries(headline_stats).map(([key, value]) => (
+                {Object.entries(headlineStats).map(([key, value]) => (
                     <div style="text-align: center;">
                         {key}
                         <br />

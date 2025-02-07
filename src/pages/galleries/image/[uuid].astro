@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import exports from "../../../data/old-export-format/bia-images-export.json";
 import SourceImage from "../../../components/SourceImage.astro"
-import StudyData from "../../../data/old-export-format/bia-export.json";
+import WebsiteStateButton from '../../../components/WebsiteStateButton.astro';
+
+import exports from "../../../data/old-export-format/bia-images-export.json";
+import studyData from "../../../data/old-export-format/bia-export.json";
 import AIStudyData from "../../../data/old-export-format/bia-ai-export.json";
 import SpatialomicsStudyData from "../../../data/old-export-format/bia-spatialomics-export.json";
 
@@ -19,21 +21,21 @@ const { uuid } = Astro.params;
 
 const image = exports["images"][uuid];
 
-const tissueX = (1e6 * image.PhysicalSizeX * image.sizeX).toPrecision(2);
-const tissueY = (1e6 * image.PhysicalSizeY * image.sizeY).toPrecision(2);
+const tissue_x = (1e6 * image.PhysicalSizeX * image.sizeX).toPrecision(2);
+const tissue_y = (1e6 * image.PhysicalSizeY * image.sizeY).toPrecision(2);
 
 
-function get_study_data(accession_id, StudyData, AIStudyData, SpatialomicsStudyData) {
-    if (accession_id in StudyData["datasets"]) {
-        return StudyData["datasets"][accession_id]
-    } else if (accession_id in AIStudyData["datasets"]) {
-        return AIStudyData["datasets"][accession_id]
-    } else if (accession_id in SpatialomicsStudyData["datasets"]) {
-        return SpatialomicsStudyData["datasets"][accession_id]
+function getStudyData(accessionID, StudyData, AIStudyData, SpatialomicsStudyData) {
+    if (accessionID in StudyData["datasets"]) {
+        return StudyData["datasets"][accessionID]
+    } else if (accessionID in AIStudyData["datasets"]) {
+        return AIStudyData["datasets"][accessionID]
+    } else if (accessionID in SpatialomicsStudyData["datasets"]) {
+        return SpatialomicsStudyData["datasets"][accessionID]
     }
 }
 
-const study_data = get_study_data(image.study_accession_id, StudyData, AIStudyData, SpatialomicsStudyData)
+const study_info = getStudyData(image.study_accession_id, studyData, AIStudyData, SpatialomicsStudyData)
 
 const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
 
@@ -45,7 +47,9 @@ const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.u
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
             <div>
-                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image.study_accession_id }:{ image.alias }<a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image.study_accession_id }:{ image.alias }
+                    <WebsiteStateButton/>
+                </h1>
                 <h2 class="vf-intro__subheading">{image.name}</h2>
                 {image.original_relpath}
                 <p class="studytitle">{image.study_title}</p>
@@ -58,7 +62,7 @@ const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.u
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div>
                 <h3>Image metadata</h3>
-                <b>Image size: </b> {tissueX}μm x {tissueY}μm<br>
+                <b>Image size: </b> {tissue_x}μm x {tissue_y}μm<br>
                 {image.sizeX} x {image.sizeY} pixels<br />
                 {image.sizeC} channels
                 <br /> <br />
@@ -120,7 +124,7 @@ const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.u
                 <h3>Biosample</h3>
             </div>
             <div>
-                <b>Organism:</b> {study_data.organism}<br>
+                <b>Organism:</b> {study_info.organism}<br>
                 <b>Biological entity: </b>
             </div>
             <div></div>

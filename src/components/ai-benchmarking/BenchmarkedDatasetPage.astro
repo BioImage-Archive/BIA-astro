@@ -1,0 +1,114 @@
+---
+import StudyTitleInfo from "../study-page/StudyTitleInfo.astro";
+import StudyContentsSummary from "../study-page/StudyContentsSummary.astro";
+import DatasetInfo from "./DatasetInfo.astro"
+import BenchmarkingTable from "./BenchmarkingTable.astro"
+import ModelPredictionTable from "./ModelPredictionTable.astro"
+
+import { formatListItem, multilineTextRender } from "../SharedJSFunctions";
+
+const { accessionID, studyMetadata, additionalStudyMetadata, tableInfo} = Astro.props;
+
+const tableOfContents = {
+  "Model Information": "model",
+  "Benchmarking": "benchmarking",
+  "Model Predictions": "predictions"
+};
+
+const study = studyMetadata[accessionID]
+
+const studyAIInfo = additionalStudyMetadata[accessionID]
+
+const filteredTableInfo = tableInfo.filter(row =>
+  row.study === accessionID
+)
+
+const aiDatasetUUIDs = studyAIInfo.dataset.reduce((aiDatasetUUIDs, dataset) => {aiDatasetUUIDs.push(dataset.uuid); return aiDatasetUUIDs}, [])
+
+const relevantDatasets = study.dataset.filter(
+  dataset => aiDatasetUUIDs.includes(dataset.uuid)
+)
+
+const exampleImageURI = studyAIInfo.hero_image 
+const exampleAnnotationURI = studyAIInfo.hero_image_gt
+
+---
+
+<body>
+    <StudyTitleInfo study_info={study} />
+
+    <StudyContentsSummary 
+      tableOfContents={tableOfContents} 
+      originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
+    >
+    <div slot="hero-image" style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+      <figure class="vf-figure" style="max-width:300px">
+        <img
+          class="vf-figure__image"
+          src={exampleImageURI}
+          alt="Example image for this dataset"
+        />
+        <figcaption class="vf-figure__caption">
+          Example image for this dataset
+        </figcaption>
+      </figure>
+
+      {
+        exampleAnnotationURI && (
+          <figure class="vf-figure" style="max-width:300px">
+            <img
+              class="vf-figure__image"
+              src={exampleAnnotationURI}
+              alt="Example annotation for this dataset"
+            />
+            <figcaption class="vf-figure__caption">
+              Example annotation for this dataset
+            </figcaption>
+          </figure>
+        )
+      }
+      
+    </div>
+    </StudyContentsSummary>
+
+    <hr/>
+
+  <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Study Information</h2>
+    </div>
+
+    <div style="overflow-wrap: anywhere;">
+      <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}/></div>
+      <div><b>Licence: </b> {study.licence}<div>
+      {
+        studyAIInfo.tags && (
+          <div><b>Tags:</b> {studyAIInfo.tags.reduce(formatListItem, "")}</div>
+        )
+      }
+    </div>
+  </section>
+
+  <hr/>
+
+  <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Study Components</h2>
+    </div>
+    <div>
+      {
+       relevantDatasets.map((dataset) => (
+          <DatasetInfo dataset={dataset} datasetAIInfo={studyAIInfo.dataset.filter(aiDataset => aiDataset.uuid === dataset.uuid)[0]} studyAccessionID={accessionID}/>
+        ))
+      }
+    </div>
+  </section>
+
+  <hr/>
+
+  <BenchmarkingTable  tableRows={filteredTableInfo}, studyOrModelPageMode='study'/>
+
+  <hr/>
+
+  <ModelPredictionTable  tableRows={filteredTableInfo}, studyOrModelPageMode='study'/>
+</body>

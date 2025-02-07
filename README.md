@@ -30,3 +30,11 @@ To test:
 \* Note that on mac you may have to modify permissions of the /Users/$USER/.config/linkchecker to get this command to work.
 
 You can also run this on the files genated by the build by running `npm run build` and then `linkchecker dist/bioimage-archive/ ...`
+
+
+## Style guide
+
+We follow: https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide/Code_style_guide/JavaScript 
+- Classes are PascalCase, which include any imported astro templates/files
+- variables, objects, and functions are camelCase
+Note that for astro, pages with dynamic route parameters should therefore be called `[camelCaseParameter].astro`

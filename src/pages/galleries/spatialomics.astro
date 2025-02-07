@@ -2,9 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BrowseDatasetHeading from '../../components/BrowseDatasetsHeading.astro';
 import DatasetCard from '../../components/cards/GalleryDatasetCard.astro';
-import exports from "../../data/old-export-format/bia-spatialomics-export.json";
 
+import exports from "../../data/old-export-format/bia-spatialomics-export.json";
 import collection from '../../data/collections/spatialomics.json';
+
 const datasets = exports["datasets"];
 
 ---
@@ -20,7 +21,7 @@ const datasets = exports["datasets"];
 
       <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;"> 
         <div class="vf-card-container__inner">
-            { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } dataset_page_url={"/bioimage-archive/galleries/spatialomics/dataset/"+dataset.accession_id}/> )) }
+            { Object.values(datasets).map((dataset) => ( <DatasetCard dataset={ dataset } datasetPagePath={`/bioimage-archive/galleries/spatialomics/dataset/${dataset.accession_id}`}/> )) }
         </div>
      </section>  
   </body>

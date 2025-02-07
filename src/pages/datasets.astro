@@ -1,20 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DatasetCard from '../components/cards/BrowseDatasetCard.astro';
-import study_info from "../data/bia-study-metadata.json";
 import BrowseDatasetHeading from '../components/BrowseDatasetsHeading.astro';
 import  "../styles/toggle.css"
 
-const totalStudies = Object.keys(study_info).length;
+import studyMetadata from "../data/bia-study-metadata.json";
 
-const totalFiles = Object.values(study_info).reduce((acc, study) => {
+const totalStudies = Object.keys(studyMetadata).length;
+
+const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
   const studyFiles = study.dataset?.reduce((fileAcc, component) => {
     return fileAcc + (component.file_reference_count || 0);
   }, 0) || 0;
   return acc + studyFiles;
 }, 0);
 
-const totalImages = Object.values(study_info).reduce((acc, study) => {
+const totalImages = Object.values(studyMetadata).reduce((acc, study) => {
   const studyImages = study.dataset?.reduce((imgAcc, component) => {
     return imgAcc + (component.image_count || 0);
   }, 0) || 0;
@@ -30,7 +31,7 @@ const formattedTotalImages = totalImages.toLocaleString();
 
     <BrowseDatasetHeading
       heading="Browse the BioImage Archive"
-      contribute_link={"/bioimage-archive/submit"}
+      contributeLink={"/bioimage-archive/submit"}
     > 
       <div slot="body_text">
         <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
@@ -65,22 +66,22 @@ const formattedTotalImages = totalImages.toLocaleString();
         toggle.addEventListener('change', () => filterElements(input.value, toggle));
         input.addEventListener('keyup', () => filterElements(input.value, toggle));
 
-        function filterElements(input_text, toggle) {
+        function filterElements(inputText, toggle) {
           const cards = document.querySelectorAll('.vf-card')
-          if (input_text == "" && !toggle.checked) {
+          if (inputText == "" && !toggle.checked) {
             cards.forEach((card) => displayElement(card as HTMLElement));
           } else {
-            cards.forEach((card) => toggleCard(input_text.toLowerCase(), toggle.checked, card as HTMLElement));
+            cards.forEach((card) => toggleCard(inputText.toLowerCase(), toggle.checked, card as HTMLElement));
           }
         }
 
         function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
-          var card_data = card.dataset.message;
-          var has_image = card_data.substring(card_data.lastIndexOf("has_img") + 9);
-          console.log(has_image)
+          var cardData = card.dataset.message;
+          var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
+          console.log(hasImage)
           console.log(toggle)
           if (requires_image) {
-            if (has_image =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
+            if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
               displayElement(card)
             } else {
               hideElement(card)
@@ -111,7 +112,7 @@ const formattedTotalImages = totalImages.toLocaleString();
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
        
         <div class="vf-card-container__inner" >
-            { Object.values(study_info).map((study) => ( <DatasetCard dataset={study} dataset_path="dataset"/> )) }
+            { Object.values(studyMetadata).map((study) => ( <DatasetCard study={study} studyPageRoot="dataset"/> )) }
         </div>
     </section>
 

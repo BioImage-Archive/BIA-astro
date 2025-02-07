@@ -7,6 +7,8 @@
 			"Arabidopsis thaliana",
             "fluorescence microscopy"
 		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_16.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_31.png",
 		"dataset": [
 			{
 				"uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
@@ -24,6 +26,8 @@
 			"human",
             "fluorescence microscopy"
 		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_1.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_31.png",
 		"dataset": [
 			{
 				"uuid": "e15c585a-5539-4b0a-9575-244e4cebf2da",

@@ -1,0 +1,114 @@
+---
+import BenchmarkingTable from "./BenchmarkingTable.astro"
+import ModelPredictionTable from "./ModelPredictionTable.astro"
+import WebsiteStateButton from "../WebsiteStateButton.astro";
+
+import { formatListItem, multilineTextRender } from "../SharedJSFunctions";
+
+
+const { modelName, modelMetadata, tableInfo, aiProjectLogosBasepath} = Astro.props;
+
+
+const modelInfo = modelMetadata[modelName]
+
+
+const tableOfContents = {
+  "Model Information": "model",
+  "Benchmarking": "benchmarking",
+  "Model Predictions": "predictions"
+};
+
+
+const filteredTableInfo = tableInfo.filter( row => row.model === modelName)
+---
+<body>
+    <section class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+
+    </div>
+    <div>
+        <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+            {modelInfo.nickname}
+            <WebsiteStateButton/>
+        </h1>
+        <h2 class="vf-intro__subheading">{modelInfo.name}</h2>
+
+
+        <p>
+          {modelInfo.author.reduce(formatListItem, "")}
+        </p>
+        <p>
+          {modelInfo.model_id}
+        </p>
+
+         <span style="display: flex; justify-content: space-evenly; flex-wrap: wrap; padding-top:8px">
+            <a href="https://ai4life.eurobioimaging.eu/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
+                <img src={aiProjectLogosBasepath + "AI4Life_logo_neg_giraffe_solid.png"} style="max-height:140%; padding-top:-40%">
+            </a>
+            <a href="https://bioimage.io/#/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
+                <img src={aiProjectLogosBasepath + "bioimage-io-logo-white.png"} style="max-height:80%; padding:10px">  
+            </a>
+         </span>
+
+    </div>
+  </section>
+
+
+  <section class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <div>
+        <h2 class="vf-section-header__heading">On this page</h2>
+        <ul class="vf-list">
+          {
+            Object.entries(tableOfContents).map(([text_title, id]) => (
+              <li class="vf-list__item">
+                <a class="vf-list__link" href={"#" + id}>
+                  {text_title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  
+    <figure class="vf-figure vf-figure--align vf-figure--align-centered">
+      <img
+        class="vf-figure__image"
+        src={modelInfo.hero_image}
+        alt="Example image containing both original image data and after applying the model to it."
+      />
+    </figure>
+  
+    <div>
+      <a href={modelInfo.model_link}>
+        <button class="vf-button vf-button--primary vf-button--sm"
+          >Link to model</button
+        >
+      </a>
+    </div>
+  </section>
+
+  <hr/>
+
+  <section id="model" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Model Information</h2>
+    </div>
+
+    <div style="overflow-wrap: anywhere;">
+      <div><b>Description: </b> <Fragment set:html={multilineTextRender(modelInfo.description)}></Fragment></div>
+      <div><b>Licence: </b> {modelInfo.licence}<div>
+      <div><b>Tags: </b> {modelInfo.tags.reduce(formatListItem, "")}<div></div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <BenchmarkingTable  tableRows={filteredTableInfo}, studyOrModelPageMode='model'/>
+
+
+  <hr/>
+
+  <ModelPredictionTable  tableRows={filteredTableInfo}, studyOrModelPageMode='model'/>
+</body>
