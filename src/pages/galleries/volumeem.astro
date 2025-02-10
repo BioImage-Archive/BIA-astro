@@ -58,6 +58,15 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 
         window.setGridColumns = function(columns) {
             document.querySelector('.grid-inner').style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+            
+            // Get all size bars and cube wrappers
+            const sizeBars = document.querySelectorAll('.size-bar');
+            const cubeWrappers = document.querySelectorAll('.cube-wrapper');
+            
+            // Show/hide based on column count
+            const display = columns === 5 ? 'none' : '';
+            sizeBars.forEach(bar => bar.style.display = display);
+            cubeWrappers.forEach(wrapper => wrapper.style.display = display);
         }
     });
 </script>
