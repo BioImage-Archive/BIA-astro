@@ -198,6 +198,11 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             max-width: var(--vf-content-max-width, 1200px);
             margin: 0 auto;
         }
+        /* Hide size bar and cube in 5-column grid view */
+        .grid-inner .size-bar,
+        .grid-inner .cube-wrapper {
+            display: none;
+        }
         .column-toggle-container {
             text-align: center;
             padding: 0.5em;
