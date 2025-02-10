@@ -1,7 +1,7 @@
 ---
 import { formatListItem } from "../SharedJSFunctions";
 
-const { model, modelPageUrl, tags } = Astro.props;
+const { model, modelPageUrl } = Astro.props;
 
 ---
 <article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px">
@@ -19,11 +19,15 @@ const { model, modelPageUrl, tags } = Astro.props;
         <p class="vf-card__text">
             { model.description }
         </p>
+        <p class="vf-card__text">
+            <b>Task:</b> { model.task }
+        </p>
+    
 
-        {tags && tags.length > 0 && (
+        {model.tags && model.tags.length > 0 && (
             <>
             <p class="vf-card__text">
-                <b>Tags:</b> {tags.reduce(formatListItem, "")}
+                <b>Tags:</b> {model.tags.reduce(formatListItem, "")}
             </p>
             </>
         )}

@@ -7,8 +7,6 @@ import modelMetadata from '../../../data/ai-dataset-benchmarking/model-metadata.
 import collection from '../../../data/collections/ai-benchmark-models.json';
 
 
-const modelNames = collection["model_names"];
-
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>
@@ -30,7 +28,10 @@ const modelNames = collection["model_names"];
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(modelNames).map((modelName) => ( <ModelCard model={ modelMetadata[modelName] } modelPageUrl={`/bioimage-archive/galleries/ai/model/${modelName}`} taglist={modelMetadata[modelName]?.tags || []}/> )) }
+          { Object.entries(modelMetadata).map(
+            ([modelName, model]) => 
+            ( <ModelCard model={ model } modelPageUrl={`/bioimage-archive/galleries/ai/model/${modelName}`}/> )
+          ) }
         </div>
     </section>
   </body>

@@ -7,7 +7,7 @@ import collection from '../../../data/collections/ai-benchmark-datasets.json';
 import studyMetadata from '../../../data/bia-study-metadata.json'
 import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
-const datasetsIDs = collection["accession_ids"];
+Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => console.log(studyAIInfo))
 
 ---
 <BaseLayout pageTitle={ collection.name }>
@@ -20,7 +20,7 @@ const datasetsIDs = collection["accession_ids"];
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(datasetsIDs).map((accessionID) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-dataset"} taglist={additionalStudyInfo[accessionID]?.tags || []} card_img_override={additionalStudyInfo[accessionID].hero_image}/> )) }
+          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-dataset"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
         </div>
     </section>
   </body>

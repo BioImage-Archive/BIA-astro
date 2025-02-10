@@ -1,10 +1,6 @@
 {
     "name": "Benchmarking Models",
-    "title": "Tested AI models",
+    "title": "Model Evaluation Platform",
     "subtitle": "",
-    "description": "This is a collection of AI models from the BioImage Model Zoo that have been applied to several datasets from the BIA. Here you can visualise the prediction of the models for different images.",
-    "model_names": [
-      "loyal-squid",
-      "noisy-fish"
-    ]
+    "description": "This is a collection of AI models from the BioImage Model Zoo that have been applied to several datasets from the BIA. Here you can visualise the prediction of the models for different images."
   }
