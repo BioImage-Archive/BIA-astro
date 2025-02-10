@@ -11,6 +11,7 @@ export function getDatasetUUIDNameMap(tableRows) {
     }
     const datasetUUIDNameMap = new Map();
     for (var accessionID of studyIDs) {
+        console.log(studyMetadata[accessionID])
         for (var dataset of studyMetadata[accessionID].dataset) {
             datasetUUIDNameMap.set(dataset.uuid, dataset.title_id)
         }
