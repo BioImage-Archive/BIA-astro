@@ -69,22 +69,24 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         </div>
         <div class="controls-container">
             <div class="controls-inner">
-                <div class="toggle-switch">
-                <label class="toggle-option">
-                    <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
-                    <span class="toggle-label">Cards</span>
-                </label>
-                <label class="toggle-option">
-                    <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
-                    <span class="toggle-label">Table</span>
-                </label>
-                <label class="toggle-option">
-                    <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
-                    <span class="toggle-label">Grid</span>
-                </label>
-                </div>
                 <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
                 <div class="counter-display">
+                    Showing <span id="visibleCount">all</span> of <span id="totalCount">0</span> images
+                </div>
+                <div class="toggle-switch">
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
+                        <span class="toggle-label">Cards</span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
+                        <span class="toggle-label">Table</span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
+                        <span class="toggle-label">Grid</span>
+                    </label>
+                </div>
                     Showing <span id="visibleCount">all</span> of <span id="totalCount">0</span> images
                 </div>
             </div>
