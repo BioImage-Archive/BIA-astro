@@ -12,9 +12,13 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
     document.addEventListener('DOMContentLoaded', () => {
         const searchBox = document.getElementById('searchBox');
         
+        const totalCount = document.querySelectorAll('.vf-card').length;
+        document.getElementById('totalCount').textContent = totalCount;
+
         searchBox.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             const cards = document.querySelectorAll('.vf-card');
+            let visibleCount = 0;
             
             cards.forEach(card => {
                 const title = card.querySelector('.title-text').textContent.toLowerCase();
@@ -22,10 +26,13 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                 
                 if (title.includes(searchTerm) || organism.includes(searchTerm)) {
                     card.style.display = '';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            document.getElementById('visibleCount').textContent = searchTerm ? visibleCount : 'all';
         });
         const dataTable = new DataTable('.vf-table', {
             pageLength: 25,
@@ -77,6 +84,9 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                 </label>
                 </div>
                 <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
+                <div class="counter-display">
+                    Showing <span id="visibleCount">all</span> of <span id="totalCount">0</span> images
+                </div>
             </div>
         </div>
     </section> 
@@ -236,6 +246,11 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         }
         .search-input:focus {
             box-shadow: 0 0 5px rgba(59, 111, 182, 0.5);
+        }
+        .counter-display {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 0.5em;
         }
     </style>
   </body>
