@@ -50,7 +50,7 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
                 <tr>
                     {
                         studyOrModelPageMode == 'model' && (
-                            <td> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></td>
+                            <td style="white-space: nowrap;"> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></td>
                         )
                     }
                     <td>{datasetUUIDNameMap.get(row.dataset_uuid)}</td>
@@ -61,10 +61,10 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
 
                         )
                     }
-                    <td>{
+                    <td style="text-align:center;">{
                         row.example_image && (
                             <a href={row.example_image} target="_blank" rel="noopener noreferrer">
-                                <img src={row.example_image} style="max-width: 180px;"/>
+                                <img src={row.example_image} style="max-width: 180px; max-height: 180px;"/>
                             </a>
                             <a href={row.example_image} download>
                                     Download
@@ -73,10 +73,10 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
                     }</td>
                     {
                         hasReferenceImage && (
-                            <td>{
+                            <td style="text-align:center;">{
                                 row.example_ground_truth && (
                                     <a href={row.example_ground_truth} target="_blank" rel="noopener noreferrer">
-                                        <img src={row.example_ground_truth} style="max-width: 180px;"/>
+                                        <img src={row.example_ground_truth} style="max-width: 180px; max-height: 180px;"/>
                                     </a>
                                     <a href={row.example_ground_truth} download>
                                         Download 
@@ -85,17 +85,17 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
                             }</td>
                         )
                     }
-                    <td>{
+                    <td style="text-align:center;">{
                         row.example_process_image && (
                             <a href={row.example_process_image} target="_blank" rel="noopener noreferrer">
-                                <img src={row.example_process_image} style="max-width: 180px;"/>
+                                <img src={row.example_process_image} style="max-width: 180px; max-height: 180px;"/>
                             </a>
-                            <a href={row.example_process_image} download>
+                            <a href={row.example_process_image} download >
                                 Download 
                             </a> 
                         )
                     }</td>
-                    <td> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></td>
+                    <td style="white-space: nowrap;"> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></td>
                 </tr>
                 ))
             }
