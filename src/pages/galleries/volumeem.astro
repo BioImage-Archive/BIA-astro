@@ -60,26 +60,22 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             <h2 class="vf-intro__subheading">3D volume images, browsable, downloadable and streamable</h2>
             <p>Individual volume images across a range of species, vEM imaging methods and reconstruction approaches. Each volume has background information, and can be viewed in the browser, accessed remotely, or downloaded either as OME-Zarr or in the format in which data were originally captured.</p>
         </div>
-        <div>
-            <div class="view-toggle-container">
-                <div class="toggle-switch">
-                    <label class="toggle-option">
-                        <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
-                        <span class="toggle-label">Cards</span>
-                    </label>
-                    <label class="toggle-option">
-                        <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
-                        <span class="toggle-label">Table</span>
-                    </label>
-                    <label class="toggle-option">
-                        <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
-                        <span class="toggle-label">Grid</span>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="search-container">
+        <div class="controls-container">
             <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
+            <div class="toggle-switch">
+                <label class="toggle-option">
+                    <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
+                    <span class="toggle-label">Cards</span>
+                </label>
+                <label class="toggle-option">
+                    <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
+                    <span class="toggle-label">Table</span>
+                </label>
+                <label class="toggle-option">
+                    <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
+                    <span class="toggle-label">Grid</span>
+                </label>
+            </div>
         </div>
     </section> 
 
@@ -127,8 +123,11 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         .vf-intro {
                 margin-bottom: 1rem; /* or a smaller value like 1rem */
         }
-        .view-toggle-container {
-            text-align: center;
+        .controls-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1em;
             padding: 1em;
         }
         .toggle-switch {
@@ -137,6 +136,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             padding: 4px;
             border-radius: 20px;
             gap: 4px;
+            flex-shrink: 0;
         }
         .toggle-option {
             position: relative;
@@ -212,11 +212,9 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             --license-badge-margin: 0;
             --license-badge-height: 18px;
         }
-        .search-container {
-            text-align: center;
-            padding: 1em;
-        }
         .search-input {
+            flex-grow: 0;
+            width: 300px;
             width: 80%;
             max-width: 600px;
             padding: 8px 16px;
