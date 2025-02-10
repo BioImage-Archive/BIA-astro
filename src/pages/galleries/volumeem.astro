@@ -17,19 +17,22 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 
         searchBox.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.vf-card, .compact-card');
+            const allCards = document.querySelectorAll('.vf-card, .compact-card');
             let visibleCount = 0;
             
-            cards.forEach(card => {
-                const title = card.querySelector('.title-text, .compact-title').textContent.toLowerCase();
-                const organism = card.querySelector('.subtitle-text, .compact-subtitle').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || organism.includes(searchTerm)) {
-                    card.style.display = '';
-                    visibleCount++;
+            allCards.forEach(card => {
+                let title, organism;
+                if (card.classList.contains('vf-card')) {
+                    title = card.querySelector('.title-text')?.textContent.toLowerCase() || '';
+                    organism = card.querySelector('.subtitle-text')?.textContent.toLowerCase() || '';
                 } else {
-                    card.style.display = 'none';
+                    title = card.querySelector('.compact-title')?.textContent.toLowerCase() || '';
+                    organism = card.querySelector('.compact-subtitle')?.textContent.toLowerCase() || '';
                 }
+                
+                const isVisible = title.includes(searchTerm) || organism.includes(searchTerm);
+                card.style.display = isVisible ? '' : 'none';
+                if (isVisible) visibleCount++;
             });
 
             document.getElementById('visibleCount').textContent = searchTerm ? visibleCount : 'all';
