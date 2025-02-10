@@ -69,7 +69,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
         </div>
         <div class="controls-container">
             <div class="controls-inner">
-                <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
+                <input type="text" id="searchBox" placeholder="Filter (e.g. title,organism)" class="search-input">
                 <div class="counter-display">
                     Showing <span id="visibleCount">all</span> of <span id="totalCount">0</span> images
                 </div>
@@ -143,6 +143,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             background: white;
             padding: 1em;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 8em;
         }
         .controls-inner {
             display: flex;
