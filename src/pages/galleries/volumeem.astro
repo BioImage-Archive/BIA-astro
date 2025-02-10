@@ -21,8 +21,8 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             let visibleCount = 0;
             
             cards.forEach(card => {
-                const title = card.querySelector('.title-text').textContent.toLowerCase();
-                const organism = card.querySelector('.subtitle-text').textContent.toLowerCase();
+                const title = card.querySelector('.title-text, .compact-title').textContent.toLowerCase();
+                const organism = card.querySelector('.subtitle-text, .compact-subtitle').textContent.toLowerCase();
                 
                 if (title.includes(searchTerm) || organism.includes(searchTerm)) {
                     card.style.display = '';
