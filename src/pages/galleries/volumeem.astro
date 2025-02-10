@@ -17,7 +17,7 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 
         searchBox.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.vf-card');
+            const cards = document.querySelectorAll('.vf-card, .compact-card');
             let visibleCount = 0;
             
             cards.forEach(card => {
