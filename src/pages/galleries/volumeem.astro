@@ -10,6 +10,23 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
+        const searchBox = document.getElementById('searchBox');
+        
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.vf-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.title-text').textContent.toLowerCase();
+                const organism = card.querySelector('.subtitle-text').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || organism.includes(searchTerm)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
         const dataTable = new DataTable('.vf-table', {
             pageLength: 25,
             order: [[1, 'asc']], // Sort by Label column by default
@@ -60,6 +77,9 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                     </label>
                 </div>
             </div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
         </div>
     </section> 
 
@@ -191,6 +211,23 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             --license-badge-padding: 2px 12px;
             --license-badge-margin: 0;
             --license-badge-height: 18px;
+        }
+        .search-container {
+            text-align: center;
+            padding: 1em;
+        }
+        .search-input {
+            width: 80%;
+            max-width: 600px;
+            padding: 8px 16px;
+            border: 2px solid #3b6fb6;
+            border-radius: 20px;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            box-shadow: 0 0 5px rgba(59, 111, 182, 0.5);
         }
     </style>
   </body>
