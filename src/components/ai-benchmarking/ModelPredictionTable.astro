@@ -6,7 +6,7 @@ const { tableRows, studyOrModelPageMode } = Astro.props;
 
 
 const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
-
+const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid != null).length > 0 ? true : false
 ---
 
 <section class="vf-intro | embl-grid | embl-grid--has-centered-content | section-spacing">
@@ -22,20 +22,24 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
             <thead class="vf-table__header">
                 <tr class="vf-table__header">
                     {
-                        studyOrModelPageMode == 'model' && (
+                        studyOrModelPageMode === 'model' && (
                             <th class="vf-table__heading" >Study</th>
                         )
                     }
                     <th class="vf-table__heading" >Dataset</th>
                     {
-                        studyOrModelPageMode == 'study' && (
+                        studyOrModelPageMode === 'study' && (
                             <th class="vf-table__heading" >Model</th>
                             <th class="vf-table__heading" >Task</th>
 
                         )
                     }
                     <th class="vf-table__heading" >Original image</th>
-                    <th class="vf-table__heading" >Reference annotation</th>
+                    {
+                        hasReferenceImage && (
+                            <th class="vf-table__heading" >Reference annotation</th>
+                        )
+                    }
                     <th class="vf-table__heading" >Prediction</th>
                     <th class="vf-table__heading" >Analysis parameters</th>
                 </tr>
@@ -46,18 +50,18 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
                 <tr>
                     {
                         studyOrModelPageMode == 'model' && (
-                            <th> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></th>
+                            <td> <a href={`/bioimage-archive/galleries/ai/analysed-dataset/${row.study}`}>{row.study}</a></td>
                         )
                     }
-                    <th>{datasetUUIDNameMap.get(row.dataset_uuid)}</th>
+                    <td>{datasetUUIDNameMap.get(row.dataset_uuid)}</td>
                     {
                         studyOrModelPageMode == 'study' && (
-                            <th> <a href={`/bioimage-archive/galleries/ai/model/${row.model}`}>{row.model}</a></th>
-                            <th> {modelMetadata[row.model]?.task}</th>
+                            <td> <a href={`/bioimage-archive/galleries/ai/model/${row.model}`}>{row.model}</a></td>
+                            <td> {modelMetadata[row.model]?.task}</td>
 
                         )
                     }
-                    <th>{
+                    <td>{
                         row.example_image && (
                             <a href={row.example_image} target="_blank" rel="noopener noreferrer">
                                 <img src={row.example_image} style="max-width: 180px;"/>
@@ -66,18 +70,22 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
                                     Download
                             </a>
                         )
-                    }</th>
-                    <th>{
-                        row.example_ground_truth && (
-                            <a href={row.example_ground_truth} target="_blank" rel="noopener noreferrer">
-                                <img src={row.example_ground_truth} style="max-width: 180px;"/>
-                            </a>
-                            <a href={row.example_ground_truth} download>
-                                Download 
-                            </a>
+                    }</td>
+                    {
+                        hasReferenceImage && (
+                            <td>{
+                                row.example_ground_truth && (
+                                    <a href={row.example_ground_truth} target="_blank" rel="noopener noreferrer">
+                                        <img src={row.example_ground_truth} style="max-width: 180px;"/>
+                                    </a>
+                                    <a href={row.example_ground_truth} download>
+                                        Download 
+                                    </a>
+                                )
+                            }</td>
                         )
-                    }</th>
-                    <th>{
+                    }
+                    <td>{
                         row.example_process_image && (
                             <a href={row.example_process_image} target="_blank" rel="noopener noreferrer">
                                 <img src={row.example_process_image} style="max-width: 180px;"/>
@@ -86,8 +94,8 @@ const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
                                 Download 
                             </a> 
                         )
-                    }</th>
-                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
+                    }</td>
+                    <td> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></td>
                 </tr>
                 ))
             }
