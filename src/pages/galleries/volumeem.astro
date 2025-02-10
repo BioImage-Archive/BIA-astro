@@ -61,8 +61,8 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             <p>Individual volume images across a range of species, vEM imaging methods and reconstruction approaches. Each volume has background information, and can be viewed in the browser, accessed remotely, or downloaded either as OME-Zarr or in the format in which data were originally captured.</p>
         </div>
         <div class="controls-container">
-            <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
-            <div class="toggle-switch">
+            <div class="controls-inner">
+                <div class="toggle-switch">
                 <label class="toggle-option">
                     <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
                     <span class="toggle-label">Cards</span>
@@ -75,6 +75,8 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                     <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
                     <span class="toggle-label">Grid</span>
                 </label>
+                </div>
+                <input type="text" id="searchBox" placeholder="Filter by title, organism or imaging method..." class="search-input">
             </div>
         </div>
     </section> 
@@ -124,11 +126,20 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                 margin-bottom: 1rem; /* or a smaller value like 1rem */
         }
         .controls-container {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 1em;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
             padding: 1em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5em;
+            max-width: var(--vf-content-max-width, 1200px);
+            margin: 0 auto;
         }
         .toggle-switch {
             display: inline-flex;
@@ -213,7 +224,6 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
             --license-badge-height: 18px;
         }
         .search-input {
-            flex-grow: 0;
             width: 300px;
             width: 80%;
             max-width: 600px;
