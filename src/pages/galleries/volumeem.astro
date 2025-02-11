@@ -9,6 +9,36 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script is:inline>
+    function copyURI(button) {
+        const uri = button.getAttribute('data-uri');
+        
+        // Create dialog
+        const dialog = document.createElement('dialog');
+        dialog.innerHTML = `
+            <div style="padding: 20px; text-align: center;">
+                <h3 style="margin-bottom: 15px;">OME-Zarr URI</h3>
+                <p style="word-break: break-all; margin-bottom: 15px; font-family: monospace;">${uri}</p>
+                <div style="display: flex; gap: 10px; justify-content: center;">
+                    <button onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy</button>
+                    <button onclick="this.closest('dialog').close()">Close</button>
+                </div>
+            </div>
+        `;
+        dialog.style.border = '1px solid #ccc';
+        dialog.style.borderRadius = '8px';
+        dialog.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        dialog.style.maxWidth = '80vw';
+        
+        // Add to document and show
+        document.body.appendChild(dialog);
+        dialog.showModal();
+        
+        // Remove dialog when closed
+        dialog.addEventListener('close', () => {
+            dialog.remove();
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const searchBox = document.getElementById('searchBox');
         
