@@ -146,7 +146,7 @@ const headlineStats = {
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} dataset_title={study.dataset.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
+              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id}/>
             ))
           }
         </tbody>
