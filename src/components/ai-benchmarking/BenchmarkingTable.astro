@@ -73,7 +73,7 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
                             {
                                 studyOrModelPageMode == 'model' && (
                             
-                                    <td> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a> </td>
+                                    <td style="white-space: nowrap;"> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a> </td>
 
                                 )
                             }
@@ -88,7 +88,7 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
                             <td>{row.recall}</td>
                             <td>{row.IoU}</td>
                             <td>{row.dice}</td>
-                            <td> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></td>
+                            <td style="white-space: nowrap;"> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></td>
                         </tr>
                         ))
                     }

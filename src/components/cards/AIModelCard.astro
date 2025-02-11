@@ -1,10 +1,12 @@
 ---
+import modelTableData from "../../data/ai-dataset-benchmarking/model-dataset-table.json"
 import { formatListItem } from "../SharedJSFunctions";
 
 const { model, modelPageUrl } = Astro.props;
 
+const isBenchmarked = modelTableData.filter(row => (row.model === model.nickname ) && (row.annotation_data_set_uuid != null)).length > 0 ? true : false
 ---
-<article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px">
+<article class="vf-card vf-card--brand vf-card--bordered" style="max-width:400px"  data-message={`is_benchmarked: ${isBenchmarked}`}>
     <img src={ model.hero_image } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
@@ -15,9 +17,6 @@ const { model, modelPageUrl } = Astro.props;
         </h3>
         <p class="vf-card__text">
             { model.name }
-        </p>
-        <p class="vf-card__text">
-            { model.description }
         </p>
         <p class="vf-card__text">
             <b>Task:</b> { model.task }
