@@ -78,8 +78,7 @@ const formattedTotalImages = totalImages.toLocaleString();
         function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
           var cardData = card.dataset.message;
           var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
-          console.log(hasImage)
-          console.log(toggle)
+
           if (requires_image) {
             if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
               displayElement(card)

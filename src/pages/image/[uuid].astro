@@ -133,12 +133,19 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
         </section>
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div>
-                <h3>Image metadata</h3>
+                {
+                    primary_image_rep && (
+                        <>
+                            <h3>Image metadata</h3>
 
-                <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep)}<br>
-                <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
-                {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
-                {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
+                            <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep)}<br>
+                            <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
+                            {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
+                            {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
+                        </>
+                    )
+                }
+
             </div>
             <div set:html={displayImageHTML} style="display: flex; justify-content: center;"></div>
 
