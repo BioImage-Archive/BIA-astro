@@ -18,6 +18,11 @@ const { image } = Astro.props;
                     <line x1="12" y1="17" x2="12" y2="17"/>
                 </svg>
             </a>
+            <button class="s3-link" title="Copy OME-Zarr URI" onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                    <text x="4" y="17" font-size="14" font-weight="bold">S3</text>
+                </svg>
+            </button>
         </div>
         <div class="dataset-link">
             <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
@@ -124,10 +129,22 @@ const { image } = Astro.props;
         color: #333;
         transition: all 0.2s ease;
     }
-    .view-link:hover, .metadata-link:hover {
+    .view-link:hover, .metadata-link:hover, .s3-link:hover {
         background: rgba(243, 243, 243, 1);
         transform: translateY(-1px);
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .s3-link {
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
     }
     .cube-wrapper {
         width: 60px;
@@ -224,3 +241,32 @@ const { image } = Astro.props;
         color: #666;
     }
 </style>
+
+<script>
+    function copyURI(button) {
+        const uri = button.getAttribute('data-uri');
+        navigator.clipboard.writeText(uri);
+        
+        // Create and show popup
+        const popup = document.createElement('div');
+        popup.textContent = 'URI copied!';
+        popup.style.position = 'fixed';
+        popup.style.padding = '10px';
+        popup.style.background = 'rgba(0, 0, 0, 0.8)';
+        popup.style.color = 'white';
+        popup.style.borderRadius = '4px';
+        popup.style.zIndex = '1000';
+        
+        // Position popup near the button
+        const rect = button.getBoundingClientRect();
+        popup.style.top = `${rect.bottom + 5}px`;
+        popup.style.left = `${rect.left}px`;
+        
+        document.body.appendChild(popup);
+        
+        // Remove popup after 2 seconds
+        setTimeout(() => {
+            popup.remove();
+        }, 2000);
+    }
+</script>
