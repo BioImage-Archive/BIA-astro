@@ -142,7 +142,7 @@
     },
     {
         "model": "dynamic-t-rex",
-        "study": "S-BIA1269",
+        "study": "S-BIAD1269",
         "dataset_uuid": "d12a9e60-ad30-4ffe-b993-a3f27b72e38b",
         "annotation_data_set_uuid": null,
         "analysis_parameters": {
@@ -1473,7 +1473,7 @@
     },
     {
         "model": "hiding-tiger",
-        "study": "S-BIA1269",
+        "study": "S-BIAD1269",
         "dataset_uuid": "d12a9e60-ad30-4ffe-b993-a3f27b72e38b",
         "annotation_data_set_uuid": null,
         "analysis_parameters": {
