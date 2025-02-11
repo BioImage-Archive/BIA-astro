@@ -9,23 +9,39 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script is:inline>
-    function parseS3Uri(uri) {
-        try {
-            // Remove s3:// prefix if present
-            const s3Path = uri.replace(/^s3:\/\//, '');
-            // Split into bucket and key
-            const [bucket, ...keyParts] = s3Path.split('/');
-            const key = keyParts.join('/');
-            return {
-                bucket,
-                key,
-                endpoint: 'https://s3.embassy.ebi.ac.uk'
-            };
-        } catch (e) {
-            console.error('Failed to parse S3 URI:', e);
-            return null;
+function parseS3Uri(url) {
+    try {
+        // Basic validation
+        if (!url || typeof url !== 'string') {
+            throw new Error('Invalid URL provided');
         }
+
+        // Parse the URL
+        const urlObj = new URL(url);
+        
+        // Extract the endpoint
+        const endpoint = `${urlObj.protocol}//${urlObj.host}`;
+        
+        // Split the pathname into segments and remove empty segments
+        const segments = urlObj.pathname.split('/').filter(segment => segment.length > 0);
+        
+        if (segments.length < 2) {
+            throw new Error('Invalid URL format: must contain bucket and key');
+        }
+
+        const bucket = segments[0];
+        const key = segments.slice(1).join('/');
+
+        return {
+            bucket,
+            key,
+            endpoint
+        };
+    } catch (e) {
+        console.error('Failed to parse URL:', e);
+        return null;
     }
+}
 
     function copyURI(button) {
         const uri = button.getAttribute('data-uri');
