@@ -60,10 +60,10 @@ function parseS3Uri(url) {
                 <p style="margin-bottom: 10px;">1. Install the AWS CLI if you haven't already:</p>
                 <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">brew install awscli</pre>
                 <p style="margin-bottom: 10px;">2. Download the data recursively (no credentials needed):</p>
-                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} "s3://${s3Info.bucket}/${s3Info.key}" . --recursive</pre>
+                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} "s3://${s3Info.bucket}/${s3Info.key}" "${s3Info.key.split('/').pop()}" --recursive</pre>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                     <button onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy S3 URI</button>
-                    <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' . --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
+                    <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' \\'${s3Info.key.split('/').pop()}\\' --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
                     <button onclick="this.closest('dialog').close()">Close</button>
                 </div>
             </div>
