@@ -34,13 +34,13 @@ const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid !
 
                         )
                     }
-                    <th class="vf-table__heading" >Original image</th>
+                    <th class="vf-table__heading" style="min-width: 200px;" >Original image</th>
                     {
                         hasReferenceImage && (
-                            <th class="vf-table__heading" >Reference annotation</th>
+                            <th class="vf-table__heading" style="min-width: 200px;">Reference annotation</th>
                         )
                     }
-                    <th class="vf-table__heading" >Prediction</th>
+                    <th class="vf-table__heading" style="min-width: 200px;">Prediction</th>
                     <th class="vf-table__heading" >Analysis parameters</th>
                 </tr>
             </thead>
