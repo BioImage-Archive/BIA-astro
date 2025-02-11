@@ -2,6 +2,7 @@
 import OldLayout from '../../../layouts/OldLayout.astro';
 import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
 import ModelCard from '../../../components/cards/AIModelCard.astro';
+import  "../../../styles/toggle.css"
 
 import collection from '../../../data/collections/ai-benchmark-models.json';
 import modelMetadata from '../../../data/ai-dataset-benchmarking/model-metadata-old-website.json'
@@ -17,11 +18,11 @@ const modelNames = collection["model_names"];
      <p class="vf-hero__text" slot="body_text">{ collection.description }
       <br/>
       <span style="display: flex; justify-content: space-evenly; flex-wrap: wrap; padding-top:8px">
-        <a href="https://ai4life.eurobioimaging.eu/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
-            <img src="/bioimage-archive/ai-galleries/AI4Life_logo_neg_giraffe_solid.png" style="max-height:140%; padding-top:-40%">
+        <a href="https://ai4life.eurobioimaging.eu/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly; box-sizing: unset;">
+            <img src="/bioimage-archive/galleries/assets/AI4Life_logo_neg_giraffe_solid.png" style="max-height:140%; padding-top:-40%">
         </a>
-        <a href="https://bioimage.io/#/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly;">
-            <img src="/bioimage-archive/ai-galleries/bioimage-io-logo-white.png" style="max-height:80%; padding:10px">  
+        <a href="https://bioimage.io/#/" class="vf-badge vf-badge--primary" style="height: 60px; width: 240px; display: flex; justify-content: space-evenly; box-sizing: unset;">
+            <img src="/bioimage-archive/galleries/assets/bioimage-io-logo-white.png" style="max-height:80%; padding:10px">  
         </a>
      </span>
      </p>
@@ -32,7 +33,7 @@ const modelNames = collection["model_names"];
   <div style="display: flex;  justify-content: space-between; flex-wrap: wrap; width: 100%;">
     <span>
       <text> Filter models that have benchmarking scores:  </text>
-      <label class="switch" id="image_toggle_switch">
+      <label class="switch" id="image_toggle_switch" style>
         <input type="checkbox" id="image_toggle">
         <span class="slider round"></span>
       </label>

@@ -24,6 +24,9 @@
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
+    height: unset;
+    margin-top: unset;
+    margin-bottom: unset;
   }
   
   .slider:before {
