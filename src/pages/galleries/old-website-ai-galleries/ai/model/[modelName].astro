@@ -7,7 +7,7 @@ import modelMetadata from "../../../../../data/ai-dataset-benchmarking/model-met
 import tableInfo from "../../../../../data/ai-dataset-benchmarking/model-dataset-table-old-website.json"
 
 export function getStaticPaths() {
-  return Object.values(collectionList["model_names"]).map((id) => {
+  return Object.keys(modelMetadata).map((id) => {
     return {
       params: { modelName: id },
     };
