@@ -10,16 +10,21 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script is:inline>
     function parseS3Uri(uri) {
-        // Remove s3:// prefix
-        const s3Path = uri.replace('s3://', '');
-        // Split into bucket and key
-        const [bucket, ...keyParts] = s3Path.split('/');
-        const key = keyParts.join('/');
-        return {
-            bucket,
-            key,
-            endpoint: 'https://s3.embassy.ebi.ac.uk'
-        };
+        try {
+            // Remove s3:// prefix if present
+            const s3Path = uri.replace(/^s3:\/\//, '');
+            // Split into bucket and key
+            const [bucket, ...keyParts] = s3Path.split('/');
+            const key = keyParts.join('/');
+            return {
+                bucket,
+                key,
+                endpoint: 'https://s3.embassy.ebi.ac.uk'
+            };
+        } catch (e) {
+            console.error('Failed to parse S3 URI:', e);
+            return null;
+        }
     }
 
     function copyURI(button) {
@@ -35,29 +40,14 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
                     <h4 style="margin: 10px 0;">S3 URI:</h4>
                     <p style="word-break: break-all; font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">${uri}</p>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <h4 style="margin: 10px 0;">Endpoint:</h4>
-                    <p style="word-break: break-all; font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">${s3Info.endpoint}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <h4 style="margin: 10px 0;">Bucket:</h4>
-                    <p style="word-break: break-all; font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">${s3Info.bucket}</p>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <h4 style="margin: 10px 0;">Key:</h4>
-                    <p style="word-break: break-all; font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">${s3Info.key}</p>
-                </div>
                 <h4 style="margin: 15px 0;">Download with AWS CLI:</h4>
                 <p style="margin-bottom: 10px;">1. Install the AWS CLI if you haven't already:</p>
                 <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">brew install awscli</pre>
-                <p style="margin-bottom: 10px;">2. Configure endpoint (one-time setup):</p>
-                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws configure set default.s3.endpoint_url ${s3Info.endpoint}</pre>
-                <p style="margin-bottom: 10px;">3. Download the data recursively (no credentials needed):</p>
-                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request "s3://${s3Info.bucket}/${s3Info.key}" . --recursive</pre>
+                <p style="margin-bottom: 10px;">2. Download the data recursively (no credentials needed):</p>
+                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} "s3://${s3Info.bucket}/${s3Info.key}" . --recursive</pre>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                     <button onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy S3 URI</button>
-                    <button onclick="navigator.clipboard.writeText('${s3Info.endpoint}').then(() => this.closest('dialog').close())">Copy Endpoint</button>
-                    <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request \\'s3://${s3Info.bucket}/${s3Info.key}\\' . --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
+                    <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' . --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
                     <button onclick="this.closest('dialog').close()">Close</button>
                 </div>
             </div>
