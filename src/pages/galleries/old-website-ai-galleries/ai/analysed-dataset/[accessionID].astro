@@ -10,7 +10,7 @@ import tableInfo from "../../../../../data/ai-dataset-benchmarking/model-dataset
 
 
 export function getStaticPaths() {
-  return Object.values(collectionList["accession_ids"]).map((id) => {
+  return Object.keys(additionalStudyMetadata).map((id) => {
     return {
       params: { accessionID: id },
     };
