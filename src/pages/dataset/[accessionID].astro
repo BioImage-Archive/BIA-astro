@@ -27,12 +27,12 @@ const tableOfContents = {
 const { accessionID } = Astro.params;
 const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
 
-const images = []
-for (var dataset of study.dataset) {
-  for (var image of dataset.image) {
-    images.push(image)
-  }
-}
+const images = study.dataset.flatMap(dataset => dataset.image ?? [])
+// for (var dataset of study.dataset) {
+//   for (var image of dataset.image) {
+//     images.push(image)
+//   }
+// }
 
 function getStudyImage(study) {
   const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
@@ -218,7 +218,11 @@ const headlineStats = {
                         columns: [
                             { data: "uuid", title: "File UUID" },
                             { data: "file_path", title: "File Name" },
-                            { data: "uri", title: "Link" },
+                            { 
+                              data: "uri", 
+                              title: "Actions", 
+                              render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` 
+                            },
                         ],
                         pageLength: 25, 
                         searching: true,
@@ -226,6 +230,18 @@ const headlineStats = {
                         processing: true,
                         scrollX: true,
                         columnDefs: [{ type: "natural", targets: 0 }],
+                        createdRow: (row, data) => {
+                            // Attach event listener to the button after row creation
+                            $(row).find(".copy-btn").on("click", function () {
+                                const link = $(this).data("uri");
+                                navigator.clipboard.writeText(link).then(() => {
+                                  this.innerText = "URL Copied";
+                                  setTimeout(() => {
+                                      this.innerText = "Copy Url";
+                                  }, 700);
+                                });
+                            });
+                        }
                     });
                 })
                 .catch((error) => {
