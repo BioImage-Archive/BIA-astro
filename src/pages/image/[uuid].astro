@@ -8,6 +8,7 @@ import fieldMap from "../../data/metadata-field-name-mapping.json";
 import datasetMetadata from "../../data/bia-dataset-metadata-for-images.json";
 import imageMetadata from "../../data/bia-image-metadata.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
+import {getSimpleAttributeValue } from "../../components/SharedJSFunctions.js"
 
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
@@ -21,12 +22,6 @@ export function getStaticPaths() {
       params:  { uuid: uuid }
     };
   });
-}
-
-function getSimpleAttributeValue(obj, attrName) {
-  return obj?.attribute
-    ?.find(attr => attr.name === attrName)
-    ?.value[attrName] ?? null;
 }
 
 const { uuid } = Astro.params;
@@ -81,7 +76,8 @@ function formatPhysicalDimension(value, text) {
 
 function formatPhysicalDimensions(imageRepresentation) {
     const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
-    return fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
+    const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
+    return formattedStr != "" ? formattedStr : 'Unknown'
 }
 
 
@@ -112,6 +108,9 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
     `<img style="height: 500px;" src="${fallbackImage.src}" />`
 
 
+
+const userProvidedAttribute = image.attribute.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
+
 ---
 
 <BaseLayout pageTitle={image["accession_id"] + ":" + image["alias"]}>
@@ -135,14 +134,21 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
             <div>
                 {
                     primary_image_rep && (
-                        <>
+                        <span>
                             <h3>Image metadata</h3>
 
-                            <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep)}<br>
+                            <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep) ?? "Not provided" }<br>
                             <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
-                            {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
-                            {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
-                        </>
+                            {primary_image_rep.size_c && (<div><b>Number of channels:</b> {primary_image_rep.size_c}</div>)}
+                            {primary_image_rep.size_t && (<div><b>Number of timesteps:</b> {primary_image_rep.size_t}</div>)}
+                            {userProvidedAttribute && ( 
+                                <div>
+                                    <br/>
+                                    <h4>Additional user metadata</h4>
+                                    {Object.entries(userProvidedAttribute).map(([key, value]) => (<div><b>{key}:</b> {value}</div>)) }
+                                </div> 
+                            )}
+                        </span>
                     )
                 }
 
