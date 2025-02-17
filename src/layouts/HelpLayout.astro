@@ -2,6 +2,8 @@
 const { frontmatter } = Astro.props;
 import Header from '../components/Header.astro';
 import HelpNavigation from '../components/HelpNavigation.astro';
+import Navigation from '../components/Navigation.astro';
+
 ---
 <html lang="en" class="vf-js">
   <head>
@@ -24,6 +26,8 @@ import HelpNavigation from '../components/HelpNavigation.astro';
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
    
     <Header />
+    <Navigation />
+
     <section class="embl-grid embl-grid--has-centered-content">
       <div>
         <HelpNavigation />
