@@ -20,7 +20,7 @@ const { accessionID } = Astro.params;
 
 ---
 
-<Layout title={accessionID}>
+<Layout pageTitle={accessionID}>
   <BenchmarkedDatasetPage accessionID={accessionID} studyMetadata={studyMetadata} additionalStudyMetadata={additionalStudyMetadata} tableInfo={tableInfo}/>
 </Layout>
 

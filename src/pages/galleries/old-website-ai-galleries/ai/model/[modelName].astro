@@ -17,6 +17,6 @@ export function getStaticPaths() {
 const { modelName } = Astro.params;
 
 ---
-<OldLayout title={modelName}>
+<OldLayout pageTitle={modelName}>
   <ModelPage modelName={modelName} modelMetadata={modelMetadata} tableInfo={tableInfo} aiProjectLogosBasepath="/bioimage-archive/galleries/assets/" />
 </Layout>
