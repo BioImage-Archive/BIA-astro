@@ -1,8 +1,8 @@
 ---
 import EMPIARLayout from '../../layouts/EMPIARLayout.astro';
-import VolumeEMImage from '../../components/cards/VolumeEMImage.astro';
+import VolumeEMImage from '../../components/cards/VolumeEMImageCard.astro';
 import VolumeEMTable from '../../components/VolumeEMTable.astro';
-import VolumeEMImageCompact from '../../components/cards/VolumeEMImageCompact.astro';
+import VolumeEMImageCompact from '../../components/cards/VolumeEMImageCompactCard.astro';
 import vemImages from "../../data/collections/vem_image_summaries.json";
 ---
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
@@ -43,7 +43,7 @@ function parseS3Uri(url) {
     }
 }
 
-    function copyURI(button) {
+function copyURI(button) {
         const uri = button.getAttribute('data-uri');
         const s3Info = parseS3Uri(uri);
         
@@ -57,8 +57,7 @@ function parseS3Uri(url) {
                     <p style="word-break: break-all; font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">${uri}</p>
                 </div>
                 <h4 style="margin: 15px 0;">Download with AWS CLI:</h4>
-                <p style="margin-bottom: 10px;">1. Install the AWS CLI if you haven't already:</p>
-                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">brew install awscli</pre>
+                <p style="margin-bottom: 10px;">1. Install the AWS CLI if you haven't already.</p>
                 <p style="margin-bottom: 10px;">2. Download the data recursively (no credentials needed):</p>
                 <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} "s3://${s3Info.bucket}/${s3Info.key}" "${s3Info.key.split('/').pop()}" --recursive</pre>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
@@ -220,7 +219,7 @@ function parseS3Uri(url) {
 
     <style>
         .vf-intro {
-                margin-bottom: 1rem; /* or a smaller value like 1rem */
+                margin-bottom: 1rem; 
         }
         .controls-container {
             position: sticky;
