@@ -21,7 +21,7 @@ export function getStaticPaths() {
 const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
-  "All Images": "all_images",
+  "Dataset files": "file_references",
 };
 
 const { accessionID } = Astro.params;
@@ -158,11 +158,16 @@ const headlineStats = {
 
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="file_references">
-        Dataset files </b><i class="fa-solid fa-circle-info"
-        title="Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files">*</i>
+        Dataset files </b>
+        <i class="fa-solid fa-circle-info"
+          title="Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files">
+        </i>
       </h2>
     </div>
-    <div>Dataset 
+    <div>
+      <p>      Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files
+      </p>
+      <b>Dataset: </b> 
       <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
         <option value="" disabled selected>Select a Dataset</option>
       </select>

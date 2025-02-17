@@ -1,0 +1,19 @@
+.controls-container {
+    position: sticky;
+    top: 48px;
+    z-index: 2;
+    background: white;
+    padding: 1em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: fit-content;
+}
+
+
+.controls-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5em;
+    max-width: var(--vf-content-max-width);
+    margin: 0 auto;
+}

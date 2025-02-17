@@ -1,0 +1,24 @@
+.search-input {
+    width: 300px;
+    width: 80%;
+    max-width: 600px;
+    padding: 8px 16px;
+    border: 2px solid #3b6fb6;
+    border-radius: 20px;
+    font-size: 1em;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.search-input:focus {
+    box-shadow: 0 0 5px rgba(59, 111, 182, 0.5);
+}
+.filter-option {
+    display: flex; 
+    align-items: center; 
+    font-size: medium;
+    gap: 4px;
+}
+
+.switch {
+    flex-shrink: 0;
+}
