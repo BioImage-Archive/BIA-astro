@@ -1,45 +1,20 @@
 ---
 const { frontmatter } = Astro.props;
-import Header from '../components/Header.astro';
 import AboutusNavigation from '../components/AboutusNavigation.astro';
-import Navigation from '../components/Navigation.astro';
-
+import BaseLayout from './BaseLayout.astro';
 import RightMenuCard from '../components/RightMenu.astro';
 ---
-<html lang="en" class="vf-js">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/bioimage-archive/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
 
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css">
-    <!-- JS -->
-    <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
-
-    <title>{frontmatter.title}</title>
-  </head>
-
-  <body class="vf-body">
-    <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-    <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
-   
-    <Header />
-    <Navigation />
-    <section class="embl-grid embl-grid--has-centered-content">
-      <div>
-        <AboutusNavigation />
-      </div>
-      <div class="vf-content">
-        <slot />
-      </div>
-      <div>
-            <RightMenuCard />
+<BaseLayout pageTitle={frontmatter.title}>
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <AboutusNavigation />
     </div>
-
-    </section>
-    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-  </body>
-</html>
+    <div class="vf-content">
+      <slot />
+    </div>
+    <div>
+      <RightMenuCard />
+    </div>
+  </section>
+</BaseLayout>
