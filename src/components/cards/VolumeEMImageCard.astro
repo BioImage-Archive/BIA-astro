@@ -7,13 +7,7 @@ const { image } = Astro.props;
             <div class="title-text">{ image.label }</div>
         </h3>
         <p class="subtitle-text">
-            <i>{ image.organism }</i>, { 
-                image.imaging_method === "Focused Ion Beam Scanning Electron Microscopy" ? "FIB-SEM" :
-                image.imaging_method === "Serial Block Face Scanning Electron Microscopy" ? "SBF-SEM" :
-                image.imaging_method === "Serial Block-Face Scanning Electron Microscopy" ? "SBF-SEM" :
-                image.imaging_method === "Serial Block-face Scanning Electron Microscopy (SBF-SEM)" ? "SBF-SEM" :
-                image.imaging_method
-            }
+            <i>{ image.organism }</i>, { image.imaging_method }
         </p>
     </div>
     <div class="image-container">
