@@ -80,6 +80,9 @@ function formatPhysicalDimension(value, text) {
 }
 
 function formatPhysicalDimensions(imageRepresentation) {
+    if (imageRepresentation == null) {
+        return "Unknown"
+    }
     const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
     return fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
 }
@@ -102,6 +105,9 @@ function formatPixelDimension(value, text) {
 }
 
 function formatPixelDimensions(img_rep) {
+    if (img_rep == null) {
+        return "Unknown"
+    }
     const fields = [ "size_x", "size_y", "size_z"]
     return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
 }
@@ -137,8 +143,12 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
 
                 <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep)}<br>
                 <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
-                {primary_image_rep.size_c != null && (<><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>)}
-                {primary_image_rep.size_t != null && (<><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>)}
+                {primary_image_rep != null && primary_image_rep.size_c != null && (
+                    <><b>Number of channels:</b> {primary_image_rep.size_c}<br/></>
+                )}
+                {primary_image_rep != null && primary_image_rep.size_t != null && (
+                    <><b>Number of timesteps:</b> {primary_image_rep.size_t}<br/></>
+                )}
             </div>
             <div set:html={displayImageHTML} style="display: flex; justify-content: center;"></div>
 
