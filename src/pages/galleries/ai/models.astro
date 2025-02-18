@@ -3,6 +3,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
 import ModelCard from '../../../components/cards/AIModelCard.astro';
 import  "../../../styles/toggle.css"
+import "../../../styles/browse_controls.css"
+import "../../../styles/filter_cards.css"
 
 import modelMetadata from '../../../data/ai-dataset-benchmarking/model-metadata.json'
 import collection from '../../../data/collections/ai-benchmark-models.json';
@@ -25,57 +27,56 @@ import collection from '../../../data/collections/ai-benchmark-models.json';
         </a>
      </span>
      </p>
+     <div slot="right_of_header" class="controls-container"> 
+      <div class="controls-inner">
+        <div class="filter-option">
+          <span > Limit to models that have benchmarking scores:  </span>
+          <label class="switch" id="image_toggle_switch">
+            <input type="checkbox" id="image_toggle">
+            <span class="slider round"/>
+          </label>
+        </div>
+      </div>
+    </div>
   </BrowseDatasetHeading>
 
-
-
-  <div style="display: flex;  justify-content: space-between; flex-wrap: wrap; width: 100%;">
-    <span>
-      <text> Filter models that have benchmarking scores:  </text>
-      <label class="switch" id="image_toggle_switch">
-        <input type="checkbox" id="image_toggle">
-        <span class="slider round"></span>
-      </label>
-    </span>
-
-    <script>
+  <script>
     
-      var toggle = document.getElementById('image_toggle') as HTMLInputElement;
+    var toggle = document.getElementById('image_toggle') as HTMLInputElement;
 
-      toggle.addEventListener('change', () => filterElements(toggle));
+    toggle.addEventListener('change', () => filterElements(toggle));
 
-      function filterElements(toggle) {
-        const cards = document.querySelectorAll('.vf-card')
-        if (!toggle.checked) {
-          cards.forEach((card) => displayElement(card as HTMLElement));
-        } else {
-          cards.forEach((card) => toggleCard(toggle.checked, card as HTMLElement));
-        }
+    function filterElements(toggle) {
+      const cards = document.querySelectorAll('.vf-card')
+      if (!toggle.checked) {
+        cards.forEach((card) => displayElement(card as HTMLElement));
+      } else {
+        cards.forEach((card) => toggleCard(toggle.checked, card as HTMLElement));
       }
+    }
 
-      function toggleCard(requires_image: boolean, card: HTMLElement) {
-        var cardData = card.dataset.message;
-        var isBenchmarked = cardData.substring(cardData.lastIndexOf("is_benchmarked") + 16);
-        if (requires_image) {
-          if (isBenchmarked =='true') {
-            displayElement(card)
-          } else {
-            hideElement(card)
-          }
-        } else {
+    function toggleCard(requires_image: boolean, card: HTMLElement) {
+      var cardData = card.dataset.message;
+      var isBenchmarked = cardData.substring(cardData.lastIndexOf("is_benchmarked") + 16);
+      if (requires_image) {
+        if (isBenchmarked =='true') {
           displayElement(card)
+        } else {
+          hideElement(card)
         }
+      } else {
+        displayElement(card)
       }
+    }
 
-      function displayElement(card: HTMLElement) {            
-        card.style.display = ""
-      }
+    function displayElement(card: HTMLElement) {            
+      card.style.display = ""
+    }
 
-      function hideElement(card: HTMLElement) {
-        card.style.display = "none"
-      }
-    </script>
-  </div>
+    function hideElement(card: HTMLElement) {
+      card.style.display = "none"
+    }
+  </script>
 
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
