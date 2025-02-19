@@ -88,6 +88,15 @@ function copyURI(button) {
         const totalCount = document.querySelectorAll('.vf-card').length;
         document.getElementById('totalCount').textContent = totalCount;
 
+        // Add event listeners for view toggles
+        document.querySelectorAll('input[name="view"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    toggleView(e.target.value);
+                }
+            });
+        });
+
         searchBox.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             const allCards = document.querySelectorAll('.vf-card, .compact-card');
@@ -160,15 +169,15 @@ function copyURI(button) {
                 </div>
                 <div class="toggle-switch">
                     <label class="toggle-option">
-                        <input type="radio" name="view" value="card-view" checked onclick="toggleView('card-view')">
+                        <input type="radio" name="view" value="card-view" checked>
                         <span class="toggle-label">Cards</span>
                     </label>
                     <label class="toggle-option">
-                        <input type="radio" name="view" value="table-view" onclick="toggleView('table-view')">
+                        <input type="radio" name="view" value="table-view">
                         <span class="toggle-label">Table</span>
                     </label>
                     <label class="toggle-option">
-                        <input type="radio" name="view" value="grid-view" onclick="toggleView('grid-view')">
+                        <input type="radio" name="view" value="grid-view">
                         <span class="toggle-label">Grid</span>
                     </label>
                 </div>
