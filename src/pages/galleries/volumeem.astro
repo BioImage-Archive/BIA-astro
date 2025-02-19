@@ -9,6 +9,23 @@ import vemImages from "../../data/collections/vem_image_summaries.json";
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script is:inline>
+// Initialize grid columns function
+window.setGridColumns = function(columns) {
+    const gridInner = document.querySelector('.grid-inner');
+    if (gridInner) {
+        gridInner.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+        
+        // Get all size bars and cube wrappers
+        const sizeBars = document.querySelectorAll('.size-bar');
+        const cubeWrappers = document.querySelectorAll('.cube-wrapper');
+        
+        // Show/hide based on column count
+        const display = columns === 5 ? 'none' : '';
+        sizeBars.forEach(bar => bar.style.display = display);
+        cubeWrappers.forEach(wrapper => wrapper.style.display = display);
+    }
+}
+
 function parseS3Uri(url) {
     try {
         // Basic validation
@@ -138,23 +155,6 @@ function copyURI(button) {
             ]
         });
 
-
-        // Initialize grid columns function
-        window.setGridColumns = function(columns) {
-            const gridInner = document.querySelector('.grid-inner');
-            if (gridInner) {
-                gridInner.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-                
-                // Get all size bars and cube wrappers
-                const sizeBars = document.querySelectorAll('.size-bar');
-                const cubeWrappers = document.querySelectorAll('.cube-wrapper');
-                
-                // Show/hide based on column count
-                const display = columns === 5 ? 'none' : '';
-                sizeBars.forEach(bar => bar.style.display = display);
-                cubeWrappers.forEach(wrapper => wrapper.style.display = display);
-            }
-        }
 
         // Set initial grid columns
         setGridColumns(4);
