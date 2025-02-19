@@ -1,5 +1,6 @@
 ---
 import "/src/styles/bars_and_sections.css"
+
 import EMPIARHeader from '../components/EMPIARHeader.astro';
 import Navigation from '../components/Navigation.astro';
 
@@ -16,6 +17,10 @@ const { pageTitle } = Astro.props;
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" />
 
+    <!-- JS -->     
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    
     <title>EMPIAR - {pageTitle}</title>
   </head>
   <body class="vf-body">
