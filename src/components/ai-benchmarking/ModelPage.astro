@@ -20,6 +20,7 @@ const tableOfContents = {
 
 
 const filteredTableInfo = tableInfo.filter( row => row.model === modelName)
+
 ---
 <body>
     <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -98,6 +99,7 @@ const filteredTableInfo = tableInfo.filter( row => row.model === modelName)
 
     <div style="overflow-wrap: anywhere;">
       <div><b>Description: </b> <Fragment set:html={multilineTextRender(modelInfo.description)}></Fragment></div>
+      <div><b>Task: </b> {modelInfo.task}<div></div>
       <div><b>Licence: </b> {modelInfo.licence}<div>
       <div><b>Tags: </b> {modelInfo.tags.reduce(formatListItem, "")}<div></div>
     </div>

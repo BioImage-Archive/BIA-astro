@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import DatasetCard from '../components/cards/BrowseDatasetCard.astro';
 import BrowseDatasetHeading from '../components/BrowseDatasetsHeading.astro';
 import  "../styles/toggle.css"
-
+import "../styles/browse_controls.css"
+import "../styles/filter_cards.css"
 import studyMetadata from "../data/bia-study-metadata.json";
 
 const totalStudies = Object.keys(studyMetadata).length;
@@ -45,69 +46,64 @@ const formattedTotalImages = totalImages.toLocaleString();
         All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
 
       </div>
+      <div slot="right_of_header" class="controls-container"> 
+        <div class="controls-inner">
+          <input type="text" id="searchInput" placeholder="Filter studies..." class="search-input">
+          <div class="filter-option">
+            <span> Limit to studies with viewable images:  </span>
+            <label class="switch" id="image_toggle_switch">
+              <input type="checkbox" id="image_toggle">
+              <span class="slider round"/>
+            </label>
+          </div>
+        </div>
+      </div>
     </BrowseDatasetHeading>
-  
 
-    <div style="display: flex;  justify-content: space-between; flex-wrap: wrap; width: 100%;">
-        <input type="text" id="searchInput" placeholder="Filter studies..">
-        <span>
-          <text> Filter studies with viewable images:  </text>
-          <label class="switch" id="image_toggle_switch">
-            <input type="checkbox" id="image_toggle">
-            <span class="slider round"></span>
-          </label>
-        </span>
 
-      <script>
-      
-        var input = document.getElementById('searchInput') as HTMLInputElement;
-        var toggle = document.getElementById('image_toggle') as HTMLInputElement;
+    <script>
+      var input = document.getElementById('searchInput') as HTMLInputElement;
+      var toggle = document.getElementById('image_toggle') as HTMLInputElement;
 
-        toggle.addEventListener('change', () => filterElements(input.value, toggle));
-        input.addEventListener('keyup', () => filterElements(input.value, toggle));
+      toggle.addEventListener('change', () => filterElements(input.value, toggle));
+      input.addEventListener('keyup', () => filterElements(input.value, toggle));
 
-        function filterElements(inputText, toggle) {
-          const cards = document.querySelectorAll('.vf-card')
-          if (inputText == "" && !toggle.checked) {
-            cards.forEach((card) => displayElement(card as HTMLElement));
+      function filterElements(inputText, toggle) {
+        const cards = document.querySelectorAll('.vf-card')
+        if (inputText == "" && !toggle.checked) {
+          cards.forEach((card) => displayElement(card as HTMLElement));
+        } else {
+          cards.forEach((card) => toggleCard(inputText.toLowerCase(), toggle.checked, card as HTMLElement));
+        }
+      }
+
+      function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
+        var cardData = card.dataset.message;
+        var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
+
+        if (requires_image) {
+          if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
+            displayElement(card)
           } else {
-            cards.forEach((card) => toggleCard(inputText.toLowerCase(), toggle.checked, card as HTMLElement));
+            hideElement(card)
+          }
+        } else {
+            if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
+            displayElement(card)
+          } else {
+            hideElement(card)
           }
         }
+      }
 
-        function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
-          var cardData = card.dataset.message;
-          var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
-          console.log(hasImage)
-          console.log(toggle)
-          if (requires_image) {
-            if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
-              displayElement(card)
-            } else {
-              hideElement(card)
-            }
-          } else {
-              if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
-              displayElement(card)
-            } else {
-              hideElement(card)
-            }
-          }
-        }
+      function displayElement(card: HTMLElement) {            
+        card.style.display = ""
+      }
 
-        function displayElement(card: HTMLElement) {            
-          card.style.display = ""
-        }
-
-        function hideElement(card: HTMLElement) {
-          card.style.display = "none"
-        }
-
-
-      </script>
-    </div>
-
-    <div style="clear: both;"></div>
+      function hideElement(card: HTMLElement) {
+        card.style.display = "none"
+      }
+    </script>
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
        

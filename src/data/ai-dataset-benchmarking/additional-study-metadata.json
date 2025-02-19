@@ -4,11 +4,13 @@
 			"nuclei",
 			"3D",
 			"segmentation",
+			"ground truth",
 			"Arabidopsis thaliana",
+			"ovule",
             "fluorescence microscopy"
 		],
-		"hero_image": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_16.png",
-		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_31.png",
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1026_1101b735-b5cc-414d-88de-dd5eb89f3cb4.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1026_1101b735-b5cc-414d-88de-dd5eb89f3cb4.png",
 		"dataset": [
 			{
 				"uuid": "1101b735-b5cc-414d-88de-dd5eb89f3cb4",
@@ -23,15 +25,216 @@
 			"nuclei",
 			"3D",
 			"segmentation",
+			"ground truth",
 			"human",
+			"brain",
             "fluorescence microscopy"
 		],
-		"hero_image": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_1.png",
-		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/placeholder_logo_31.png",
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1196_e15c585a-5539-4b0a-9575-244e4cebf2da.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1196_ca876873-0d7d-42f8-b0f0-da7dd985226d.png",
 		"dataset": [
 			{
 				"uuid": "e15c585a-5539-4b0a-9575-244e4cebf2da",
 				"annotation_dataset": "2537a3bd-0787-4524-a144-535805065c6a"
+			}
+		]
+	},
+	"S-BIAD1492": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"ground truth",
+			"synthetic data" 
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1492_44500cd8-1ad9-4340-ba55-3427a2782486.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1492_2d124551-c51a-4d8a-817e-2804f558e059.png",
+		"dataset": [
+			{
+				"uuid": "44500cd8-1ad9-4340-ba55-3427a2782486",
+				"annotation_dataset":  "2d124551-c51a-4d8a-817e-2804f558e059"
+			}
+		]
+	},
+	"S-BIAD1518": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"ground truth",
+			"mouse",
+			"human",
+			"rat",
+			"intestine",
+			"kidney",
+            "fluorescence microscopy",
+			"synthetic data" 
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1518_3a1b6126-9a94-44de-9ba1-195732de1415.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1518_6230f9e0-4c39-4f58-8d64-af64ea638328.png",
+		"dataset": [
+			{
+				"uuid": "8415cf5f-251f-4ac0-acce-5c8cdce20607",
+				"annotation_dataset":  "02aeb6cd-dfff-43ad-b74d-8f51c4efb66a"
+			},
+			{
+				"uuid": "3a1b6126-9a94-44de-9ba1-195732de1415",
+				"annotation_dataset": "6230f9e0-4c39-4f58-8d64-af64ea638328"
+			},
+			{
+				"uuid": "1942a616-e5dc-4cda-aeca-442ee782d644",
+				"annotation_dataset": "f2507c6c-f565-4b3b-808e-5bc8bbe75d15"
+			},
+			{
+				"uuid": "d20ddab8-5b39-443f-8688-31525561afc9",
+				"annotation_dataset": "0d421c35-6a95-451a-a8fd-5d5df93af291"
+			},
+			{
+				"uuid": "d6f4d1d6-3567-4123-88fd-8d9ad7e3bea1",
+				"annotation_dataset": "8b8db97a-89e9-435b-8e66-dd78ebc83fee"
+			},
+			{
+				"uuid": "3ee4d2c5-3894-4909-97b0-90f84404984c",
+				"annotation_dataset": "84be2e8c-7811-478b-82d3-249bba368171"
+			},
+			{
+				"uuid": "5540ad0a-ba92-45ab-81dc-e091fb9d5508",
+				"annotation_dataset": "2023998f-68a7-421c-b4d9-599bec24c0b1"
+			}
+		]
+	},
+	"S-BIAD1269": {
+		"tags": [
+			"cells",
+			"2D",
+			"chinese hamster",
+			"ovary",
+            "transmission light microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1269_d12a9e60-ad30-4ffe-b993-a3f27b72e38b.png",
+		"dataset": [
+			{
+				"uuid": "d12a9e60-ad30-4ffe-b993-a3f27b72e38b"
+			}
+		]
+	},
+	"S-BIAD1466": {
+		"tags": [
+			"cells",
+			"3D",
+			"human",
+            "transmission light microscopy"
+            
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1466_c5ca4ef9-8a26-4538-b5a3-38932365549c.png",
+		"dataset": [
+			{
+				"uuid": "c5ca4ef9-8a26-4538-b5a3-38932365549c"
+
+			}
+		]
+	},
+	"S-BIAD827": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"Arabidopsis thaliana",
+			"root",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD827_b0cef183-49b0-4911-ad36-b3058e65f272.png",
+		"dataset": [
+			{
+				"uuid": "b0cef183-49b0-4911-ad36-b3058e65f272"
+			}
+		]
+	},
+	"S-BIAD1241": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"Nicotiana benthamiana",
+			"leaves",
+			"pavement cells",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1241_ce0936e6-54ab-4d83-b9ef-440e1a9f73f2.png",
+		"dataset": [
+			{
+				"uuid": "ce0936e6-54ab-4d83-b9ef-440e1a9f73f2"
+			}
+		]
+	},
+	"S-BIAD1490": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"Drosophila melanogaster",
+			"wing disc",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1490_675eb0fa-5013-4224-b390-46e5671ae91f.png",
+		"dataset": [
+			{
+				"uuid": "675eb0fa-5013-4224-b390-46e5671ae91f"
+			}
+		]
+	},
+	"S-BIAD915": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"human",
+			"embryo",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD915_e09f2dea-6108-442d-82fd-f09787dc713b.png",
+		"dataset": [
+			{
+				"uuid": "e09f2dea-6108-442d-82fd-f09787dc713b"
+			}
+		]
+	},
+	"S-BIAD1122": {
+		"tags": [
+			"cells",
+			"3D",
+			"human",
+			"HeLa cells",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1122_22c7c47e-dc07-4b1c-9abc-e93f062c915e.png",
+		"dataset": [
+			{
+				"uuid": "22c7c47e-dc07-4b1c-9abc-e93f062c915e"
+			}
+		]
+	},
+	"S-BIAD1375": {
+		"tags": [
+			"bacteria",
+			"2D",
+			"Bacillus subtilis",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1375_bf1d6b19-04f2-4a91-9aaf-85fe4a41f9fa.png",
+		"dataset": [
+			{
+				"uuid": "bf1d6b19-04f2-4a91-9aaf-85fe4a41f9fa"
+			}
+		]
+	},
+	"S-BIAD1175": {
+		"tags": [
+			"3D",
+			"Tribolium castaneum",
+			"embryo",
+            "fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1175_a360a3c3-d9eb-4d3d-abe5-61501f2ba8b9.png",
+		"dataset": [
+			{
+				"uuid": "a360a3c3-d9eb-4d3d-abe5-61501f2ba8b9"
 			}
 		]
 	}

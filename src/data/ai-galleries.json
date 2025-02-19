@@ -19,7 +19,7 @@
     },
     {
       "name":"models",
-      "title":"Tested AI models",
+      "title":"Model Evaluation Platform",
       "subtitle":"A selection of BioImage Model Zoo models applied to BioImage Archive datasets",
       "summary_image":"/bioimage-archive/ai-galleries/ai_pg_model.png"
     }

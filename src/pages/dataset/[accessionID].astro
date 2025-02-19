@@ -21,18 +21,18 @@ export function getStaticPaths() {
 const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
-  "All Images": "all_images",
+  "Dataset files": "file_references",
 };
 
 const { accessionID } = Astro.params;
 const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
 
-const images = []
-for (var dataset of study.dataset) {
-  for (var image of dataset.image) {
-    images.push(image)
-  }
-}
+const images = study.dataset.flatMap(dataset => dataset.image ?? [])
+// for (var dataset of study.dataset) {
+//   for (var image of dataset.image) {
+//     images.push(image)
+//   }
+// }
 
 function getStudyImage(study) {
   const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
@@ -43,10 +43,10 @@ function getStudyImage(study) {
   }
 }
 
-function getDatasetStatsByUUID(study_info) {
+function getDatasetStatsByUUID(study) {
   const dataset_uuids = []
-  for (var dataset of study_info.dataset) {
-    dataset_uuids.push([dataset.uuid,dataset.file_count,dataset.title_id])
+  for (var dataset of study.dataset) {
+    dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
   }
   return dataset_uuids
 }
@@ -55,7 +55,7 @@ const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 
 const totalImageCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
 
-const totalFileCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_count, 0);
+const totalFileCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0);
 
 function getFileTypes(study) {
     const fileTypeList = []
@@ -146,7 +146,7 @@ const headlineStats = {
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} dataset_title={study.dataset.find((dataset) => dataset.uuid == image.submission_dataset_uuid).title_id}/>
+              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id}/>
             ))
           }
         </tbody>
@@ -158,11 +158,16 @@ const headlineStats = {
 
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="file_references">
-        Dataset files </b><i class="fa-solid fa-circle-info"
-        title="Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files">*</i>
+        Dataset files </b>
+        <i class="fa-solid fa-circle-info"
+          title="Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files">
+        </i>
       </h2>
     </div>
-    <div>Dataset 
+    <div>
+      <p>      Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files
+      </p>
+      <b>Dataset: </b> 
       <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
         <option value="" disabled selected>Select a Dataset</option>
       </select>
@@ -218,7 +223,11 @@ const headlineStats = {
                         columns: [
                             { data: "uuid", title: "File UUID" },
                             { data: "file_path", title: "File Name" },
-                            { data: "uri", title: "Link" },
+                            { 
+                              data: "uri", 
+                              title: "Actions", 
+                              render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` 
+                            },
                         ],
                         pageLength: 25, 
                         searching: true,
@@ -226,6 +235,18 @@ const headlineStats = {
                         processing: true,
                         scrollX: true,
                         columnDefs: [{ type: "natural", targets: 0 }],
+                        createdRow: (row, data) => {
+                            // Attach event listener to the button after row creation
+                            $(row).find(".copy-btn").on("click", function () {
+                                const link = $(this).data("uri");
+                                navigator.clipboard.writeText(link).then(() => {
+                                  this.innerText = "URL Copied";
+                                  setTimeout(() => {
+                                      this.innerText = "Copy Url";
+                                  }, 700);
+                                });
+                            });
+                        }
                     });
                 })
                 .catch((error) => {

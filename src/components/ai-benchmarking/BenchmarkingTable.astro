@@ -29,6 +29,7 @@ export function formatRowAnalysisParameters(analysisParameters) {
 }
 
 const filtered_table_rows = tableRows.filter(row => row.precision != null)
+const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid != null).length > 0 ? true : false
 
 ---
 
@@ -41,64 +42,81 @@ const filtered_table_rows = tableRows.filter(row => row.precision != null)
     </div>
 
     <div>
-        <table id="benchmarking_table" class="display">
-            <thead class="vf-table__header">
-                <tr class="vf-table__header">
+        {
+            hasReferenceImage && (
+                <table id="benchmarking_table" class="display">
+                    <thead class="vf-table__header">
+                        <tr class="vf-table__header">
+                            {
+                                studyOrModelPageMode == 'model' && (
+                                    <th class="vf-table__heading" >Study</th>
+                                )
+                            }
+                            <th class="vf-table__heading" >Dataset</th>
+                            {
+                                studyOrModelPageMode == 'study' && (
+                                    <th class="vf-table__heading" >Model</th>
+                                    <th class="vf-table__heading" >Task</th>
+                                )
+                            }
+                            <th class="vf-table__heading" >Precision</th>
+                            <th class="vf-table__heading" >Recall</th>
+                            <th class="vf-table__heading" >IoU</th>
+                            <th class="vf-table__heading" >Dice</th>
+                            <th class="vf-table__heading" >Analysis parameters</th>
+                        </tr>
+                    </thead>
+                    <tbody class="vf_table__body">
                     {
-                        studyOrModelPageMode == 'model' && (
-                            <th class="vf-table__heading" >Study</th>
-                        )
-                    }
-                    <th class="vf-table__heading" >Dataset</th>
-                    {
-                        studyOrModelPageMode == 'study' && (
-                            <th class="vf-table__heading" >Model</th>
-                            <th class="vf-table__heading" >Task</th>
-                        )
-                    }
-                    <th class="vf-table__heading" >Precision</th>
-                    <th class="vf-table__heading" >Recall</th>
-                    <th class="vf-table__heading" >IoU</th>
-                    <th class="vf-table__heading" >Dice</th>
-                    <th class="vf-table__heading" >Analysis parameters</th>
-                </tr>
-            </thead>
-            <tbody class="vf_table__body">
-            {
-                filtered_table_rows.map((row) => (
-                <tr>
-                    {
-                        studyOrModelPageMode == 'model' && (
-                       
-                            <th> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a> </th>
+                        filtered_table_rows.map((row) => (
+                        <tr>
+                            {
+                                studyOrModelPageMode == 'model' && (
+                            
+                                    <td style="white-space: nowrap;"> <a href={"/bioimage-archive/galleries/ai/analysed-dataset/" + row.study}>{row.study}</a> </td>
 
-                        )
+                                )
+                            }
+                            <td>{datasetUUIDNameMap.get(row.dataset_uuid)}</td>
+                            {
+                                studyOrModelPageMode == 'study' && (
+                                    <td> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></td>
+                                    <td>{modelMetadata[row.model].task}</td>
+                                )
+                            }
+                            <td>{row.precision}</td>
+                            <td>{row.recall}</td>
+                            <td>{row.IoU}</td>
+                            <td>{row.dice}</td>
+                            <td style="white-space: nowrap;"> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></td>
+                        </tr>
+                        ))
                     }
-                    <th>{datasetUUIDNameMap.get(row.dataset_uuid)}</th>
-                    {
-                        studyOrModelPageMode == 'study' && (
-                            <th> <a href={"/bioimage-archive/galleries/ai/model/" + row.model}>{row.model}</a></th>
-                            <th>{modelMetadata[row.model].task}</th>
-                        )
+                    </tbody>
+                </table>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    $("#benchmarking_table").DataTable({
+                        scrollX: true,
+                        columnDefs: [{ type: "natural", targets: 0 }],
+                    });
+                    });
+                </script>
+            )
+        }
+        {
+            (!hasReferenceImage) && (
+                <span>
+                    {studyOrModelPageMode == 'model' &&
+                        (<p> This model was not tested on datasets with reference annotations, so we cannot produce benchmarking metrics.</p>)
                     }
-                    <th>{row.precision}</th>
-                    <th>{row.recall}</th>
-                    <th>{row.IoU}</th>
-                    <th>{row.dice}</th>
-                    <th> <Fragment set:html={formatRowAnalysisParameters(row.analysis_parameters)}/></th>
-                </tr>
-                ))
-            }
-            </tbody>
-        </table>
+                    {studyOrModelPageMode == 'study' &&
+                        (<p> This dataset does not have reference annotations, so we cannot produce benchmarking metrics.</p>)
+                    }
+                </span>
+                
+            )
+        }
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          $("#benchmarking_table").DataTable({
-            scrollX: true,
-            columnDefs: [{ type: "natural", targets: 0 }],
-          });
-        });
-    </script>
 </section>

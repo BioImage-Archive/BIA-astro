@@ -35,3 +35,11 @@ export function formatBytesToHumanSize(sizeBytes) {
     var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
     return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
 }
+
+export function getSimpleAttributeValue(obj, attrName) {
+    // For attributes of structure: { "name": "AttributeName", "value": { "AttributeName": <value> } }
+    return obj?.attribute
+      ?.find(attr => attr.name === attrName)
+      ?.value[attrName] ?? null;
+}
+  

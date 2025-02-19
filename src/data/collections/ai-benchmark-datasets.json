@@ -2,9 +2,5 @@
     "name": "Analysed datasets",
     "title": "Analysed datasets",
     "subtitle": "",
-    "description": "This is a collection of datasets that have been processed using different AI models from the BioImage Model Zoo. You will be able to see the outputs of models applied to a particular dataset and compare their predictions.",
-    "accession_ids": [
-      "S-BIAD1026",
-      "S-BIAD1196"
-    ]
+    "description": "This is a collection of datasets that have been processed using different AI models from the BioImage Model Zoo. You will be able to see the outputs of models applied to a particular dataset and compare their predictions."
   }

@@ -11,19 +11,29 @@ const pageData = {
 const pathname = Astro.url.pathname;
 const basePath = pathname.split('/')[2];
 
+
+
 ---
-
-
-<nav class="vf-navigation | vf-navigation--main" style="margin-top: 0.25rem; padding: 0 8px 0 8px;">
-  <style>
-    .active { 
-      color: #3b6fb6;
-      font-weight: bold;
-      }
-    li.active {
-      border-bottom: 2px solid;
+<style>
+  .active { 
+    color: #3b6fb6;
+    font-weight: bold;
     }
-  </style>
+  li.active {
+    border-bottom: 2px solid;
+  }
+  .navbar {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    border-bottom: #D0D0CE 2px solid;
+    z-index: 6;
+    margin: 0.25rem 0 8px;
+    padding: 0 8px 0 8px;
+  }
+</style>
+
+<nav class="vf-navigation | vf-navigation--main | navbar | vf-u-fullbleed" style="display: block;">
   <ul class="vf-navigation__list | vf-list" style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0px;">
     {Object.entries(pageData).map(([key, value]) => (
       <li class={basePath === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
@@ -33,4 +43,3 @@ const basePath = pathname.split('/')[2];
     )}
   </ul>
 </nav>
-<hr style="margin-top: 0px;">

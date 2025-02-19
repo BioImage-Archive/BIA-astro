@@ -2,12 +2,13 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
 import ModelCard from '../../../components/cards/AIModelCard.astro';
+import  "../../../styles/toggle.css"
+import "../../../styles/browse_controls.css"
+import "../../../styles/filter_cards.css"
 
 import modelMetadata from '../../../data/ai-dataset-benchmarking/model-metadata.json'
 import collection from '../../../data/collections/ai-benchmark-models.json';
 
-
-const modelNames = collection["model_names"];
 
 ---
 <BaseLayout pageTitle={ collection.name }>
@@ -26,11 +27,64 @@ const modelNames = collection["model_names"];
         </a>
      </span>
      </p>
+     <div slot="right_of_header" class="controls-container"> 
+      <div class="controls-inner">
+        <div class="filter-option">
+          <span > Limit to models that have benchmarking scores:  </span>
+          <label class="switch" id="image_toggle_switch">
+            <input type="checkbox" id="image_toggle">
+            <span class="slider round"/>
+          </label>
+        </div>
+      </div>
+    </div>
   </BrowseDatasetHeading>
+
+  <script>
+    
+    var toggle = document.getElementById('image_toggle') as HTMLInputElement;
+
+    toggle.addEventListener('change', () => filterElements(toggle));
+
+    function filterElements(toggle) {
+      const cards = document.querySelectorAll('.vf-card')
+      if (!toggle.checked) {
+        cards.forEach((card) => displayElement(card as HTMLElement));
+      } else {
+        cards.forEach((card) => toggleCard(toggle.checked, card as HTMLElement));
+      }
+    }
+
+    function toggleCard(requires_image: boolean, card: HTMLElement) {
+      var cardData = card.dataset.message;
+      var isBenchmarked = cardData.substring(cardData.lastIndexOf("is_benchmarked") + 16);
+      if (requires_image) {
+        if (isBenchmarked =='true') {
+          displayElement(card)
+        } else {
+          hideElement(card)
+        }
+      } else {
+        displayElement(card)
+      }
+    }
+
+    function displayElement(card: HTMLElement) {            
+      card.style.display = ""
+    }
+
+    function hideElement(card: HTMLElement) {
+      card.style.display = "none"
+    }
+  </script>
+
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(modelNames).map((modelName) => ( <ModelCard model={ modelMetadata[modelName] } modelPageUrl={`/bioimage-archive/galleries/ai/model/${modelName}`} taglist={modelMetadata[modelName]?.tags || []}/> )) }
+          { Object.entries(modelMetadata).map(
+            ([modelName, model]) => 
+            ( <ModelCard model={ model } modelPageUrl={`/bioimage-archive/galleries/ai/model/${modelName}`}/> )
+          ) }
         </div>
     </section>
   </body>
