@@ -1,6 +1,8 @@
 ---
 import "/src/styles/bars_and_sections.css"
 import EMPIARHeader from '../components/EMPIARHeader.astro';
+import Navigation from '../components/Navigation.astro';
+
 const { pageTitle } = Astro.props;
 ---
 <html lang="en" class="vf-js">
@@ -21,6 +23,7 @@ const { pageTitle } = Astro.props;
     <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
     <EMPIARHeader />
+    <Navigation />
     <slot />
   </body>
   
