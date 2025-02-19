@@ -139,18 +139,25 @@ function copyURI(button) {
         });
 
 
+        // Initialize grid columns function
         window.setGridColumns = function(columns) {
-            document.querySelector('.grid-inner').style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-            
-            // Get all size bars and cube wrappers
-            const sizeBars = document.querySelectorAll('.size-bar');
-            const cubeWrappers = document.querySelectorAll('.cube-wrapper');
-            
-            // Show/hide based on column count
-            const display = columns === 5 ? 'none' : '';
-            sizeBars.forEach(bar => bar.style.display = display);
-            cubeWrappers.forEach(wrapper => wrapper.style.display = display);
+            const gridInner = document.querySelector('.grid-inner');
+            if (gridInner) {
+                gridInner.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+                
+                // Get all size bars and cube wrappers
+                const sizeBars = document.querySelectorAll('.size-bar');
+                const cubeWrappers = document.querySelectorAll('.cube-wrapper');
+                
+                // Show/hide based on column count
+                const display = columns === 5 ? 'none' : '';
+                sizeBars.forEach(bar => bar.style.display = display);
+                cubeWrappers.forEach(wrapper => wrapper.style.display = display);
+            }
         }
+
+        // Set initial grid columns
+        setGridColumns(4);
     });
 </script>
 <EMPIARLayout pageTitle="Volume EM Gallery">
@@ -205,15 +212,15 @@ function copyURI(button) {
         <div class="column-toggle-container">
             <div class="column-toggle">
                 <label class="column-option">
-                    <input type="radio" name="columns" value="3" onclick="setGridColumns(3)">
+                    <input type="radio" name="columns" value="3" onchange="setGridColumns(3)">
                     <span class="column-label">3 Columns</span>
                 </label>
                 <label class="column-option">
-                    <input type="radio" name="columns" value="4" checked onclick="setGridColumns(4)">
+                    <input type="radio" name="columns" value="4" checked onchange="setGridColumns(4)">
                     <span class="column-label">4 Columns</span>
                 </label>
                 <label class="column-option">
-                    <input type="radio" name="columns" value="5" onclick="setGridColumns(5)">
+                    <input type="radio" name="columns" value="5" onchange="setGridColumns(5)">
                     <span class="column-label">5 Columns</span>
                 </label>
             </div>
