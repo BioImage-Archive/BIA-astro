@@ -1,5 +1,24 @@
 ---
 const { images } = Astro.props;
+
+interface Image {
+    submitted_in_study_accession: string;
+    thumbnail_src: string;
+    label: string;
+    organism: string;
+    imaging_method: string;
+    size_x: number;
+    size_y: number;
+    size_z: number;
+    physical_dim_x: number;
+    physical_dim_y: number;
+    physical_dim_z: number;
+    voxel_size_x: number;
+    voxel_size_y: number;
+    voxel_size_z: number;
+    view_link: string;
+    uuid: string;
+}
 ---
 <table class="vf-table">
     <thead>
@@ -15,7 +34,7 @@ const { images } = Astro.props;
         </tr>
     </thead>
     <tbody>
-        {Object.entries(images).map(([uuid, image]) => (
+        {Object.entries(images).map(([uuid, image]: [string, Image]) => (
             <tr>
                 <td style="width: 100px;">
                     <img src={image.thumbnail_src} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
