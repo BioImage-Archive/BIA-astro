@@ -4,6 +4,7 @@
     "subtitle": "A selection of spatial-omics studies",
     "description": "This is a collection of spatial omics datasets from the BioImage Archive from which one or more images have been converted to OME-Zarr. It is intended to present interactive spatial omics datasets curated with relevant tags to encourage tool development.",
     "accession_ids": [
-      "S-BIAD570"
+      "S-BIAD1093",
+      "S-BIAD1257"
     ]
   }
