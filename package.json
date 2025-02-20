@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build && cp public/robots.txt dist/robots.txt",
+    "build": "astro check && astro build && cp public/robots.txt dist/robots.txt && cp public/redirect_index.html dist/index.html",
     "preview": "astro preview",
     "astro": "astro",
     "local": "astro check && astro build && astro preview"
