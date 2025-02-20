@@ -5,14 +5,16 @@ export function getPlaceholderHeroImage(accessionID) {
     return `/bioimage-archive/default-hero/placeholder_logo_${imageNumber}.png`
 }
 
-export function getStudyImage(study) {
+export function getStudyImage(study, cardImageOverride) {
     const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-    if (datasetWithImage === undefined) {
+    if (cardImageOverride != null) {
+      return cardImageOverride
+    } else if (datasetWithImage == undefined) {
       return getPlaceholderHeroImage(study.accession_id)
     } else {
       return datasetWithImage.example_image_uri[0]
     }
-  }
+}
 
 export function formatListItem(outputString, item, i, list) {
     if (i + 1 === list.length) {
