@@ -7,8 +7,7 @@ import ImageRow from "../../components/ImageTableRow.astro";
 
 import studyMetadata from "../../data/bia-study-metadata.json";
 
-import {getPlaceholderHeroImage, formatListItem, multilineTextRender, formatBytesToHumanSize} from "../../components/SharedJSFunctions.js"
-
+import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return Object.values(studyMetadata).map((study) => {
@@ -28,34 +27,6 @@ const { accessionID } = Astro.params;
 const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
 
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
-// for (var dataset of study.dataset) {
-//   for (var image of dataset.image) {
-//     images.push(image)
-//   }
-// }
-
-function getStudyImage(study) {
-  const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-  if (datasetWithImage === undefined) {
-    return getPlaceholderHeroImage(study.accession_id)
-  } else {
-    return datasetWithImage.example_image_uri[0]
-  }
-}
-
-function getDatasetStatsByUUID(study) {
-  const dataset_uuids = []
-  for (var dataset of study.dataset) {
-    dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
-  }
-  return dataset_uuids
-}
-
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
-
-const totalImageCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
-
-const totalFileCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0);
 
 function getFileTypes(study) {
     const fileTypeList = []
@@ -69,6 +40,7 @@ function getFileTypes(study) {
     return fileTypeList
 }
 
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 
 const headlineStats = {
   "Total Viewable Images":  study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),

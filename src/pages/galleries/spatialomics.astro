@@ -5,8 +5,9 @@ import DatasetCard from '../../components/cards/GalleryDatasetCard.astro';
 
 import exports from "../../data/old-export-format/bia-spatialomics-export.json";
 import collection from '../../data/collections/spatialomics.json';
+import studyMetadata from '../../data/bia-study-metadata.json'
 
-const datasets = exports["datasets"];
+const datasets = studyMetadata;
 
 ---
 <BaseLayout pageTitle={ collection.name }>
