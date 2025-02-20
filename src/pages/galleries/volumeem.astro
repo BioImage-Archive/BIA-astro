@@ -1,0 +1,368 @@
+---
+import EMPIARLayout from '../../layouts/EMPIARLayout.astro';
+import VolumeEMImage from '../../components/cards/VolumeEMImageCard.astro';
+import VolumeEMTable from '../../components/VolumeEMTable.astro';
+import VolumeEMImageCompact from '../../components/cards/VolumeEMImageCompactCard.astro';
+import vemImages from "../../data/collections/vem_image_summaries.json";
+---
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script is:inline>
+// Initialize grid columns function
+window.setGridColumns = function(columns) {
+    const gridInner = document.querySelector('.grid-inner');
+    if (gridInner) {
+        gridInner.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+        
+        // Get all size bars and cube wrappers
+        const sizeBars = document.querySelectorAll('.size-bar');
+        const cubeWrappers = document.querySelectorAll('.cube-wrapper');
+        
+        // Show/hide based on column count
+        const display = columns === 5 ? 'none' : '';
+        sizeBars.forEach(bar => bar.style.display = display);
+        cubeWrappers.forEach(wrapper => wrapper.style.display = display);
+    }
+}
+
+function parseS3Uri(url) {
+    try {
+        // Basic validation
+        if (!url || typeof url !== 'string') {
+            throw new Error('Invalid URL provided');
+        }
+
+        // Parse the URL
+        const urlObj = new URL(url);
+        
+        // Extract the endpoint
+        const endpoint = `${urlObj.protocol}//${urlObj.host}`;
+        
+        // Split the pathname into segments and remove empty segments
+        const segments = urlObj.pathname.split('/').filter(segment => segment.length > 0);
+        
+        if (segments.length < 2) {
+            throw new Error('Invalid URL format: must contain bucket and key');
+        }
+
+        const bucket = segments[0];
+        const key = segments.slice(1).join('/');
+
+        return {
+            bucket,
+            key,
+            endpoint
+        };
+    } catch (e) {
+        console.error('Failed to parse URL:', e);
+        return null;
+    }
+}
+
+function copyURI(button) {
+        const uri = button.getAttribute('data-uri');
+        const s3Info = parseS3Uri(uri);
+        
+        // Create dialog
+        const dialog = document.createElement('dialog');
+        dialog.innerHTML = `
+            <div style="padding: 20px; text-align: left; max-width: 600px;">
+                <h3 style="margin-bottom: 15px; text-align: center;">OME-Zarr S3 Location</h3>
+                <div style="margin-bottom: 15px;">
+                    <h4 style="margin: 10px 0;">S3 URI:</h4>
+                    <p style="word-break: break-all; font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 4px;">${uri}</p>
+                </div>
+                <h4 style="margin: 15px 0;">Download with AWS CLI:</h4>
+                <p style="margin-bottom: 10px;">1. Install the AWS CLI if you haven't already.</p>
+                <p style="margin-bottom: 10px;">2. Download the data recursively (no credentials needed):</p>
+                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} "s3://${s3Info.bucket}/${s3Info.key}" "${s3Info.key.split('/').pop()}" --recursive</pre>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                    <button onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy S3 URI</button>
+                    <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' \\'${s3Info.key.split('/').pop()}\\' --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
+                    <button onclick="this.closest('dialog').close()">Close</button>
+                </div>
+            </div>
+        `;
+        dialog.style.border = '1px solid #ccc';
+        dialog.style.borderRadius = '8px';
+        dialog.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        dialog.style.maxWidth = '80vw';
+        
+        // Add to document and show
+        document.body.appendChild(dialog);
+        dialog.showModal();
+        
+        // Remove dialog when closed
+        dialog.addEventListener('close', () => {
+            dialog.remove();
+        });
+    }
+
+    function toggleView(viewId) {
+        const views = ['card-view', 'table-view', 'grid-view'];
+        views.forEach(id => {
+            document.getElementById(id).style.display = id === viewId ? 'block' : 'none';
+        });
+        
+        if (viewId === 'table-view') {
+            dataTable?.columns.adjust();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchBox = document.getElementById('searchBox');
+        
+        const totalCount = document.querySelectorAll('.vf-card').length;
+        document.getElementById('totalCount').textContent = totalCount;
+
+        // Add event listeners for view toggles
+        document.querySelectorAll('input[name="view"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    toggleView(e.target.value);
+                }
+            });
+        });
+
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const allCards = document.querySelectorAll('.vf-card, .compact-card');
+            let visibleCount = 0;
+            
+            allCards.forEach(card => {
+                let title, organism;
+                if (card.classList.contains('vf-card')) {
+                    title = card.querySelector('.title-text')?.textContent.toLowerCase() || '';
+                    organism = card.querySelector('.subtitle-text')?.textContent.toLowerCase() || '';
+                } else {
+                    title = card.querySelector('.compact-title')?.textContent.toLowerCase() || '';
+                    organism = card.querySelector('.compact-subtitle')?.textContent.toLowerCase() || '';
+                }
+                
+                const isVisible = title.includes(searchTerm) || organism.includes(searchTerm);
+                card.style.display = isVisible ? '' : 'none';
+                if (isVisible) visibleCount++;
+            });
+
+            document.getElementById('visibleCount').textContent = searchTerm ? visibleCount : 'all';
+        });
+        const dataTable = new DataTable('.vf-table', {
+            pageLength: 25,
+            order: [[1, 'asc']], // Sort by Label column by default
+            columnDefs: [
+                { orderable: false, targets: [4, 5, 6] } // Disable sorting for dimensions, physical size, and voxel size columns
+            ]
+        });
+
+
+        // Set initial grid columns
+        setGridColumns(4);
+    });
+</script>
+<EMPIARLayout pageTitle="Volume EM Gallery">
+  <body>
+    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
+        <div></div>
+        <div>
+            <h1 class="vf-intro__heading vf-intro__heading--has-tag">EMPIAR Volume EM Volumes <a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">alpha</a></h1>
+            <h2 class="vf-intro__subheading">3D volume images, browsable, downloadable and streamable</h2>
+            <p>Individual volume images across a range of species, vEM imaging methods and reconstruction approaches. Each volume has background information, and can be viewed in the browser, accessed remotely, or downloaded either as OME-Zarr or in the format in which data were originally captured.</p>
+        </div>
+        <div class="controls-container">
+            <div class="controls-inner">
+                <input type="text" id="searchBox" placeholder="Filter (e.g. title,organism)" class="search-input">
+                <div class="counter-display">
+                    Showing <span id="visibleCount">all</span> of <span id="totalCount">0</span> images
+                </div>
+                <div class="toggle-switch">
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="card-view" checked>
+                        <span class="toggle-label">Cards</span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="table-view">
+                        <span class="toggle-label">Table</span>
+                    </label>
+                    <label class="toggle-option">
+                        <input type="radio" name="view" value="grid-view">
+                        <span class="toggle-label">Grid</span>
+                    </label>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+    <div id="card-view">
+        <section class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
+            <div class="vf-card-container__inner">
+                { Object.entries(vemImages).map(([uuid, image]) => (
+                    <VolumeEMImage image={{...image, uuid}} />
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <div id="table-view" style="display: none;">
+        <VolumeEMTable images={vemImages} />
+    </div>
+
+    <div id="grid-view" style="display: none;">
+        <div class="column-toggle-container">
+            <div class="column-toggle">
+                <label class="column-option">
+                    <input type="radio" name="columns" value="3" onchange="setGridColumns(3)">
+                    <span class="column-label">3 Columns</span>
+                </label>
+                <label class="column-option">
+                    <input type="radio" name="columns" value="4" checked onchange="setGridColumns(4)">
+                    <span class="column-label">4 Columns</span>
+                </label>
+                <label class="column-option">
+                    <input type="radio" name="columns" value="5" onchange="setGridColumns(5)">
+                    <span class="column-label">5 Columns</span>
+                </label>
+            </div>
+        </div>
+        <section class="grid-container">
+            <div class="grid-inner">
+                { Object.entries(vemImages).map(([uuid, image]) => (
+                    <VolumeEMImageCompact image={{...image, uuid}} />
+                ))}
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .vf-intro {
+                margin-bottom: 1rem; 
+        }
+        .controls-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            padding: 1em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 8em;
+        }
+        .controls-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5em;
+            max-width: var(--vf-content-max-width, 1200px);
+            margin: 0 auto;
+        }
+        .toggle-switch {
+            display: inline-flex;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 20px;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .toggle-option {
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .toggle-label {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .toggle-option input:checked + .toggle-label {
+            background: #3b6fb6;
+            color: white;
+        }
+        .toggle-option:hover input:not(:checked) + .toggle-label {
+            background: #e0e0e0;
+        }
+        .grid-container {
+            background-color: var(--vf-u-background-color-ui--white);
+            width: 100%;
+            padding: 0 1rem;
+        }
+        .grid-inner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.25rem;
+            max-width: var(--vf-content-max-width, 1200px);
+            margin: 0 auto;
+        }
+        /* Hide size bar and cube in 5-column grid view */
+        .grid-inner .size-bar,
+        .grid-inner .cube-wrapper {
+            display: none;
+        }
+        .column-toggle-container {
+            text-align: center;
+            padding: 0.5em;
+        }
+        .column-toggle {
+            display: inline-flex;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 20px;
+            gap: 4px;
+            margin-bottom: 1em;
+        }
+        .column-option {
+            position: relative;
+            cursor: pointer;
+        }
+        .column-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .column-label {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        .column-option input:checked + .column-label {
+            background: #3b6fb6;
+            color: white;
+        }
+        .column-option:hover input:not(:checked) + .column-label {
+            background: #e0e0e0;
+        }
+        .license-badge {
+            --license-badge-padding: 2px 12px;
+            --license-badge-margin: 0;
+            --license-badge-height: 18px;
+        }
+        .search-input {
+            width: 300px;
+            width: 80%;
+            max-width: 600px;
+            padding: 8px 16px;
+            border: 2px solid #3b6fb6;
+            border-radius: 20px;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            box-shadow: 0 0 5px rgba(59, 111, 182, 0.5);
+        }
+        .counter-display {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 0.5em;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+  </body>
+</EMPIARLayout>

@@ -1,0 +1,244 @@
+---
+const { image } = Astro.props;
+---
+<article class="compact-card custom-card">
+    <div class="image-container">
+        <img src={ image.static_display_src } alt="" loading="lazy">
+        <div class="icon-container">
+            <a href={ image.view_link } class="view-link" title="View in Neuroglancer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </a>
+            <a href={"/bioimage-archive/image/" + image.uuid} class="metadata-link" title="View Metadata">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12" y2="17"/>
+                </svg>
+            </a>
+            <button class="s3-link" title="Copy OME-Zarr URI" onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                    <text x="4" y="17" font-size="14" font-weight="bold">S3</text>
+                </svg>
+            </button>
+        </div>
+        <div class="dataset-link">
+            <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+        </div>
+        <div class="size-bar">
+            <span class="physical-size">
+                <code>{ Number(image.physical_dim_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.physical_dim_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
+            </span>
+            <span class="image-size">
+                <code>{ image.size_x }<span class="x-text">×</span>{ image.size_y }<span class="x-text">×</span>{ image.size_z }</code><span class="unit-text"> vx</span>
+            </span>
+            <span class="voxel-size">
+                <code>{ Math.round(image.voxel_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_y * 1e9) }<span class="x-text">×</span>{ Math.round(image.voxel_size_z * 1e9) }</code><span class="unit-text"> nm voxels</span>
+            </span>
+        </div>
+        <div class="cube-wrapper">
+            <div class="cube" style={`
+                --scale-x: ${image.physical_dim_x/Math.max(image.physical_dim_x, image.physical_dim_y, image.physical_dim_z)}; 
+                --scale-y: ${image.physical_dim_y/Math.max(image.physical_dim_x, image.physical_dim_y, image.physical_dim_z)}; 
+                --scale-z: ${image.physical_dim_z/Math.max(image.physical_dim_x, image.physical_dim_y, image.physical_dim_z)};
+                --grid-lines-x: ${Math.min(10, Math.max(3, Math.floor(image.size_x/1000)))};
+                --grid-lines-y: ${Math.min(10, Math.max(3, Math.floor(image.size_y/1000)))};
+                --grid-lines-z: ${Math.min(10, Math.max(3, Math.floor(image.size_z/1000)))};
+            `}>
+                <div class="cube__face cube__face--front"></div>
+                <div class="cube__face cube__face--back"></div>
+                <div class="cube__face cube__face--right"></div>
+                <div class="cube__face cube__face--left"></div>
+                <div class="cube__face cube__face--top"></div>
+                <div class="cube__face cube__face--bottom"></div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<style>
+    .compact-card {
+        overflow: hidden;
+        aspect-ratio: 1/1;
+    }
+    .custom-card {
+        border: 2px solid #999;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .custom-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+    }
+    .image-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .size-bar {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 8px 12px;
+        font-size: 0.9em;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        border-radius: 4px;
+        max-width: 80%;
+    }
+    .dataset-link {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    .dataset-link a {
+        color: #333;
+        text-decoration: none;
+    }
+    .dataset-link a:hover {
+        text-decoration: underline;
+    }
+    .icon-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 4px;
+    }
+    .view-link, .metadata-link {
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+    .view-link:hover, .metadata-link:hover, .s3-link:hover {
+        background: rgba(243, 243, 243, 1);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .s3-link {
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .cube-wrapper {
+        width: 60px;
+        height: 60px;
+        perspective: 1000px;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 8px;
+        border-radius: 4px;
+    }
+    .cube {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        animation: spin 8s linear infinite;
+    }
+    /* Front and back faces */
+    .cube__face--front, .cube__face--back {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(50px * var(--scale-x));
+        height: calc(50px * var(--scale-y));
+        margin-left: calc(50px * var(--scale-x) / -2);
+        margin-top: calc(50px * var(--scale-y) / -2);
+        background: rgba(200, 200, 200, 0.2);
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-x)) / var(--grid-lines-x)) 
+            calc((50px * var(--scale-y)) / var(--grid-lines-y));
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    /* Right and left faces */
+    .cube__face--right, .cube__face--left {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(50px * var(--scale-z));
+        height: calc(50px * var(--scale-y));
+        margin-left: calc(50px * var(--scale-z) / -2);
+        margin-top: calc(50px * var(--scale-y) / -2);
+        background: rgba(200, 200, 200, 0.2);
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-z)) / var(--grid-lines-z)) 
+            calc((50px * var(--scale-y)) / var(--grid-lines-y));
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    /* Top and bottom faces */
+    .cube__face--top, .cube__face--bottom {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: calc(50px * var(--scale-x));
+        height: calc(50px * var(--scale-z));
+        margin-left: calc(50px * var(--scale-x) / -2);
+        margin-top: calc(50px * var(--scale-z) / -2);
+        background: rgba(200, 200, 200, 0.2);
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+        background-size: 
+            calc((50px * var(--scale-x)) / var(--grid-lines-x)) 
+            calc((50px * var(--scale-z)) / var(--grid-lines-z));
+        border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .cube__face--front  { transform: translateZ(calc(50px * var(--scale-z) / 2)); }
+    .cube__face--back   { transform: translateZ(calc(50px * var(--scale-z) / -2)) rotateY(180deg); }
+    .cube__face--right  { transform: translateX(calc(50px * var(--scale-x) / 2)) rotateY(90deg); }
+    .cube__face--left   { transform: translateX(calc(50px * var(--scale-x) / -2)) rotateY(-90deg); }
+    .cube__face--top    { transform: translateY(calc(50px * var(--scale-y) / -2)) rotateX(90deg); }
+    .cube__face--bottom { transform: translateY(calc(50px * var(--scale-y) / 2)) rotateX(-90deg); }
+    @keyframes spin {
+        from { transform: rotateX(0) rotateY(0); }
+        to { transform: rotateX(360deg) rotateY(360deg); }
+    }
+    .x-text {
+        font-size: 0.7em;
+        vertical-align: middle;
+        color: #666;
+    }
+    .unit-text {
+        font-size: 0.8em;
+        color: #666;
+    }
+</style>
+
