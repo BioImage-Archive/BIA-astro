@@ -3,8 +3,12 @@ import "/src/styles/bars_and_sections.css"
 
 import EMPIARHeader from '../components/EMPIARHeader.astro';
 import Navigation from '../components/Navigation.astro';
+import Breadcrumbs from "../components/Breadcrumbs.astro";
 
-const { pageTitle } = Astro.props;
+const { pageTitle, breadcrumbs } = Astro.props;
+
+const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
+
 ---
 <html lang="en" class="vf-js">
   <head>
@@ -30,6 +34,7 @@ const { pageTitle } = Astro.props;
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
     <EMPIARHeader />
     <Navigation />
+    <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
     <slot />
   </body>
   
