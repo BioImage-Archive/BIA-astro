@@ -1,0 +1,49 @@
+---
+const {pageTitle, pagePath}=Astro.props; 
+const getBreadcrumbsFromUrl=(path)=>{
+    let breadcrumbs = []
+    const splitPath=path.split('/'); 
+    if (path.endsWith("/")) splitPath.pop(); // remove last element if path has a trailing '/'   
+
+    while(splitPath.length>2){ // stop until where the first path preceeding the trailing '/' at index 1 i.e ['', 'first_path', 'second_path' , ...]
+        splitPath.pop()
+        breadcrumbs.push(splitPath.join('/'))
+    }
+
+    return breadcrumbs
+
+}
+const breadcrumbs = Array.isArray(pagePath) ? pagePath : getBreadcrumbsFromUrl(pagePath).reverse();
+---
+
+<div>
+    {
+        breadcrumbs && 
+        breadcrumbs.map(breadcrumb=>(
+            <a href={breadcrumb}>{breadcrumb.split('/').pop()}</a><span>&gt;</span> 
+        ))
+    }
+    <b>
+        {
+            pageTitle
+        }
+    </b>
+</div>
+<style>
+    div{
+        display:flex;
+        justify-content: left;
+        align-content:center;
+        gap:0.5rem;
+    }
+    a{
+        color: black;
+        font-size: small;
+    }
+    span{
+        font-size: small;
+    }
+    b{
+        font-size: small;
+    }
+</style>

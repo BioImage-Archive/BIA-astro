@@ -1,0 +1,41 @@
+---
+const { pageTitle } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/bioimage-archive/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- CSS only -->
+		<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css"/>
+
+		<!-- JS -->
+		<script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"/>
+		<script>
+			// Detect if JS is on and swap vf-no-js for vf-js on the html element
+			(function (H) {
+			  H.className = H.className.replace(/\bvf-no-js\b/, "vf-js");
+			})(document.documentElement);
+		</script>
+
+		<meta name="robots" content="noindex, nofollow">
+
+		<title>{pageTitle}</title>
+	</head>
+
+	<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
+	<script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
+	<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
+	
+	<body class="vf-body">
+		<slot />
+	</body>
+
+	<!-- Script required for bottom bar -->
+	<script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"/>
+	<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader/>
+</html>

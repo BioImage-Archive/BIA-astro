@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import SourceImage from "../../components/SourceImage.astro"
 import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
@@ -111,9 +111,17 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
 
 const userProvidedAttribute = image.attribute?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
 
+
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/studies",
+  `/bioimage-archive/study/${imageStudy.accession_id}`
+]
+
+
 ---
 
-<BaseLayout pageTitle={image["accession_id"] + ":" + image["alias"]}>
+<BaseLayoutWithBreadcrumbs pageTitle={image.uuid} breadcrumbs={breadcrumbs}>
   <body>
     <div class="vf-stack vf-stack--500">
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -125,7 +133,7 @@ const userProvidedAttribute = image.attribute?.find(attribute => attribute.name.
                 </h1>
                 <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
                 <p class="studytitle">{imageDataset.title_id}</p>
-                <a href={ "/bioimage-archive/dataset/" + imageStudy.accession_id}>
+                <a href={ "/bioimage-archive/study/" + imageStudy.accession_id}>
                     <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                 </a> 
             </div>

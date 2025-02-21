@@ -1,0 +1,13 @@
+---
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import BaseLayout from "./BaseLayout.astro";
+
+const { pageTitle, breadcrumbs } = Astro.props;
+
+const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
+
+---
+<BaseLayout pageTitle={pageTitle}>
+    <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
+    <slot/>
+</BaseLayout>

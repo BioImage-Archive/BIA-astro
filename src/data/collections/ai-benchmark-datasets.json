@@ -1,6 +1,6 @@
 {
-    "name": "Analysed datasets",
-    "title": "Analysed datasets",
+    "name": "Analysed studies",
+    "title": "Analysed studies",
     "subtitle": "",
-    "description": "This is a collection of datasets that have been processed using different AI models from the BioImage Model Zoo. You will be able to see the outputs of models applied to a particular dataset and compare their predictions."
+    "description": "This is a collection of studies that have been processed using different AI models from the BioImage Model Zoo. You will be able to see the outputs of models applied to a particular dataset and compare their predictions."
   }

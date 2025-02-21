@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import SourceImage from "../../../components/SourceImage.astro"
-import WebsiteStateButton from '../../../components/WebsiteStateButton.astro';
+import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
+import SourceImage from "../../../../components/SourceImage.astro"
+import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
 
-import exports from "../../../data/old-export-format/bia-images-export.json";
-import studyData from "../../../data/old-export-format/bia-export.json";
-import AIStudyData from "../../../data/old-export-format/bia-ai-export.json";
-import SpatialomicsStudyData from "../../../data/old-export-format/bia-spatialomics-export.json";
+import exports from "../../../../data/old-export-format/bia-images-export.json";
+import studyData from "../../../../data/old-export-format/bia-export.json";
+import AIStudyData from "../../../../data/old-export-format/bia-ai-export.json";
+import SpatialomicsStudyData from "../../../../data/old-export-format/bia-spatialomics-export.json";
 
 
 export function getStaticPaths() {
@@ -39,10 +39,16 @@ const study_info = getStudyData(image.study_accession_id, studyData, AIStudyData
 
 const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
 
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/spatialomics",
+  `/bioimage-archive/galleries/spatialomics/study/${image.study_accession_id}`,
+]
+
 ---
 
-<BaseLayout pageTitle={image["accession_id"] + ":" + image["alias"]}>
-  <body>
+<BaseLayoutWithBreadcrumbs pageTitle={image["alias"]} breadcrumbs={breadcrumbs}>
     <div class="vf-stack vf-stack--500">
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
@@ -147,5 +153,4 @@ const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.u
             </div>
             <div></div>
         </section>
-    </body>
 </BaseLayout>

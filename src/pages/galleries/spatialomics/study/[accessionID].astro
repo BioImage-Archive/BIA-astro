@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
 
 import exports from "../../../../data/old-export-format/bia-spatialomics-export.json";
@@ -25,8 +25,14 @@ const { accessionID } = Astro.params;
 const study = exports["datasets"][accessionID];
 
 const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/spatialomics",
+]
 ---
-<BaseLayout pageTitle= {study.accession_id} >
+<BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
   <body class="vf-body">
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
         <div></div>
@@ -205,12 +211,12 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
         images.map((image) => (
           <tr>
             <th>
-              <a href={"/bioimage-archive/galleries/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri}/></a> 
+              <a href={"/bioimage-archive/galleries/spatialomics/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri}/></a> 
             </th>
             <th>{image.name}</th>
             <th>Unknown</th>
             <th>
-              <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
+              <a href={"/bioimage-archive/galleries/spatialomics/image/" + image.uuid}>View</a>
             </th>
           </tr>
         ))

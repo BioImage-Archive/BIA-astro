@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 
 import BenchmarkedDatasetPage from "../../../../components/ai-benchmarking/BenchmarkedDatasetPage.astro"
 
@@ -18,10 +18,18 @@ export function getStaticPaths() {
 
 const { accessionID } = Astro.params;
 
+
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/ai",
+  "/bioimage-archive/galleries/ai/analysed-studies",
+]
+
 ---
 
-<BaseLayout pageTitle={accessionID}>
+<BaseLayoutWithBreadcrumbs pageTitle={accessionID} breadcrumbs={breadcrumbs}>
   <BenchmarkedDatasetPage accessionID={accessionID} studyMetadata={studyMetadata} additionalStudyMetadata={additionalStudyMetadata} tableInfo={tableInfo}/>
-</BaseLayout>
+</BaseLayoutWithBreadcrumbs>
 
 
