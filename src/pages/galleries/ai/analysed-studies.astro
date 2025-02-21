@@ -19,7 +19,7 @@ import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additiona
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <StudyCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-dataset"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
+          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <StudyCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-study"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
         </div>
     </section>
   </body>
