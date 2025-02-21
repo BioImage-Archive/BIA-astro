@@ -1,5 +1,5 @@
 {
-  "name": "AI Playground",
+  "name": "AI",
   "title": "The BioImage Archive AI Gallery",
   "subtitle": "Explore AI-ready image data and how AI models perform on different datasets",
   "body_text": "In this page you can explore AI-related datasets and models. You can browse a selection of AI-ready datasets curated to facilitate model development. You can also explore the outputs of several models from the BioImage Model Zoo on a dataset to get an idea of what is the most suitable model for a specific image. Or you can investigate how a model works on different datasets and see how widely applicable the model is.",

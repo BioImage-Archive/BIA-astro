@@ -1,4 +1,6 @@
 ---
+import MinimalLayout from "../layouts/MinimalLayout.astro";
+
 import browseImage from "../assets/bioimage-archive/browse_embl_green.png";
 import submitImage from "../assets/bioimage-archive/submit_embl_green.png";
 import galleriesImage from "../assets/bioimage-archive/galleries_embl_green.png";
@@ -61,150 +63,92 @@ const cards = [
 import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.png";
 import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 ---
+<MinimalLayout pageTitle="The BioImage Archive">
 
-<!doctype html>
-<html lang="en" class="vf-no-js | vf-smooth-scroll">
-  <head>
-    <script>
-      // Detect if JS is on and swap vf-no-js for vf-js on the html element
-      (function (H) {
-        H.className = H.className.replace(/\bvf-no-js\b/, "vf-js");
-      })(document.documentElement);
-    </script>
-    <!-- CSS only -->
-    <link
-      rel="stylesheet"
-      href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css"
-    />
-    <!-- JS -->
-    <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"
-    ></script>
-
-    <title>The BioImage Archive</title>
-
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex, nofollow">
-    <meta
-      content="width=device-width, initial-scale=1, minimum-scale=1"
-      name="viewport"
-    />
-  </head>
-  <body class="vf-body">
-    <link
-      rel="stylesheet"
-      href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css"
-      type="text/css"
-      media="all"
-    />
-    <header
-      id="masthead-black-bar"
-      class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"
+  <section
+  class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
+  style="--vf-hero--bg-image: url(https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png);"
+  >
+    <div
+      class="vf-hero__content | vf-box | vf-stack vf-stack--400"
+      style="opacity: 0.9;"
     >
-    </header>
-    <link
-      rel="import"
-      href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub"
-      data-target="self"
-      data-embl-js-content-hub-loader
-    />
-    <link
-      rel="stylesheet"
-      href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css"
-      type="text/css"
-      media="all"
-    />
-    <script
-      defer="defer"
-      src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"
-    ></script>
-
-    <!-- prototype hero + search -->
-    <section
-      class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
-      style="--vf-hero--bg-image: url(https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png);"
-    >
-      <div
-        class="vf-hero__content | vf-box | vf-stack vf-stack--400"
-        style="opacity: 0.9;"
-      >
-        <section style="display: flex; gap: 10px;">
-          <div>
-            <img
-              src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png"
-              style="width: 110px;"
-            />
-          </div>
-          <div>
-            <h2 class="vf-hero__heading">BioImage Archive</h2>
-            <p class="vf-hero__subheading">
-              A free, publicly available resource for life sciences images from
-              any imaging modality, at any scale
-            </p>
-          </div>
-        </section>
-        <!-- <div>
-          <form
-            action="#"
-            class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end"
-          >
-            <div class="vf-sidebar__inner">
-              <div class="vf-form__item">
-                <label
-                  class="vf-form__label vf-u-sr-only | vf-search__label"
-                  for="searchitem">Search</label
-                >
-                <input
-                  type="search"
-                  placeholder="Search BioImage Archive"
-                  id="searchitem"
-                  class="vf-form__input"
-                />
-              </div>
-              <button
-                type="submit"
-                class="vf-search__button | vf-button vf-button--primary"
-              >
-                <span class="vf-button__text | vf-u-sr-only">Search</span>
-                <svg
-                  class="vf-icon vf-icon--search-btn | vf-button__icon"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  version="1.1"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  viewBox="0 0 140 140"
-                  width="140"
-                  height="140"
-                >
-                  <g
-                    transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)"
-                  >
-                    <path
-                      d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
-                      fill="#FFFFFF"
-                      stroke="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="0"></path>
-                  </g>
-                </svg>
-              </button>
-            </div>
-          </form>
-          <p class="vf-text-body--5">
-            Example searches: <a href="JavaScript:Void(0);" class="vf-link"
-              >Brain</a
-            >, <a href="JavaScript:Void(0);" class="vf-link">Capsid</a>, <a
-              href="JavaScript:Void(0);"
-              class="vf-link">Organelle</a
-            >
-            |
-            <a href="JavaScript:Void(0);" class="vf-link">advanced search</a>
+      <section style="display: flex; gap: 10px;">
+        <div>
+          <img
+            src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png"
+            style="width: 110px;"
+          />
+        </div>
+        <div>
+          <h2 class="vf-hero__heading">BioImage Archive</h2>
+          <p class="vf-hero__subheading">
+            A free, publicly available resource for life sciences images from
+            any imaging modality, at any scale
           </p>
-        </div> 
-       </div>  -->
-    </section>
-  </body>
-
+        </div>
+      </section>
+      <!-- <div>
+        <form
+          action="#"
+          class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end"
+        >
+          <div class="vf-sidebar__inner">
+            <div class="vf-form__item">
+              <label
+                class="vf-form__label vf-u-sr-only | vf-search__label"
+                for="searchitem">Search</label
+              >
+              <input
+                type="search"
+                placeholder="Search BioImage Archive"
+                id="searchitem"
+                class="vf-form__input"
+              />
+            </div>
+            <button
+              type="submit"
+              class="vf-search__button | vf-button vf-button--primary"
+            >
+              <span class="vf-button__text | vf-u-sr-only">Search</span>
+              <svg
+                class="vf-icon vf-icon--search-btn | vf-button__icon"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                version="1.1"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 140 140"
+                width="140"
+                height="140"
+              >
+                <g
+                  transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)"
+                >
+                  <path
+                    d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+                    fill="#FFFFFF"
+                    stroke="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="0"></path>
+                </g>
+              </svg>
+            </button>
+          </div>
+        </form>
+        <p class="vf-text-body--5">
+          Example searches: <a href="JavaScript:Void(0);" class="vf-link"
+            >Brain</a
+          >, <a href="JavaScript:Void(0);" class="vf-link">Capsid</a>, <a
+            href="JavaScript:Void(0);"
+            class="vf-link">Organelle</a
+          >
+          |
+          <a href="JavaScript:Void(0);" class="vf-link">advanced search</a>
+        </p>
+      </div> 
+    </div>  -->
+  </section>
 
   <section class="vf-u-fullbleed" style="background-color: #3b6fb6; margin: 0px">
     <div
@@ -235,8 +179,8 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 
   <!-- Image strip -->
   <section
-    class="vf-grid"
-    style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
+  class="vf-grid"
+  style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
   >
     <figure class="vf-figure">
       <img
@@ -250,8 +194,8 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 
   <!-- News -->
   <section
-    class="vf-stack"
-    style="background-color: rgb(226, 237, 239); padding: 16px 10%;"
+  class="vf-stack"
+  style="background-color: rgb(226, 237, 239); padding: 16px 10%;"
   >
     <h2>News</h2>
     <section class="vf-grid vf-grid__col-2">
@@ -296,8 +240,8 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 
   <!-- Tutorial and get in touch -->
   <section
-    class="vf-grid vf-grid__col-2"
-    style="margin-left: 10%; margin-right: 10%;"
+  class="vf-grid vf-grid__col-2"
+  style="margin-left: 10%; margin-right: 10%;"
   >
     <div>
       <h2>Learn more</h2>
@@ -360,9 +304,9 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
   </section>
 
   <style>
-    .logo-img {
-      border-width: 0px;
-    }
+  .logo-img {
+    border-width: 0px;
+  }
   </style>
 
   <section class="vf-content;" style="margin-left: 10%; margin-right: 10%;">
@@ -399,20 +343,4 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
       </span>
     </div>
   </section>
-
-  <div style="padding: 24px;">
-    <!-- IE11 polyfill JS -->
-    <script
-      nomodule
-      crossorigin="anonymous"
-      src="https://polyfill.io/v3/polyfill.min.js?flags=gated&features=default"
-    ></script>
-
-    <link
-      rel="import"
-      href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub"
-      data-target="self"
-      data-embl-js-content-hub-loader
-    />
-  </div>
-</html>
+</MinimalLayout>

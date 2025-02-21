@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import BaseLayoutWithBreadcrumbs from "../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
@@ -77,11 +77,16 @@ const headlineStats = {
 };
 
 
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/datasets",
+]
+
 ---
 
-<BaseLayout pageTitle={study.accession_id}>
+<BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
   <body>
-    <StudyTitleInfo study_info={study} />
+    <StudyTitleInfo study_info={study}/>
 
     <StudyContentsSummary 
       tableOfContents={tableOfContents} 

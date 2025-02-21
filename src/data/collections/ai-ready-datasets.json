@@ -1,5 +1,5 @@
 {
-  "name": "AI",
+  "name": "ai-ready-datasets",
   "title": "AI ready datasets",
   "subtitle": "A selection of AI related studies",
   "description": "This is a collection of  AI/Machine Learning datasets from the BioImage Archive from which one or more images have been converted to OME-Zarr. It is intended to present the AI related datasets with relevant tags and visualisation of images from the archive's collection, and to provide easy access to AI datasets and encourage tool development.",

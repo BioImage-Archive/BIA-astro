@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
 
 import exports from "../../../../data/old-export-format/bia-ai-export.json";
@@ -37,9 +37,18 @@ const viewableNonAnnotationImages = study.image_uuids
 const viewable_annotation_images = study.image_uuids
   .filter((item) => Object.values(study.annotation_images).includes(item))
   .map((uuid) => exports["images"][uuid]);
+
+
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/ai",
+  "/bioimage-archive/galleries/ai/ai-ready-datasets",
+]
+
 ---
 
-<BaseLayout pageTitle={study.accession_id}>
+<BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
   <body>
     <StudyTitleInfo study_info={study} />
 
@@ -248,7 +257,7 @@ const viewable_annotation_images = study.image_uuids
                 <th>{image.name}</th>
                 <th>Unknown</th>
                 <th>
-                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/galleries/ai/image/" + image.uuid}>View</a>
                   Download
                 </th>
               </tr>
@@ -271,6 +280,6 @@ const viewable_annotation_images = study.image_uuids
       });
     });
   </script>
-</BaseLayout>
+</BaseLayoutWithBreadcrumbs>
 
 

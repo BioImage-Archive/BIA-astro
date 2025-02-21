@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayoutWithBreadcrumbs from '../layouts/BaseLayoutWithBreadcrumbs.astro';
 import DatasetCard from '../components/cards/BrowseDatasetCard.astro';
 import BrowseDatasetHeading from '../components/BrowseDatasetsHeading.astro';
 import  "../styles/toggle.css"
@@ -27,7 +27,7 @@ const formattedTotalStudies = totalStudies.toLocaleString();
 const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
-<BaseLayout pageTitle="Datasets">
+<BaseLayoutWithBreadcrumbs pageTitle="Datasets">
   <body>
 
     <BrowseDatasetHeading
@@ -113,4 +113,4 @@ const formattedTotalImages = totalImages.toLocaleString();
     </section>
 
   </body>
-</BaseLayout>
+</BaseLayoutWithBreadcrumbs>
