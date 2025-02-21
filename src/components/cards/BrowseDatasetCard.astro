@@ -1,18 +1,8 @@
 ---
-import { getPlaceholderHeroImage, formatListItem, taxonRender } from "../SharedJSFunctions.js";
+import { getPlaceholderHeroImage, formatListItem, taxonRender, getStudyImage } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 const { study, studyPageRoot, taglist, cardImageOverride} = Astro.props;
 
-function getStudyImage(study, cardImageOverride) {
-  const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-  if (cardImageOverride != null) {
-    return cardImageOverride
-  } else if (datasetWithImage == undefined) {
-    return getPlaceholderHeroImage(study.accession_id)
-  } else {
-    return datasetWithImage.example_image_uri[0]
-  }
-}
 
 function getImagingMethodType(study) {
     const imagingTypeList = []
