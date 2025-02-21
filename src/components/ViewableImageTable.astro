@@ -1,0 +1,42 @@
+---
+import ImageRow from "./ImageTableRow.astro"
+const {study, images} = Astro.props;
+
+---
+
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="viewable_images">
+        Viewable Images
+      </h2>
+    </div>
+    <div>
+      <table id="viewable_images_table" class="display">
+        <thead>
+          <tr>
+            <th>Preview</th>
+            <th>UUID</th>
+            <th>Dataset</th>
+            <th>Download Size (bytes)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            images.map((image) => (
+              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id}/>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+              $("#viewable_images_table").DataTable({
+                scrollX: true,
+                columnDefs: [{ type: "natural", targets: 0 }],
+              });
+            });
+
+    </script>
+</section>

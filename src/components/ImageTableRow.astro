@@ -26,13 +26,13 @@ function getDownloadSize(uuid, imageMetadata) {
 
 ---
 <tr>
-  <th>
+  <td>
     <a href={"/bioimage-archive/image/" + image.uuid}><img class="vf-figure__image" src={getThumbnail(image.uuid, imageMetadata)}/></a>
-  </th>
-  <th>{image.uuid}</th>
-  <th>{datasetTitle}</th>
-  <th>{getDownloadSize(image.uuid, imageMetadata)}</th>
-  <th>
+  </td>
+  <td>{image.uuid}</td>
+  <td>{datasetTitle}</td>
+  <td>{getDownloadSize(image.uuid, imageMetadata)}</td>
+  <td>
     <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
-  </th>
+  </td>
 </tr>
