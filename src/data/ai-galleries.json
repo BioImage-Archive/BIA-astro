@@ -1,20 +1,20 @@
 {
   "name": "AI",
   "title": "The BioImage Archive AI Gallery",
-  "subtitle": "Explore AI-ready image data and how AI models perform on different datasets",
-  "body_text": "In this page you can explore AI-related datasets and models. You can browse a selection of AI-ready datasets curated to facilitate model development. You can also explore the outputs of several models from the BioImage Model Zoo on a dataset to get an idea of what is the most suitable model for a specific image. Or you can investigate how a model works on different datasets and see how widely applicable the model is.",
+  "subtitle": "Explore AI-ready image data and how AI models perform on different studies",
+  "body_text": "In this page you can explore AI-related studies and models. You can browse a selection of AI-ready studies curated to facilitate model development. You can also explore the outputs of several models from the BioImage Model Zoo on data to get an idea of what is the most suitable model for a specific image. Or you can investigate how a model works on data from different studies and see how widely applicable the model is.",
   "gallery_item_basepath": "/bioimage-archive/galleries/ai/",
   "collections": [
     {
-      "name":"ai-ready-datasets",
-      "title":"AI-ready datasets",
-      "subtitle":"A collection of AI-ready annotated datasets",
+      "name":"ai-ready-studies",
+      "title":"AI-ready studies",
+      "subtitle":"A collection of AI-ready annotated studies",
       "summary_image":"/bioimage-archive/ai-galleries/ai_ready_datasets.png"
     },
     {
-      "name":"analysed-datasets",
-      "title":"Analysed datasets",
-      "subtitle":"A selection of datasets analysed using different models",
+      "name":"analysed-studies",
+      "title":"Analysed studies",
+      "subtitle":"A selection of studies analysed using different models",
       "summary_image":"/bioimage-archive/ai-galleries/ai_pg_dataset.png"
     },
     {
