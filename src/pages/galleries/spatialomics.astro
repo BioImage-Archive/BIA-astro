@@ -20,7 +20,7 @@ import studyMetadata from '../../data/bia-study-metadata.json'
 
       <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;"> 
         <div class="vf-card-container__inner">
-            { Object.values(collection.accession_ids).map((accessionID) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot="galleries/spatialomics/dataset"/> )) }
+            { Object.values(collection.accession_ids).map((accessionID) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot="galleries/spatialomics"/> )) }
         </div>
      </section>  
   </body>

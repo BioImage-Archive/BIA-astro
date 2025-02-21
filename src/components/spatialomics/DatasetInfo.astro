@@ -1,7 +1,10 @@
 ---
+import DatasetDetail from "../DatasetDetail.astro";
+import fieldMap from "../../data/metadata-field-name-mapping.json";
 import { formatListItem, taxonRender } from "../SharedJSFunctions";
 
 const { dataset } = Astro.props;
+const biosampleMap = fieldMap["biosample"];
 
 
 function getTaxons(dataset) {
@@ -72,23 +75,22 @@ const taxons = getTaxons(dataset)
     </div>
     <ul>
         {
-            taxons && taxons.length > 0 && 
-                (
-                    <div>
-                        <b>Organism:</b> <Fragment set:html={renderTaxonList(taxons)}/>
-                    </div>
+            "biological_entity" in dataset &&
+                dataset.biological_entity &&
+                dataset.biological_entity.length > 0 && (
+                    <b>Biosamples:</b>
+                    <ul>
+                        {dataset.biological_entity.map((biosample) => (
+                            <DatasetDetail
+                                data={biosample}
+                                fieldMap={biosampleMap}
+                            />
+                        ))}
+                    </ul>
                 )
         }
         {
-            taxons && taxons.length > 0 && 
-                (
-                    <div>
-                    <b>Biological Entity:</b> {getBiologicalEntity(dataset)}
-                    </div>
-                )
-        }
-        {
-            taxons && taxons.length > 0 && 
+            dataset.acquisition_process && dataset.acquisition_process.length > 0 && 
                 (
                     <div>
                     <b>Imaging Method:</b> {displayImagingType(dataset)}
