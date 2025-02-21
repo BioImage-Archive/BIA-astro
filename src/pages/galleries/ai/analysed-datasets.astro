@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
-import BrowseDatasetHeading from '../../../components/BrowseDatasetsHeading.astro';
-import DatasetCard from '../../../components/cards/BrowseDatasetCard.astro';
+import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro';
+import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 
 import collection from '../../../data/collections/ai-benchmark-datasets.json';
 import studyMetadata from '../../../data/bia-study-metadata.json'
@@ -19,7 +19,7 @@ import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additiona
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-dataset"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
+          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <StudyCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-dataset"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
         </div>
     </section>
   </body>

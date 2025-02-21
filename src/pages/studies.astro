@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from '../layouts/BaseLayoutWithBreadcrumbs.astro';
-import DatasetCard from '../components/cards/BrowseDatasetCard.astro';
-import BrowseDatasetHeading from '../components/BrowseDatasetsHeading.astro';
+import StudyCard from '../components/cards/BrowseStudyCard.astro';
+import BrowseStudyHeading from '../components/BrowseStudiesHeading.astro';
 import  "../styles/toggle.css"
 import "../styles/browse_controls.css"
 import "../styles/filter_cards.css"
@@ -27,10 +27,10 @@ const formattedTotalStudies = totalStudies.toLocaleString();
 const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
-<BaseLayoutWithBreadcrumbs pageTitle="Datasets">
+<BaseLayoutWithBreadcrumbs pageTitle="Browse Studies">
   <body>
 
-    <BrowseDatasetHeading
+    <BrowseStudyHeading
       heading="Browse the BioImage Archive"
       contributeLink={"/bioimage-archive/submit"}
     > 
@@ -58,7 +58,7 @@ const formattedTotalImages = totalImages.toLocaleString();
           </div>
         </div>
       </div>
-    </BrowseDatasetHeading>
+    </BrowseStudyHeading>
 
 
     <script>
@@ -108,7 +108,7 @@ const formattedTotalImages = totalImages.toLocaleString();
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
        
         <div class="vf-card-container__inner" >
-            { Object.values(studyMetadata).map((study) => ( <DatasetCard study={study} studyPageRoot="dataset"/> )) }
+            { Object.values(studyMetadata).map((study) => ( <StudyCard study={study} studyPageRoot="study"/> )) }
         </div>
     </section>
 
