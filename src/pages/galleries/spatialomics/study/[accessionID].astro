@@ -1,12 +1,11 @@
 ---
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
-import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
 import StudyTitleInfo from '../../../../components/study-page/StudyTitleInfo.astro'
 import StudyContentsSummary from '../../../../components/study-page/StudyContentsSummary.astro'
 import DatasetInfo  from "../../../../components/spatialomics/DatasetInfo.astro"
-
-// import exports from "../../../../data/old-export-format/bia-spatialomics-export.json";
-
+import ViewableImageTable from '../../../../components/ViewableImageTable.astro';
+import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
+import SOTables from '../../../../components/SOTables.astro';
 
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import studyMetadata from "../../../../data/bia-study-metadata.json"
@@ -23,72 +22,107 @@ export function getStaticPaths() {
 const { accessionID } = Astro.params;
 const study = studyMetadata[accessionID];
 
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
+
+let hasTranscripts = false;
+
+const fetchDatasetDetails = async (datasetUuid) => {
+    const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
+    const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+    const response = await fetch(apiUrl);
+    const fileData = await response.json();
+    const attributes = fileData.flatMap(file => file.attribute || []);
+    const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
+    return dataTypeAttr ? 'transcripts' : undefined;
+};
+
+const checkForTranscripts = async () => {
+    for (const [uuid, fileCount, title] of datasetUUIDsAndFileStats) {
+        const dataType = await fetchDatasetDetails(uuid);
+        if (dataType === 'transcripts') {
+            hasTranscripts = true;
+            break;
+        }
+    }
+};
+
+await checkForTranscripts();
+
 const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
   "Dataset files": "file_references",
 };
 
-const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+if (hasTranscripts) {
+  tableOfContents["Transcript files"] = "transcript_files";
+}
+
+const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/galleries",
   "/bioimage-archive/galleries/spatialomics",
 ]
+
 ---
+
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
-  <body class="vf-body">
+  <body>
+    <StudyTitleInfo study_info={study} />
+
+    <StudyContentsSummary 
+      tableOfContents={tableOfContents} 
+      originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
+    >
+    <div slot="hero-image" style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+      <figure class="vf-figure" style="max-width:300px;">
+        <img
+          class="vf-figure__image"
+          src={getStudyImage(study)}
+        />
+      </figure>
+    </div>
+    </StudyContentsSummary>
+
+    <hr/>
+
+    <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Study Information</h2>
+      </div>
+
+      <div style="overflow-wrap: anywhere;">
+        <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
+        <div><b>Licence: </b> {study.licence}<div>
+      </div>
+    </section>
+
+    <hr/>
+
+    <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Study Components</h2>
+      </div>
+      <div>
+        {
+          study.dataset.map((dataset) => (
+            <DatasetInfo dataset={dataset} />
+          ))
+        }
+      </div>
+    </section>
+
+    <hr/>
+    
+    <ViewableImageTable study={study} images={images} imagePageRoot="galleries/spatialomics/image"/>
+
+    {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
+
+    <hr/>
   
-
-
-  <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
-
-<div class="vf-section-header">
-  <h2 class="vf-section-header__heading" id="viewable_images">
-    Viewable Images
-  </h2>
-</div>
-<div>
-  <table id="viewable_images_table" class="display">
-    <thead>
-      <tr>
-        <th>Preview</th>
-        <th>Filename</th>
-        <th>Download Size</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        images.map((image) => (
-          <tr>
-            <th>
-              <a href={"/bioimage-archive/galleries/spatialomics/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri}/></a> 
-            </th>
-            <th>{image.name}</th>
-            <th>Unknown</th>
-            <th>
-              <a href={"/bioimage-archive/galleries/spatialomics/image/" + image.uuid}>View</a>
-            </th>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
-</div>
-</section>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    $("#viewable_images_table").DataTable({
-      scrollX: true,
-      columnDefs: [{ type: "natural", targets: 0 }],
-    });
-  });
-</script>
-</body>
-
-
+    <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
+ 
   </body>
-</BaseLayout> -->
+</BaseLayout>

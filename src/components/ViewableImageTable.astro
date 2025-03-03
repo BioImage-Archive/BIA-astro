@@ -1,6 +1,6 @@
 ---
 import ImageRow from "./ImageTableRow.astro"
-const {study, images} = Astro.props;
+const { study, images, imagePageRoot } = Astro.props;
 
 ---
 
@@ -24,7 +24,7 @@ const {study, images} = Astro.props;
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id}/>
+              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id} imagePageRoot={imagePageRoot}/>
             ))
           }
         </tbody>

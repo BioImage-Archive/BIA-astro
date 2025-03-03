@@ -2,7 +2,7 @@
 import imageMetadata from "../data/bia-image-metadata.json";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
-const { image , datasetTitle} = Astro.props;
+const { image, datasetTitle, imagePageRoot } = Astro.props;
 
 function getThumbnail(uuid, imageMetadata) {
     if (uuid in imageMetadata) {
@@ -27,12 +27,12 @@ function getDownloadSize(uuid, imageMetadata) {
 ---
 <tr>
   <td>
-    <a href={"/bioimage-archive/image/" + image.uuid}><img class="vf-figure__image" src={getThumbnail(image.uuid, imageMetadata)}/></a>
+    <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}><img class="vf-figure__image" src={getThumbnail(image.uuid, imageMetadata)}/></a>
   </td>
   <td>{image.uuid}</td>
   <td>{datasetTitle}</td>
   <td>{getDownloadSize(image.uuid, imageMetadata)}</td>
   <td>
-    <a href={"/bioimage-archive/image/" + image.uuid}>View</a>
+    <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}>View</a>
   </td>
 </tr>

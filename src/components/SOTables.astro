@@ -103,11 +103,8 @@ const { datasetUUIDsAndFileStats } = Astro.props;
             return fetch(apiUrl)
                 .then((response) => response.json())
                 .then((fileData) => {
-                    console.log(`Fetched data for dataset ${datasetUuid}:`, fileData);
                     const attributes = fileData.flatMap(file => file.attribute || []);
-                    console.log(`Attributes for dataset ${datasetUuid}:`, attributes);
                     const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
-                    console.log(`Data_Type attribute for dataset ${datasetUuid}:`, dataTypeAttr);
                     return dataTypeAttr ? 'transcripts' : undefined;
                 });
         };
@@ -116,7 +113,6 @@ const { datasetUUIDsAndFileStats } = Astro.props;
         const filteredDatasets = [];
         datasetDetails.forEach(([uuid, fileCount, title]) => {
             fetchDatasetDetails(uuid).then((dataType) => {
-                console.log(`Dataset ${uuid} has Data_Type: ${dataType}`);
                 if (dataType === 'transcripts') {
                     const option = document.createElement("option");
                     option.value = uuid;
