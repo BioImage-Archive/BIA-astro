@@ -5,9 +5,7 @@ import StudyContentsSummary from '../../../components/study-page/StudyContentsSu
 import DatasetInfo  from "../../../components/spatialomics/DatasetInfo.astro"
 import ViewableImageTable from '../../../components/ViewableImageTable.astro';
 import DatasetFilesTable from '../../../components/DatasetFilesTable.astro';
-
-// import exports from "../../../../data/old-export-format/bia-spatialomics-export.json";
-
+import SOTables from '../../../components/SOTables.astro';
 
 import spatialomicsCollection from "../../../data/collections/spatialomics.json"
 import studyMetadata from "../../../data/bia-study-metadata.json"
@@ -24,15 +22,44 @@ export function getStaticPaths() {
 const { accessionID } = Astro.params;
 const study = studyMetadata[accessionID];
 
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
+
+let hasTranscripts = false;
+
+const fetchDatasetDetails = async (datasetUuid) => {
+    const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
+    const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+    const response = await fetch(apiUrl);
+    const fileData = await response.json();
+    const attributes = fileData.flatMap(file => file.attribute || []);
+    const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
+    return dataTypeAttr ? 'transcripts' : undefined;
+};
+
+const checkForTranscripts = async () => {
+    for (const [uuid, fileCount, title] of datasetUUIDsAndFileStats) {
+        const dataType = await fetchDatasetDetails(uuid);
+        if (dataType === 'transcripts') {
+            hasTranscripts = true;
+            break;
+        }
+    }
+};
+
+await checkForTranscripts();
+
 const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
   "Dataset files": "file_references",
 };
 
+if (hasTranscripts) {
+  tableOfContents["Transcript files"] = "transcript_files";
+}
+
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 
 ---
 
@@ -62,7 +89,7 @@ const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
       </div>
 
       <div style="overflow-wrap: anywhere;">
-        <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div>
+        <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
         <div><b>Licence: </b> {study.licence}<div>
       </div>
     </section>
@@ -86,9 +113,11 @@ const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
     
     <ViewableImageTable study={study} images={images}/>
 
-   <hr/>
-  
-   <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
+    {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
 
+    <hr/>
+  
+    <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
+ 
   </body>
 </BaseLayout>

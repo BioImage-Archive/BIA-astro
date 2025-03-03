@@ -5,6 +5,7 @@ import { formatListItem, taxonRender } from "../SharedJSFunctions";
 
 const { dataset } = Astro.props;
 const biosampleMap = fieldMap["biosample"];
+const annotationMethodMap = fieldMap["annotation_method"];
 
 
 function getTaxons(dataset) {
@@ -96,6 +97,19 @@ const taxons = getTaxons(dataset)
                     <b>Imaging Method:</b> {displayImagingType(dataset)}
                     </div>
                 )
+        }
+        {
+            "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0 && (
+                <b>Annotation Methods:</b>
+                <ul>
+                    {dataset.annotation_process.map((annotation_method) => (
+                        <DatasetDetail
+                            data={annotation_method}
+                            fieldMap={annotationMethodMap}
+                        />
+                    ))}
+                </ul>
+            )
         }
     </ul>
 </div>

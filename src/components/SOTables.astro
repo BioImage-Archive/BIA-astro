@@ -1,0 +1,162 @@
+---
+
+const { datasetUUIDsAndFileStats } = Astro.props;
+
+---
+
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="transcript_files">
+        Transcript files
+      </h2>
+    </div>
+    <div>
+      <p>     
+        Shows up to 1000 transcript files of any selected dataset.
+      </p>
+      <b>Dataset: </b> 
+      <select id="sotables_dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
+        <option value="" disabled selected>Select a Dataset</option>
+      </select>
+      
+      <table id="sotables_file_references_table" class="display"></table>
+    </div>
+
+    <script>
+      
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropdown = document.getElementById("sotables_dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
+        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); // Ensure datasetUuids is parsed correctly
+
+        let dataTable;
+
+        // Function to initialize or update the DataTable
+        const initializeDataTable = (datasetUuid, totalFiles) => {
+            // set page size parameter of the api url with an upper limit of 1000
+            const pageSize = totalFiles < 1000 ? totalFiles : 1000;
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+
+            // Destroy the existing DataTable instance if it exists
+            if ($.fn.DataTable.isDataTable('#sotables_file_references_table')) {
+                $('#sotables_file_references_table').DataTable().destroy();
+                $('#sotables_file_references_table').empty(); // Clear the table's HTML content
+            }
+
+            // Fetch data and initialize the DataTable
+            fetch(apiUrl)
+                .then((response) => response.json())
+                .then((fileData) => {
+                    fileData = Array.isArray(fileData) ? fileData : [];
+
+                    // Filter files with Data_Type 'transcripts'
+                    const filteredFiles = fileData.filter(file => {
+                        const attributes = file.attribute || [];
+                        const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
+                        return dataTypeAttr !== undefined;
+                    });
+
+                    // Initialize the DataTable
+                    dataTable = $('#sotables_file_references_table').DataTable({
+                        data: filteredFiles,
+                        columns: [
+                            { data: "uuid", title: "File UUID" },
+                            { 
+                                data: "file_path", 
+                                title: "File Name",
+                                render: (data) => data.replace("/", "/&#8203;")
+                            },
+                            { 
+                              data: "uri", 
+                              title: "Actions", 
+                              render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` 
+                            },
+                        ],
+                        pageLength: 25, 
+                        searching: true,
+                        ordering: true,
+                        processing: true,
+                        scrollX: true,
+                        columnDefs: [{ type: "natural", targets: 0 }],
+                        createdRow: (row, data) => {
+                            // Attach event listener to the button after row creation
+                            $(row).find(".copy-btn").on("click", function () {
+                                const link = $(this).data("uri");
+                                navigator.clipboard.writeText(link).then(() => {
+                                  this.innerText = "URL Copied";
+                                  setTimeout(() => {
+                                      this.innerText = "Copy Url";
+                                  }, 700);
+                                });
+                            });
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
+        };
+
+        // Function to fetch dataset details including Data_Type
+        const fetchDatasetDetails = (datasetUuid) => {
+            const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+            return fetch(apiUrl)
+                .then((response) => response.json())
+                .then((fileData) => {
+                    console.log(`Fetched data for dataset ${datasetUuid}:`, fileData);
+                    const attributes = fileData.flatMap(file => file.attribute || []);
+                    console.log(`Attributes for dataset ${datasetUuid}:`, attributes);
+                    const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
+                    console.log(`Data_Type attribute for dataset ${datasetUuid}:`, dataTypeAttr);
+                    return dataTypeAttr ? 'transcripts' : undefined;
+                });
+        };
+
+        // Populate the dropdown menu with dataset details
+        const filteredDatasets = [];
+        datasetDetails.forEach(([uuid, fileCount, title]) => {
+            fetchDatasetDetails(uuid).then((dataType) => {
+                console.log(`Dataset ${uuid} has Data_Type: ${dataType}`);
+                if (dataType === 'transcripts') {
+                    const option = document.createElement("option");
+                    option.value = uuid;
+                    option.text = `${title}`; 
+                    dropdown.appendChild(option);
+                    filteredDatasets.push([uuid, fileCount, title]);
+                }
+            }).catch((error) => {
+                console.error(`Error fetching details for dataset ${uuid}:`, error);
+            });
+        });
+
+        // Event listener for dropdown menu selection
+        dropdown.addEventListener("change", () => {
+            const selectedIndex = dropdown.selectedIndex; // Get the selected index
+            if (selectedIndex > 0) { // Ignore the first "placeholder" option
+                const [selectedUuid, totalFiles] = filteredDatasets[selectedIndex - 1]; // Adjust for 0-based index
+                initializeDataTable(selectedUuid, totalFiles); // Initialize the table with selected dataset
+            }
+        });
+
+        // Trigger a default load for the first dataset 
+        dropdown.addEventListener("datasetLoaded", () => {
+            if (filteredDatasets.length > 0) {
+                dropdown.selectedIndex = 1; // Automatically select the first dataset
+                const [defaultUuid, defaultTotalFiles] = filteredDatasets[0];
+                initializeDataTable(defaultUuid, defaultTotalFiles);
+            }
+        });
+
+        // Dispatch a custom event when datasets are loaded
+        const observer = new MutationObserver(() => {
+            if (dropdown.options.length > 1) {
+                dropdown.dispatchEvent(new Event("datasetLoaded"));
+                observer.disconnect();
+            }
+        });
+
+        observer.observe(dropdown, { childList: true });
+    });
+
+    </script>
+</section>
