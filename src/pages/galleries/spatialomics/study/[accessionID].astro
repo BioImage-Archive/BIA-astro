@@ -6,10 +6,11 @@ import DatasetInfo  from "../../../../components/spatialomics/DatasetInfo.astro"
 import ViewableImageTable from '../../../../components/ViewableImageTable.astro';
 import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
 import SOTables from '../../../../components/SOTables.astro';
+import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import studyMetadata from "../../../../data/bia-study-metadata.json"
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../../../components/SharedJSFunctions.js"
+import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getAnnotationDatasetStatsByUUID} from "../../../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return spatialomicsCollection.accession_ids.map((id) => {
@@ -51,14 +52,29 @@ await checkForTranscripts();
 const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
-  "Dataset files": "file_references",
 };
 
 if (hasTranscripts) {
   tableOfContents["Transcript files"] = "transcript_files";
 }
 
+
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
+
+const annotationDatasets = study.dataset.filter(dataset => 
+  "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0
+);
+const annotationDatasetUUIDsAndFileStats = getAnnotationDatasetStatsByUUID(annotationDatasets);
+
+if (annotationDatasets.length > 0) {
+  tableOfContents["Annotation Datasets"] = "annotation_datasets";
+  tableOfContents["Annotation files"] = "annotation_table"
+}
+const nonannotationDatasets = study.dataset.filter(dataset => 
+  !("annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0)
+);
+
+tableOfContents["Dataset files"] = "file_references";
 
 const breadcrumbs = [
   "/bioimage-archive",
@@ -103,11 +119,11 @@ const breadcrumbs = [
 
     <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
-        <h2 class="vf-section-header__heading">Study Components</h2>
+        <h2 class="vf-section-header__heading">Imaging Datasets</h2>
       </div>
       <div>
         {
-          study.dataset.map((dataset) => (
+          nonannotationDatasets.map((dataset) => (
             <DatasetInfo dataset={dataset} />
           ))
         }
@@ -118,11 +134,32 @@ const breadcrumbs = [
     
     <ViewableImageTable study={study} images={images} imagePageRoot="galleries/spatialomics/image"/>
 
+
+    {annotationDatasets.length > 0 && (     <hr/>
+    <section id="annotation_datasets" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Annotation Datasets</h2>
+      </div>
+      <div>
+        {
+          annotationDatasets.map((dataset) => (
+            <DatasetInfo dataset={dataset} />
+          ))
+        }
+      </div>
+    </section>
+    )}
+
+    {annotationDatasets.length > 0 && (
+    <hr/>
+    <AnnotationFilesTable datasetUUIDsAndFileStats={annotationDatasetUUIDsAndFileStats} title="Annotation" table_id="annotation_table"/>
+    )}
+
     {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
 
     <hr/>
   
-    <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
+    <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} title="All" table_id="file_references"/>
  
   </body>
 </BaseLayout>

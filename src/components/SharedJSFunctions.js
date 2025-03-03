@@ -62,4 +62,11 @@ export function getDatasetStatsByUUID(study) {
     }
     return dataset_uuids
 }
-  
+
+export function getAnnotationDatasetStatsByUUID(annotationDatasets) {
+    const dataset_uuids = []
+    for (var dataset of annotationDatasets) {
+      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
+    }
+    return dataset_uuids
+}
