@@ -33,14 +33,21 @@ const fetchDatasetDetails = async (datasetUuid) => {
     const response = await fetch(apiUrl);
     const fileData = await response.json();
     const attributes = fileData.flatMap(file => file.attribute || []);
-    const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
-    return dataTypeAttr ? 'transcripts' : undefined;
-};
+    const dataTypeAttr = attributes.find(attr => 
+        attr.name === 'attributes_from_biostudies.File' && (
+            attr.value?.attributes?.Data_Type === 'transcripts' ||
+            attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+            attr.value?.attributes?.Description?.includes('Feature barcode') ||
+            attr.value?.attributes?.Description?.includes('feature matrix')
+        )
+    );
+    return dataTypeAttr ? true : false;
+};    
 
 const checkForTranscripts = async () => {
     for (const [uuid, fileCount, title] of datasetUUIDsAndFileStats) {
         const dataType = await fetchDatasetDetails(uuid);
-        if (dataType === 'transcripts') {
+        if (dataType) {
             hasTranscripts = true;
             break;
         }

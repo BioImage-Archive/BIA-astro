@@ -1,7 +1,5 @@
 ---
-
 const { datasetUUIDsAndFileStats } = Astro.props;
-
 ---
 
 <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
@@ -23,15 +21,14 @@ const { datasetUUIDsAndFileStats } = Astro.props;
     </div>
 
     <script>
-      
       document.addEventListener("DOMContentLoaded", function () {
-        const dropdown = document.getElementById("sotables_dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
+        const dropdown = document.getElementById("sotables_dataset_selector"); // Get the dropdown element
         const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); // Ensure datasetUuids is parsed correctly
 
         let dataTable;
 
         // Function to initialize or update the DataTable
-        const initializeDataTable = (datasetUuid, totalFiles) => {
+        const initializeDataTable = async (datasetUuid, totalFiles) => {
             // set page size parameter of the api url with an upper limit of 1000
             const pageSize = totalFiles < 1000 ? totalFiles : 1000;
             const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
@@ -46,13 +43,16 @@ const { datasetUUIDsAndFileStats } = Astro.props;
             fetch(apiUrl)
                 .then((response) => response.json())
                 .then((fileData) => {
-                    fileData = Array.isArray(fileData) ? fileData : [];
-
-                    // Filter files with Data_Type 'transcripts'
                     const filteredFiles = fileData.filter(file => {
                         const attributes = file.attribute || [];
-                        const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
-                        return dataTypeAttr !== undefined;
+                        return attributes.some(attr => 
+                            attr.name === 'attributes_from_biostudies.File' && (
+                                attr.value?.attributes?.Data_Type === 'transcripts' ||
+                                attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+                                attr.value?.attributes?.Description?.includes('Feature barcode') ||
+                                attr.value?.attributes?.Description?.includes('feature matrix')
+                            )
+                        );
                     });
 
                     // Initialize the DataTable
@@ -60,25 +60,16 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                         data: filteredFiles,
                         columns: [
                             { data: "uuid", title: "File UUID" },
-                            { 
-                                data: "file_path", 
-                                title: "File Name",
-                                render: (data) => data.replace("/", "/&#8203;")
-                            },
-                            { 
-                              data: "uri", 
-                              title: "Actions", 
-                              render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` 
-                            },
+                            { data: "file_path", title: "File Name" },
+                            { data: "uri", title: "Actions", render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` },
                         ],
-                        pageLength: 25, 
+                        pageLength: 25,
                         searching: true,
                         ordering: true,
                         processing: true,
                         scrollX: true,
                         columnDefs: [{ type: "natural", targets: 0 }],
                         createdRow: (row, data) => {
-                            // Attach event listener to the button after row creation
                             $(row).find(".copy-btn").on("click", function () {
                                 const link = $(this).data("uri");
                                 navigator.clipboard.writeText(link).then(() => {
@@ -97,23 +88,29 @@ const { datasetUUIDsAndFileStats } = Astro.props;
         };
 
         // Function to fetch dataset details including Data_Type
-        const fetchDatasetDetails = (datasetUuid) => {
+        const fetchDatasetDetails = async (datasetUuid) => {
             const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
             const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
-            return fetch(apiUrl)
-                .then((response) => response.json())
-                .then((fileData) => {
-                    const attributes = fileData.flatMap(file => file.attribute || []);
-                    const dataTypeAttr = attributes.find(attr => attr.name === 'attributes_from_biostudies.File' && attr.value?.attributes?.Data_Type === 'transcripts');
-                    return dataTypeAttr ? 'transcripts' : undefined;
-                });
-        };
+            const response = await fetch(apiUrl);
+            const fileData = await response.json();
+            const attributes = fileData.flatMap(file => file.attribute || []);
+            const dataTypeAttr = attributes.find(attr => 
+                attr.name === 'attributes_from_biostudies.File' && (
+                    attr.value?.attributes?.Data_Type === 'transcripts' ||
+                    attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+                    attr.value?.attributes?.Description?.includes('Feature barcode') ||
+                    attr.value?.attributes?.Description?.includes('feature matrix')
+                )
+            );
+            return dataTypeAttr ? true : false;
+        };    
+
 
         // Populate the dropdown menu with dataset details
         const filteredDatasets = [];
         datasetDetails.forEach(([uuid, fileCount, title]) => {
             fetchDatasetDetails(uuid).then((dataType) => {
-                if (dataType === 'transcripts') {
+                if (dataType) {
                     const option = document.createElement("option");
                     option.value = uuid;
                     option.text = `${title}`; 
@@ -142,17 +139,6 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                 initializeDataTable(defaultUuid, defaultTotalFiles);
             }
         });
-
-        // Dispatch a custom event when datasets are loaded
-        const observer = new MutationObserver(() => {
-            if (dropdown.options.length > 1) {
-                dropdown.dispatchEvent(new Event("datasetLoaded"));
-                observer.disconnect();
-            }
-        });
-
-        observer.observe(dropdown, { childList: true });
     });
-
     </script>
 </section>
