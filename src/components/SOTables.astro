@@ -7,12 +7,12 @@ const { datasetUUIDsAndFileStats } = Astro.props;
 <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="transcript_files">
-        Transcript files
+        Omics component
       </h2>
     </div>
     <div>
       <p>     
-        Shows up to 1000 transcript files of any selected dataset.
+        Shows up to 1000 transcript or related files of any selected dataset.
       </p>
       <b>Dataset: </b> 
       <select id="sotables_dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
