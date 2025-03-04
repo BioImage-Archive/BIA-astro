@@ -3,12 +3,12 @@ import BaseLayoutWithBreadcrumbs from "../../layouts/BaseLayoutWithBreadcrumbs.a
 import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
-import ImageRow from "../../components/ImageTableRow.astro";
+import ViewableImageTable from "../../components/ViewableImageTable.astro";
+import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 
 import studyMetadata from "../../data/bia-study-metadata.json";
 
-import {getPlaceholderHeroImage, formatListItem, multilineTextRender, formatBytesToHumanSize} from "../../components/SharedJSFunctions.js"
-
+import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return Object.values(studyMetadata).map((study) => {
@@ -28,34 +28,6 @@ const { accessionID } = Astro.params;
 const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
 
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
-// for (var dataset of study.dataset) {
-//   for (var image of dataset.image) {
-//     images.push(image)
-//   }
-// }
-
-function getStudyImage(study) {
-  const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
-  if (datasetWithImage === undefined) {
-    return getPlaceholderHeroImage(study.accession_id)
-  } else {
-    return datasetWithImage.example_image_uri[0]
-  }
-}
-
-function getDatasetStatsByUUID(study) {
-  const dataset_uuids = []
-  for (var dataset of study.dataset) {
-    dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
-  }
-  return dataset_uuids
-}
-
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
-
-const totalImageCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0);
-
-const totalFileCount = study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0);
 
 function getFileTypes(study) {
     const fileTypeList = []
@@ -69,6 +41,7 @@ function getFileTypes(study) {
     return fileTypeList
 }
 
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 
 const headlineStats = {
   "Total Viewable Images":  study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
@@ -88,194 +61,52 @@ const breadcrumbs = [
   <body>
     <StudyTitleInfo study_info={study}/>
 
-    <StudyContentsSummary 
-      tableOfContents={tableOfContents} 
-      originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
-      headlineStats={headlineStats}
-    >
-      <div slot="hero-image">
-        <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-          <img class="vf-figure__image" src={getStudyImage(study)} />
-        </figure>
-      </div>
-    </StudyContentsSummary>
-
-    <hr/>
-
-    <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
-      <div>
-        <h2 class="vf-section-header__heading">Study Information</h2>
-      </div>
-
-      <div style="overflow-wrap: anywhere;">
-        <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div>
-        <div><b>Licence: </b> {study.licence}<div>
-      </div>
-    </section>
-
-    <hr/>
-
-    <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
-      <div>
-        <h2 class="vf-section-header__heading">Study Components</h2>
-      </div>
-      <div>
-        {
-          study.dataset.map((dataset) => (
-            <DatasetInfo dataset={dataset} />
-          ))
-        }
-      </div>
-    </section>
-
-    <hr/>
-
-    <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
-
-    <div class="vf-section-header">
-      <h2 class="vf-section-header__heading" id="viewable_images">
-        Viewable Images
-      </h2>
+  <StudyContentsSummary 
+    tableOfContents={tableOfContents} 
+    originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
+    headlineStats={headlineStats}
+  >
+    <div slot="hero-image">
+      <figure class="vf-figure vf-figure--align vf-figure--align-centered">
+        <img class="vf-figure__image" src={getStudyImage(study)} />
+      </figure>
     </div>
+  </StudyContentsSummary>
+
+  <hr/>
+
+  <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
-      <table id="viewable_images_table" class="display">
-        <thead>
-          <tr>
-            <th>Preview</th>
-            <th>UUID</th>
-            <th>Dataset</th>
-            <th>Download Size (bytes)</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            images.map((image) => (
-              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id}/>
-            ))
-          }
-        </tbody>
-      </table>
+      <h2 class="vf-section-header__heading">Study Information</h2>
+    </div>
+
+    <div style="overflow-wrap: anywhere;">
+      <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div>
+      <div><b>Licence: </b> {study.licence}<div>
     </div>
   </section>
 
-  <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+  <hr/>
 
-    <div class="vf-section-header">
-      <h2 class="vf-section-header__heading" id="file_references">
-        Dataset files </b>
-        <i class="fa-solid fa-circle-info"
-          title="Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files">
-        </i>
-      </h2>
+  <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading">Study Components</h2>
     </div>
     <div>
-      <p>      Shows up to 1000 files of any selected dataset, if the dataset has more than 1000 files
-      </p>
-      <b>Dataset: </b> 
-      <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
-        <option value="" disabled selected>Select a Dataset</option>
-      </select>
-      
-      <table id="file_references_table" class="display">
-      </table>
+      {
+        study.dataset.map((dataset) => (
+          <DatasetInfo dataset={dataset} />
+        ))
+      }
     </div>
   </section>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        $("#viewable_images_table").DataTable({
-          scrollX: true,
-          columnDefs: [{ type: "natural", targets: 0 }],
-        });
-      });
-      document.addEventListener("DOMContentLoaded", function () {
-        const dropdown = document.getElementById("dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
-        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids as string); // Ensure datasetUuids is parsed correctly
+  <hr/>
 
+  <ViewableImageTable study={study} images={images}/>
 
-        // Populate the dropdown menu with dataset details
-        datasetDetails.forEach(([uuid, fileCount, title]) => {
-            const option = document.createElement("option");
-            option.value = uuid;
-            option.text = `${title} (${fileCount} files)`; 
-            dropdown.appendChild(option);
-        });
+  <hr/>
 
-        let dataTable;
+  <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
 
-        // Function to initialize or update the DataTable
-        const initializeDataTable = (datasetUuid: string, totalFiles: number) => {
-            // set page size parameter of the api url with an upper limit of 1000
-            const pageSize = totalFiles < 1000 ? totalFiles : 1000;
-            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
-
-            // Destroy the existing DataTable instance if it exists
-            if (dataTable) {
-                dataTable.destroy();
-                document.getElementById("file_references_table")!.innerHTML = ""; // Clear the table's HTML content
-            }
-
-            // Fetch data and initialize the DataTable
-            fetch(apiUrl)
-                .then((response) => response.json())
-                .then((fileData) => {
-                    fileData = Array.isArray(fileData) ? fileData : [];
-
-                    // Initialize the DataTable
-                    dataTable = $('#file_references_table').DataTable({
-                        data: fileData,
-                        columns: [
-                            { data: "uuid", title: "File UUID" },
-                            { data: "file_path", title: "File Name" },
-                            { 
-                              data: "uri", 
-                              title: "Actions", 
-                              render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` 
-                            },
-                        ],
-                        pageLength: 25, 
-                        searching: true,
-                        ordering: true,
-                        processing: true,
-                        scrollX: true,
-                        columnDefs: [{ type: "natural", targets: 0 }],
-                        createdRow: (row, data) => {
-                            // Attach event listener to the button after row creation
-                            $(row).find(".copy-btn").on("click", function () {
-                                const link = $(this).data("uri");
-                                navigator.clipboard.writeText(link).then(() => {
-                                  this.innerText = "URL Copied";
-                                  setTimeout(() => {
-                                      this.innerText = "Copy Url";
-                                  }, 700);
-                                });
-                            });
-                        }
-                    });
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                });
-        };
-
-        // Event listener for dropdown menu selection
-        dropdown.addEventListener("change", () => {
-            const selectedIndex = dropdown.selectedIndex; // Get the selected index
-            if (selectedIndex > 0) { // Ignore the first "placeholder" option
-                const [selectedUuid, totalFiles] = datasetDetails[selectedIndex - 1]; // Adjust for 0-based index
-                initializeDataTable(selectedUuid, totalFiles); // Initialize the table with selected dataset
-            }
-        });
-
-        // Trigger a default load for the first dataset 
-        if (datasetDetails.length > 0) {
-            dropdown.selectedIndex = 1; // Automatically select the first dataset
-            const [defaultUuid, defaultTotalFiles] = datasetDetails[0];
-            initializeDataTable(defaultUuid, defaultTotalFiles);
-        }
-    });
-
-    </script>
-  </body>
 </BaseLayout>

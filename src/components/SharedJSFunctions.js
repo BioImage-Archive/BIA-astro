@@ -5,6 +5,17 @@ export function getPlaceholderHeroImage(accessionID) {
     return `/bioimage-archive/default-hero/placeholder_logo_${imageNumber}.png`
 }
 
+export function getStudyImage(study, cardImageOverride) {
+    const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
+    if (cardImageOverride != null) {
+      return cardImageOverride
+    } else if (datasetWithImage == undefined) {
+      return getPlaceholderHeroImage(study.accession_id)
+    } else {
+      return datasetWithImage.example_image_uri[0]
+    }
+}
+
 export function formatListItem(outputString, item, i, list) {
     if (i + 1 === list.length) {
         return `${outputString}${item}` ;
@@ -43,3 +54,15 @@ export function getSimpleAttributeValue(obj, attrName) {
       ?.value[attrName] ?? null;
 }
   
+  
+export function getDatasetStatsByUUID(study) {
+    return aggregateDatasetStats(study.dataset);
+}
+
+export function aggregateDatasetStats(datasets) {
+    const dataset_uuids = []
+    for (var dataset of datasets) {
+      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
+    }
+    return dataset_uuids
+}

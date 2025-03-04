@@ -1,241 +1,172 @@
 ---
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
-import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
+import StudyTitleInfo from '../../../../components/study-page/StudyTitleInfo.astro'
+import StudyContentsSummary from '../../../../components/study-page/StudyContentsSummary.astro'
+import DatasetInfo  from "../../../../components/spatialomics/DatasetInfo.astro"
+import ViewableImageTable from '../../../../components/ViewableImageTable.astro';
+import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
+import SOTables from '../../../../components/spatialomics/SOTables.astro';
+import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 
-import exports from "../../../../data/old-export-format/bia-spatialomics-export.json";
-
-import studyImage from '../../../../assets/bioimage-archive/study.png';
-import biosampleImage from '../../../../assets/bioimage-archive/biosample.png';
-import imacqImage from '../../../../assets/bioimage-archive/im_acquisition.png';
-import specimenImage from '../../../../assets/bioimage-archive/specimen.png';
-import cellImage from '../../../../assets/bioimage-archive/cells_icon.png';
-import dnaImage from '../../../../assets/bioimage-archive/dna_icon.png';
-import codeImage from '../../../../assets/bioimage-archive/code_icon.png';
-
+import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
+import studyMetadata from "../../../../data/bia-study-metadata.json"
+import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats} from "../../../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
-  return Object.values(exports["datasets"]).map((dataset) => {
+  return spatialomicsCollection.accession_ids.map((id) => {
     return {
-      params:  {accessionID: dataset.accession_id }
+      params:  {accessionID: id }
     };
   });
 }
 
 const { accessionID } = Astro.params;
-const study = exports["datasets"][accessionID];
+const study = studyMetadata[accessionID];
 
-const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
+
+let hasTranscripts = false;
+
+const fetchDatasetDetails = async (datasetUuid) => {
+    const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
+    const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+    const response = await fetch(apiUrl);
+    const fileData = await response.json();
+    const attributes = fileData.flatMap(file => file.attribute || []);
+    const dataTypeAttr = attributes.find(attr => 
+        attr.name === 'attributes_from_biostudies.File' && (
+            attr.value?.attributes?.Data_Type === 'transcripts' ||
+            attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+            attr.value?.attributes?.Description?.includes('Feature barcode') ||
+            attr.value?.attributes?.Description?.includes('feature matrix')
+        )
+    );
+    return dataTypeAttr ? true : false;
+};    
+
+const checkForTranscripts = async () => {
+    for (const [uuid, fileCount, title] of datasetUUIDsAndFileStats) {
+        const dataType = await fetchDatasetDetails(uuid);
+        if (dataType) {
+            hasTranscripts = true;
+            break;
+        }
+    }
+};
+
+await checkForTranscripts();
+
+const tableOfContents = {
+  "Study Information": "study",
+  "Viewable Images": "viewable_images",
+};
+
+if (hasTranscripts) {
+  tableOfContents["Transcript files"] = "transcript_files";
+}
+
+
+const images = study.dataset.flatMap(dataset => dataset.image ?? [])
+
+const annotationDatasets = study.dataset.filter(dataset => 
+  "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0
+);
+const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatasets);
+
+if (annotationDatasets.length > 0) {
+  tableOfContents["Annotation Datasets"] = "annotation_datasets";
+  tableOfContents["Annotation files"] = "annotation_table"
+}
+const nonannotationDatasets = study.dataset.filter(dataset => 
+  !("annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0)
+);
+
+tableOfContents["Dataset files"] = "file_references";
 
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/galleries",
   "/bioimage-archive/galleries/spatialomics",
 ]
+
 ---
+
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
-  <body class="vf-body">
-    <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-        <div></div>
-        <div>
-            <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ study.accession_id }
-              <WebsiteStateButton/>
-            </h1>
-            <h2 class="vf-intro__subheading">{ study.title }</h2>
-            Released { study.release_date }<br>
-            <!-- {{ authors }} -->
-        </div>
-        <div></div>
-    </section>
-    <section  class="vf-content | vf-sidebar vf-sidebar--start">
-      <div class="vf-sidebar__inner">
-        <div>
-          <h2 class="vf-section-header__heading"> On this page</h2>
-          <ul class="vf-list">
-            <li class="vf-list__item">
-            <a class="vf-list__link" href="#study">
-              Study Information
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#spatial_omics">
-              Spatial-omics data
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="#code">
-              Analysis Code
-            </a>
-            </li>
-            <li class="vf-list__item">
-              <a class="vf-list__link" href="#viewable_images">
-                Viewable Images
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>                                   
-            <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-                <img class="vf-figure__image" src={ study.example_image_uri }>
-            </figure>  
-            { study.description }
-        </div>
+  <body>
+    <StudyTitleInfo study_info={study} />
+
+    <StudyContentsSummary 
+      tableOfContents={tableOfContents} 
+      originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
+    >
+    <div slot="hero-image" style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+      <figure class="vf-figure" style="max-width:300px;">
+        <img
+          class="vf-figure__image"
+          src={getStudyImage(study)}
+        />
+      </figure>
+    </div>
+    </StudyContentsSummary>
+
+    <hr/>
+
+    <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Study Information</h2>
       </div>
-    </div>
-        </section>
-      <section class="vf-content">
-        <div class="vf-grid vf-grid__col-4">
-        <div> Images<br/> {study.n_images}</div>
-        <div> Other Data <br> None </div>
-        <div> Study Size <br> None </div>
-        <div> File Types <br> None </div>
-    </div>
+
+      <div style="overflow-wrap: anywhere;">
+        <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
+        <div><b>Licence: </b> {study.licence}<div>
+      </div>
     </section>
-    <div style="width: 1238px; height: 22px; padding-top: 16px; padding-bottom: 1px; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-      <div style="align-self: stretch; height: 0px; border: 1px #D0D0CE solid"></div>
-    </div>
-    <section  class="embl-grid embl-grid--has-centered-content">
-        <div>
-        <h2 class="vf-section-header__heading" id="study">Study Information</h2>
-        <p>Complete metadata</p>
-        <h3>Study</h3>
-        <img src={studyImage.src} alt="Study" style="width: 60px">
+
+    <hr/>
+
+    <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Imaging Datasets</h2>
       </div>
       <div>
-        <br><br>
-        <a href={study.links[0]["url"]}>
-          <button class="vf-button vf-button--primary vf-button--sm">Original submission page</button>
-        </a>
-        <p><b>Licence:</b> CC0</p>
-        { ( study.models_description != null ) && <p><b>Models: </b> { study.models_description }</p> }
+        {
+          nonannotationDatasets.map((dataset) => (
+            <DatasetInfo dataset={dataset} />
+          ))
+        }
       </div>
-      <div></div>
     </section>
-    <section class="embl-grid embl-grid--has-centered-content">
-        <div>
-        <h3>Biosample</h3>
-          <img src={biosampleImage.src} alt="Biosample" style="width: 60px">
+
+    <hr/>
+    
+    <ViewableImageTable study={study} images={images} imagePageRoot="galleries/spatialomics/image"/>
+
+
+    {annotationDatasets.length > 0 && (     <hr/>
+    <section id="annotation_datasets" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Annotation Datasets</h2>
       </div>
       <div>
-        <br>                  
-          <b>Organism: </b> { study.organism }
+        {
+          annotationDatasets.map((dataset) => (
+            <DatasetInfo dataset={dataset} />
+          ))
+        }
       </div>
-      <div></div>
-  </section>
-  <section class="embl-grid embl-grid--has-centered-content">
-    <div>
-      <h3>Image Acquisition </h3>
-      <img src={imacqImage.src} alt="Imaging" style="width: 60px">
-    </div>
-  <div>
-    <br>
-    <b>Imaging method: </b> { study.imaging_type } 
-  </div>
-  </section>
+    </section>
+    )}
+
+    {annotationDatasets.length > 0 && (
+    <hr/>
+    <AnnotationFilesTable datasetUUIDsAndFileStats={annotationDatasetUUIDsAndFileStats} title="Annotation" table_id="annotation_table"/>
+    )}
+
+    {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
+
+    <hr/>
   
-  <hr/>
-
-  <section class="embl-grid embl-grid embl-grid--has-centered-content">
-    <div class="vf-section-header" id="spatial_omics">
-      <h3 class="vf-section-header__heading" title="Cell segmentation, RNA spots and Omics data"> Spatial-omics data </h3>
-    </div>
-    <div>
-    </div>
-    <div></div>
-  </section>
-  { ( study.cell_seg_descr != null ) && 
-  <section class="embl-grid embl-grid--has-centered-content">
-        <div class="vf-section-header">
-        <h3>Cell segmentation and labels</h3>
-          <img src={cellImage.src} alt="Cell segmentation" style="width: 60px">
-      </div>
-      <div>                  
-          <p><b>Description: </b> { study.cell_seg_descr }
-          </p>
-          <p><b>Link:</b> <a href={ study.cell_seg_link }> {study.cell_seg_link} </a></p>
-      </div>
-    <div></div>
-  </section>
-}
-{ ( study.scseq_desc != null ) && 
-  <section class="embl-grid embl-grid--has-centered-content">
-        <div class="vf-section-header">
-        <h3>single-cell sequencing</h3>
-          <img src={dnaImage.src} alt="single-cell sequencing" style="width: 60px">
-      </div>
-      <div>                  
-          <p><b>Description: </b> { study.scseq_desc }
-          </p>
-          <p><b>Link:</b> <a href={ study.scseq_link }> {study.scseq_link} </a></p>
-      </div>
-    <div></div>
-  </section>
-}
-  
-  <hr/>
-   
-  <section class="embl-grid embl-grid--has-centered-content">
-        <div class="vf-section-header" id="code">
-        <h3 class="vf-section-header__heading">Analysis code</h3>
-        <br>
-          <img src={codeImage.src} alt="Analysis code" style="width: 60px">
-      </div>
-      <div>                  
-          <p><b>Description: </b> { study.code_desc }
-          </p>
-          <p><b>Link:</b> <a href={ study.code_link }> {study.code_link} </a> </p>
-      </div>
-    <div></div>
-  </section>
-
-<hr/>
-
-  <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
-
-<div class="vf-section-header">
-  <h2 class="vf-section-header__heading" id="viewable_images">
-    Viewable Images
-  </h2>
-</div>
-<div>
-  <table id="viewable_images_table" class="display">
-    <thead>
-      <tr>
-        <th>Preview</th>
-        <th>Filename</th>
-        <th>Download Size</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        images.map((image) => (
-          <tr>
-            <th>
-              <a href={"/bioimage-archive/galleries/spatialomics/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri}/></a> 
-            </th>
-            <th>{image.name}</th>
-            <th>Unknown</th>
-            <th>
-              <a href={"/bioimage-archive/galleries/spatialomics/image/" + image.uuid}>View</a>
-            </th>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
-</div>
-</section>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    $("#viewable_images_table").DataTable({
-      scrollX: true,
-      columnDefs: [{ type: "natural", targets: 0 }],
-    });
-  });
-</script>
-</body>
-
-
+    <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} title="All" table_id="file_references"/>
+ 
   </body>
 </BaseLayout>

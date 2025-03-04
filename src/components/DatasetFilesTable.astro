@@ -1,0 +1,119 @@
+---
+
+const { datasetUUIDsAndFileStats } = Astro.props;
+
+---
+
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading" id="file_references">
+        Dataset files
+      </h2>
+    </div>
+    <div>
+      <p>     
+        Shows up to 1000 files of any selected dataset.
+      </p>
+      <b>Dataset: </b> 
+      <select id="dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
+        <option value="" disabled selected>Select a Dataset</option>
+      </select>
+      
+      <table id="file_references_table" class="display"></table>
+    </div>
+
+    <script>
+      
+      document.addEventListener("DOMContentLoaded", function () {
+        const dropdown = document.getElementById("dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
+        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids as string); // Ensure datasetUuids is parsed correctly
+
+
+        // Populate the dropdown menu with dataset details
+        datasetDetails.forEach(([uuid, fileCount, title]) => {
+            const option = document.createElement("option");
+            option.value = uuid;
+            option.text = `${title} (${fileCount} files)`; 
+            dropdown.appendChild(option);
+        });
+
+        let dataTable;
+
+        // Function to initialize or update the DataTable
+        const initializeDataTable = (datasetUuid: string, totalFiles: number) => {
+            // set page size parameter of the api url with an upper limit of 1000
+            const pageSize = totalFiles < 1000 ? totalFiles : 1000;
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+
+            // Destroy the existing DataTable instance if it exists
+            if (dataTable) {
+                dataTable.destroy();
+                document.getElementById("file_references_table")!.innerHTML = ""; // Clear the table's HTML content
+            }
+
+            // Fetch data and initialize the DataTable
+            fetch(apiUrl)
+                .then((response) => response.json())
+                .then((fileData) => {
+                    fileData = Array.isArray(fileData) ? fileData : [];
+
+                    // Initialize the DataTable
+                    dataTable = $('#file_references_table').DataTable({
+                        data: fileData,
+                        columns: [
+                            { data: "uuid", title: "File UUID" },
+                            { 
+                                data: "file_path", 
+                                title: "File Name",
+                                render: (data) => data.replace("/", "/&#8203;")
+                            },
+                            { 
+                              data: "uri", 
+                              title: "Actions", 
+                              render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` 
+                            },
+                        ],
+                        pageLength: 25, 
+                        searching: true,
+                        ordering: true,
+                        processing: true,
+                        scrollX: true,
+                        columnDefs: [{ type: "natural", targets: 0 }],
+                        createdRow: (row, data) => {
+                            // Attach event listener to the button after row creation
+                            $(row).find(".copy-btn").on("click", function () {
+                                const link = $(this).data("uri");
+                                navigator.clipboard.writeText(link).then(() => {
+                                  this.innerText = "URL Copied";
+                                  setTimeout(() => {
+                                      this.innerText = "Copy Url";
+                                  }, 700);
+                                });
+                            });
+                        }
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching data:", error);
+                });
+        };
+
+        // Event listener for dropdown menu selection
+        dropdown.addEventListener("change", () => {
+            const selectedIndex = dropdown.selectedIndex; // Get the selected index
+            if (selectedIndex > 0) { // Ignore the first "placeholder" option
+                const [selectedUuid, totalFiles] = datasetDetails[selectedIndex - 1]; // Adjust for 0-based index
+                initializeDataTable(selectedUuid, totalFiles); // Initialize the table with selected dataset
+            }
+        });
+
+        // Trigger a default load for the first dataset 
+        if (datasetDetails.length > 0) {
+            dropdown.selectedIndex = 1; // Automatically select the first dataset
+            const [defaultUuid, defaultTotalFiles] = datasetDetails[0];
+            initializeDataTable(defaultUuid, defaultTotalFiles);
+        }
+    });
+
+    </script>
+</section>
