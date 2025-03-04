@@ -56,16 +56,12 @@ export function getSimpleAttributeValue(obj, attrName) {
   
   
 export function getDatasetStatsByUUID(study) {
-    const dataset_uuids = []
-    for (var dataset of study.dataset) {
-      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
-    }
-    return dataset_uuids
+    return aggregateDatasetStats(study.dataset);
 }
 
-export function getAnnotationDatasetStatsByUUID(annotationDatasets) {
+export function aggregateDatasetStats(datasets) {
     const dataset_uuids = []
-    for (var dataset of annotationDatasets) {
+    for (var dataset of datasets) {
       dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
     }
     return dataset_uuids

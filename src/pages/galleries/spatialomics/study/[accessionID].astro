@@ -5,12 +5,12 @@ import StudyContentsSummary from '../../../../components/study-page/StudyContent
 import DatasetInfo  from "../../../../components/spatialomics/DatasetInfo.astro"
 import ViewableImageTable from '../../../../components/ViewableImageTable.astro';
 import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
-import SOTables from '../../../../components/SOTables.astro';
+import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import studyMetadata from "../../../../data/bia-study-metadata.json"
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getAnnotationDatasetStatsByUUID} from "../../../../components/SharedJSFunctions.js"
+import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats} from "../../../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return spatialomicsCollection.accession_ids.map((id) => {
@@ -71,7 +71,7 @@ const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 const annotationDatasets = study.dataset.filter(dataset => 
   "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0
 );
-const annotationDatasetUUIDsAndFileStats = getAnnotationDatasetStatsByUUID(annotationDatasets);
+const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatasets);
 
 if (annotationDatasets.length > 0) {
   tableOfContents["Annotation Datasets"] = "annotation_datasets";
