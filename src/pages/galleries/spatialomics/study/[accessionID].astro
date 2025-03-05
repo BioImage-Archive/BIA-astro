@@ -10,7 +10,7 @@ import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.as
 
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import studyMetadata from "../../../../data/bia-study-metadata.json"
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats} from "../../../../components/SharedJSFunctions.js"
+import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue} from "../../../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return spatialomicsCollection.accession_ids.map((id) => {
@@ -89,6 +89,10 @@ const breadcrumbs = [
   "/bioimage-archive/galleries/spatialomics",
 ]
 
+
+const omics_links = getSimpleAttributeValue(study, 'see_also_omics')
+const code_links = getSimpleAttributeValue(study, 'see_also_code')
+
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
@@ -119,6 +123,16 @@ const breadcrumbs = [
       <div style="overflow-wrap: anywhere;">
         <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
         <div><b>Licence: </b> {study.licence}<div>
+        {
+          omics_links && (
+            <div><b>Omics links: </b> <ul>{omics_links.map((link) => (<li class="vf-content">{link.description} <a href={link.link}>{link.link}</a></li>))}</ul></div>
+          )
+        }
+        {
+          code_links && (
+            <div><b>Code links: </b> <ul>{code_links.map((link) => (<li class="vf-content">{link.description} <a href={link.link}>{link.link}</a></li>))}</ul></div>
+          )
+        }
       </div>
     </section>
 
