@@ -212,12 +212,12 @@ const breadcrumbs = [
             viewableNonAnnotationImages.map((image) => (
               <tr class="vf-table__row">
                 <th>
-                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri} /></a>
+                  <a href={"/bioimage-archive/galleries/ai/image/" + image.uuid}><img class="vf-figure__image" src={image.thumbnail_uri} /></a>
                 </th>
                 <th>{image.name}</th>
                 <th>Unknown</th>
                 <th>
-                  <a href={"/bioimage-archive/galleries/image/" + image.uuid}>View</a>
+                  <a href={"/bioimage-archive/galleries/ai/image/" + image.uuid}>View</a>
                 </th>
               </tr>
             ))
