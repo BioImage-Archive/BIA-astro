@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import ModelPage from "../../../../components/ai-benchmarking/ModelPage.astro"
 
 import modelMetadata from "../../../../data/ai-dataset-benchmarking/model-metadata.json"
@@ -16,7 +16,13 @@ export function getStaticPaths() {
 const { modelName } = Astro.params;
 
 
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/ai",
+  "/bioimage-archive/galleries/ai/models",
+]
 ---
-<BaseLayout pageTitle={modelName}>
+<BaseLayoutWithBreadcrumbs pageTitle={modelName} breadcrumbs={breadcrumbs}>
   <ModelPage modelName={modelName} modelMetadata={modelMetadata} tableInfo={tableInfo} aiProjectLogosBasepath="/bioimage-archive/ai-galleries/"/>
-</BaseLayout>
+</BaseLayoutWithBreadcrumbs>

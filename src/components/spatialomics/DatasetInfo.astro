@@ -1,0 +1,115 @@
+---
+import DatasetDetail from "../DatasetDetail.astro";
+import fieldMap from "../../data/metadata-field-name-mapping.json";
+import { formatListItem, taxonRender } from "../SharedJSFunctions";
+
+const { dataset } = Astro.props;
+const biosampleMap = fieldMap["biosample"];
+const annotationMethodMap = fieldMap["annotation_method"];
+
+
+function getTaxons(dataset) {
+    var taxons
+    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
+        taxons = [];
+    }
+
+    taxons = dataset.biological_entity
+        .flatMap(entity => entity.organism_classification || [])
+        .filter(item => typeof item === "object"); 
+
+    var taxonHTMLList = new Array()
+    for (var taxon of taxons) {
+        taxonHTMLList.push(taxonRender(taxon))
+    }
+
+    return taxonHTMLList
+};
+
+function getBiologicalEntity(dataset) {
+    var biosamples
+    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
+        biosamples = [];
+    }
+
+    biosamples = dataset.biological_entity
+        .flatMap(entity => entity.biological_entity_description || []); 
+
+    return biosamples.reduce(formatListItem, "")
+};
+
+
+function getImagingType(dataset) {
+    var imagingTypeList = new Array()
+    for (var ia of dataset.acquisition_process) {
+        for (var method_names of ia.imaging_method_name) {
+            if (!imagingTypeList.includes(method_names)) {
+                imagingTypeList.push(method_names)
+            }
+        }
+    }
+    return imagingTypeList
+}
+
+function displayImagingType(dataset) {
+    const imageTypeList = getImagingType(dataset)
+    const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
+    if (imgTypeDisplay.length > 50 * imageTypeList.length) {
+        // Avoid displaying full method text on dataset cards.
+        return 'See details of study'
+    } else {
+        return imgTypeDisplay
+    }
+}
+
+function renderTaxonList(taxon_list) {
+    return taxon_list.reduce(formatListItem, "");
+}
+
+const taxons = getTaxons(dataset)
+
+---
+
+<div style="margin-bottom: 1rem;">
+    <div>
+        <b style="font-size: 14pt;">{dataset.title_id}</b>
+    </div>
+    <ul>
+        {
+            "biological_entity" in dataset &&
+                dataset.biological_entity &&
+                dataset.biological_entity.length > 0 && (
+                    <b>Biosamples:</b>
+                    <ul>
+                        {dataset.biological_entity.map((biosample) => (
+                            <DatasetDetail
+                                data={biosample}
+                                fieldMap={biosampleMap}
+                            />
+                        ))}
+                    </ul>
+                )
+        }
+        {
+            dataset.acquisition_process && dataset.acquisition_process.length > 0 && 
+                (
+                    <div>
+                    <b>Imaging Method:</b> {displayImagingType(dataset)}
+                    </div>
+                )
+        }
+        {
+            "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0 && (
+                <b>Annotation Methods:</b>
+                <ul>
+                    {dataset.annotation_process.map((annotation_method) => (
+                        <DatasetDetail
+                            data={annotation_method}
+                            fieldMap={annotationMethodMap}
+                        />
+                    ))}
+                </ul>
+            )
+        }
+    </ul>
+</div>

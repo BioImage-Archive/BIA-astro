@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../layouts/BaseLayoutWithBreadcrumbs.astro";
 import GalleryCard from "./cards/GalleryRoundImageCard.astro";
 
 const { galleryData } = Astro.props;
@@ -7,7 +7,7 @@ const { galleryData } = Astro.props;
 ---
 
 
-<BaseLayout>
+<BaseLayout pageTitle={galleryData.name}>
     <body>
         <section
             class="vf-news-container vf-news-container--featured | vf-stack "

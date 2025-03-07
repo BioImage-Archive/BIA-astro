@@ -1,0 +1,346 @@
+---
+import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
+import SourceImage from "../../../../components/SourceImage.astro"
+import DatasetDetail from '../../../../components/DatasetDetail.astro';
+import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
+
+import fieldMap from "../../../../data/metadata-field-name-mapping.json";
+import datasetMetadata from "../../../../data/bia-dataset-metadata-for-images.json";
+import imageMetadata from "../../../../data/bia-image-metadata.json";
+import fallbackImage from "../../../../assets/bioimage-archive/image_fallback.png"
+import {getSimpleAttributeValue } from "../../../../components/SharedJSFunctions.js"
+
+const biosampleMap = fieldMap["biosample"];
+const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
+const imageAcquisitionMap = fieldMap["image_acquisition"];
+const annotationMethodMap = fieldMap["annotation_method"];
+const protocolMap = fieldMap["protocol"];
+
+export function getStaticPaths() {
+  return Object.keys(imageMetadata).map((uuid) => {
+    return {
+      params:  { uuid: uuid }
+    };
+  });
+}
+
+const { uuid } = Astro.params;
+
+const image = imageMetadata[uuid];
+
+const imageDataset = datasetMetadata[image.submission_dataset_uuid]
+const imageStudy = imageDataset.submitted_in_study
+const interactiveImage = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
+const staticDisplay = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
+const thumbnailImage = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
+const userSubmitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
+
+const primary_image_rep = interactiveImage != null ? interactiveImage :
+    staticDisplay != null ? staticDisplay :
+    thumbnailImage != null ? thumbnailImage :
+    userSubmitted != null ? userSubmitted : null
+
+
+
+const vizarrIFrameSource = interactiveImage != null ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImage.file_uri[0]}` : null
+const itkLink = interactiveImage != null ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImage.file_uri[0]}` : null
+
+
+const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
+const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
+const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link") : null
+
+const creation_process = image.creation_process
+
+let specimen
+if ("subject" in creation_process && creation_process.subject != null) {
+    specimen = creation_process.subject
+}
+
+
+function formatPhysicalDimension(value, text) {
+    if (text === "") {
+        if (value != null) {
+            return value + "m"
+        } else {
+            return text
+        }
+    } else {
+        if (value != null) {
+            return text + " x " + value + "m"
+        } else {
+            return text
+        }
+    }
+}
+
+function formatPhysicalDimensions(imageRepresentation) {
+    const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
+    const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
+    return formattedStr != "" ? formattedStr : 'Unknown'
+}
+
+
+function formatPixelDimension(value, text) {
+    if (text === "") {
+        if (value != null) {
+            return value
+        } else {
+            return text
+        }
+    } else {
+        if (value != null) {
+            return text + " x " + value
+        } else {
+            return text
+        }
+    }
+}
+
+function formatPixelDimensions(img_rep) {
+    const fields = [ "size_x", "size_y", "size_z"]
+    return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
+}
+
+
+const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarrIFrameSource}"></iframe>` :
+    (primary_image_rep && primary_image_rep.use_type !== "UPLOADED_BY_SUBMITTER" && primary_image_rep.file_uri?.[0]) ? `<img style="width: 100%; height: 500px" src="${primary_image_rep.file_uri[0]}" />` :
+    `<img style="height: 500px;" src="${fallbackImage.src}" />`
+
+
+
+const userProvidedAttribute = image.attribute?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
+
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/spatialomics",
+  `/bioimage-archive/galleries/spatialomics/study/${imageStudy.accession_id}`,
+]
+
+---
+
+<BaseLayoutWithBreadcrumbs pageTitle={image.uuid} breadcrumbs={breadcrumbs}>
+    <body>
+      <div class="vf-stack vf-stack--500">
+          <section class="vf-content | embl-grid embl-grid--has-centered-content">
+              <div></div>
+              <div>
+                  <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+                      { imageStudy.accession_id }
+                      <WebsiteStateButton/>
+                  </h1>
+                  <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
+                  <p class="studytitle">{imageDataset.title_id}</p>
+                  <a href={ "/bioimage-archive/galleries/spatialomics/study/" + imageStudy.accession_id}>
+                      <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
+                  </a> 
+              </div>
+          </section>
+          <section class="vf-content | embl-grid embl-grid--has-centered-content">
+              <div>
+                  {
+                      primary_image_rep && (
+                          <span>
+                              <h3>Image metadata</h3>
+  
+                              <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep) ?? "Not provided" }<br>
+                              <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
+                              {primary_image_rep.size_c && (<div><b>Number of channels:</b> {primary_image_rep.size_c}</div>)}
+                              {primary_image_rep.size_t && (<div><b>Number of timesteps:</b> {primary_image_rep.size_t}</div>)}
+                              {userProvidedAttribute && ( 
+                                  <div>
+                                      <br/>
+                                      <h4>Additional user metadata</h4>
+                                      {Object.entries(userProvidedAttribute).map(([key, value]) => (<div><b>{key}:</b> {value}</div>)) }
+                                  </div> 
+                              )}
+                          </span>
+                      )
+                  }
+  
+              </div>
+              <div set:html={displayImageHTML} style="display: flex; justify-content: center;"></div>
+  
+              <div>
+                  <h3>Access images</h3>
+                  License: {imageStudy.licence} <br/>
+                  <br/>
+                  <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a><br/>
+                  <br/>
+                  {
+                      primary_image_rep && (
+                          <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={primary_image_rep.file_uri[0]}>Copy OME-Zarr URI</button>
+                      )
+                  }
+                  {
+                      ( vizarrIFrameSource || itkLink || ng_link ) && (
+                          <h3>Visualise</h3>
+                      )
+                  }
+                  {
+                      vizarrIFrameSource && (
+                          <a href={vizarrIFrameSource}>
+                              <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
+                          </a>
+                      )
+                  }
+                  {
+                      itkLink && (
+                          <a href={itkLink}>
+                              <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
+                          </a>
+                      )
+                  }
+                  {
+                      ng_link && (
+                          <a href={ng_link}>
+                              <button class="vf-button vf-button--primary vf-button--sm">Open in neuroglancer</button>
+                          </a>
+                      )
+                  }
+                  <script>
+  
+                      let copyUrlButton = document.getElementById("CopyURLButton")
+                      let originalText = copyUrlButton.innerText;
+                      copyUrlButton.onclick=async() => {
+                          await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
+                      };
+  
+                      async function copyUrl(url, button, originalText) {
+                          await navigator.clipboard.writeText(url);
+                          button.innerText = "URI Copied";
+                          setTimeout(() => {
+                              button.innerText = originalText;
+                          }, 700);
+                      }
+  
+                  </script>
+              </div>
+          </section>
+  
+          <!-- TODO: Include links to source images using  <SourceImage image={ image}/> for derived images -->
+  
+          <hr/>
+  
+          <section class="vf-content | embl-grid embl-grid--has-centered-content">
+              <div>
+                  <h3>Study</h3>
+              </div>
+              <div style="overflow-wrap: anywhere;">
+                  <b>Title</b>: {imageStudy.title}<br/>
+                  <b>Description:</b> {imageStudy.description} <br/>
+                  <b>Licence:</b> {imageStudy.licence} <br/>
+              </div>
+          </section>
+  
+          <hr/>
+  
+          <section class="vf-content | embl-grid embl-grid--has-centered-content">
+              <div>
+                  <h3>Dataset</h3>
+              </div>
+              <div>
+                  <b>Title</b>: {imageDataset.title_id}<br/>
+                  <b>Description:</b> {imageDataset.description}<br/>
+              </div> 
+          </section>
+  
+          <hr/>
+          
+          <section class="vf-content | embl-grid embl-grid--has-centered-content">
+              <div>
+                  <h3>Subject</h3>
+              </div>
+              <div>
+              {
+                  specimen != null && "sample_of" in specimen &&
+                      specimen.sample_of.length > 0 && (
+                          <b>Biosamples:</b>
+                          <ul>
+                              {specimen.sample_of.map((biosample) => (
+                                  <DatasetDetail
+                                      data={biosample}
+                                      fieldMap={biosampleMap}
+                                  />
+                              ))}
+                          </ul>
+                      )
+              }
+              {
+                  specimen != null && "imaging_preparation_protocol" in specimen &&
+                      specimen.imaging_preparation_protocol.length > 0 && (
+                          <b>Specimen Preparation Protocols:</b>
+                          <ul>
+                              {specimen.imaging_preparation_protocol.map((sipp) => (
+                                  <DatasetDetail
+                                      data={sipp}
+                                      fieldMap={sippMap}
+                                  />
+                              ))}
+                          </ul>
+                      )
+              }
+              </div>
+          </section>
+  
+          <hr/>
+  
+          <section class="vf-content | embl-grid embl-grid--has-centered-content">
+              <div>
+                  <h3>Creation</h3>
+              </div>
+              <div>
+                  {
+                      "acquisition_process" in creation_process &&
+                          creation_process.acquisition_process.length > 0 && (
+                              <b>Image Acquisition Protocols:</b>
+                              <ul>
+                                  {creation_process.acquisition_process.map(
+                                      (image_acquisition) => (
+                                          <DatasetDetail
+                                              data={image_acquisition}
+                                              fieldMap={imageAcquisitionMap}
+                                          />
+                                      ),
+                                  )}
+                              </ul>
+                          )
+                  }
+                  {
+                      "annotation_method" in creation_process &&
+                          creation_process.annotation_method.length > 0 && (
+                              <b>Image Acquisition Protocols:</b>
+                              <ul>
+                                  {creation_process.annotation_method.map(
+                                      (annotation_method) => (
+                                          <DatasetDetail
+                                              data={annotation_method}
+                                              fieldMap={annotationMethodMap}
+                                          />
+                                      ),
+                                  )}
+                              </ul>
+                          )
+                  }
+                  {
+                      "protocol" in creation_process &&
+                          creation_process.protocol.length > 0 && (
+                              <b>Image Acquisition Protocols:</b>
+                              <ul>
+                                  {creation_process.protocol.map(
+                                      (protocol) => (
+                                          <DatasetDetail
+                                              data={protocol}
+                                              fieldMap={protocolMap}
+                                          />
+                                      ),
+                                  )}
+                              </ul>
+                          )
+                  }
+              </div>
+          </section>
+      </body>
+  </BaseLayout>
+  

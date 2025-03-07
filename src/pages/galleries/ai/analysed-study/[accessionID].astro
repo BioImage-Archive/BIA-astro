@@ -1,0 +1,35 @@
+---
+import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
+
+import BenchmarkedDatasetPage from "../../../../components/ai-benchmarking/BenchmarkedDatasetPage.astro"
+
+import studyMetadata from "../../../../data/bia-study-metadata.json"
+import additionalStudyMetadata from "../../../../data/ai-dataset-benchmarking/additional-study-metadata.json"
+import tableInfo from "../../../../data/ai-dataset-benchmarking/model-dataset-table.json"
+
+
+export function getStaticPaths() {
+  return Object.keys(additionalStudyMetadata).map((id) => {
+    return {
+      params: { accessionID: id },
+    };
+  });
+}
+
+const { accessionID } = Astro.params;
+
+
+const breadcrumbs = [
+  "/bioimage-archive",
+  "/bioimage-archive/galleries",
+  "/bioimage-archive/galleries/ai",
+  "/bioimage-archive/galleries/ai/analysed-studies",
+]
+
+---
+
+<BaseLayoutWithBreadcrumbs pageTitle={accessionID} breadcrumbs={breadcrumbs}>
+  <BenchmarkedDatasetPage accessionID={accessionID} studyMetadata={studyMetadata} additionalStudyMetadata={additionalStudyMetadata} tableInfo={tableInfo}/>
+</BaseLayoutWithBreadcrumbs>
+
+

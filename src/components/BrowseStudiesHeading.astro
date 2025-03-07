@@ -1,0 +1,33 @@
+---
+import WebsiteStateButton from "./WebsiteStateButton.astro";
+
+const { heading, subheading, contributeLink } = Astro.props;
+
+---
+<section class="vf-intro | embl-grid embl-grid--has-centered-content">
+    <div></div>
+    <div>
+        <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+          {heading}
+          <WebsiteStateButton/>
+        </h1>
+        {
+          subheading && (
+            <h2 class="vf-intro__subheading">
+              {subheading}
+            </h2>
+          )
+        }
+        
+        <slot name="body_text"/>
+        <br/>
+
+        {
+          contributeLink && (
+            <p class="vf-hero__text"> <a href={contributeLink}>Check here </a> for how to contribute</p>
+          )
+        }
+        
+    </div>
+    <slot name="right_of_header">
+</section> 
