@@ -24,8 +24,8 @@ const { image } = Astro.props;
                 </svg>
             </button>
         </div>
-        <div class="dataset-link">
-            <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+        <div class="study-link">
+            <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
         <div class="size-bar">
             <span class="physical-size">
@@ -96,7 +96,7 @@ const { image } = Astro.props;
         border-radius: 4px;
         max-width: 80%;
     }
-    .dataset-link {
+    .study-link {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -105,11 +105,11 @@ const { image } = Astro.props;
         border-radius: 4px;
         font-size: 0.9em;
     }
-    .dataset-link a {
+    .study-link a {
         color: #333;
         text-decoration: none;
     }
-    .dataset-link a:hover {
+    .study-link a:hover {
         text-decoration: underline;
     }
     .icon-container {

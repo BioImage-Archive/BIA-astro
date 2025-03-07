@@ -12,8 +12,8 @@ const { image } = Astro.props;
     </div>
     <div class="image-container">
         <img src={ image.static_display_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
-        <div class="dataset-link">
-            <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+        <div class="study-link">
+            <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
         <div class="license-badge">
             <a href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
@@ -149,7 +149,7 @@ const { image } = Astro.props;
         box-shadow: 0 4px 8px rgba(0,0,0,0.25);
     }
 
-    .dataset-link {
+    .study-link {
         position: absolute;
         top: 10px;
         right: 10px;
@@ -158,11 +158,11 @@ const { image } = Astro.props;
         border-radius: 4px;
         font-size: 0.9em;
     }
-    .dataset-link a {
+    .study-link a {
         color: #333;
         text-decoration: none;
     }
-    .dataset-link a:hover {
+    .study-link a:hover {
         text-decoration: underline;
     }
     .license-badge {
