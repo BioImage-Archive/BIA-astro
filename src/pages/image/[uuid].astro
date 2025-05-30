@@ -30,20 +30,13 @@ const image = imageMetadata[uuid];
 
 const imageDataset = datasetMetadata[image.submission_dataset_uuid]
 const imageStudy = imageDataset.submitted_in_study
-const interactiveImage = image.representation.find((rep) => rep.use_type === "INTERACTIVE_DISPLAY")
-const staticDisplay = image.representation.find((rep) => rep.use_type === "STATIC_DISPLAY")
-const thumbnailImage = image.representation.find((rep) => rep.use_type === "THUMBNAIL")
-const userSubmitted = image.representation.find((rep) => rep.use_type === "UPLOADED_BY_SUBMITTER")
 
-const primary_image_rep = interactiveImage != null ? interactiveImage :
-    staticDisplay != null ? staticDisplay :
-    thumbnailImage != null ? thumbnailImage :
-    userSubmitted != null ? userSubmitted : null
+// @TODO: Representation uuid -> Representation (without the workaround)
+// possibly one of many (with one primary)
+const interactiveImageRepresentation = image.representation.find((rep) => rep.file_uri[0].includes(".ome.zarr"))
 
-
-
-const vizarrIFrameSource = interactiveImage != null ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImage.file_uri[0]}` : null
-const itkLink = interactiveImage != null ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImage.file_uri[0]}` : null
+const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
+const itkLink = interactiveImageRepresentation ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
 
 
 const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
@@ -104,7 +97,7 @@ function formatPixelDimensions(img_rep) {
 
 
 const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarrIFrameSource}"></iframe>` :
-    (primary_image_rep && primary_image_rep.use_type !== "UPLOADED_BY_SUBMITTER" && primary_image_rep.file_uri?.[0]) ? `<img style="width: 100%; height: 500px" src="${primary_image_rep.file_uri[0]}" />` :
+    (interactiveImageRepresentation && interactiveImageRepresentation.file_uri?.[0]) ? `<img style="width: 100%; height: 500px" src="${interactiveImageRepresentation.file_uri[0]}" />` :
     `<img style="height: 500px;" src="${fallbackImage.src}" />`
 
 
@@ -141,14 +134,14 @@ const breadcrumbs = [
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div>
                 {
-                    primary_image_rep && (
+                    interactiveImageRepresentation && (
                         <span>
                             <h3>Image metadata</h3>
 
-                            <b>Physical Image size: </b> {formatPhysicalDimensions(primary_image_rep) ?? "Not provided" }<br>
-                            <b>Pixel Image size: </b> {formatPixelDimensions(primary_image_rep)}<br>
-                            {primary_image_rep.size_c && (<div><b>Number of channels:</b> {primary_image_rep.size_c}</div>)}
-                            {primary_image_rep.size_t && (<div><b>Number of timesteps:</b> {primary_image_rep.size_t}</div>)}
+                            <b>Physical Image size: </b> {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided" }<br>
+                            <b>Pixel Image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br>
+                            {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
+                            {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
                             {userProvidedAttribute && ( 
                                 <div>
                                     <br/>
@@ -170,8 +163,8 @@ const breadcrumbs = [
                 <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a><br/>
                 <br/>
                 {
-                    primary_image_rep && (
-                        <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={primary_image_rep.file_uri[0]}>Copy OME-Zarr URI</button>
+                    interactiveImageRepresentation && (
+                        <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
                     )
                 }
                 {
