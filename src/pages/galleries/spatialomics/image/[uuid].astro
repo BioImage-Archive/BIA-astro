@@ -123,7 +123,7 @@ const breadcrumbs = [
                       <WebsiteStateButton/>
                   </h1>
                   <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
-                  <p class="studytitle">{imageDataset.title_id}</p>
+                  <p class="studytitle">{imageDataset.title}</p>
                   <a href={ "/bioimage-archive/galleries/spatialomics/study/" + imageStudy.accession_id}>
                       <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                   </a> 
@@ -233,7 +233,7 @@ const breadcrumbs = [
                   <h3>Dataset</h3>
               </div>
               <div>
-                  <b>Title</b>: {imageDataset.title_id}<br/>
+                  <b>Title</b>: {imageDataset.title}<br/>
                   <b>Description:</b> {imageDataset.description}<br/>
               </div> 
           </section>

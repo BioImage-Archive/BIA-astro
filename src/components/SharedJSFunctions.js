@@ -62,7 +62,7 @@ export function getDatasetStatsByUUID(study) {
 export function aggregateDatasetStats(datasets) {
     const dataset_uuids = []
     for (var dataset of datasets) {
-      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
+      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title])
     }
     return dataset_uuids
 }
