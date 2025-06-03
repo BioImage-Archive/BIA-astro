@@ -49,7 +49,7 @@ export function formatBytesToHumanSize(sizeBytes) {
 
 export function getSimpleAttributeValue(obj, attrName) {
     // For attributes of structure: { "name": "AttributeName", "value": { "AttributeName": <value> } }
-    return obj?.attribute
+    return obj?.additional_metadata
       ?.find(attr => attr.name === attrName)
       ?.value[attrName] ?? null;
 }

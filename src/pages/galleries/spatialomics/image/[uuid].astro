@@ -101,7 +101,7 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
 
 
 
-const userProvidedAttribute = image.attribute?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
+const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
 
 const breadcrumbs = [
   "/bioimage-archive",

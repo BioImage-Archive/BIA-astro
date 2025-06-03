@@ -44,13 +44,13 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                 .then((response) => response.json())
                 .then((fileData) => {
                     const filteredFiles = fileData.filter(file => {
-                        const attributes = file.attribute || [];
-                        return attributes.some(attr => 
+                        const additional_metadata = file.additional_metadata || [];
+                        return additional_metadata.some(attr => 
                             attr.name === 'attributes_from_biostudies.File' && (
-                                attr.value?.attributes?.Data_Type === 'transcripts' ||
-                                attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-                                attr.value?.attributes?.Description?.includes('Feature barcode') ||
-                                attr.value?.attributes?.Description?.includes('feature matrix')
+                                attr.value?.additional_metadata?.Data_Type === 'transcripts' ||
+                                attr.value?.additional_metadata?.Data_Type === 'Transcript_Coordinates' ||
+                                attr.value?.additional_metadata?.Description?.includes('Feature barcode') ||
+                                attr.value?.additional_metadata?.Description?.includes('feature matrix')
                             )
                         );
                     });
@@ -93,13 +93,13 @@ const { datasetUUIDsAndFileStats } = Astro.props;
             const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
             const response = await fetch(apiUrl);
             const fileData = await response.json();
-            const attributes = fileData.flatMap(file => file.attribute || []);
-            const dataTypeAttr = attributes.find(attr => 
+            const additional_metadata = fileData.flatMap(file => file.additional_metadata || []);
+            const dataTypeAttr = additional_metadata.find(attr => 
                 attr.name === 'attributes_from_biostudies.File' && (
-                    attr.value?.attributes?.Data_Type === 'transcripts' ||
-                    attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-                    attr.value?.attributes?.Description?.includes('Feature barcode') ||
-                    attr.value?.attributes?.Description?.includes('feature matrix')
+                    attr.value?.additional_metadata?.Data_Type === 'transcripts' ||
+                    attr.value?.additional_metadata?.Data_Type === 'Transcript_Coordinates' ||
+                    attr.value?.additional_metadata?.Description?.includes('Feature barcode') ||
+                    attr.value?.additional_metadata?.Description?.includes('feature matrix')
                 )
             );
             return dataTypeAttr ? true : false;
