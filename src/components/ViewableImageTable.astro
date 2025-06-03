@@ -24,7 +24,7 @@ const { study, images, imagePageRoot } = Astro.props;
         <tbody>
           {
             images.map((image) => (
-              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title_id} imagePageRoot={imagePageRoot}/>
+              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title} imagePageRoot={imagePageRoot}/>
             ))
           }
         </tbody>

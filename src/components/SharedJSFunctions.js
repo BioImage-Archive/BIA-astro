@@ -49,7 +49,7 @@ export function formatBytesToHumanSize(sizeBytes) {
 
 export function getSimpleAttributeValue(obj, attrName) {
     // For attributes of structure: { "name": "AttributeName", "value": { "AttributeName": <value> } }
-    return obj?.attribute
+    return obj?.additional_metadata
       ?.find(attr => attr.name === attrName)
       ?.value[attrName] ?? null;
 }
@@ -62,7 +62,7 @@ export function getDatasetStatsByUUID(study) {
 export function aggregateDatasetStats(datasets) {
     const dataset_uuids = []
     for (var dataset of datasets) {
-      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title_id])
+      dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title])
     }
     return dataset_uuids
 }

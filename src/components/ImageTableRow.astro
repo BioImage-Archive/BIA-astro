@@ -1,27 +1,24 @@
 ---
 import imageMetadata from "../data/bia-image-metadata.json";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
+import { getSimpleAttributeValue } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
 function getThumbnail(uuid, imageMetadata) {
-    if (uuid in imageMetadata) {
-        const thumbnail = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "THUMBNAIL")
-        if (thumbnail != undefined) {
-            return thumbnail.file_uri[0]
-        }
-    }
-    return imageFallback.src
+  const thumbnail_uri = imageMetadata?.[uuid] ? getSimpleAttributeValue(imageMetadata[uuid], "thumbnail_uri")?.[0] : null;
+  return thumbnail_uri ?? imageFallback.src;
 }
 
 function getDownloadSize(uuid, imageMetadata) {
-    if (uuid in imageMetadata) {
-        const submitter_data = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
-        if (submitter_data != undefined) {
-            return submitter_data.total_size_in_bytes
-        }
+  // TODO
+  if (uuid in imageMetadata) {
+    const submitter_data = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
+    if (submitter_data != undefined) {
+      return submitter_data.total_size_in_bytes
     }
-    return "Unknown"
+  }
+  return "Unknown"
 }
 
 ---
