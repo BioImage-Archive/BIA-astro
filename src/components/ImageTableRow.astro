@@ -1,15 +1,13 @@
 ---
 import imageMetadata from "../data/bia-image-metadata.json";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
+import { getSimpleAttributeValue } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
 function getThumbnail(uuid, imageMetadata) {
-  const thumbnail = imageMetadata?.[uuid].additional_metadata.find(
-      (metadataItem) => metadataItem.name === "thumbnail_uri"
-  )?.value.thumbnail_uri[0];
-
-  return thumbnail ?? imageFallback.src;
+  const thumbnail_uri = imageMetadata?.[uuid] ?? getSimpleAttributeValue(imageMetadata[uuid], "thumbnail_uri");
+  return thumbnail_uri ?? imageFallback.src;
 }
 
 function getDownloadSize(uuid, imageMetadata) {
