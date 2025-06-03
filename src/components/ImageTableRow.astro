@@ -6,7 +6,7 @@ import { getSimpleAttributeValue } from "./SharedJSFunctions";
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
 function getThumbnail(uuid, imageMetadata) {
-  const thumbnail_uri = imageMetadata?.[uuid] ?? getSimpleAttributeValue(imageMetadata[uuid], "thumbnail_uri");
+  const thumbnail_uri = imageMetadata?.[uuid] ? getSimpleAttributeValue(imageMetadata[uuid], "thumbnail_uri")?.[0] : null;
   return thumbnail_uri ?? imageFallback.src;
 }
 
