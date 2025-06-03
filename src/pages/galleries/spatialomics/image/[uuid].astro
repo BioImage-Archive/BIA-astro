@@ -31,12 +31,14 @@ const image = imageMetadata[uuid];
 const imageDataset = datasetMetadata[image.submission_dataset_uuid]
 const imageStudy = imageDataset.submitted_in_study
 
-const interactiveImageRepresentation = image.representation.find((rep) => rep.file_uri[0].includes(".ome.zarr"))
-
-
+const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
+const interactiveImageRepresentation = image.representation.find(
+    (rep) => rep.uuid === vizarrRepUuid
+)
 const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
-const itkLink = interactiveImageRepresentation ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
 
+const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
+const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
 
 const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")?.[0]
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)

@@ -388,7 +388,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "445cb17b-95dc-47a3-9efc-b7a1a066bb51",
-                        "version": 1,
+                        "version": 2,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -415,31 +415,6 @@
                                 "name": "uuid_unique_input",
                                 "value": {
                                     "uuid_unique_input": "e66bc935-8f6e-4d7a-baa5-b00e5001fd99"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "thumbnail_uri",
-                                "value": {
-                                    "thumbnail_uri": [
-                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1556/505d6c05-06e4-4364-b018-d313e7ffdd05/e3e5886d-531d-45b5-a999-7dc081688461.png"
-                                    ]
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "static_display_uri",
-                                "value": {
-                                    "static_display_uri": [
-                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1556/505d6c05-06e4-4364-b018-d313e7ffdd05/25034645-2f43-4822-b808-f7364c6aca28.png"
-                                    ]
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "recommended_vizarr_representation",
-                                "value": {
-                                    "recommended_vizarr_representation": "dd4b274d-9f57-43b2-a27f-a728592a15e0"
                                 }
                             }
                         ],
@@ -5098,7 +5073,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "5bae31bb-02ea-4426-8dcf-f84b3c99df51",
-                        "version": 1,
+                        "version": 2,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -5132,22 +5107,6 @@
                                 "name": "uuid_unique_input",
                                 "value": {
                                     "uuid_unique_input": "0496cafc-1da7-44c4-b4b4-6ef226d97f99"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "thumbnail_uri",
-                                "value": {
-                                    "thumbnail_uri": [
-                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1519/6782cf4a-cfbc-42d9-ad2b-a4225ca29eb7/f29ce3bf-5b24-43f7-9e08-c0432ba05090.png"
-                                    ]
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "recommended_vizarr_representation",
-                                "value": {
-                                    "recommended_vizarr_representation": "d58f9c2c-c0e4-4c74-9a57-f2b13e33dfc5"
                                 }
                             }
                         ],
@@ -8019,7 +7978,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "52509f6d-2668-4f2a-89bc-22ae8107a5b1",
-                        "version": 1,
+                        "version": 3,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -8077,7 +8036,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "d58f9c2c-c0e4-4c74-9a57-f2b13e33dfc5"
+                                    "recommended_vizarr_representation": "5e33c5d4-4c5f-4778-8901-a16f847cfa26"
                                 }
                             }
                         ],
@@ -8091,7 +8050,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "9a27a59e-c265-4226-8fd9-2551210530df",
-                        "version": 1,
+                        "version": 3,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -8140,7 +8099,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "d58f9c2c-c0e4-4c74-9a57-f2b13e33dfc5"
+                                    "recommended_vizarr_representation": "e83e1597-ee48-4fc9-acd3-5cad7874f70f"
                                 }
                             }
                         ],
@@ -10359,7 +10318,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "2a51445b-a064-42c3-8ae6-866404e11c80",
-                        "version": 1,
+                        "version": 3,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -10404,7 +10363,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "d58f9c2c-c0e4-4c74-9a57-f2b13e33dfc5"
+                                    "recommended_vizarr_representation": "54f051b6-c6d6-405b-908c-d9c813174d19"
                                 }
                             }
                         ],
