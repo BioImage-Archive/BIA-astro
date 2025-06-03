@@ -82,7 +82,7 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
 
     <div style="overflow-wrap: anywhere;">
       <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}/></div>
-      <div><b>Licence: </b> {study.licence}<div>
+      <div><b>Licence: </b> <a href={study.licence}>{study.licence}</a><div>
       {
         studyAIInfo.tags && (
           <div><b>Tags:</b> {studyAIInfo.tags.reduce(formatListItem, "")}</div>

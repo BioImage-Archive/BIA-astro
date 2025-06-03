@@ -122,7 +122,7 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
 
       <div style="overflow-wrap: anywhere;">
         <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
-        <div><b>Licence: </b> {study.licence}<div>
+        <div><b>Licence: </b> <a href={study.licence}>{study.licence}</a><div>
         {
           omics_links && (
             <div><b>Omics links: </b> <ul>{omics_links.map((link) => (<li class="vf-content">{link.description} <a href={link.link}>{link.link}</a></li>))}</ul></div>
