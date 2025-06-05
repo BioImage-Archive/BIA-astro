@@ -35,7 +35,9 @@
                     }
                 ],
                 "contact_email": "aarabzad@stjude.org",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -52,7 +54,9 @@
                     }
                 ],
                 "contact_email": "dbaggett@stjude.org",
-                "role": "data analyst"
+                "role": [
+                    "data analyst"
+                ]
             },
             {
                 "rorid": null,
@@ -69,7 +73,9 @@
                     }
                 ],
                 "contact_email": "h.shirnekhi@gmail.com",
-                "role": "data acquisition"
+                "role": [
+                    "data acquisition"
+                ]
             },
             {
                 "rorid": null,
@@ -86,7 +92,9 @@
                     }
                 ],
                 "contact_email": "mjo@stjude.org",
-                "role": "data acquisition"
+                "role": [
+                    "data acquisition"
+                ]
             },
             {
                 "rorid": null,
@@ -103,7 +111,9 @@
                     }
                 ],
                 "contact_email": "smack@stjude.org",
-                "role": "principal investigator"
+                "role": [
+                    "principal investigator"
+                ]
             },
             {
                 "rorid": null,
@@ -120,7 +130,9 @@
                     }
                 ],
                 "contact_email": "rkriwack@stjude.org",
-                "role": "principal investigator"
+                "role": [
+                    "principal investigator"
+                ]
             }
         ],
         "title": "ZFTA_RELA HEK293T Puncta Studies",
@@ -154,7 +166,7 @@
         "funding_statement": "We acknowledge support from NIH, including U54CA243124 (to R.W.K), U01CA294103 (to S.M. and R.W.K.), R01CA246125 (to R.W.K.), and P30CA021765 (C. Roberts, PI), and ALSAC.",
         "dataset": [
             {
-                "image_count": 5,
+                "image_count": 1,
                 "file_reference_count": 1963,
                 "file_reference_size_bytes": 530175344194,
                 "file_type_counts": {
@@ -347,48 +359,8 @@
                 "image": [
                     {
                         "object_creator": "bia_image_assignment",
-                        "uuid": "0657ea94-e37e-442c-abf4-84b9d89a9d48",
-                        "version": 0,
-                        "model": {
-                            "type_name": "Image",
-                            "version": 2
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "attributes_from_file_reference_71debff9-b66d-4807-aba0-6a746e9cafc6",
-                                "value": {
-                                    "attributes": {
-                                        "Description": "Raw acquisition data for experiments probing the mutation of residues in ZFTA::RELA to GS on the formation of nuclear puncta"
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "file_pattern",
-                                "value": {
-                                    "file_pattern": "GS_mutants/Raw_Tiff/241021_ZR_IDR3_50GS/10-21-24-2.sld - ZR_IDR3_50GS - Position 7.tif"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "71debff9-b66d-4807-aba0-6a746e9cafc6"
-                                }
-                            }
-                        ],
-                        "label": null,
-                        "submission_dataset_uuid": "753726af-28ac-45d3-a124-8a0710472333",
-                        "creation_process_uuid": "fe540e62-d2c5-456d-9e5c-92decd994084",
-                        "original_file_reference_uuid": [
-                            "71debff9-b66d-4807-aba0-6a746e9cafc6"
-                        ]
-                    },
-                    {
-                        "object_creator": "bia_image_assignment",
                         "uuid": "445cb17b-95dc-47a3-9efc-b7a1a066bb51",
-                        "version": 2,
+                        "version": 1,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -416,6 +388,31 @@
                                 "value": {
                                     "uuid_unique_input": "e66bc935-8f6e-4d7a-baa5-b00e5001fd99"
                                 }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1556/505d6c05-06e4-4364-b018-d313e7ffdd05/e3e5886d-531d-45b5-a999-7dc081688461.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "static_display_uri",
+                                "value": {
+                                    "static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1556/505d6c05-06e4-4364-b018-d313e7ffdd05/25034645-2f43-4822-b808-f7364c6aca28.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "c90504d6-42a6-4067-8834-db0c3d4093ce"
+                                }
                             }
                         ],
                         "label": null,
@@ -423,126 +420,6 @@
                         "creation_process_uuid": "36b8bca1-df4a-4473-b722-6ca39f013b5f",
                         "original_file_reference_uuid": [
                             "e66bc935-8f6e-4d7a-baa5-b00e5001fd99"
-                        ]
-                    },
-                    {
-                        "object_creator": "bia_image_assignment",
-                        "uuid": "d172e938-3e1a-4c6b-ba34-27ca0b89ad5e",
-                        "version": 0,
-                        "model": {
-                            "type_name": "Image",
-                            "version": 2
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "attributes_from_file_reference_6c08bf30-866f-479d-a068-3727781a36ce",
-                                "value": {
-                                    "attributes": {
-                                        "Description": "Analysis results of the punctatools pipeline of the corresponding RAW_Tiff image: The first two channels show hoechst stain and GFP signal, then Cellpose masks of nuclei, finally  masks of individual puncta"
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "file_pattern",
-                                "value": {
-                                    "file_pattern": "Delta_IDR_mutants/Analysis_Results/puncta_segm/110922_delIDR2/110922_ZFTA_RELA_HEK.sld - 110922_delIDR2 - Position 16.tif_trimmed.tif"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "6c08bf30-866f-479d-a068-3727781a36ce"
-                                }
-                            }
-                        ],
-                        "label": null,
-                        "submission_dataset_uuid": "753726af-28ac-45d3-a124-8a0710472333",
-                        "creation_process_uuid": "c4e8b20f-85d0-4915-9ba8-f408cc7b395a",
-                        "original_file_reference_uuid": [
-                            "6c08bf30-866f-479d-a068-3727781a36ce"
-                        ]
-                    },
-                    {
-                        "object_creator": "bia_image_assignment",
-                        "uuid": "d70dc482-ccd0-4953-9b22-37ba1ebc3112",
-                        "version": 0,
-                        "model": {
-                            "type_name": "Image",
-                            "version": 2
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "attributes_from_file_reference_808d1c11-1811-4094-add8-e9d412d8585a",
-                                "value": {
-                                    "attributes": {
-                                        "Description": "Segmentation results of the punctatools pipeline of the corresponding RAW_Tiff image: The first two channels show hoechst stain and GFP signal, then Cellpose masks of nuclei, finally  masks of individual puncta"
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "file_pattern",
-                                "value": {
-                                    "file_pattern": "GS_mutants/Analysis_Results/puncta_segm/WT/11-19-2024.sld - ZR_Full_length-2 - Position 3.tif_trimmed.tif"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "808d1c11-1811-4094-add8-e9d412d8585a"
-                                }
-                            }
-                        ],
-                        "label": null,
-                        "submission_dataset_uuid": "753726af-28ac-45d3-a124-8a0710472333",
-                        "creation_process_uuid": "d25954c9-daff-4c84-b793-401950abd6bb",
-                        "original_file_reference_uuid": [
-                            "808d1c11-1811-4094-add8-e9d412d8585a"
-                        ]
-                    },
-                    {
-                        "object_creator": "bia_image_assignment",
-                        "uuid": "f28cf568-e9de-402c-b0d2-b0ab1c73e5d0",
-                        "version": 0,
-                        "model": {
-                            "type_name": "Image",
-                            "version": 2
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "attributes_from_file_reference_7f4fc7da-e466-488f-a321-a911d3c69825",
-                                "value": {
-                                    "attributes": {
-                                        "Description": "Segmentation results of the punctatools pipeline of the corresponding RAW_Tiff image: The first two channels show hoechst stain and GFP signal, then Cellpose masks of nuclei, finally  masks of individual puncta"
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "file_pattern",
-                                "value": {
-                                    "file_pattern": "GS_mutants/Analysis_Results/puncta_segm/241021_ZR_FL_SM08/10-21-24.sld - ZR full lenght SM08-1 - Position 13.tif_trimmed.tif"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "7f4fc7da-e466-488f-a321-a911d3c69825"
-                                }
-                            }
-                        ],
-                        "label": null,
-                        "submission_dataset_uuid": "753726af-28ac-45d3-a124-8a0710472333",
-                        "creation_process_uuid": "2a78cec4-e851-4e15-9adc-aec26c996424",
-                        "original_file_reference_uuid": [
-                            "7f4fc7da-e466-488f-a321-a911d3c69825"
                         ]
                     }
                 ]
@@ -585,7 +462,9 @@
                     }
                 ],
                 "contact_email": "nicola.diny@uni-bonn.de",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             },
             {
                 "rorid": null,
@@ -602,7 +481,9 @@
                     }
                 ],
                 "contact_email": "nicola.diny@uni-bonn.de",
-                "role": "investigator"
+                "role": [
+                    "investigator"
+                ]
             },
             {
                 "rorid": null,
@@ -619,7 +500,9 @@
                     }
                 ],
                 "contact_email": "adrien.franchet@crick.ac.uk",
-                "role": "investigator"
+                "role": [
+                    "investigator"
+                ]
             },
             {
                 "rorid": null,
@@ -636,7 +519,9 @@
                     }
                 ],
                 "contact_email": "BriGitta.Stockinger@crick.ac.uk",
-                "role": "investigator"
+                "role": [
+                    "investigator"
+                ]
             }
         ],
         "title": "Drosophila AHR limits tumor growth and stem cell proliferation in the intestine",
@@ -748,7 +633,7 @@
                 "image": []
             },
             {
-                "image_count": 0,
+                "image_count": 1,
                 "file_reference_count": 16,
                 "file_reference_size_bytes": 292209039,
                 "file_type_counts": {
@@ -918,7 +803,65 @@
                 ],
                 "annotation_process": [],
                 "other_creation_process": [],
-                "image": []
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "bc8efc45-3442-4c70-add4-8f037cd617a6",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_c4a92624-440c-4bfb-b8dc-800c1673be45",
+                                "value": {
+                                    "attributes": {
+                                        "timepoint": "Day 2",
+                                        "genotype": "esgts>ykiact, ssHA "
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "esg-N-ss_day2_02_bright.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "c4a92624-440c-4bfb-b8dc-800c1673be45"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/5481818e-a20e-4c0e-b78e-fa8fbe673433/2e4dcef9-8ea3-468b-90a6-4b1aca0bf5f2.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "a19d8ad3-b620-4338-81eb-f4e9c1871e02"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "3c808719-644d-427d-9ea5-56258228a2ec",
+                        "creation_process_uuid": "bfeb997d-0046-4fbe-99f6-51bfb22c5a87",
+                        "original_file_reference_uuid": [
+                            "c4a92624-440c-4bfb-b8dc-800c1673be45"
+                        ]
+                    }
+                ]
             },
             {
                 "image_count": 0,
@@ -994,7 +937,7 @@
                 "image": []
             },
             {
-                "image_count": 0,
+                "image_count": 3,
                 "file_reference_count": 4,
                 "file_reference_size_bytes": 166705908,
                 "file_type_counts": {
@@ -1002,7 +945,7 @@
                 },
                 "object_creator": "bia_ingest",
                 "uuid": "99968d8b-9ca9-4aab-a21f-acc71ce02673",
-                "version": 0,
+                "version": 1,
                 "model": {
                     "type_name": "Dataset",
                     "version": 2
@@ -1070,7 +1013,9 @@
                         "transformation_matrix": null
                     }
                 ],
-                "example_image_uri": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/f2ea13ce-915f-4087-9183-3c8ed165cb69/b6e32c01-f630-4dc1-95b0-b6a19f48ccbc.png"
+                ],
                 "submitted_in_study_uuid": "011cfb43-fa60-4e21-a047-e077c805840f",
                 "acquisition_process": [
                     {
@@ -1164,10 +1109,194 @@
                 ],
                 "annotation_process": [],
                 "other_creation_process": [],
-                "image": []
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "155f9b52-ffc9-4341-a9ee-7d1e7e906a22",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_80b597a3-8b59-44db-9518-6116dad8d658",
+                                "value": {
+                                    "attributes": {
+                                        "timepoint": "24h",
+                                        "genotype": "esgts> GFP, ssHA ",
+                                        "infection": "control"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Dm18_Ctrl_UASss.lif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "80b597a3-8b59-44db-9518-6116dad8d658"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/f2ea13ce-915f-4087-9183-3c8ed165cb69/d8b40c6d-2dec-4067-925f-4ccddb7b95cd.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "static_display_uri",
+                                "value": {
+                                    "static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/f2ea13ce-915f-4087-9183-3c8ed165cb69/b6e32c01-f630-4dc1-95b0-b6a19f48ccbc.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "5399d3b5-7565-4c79-a3c9-234603eebb9e"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "99968d8b-9ca9-4aab-a21f-acc71ce02673",
+                        "creation_process_uuid": "c54e7c6d-ce55-4dd1-888f-6cc966b83216",
+                        "original_file_reference_uuid": [
+                            "80b597a3-8b59-44db-9518-6116dad8d658"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "53d89263-3d26-4744-ac61-8cdbc2cc0134",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_399cf7ea-8b9d-4927-96aa-dba027629154",
+                                "value": {
+                                    "attributes": {
+                                        "timepoint": "24h",
+                                        "genotype": "esgts> GFP, ssHA ",
+                                        "infection": "Pseudomonas entomophila"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Dm18_Pe_UASss.lif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "399cf7ea-8b9d-4927-96aa-dba027629154"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/93b44141-a0b7-41cd-9cc0-397ae935ce51/92424927-4b15-479e-833e-d613bc123565.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "28769c84-226b-4da4-b52e-7b6028ba49ee"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "99968d8b-9ca9-4aab-a21f-acc71ce02673",
+                        "creation_process_uuid": "5bb9ec6b-fdc3-4545-b9f4-6bae7f4bd49b",
+                        "original_file_reference_uuid": [
+                            "399cf7ea-8b9d-4927-96aa-dba027629154"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "e1c71013-2e72-4b02-afde-d69824d1a206",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_7f953c8a-e65f-4e33-808a-13c3789e7173",
+                                "value": {
+                                    "attributes": {
+                                        "timepoint": "24h",
+                                        "genotype": "esgts> GFP",
+                                        "infection": "control"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Dm18_Ctrl_w1118.lif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "7f953c8a-e65f-4e33-808a-13c3789e7173"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/b6abcf43-a8c9-4732-a23c-4f63e6edceec/c0c1dd7b-4faf-498e-8c43-6fc373bbc527.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "e86037f9-5cc2-4a16-b90a-66d9314905d3"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "99968d8b-9ca9-4aab-a21f-acc71ce02673",
+                        "creation_process_uuid": "32b8ad8e-b377-4fed-89d5-b1f13b6c9dfe",
+                        "original_file_reference_uuid": [
+                            "7f953c8a-e65f-4e33-808a-13c3789e7173"
+                        ]
+                    }
+                ]
             },
             {
-                "image_count": 0,
+                "image_count": 1,
                 "file_reference_count": 22,
                 "file_reference_size_bytes": 46231841,
                 "file_type_counts": {
@@ -1337,7 +1466,65 @@
                 ],
                 "annotation_process": [],
                 "other_creation_process": [],
-                "image": []
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "1049e31d-9f73-47b2-9ff0-68318daf2610",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_2dca5622-2bb1-43b3-9773-79ec0c63d4a5",
+                                "value": {
+                                    "attributes": {
+                                        "timepoint": "Day 5",
+                                        "genotype": "esgts"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Day5_esg_GFP_3_R2.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "2dca5622-2bb1-43b3-9773-79ec0c63d4a5"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1553/dc53aa81-e359-457c-acb1-aa0e7f4655b8/fac640a8-aa2d-47f1-8c3e-d4c1634d2417.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "c7ee8065-64d0-4a0b-bd24-d639340bb80b"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "acb0f2d9-01b0-4aad-aacb-be680b3362b3",
+                        "creation_process_uuid": "c856b116-178e-4242-bb12-35b52fc96f8c",
+                        "original_file_reference_uuid": [
+                            "2dca5622-2bb1-43b3-9773-79ec0c63d4a5"
+                        ]
+                    }
+                ]
             },
             {
                 "image_count": 0,
@@ -1896,7 +2083,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -1913,7 +2102,9 @@
                     }
                 ],
                 "contact_email": "zachary.klamer@vai.org",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -1930,7 +2121,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "data acquisition"
+                "role": [
+                    "data acquisition"
+                ]
             },
             {
                 "rorid": null,
@@ -1947,7 +2140,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "data acquisition"
+                "role": [
+                    "data acquisition"
+                ]
             },
             {
                 "rorid": null,
@@ -1964,7 +2159,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "data analyst"
+                "role": [
+                    "data analyst"
+                ]
             },
             {
                 "rorid": null,
@@ -1981,7 +2178,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "data analyst"
+                "role": [
+                    "data analyst"
+                ]
             },
             {
                 "rorid": null,
@@ -1998,7 +2197,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2015,7 +2216,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2032,7 +2235,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2049,7 +2254,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2066,7 +2273,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2083,7 +2292,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2100,7 +2311,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2117,7 +2330,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2134,7 +2349,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2151,7 +2368,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2168,7 +2387,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -2185,7 +2406,9 @@
                     }
                 ],
                 "contact_email": "brian.haab@vai.org",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "Multiplexed Glycan Immunofluorescence Identification of Pancreatic Cancer Cell Subpopulations in Both Tumor and Blood Samples",
@@ -5073,7 +5296,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "5bae31bb-02ea-4426-8dcf-f84b3c99df51",
-                        "version": 2,
+                        "version": 1,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -5107,6 +5330,22 @@
                                 "name": "uuid_unique_input",
                                 "value": {
                                     "uuid_unique_input": "0496cafc-1da7-44c4-b4b4-6ef226d97f99"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1519/6782cf4a-cfbc-42d9-ad2b-a4225ca29eb7/f29ce3bf-5b24-43f7-9e08-c0432ba05090.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "3f462ec1-e848-46aa-9d96-0f31112bfcf1"
                                 }
                             }
                         ],
@@ -7978,7 +8217,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "52509f6d-2668-4f2a-89bc-22ae8107a5b1",
-                        "version": 3,
+                        "version": 1,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -8050,7 +8289,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "9a27a59e-c265-4226-8fd9-2551210530df",
-                        "version": 3,
+                        "version": 1,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -10318,7 +10557,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "2a51445b-a064-42c3-8ae6-866404e11c80",
-                        "version": 3,
+                        "version": 1,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -12144,7 +12383,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "d58f9c2c-c0e4-4c74-9a57-f2b13e33dfc5"
+                                    "recommended_vizarr_representation": "77bc1a6e-5f3a-4329-8df3-00895ffd185d"
                                 }
                             }
                         ],
@@ -12768,7 +13007,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "dataset creator"
+                "role": [
+                    "dataset creator"
+                ]
             },
             {
                 "rorid": null,
@@ -12785,7 +13026,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "dataset creator"
+                "role": [
+                    "dataset creator"
+                ]
             },
             {
                 "rorid": null,
@@ -12802,7 +13045,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "dataset creator"
+                "role": [
+                    "dataset creator"
+                ]
             },
             {
                 "rorid": null,
@@ -12819,7 +13064,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "data curation"
+                "role": [
+                    "data curation"
+                ]
             },
             {
                 "rorid": null,
@@ -12836,7 +13083,10 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "data curation, submitter"
+                "role": [
+                    "data curation",
+                    "submitter"
+                ]
             }
         ],
         "title": "Synthetic images and segmentation masks simulating HL-60 cell nucleus in 3D",
@@ -13125,7 +13375,9 @@
                     }
                 ],
                 "contact_email": "sebastien.carreno@umontreal.ca",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "Slik sculpts the plasma membrane into cytonemes to control cell-cell communication.",
@@ -13372,7 +13624,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "0a7bea68-61f4-48a1-bd33-325bae2bcf59"
+                                    "recommended_vizarr_representation": "d80658d9-5943-4641-9538-e5f22d374584"
                                 }
                             }
                         ],
@@ -13426,7 +13678,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "0a7bea68-61f4-48a1-bd33-325bae2bcf59"
+                                    "recommended_vizarr_representation": "1e514fb8-0434-46b6-b208-adec71a17cd8"
                                 }
                             }
                         ],
@@ -13480,7 +13732,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "0a7bea68-61f4-48a1-bd33-325bae2bcf59"
+                                    "recommended_vizarr_representation": "23d60add-7918-4cbc-b4e4-5d2e4ddc098e"
                                 }
                             }
                         ],
@@ -13534,7 +13786,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "0a7bea68-61f4-48a1-bd33-325bae2bcf59"
+                                    "recommended_vizarr_representation": "674ea6aa-7bb4-495b-ad55-4a323453b34a"
                                 }
                             }
                         ],
@@ -13597,7 +13849,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "0a7bea68-61f4-48a1-bd33-325bae2bcf59"
+                                    "recommended_vizarr_representation": "bd43c751-07a8-457e-a2e3-db934db54477"
                                 }
                             }
                         ],
@@ -13648,7 +13900,9 @@
                     }
                 ],
                 "contact_email": "lu@anaphase.org",
-                "role": "principal investigator"
+                "role": [
+                    "principal investigator"
+                ]
             }
         ],
         "title": "Nanoscale analysis of human G1 and metaphase chromatin in situ",
@@ -13879,7 +14133,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "21bb3b44-e50e-4ed1-ac33-0f7dcd483c7f"
+                                    "recommended_vizarr_representation": "a3b6f95a-5094-448e-84b4-97f8b87dcd06"
                                 }
                             }
                         ],
@@ -13933,7 +14187,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "21bb3b44-e50e-4ed1-ac33-0f7dcd483c7f"
+                                    "recommended_vizarr_representation": "d2196ae7-632a-4ee6-8aa5-689c3e6df9eb"
                                 }
                             }
                         ],
@@ -13987,7 +14241,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "21bb3b44-e50e-4ed1-ac33-0f7dcd483c7f"
+                                    "recommended_vizarr_representation": "50e7acf0-605a-44e0-ad03-336a1048b532"
                                 }
                             }
                         ],
@@ -14041,7 +14295,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "21bb3b44-e50e-4ed1-ac33-0f7dcd483c7f"
+                                    "recommended_vizarr_representation": "e7a0af3e-b706-46e6-9124-366603bd7cce"
                                 }
                             }
                         ],
@@ -14095,7 +14349,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "21bb3b44-e50e-4ed1-ac33-0f7dcd483c7f"
+                                    "recommended_vizarr_representation": "8ccbf0df-0691-432f-b01d-8337c8a49dab"
                                 }
                             }
                         ],
@@ -14146,7 +14400,9 @@
                     }
                 ],
                 "contact_email": "griesman@pennmedicine.upenn.edu",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -14163,7 +14419,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14180,7 +14438,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14197,7 +14457,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14214,7 +14476,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14231,7 +14495,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14248,7 +14514,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14265,7 +14533,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14282,7 +14552,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14299,7 +14571,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14316,7 +14590,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -14333,7 +14609,9 @@
                     }
                 ],
                 "contact_email": "cherrys@pennmedicine.upenn.edu",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "The lipopeptide Pam3CSK4 inhibits Rift Valley fever virus infection and protects from encephalitis: Source data Figure 5G-J",
@@ -14590,7 +14868,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "db686d21-e82f-4e28-b591-041cb2326d0f"
+                                    "recommended_vizarr_representation": "fbb29cd3-39b9-42fd-905e-42811ff63252"
                                 }
                             }
                         ],
@@ -14649,7 +14927,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "db686d21-e82f-4e28-b591-041cb2326d0f"
+                                    "recommended_vizarr_representation": "332583c9-3c18-40ce-802a-eda0ea4ef225"
                                 }
                             }
                         ],
@@ -14717,7 +14995,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "db686d21-e82f-4e28-b591-041cb2326d0f"
+                                    "recommended_vizarr_representation": "4d7712e8-546e-4f7c-85f2-29b8208f7c1b"
                                 }
                             }
                         ],
@@ -14776,7 +15054,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "db686d21-e82f-4e28-b591-041cb2326d0f"
+                                    "recommended_vizarr_representation": "8606e36a-a198-4ee0-ad31-82a8e5f0fb88"
                                 }
                             }
                         ],
@@ -14835,7 +15113,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "db686d21-e82f-4e28-b591-041cb2326d0f"
+                                    "recommended_vizarr_representation": "f9390cf0-2990-4d4d-979c-2fefdef479e9"
                                 }
                             }
                         ],
@@ -14959,7 +15237,9 @@
                     }
                 ],
                 "contact_email": "antonia.fecke@isas.de",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -14976,7 +15256,9 @@
                     }
                 ],
                 "contact_email": "karl.smith@isas.de",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -14993,7 +15275,9 @@
                     }
                 ],
                 "contact_email": "siva.kasarla@isas.de",
-                "role": "data analyst"
+                "role": [
+                    "data analyst"
+                ]
             },
             {
                 "rorid": null,
@@ -15010,7 +15294,9 @@
                     }
                 ],
                 "contact_email": "prasad.phapale@isas.de",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "Metabolite imaging in mouse organ tissues using mass spectrometry",
@@ -15686,7 +15972,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "4ef0c919-916f-4260-ba49-680d4876ef71"
+                                    "recommended_vizarr_representation": "fcd3e97b-8b80-4281-a084-7d62df59d4a2"
                                 }
                             }
                         ],
@@ -15742,7 +16028,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "4ef0c919-916f-4260-ba49-680d4876ef71"
+                                    "recommended_vizarr_representation": "96b8c3d0-7160-4c8d-8f39-1b11fec8544e"
                                 }
                             }
                         ],
@@ -15798,7 +16084,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "4ef0c919-916f-4260-ba49-680d4876ef71"
+                                    "recommended_vizarr_representation": "b3f0f315-3f58-4494-b5c1-eb8d7532cde7"
                                 }
                             }
                         ],
@@ -15863,7 +16149,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "4ef0c919-916f-4260-ba49-680d4876ef71"
+                                    "recommended_vizarr_representation": "5f0e1a84-d609-4734-b93d-5384c4cb691b"
                                 }
                             }
                         ],
@@ -15919,7 +16205,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "4ef0c919-916f-4260-ba49-680d4876ef71"
+                                    "recommended_vizarr_representation": "6901b9a9-1ff9-41ee-86b9-2c68014dd6f9"
                                 }
                             }
                         ],
@@ -16277,7 +16563,9 @@
                     }
                 ],
                 "contact_email": "hyenne@unistra.fr",
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -16294,7 +16582,9 @@
                     }
                 ],
                 "contact_email": "jacky.goetz@inserm.fr",
-                "role": null
+                "role": [
+                    ""
+                ]
             }
         ],
         "title": "Blood flow diverts extracellular vesicles from endothelial degradative compartments to promote angiogenesis",
@@ -16381,7 +16671,9 @@
                     }
                 ],
                 "contact_email": "marie.catillon@uni.lu",
-                "role": "data acquisition"
+                "role": [
+                    "data acquisition"
+                ]
             },
             {
                 "rorid": null,
@@ -16398,7 +16690,9 @@
                     }
                 ],
                 "contact_email": "jochen.ohnmacht@lih.lu",
-                "role": "data analyst"
+                "role": [
+                    "data analyst"
+                ]
             },
             {
                 "rorid": null,
@@ -16415,7 +16709,9 @@
                     }
                 ],
                 "contact_email": "paul.antony@uni.lu",
-                "role": "data analyst"
+                "role": [
+                    "data analyst"
+                ]
             }
         ],
         "title": "LBX1, NHLH1 and NR2Fs knock-down effects on midbrain dopaminergic neurons populations derived from 4 different iPSC lines",
@@ -16790,7 +17086,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "1084ce5e-3ae4-4a2f-ba8d-ed7e0a696bb3"
+                                    "recommended_vizarr_representation": "f624b816-c5c3-4faf-8863-46e882c33b77"
                                 }
                             }
                         ],
@@ -16860,7 +17156,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "1084ce5e-3ae4-4a2f-ba8d-ed7e0a696bb3"
+                                    "recommended_vizarr_representation": "5cac2590-71ac-4b5e-8c8a-127314b6c252"
                                 }
                             }
                         ],
@@ -16930,7 +17226,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "1084ce5e-3ae4-4a2f-ba8d-ed7e0a696bb3"
+                                    "recommended_vizarr_representation": "e4708f8e-8c17-4f7a-b464-3b22519bbce5"
                                 }
                             }
                         ],
@@ -17000,7 +17296,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "1084ce5e-3ae4-4a2f-ba8d-ed7e0a696bb3"
+                                    "recommended_vizarr_representation": "b6265527-78c1-42cd-b0fc-6ff2950e69c7"
                                 }
                             }
                         ],
@@ -17070,7 +17366,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "1084ce5e-3ae4-4a2f-ba8d-ed7e0a696bb3"
+                                    "recommended_vizarr_representation": "63550348-19b1-4563-b7c5-22905e43c52d"
                                 }
                             }
                         ],
@@ -17128,7 +17424,9 @@
                     }
                 ],
                 "contact_email": "idr-support@openmicroscopy.org",
-                "role": null
+                "role": [
+                    ""
+                ]
             }
         ],
         "title": "Protein Kinase C and the stress response pathways are required for kinetochore homeostasis (OME-NGFF)",
@@ -17352,7 +17650,9 @@
                     }
                 ],
                 "contact_email": "yamashita-minato77@g.ecc.u-tokyo.ac.jp",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -17369,7 +17669,9 @@
                     }
                 ],
                 "contact_email": "tamamitsu@g.ecc.u-tokyo.ac.jp",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -17386,7 +17688,9 @@
                     }
                 ],
                 "contact_email": "kzkhattori@g.ecc.u-tokyo.ac.jp",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             },
             {
                 "rorid": null,
@@ -17403,7 +17707,9 @@
                     }
                 ],
                 "contact_email": "sadaota@g.ecc.u-tokyo.ac.jp",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "High-throughput 3D imaging flow cytometry of suspended adherent 3D cell cultures",
@@ -17825,7 +18131,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "a89ca763-2f47-4f74-812a-e6580b480d83"
+                                    "recommended_vizarr_representation": "40a73fd7-8ddb-415d-958c-e2b8783bc855"
                                 }
                             }
                         ],
@@ -17896,7 +18202,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "a89ca763-2f47-4f74-812a-e6580b480d83"
+                                    "recommended_vizarr_representation": "6730ee43-b21f-407c-a47b-7b140051ca5e"
                                 }
                             }
                         ],
@@ -17967,7 +18273,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "a89ca763-2f47-4f74-812a-e6580b480d83"
+                                    "recommended_vizarr_representation": "78d60aa2-9cac-4ec7-a6a0-8e01a9961395"
                                 }
                             }
                         ],
@@ -18038,7 +18344,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "a89ca763-2f47-4f74-812a-e6580b480d83"
+                                    "recommended_vizarr_representation": "b992df0b-dcf4-4f8c-be12-f7b92c36da16"
                                 }
                             }
                         ],
@@ -18109,7 +18415,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "a89ca763-2f47-4f74-812a-e6580b480d83"
+                                    "recommended_vizarr_representation": "85159a3b-71c9-47f7-9187-c929f28c499d"
                                 }
                             }
                         ],
@@ -18160,7 +18466,9 @@
                     }
                 ],
                 "contact_email": "eva.hasel@cos.uni-heidelberg.de",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -18177,7 +18485,9 @@
                     }
                 ],
                 "contact_email": "Maria.leptin@embl.de",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "The Opto-inflammasome in zebrafish: a tool to study cell and tissue responses to speck formation and cell death ",
@@ -18421,7 +18731,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "b5c3ac18-839a-4505-b91d-24b368ea32bc"
+                                    "recommended_vizarr_representation": "7a193a08-1f0c-46d7-8b91-ff7fa1c4066f"
                                 }
                             }
                         ],
@@ -18488,7 +18798,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "b5c3ac18-839a-4505-b91d-24b368ea32bc"
+                                    "recommended_vizarr_representation": "0f7a335f-461a-42ce-a2a0-dc712ca1e70c"
                                 }
                             }
                         ],
@@ -18564,7 +18874,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "b5c3ac18-839a-4505-b91d-24b368ea32bc"
+                                    "recommended_vizarr_representation": "730f48ed-f4af-483d-b3cb-393058944bd8"
                                 }
                             }
                         ],
@@ -18640,7 +18950,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "b5c3ac18-839a-4505-b91d-24b368ea32bc"
+                                    "recommended_vizarr_representation": "815f7a05-1ba7-47c2-9bd8-7a964a7cc13b"
                                 }
                             }
                         ],
@@ -18707,7 +19017,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "b5c3ac18-839a-4505-b91d-24b368ea32bc"
+                                    "recommended_vizarr_representation": "73a1cfdf-4952-42f2-b2a5-2c4708310fb9"
                                 }
                             }
                         ],
@@ -18758,7 +19068,9 @@
                     }
                 ],
                 "contact_email": "uwe.vinkemeier@nottingham.ac.uk",
-                "role": "principal investigator"
+                "role": [
+                    "principal investigator"
+                ]
             },
             {
                 "rorid": null,
@@ -18775,7 +19087,9 @@
                     }
                 ],
                 "contact_email": "sebikrause1993@web.de",
-                "role": "submitter"
+                "role": [
+                    "submitter"
+                ]
             }
         ],
         "title": "A family-wide assessment of latent STAT transcription factor interactions reveals divergent dimer repertoires",
@@ -19051,7 +19365,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "e12493ca-f3c0-4dce-a8d4-27cead5de05b"
+                                    "recommended_vizarr_representation": "9b9bbeb4-b69f-4686-9bed-1dcab4745a35"
                                 }
                             }
                         ],
@@ -19118,7 +19432,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "e12493ca-f3c0-4dce-a8d4-27cead5de05b"
+                                    "recommended_vizarr_representation": "a72f1f14-05c0-4d41-943b-3d511c9a2c82"
                                 }
                             }
                         ],
@@ -19185,7 +19499,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "e12493ca-f3c0-4dce-a8d4-27cead5de05b"
+                                    "recommended_vizarr_representation": "f550dbb4-32ca-413d-a157-4a9cd99205fb"
                                 }
                             }
                         ],
@@ -19252,7 +19566,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "e12493ca-f3c0-4dce-a8d4-27cead5de05b"
+                                    "recommended_vizarr_representation": "10a1b45e-45fe-401e-95e1-3ad74f0dbc4f"
                                 }
                             }
                         ],
@@ -19319,7 +19633,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "e12493ca-f3c0-4dce-a8d4-27cead5de05b"
+                                    "recommended_vizarr_representation": "d315383f-c0bd-4422-8e85-50ba7ec68184"
                                 }
                             }
                         ],
@@ -19370,7 +19684,9 @@
                     }
                 ],
                 "contact_email": "edoardo.dimprima@embl.de",
-                "role": "first author"
+                "role": [
+                    "first author"
+                ]
             },
             {
                 "rorid": null,
@@ -19387,7 +19703,9 @@
                     }
                 ],
                 "contact_email": "julia.mahamid@embl.de",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "Light and electron microscopy continuum-resolution imaging of 3D cell cultures",
@@ -19689,7 +20007,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "2f82bc0d-4966-41a3-9086-45c514315e30"
+                                    "recommended_vizarr_representation": "f3c32018-12d5-46eb-aa2a-d77abf93f81d"
                                 }
                             }
                         ],
@@ -19752,7 +20070,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "2f82bc0d-4966-41a3-9086-45c514315e30"
+                                    "recommended_vizarr_representation": "06e1afd3-2656-4eb5-845e-1886a82770e9"
                                 }
                             }
                         ],
@@ -19803,7 +20121,9 @@
                     }
                 ],
                 "contact_email": "francois.leguerroue@nih.gov",
-                "role": null
+                "role": [
+                    ""
+                ]
             }
         ],
         "title": "Autophagy component recruitment to TNIP1 upon chemical-induced dimerization",
@@ -20131,7 +20451,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "afeec113-38c6-4fed-bf51-2517ecd1f34a"
+                                    "recommended_vizarr_representation": "b646ad7b-c1b4-4694-805f-86cf3a21a83d"
                                 }
                             }
                         ],
@@ -20199,7 +20519,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "afeec113-38c6-4fed-bf51-2517ecd1f34a"
+                                    "recommended_vizarr_representation": "01fe9e0d-3bad-4ea3-b294-4ca00a118c5b"
                                 }
                             }
                         ],
@@ -20267,7 +20587,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "afeec113-38c6-4fed-bf51-2517ecd1f34a"
+                                    "recommended_vizarr_representation": "4c1e7383-ea16-4781-b026-eb03bbca59f1"
                                 }
                             }
                         ],
@@ -20335,7 +20655,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "afeec113-38c6-4fed-bf51-2517ecd1f34a"
+                                    "recommended_vizarr_representation": "3e48d43a-5816-40ff-be14-75ceeba31a27"
                                 }
                             }
                         ],
@@ -20403,7 +20723,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "afeec113-38c6-4fed-bf51-2517ecd1f34a"
+                                    "recommended_vizarr_representation": "0d8da2cc-1836-4465-b3c6-672775430d72"
                                 }
                             }
                         ],
@@ -20454,7 +20774,9 @@
                     }
                 ],
                 "contact_email": "geg15@ic.ac.uk",
-                "role": "corresponding author"
+                "role": [
+                    "corresponding author"
+                ]
             }
         ],
         "title": "Label-free nanoscale mapping of intracellular organelle chemistry",
@@ -20696,7 +21018,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "867d0fc6-3edc-4121-84bf-b1fc9e09dd69"
+                                    "recommended_vizarr_representation": "c0436079-666e-4ec0-b493-c652b10fbade"
                                 }
                             }
                         ],
@@ -20763,7 +21085,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "867d0fc6-3edc-4121-84bf-b1fc9e09dd69"
+                                    "recommended_vizarr_representation": "bf9f57d5-0bde-4f70-bf63-b705d2bd152a"
                                 }
                             }
                         ],
@@ -20830,7 +21152,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "867d0fc6-3edc-4121-84bf-b1fc9e09dd69"
+                                    "recommended_vizarr_representation": "579dbf2c-772c-46c3-807a-981ef726114b"
                                 }
                             }
                         ],
@@ -20881,7 +21203,9 @@
                     }
                 ],
                 "contact_email": "zingone@szn.it",
-                "role": "PI responsible for the taxonomic annotation"
+                "role": [
+                    "PI responsible for the taxonomic annotation"
+                ]
             },
             {
                 "rorid": null,
@@ -20898,7 +21222,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "Image acquisition and annotation"
+                "role": [
+                    "Image acquisition and annotation"
+                ]
             },
             {
                 "rorid": null,
@@ -20915,7 +21241,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "Image acquisition"
+                "role": [
+                    "Image acquisition"
+                ]
             },
             {
                 "rorid": null,
@@ -20932,7 +21260,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "Taxonomic expert"
+                "role": [
+                    "Taxonomic expert"
+                ]
             },
             {
                 "rorid": null,
@@ -20949,7 +21279,9 @@
                     }
                 ],
                 "contact_email": null,
-                "role": "Taxonomic expert"
+                "role": [
+                    "Taxonomic expert"
+                ]
             },
             {
                 "rorid": null,
@@ -20966,7 +21298,9 @@
                     }
                 ],
                 "contact_email": "jula@paru.cas.cz",
-                "role": "principal investigator"
+                "role": [
+                    "principal investigator"
+                ]
             },
             {
                 "rorid": null,
@@ -20983,7 +21317,9 @@
                     }
                 ],
                 "contact_email": "sebastien.colin@tuebingen.mpg.de",
-                "role": "Dataset organiser and submitter"
+                "role": [
+                    "Dataset organiser and submitter"
+                ]
             }
         ],
         "title": "A large collection of Scanning Electron Microscopy images of protists and their taxonomic annotations from the Marquesas Island area (Tara Oceans survey, Southern Pacific Ocean).",
@@ -21297,7 +21633,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "6c121e70-e324-474c-bac2-dfcfd58c21bb"
+                                    "recommended_vizarr_representation": "464d05f7-bd9f-4d86-b306-c00faf696ee7"
                                 }
                             }
                         ],
@@ -21380,7 +21716,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "6c121e70-e324-474c-bac2-dfcfd58c21bb"
+                                    "recommended_vizarr_representation": "1582c98b-9da5-43fd-b2ec-a64ee3a7e89d"
                                 }
                             }
                         ],
@@ -21454,7 +21790,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "6c121e70-e324-474c-bac2-dfcfd58c21bb"
+                                    "recommended_vizarr_representation": "4063d7dd-e1b9-4d8a-aaf9-f3bdf5d0a0b6"
                                 }
                             }
                         ],
@@ -21528,7 +21864,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "6c121e70-e324-474c-bac2-dfcfd58c21bb"
+                                    "recommended_vizarr_representation": "a258380b-483c-4f23-bc69-bb7e41c04f08"
                                 }
                             }
                         ],
@@ -21602,7 +21938,7 @@
                                 "provenance": "bia_image_assignment",
                                 "name": "recommended_vizarr_representation",
                                 "value": {
-                                    "recommended_vizarr_representation": "6c121e70-e324-474c-bac2-dfcfd58c21bb"
+                                    "recommended_vizarr_representation": "f7f875d4-2f55-4cfd-8b8c-39c4f242cfab"
                                 }
                             }
                         ],
@@ -21667,7 +22003,9 @@
                     }
                 ],
                 "contact_email": "u3006988@connect.hku.hk",
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -21684,7 +22022,9 @@
                     }
                 ],
                 "contact_email": "sheyli.lim@gmail.com",
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -21701,7 +22041,9 @@
                     }
                 ],
                 "contact_email": "zjiaer@gmail.com",
-                "role": null
+                "role": [
+                    ""
+                ]
             },
             {
                 "rorid": null,
@@ -21718,7 +22060,9 @@
                     }
                 ],
                 "contact_email": "bllim@hku.hk",
-                "role": null
+                "role": [
+                    ""
+                ]
             }
         ],
         "title": "Bioenergetics of pollen tube growth in Arabidopsis thaliana",
@@ -21777,7 +22121,9 @@
                     }
                 ],
                 "contact_email": "gabaldon@umich.edu",
-                "role": null
+                "role": [
+                    ""
+                ]
             }
         ],
         "title": "Computer-vision object tracking for monitoring bottlenose dolphin habitat use and kinematics",
