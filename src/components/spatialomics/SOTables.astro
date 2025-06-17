@@ -22,7 +22,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const dropdown = document.getElementById("sotables_dataset_selector"); // Get the dropdown element
+        const dropdown = document.getElementById("sotables_dataset_selector") as HTMLSelectElement; // Get the dropdown element
         const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); // Ensure datasetUuids is parsed correctly
 
         let dataTable;

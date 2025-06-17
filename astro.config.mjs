@@ -2,18 +2,23 @@ import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
 import yaml from '@rollup/plugin-yaml';
 
-//import preact from "@astrojs/preact";
+import node from '@astrojs/node';
+
 
 // https://astro.build/config
 export default defineConfig({
-  //output: 'hybrid',
+  //output: 'server',
   //integrations: [mdx(), preact()]
   integrations: [mdx()],
+
   outDir: './dist/bioimage-archive',
+
   vite: {
     plugins: [yaml()]
   },
+
   base: "/bioimage-archive",
+
   redirects: {
     '/ai': '/bioimage-archive//galleries/ai',
     '/cryoet': '/bioimage-archive/galleries/cryoet',
@@ -35,5 +40,10 @@ export default defineConfig({
     '/submit-annotations': '/bioimage-archive/help/submit-annotations',
     '/help-tools': '/bioimage-archive/help/supporting-tools',
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
-  }
+  },
+
+  adapter: node({
+    mode: 'standalone',
+  }),
+
 });

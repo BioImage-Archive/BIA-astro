@@ -8,14 +8,17 @@
     "build": "astro check && astro build && cp public/robots.txt dist/robots.txt && cp public/redirect_index.html dist/index.html",
     "preview": "astro preview",
     "astro": "astro",
+    "express": "NODE_ENV=production node server/server.js",
     "local": "astro check && astro build && astro preview"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
     "@astrojs/mdx": "^4.0.2",
-    "astro": "^5.0.5",
+    "@astrojs/node": "^9.2.2",
+    "astro": "^5.0",
     "datatables.net": "^2.1.0",
     "datatables.net-dt": "^2.1.0",
+    "express": "^5.1.0",
     "jquery": "^3.7.1",
     "typescript": "^5.2.2"
   },
