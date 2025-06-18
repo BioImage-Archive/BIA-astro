@@ -119,8 +119,11 @@ const breadcrumbs = [
   `/bioimage-archive/study/${imageStudy.accession_id}`
 ]
 
-
+const number = Math.random();
 ---
+
+<div><h2>{number}</h2></div>
+<div><h2>{process.env}</h2></div>
 
 <BaseLayoutWithBreadcrumbs pageTitle={image.uuid} breadcrumbs={breadcrumbs}>
   <body>

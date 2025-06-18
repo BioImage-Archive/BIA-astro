@@ -2,9 +2,6 @@ import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
 import yaml from '@rollup/plugin-yaml';
 
-import node from '@astrojs/node';
-
-
 import netlify from '@astrojs/netlify';
 
 
@@ -22,10 +19,6 @@ export default defineConfig({
 
   base: "/bioimage-archive",
 
-  //adapter: netlify(),
-  //adapter: node({
-  //  mode: 'standalone',
-  //}),
   redirects: {
     '/ai': '/bioimage-archive//galleries/ai',
     '/cryoet': '/bioimage-archive/galleries/cryoet',

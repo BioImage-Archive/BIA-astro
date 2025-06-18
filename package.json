@@ -19,7 +19,6 @@
     "astro": "^5.0",
     "datatables.net": "^2.1.0",
     "datatables.net-dt": "^2.1.0",
-    "express": "^5.1.0",
     "jquery": "^3.7.1",
     "typescript": "^5.2.2"
   },
