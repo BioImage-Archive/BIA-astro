@@ -8,7 +8,7 @@
     "build": "astro check && astro build && cp public/robots.txt dist/robots.txt && cp public/redirect_index.html dist/index.html",
     "preview": "astro preview",
     "astro": "astro",
-    "express": "NODE_ENV=production node server/server.js",
+    "prod": "NODE_ENV=production PORT=8080 HOST=0.0.0.0 node dist/bioimage-archive/server/entry.mjs",
     "local": "astro check && astro build && astro preview"
   },
   "dependencies": {

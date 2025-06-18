@@ -3,9 +3,18 @@ import mdx from "@astrojs/mdx";
 import yaml from '@rollup/plugin-yaml';
 
 import netlify from '@astrojs/netlify';
+import node from '@astrojs/node';
 
+function isNetlify() {
+  return process.env.NETLIFY === 'true' || 
+         process.env.NETLIFY_DEV === 'true' ||
+         !!process.env.AWS_LAMBDA_FUNCTION_NAME
+}
 
-// https://astro.build/config
+const adapter = isNetlify() 
+  ? netlify() 
+  : node({ mode: 'standalone' });
+
 export default defineConfig({
   //output: 'server',
   //integrations: [mdx(), preact()]
@@ -42,5 +51,5 @@ export default defineConfig({
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
   },
 
-  adapter: netlify(),
+  adapter
 });

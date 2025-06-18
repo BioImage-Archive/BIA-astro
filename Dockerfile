@@ -10,4 +10,4 @@ COPY . .
 RUN npm run build
 
 EXPOSE 8080
-CMD ["npm", "run", "express"]
+CMD ["npm", "run", "prod"]
