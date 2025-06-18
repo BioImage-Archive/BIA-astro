@@ -5,6 +5,9 @@ import yaml from '@rollup/plugin-yaml';
 import node from '@astrojs/node';
 
 
+import netlify from '@astrojs/netlify';
+
+
 // https://astro.build/config
 export default defineConfig({
   //output: 'server',
@@ -19,6 +22,10 @@ export default defineConfig({
 
   base: "/bioimage-archive",
 
+  //adapter: netlify(),
+  //adapter: node({
+  //  mode: 'standalone',
+  //}),
   redirects: {
     '/ai': '/bioimage-archive//galleries/ai',
     '/cryoet': '/bioimage-archive/galleries/cryoet',
@@ -42,8 +49,5 @@ export default defineConfig({
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
   },
 
-  adapter: node({
-    mode: 'standalone',
-  }),
-
+  adapter: netlify(),
 });
