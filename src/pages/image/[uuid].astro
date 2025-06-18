@@ -18,17 +18,6 @@ const imageAcquisitionMap = fieldMap["image_acquisition"];
 const annotationMethodMap = fieldMap["annotation_method"];
 const protocolMap = fieldMap["protocol"];
 
-//export function getStaticPaths() {
-//  const static_paths = Object.keys(imageMetadata).map((uuid) => {
-//    return {
-//      params:  { uuid: uuid }
-//    };
-//  }).slice(0, 1);
-
-//  console.log(static_paths);
-//  return static_paths;
-//}
-
 const { uuid } = Astro.params;
 
 const image = imageMetadata[uuid];
