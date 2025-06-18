@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express from "express";
 import { handler as ssrHandler } from '../../dist/bioimage-archive/server/entry.mjs';
 import serverless from "serverless-http";
 

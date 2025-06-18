@@ -6,5 +6,6 @@
   base = "/"
   publish = "dist"
   command = "NODE_OPTIONS='--max-old-space-size=4096' npm run build"
+  functions = "server/netlify_functions"
 [functions]
   directory = "server/netlify_functions"
