@@ -1,1 +1,239 @@
-{}
+{
+	"S-BIAD1026": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"ground truth",
+			"Arabidopsis thaliana",
+			"ovule",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1026_762ccaa6-e726-47c5-97f6-9061f8543532.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1026_762ccaa6-e726-47c5-97f6-9061f8543532.png",
+		"dataset": [
+			{
+				"uuid": "762ccaa6-e726-47c5-97f6-9061f8543532",
+				"annotation_method_override": [
+					"3D segmentation of the strong tdTomato nuclei reporter signal was performed using the default Cellpose nuclei model. It was then proofread and used as the ‘initial ground truth’. Initial model training was performed using the initial ground truths and trained on the weak TO-PRO-3 channel. The StarDist-ResNet_3Dnuc_initial model was then used to segment the original weak TO-PRO-3-based nuclear stain channel resulting in a modified ground truth which was then human proofread, resulting in the ‘gold ground truth’. "
+				]
+			}
+		]
+	},
+	"S-BIAD1196": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"ground truth",
+			"human",
+			"brain",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1196_ddf07325-8fca-42a8-801d-225f20a12908.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1196_ca876873-0d7d-42f8-b0f0-da7dd985226d.png",
+		"dataset": [
+			{
+				"uuid": "ddf07325-8fca-42a8-801d-225f20a12908",
+				"annotation_dataset": "b70ab483-4875-4121-89d6-baf967330a6b"
+			}
+		]
+	},
+	"S-BIAD1492": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"ground truth",
+			"synthetic data"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1492_05153ce9-8fd0-4e41-a805-32cc3a39dd68.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1492_1d0b45f8-374c-4444-8fa3-c7189f58438d.png",
+		"dataset": [
+			{
+				"uuid": "05153ce9-8fd0-4e41-a805-32cc3a39dd68",
+				"annotation_dataset": "1d0b45f8-374c-4444-8fa3-c7189f58438d"
+			}
+		]
+	},
+	"S-BIAD1518": {
+		"tags": [
+			"nuclei",
+			"3D",
+			"segmentation",
+			"ground truth",
+			"mouse",
+			"human",
+			"rat",
+			"intestine",
+			"kidney",
+			"fluorescence microscopy",
+			"synthetic data"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1518_2bf6ccc8-6895-428b-8b57-3c35fc283cb1.png",
+		"hero_image_gt": "/bioimage-archive/ai-galleries/example-images/ground_truth_S-BIAD1518_f38ad77a-3b76-4734-b9a9-47aec25bbaef.png",
+		"dataset": [
+			{
+				"uuid": "b433e79a-741b-489c-a774-04634610d370",
+				"annotation_dataset": "216faafc-c24d-45ca-8002-018332ffc1f4"
+			},
+			{
+				"uuid": "2bf6ccc8-6895-428b-8b57-3c35fc283cb1",
+				"annotation_dataset": "f38ad77a-3b76-4734-b9a9-47aec25bbaef"
+			},
+			{
+				"uuid": "d49dd841-db73-4cd4-9704-1e7e6baab9a9",
+				"annotation_dataset": "5b2e2eb0-186e-4652-ad07-b5b4a3181752"
+			},
+			{
+				"uuid": "6a5c08a6-e1bb-411e-a540-9f63ff1a433d",
+				"annotation_dataset": "5c21be57-9165-4c96-99aa-45e6f969c8a4"
+			},
+			{
+				"uuid": "cec58415-2f9a-4fa1-8fcd-2e8d9c7e3001",
+				"annotation_dataset": "8c8710d0-22d1-4739-b1b1-368926771784"
+			},
+			{
+				"uuid": "ff0e41ab-4aa6-4bac-a84e-023dcf9a6bb7",
+				"annotation_dataset": "f62d9def-efe1-453a-a523-2b782ef09a76"
+			},
+			{
+				"uuid": "d45488c0-a0f6-4af7-baef-d19ed66fb5a9",
+				"annotation_dataset": "af3b360d-7bf6-436b-85da-240b5de96694"
+			}
+		]
+	},
+	"S-BIAD1269": {
+		"tags": [
+			"cells",
+			"2D",
+			"chinese hamster",
+			"ovary",
+			"transmission light microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1269_dafcb0bf-78ee-486e-a1a5-82b0e6bc6213.png",
+		"dataset": [
+			{
+				"uuid": "dafcb0bf-78ee-486e-a1a5-82b0e6bc6213"
+			}
+		]
+	},
+	"S-BIAD1466": {
+		"tags": [
+			"cells",
+			"3D",
+			"human",
+			"transmission light microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1466_a227a231-b041-4d92-ae0f-4f72e3dca66c.png",
+		"dataset": [
+			{
+				"uuid": "a227a231-b041-4d92-ae0f-4f72e3dca66c"
+			}
+		]
+	},
+	"S-BIAD827": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"Arabidopsis thaliana",
+			"root",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD827_5690b487-7841-4d1f-b8a5-21af31a42ed0.png",
+		"dataset": [
+			{
+				"uuid": "5690b487-7841-4d1f-b8a5-21af31a42ed0"
+			}
+		]
+	},
+	"S-BIAD1241": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"Nicotiana benthamiana",
+			"leaves",
+			"pavement cells",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1241_56412b86-4d00-490f-ad85-5aa5f8e896a0.png",
+		"dataset": [
+			{
+				"uuid": "56412b86-4d00-490f-ad85-5aa5f8e896a0"
+			}
+		]
+	},
+	"S-BIAD1490": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"Drosophila melanogaster",
+			"wing disc",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1490_35b57b7d-cbb3-483b-83e3-3ab83518c4e0.png",
+		"dataset": [
+			{
+				"uuid": "35b57b7d-cbb3-483b-83e3-3ab83518c4e0"
+			}
+		]
+	},
+	"S-BIAD915": {
+		"tags": [
+			"cell boundary",
+			"3D",
+			"human",
+			"embryo",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD915_73efaef9-3cd1-44f4-8595-d97470a3a972.png",
+		"dataset": [
+			{
+				"uuid": "73efaef9-3cd1-44f4-8595-d97470a3a972"
+			}
+		]
+	},
+	"S-BIAD1122": {
+		"tags": [
+			"cells",
+			"3D",
+			"human",
+			"HeLa cells",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1122_0d383300-4771-422f-930c-f31ecb32ec81.png",
+		"dataset": [
+			{
+				"uuid": "0d383300-4771-422f-930c-f31ecb32ec81"
+			}
+		]
+	},
+	"S-BIAD1375": {
+		"tags": [
+			"bacteria",
+			"2D",
+			"Bacillus subtilis",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1375_aaafdf2d-0683-45f5-9189-b042d19e9928.png",
+		"dataset": [
+			{
+				"uuid": "aaafdf2d-0683-45f5-9189-b042d19e9928"
+			}
+		]
+	},
+	"S-BIAD1175": {
+		"tags": [
+			"3D",
+			"Tribolium castaneum",
+			"embryo",
+			"fluorescence microscopy"
+		],
+		"hero_image": "/bioimage-archive/ai-galleries/example-images/example_image_S-BIAD1175_84c4d0cc-ae35-4afd-805c-5832b38a9a2e.png",
+		"dataset": [
+			{
+				"uuid": "84c4d0cc-ae35-4afd-805c-5832b38a9a2e"
+			}
+		]
+	}
+}
