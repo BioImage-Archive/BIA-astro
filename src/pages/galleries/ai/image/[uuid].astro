@@ -95,10 +95,8 @@ const breadcrumbs = [
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={uuid} breadcrumbs={breadcrumbs}>
     <div class="vf-stack vf-stack--500">
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-        <div>
-        </div>
-        <div>
+        <section class="vf-content | embl-grid--has-centered-content">
+        <div style="padding-left: 10%;padding-right: 10%">
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ studyInfo.accession_id }
                     <WebsiteStateButton/>
                 </h1>
@@ -107,19 +105,17 @@ const breadcrumbs = [
                     <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                 </a>
         </div>
-        <div>
-        </div>
         </section>
         <section class="vf-content "><a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download these images</a><br/></section>    
+        <section class="vf-content">
+        </section>
         <section class="vf-content">
             <div class="vf-grid vf-grid__col-2">
                 <div><h3><span>Source Image</span></h3></div>
                 <div><h3><span>Annotated Image <span id="AnnotatedImageLength">1</span> of {annotatedImages.length}</span></h3></div>
             </div>   
-        </section>
-        <section class="vf-content">
             <div style="display: flex; gap: 1rem;">
-                <iframe src={sourceImageRep.file_uri[0]} style="flex:1;height: 500px;"></iframe>
+                <iframe src={sourceImageRep.file_uri[0]} style="flex:1;height: 500px;min-width: 48%;"></iframe>
                 <div style="flex: 1; position: relative; overflow: hidden;">
                     <button onclick="slide(-1)" class="slider-left-button"></button>
                     <div id="slider">
@@ -216,7 +212,7 @@ const breadcrumbs = [
                 const copyBtn = document.getElementById("CopyAnnotationButton");
                 copyBtn.dataset.url = s3url;
                 document.getElementById("OpenAnnotationInVizarr").href = rep.file_uri[0];
-                document.getElementById("OpenAnnotationInITK").fred = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
+                document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
                 const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
                 const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
                 document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
@@ -232,6 +228,12 @@ const breadcrumbs = [
                 updateMetadata(currentUUID);
             };
             const originalText = "Copy Annotation OME-Zarr URI";
+            document.getElementById("CopyURLButton").onclick = async (e) => {
+                const url = e.target.dataset.url;
+                await navigator.clipboard.writeText(url);
+                e.target.innerText = "URI Copied";
+                setTimeout(() => e.target.innerText = originalText, 700);
+            };
             document.getElementById("CopyAnnotationButton").onclick = async (e) => {
                 const url = e.target.dataset.url;
                 await navigator.clipboard.writeText(url);
