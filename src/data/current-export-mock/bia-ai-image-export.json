@@ -1,0 +1,1616 @@
+{
+    "15e5f46d-369b-49cf-9fda-15c0d0ed67ab": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab",
+        "version": 1,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_2d7824e6-c2ee-47c9-98a9-8b26f032ebf8",
+                "value": {
+                    "attributes": {
+                        "file description": "Raw nuclear images in TIFF format",
+                        "Diagnosis": "normal (HaCaT)",
+                        "Preparation": "cellline cytospin",
+                        "Train-/Testset split": "train",
+                        "Testset class": "-",
+                        "Magnification": "63x",
+                        "Modality": "FM",
+                        "Device": "Zeiss Axioplan II",
+                        "Software": "Metafer",
+                        "Mean BG signal": "19,4",
+                        "Mean FG signal": "130,4",
+                        "Signal/Noise": "6,7",
+                        "S/N Class": ">=4,<40"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "dataset/rawimages/normal_20.tif"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "2d7824e6-c2ee-47c9-98a9-8b26f032ebf8"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "thumbnail_uri",
+                "value": {
+                    "thumbnail_uri": [
+                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/886609a6-1a98-4e32-9776-e2a9a4d3ba17/71e7fdd3-14e2-42b5-97f3-cce1af12492c.png"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "bfa4a4d2-0873-4f45-b1c3-4125f82ea650"
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
+        "creation_process_uuid": "fdff0424-6f45-48dc-b176-20d266a74bb3",
+        "original_file_reference_uuid": [
+            "2d7824e6-c2ee-47c9-98a9-8b26f032ebf8"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "fdff0424-6f45-48dc-b176-20d266a74bb3",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "a5e91bf4-82bc-4ebc-b312-66bfe8b0f4d1",
+            "image_acquisition_protocol_uuid": [
+                "29f61c5f-ae01-438d-8aa0-d9a787751443"
+            ],
+            "input_image_uuid": [],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "29f61c5f-ae01-438d-8aa0-d9a787751443",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image acquisition-3"
+                            }
+                        }
+                    ],
+                    "title": "Fluorescence imaging",
+                    "protocol_description": "Samples were imaged using 1. an Axioplan-II microscope from Zeiss equipped with a Maerzhaeuser slide scanning stage and a Metasystems Coolcube 1 camera using the Metafer software system (V3.8.6) from Metasystems, 2. an Axioplan-II microscope from Zeiss equipped with a Zeiss AxioCam Mrm 1 using the Metasystems ISIS Software for microscopy image acquisition, 3. an LSM 780 microscope from Zeiss equipped with an Argonlaser 458\u2009nm, a photomultiplier tube (PMT) detector (371\u2013740\u2009nm) and a motorized Piezo Z-stage using the Zeiss Zen software package and 4. a SP8X from Leica equipped with a Diode Laser and a PMT detector (447\u2013468\u2009nm). For the presented dataset, we digitized the DAPI staining pattern representing nuclear DNA. Additional immunofluorescence or FISH stainings were in part available. An automatic illumination time was set as measured by pixel saturation (Metasystems Metafer and ISIS) or defined manually (Zeiss and Leica LSMs). Objectives used were a Zeiss Plan-Apochromat 10\u00d7 objective (Zeiss Axioplan II; numerical aperture 0.45; air), a Zeiss 20\u00d7 Plan-Apochromat (Zeiss LSM 780; numerical aperture 0.8; oil), a Zeiss 20\u00d7 Plan-Apochromat (Leica SP8X; nuermical aperture 0.75; oil), a Zeiss Plan-Neofluar 40\u00d7 objective (Zeiss Axioplan II; numerical aperture 0.75) and a Zeiss Plan-Apochromat 63\u00d7 objective (Zeiss Axioplan II, Zeiss LSM 780 and Leica SP8X; numerical aperture 1.4; oil). Representative field of views (FOVs) were selected according to the following quality criteria: sharpness, intact nuclei and a sufficient number of nuclei.",
+                    "imaging_instrument_description": "Axioplan-II microscope from Zeiss, LSM 780 microscope from Zeiss, SP8X from Leica",
+                    "fbbi_id": [],
+                    "imaging_method_name": [
+                        "fluorescence microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "a5e91bf4-82bc-4ebc-b312-66bfe8b0f4d1",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "65dec4db-20e8-4505-83a7-6b73a43c64db",
+                    "fa9836ff-dfe2-4bb9-af81-ee450b028a30",
+                    "6b8fd66c-20bc-4cea-9bca-8411965dd7f4",
+                    "a4dad3fc-be06-467a-a52f-bb672e3c623f"
+                ],
+                "sample_of_uuid": [
+                    "c8c7e2ad-1cf4-49b2-b2a0-1cb033c63dbf",
+                    "f29b5a91-69f1-4921-8d8f-e62ce493c523",
+                    "5fbed112-60d9-4777-83ba-139fa170c05f",
+                    "819dc124-caa5-4fa1-bf99-e47a784b75f0",
+                    "45e124c5-edd3-492b-8f9b-580e7834c623",
+                    "073010c8-ac4d-44ee-a541-0bdaf68cb46c"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "65dec4db-20e8-4505-83a7-6b73a43c64db",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-2"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of tumor tissue cryosections",
+                        "protocol_description": "The fresh-frozen tumor tissues of one ganglioneuroblastoma patient, one neuroblastoma patient and one Wilms tumor patient were embedded into tissue-tek-OCT and 4 \ud835\udf07\ud835\udc5a thick cryosections were prepared. Sections were mounted on Histobond glass slides (Marienfeld), fixed in 4.5% formaledhyde and stained with 4,6-diamino-2-phenylindole (DAPI), a blue fluorescent dye conventionally used for staining of nuclei for cellular imaging techniques. Finally, slides were covered with Vectashield and coverslips were sealed on the slides with rubber cement.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "fa9836ff-dfe2-4bb9-af81-ee450b028a30",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-8"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of HaCaT human skin keratinocyte cell line",
+                        "protocol_description": "The HaCaT cell line, a spontaneously transformed human epithelial cell line from adult skin, was cultivated either in culture flasks or on microscopy glass slides. Cell cultures were irradiated (2 and 6\u2009Gy), harvested, cytospinned, air-dried and IF stained. Cells grown and irradiated on the glass slides were directly subjected to IF staining. Cells were fixed in 4% formaldehyde for 10\u2009minutes at 4\u2009\u00b0C, and were permeabilized with 0.1% sodium dodecyl sulfate (SDS) in PBS for 6\u2009minutes. Slides were mounted with antifade solution Vectashield containing DAPI and coverslips were sealed on the slides with rubber cement.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "6b8fd66c-20bc-4cea-9bca-8411965dd7f4",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-9"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of tumor touch imprints and bone marrow cytospin preparations",
+                        "protocol_description": "Touch imprints were prepared from fresh primary tumors of 4 stage M neuroblastoma patients as previously described. Mononuclear cells were isolated from bone marrow aspirates of 3 stage M neuroblastoma patients by density gradient centrifugation and cytospinned as described. After fixation in 3.7% formaldehyde for 3\u2009minutes, cells were treated according to the Telomere PNA FISH Kit Cy3 protocol (Dako), mounted with Vectashield containing DAPI, covered and sealed.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "a4dad3fc-be06-467a-a52f-bb672e3c623f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-10"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of neuroblastoma cell line cytospin preparations",
+                        "protocol_description": "STA-NB-10 and CLB-Ma are cell lines derived from neuroblastoma tumor tissue of patients with stage M disease. Preparation and drug-treatment were conducted as described. Briefly, cells were cultured in the absence or presence of 5\u2009nM topotecan, a chemotherapeutic drug for 3 weeks, detached and cytospinned to microscopy glass slides. Preparations were air-dried, fixed in 3.7% formaldehyde, immuno- and DAPI stained, covered and sealed.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8c7e2ad-1cf4-49b2-b2a0-1cb033c63dbf",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from ganglioneuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Schwann cell stroma-rich tissue from a patient with a ganglioneuroblastoma tumor",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "f29b5a91-69f1-4921-8d8f-e62ce493c523",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-2"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from neuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Tumor tissue from neuroblastoma patient",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "5fbed112-60d9-4777-83ba-139fa170c05f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-4"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from Wilms tumor patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Wilms tumor tissue",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "819dc124-caa5-4fa1-bf99-e47a784b75f0",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-6"
+                                }
+                            }
+                        ],
+                        "title": "Skin keratinocyte cell line",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "HaCaT cell line, a spontaneously transformed human epithelial cell line from adult skin",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "45e124c5-edd3-492b-8f9b-580e7834c623",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-3"
+                                }
+                            }
+                        ],
+                        "title": "Bone marrow sample from neuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Bone marrow cells from neuroblastoma patient",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "073010c8-ac4d-44ee-a541-0bdaf68cb46c",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-5"
+                                }
+                            }
+                        ],
+                        "title": "Neuroblastoma cell lines",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Patient-derived neuroblastoma cell lines (CLB-Ma, STA-NB10)",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "bfa4a4d2-0873-4f45-b1c3-4125f82ea650",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "cbd6e9bd-4943-40a0-a0db-a13cffdcdc91 {'conversion_function': 'map_image_representation_to_2025_04_model'}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/15e5f46d-369b-49cf-9fda-15c0d0ed67ab/15e5f46d-369b-49cf-9fda-15c0d0ed67ab.zarr/0"
+                ],
+                "total_size_in_bytes": 1430303,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1280,
+                "size_y": 1024,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 1,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab"
+            },
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "cbd6e9bd-4943-40a0-a0db-a13cffdcdc91",
+                "version": 1,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "file_pattern",
+                        "value": {
+                            "file_pattern": "dataset/rawimages/normal_20.tif"
+                        }
+                    },
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD634/dataset/rawimages/normal_20.tif"
+                ],
+                "total_size_in_bytes": 1311278,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab"
+            }
+        ]
+    },
+    "906e2ace-8e99-4841-89e6-f95983632896": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "906e2ace-8e99-4841-89e6-f95983632896",
+        "version": 1,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_269b149b-f5b4-490f-876f-c1baa0b29ac0",
+                "value": {
+                    "attributes": {
+                        "file description": "Raw nuclear images in TIFF format",
+                        "Diagnosis": "normal (HaCaT)",
+                        "Preparation": "cellline cytospin",
+                        "Train-/Testset split": "train",
+                        "Testset class": "-",
+                        "Magnification": "63x",
+                        "Modality": "FM",
+                        "Device": "Zeiss Axioplan II",
+                        "Software": "Metafer",
+                        "Mean BG signal": "13,7",
+                        "Mean FG signal": "81,4",
+                        "Signal/Noise": "6",
+                        "S/N Class": ">=4,<40"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "dataset/groundtruth/normal_20.tif"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "269b149b-f5b4-490f-876f-c1baa0b29ac0"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "thumbnail_uri",
+                "value": {
+                    "thumbnail_uri": [
+                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/31968bad-fb22-49f1-b782-dda04f9ee78a/56ea80c7-01ac-422c-9c22-c28de48c1e1b.png"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "7689ac81-1271-42c8-8ed3-a5a57590f82c"
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+        "creation_process_uuid": "5f19742f-20f9-439c-b0be-63df18c56b99",
+        "original_file_reference_uuid": [
+            "269b149b-f5b4-490f-876f-c1baa0b29ac0"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "5f19742f-20f9-439c-b0be-63df18c56b99",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "906e2ace-8e99-4841-89e6-f95983632896"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "1e85ed8b-8576-47ce-a267-3a63a13b349d",
+            "image_acquisition_protocol_uuid": [
+                "29f61c5f-ae01-438d-8aa0-d9a787751443"
+            ],
+            "input_image_uuid": ["15e5f46d-369b-49cf-9fda-15c0d0ed67ab"],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "29f61c5f-ae01-438d-8aa0-d9a787751443",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image acquisition-3"
+                            }
+                        }
+                    ],
+                    "title": "Fluorescence imaging",
+                    "protocol_description": "Samples were imaged using 1. an Axioplan-II microscope from Zeiss equipped with a Maerzhaeuser slide scanning stage and a Metasystems Coolcube 1 camera using the Metafer software system (V3.8.6) from Metasystems, 2. an Axioplan-II microscope from Zeiss equipped with a Zeiss AxioCam Mrm 1 using the Metasystems ISIS Software for microscopy image acquisition, 3. an LSM 780 microscope from Zeiss equipped with an Argonlaser 458\u2009nm, a photomultiplier tube (PMT) detector (371\u2013740\u2009nm) and a motorized Piezo Z-stage using the Zeiss Zen software package and 4. a SP8X from Leica equipped with a Diode Laser and a PMT detector (447\u2013468\u2009nm). For the presented dataset, we digitized the DAPI staining pattern representing nuclear DNA. Additional immunofluorescence or FISH stainings were in part available. An automatic illumination time was set as measured by pixel saturation (Metasystems Metafer and ISIS) or defined manually (Zeiss and Leica LSMs). Objectives used were a Zeiss Plan-Apochromat 10\u00d7 objective (Zeiss Axioplan II; numerical aperture 0.45; air), a Zeiss 20\u00d7 Plan-Apochromat (Zeiss LSM 780; numerical aperture 0.8; oil), a Zeiss 20\u00d7 Plan-Apochromat (Leica SP8X; nuermical aperture 0.75; oil), a Zeiss Plan-Neofluar 40\u00d7 objective (Zeiss Axioplan II; numerical aperture 0.75) and a Zeiss Plan-Apochromat 63\u00d7 objective (Zeiss Axioplan II, Zeiss LSM 780 and Leica SP8X; numerical aperture 1.4; oil). Representative field of views (FOVs) were selected according to the following quality criteria: sharpness, intact nuclei and a sufficient number of nuclei.",
+                    "imaging_instrument_description": "Axioplan-II microscope from Zeiss, LSM 780 microscope from Zeiss, SP8X from Leica",
+                    "fbbi_id": [],
+                    "imaging_method_name": [
+                        "fluorescence microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "1e85ed8b-8576-47ce-a267-3a63a13b349d",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "906e2ace-8e99-4841-89e6-f95983632896"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "65dec4db-20e8-4505-83a7-6b73a43c64db",
+                    "fa9836ff-dfe2-4bb9-af81-ee450b028a30",
+                    "6b8fd66c-20bc-4cea-9bca-8411965dd7f4",
+                    "a4dad3fc-be06-467a-a52f-bb672e3c623f"
+                ],
+                "sample_of_uuid": [
+                    "c8c7e2ad-1cf4-49b2-b2a0-1cb033c63dbf",
+                    "f29b5a91-69f1-4921-8d8f-e62ce493c523",
+                    "5fbed112-60d9-4777-83ba-139fa170c05f",
+                    "819dc124-caa5-4fa1-bf99-e47a784b75f0",
+                    "45e124c5-edd3-492b-8f9b-580e7834c623",
+                    "073010c8-ac4d-44ee-a541-0bdaf68cb46c"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "65dec4db-20e8-4505-83a7-6b73a43c64db",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-2"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of tumor tissue cryosections",
+                        "protocol_description": "The fresh-frozen tumor tissues of one ganglioneuroblastoma patient, one neuroblastoma patient and one Wilms tumor patient were embedded into tissue-tek-OCT and 4 \ud835\udf07\ud835\udc5a thick cryosections were prepared. Sections were mounted on Histobond glass slides (Marienfeld), fixed in 4.5% formaledhyde and stained with 4,6-diamino-2-phenylindole (DAPI), a blue fluorescent dye conventionally used for staining of nuclei for cellular imaging techniques. Finally, slides were covered with Vectashield and coverslips were sealed on the slides with rubber cement.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "fa9836ff-dfe2-4bb9-af81-ee450b028a30",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-8"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of HaCaT human skin keratinocyte cell line",
+                        "protocol_description": "The HaCaT cell line, a spontaneously transformed human epithelial cell line from adult skin, was cultivated either in culture flasks or on microscopy glass slides. Cell cultures were irradiated (2 and 6\u2009Gy), harvested, cytospinned, air-dried and IF stained. Cells grown and irradiated on the glass slides were directly subjected to IF staining. Cells were fixed in 4% formaldehyde for 10\u2009minutes at 4\u2009\u00b0C, and were permeabilized with 0.1% sodium dodecyl sulfate (SDS) in PBS for 6\u2009minutes. Slides were mounted with antifade solution Vectashield containing DAPI and coverslips were sealed on the slides with rubber cement.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "6b8fd66c-20bc-4cea-9bca-8411965dd7f4",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-9"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of tumor touch imprints and bone marrow cytospin preparations",
+                        "protocol_description": "Touch imprints were prepared from fresh primary tumors of 4 stage M neuroblastoma patients as previously described. Mononuclear cells were isolated from bone marrow aspirates of 3 stage M neuroblastoma patients by density gradient centrifugation and cytospinned as described. After fixation in 3.7% formaldehyde for 3\u2009minutes, cells were treated according to the Telomere PNA FISH Kit Cy3 protocol (Dako), mounted with Vectashield containing DAPI, covered and sealed.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "a4dad3fc-be06-467a-a52f-bb672e3c623f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-10"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of neuroblastoma cell line cytospin preparations",
+                        "protocol_description": "STA-NB-10 and CLB-Ma are cell lines derived from neuroblastoma tumor tissue of patients with stage M disease. Preparation and drug-treatment were conducted as described. Briefly, cells were cultured in the absence or presence of 5\u2009nM topotecan, a chemotherapeutic drug for 3 weeks, detached and cytospinned to microscopy glass slides. Preparations were air-dried, fixed in 3.7% formaldehyde, immuno- and DAPI stained, covered and sealed.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8c7e2ad-1cf4-49b2-b2a0-1cb033c63dbf",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from ganglioneuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Schwann cell stroma-rich tissue from a patient with a ganglioneuroblastoma tumor",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "f29b5a91-69f1-4921-8d8f-e62ce493c523",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-2"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from neuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Tumor tissue from neuroblastoma patient",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "5fbed112-60d9-4777-83ba-139fa170c05f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-4"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from Wilms tumor patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Wilms tumor tissue",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "819dc124-caa5-4fa1-bf99-e47a784b75f0",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-6"
+                                }
+                            }
+                        ],
+                        "title": "Skin keratinocyte cell line",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "HaCaT cell line, a spontaneously transformed human epithelial cell line from adult skin",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "45e124c5-edd3-492b-8f9b-580e7834c623",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-3"
+                                }
+                            }
+                        ],
+                        "title": "Bone marrow sample from neuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Bone marrow cells from neuroblastoma patient",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "073010c8-ac4d-44ee-a541-0bdaf68cb46c",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-5"
+                                }
+                            }
+                        ],
+                        "title": "Neuroblastoma cell lines",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Patient-derived neuroblastoma cell lines (CLB-Ma, STA-NB10)",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "6cd0f536-f8a7-4b50-bef1-ee839c8527df",
+                "version": 1,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "file_pattern",
+                        "value": {
+                            "file_pattern": "dataset/groundtruth/normal_20.tif"
+                        }
+                    },
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "906e2ace-8e99-4841-89e6-f95983632896"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD634/dataset/groundtruth/normal_20.tif"
+                ],
+                "total_size_in_bytes": 1311278,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "906e2ace-8e99-4841-89e6-f95983632896"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "7689ac81-1271-42c8-8ed3-a5a57590f82c",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "attributes_from_bioformat2raw_conversion",
+                        "value": {
+                            "BigEndian": "true",
+                            "DimensionOrder": "XYZCT",
+                            "ID": "Pixels:0",
+                            "Interleaved": "false",
+                            "SignificantBits": "8",
+                            "Type": "uint8",
+                            "{http://www.openmicroscopy.org/Schemas/OME/2016-06}Channel": {
+                                "ID": "Channel:0:0",
+                                "SamplesPerPixel": "1",
+                                "{http://www.openmicroscopy.org/Schemas/OME/2016-06}LightPath": null
+                            },
+                            "{http://www.openmicroscopy.org/Schemas/OME/2016-06}MetadataOnly": null
+                        }
+                    },
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "6cd0f536-f8a7-4b50-bef1-ee839c8527df {'conversion_function': 'map_image_representation_to_2025_04_model'}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/906e2ace-8e99-4841-89e6-f95983632896/906e2ace-8e99-4841-89e6-f95983632896.zarr/0"
+                ],
+                "total_size_in_bytes": 0,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": 1280,
+                "size_y": 1024,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 1,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "906e2ace-8e99-4841-89e6-f95983632896"
+            }
+        ]
+    },
+    "906e2ace-8e99-4841-89e6-f95983632869": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "906e2ace-8e99-4841-89e6-f95983632869",
+        "version": 1,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_269b149b-f5b4-490f-876f-c1baa0b29ac0",
+                "value": {
+                    "attributes": {
+                        "file description": "Test",
+                        "Diagnosis": "test",
+                        "Preparation": "test",
+                        "Train-/Testset split": "train",
+                        "Testset class": "test",
+                        "Magnification": "test",
+                        "Modality": "test",
+                        "Device": "test",
+                        "Software": "test",
+                        "Mean BG signal": "13,7",
+                        "Mean FG signal": "81,4",
+                        "Signal/Noise": "6",
+                        "S/N Class": ">=4,<40"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "dataset/groundtruth/normal_25.tif"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "269b149b-f5b4-490f-876f-c1baa0b29ac0"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "thumbnail_uri",
+                "value": {
+                    "thumbnail_uri": [
+                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/31968bad-fb22-49f1-b782-dda04f9ee78a/56ea80c7-01ac-422c-9c22-c28de48c1e1b.png"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "7689ac81-1271-42c8-8ed3-a5a57590f82c"
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+        "creation_process_uuid": "5f19742f-20f9-439c-b0be-63df18c56b99",
+        "original_file_reference_uuid": [
+            "269b149b-f5b4-490f-876f-c1baa0b29ac0"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "5f19742f-20f9-439c-b0be-63df18c56b99",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "906e2ace-8e99-4841-89e6-f95983632869"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "1e85ed8b-8576-47ce-a267-3a63a13b349d",
+            "image_acquisition_protocol_uuid": [
+                "29f61c5f-ae01-438d-8aa0-d9a787751443"
+            ],
+            "input_image_uuid": ["15e5f46d-369b-49cf-9fda-15c0d0ed67ab"],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "29f61c5f-ae01-438d-8aa0-d9a787751443",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image acquisition-3"
+                            }
+                        }
+                    ],
+                    "title": "Fluorescence imaging",
+                    "protocol_description": "Samples were imaged using 1. an Axioplan-II microscope from Zeiss equipped with a Maerzhaeuser slide scanning stage and a Metasystems Coolcube 1 camera using the Metafer software system (V3.8.6) from Metasystems, 2. an Axioplan-II microscope from Zeiss equipped with a Zeiss AxioCam Mrm 1 using the Metasystems ISIS Software for microscopy image acquisition, 3. an LSM 780 microscope from Zeiss equipped with an Argonlaser 458\u2009nm, a photomultiplier tube (PMT) detector (371\u2013740\u2009nm) and a motorized Piezo Z-stage using the Zeiss Zen software package and 4. a SP8X from Leica equipped with a Diode Laser and a PMT detector (447\u2013468\u2009nm). For the presented dataset, we digitized the DAPI staining pattern representing nuclear DNA. Additional immunofluorescence or FISH stainings were in part available. An automatic illumination time was set as measured by pixel saturation (Metasystems Metafer and ISIS) or defined manually (Zeiss and Leica LSMs). Objectives used were a Zeiss Plan-Apochromat 10\u00d7 objective (Zeiss Axioplan II; numerical aperture 0.45; air), a Zeiss 20\u00d7 Plan-Apochromat (Zeiss LSM 780; numerical aperture 0.8; oil), a Zeiss 20\u00d7 Plan-Apochromat (Leica SP8X; nuermical aperture 0.75; oil), a Zeiss Plan-Neofluar 40\u00d7 objective (Zeiss Axioplan II; numerical aperture 0.75) and a Zeiss Plan-Apochromat 63\u00d7 objective (Zeiss Axioplan II, Zeiss LSM 780 and Leica SP8X; numerical aperture 1.4; oil). Representative field of views (FOVs) were selected according to the following quality criteria: sharpness, intact nuclei and a sufficient number of nuclei.",
+                    "imaging_instrument_description": "Axioplan-II microscope from Zeiss, LSM 780 microscope from Zeiss, SP8X from Leica",
+                    "fbbi_id": [],
+                    "imaging_method_name": [
+                        "fluorescence microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "1e85ed8b-8576-47ce-a267-3a63a13b349d",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "906e2ace-8e99-4841-89e6-f95983632869"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "65dec4db-20e8-4505-83a7-6b73a43c64db",
+                    "fa9836ff-dfe2-4bb9-af81-ee450b028a30",
+                    "6b8fd66c-20bc-4cea-9bca-8411965dd7f4",
+                    "a4dad3fc-be06-467a-a52f-bb672e3c623f"
+                ],
+                "sample_of_uuid": [
+                    "c8c7e2ad-1cf4-49b2-b2a0-1cb033c63dbf",
+                    "f29b5a91-69f1-4921-8d8f-e62ce493c523",
+                    "5fbed112-60d9-4777-83ba-139fa170c05f",
+                    "819dc124-caa5-4fa1-bf99-e47a784b75f0",
+                    "45e124c5-edd3-492b-8f9b-580e7834c623",
+                    "073010c8-ac4d-44ee-a541-0bdaf68cb46c"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "65dec4db-20e8-4505-83a7-6b73a43c64db",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-2"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of tumor tissue cryosections",
+                        "protocol_description": "The fresh-frozen tumor tissues of one ganglioneuroblastoma patient, one neuroblastoma patient and one Wilms tumor patient were embedded into tissue-tek-OCT and 4 \ud835\udf07\ud835\udc5a thick cryosections were prepared. Sections were mounted on Histobond glass slides (Marienfeld), fixed in 4.5% formaledhyde and stained with 4,6-diamino-2-phenylindole (DAPI), a blue fluorescent dye conventionally used for staining of nuclei for cellular imaging techniques. Finally, slides were covered with Vectashield and coverslips were sealed on the slides with rubber cement.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "fa9836ff-dfe2-4bb9-af81-ee450b028a30",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-8"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of HaCaT human skin keratinocyte cell line",
+                        "protocol_description": "The HaCaT cell line, a spontaneously transformed human epithelial cell line from adult skin, was cultivated either in culture flasks or on microscopy glass slides. Cell cultures were irradiated (2 and 6\u2009Gy), harvested, cytospinned, air-dried and IF stained. Cells grown and irradiated on the glass slides were directly subjected to IF staining. Cells were fixed in 4% formaldehyde for 10\u2009minutes at 4\u2009\u00b0C, and were permeabilized with 0.1% sodium dodecyl sulfate (SDS) in PBS for 6\u2009minutes. Slides were mounted with antifade solution Vectashield containing DAPI and coverslips were sealed on the slides with rubber cement.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "6b8fd66c-20bc-4cea-9bca-8411965dd7f4",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-9"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of tumor touch imprints and bone marrow cytospin preparations",
+                        "protocol_description": "Touch imprints were prepared from fresh primary tumors of 4 stage M neuroblastoma patients as previously described. Mononuclear cells were isolated from bone marrow aspirates of 3 stage M neuroblastoma patients by density gradient centrifugation and cytospinned as described. After fixation in 3.7% formaldehyde for 3\u2009minutes, cells were treated according to the Telomere PNA FISH Kit Cy3 protocol (Dako), mounted with Vectashield containing DAPI, covered and sealed.",
+                        "signal_channel_information": []
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "a4dad3fc-be06-467a-a52f-bb672e3c623f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-10"
+                                }
+                            }
+                        ],
+                        "title": "Preparation and IF-staining of neuroblastoma cell line cytospin preparations",
+                        "protocol_description": "STA-NB-10 and CLB-Ma are cell lines derived from neuroblastoma tumor tissue of patients with stage M disease. Preparation and drug-treatment were conducted as described. Briefly, cells were cultured in the absence or presence of 5\u2009nM topotecan, a chemotherapeutic drug for 3 weeks, detached and cytospinned to microscopy glass slides. Preparations were air-dried, fixed in 3.7% formaldehyde, immuno- and DAPI stained, covered and sealed.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8c7e2ad-1cf4-49b2-b2a0-1cb033c63dbf",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from ganglioneuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Schwann cell stroma-rich tissue from a patient with a ganglioneuroblastoma tumor",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "f29b5a91-69f1-4921-8d8f-e62ce493c523",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-2"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from neuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Tumor tissue from neuroblastoma patient",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "5fbed112-60d9-4777-83ba-139fa170c05f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-4"
+                                }
+                            }
+                        ],
+                        "title": "Tumor sample from Wilms tumor patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Wilms tumor tissue",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "819dc124-caa5-4fa1-bf99-e47a784b75f0",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-6"
+                                }
+                            }
+                        ],
+                        "title": "Skin keratinocyte cell line",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "HaCaT cell line, a spontaneously transformed human epithelial cell line from adult skin",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "45e124c5-edd3-492b-8f9b-580e7834c623",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-3"
+                                }
+                            }
+                        ],
+                        "title": "Bone marrow sample from neuroblastoma patient",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Bone marrow cells from neuroblastoma patient",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    },
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "073010c8-ac4d-44ee-a541-0bdaf68cb46c",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-5"
+                                }
+                            }
+                        ],
+                        "title": "Neuroblastoma cell lines",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "human",
+                                "scientific_name": "Homo sapiens",
+                                "ncbi_id": null
+                            }
+                        ],
+                        "biological_entity_description": "Patient-derived neuroblastoma cell lines (CLB-Ma, STA-NB10)",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "6cd0f536-f8a7-4b50-bef1-ee839c8527df",
+                "version": 1,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "file_pattern",
+                        "value": {
+                            "file_pattern": "dataset/groundtruth/normal_25.tif"
+                        }
+                    },
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "906e2ace-8e99-4841-89e6-f95983632869"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD634/dataset/groundtruth/normal_25.tif"
+                ],
+                "total_size_in_bytes": 1311278,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "906e2ace-8e99-4841-89e6-f95983632869"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "7689ac81-1271-42c8-8ed3-a5a57590f82c",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "attributes_from_bioformat2raw_conversion",
+                        "value": {
+                            "BigEndian": "true",
+                            "DimensionOrder": "XYZCT",
+                            "ID": "Pixels:0",
+                            "Interleaved": "false",
+                            "SignificantBits": "8",
+                            "Type": "uint8",
+                            "{http://www.openmicroscopy.org/Schemas/OME/2016-06}Channel": {
+                                "ID": "Channel:0:0",
+                                "SamplesPerPixel": "1",
+                                "{http://www.openmicroscopy.org/Schemas/OME/2016-06}LightPath": null
+                            },
+                            "{http://www.openmicroscopy.org/Schemas/OME/2016-06}MetadataOnly": null
+                        }
+                    },
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "6cd0f536-f8a7-4b50-bef1-ee839c8527df {'conversion_function': 'map_image_representation_to_2025_04_model'}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/00fefce9-850f-43eb-b165-e4fa3aef8e94/00fefce9-850f-43eb-b165-e4fa3aef8e94.zarr/0"
+                ],
+                "total_size_in_bytes": 0,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": 1280,
+                "size_y": 1024,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 1,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "906e2ace-8e99-4841-89e6-f95983632869"
+            }
+        ]
+    }
+}
