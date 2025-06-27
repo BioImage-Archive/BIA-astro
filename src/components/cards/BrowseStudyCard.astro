@@ -1,5 +1,5 @@
 ---
-import { getPlaceholderHeroImage, formatListItem, taxonRender, getStudyImage } from "../SharedJSFunctions.js";
+import { getTaxons, formatListItem, taxonRender, getStudyImage } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 const { study, studyPageRoot, taglist, cardImageOverride} = Astro.props;
 
@@ -16,23 +16,6 @@ function getImagingMethodType(study) {
         }
     }
     return imagingTypeList
-}
-
-
-function getTaxons(study) {
-    const taxonHtmlList = []
-    const taxonList = []
-    for (var dataset of study.dataset) {
-        for (var biosample of dataset.biological_entity) {
-            for (var taxon of biosample.organism_classification) {
-                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
-                    taxonList.push(taxon)
-                    taxonHtmlList.push(taxonRender(taxon))
-                }
-            }
-        }
-    }
-    return taxonHtmlList
 }
 
 
