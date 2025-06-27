@@ -20,7 +20,8 @@
     "datatables.net": "^2.1.0",
     "datatables.net-dt": "^2.1.0",
     "jquery": "^3.7.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "bia-search": "file:../bia-integrator/clients/search/typescript/"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",
