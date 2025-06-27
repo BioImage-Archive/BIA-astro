@@ -273,7 +273,7 @@
         "funding_statement": "This work was facilitated by an EraSME grant (project TisQuant) under the grant no. 844198 and by a COIN grant (project VISIOMICS) under the grant no. 861750, both grants kindly provided by the Austrian Research Promotion Agency (FFG), and the St. Anna Kinderkrebsforschung. Partial funding was further provided by BMK, BMDW, and the Province of Upper Austria in the frame of the COMET Programme managed by FFG.",
         "dataset": [
             {
-                "image_count": 6,
+                "image_count": 11,
                 "file_reference_count": 80,
                 "file_reference_size_bytes": 95929564,
                 "file_type_counts": {
@@ -391,7 +391,7 @@
                 "description": "Fluorescent nuclear images of normal or cancer cells from different tissue origins and sample preparation types",
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": [],
+                "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-example.png"],
                 "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
                 "acquisition_process": [
                     {
@@ -722,6 +722,144 @@
                 "image": [
                     {
                         "object_creator": "bia_image_assignment",
+                        "uuid": "15e5f46d-369b-49cf-9fda-15c0d0ed67ab",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_2d7824e6-c2ee-47c9-98a9-8b26f032ebf8",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw nuclear images in TIFF format",
+                                        "Diagnosis": "normal (HaCaT)",
+                                        "Preparation": "cellline cytospin",
+                                        "Train-/Testset split": "train",
+                                        "Testset class": "-",
+                                        "Magnification": "63x",
+                                        "Modality": "FM",
+                                        "Device": "Zeiss Axioplan II",
+                                        "Software": "Metafer",
+                                        "Mean BG signal": "19,4",
+                                        "Mean FG signal": "130,4",
+                                        "Signal/Noise": "6,7",
+                                        "S/N Class": ">=4,<40"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/rawimages/normal_20.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "2d7824e6-c2ee-47c9-98a9-8b26f032ebf8"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/886609a6-1a98-4e32-9776-e2a9a4d3ba17/71e7fdd3-14e2-42b5-97f3-cce1af12492c.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "bfa4a4d2-0873-4f45-b1c3-4125f82ea650"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
+                        "creation_process_uuid": "fdff0424-6f45-48dc-b176-20d266a74bb3",
+                        "original_file_reference_uuid": [
+                            "2d7824e6-c2ee-47c9-98a9-8b26f032ebf8"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "0931a00e-d4dc-4c82-9809-4fdeffb1fc2e",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_0e163cf3-189e-4f0d-9308-11fc86cd9bd7",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw nuclear images in TIFF format",
+                                        "Diagnosis": "Wilms",
+                                        "Preparation": "tissue section",
+                                        "Train-/Testset split": "test",
+                                        "Testset class": "TS: other tissue sections (neuroblastoma, Wilms)",
+                                        "Magnification": "63x",
+                                        "Modality": "FM",
+                                        "Device": "Zeiss Axioplan II",
+                                        "Software": "Isis",
+                                        "Mean BG signal": "15,9",
+                                        "Mean FG signal": "45,2",
+                                        "Signal/Noise": "2,8",
+                                        "S/N Class": "<4"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/rawimages/otherspecimen_3.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "0e163cf3-189e-4f0d-9308-11fc86cd9bd7"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/0931a00e-d4dc-4c82-9809-4fdeffb1fc2e/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/0931a00e-d4dc-4c82-9809-4fdeffb1fc2e/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
+                        "creation_process_uuid": "adf645a9-c37d-4571-b7b7-d3dd5275cabe",
+                        "original_file_reference_uuid": [
+                            "0e163cf3-189e-4f0d-9308-11fc86cd9bd7"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
                         "uuid": "0bd6f46e-5fd4-4a62-9924-70eeb98b5db0",
                         "version": 1,
                         "model": {
@@ -786,6 +924,76 @@
                         "creation_process_uuid": "fdff0424-6f45-48dc-b176-20d266a74bb3",
                         "original_file_reference_uuid": [
                             "2d7824e6-c2ee-47c9-98a9-8b26f032ebf8"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "0e00ab95-0da0-47f2-af67-6fbdc2ab05e2",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_76ea0d52-9b23-4987-b798-7de64d54d3c8",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw nuclear images in TIFF format",
+                                        "Diagnosis": "Neuroblastoma",
+                                        "Preparation": "Tumor touch imprint",
+                                        "Train-/Testset split": "test",
+                                        "Testset class": "NB-IV: neuroblastoma tumor touch imprints",
+                                        "Magnification": "63x",
+                                        "Modality": "FM",
+                                        "Device": "Zeiss Axioplan II",
+                                        "Software": "Metafer",
+                                        "Mean BG signal": "9,1",
+                                        "Mean FG signal": "98,8",
+                                        "Signal/Noise": "10,8",
+                                        "S/N Class": ">=4,<40"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/rawimages/Neuroblastoma_12.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "76ea0d52-9b23-4987-b798-7de64d54d3c8"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/0e00ab95-0da0-47f2-af67-6fbdc2ab05e2/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/0e00ab95-0da0-47f2-af67-6fbdc2ab05e2/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
+                        "creation_process_uuid": "2c1bcf75-081c-45ca-b1cb-4165b6de5e68",
+                        "original_file_reference_uuid": [
+                            "76ea0d52-9b23-4987-b798-7de64d54d3c8"
                         ]
                     },
                     {
@@ -859,7 +1067,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "65946fbf-ffe9-485b-b4e9-0119ed3f8b15",
-                        "version": 1,
+                        "version": 4,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -901,19 +1109,21 @@
                                 }
                             },
                             {
-                                "provenance": "bia_image_assignment",
-                                "name": "thumbnail_uri",
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
                                 "value": {
-                                    "thumbnail_uri": [
-                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/0bff46f3-6708-4e39-b7e5-be91ffacd68f/b0b90390-b897-419d-ad7f-b89d87d0c89f.png"
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/65946fbf-ffe9-485b-b4e9-0119ed3f8b15/thumbnail_256x256.png"
                                     ]
                                 }
                             },
                             {
-                                "provenance": "bia_image_assignment",
-                                "name": "recommended_vizarr_representation",
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
                                 "value": {
-                                    "recommended_vizarr_representation": "18fd92d2-367a-4f4c-9b3a-bfe7907735b3"
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/65946fbf-ffe9-485b-b4e9-0119ed3f8b15/static_display_512x512.png"
+                                    ]
                                 }
                             }
                         ],
@@ -994,6 +1204,76 @@
                     },
                     {
                         "object_creator": "bia_image_assignment",
+                        "uuid": "9d3dc9ed-2985-472d-ae3a-fb986030d7bd",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_34cba79c-cbaa-4ab8-a7f0-fa965608faca",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw nuclear images in TIFF format",
+                                        "Diagnosis": "normal (HaCaT)",
+                                        "Preparation": "cellline cytospin",
+                                        "Train-/Testset split": "test",
+                                        "Testset class": "NC-II: normal cells cytospin preparations with low signal-to-noise ratio",
+                                        "Magnification": "40x",
+                                        "Modality": "FM",
+                                        "Device": "Zeiss Axioplan II",
+                                        "Software": "Metafer",
+                                        "Mean BG signal": "19,4",
+                                        "Mean FG signal": "68,7",
+                                        "Signal/Noise": "3,5",
+                                        "S/N Class": "<4"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/rawimages/normal_40.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "34cba79c-cbaa-4ab8-a7f0-fa965608faca"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/9d3dc9ed-2985-472d-ae3a-fb986030d7bd/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/9d3dc9ed-2985-472d-ae3a-fb986030d7bd/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
+                        "creation_process_uuid": "a65f35e6-b5c0-404c-84ce-06dc33ac7dae",
+                        "original_file_reference_uuid": [
+                            "34cba79c-cbaa-4ab8-a7f0-fa965608faca"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
                         "uuid": "ae084092-2305-4eef-ba18-b7c1000562a5",
                         "version": 1,
                         "model": {
@@ -1058,6 +1338,76 @@
                         "creation_process_uuid": "c5f907e5-6fd8-4d66-8ba8-55ba7d5cbf4b",
                         "original_file_reference_uuid": [
                             "28217c7a-fba8-4635-969a-d409f8efc61d"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "cf92da2f-cf96-4dae-8c2e-15a425fa11d0",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_f0cdb453-b551-4534-82bf-f0c15637c6f3",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw nuclear images in TIFF format",
+                                        "Diagnosis": "Ganglioneuroblastoma",
+                                        "Preparation": "tissue section",
+                                        "Train-/Testset split": "train",
+                                        "Testset class": "-",
+                                        "Magnification": "20x",
+                                        "Modality": "FM",
+                                        "Device": "Zeiss Axioplan II",
+                                        "Software": "Metafer",
+                                        "Mean BG signal": "2",
+                                        "Mean FG signal": "88",
+                                        "Signal/Noise": "44,2",
+                                        "S/N Class": ">=40"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/rawimages/Ganglioneuroblastoma_1.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "f0cdb453-b551-4534-82bf-f0c15637c6f3"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/cf92da2f-cf96-4dae-8c2e-15a425fa11d0/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/cf92da2f-cf96-4dae-8c2e-15a425fa11d0/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
+                        "creation_process_uuid": "f254ea3e-cf84-44de-94a5-1b916bff374e",
+                        "original_file_reference_uuid": [
+                            "f0cdb453-b551-4534-82bf-f0c15637c6f3"
                         ]
                     },
                     {
@@ -1140,7 +1490,7 @@
                 ]
             },
             {
-                "image_count": 0,
+                "image_count": 5,
                 "file_reference_count": 388,
                 "file_reference_size_bytes": 399220454,
                 "file_type_counts": {
@@ -1175,7 +1525,7 @@
                 "description": null,
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": [],
+                "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-annotation-example.png"],
                 "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
                 "acquisition_process": [],
                 "specimen_imaging_preparation_protocol": [],
@@ -1212,7 +1562,371 @@
                     }
                 ],
                 "other_creation_process": [],
-                "image": []
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "906e2ace-8e99-4841-89e6-f95983632896",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_269b149b-f5b4-490f-876f-c1baa0b29ac0",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw nuclear images in TIFF format",
+                                        "Diagnosis": "normal (HaCaT)",
+                                        "Preparation": "cellline cytospin",
+                                        "Train-/Testset split": "train",
+                                        "Testset class": "-",
+                                        "Magnification": "63x",
+                                        "Modality": "FM",
+                                        "Device": "Zeiss Axioplan II",
+                                        "Software": "Metafer",
+                                        "Mean BG signal": "13,7",
+                                        "Mean FG signal": "81,4",
+                                        "Signal/Noise": "6",
+                                        "S/N Class": ">=4,<40"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/normal_20.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "269b149b-f5b4-490f-876f-c1baa0b29ac0"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "thumbnail_uri",
+                                "value": {
+                                    "thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/31968bad-fb22-49f1-b782-dda04f9ee78a/56ea80c7-01ac-422c-9c22-c28de48c1e1b.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "7689ac81-1271-42c8-8ed3-a5a57590f82c"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "5f19742f-20f9-439c-b0be-63df18c56b99",
+                        "original_file_reference_uuid": [
+                            "269b149b-f5b4-490f-876f-c1baa0b29ac0"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "89955a65-2178-4a1c-af4e-b9a1d2bcd87a",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_d056cb02-a540-4060-9afd-f413b6885166",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/Ganglioneuroblastoma_1.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/Ganglioneuroblastoma_1.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "d056cb02-a540-4060-9afd-f413b6885166"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/89955a65-2178-4a1c-af4e-b9a1d2bcd87a/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/89955a65-2178-4a1c-af4e-b9a1d2bcd87a/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "036aed41-2049-47bf-97fb-0b1fa908fc5a",
+                        "original_file_reference_uuid": [
+                            "d056cb02-a540-4060-9afd-f413b6885166"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "8cc68728-2581-4fe2-bdb2-562b5a4fee39",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_d0d2884d-9b6d-4d72-ae81-c648df3de718",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth for randomly selected nuclei in PNG format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_12.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_singlecell_groundtruth/Neuroblastoma_12_singlemask.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "d0d2884d-9b6d-4d72-ae81-c648df3de718"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/8cc68728-2581-4fe2-bdb2-562b5a4fee39/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/8cc68728-2581-4fe2-bdb2-562b5a4fee39/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "af8badfa-b6cd-4259-817e-f02e0fd0fe68",
+                        "original_file_reference_uuid": [
+                            "d0d2884d-9b6d-4d72-ae81-c648df3de718"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "ac0ce47d-78f0-4f57-b77d-73d598a2fbf9",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_a0b630dc-cae9-459d-a4c7-11bb1cb1e3f6",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth for randomly selected nuclei of the testset (25 nuclei per testset class, a subset of all nuclei of the testset classes; human experts can compete with this low number of nuclei per subset by calculating Dice coefficients between their annotations and the groundtruth annotations)",
+                                        "source image": "dataset/rawimages/normal_40.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/singlecell_groundtruth/normal_40singlemask.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "a0b630dc-cae9-459d-a4c7-11bb1cb1e3f6"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/ac0ce47d-78f0-4f57-b77d-73d598a2fbf9/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/ac0ce47d-78f0-4f57-b77d-73d598a2fbf9/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "f36de18d-7ee1-42c0-bbcc-282e95160ea6",
+                        "original_file_reference_uuid": [
+                            "a0b630dc-cae9-459d-a4c7-11bb1cb1e3f6"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d0b3f24f-4a9c-499b-99e4-343de48e7c82",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_27e473bd-9b7e-4ccc-af53-3619a14f1346",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth for randomly selected nuclei of the testset (25 nuclei per testset class, a subset of all nuclei of the testset classes; human experts can compete with this low number of nuclei per subset by calculating Dice coefficients between their annotations and the groundtruth annotations)",
+                                        "source image": "dataset/rawimages/otherspecimen_3.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/singlecell_groundtruth/otherspecimen_3singlemask.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "27e473bd-9b7e-4ccc-af53-3619a14f1346"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d0b3f24f-4a9c-499b-99e4-343de48e7c82/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d0b3f24f-4a9c-499b-99e4-343de48e7c82/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "195694f6-7bad-49e3-8271-2854d2d1d4b9",
+                        "original_file_reference_uuid": [
+                            "27e473bd-9b7e-4ccc-af53-3619a14f1346"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d1cb8c93-32e1-43b3-b6a3-98e9a92a1301",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_2f2e15ff-fa4a-4bbe-ba46-5c4c237d744f",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth for randomly selected nuclei of the testset (25 nuclei per testset class, a subset of all nuclei of the testset classes; human experts can compete with this low number of nuclei per subset by calculating Dice coefficients between their annotations and the groundtruth annotations)",
+                                        "source image": "dataset/rawimages/otherspecimen_8.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/singlecell_groundtruth/otherspecimen_8singlemask.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "2f2e15ff-fa4a-4bbe-ba46-5c4c237d744f"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "image_thumbnail_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d1cb8c93-32e1-43b3-b6a3-98e9a92a1301/thumbnail_256x256.png"
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "image_static_display_uri": [
+                                        "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d1cb8c93-32e1-43b3-b6a3-98e9a92a1301/static_display_512x512.png"
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "64d4bf14-4eac-4ba8-af76-9979660c0fcf",
+                        "original_file_reference_uuid": [
+                            "2f2e15ff-fa4a-4bbe-ba46-5c4c237d744f"
+                        ]
+                    }
+                ]
             }
         ]
     }

@@ -112,7 +112,7 @@
         "description": "Fluorescent nuclear images of normal or cancer cells from different tissue origins and sample preparation types",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-example.png"],
         "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -418,7 +418,7 @@
         "description": null,
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-annotation-example.png"],
         "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
         "submitted_in_study": {
             "object_creator": "bia_ingest",

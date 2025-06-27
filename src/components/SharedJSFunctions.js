@@ -66,3 +66,19 @@ export function aggregateDatasetStats(datasets) {
     }
     return dataset_uuids
 }
+
+export function getTaxons(study) {
+    const taxonHtmlList = []
+    const taxonList = []
+    for (var dataset of study.dataset) {
+        for (var biosample of dataset.biological_entity) {
+            for (var taxon of biosample.organism_classification) {
+                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
+                    taxonList.push(taxon)
+                    taxonHtmlList.push(taxonRender(taxon))
+                }
+            }
+        }
+    }
+    return taxonHtmlList
+}

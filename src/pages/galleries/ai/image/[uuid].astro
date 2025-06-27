@@ -18,25 +18,27 @@ export function getStaticPaths() {
 }
 
 function getAttributes(image) {
-  return image.additional_metadata.find(meta =>
+  return image?.additional_metadata.find(meta =>
     meta.name.startsWith("attributes_from_file_reference")
   )?.value?.attributes || {};
 }
 
 function getMicronSize(rep) {
   return [
-    (1e6 * rep.voxel_physical_size_x ** 2).toPrecision(2),
-    (1e6 * rep.voxel_physical_size_y ** 2).toPrecision(2)
+    (1e6 * rep?.voxel_physical_size_x ** 2).toPrecision(2),
+    (1e6 * rep?.voxel_physical_size_y ** 2).toPrecision(2)
   ];
 }
 
 function getStudyData(datasetID) {
   const accessionID = datasets[datasetID].submitted_in_study.accession_id;
   return (
-    studyData.datasets[accessionID] ||
-    AIStudyData[accessionID] ||
-    SpatialomicsStudyData.datasets[accessionID]
-  );
+  studyData.datasets?.[accessionID] ??
+  AIStudyData?.[accessionID] ??
+  SpatialomicsStudyData.datasets?.[accessionID] ??
+  { title: "Unknown Study", dataset: [] }
+);
+
 }
 
 function getTaxons(study) {
@@ -73,18 +75,23 @@ if (image.creation_process?.input_image_uuid?.[0]) {
 }
 let annotatedImage = annotatedImages[0]
 
-const annotatedImageAttributes = getAttributes(annotatedImage);
-const sourceImageAtrributes = getAttributes(sourceImage)
-const annotatedImageRep = annotatedImage.representation.find((r) => r.image_format === ".ome.zarr");
-const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
-const [annotated_tissue_x, annotated_tissue_y] = getMicronSize(annotatedImageRep)
-const [source_tissue_x, source_tissue_y] = getMicronSize(sourceImageRep)
-const sourceImgS3Url = sourceImageRep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
-const annotatedImgS3Url = annotatedImageRep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
 const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
 const organism = getTaxons(studyInfo).join(", ");
-const imagingMethod = studyInfo.dataset.find((d) => d['uuid'] == sourceImage.submission_dataset_uuid).acquisition_process[0].imaging_method_name.join(", ")
-const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == annotatedImage.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
+
+const sourceImageAtrributes = getAttributes(sourceImage)
+const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
+const [source_tissue_x, source_tissue_y] = getMicronSize(sourceImageRep)
+const sourceImgS3Url = sourceImageRep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
+const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
+const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
+
+const annotatedImageAttributes = getAttributes(annotatedImage);
+const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
+const [annotated_tissue_x, annotated_tissue_y] = getMicronSize(annotatedImageRep)
+const annotatedImgS3Url = annotatedImageRep?.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
+const annotatedDataset = studyInfo.dataset.find((d) => d['uuid'] === annotatedImage?.submission_dataset_uuid);
+const annotationTypeMethod = annotatedDataset?.annotation_process[0] ?? {title: "", annotation_criteria:""};
+
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/galleries",
@@ -100,8 +107,9 @@ const breadcrumbs = [
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ studyInfo.accession_id }
                     <WebsiteStateButton/>
                 </h1>
-                <p class="studytitle">{studyInfo.title}</p>
-            <a href=`/bioimage-archive/galleries/ai/ai-ready-study/${studyInfo.accession_id}`>
+                <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
+              <br />
+            <a href={`/bioimage-archive/galleries/ai/ai-ready-study/${studyInfo.accession_id}`}>
                     <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                 </a>
         </div>
@@ -110,25 +118,39 @@ const breadcrumbs = [
         <section class="vf-content">
         </section>
         <section class="vf-content">
-            <div class="vf-grid vf-grid__col-2">
+          {annotatedImages.length > 0 ? (
+            <>
+              <div class="vf-grid vf-grid__col-2">
                 <div><h3><span>Source Image</span></h3></div>
                 <div><h3><span>Annotated Image <span id="AnnotatedImageLength">1</span> of {annotatedImages.length}</span></h3></div>
-            </div>   
-            <div style="display: flex; gap: 1rem;">
-                <iframe src={sourceImageRep.file_uri[0]} style="flex:1;height: 500px;min-width: 48%;"></iframe>
+              </div>   
+              <div style="display: flex; gap: 1rem;">
+                <iframe src={"https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+sourceImageRep.file_uri[0]} style="flex:1;height: 500px;min-width: 48%;"></iframe>
                 <div style="flex: 1; position: relative; overflow: hidden;">
-                    <button onclick="slide(-1)" class="slider-left-button"></button>
-                    <div id="slider">
-                        {annotatedImages.map((img) => {
-                            const rep = img.representation.find((r) => r.image_format === ".ome.zarr");
-                            return (
-                                <iframe src={rep.file_uri[0]} style="height: 500px; min-width: 100%; border: none;" id={img.uuid}></iframe>
-                            );
-                            })}
-                    </div>
-                    <button onclick="slide(1)" class="slider-right-button"></button>
+                  <span class="imageslider"><button onclick="slide(-1)" id="image-slider" class="slider-left-button"></button></span>
+                  <div id="slider">
+                    {annotatedImages.map((img) => {
+                      const rep = img.representation.find((r) => r.image_format === ".ome.zarr");
+                      if (!rep || !rep.file_uri?.[0]) return null;
+                      return (
+                        <iframe
+                          src={"https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+rep.file_uri[0]}
+                          style="height: 500px; min-width: 100%; border: none;"
+                          id={img.uuid}
+                        ></iframe>
+                      );
+                    })}
+                  </div>
+                  <span class="imageslider"><button onclick="slide(1)" class="slider-right-button"></button></span>
                 </div>   
-            </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <h3><span>Source Image</span></h3>
+              <iframe src={sourceImageRep.file_uri[0]} style="height: 500px; width: 100%;"></iframe>
+            </>
+          )}
         </section>
         <section class="vf-content">
             <div style="display: flex; justify-content: space-between; gap: 2rem;">
@@ -150,25 +172,34 @@ const breadcrumbs = [
                     </>
                 ))}
             </div>
-            <div style="flex: 1;">
-                
-                <a href={annotatedImageRep.file_uri[0]} id="OpenAnnotationInVizarr"><button class="vf-button vf-button--primary vf-button--sm">Open Annotation in Vizarr viewer</button></a>
-                <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+annotatedImgS3Url} id="OpenAnnotationInITK"><button class="vf-button vf-button--primary vf-button--sm">Open Annotation in ITK viewer</button></a>
-                <button class="vf-button vf-button--primary vf-button--sm" id="CopyAnnotationButton" data-url={annotatedImgS3Url}>Copy Annotation OME-Zarr URI</button>
+            {annotatedImages.length > 0 && (
+              <div style="flex: 1;">
+                <a href={annotatedImageRep?.file_uri[0]} id="OpenAnnotationInVizarr">
+                  <button class="vf-button vf-button--primary vf-button--sm">Open Annotation in Vizarr viewer</button>
+                </a>
+                <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + annotatedImgS3Url} id="OpenAnnotationInITK">
+                  <button class="vf-button vf-button--primary vf-button--sm">Open Annotation in ITK viewer</button>
+                </a>
+                <button class="vf-button vf-button--primary vf-button--sm" id="CopyAnnotationButton" data-url={annotatedImgS3Url}>
+                  Copy Annotation OME-Zarr URI
+                </button>
+
                 <h3>Image metadata</h3>
-                <b>Image size: </b> <span id="annotated-size">{annotated_tissue_x}μm x {annotated_tissue_y}μm</span><br>
-                <span id="annotated-pixels">{annotatedImageRep.size_x} x {annotatedImageRep.size_y} pixels</span><br />
-                <span id="annotated-channels">{annotatedImageRep.size_c} channels</span><br />
-                <span id="annotated-timesteps">{annotatedImageRep.size_t} timesteps</span><br /><br />
+                <b>Image size: </b> <span id="annotated-size">{annotated_tissue_x}μm x {annotated_tissue_y}μm</span><br />
+                <span id="annotated-pixels">{annotatedImageRep?.size_x} x {annotatedImageRep?.size_y} pixels</span><br />
+                <span id="annotated-channels">{annotatedImageRep?.size_c} channels</span><br />
+                <span id="annotated-timesteps">{annotatedImageRep?.size_t} timesteps</span><br /><br />
+
                 <h3>Additional metadata</h3>
                 <div id="annotated-metadata">
-                {Object.entries(annotatedImageAttributes).map(([key, value]) => (
+                  {Object.entries(annotatedImageAttributes).map(([key, value]) => (
                     <>
-                    <b>{key}:</b> {value}<br />
+                      <b>{key}:</b> {value}<br />
                     </>
-                ))}
+                  ))}
                 </div>
-            </div>
+              </div>
+            )}
             </div>
         </section>
         <div class="vf-divider" />
@@ -180,53 +211,60 @@ const breadcrumbs = [
             <b>Organism: </b> <span set:html={organism}/><br />
             <b>Imaging method: </b> {imagingMethod}<br />
             <b>Annotation type: </b><span id="annotation-type">{annotationTypeMethod.title}</span> <br />
-            <b>Annotation method: </b><span id="annotation-method">{annotationTypeMethod.annotation_criteria}</span> <br />
+            <b>Annotation method: </b><span id="annotation-method">{annotationTypeMethod?.annotation_method || annotationTypeMethod?.annotation_criteria}</span> <br />
         </div>
         </section>
         <script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
+        <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
         <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
         <script type="module">
-            let currentSlide = 0;
-            const slider = document.getElementById("slider");
-            const slides = slider.children;
-            const updateMetadata = (uuid) => {
-                const image = JSON.parse(document.getElementById("images-json").textContent).find(ai => ai.uuid === uuid)
-                const rep = image.representation.find((r) => r.image_format === ".ome.zarr");
-                const attributes = image.additional_metadata.find(meta =>
-                    meta.name.startsWith("attributes_from_file_reference")
-                )?.value?.attributes || {};
-                const micronX = (1e6 * rep.voxel_physical_size_x ** 2).toPrecision(2);
-                const micronY = (1e6 * rep.voxel_physical_size_y ** 2).toPrecision(2);
-                document.getElementById("annotated-size").innerText = `${micronX}μm x ${micronY}μm`;
-                document.getElementById("annotated-pixels").innerText = `${rep.size_x} x ${rep.size_y} pixels`;
-                document.getElementById("annotated-channels").innerText = `${rep.size_c} channels`;
-                document.getElementById("annotated-timesteps").innerText = `${rep.size_t} timesteps`;
-                const metaContainer = document.getElementById("annotated-metadata");
-                metaContainer.innerHTML = "";
-                Object.entries(attributes).forEach(([key, value]) => {
-                    const line = document.createElement("div");
-                    line.innerHTML = `<b>${key}:</b> ${value}<br />`;
-                    metaContainer.appendChild(line);
-                });
-                const s3url = rep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=', '');
-                const copyBtn = document.getElementById("CopyAnnotationButton");
-                copyBtn.dataset.url = s3url;
-                document.getElementById("OpenAnnotationInVizarr").href = rep.file_uri[0];
-                document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
-                const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
-                const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
-                document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
-                document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria
-            };
-            window.slide = function(direction) {
-                const total = slides.length;
-                currentSlide = (currentSlide + direction + total) % total;
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-                const currentUUID = slides[currentSlide].id;
-                document.getElementById("AnnotatedImageLength").innerText = currentSlide+1;
-                updateMetadata(currentUUID);
-            };
+            const numberOfAnnotatedImages = JSON.parse(document.getElementById("images-length").textContent);
+            if(numberOfAnnotatedImages <= 1){
+              document.getElementsByClassName("imageslider")[0].style.display = "none";
+              document.getElementsByClassName("imageslider")[1].style.display = "none";
+            }else{
+              let currentSlide = 0;
+              const slider = document.getElementById("slider");
+              const slides = slider.children;
+              const updateMetadata = (uuid) => {
+                  const image = JSON.parse(document.getElementById("images-json").textContent).find(ai => ai.uuid === uuid)
+                  const rep = image.representation.find((r) => r.image_format === ".ome.zarr");
+                  const attributes = image.additional_metadata.find(meta =>
+                      meta.name.startsWith("attributes_from_file_reference")
+                  )?.value?.attributes || {};
+                  const micronX = (1e6 * rep.voxel_physical_size_x ** 2).toPrecision(2);
+                  const micronY = (1e6 * rep.voxel_physical_size_y ** 2).toPrecision(2);
+                  document.getElementById("annotated-size").innerText = `${micronX}μm x ${micronY}μm`;
+                  document.getElementById("annotated-pixels").innerText = `${rep.size_x} x ${rep.size_y} pixels`;
+                  document.getElementById("annotated-channels").innerText = `${rep.size_c} channels`;
+                  document.getElementById("annotated-timesteps").innerText = `${rep.size_t} timesteps`;
+                  const metaContainer = document.getElementById("annotated-metadata");
+                  metaContainer.innerHTML = "";
+                  Object.entries(attributes).forEach(([key, value]) => {
+                      const line = document.createElement("div");
+                      line.innerHTML = `<b>${key}:</b> ${value}<br />`;
+                      metaContainer.appendChild(line);
+                  });
+                  const s3url = rep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=', '');
+                  const copyBtn = document.getElementById("CopyAnnotationButton");
+                  copyBtn.dataset.url = s3url;
+                  document.getElementById("OpenAnnotationInVizarr").href = rep.file_uri[0];
+                  document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
+                  const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
+                  const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
+                  document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
+                  document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria
+              };
+              window.slide = function(direction) {
+                  const total = slides.length;
+                  currentSlide = (currentSlide + direction + total) % total;
+                  slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                  const currentUUID = slides[currentSlide].id;
+                  document.getElementById("AnnotatedImageLength").innerText = currentSlide+1;
+                  updateMetadata(currentUUID);
+              };
+              updateMetadata(slides[0].id);
+            }
             const originalText = "Copy Annotation OME-Zarr URI";
             document.getElementById("CopyURLButton").onclick = async (e) => {
                 const url = e.target.dataset.url;
@@ -240,6 +278,6 @@ const breadcrumbs = [
                 e.target.innerText = "URI Copied";
                 setTimeout(() => e.target.innerText = originalText, 700);
             };
-            updateMetadata(slides[0].id);
+            
         </script>
 </BaseLayout>
