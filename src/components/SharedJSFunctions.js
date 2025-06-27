@@ -1,3 +1,5 @@
+import { Configuration, DefaultApi } from 'bia-search';
+
 export function getPlaceholderHeroImage(accessionID) {
     const match = accessionID.match(/(\d{1,5})$/);
     const accessionIDNumber = parseInt(match[1]);
@@ -65,4 +67,13 @@ export function aggregateDatasetStats(datasets) {
       dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title])
     }
     return dataset_uuids
+}
+
+export function getApiClient() {
+    const config = new Configuration({
+        basePath: import.meta.env.PUBLIC_API_BASE_URL
+    });
+
+    const api = new DefaultApi(config);
+    return api;
 }
