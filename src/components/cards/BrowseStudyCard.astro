@@ -1,6 +1,7 @@
 ---
 import { getTaxons, formatListItem, taxonRender, getStudyImage } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
+import StudyTitleInfo from "../study-page/StudyTitleInfo.astro";
 const { study, studyPageRoot, taglist, cardImageOverride} = Astro.props;
 
 
@@ -41,6 +42,13 @@ function getDataForCardFilter(study) {
     const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
     return dataString
 }
+
+function getAnnotationType(study){
+    return study.dataset.find((dataset) => dataset?.annotation_type?.length > 0 )?.annotation_type || []
+}
+
+
+const annotationType = getAnnotationType(study);
 ---
 <article class="vf-card vf-card--brand vf-card--bordered" data-message={getDataForCardFilter(study)}>
     <img src={ getStudyImage(study, cardImageOverride) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
@@ -61,6 +69,12 @@ function getDataForCardFilter(study) {
         {taglist && taglist.length > 0 && (
             <p class="vf-card__text">
                 <b>Tags:</b> {taglist.reduce(formatListItem, "")}
+            </p>
+        )}
+
+        {annotationType && annotationType.length > 0 && (
+            <p class="vf-card__text">
+                <b>Annotation Type:</b> {annotationType.join(", ")}
             </p>
         )}
     </div>

@@ -418,6 +418,7 @@
         "description": null,
         "analysis_method": [],
         "correlation_method": [],
+        "annotation_type": ["segmentation mask", "tracks"],
         "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-annotation-example.png"],
         "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
         "submitted_in_study": {
