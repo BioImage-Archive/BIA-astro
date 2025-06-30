@@ -1,0 +1,73 @@
+---
+const { datasets } = Astro.props;
+---
+
+<section class="vf-content | embl-grid embl-grid--has-centered-content">
+  <div class="vf-section-header">
+    <h2 class="vf-section-header__heading" id="all_files">All Files</h2>
+  </div>
+
+  <div class="vf-grid__col--span-2">
+    <p>Dataset: 
+    <select id="dataset_selector" class="form-select" data-datasets={JSON.stringify(datasets)}>
+      <option value="" disabled selected>Select a Dataset</option>
+      {datasets.map(ds => (
+        <option value={ds.uuid}>{ds.title} ({ds.image.length} files)</option>
+      ))}
+    </select>
+    </p>
+    <br />
+    <table id="dataset_files_table" class="display w-full" ></table>
+  </div>
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropdown = document.getElementById("dataset_selector");
+      const datasets = JSON.parse(dropdown.dataset.datasets);
+      let dataTable;
+
+      dropdown.addEventListener("change", () => {
+        const selectedUuid = dropdown.value;
+        const selectedDataset = datasets.find(ds => ds.uuid === selectedUuid);
+
+        if (!selectedDataset) return;
+        if (dataTable) {
+          dataTable.destroy();
+          document.getElementById("dataset_files_table").innerHTML = "";
+        }
+        dataTable = $('#dataset_files_table').DataTable({
+          data: selectedDataset.image,
+          columns: [
+            { data: "uuid", title: "File UUID" },
+            { 
+              data: "file_name", 
+              title: "File Name", 
+              render: data => data?.replace("/", "/&#8203;") || "(missing)"
+            },
+            { 
+              data: "file_uri", 
+              title: "Actions", 
+              render: data => `<button class="copy-btn | vf-link" data-uri="${data}" style="background: none;border: none;text-decoration: underline;cursor: pointer;padding: 0;font: inherit;"">Copy URL</button>`
+            }
+          ],
+          pageLength: 25,
+          searching: true,
+          ordering: true,
+          scrollX: true,
+          createdRow: (row) => {
+            $(row).find(".copy-btn").on("click", function () {
+              const uri = $(this).data("uri");
+              navigator.clipboard.writeText(uri).then(() => {
+                this.innerText = "URI Copied";
+                setTimeout(() => this.innerText = "Copy URL", 700);
+              });
+            });
+          }
+        });
+      });
+      if (datasets.length > 0) {
+        dropdown.selectedIndex = 1;
+        dropdown.dispatchEvent(new Event("change"));
+      }
+    });
+  </script>
+</section>
