@@ -24,11 +24,13 @@ function getAttributes(image) {
 }
 
 function getMicronSize(rep) {
+  if (!rep?.voxel_physical_size_x || !rep?.voxel_physical_size_y) return ["?", "?"];
   return [
-    (1e6 * rep?.voxel_physical_size_x ** 2).toPrecision(2),
-    (1e6 * rep?.voxel_physical_size_y ** 2).toPrecision(2)
+    (1e6 * rep.voxel_physical_size_x ** 2).toPrecision(2),
+    (1e6 * rep.voxel_physical_size_y ** 2).toPrecision(2),
   ];
 }
+
 
 function getStudyData(datasetID) {
   const accessionID = datasets[datasetID].submitted_in_study.accession_id;
@@ -73,22 +75,22 @@ if (image.creation_process?.input_image_uuid?.[0]) {
     img.creation_process?.input_image_uuid?.[0] === uuid
   );
 }
-let annotatedImage = annotatedImages[0]
+let annotatedImage = annotatedImages[0];
 
 const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
 const organism = getTaxons(studyInfo).join(", ");
 
 const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
-const [source_tissue_x, source_tissue_y] = getMicronSize(sourceImageRep)
-const sourceImgS3Url = sourceImageRep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
+const [source_tissue_x, source_tissue_y] = getMicronSize(sourceImageRep);
+const sourceImgS3Url = sourceImageRep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','') || "";
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
 const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
 
 const annotatedImageAttributes = getAttributes(annotatedImage);
 const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
-const [annotated_tissue_x, annotated_tissue_y] = getMicronSize(annotatedImageRep)
-const annotatedImgS3Url = annotatedImageRep?.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
+const [annotated_tissue_x, annotated_tissue_y] = getMicronSize(annotatedImageRep);
+const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','') || "";
 const annotatedDataset = studyInfo.dataset.find((d) => d['uuid'] === annotatedImage?.submission_dataset_uuid);
 const annotationTypeMethod = annotatedDataset?.annotation_process[0] ?? {title: "", annotation_criteria:""};
 
@@ -125,7 +127,7 @@ const breadcrumbs = [
                 <div><h3><span>Annotated Image <span id="AnnotatedImageLength">1</span> of {annotatedImages.length}</span></h3></div>
               </div>   
               <div style="display: flex; gap: 1rem;">
-                <iframe src={"https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+sourceImageRep.file_uri[0]} style="flex:1;height: 500px;min-width: 48%;"></iframe>
+                <iframe src={"https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+sourceImgS3Url} style="flex:1;height: 500px;min-width: 48%;"></iframe>
                 <div style="flex: 1; position: relative; overflow: hidden;">
                   <span class="imageslider"><button onclick="slide(-1)" id="image-slider" class="slider-left-button"></button></span>
                   <div id="slider">
@@ -148,7 +150,7 @@ const breadcrumbs = [
           ) : (
             <>
               <h3><span>Source Image</span></h3>
-              <iframe src={sourceImageRep.file_uri[0]} style="height: 500px; width: 100%;"></iframe>
+              <iframe src={"https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+sourceImgS3Url} style="height: 500px; width: 100%;"></iframe>
             </>
           )}
         </section>
@@ -174,7 +176,7 @@ const breadcrumbs = [
             </div>
             {annotatedImages.length > 0 && (
               <div style="flex: 1;">
-                <a href={annotatedImageRep?.file_uri[0]} id="OpenAnnotationInVizarr">
+                <a href={annotatedImageRep?.file_uri?.[0] || ""} id="OpenAnnotationInVizarr">
                   <button class="vf-button vf-button--primary vf-button--sm">Open Annotation in Vizarr viewer</button>
                 </a>
                 <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=" + annotatedImgS3Url} id="OpenAnnotationInITK">
