@@ -1,0 +1,35 @@
+---
+const { url, imageRep, imageAtrributes, text, btnID} = Astro.props;
+
+function getMicronSize(rep) {
+  if (!rep?.voxel_physical_size_x || !rep?.voxel_physical_size_y) return ["0", "0"];
+  return [
+    (1e6 * rep.voxel_physical_size_x ** 2).toPrecision(2),
+    (1e6 * rep.voxel_physical_size_y ** 2).toPrecision(2),
+  ];
+}
+const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
+const [tissue_x, tissue_y] = getMicronSize(imageRep);
+---
+<div style="flex: 1;">
+    <a href={vizarrURL+url}>
+        <button class="vf-button vf-button--primary vf-button--sm">Open {text} in Vizarr viewer</button>
+    </a> 
+    <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url}>
+        <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
+    </a>
+    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={vizarrURL+url}>Copy {text} OME-Zarr URI</button><br/>
+    
+    <h3>Image metadata</h3>
+    <b>Image size: </b> {tissue_x}μm x {tissue_y}μm<br>
+    {imageRep.size_x} x {imageRep.size_y} pixels<br />
+    {imageRep.size_c} channels<br />
+    {imageRep.size_t} timesteps
+    <br /> <br />
+    <h3>Additional metadata</h3>
+    {Object.entries(imageAtrributes).map(([key, value]) => (
+        <>
+        <b>{key}:</b> {value}<br />
+        </>
+    ))}
+</div>
