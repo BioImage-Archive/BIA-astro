@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "postinstall": "cd node_modules/bia-search && npm install && npm run build",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build && cp public/robots.txt dist/robots.txt && cp public/redirect_index.html dist/index.html",
@@ -21,7 +22,7 @@
     "datatables.net-dt": "^2.1.0",
     "jquery": "^3.7.1",
     "typescript": "^5.2.2",
-    "bia-search": "file:../bia-integrator/clients/search/typescript/"
+    "bia-search": "https://gitpkg.vercel.app/BioImage-Archive/bia-integrator/clients/search/typescript?elastic_api"
   },
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",

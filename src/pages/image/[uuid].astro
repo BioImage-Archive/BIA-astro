@@ -7,8 +7,6 @@ import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
-import datasetMetadata from "../../data/bia-dataset-metadata-for-images.json";
-import imageMetadata from "../../data/bia-image-metadata.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
 import {getSimpleAttributeValue, getApiClient } from "../../components/SharedJSFunctions.js"
 
@@ -19,10 +17,13 @@ const annotationMethodMap = fieldMap["annotation_method"];
 const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
+const api = getApiClient();
+let results = await api.getDoc({ uuid });
+const image = results.hits[0]._source;
 
-const image = imageMetadata[uuid];
+results = (await api.getDoc({ uuid: image.submission_dataset_uuid }))
+const imageDataset = results.hits[0]._source;
 
-const imageDataset = datasetMetadata[image.submission_dataset_uuid]
 const imageStudy = imageDataset.submitted_in_study
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
@@ -46,11 +47,6 @@ let specimen
 if ("subject" in creation_process && creation_process.subject != null) {
     specimen = creation_process.subject
 }
-
-
-const api = getApiClient();
-const results = await api.fts({ query: "drosophilla"});
-console.log(results)
 
 
 function formatPhysicalDimension(value, text) {
