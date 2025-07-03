@@ -17,7 +17,7 @@ const { datasets } = Astro.props;
     </select>
     </p>
     <br />
-    <table id="dataset_files_table" class="display w-full" ></table>
+    <table id="dataset_files_table" class="vf-table display" ></table>
   </div>
   <script type="module">
     document.addEventListener("DOMContentLoaded", () => {
@@ -53,6 +53,10 @@ const { datasets } = Astro.props;
           searching: true,
           ordering: true,
           scrollX: true,
+          headerCallback: function(thead) {
+            $(thead).addClass("vf-table__header");
+            $(thead).find("th").addClass("vf-table__heading");
+          },
           createdRow: (row) => {
             $(row).find(".copy-btn").on("click", function () {
               const uri = $(this).data("uri");

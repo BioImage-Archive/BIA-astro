@@ -11,7 +11,7 @@ function getMicronSize(rep) {
 const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
 const [tissue_x, tissue_y] = getMicronSize(imageRep);
 ---
-<div style="flex: 1;">
+<div style="min-width: 48%">
     <a href={vizarrURL+url}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in Vizarr viewer</button>
     </a> 
@@ -22,14 +22,20 @@ const [tissue_x, tissue_y] = getMicronSize(imageRep);
     
     <h3>Image metadata</h3>
     <b>Image size: </b> {tissue_x}μm x {tissue_y}μm<br>
-    {imageRep.size_x} x {imageRep.size_y} pixels<br />
-    {imageRep.size_c} channels<br />
-    {imageRep.size_t} timesteps
+    {imageRep?.size_x} x {imageRep?.size_y} pixels<br />
+    {imageRep?.size_c} channels<br />
+    {imageRep?.size_t} timesteps
     <br /> <br />
-    <h3>Additional metadata</h3>
-    {Object.entries(imageAtrributes).map(([key, value]) => (
+    {
+      imageAtrributes && Object.keys(imageAtrributes).length === 0 ? <span></span> : (
         <>
-        <b>{key}:</b> {value}<br />
+          <h3>Additional metadata</h3>
+          {Object.entries(imageAtrributes).map(([key, value]) => (
+            <>
+            <b>{key}:</b> {value}<br />
         </>
-    ))}
+        ))}
+        </>
+      )
+    }
 </div>

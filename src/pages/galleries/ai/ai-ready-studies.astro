@@ -1,14 +1,12 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro';
-import DatasetCard from '../../../components/cards/GalleryDatasetCard.astro';
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 import collection from '../../../data/collections/ai-ready-datasets.json';
 //import exports from "../../../data/old-export-format/bia-ai-export.json";
-import exports from "../../../data/current-export-mock/bia-ai-study-export.json";
+import exports from "../../../data/current-export/bia-ai-study-export.json";
 
 const studys = exports;
-
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>
@@ -22,7 +20,7 @@ const studys = exports;
 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(studys).map((study) => ( <StudyCard study={study} studyPageRoot={`galleries/ai/ai-ready-study`} taglist={study.keyword || []} /> )) }
+          { Object.values(studys).map((study) => ( <StudyCard study={study} studyPageRoot={`galleries/ai/ai-ready-study`} taglist={study.additional_metadata.find(md => md.name==="ai_tags")?.value?.ai_tags[0] || []} /> )) }
         </div>
     </section>
   </body>

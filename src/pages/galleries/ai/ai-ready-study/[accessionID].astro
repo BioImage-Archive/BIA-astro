@@ -1,13 +1,14 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons } from "../../../../components/SharedJSFunctions"
-import exports from "../../../../data/current-export-mock/bia-ai-study-export.json";
-import images from "../../../../data/current-export-mock/bia-ai-image-export.json";
+import { getTaxons, getAnnotationType } from "../../../../components/SharedJSFunctions"
+import exports from "../../../../data/current-export/bia-ai-study-export.json";
+import images from "../../../../data/current-export/bia-ai-image-export.json";
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
 import AIDatasetFilesTable from "../../../../components/ai-gallery/AIDatasetFilesTable.astro";
-import { doSwap } from "astro/virtual-modules/transitions-events.js";
-
+import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
+import { undefined } from "astro:schema";
+import "../../../../styles/image_slider.css"
 
 export function getStaticPaths() {
   return Object.values(exports).map((dataset) => {
@@ -19,24 +20,32 @@ export function getStaticPaths() {
 
 function getThumbnail(img){
   return img?.additional_metadata?.find(md => md.name === "thumbnail_uri")?.value?.thumbnail_uri?.[0]
+                 || img?.additional_metadata?.find(md => md.name === "image_thumbnail_uri")?.value["256_256"]
                  || img?.additional_metadata?.find(md => md.name === "image_thumbnail_uri")?.value?.image_thumbnail_uri?.[0]
                  || ""
 }
 
-const tableOfContents = {
-  "Curated Study Information": "study",
-  "Models Related To This Work": "models",
-  "Annotated Datasets": "annotated_datasets",
-  "Viewable Annotated Images": "all_images",
-  "All Files": "all_files",
-};
-
 const { accessionID } = Astro.params;
 const study = exports[accessionID];
 
+const annotatedImagesMap = new Map();
+const allInputImageUUIDs = new Set();
+
+
+for (const img of Object.values(images)) {
+  if (img.creation_process?.input_image_uuid?.length) {
+    const key = img.creation_process.input_image_uuid[0];
+    allInputImageUUIDs.add(img.uuid)
+    if (!annotatedImagesMap.has(key)) {
+      annotatedImagesMap.set(key, []);
+    }
+    annotatedImagesMap.get(key).push(img);
+  }
+}
+
 const datasets = study.dataset.map(ds => ({
   uuid: ds.uuid,
-  image: ds.image.map(img => {
+  image: ds.image.filter(img=> annotatedImagesMap.has(img.uuid) || allInputImageUUIDs.has(img.uuid)).map(img => {
     const filePatternMeta = img?.additional_metadata?.find(md => md.name === "file_pattern");
     const filePattern = filePatternMeta?.value?.file_pattern || "";
     const imageRep = images[img.uuid]?.representation.find(r => r.image_format === ".ome.zarr");
@@ -54,23 +63,16 @@ const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(dataset => dataset.acquisition_process.length > 0 && dataset.annotation_process.length == 0)[0];
 const imaging_method = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
-
+const sourceExampleImageURI = sourceDataset?.example_image_uri
 // Need a better logic to identify source dataset and annotation dataset
 const annotationDatasets = study.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
 const annotationExampleImageURI = annotationDatasets.find(ad => ad.example_image_uri.length > 0)?.example_image_uri[0];
-const annotatedImagesMap = new Map();
-for (const img of Object.values(images)) {
-  if (img.creation_process?.input_image_uuid?.length) {
-    const key = img.creation_process.input_image_uuid[0];
-    if (!annotatedImagesMap.has(key)) {
-      annotatedImagesMap.set(key, []);
-    }
-    annotatedImagesMap.get(key).push(img);
-  }
-}
+
 const totalViewableImages = datasets.reduce((count, ds) => count + ds.image.filter(img => !!img.file_uri).length, 0);
 const totalFiles = datasets.reduce((count, ds) => count + ds.image.length, 0);
 const totalSizeBytes = datasets.reduce((sum, ds) => sum + ds.dataset_size, 0);
+
+const modelInformation = study?.additional_metadata?.find(md => md.name === "associated_ai_models")?.value?.associated_ai_models[0] || undefined;
 
 function formatBytes(bytes) {
   if (bytes === 0) return "0 Bytes";
@@ -91,6 +93,33 @@ const breadcrumbs = [
   "/bioimage-archive/galleries/ai",
   "/bioimage-archive/galleries/ai/ai-ready-studies",
 ]
+
+const studyContent = {
+  "Study summary": study?.additional_metadata.find(md=> md.name==="one_summary")?.value?.one_summary || study.description,
+  "License": "CC0",
+  "Tags": study?.additional_metadata.find(md=> md.name==="ai_tags")?.value?.ai_tags[0].join(", ") || study.keyword.join(", ")
+}
+const modelContent = {
+  "Model description": modelInformation?.description,
+  "Model link": modelInformation?.link
+}
+
+const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
+  dataset_title: dataset.title,
+  organism: organism,
+  imaging: imaging_method,
+  annotation_type: dataset.additional_metadata.find(md=> md.name === "annotation_type")?.value?.annotation_type?.[0].join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
+  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
+}))
+
+const tableOfContents = {
+  "Curated Study Information": "study",
+  "Models Related To This Work": "models",
+  "Annotated Datasets": "annotated_datasets",
+  "Viewable Annotated Images": "all_images",
+  "All Files": "all_files",
+};
+modelInformation === undefined ? delete tableOfContents["Models Related To This Work"] : "";
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
@@ -102,7 +131,7 @@ const breadcrumbs = [
           <figure class="vf-figure"  style="width: 48%">
             <img
               class="vf-figure__image"
-              src={sourceDataset.example_image_uri}
+              src={sourceExampleImageURI}
               alt="Example image for this dataset"
             />
             <figcaption class="vf-figure__caption">
@@ -123,59 +152,15 @@ const breadcrumbs = [
         </div>
   </StudyContentsSummary>
   <hr/>
-  <section class="embl-grid embl-grid--has-centered-content">
-    <div>
-      <h2 class="vf-section-header__heading" id="study">Curated Study Information</h2>
-    </div>
-    <div>
-      <p><b>Study summary: </b> {study.description}</p>
-      <p><b>Licence: </b> CC0</p>
-      <p><b>Tags: </b> {study.keyword.join(", ")}</p>
-    </div>
-    <div></div>
-  </section>
-  <hr/>
-  <section class="embl-grid embl-grid--has-centered-content">
-    <div>
-      <h2 class="vf-section-header__heading" id="models">Models Related To This Work</h2>
-    </div>
-    <div>
-      <p><b>Model description: </b> {study?.model_description || "Not available"}</p>
-      <p><b>Model link: </b> {study?.model_uri || "Not available"}</p>
-    </div>
-    <div></div>
-  </section>
-  <hr/>
-  <section class="embl-grid embl-grid--has-centered-content">
-    <div>
-      <h2 class="vf-section-header__heading" id="annotated_datasets">Annotated Datasets</h2>
-    </div>
-    <div>
-      {annotationDatasets.map((dataset, index) => (
-        <div>
-          <p><b>{dataset.title}</b></p>
-          <div style="padding-left: 1.5rem;">
-            <p><b>Organism:</b> <span set:html={organism}/></p>
-            <p><b>Imaging method:</b> {imaging_method}</p>
-            {dataset.annotation_process.map((annotationProcess, i) => (
-              <div>
-                <p><b>Annotation type: </b> {annotationProcess?.title}</p>
-                <p><b>Annotation method: </b> {annotationProcess?.annotation_method || annotationProcess?.annotation_criteria}</p>
-              </div>
-            ))}
-        </div>
-      </div>
-    ))}
-    </div>
-    <div></div>
-  </section>
-  <hr/>
+  <StudyComponents title="Curated Study Information", id="study" content={studyContent} />
+  {modelInformation === undefined ? <br /> :  <StudyComponents title="Models Related To This Work" id="models" content={modelContent} />}
+  <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent}/>
   <section class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
       <h2 class="vf-section-header__heading" id="all_images">Viewable Annotated Images</h2>
     </div>
-    <div>
-      <table id="viewable_images" class="display">
+    <div class="vf-grid__col--span-2">
+      <table id="viewable_images" class="display vf-table">
         <thead class="vf-table__header">
           <tr>
             <th class="vf-table__heading" scope="col">Image Preview</th>
@@ -188,7 +173,7 @@ const breadcrumbs = [
           </tr>
         </thead>
         <tbody class="vf_table__body">
-        {sourceDataset?.image.map((sourceImage) => {
+        {sourceDataset?.image?.filter(img=> annotatedImagesMap.has(img.uuid)).map((sourceImage) => {
           const annotatedImgs = annotatedImagesMap.get(sourceImage.uuid) || [];
           return (
             <tr>
@@ -197,20 +182,18 @@ const breadcrumbs = [
                 <img src={getThumbnail(sourceImage)} alt="Preview" width="80" /></td>
                 </a>
               <td>
-                {annotatedImgs.length > 0 ? annotatedImgs.map((annImg) => (
-                  <a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}>
-
-                    <img
-                      src={getThumbnail(annImg)}
-                      alt="Annotation Preview"
-                      width="80"
-                    />
-                  </a>
-                )) : "Not available"}
+                <div class="slideshow-container">
+                {annotatedImgs.length > 1 ? annotatedImgs.map((annImg) => (
+                  <div class="slides fade">
+                  <a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
+                  </div>
+                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
+                }
+                </div>
               </td>
               <td>{sourceImage.uuid}</td>
               <td>{sourceDataset.title}</td>
-              <td>{annotatedImgs.length > 0 ? annotatedImgs.map((annImg) => annImg.uuid).join(", ") : "Not available"}</td>
+              <td>{annotatedImgs.length > 1 ? annotatedImgs.map((annImg) => <span class="uuid">{annImg.uuid}</span>) : annotatedImgs.map((annImg) => annImg.uuid)}</td>
               <td>{annotationDatasets.map(ds => ds.title).join(", ")}</td>
               <td>
                 <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>View</a>
@@ -232,5 +215,24 @@ const breadcrumbs = [
         columnDefs: [{ type: "natural", targets: 0 }],
       });
     });
+    let slideIndex = 0;
+    showSlides();
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("slides");
+      let uuid = document.getElementsByClassName("uuid");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}
+      for (i = 0; i < uuid.length; i++) {
+          uuid[i].style.display = "none";
+      }    
+      slides[slideIndex-1].style.display = "block";
+      uuid[slideIndex-1].style.display = "block";  
+      setTimeout(showSlides, 3500);
+    }
 </script>
 </BaseLayoutWithBreadcrumbs>
+

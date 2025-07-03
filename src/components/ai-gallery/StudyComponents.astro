@@ -1,0 +1,30 @@
+---
+const { title, content, id, license } = Astro.props;
+---
+
+<section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <h2 class="vf-section-header__heading" id={id}>{title}</h2>
+    </div>
+    <div>
+        {
+            id!=="annotated_datasets" ? Object.keys(content).map((key, value)=> <p><b>{key}: </b>{content[key]}</p>) : (
+                content.map( (dataset) => 
+                    <p><b>{dataset.dataset_title}</b></p>
+                        <div style="padding-left: 1.5rem;">
+                            {
+                                license ? <p><b>License: </b><a href={license.link}>{license.text}</a></p> : <span></span>
+                            }  
+                            <p><b>Organism: </b> <span set:html={dataset.organism}/></p>
+                            <p><b>Imaging method: </b> {dataset.imaging}</p>
+                            <div>
+                                <p><b>Annotation type: </b> {dataset.annotation_type}</p>
+                                <p><b>Annotation method: </b> {dataset.annotation_method}</p>
+                            </div>
+                        </div>
+            ))
+        }     
+    </div>
+    <div></div>
+  </section>
+  <hr/>

@@ -3,13 +3,16 @@ import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcr
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
 import { taxonRender } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
-import ImageMetadata from '../../../../components/ai-gallery/ImageMetadata.astro';
-import exports from "../../../../data/current-export-mock/bia-ai-image-export.json";
-import datasets from "../../../../data/current-export-mock/bia-ai-dataset-export.json";
+import exports from "../../../../data/current-export/bia-ai-image-export.json";
+import datasets from "../../../../data/current-export/bia-ai-dataset-export.json";
 import studyData from "../../../../data/old-export-format/bia-export.json";
-import AIStudyData from "../../../../data/current-export-mock/bia-ai-study-export.json";
+import AIStudyData from "../../../../data/current-export/bia-ai-study-export.json";
 import SpatialomicsStudyData from "../../../../data/old-export-format/bia-spatialomics-export.json";
+import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
+
+
+
 export function getStaticPaths() {
   return Object.keys(exports).map((uuid) => {
     return {
@@ -18,23 +21,14 @@ export function getStaticPaths() {
   });
 }
 
-function getAttributes(image) {
-  return image?.additional_metadata.find(meta =>
-    meta.name.startsWith("attributes_from_file_reference")
-  )?.value?.attributes || {};
-}
-
-
-
 function getStudyData(datasetID) {
   const accessionID = datasets[datasetID].submitted_in_study.accession_id;
   return (
-  studyData.datasets?.[accessionID] ??
-  AIStudyData?.[accessionID] ??
-  SpatialomicsStudyData.datasets?.[accessionID] ??
-  { title: "Unknown Study", dataset: [] }
-);
-
+    studyData.datasets?.[accessionID] ??
+    AIStudyData?.[accessionID] ??
+    SpatialomicsStudyData.datasets?.[accessionID] ??
+    { title: "Unknown Study", dataset: [] }
+  );
 }
 
 function getTaxons(study) {
@@ -69,24 +63,21 @@ if (image.creation_process?.input_image_uuid?.[0]) {
     img.creation_process?.input_image_uuid?.[0] === uuid
   );
 }
-let annotatedImage = annotatedImages[0];
 
 const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
 const organism = getTaxons(studyInfo).join(", ");
 const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
-const sourceImageAtrributes = getAttributes(sourceImage)
-const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
-
-const sourceImgS3Url = sourceImageRep.file_uri[0].replace(vizarrURL,'') || "";
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
 const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
-
-const annotatedImageAttributes = getAttributes(annotatedImage);
-const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
-const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
-const annotatedDataset = studyInfo.dataset.find((d) => d['uuid'] === annotatedImage?.submission_dataset_uuid);
-const annotationTypeMethod = annotatedDataset?.annotation_process[0] ?? {title: "", annotation_criteria:""};
-
+const annotationDatasets = studyInfo.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
+const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
+  dataset_title: dataset.title,
+  organism: organism,
+  imaging: imagingMethod,
+  annotation_type: dataset.additional_metadata.find(md=> md.name === "annotation_type")?.value?.annotation_type?.[0].join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
+  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
+}))
+const license = {link: "https://creativecommons.org/publicdomain/zero/1.0/", text: "CC0"}
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/galleries",
@@ -110,27 +101,9 @@ const breadcrumbs = [
         </div>
         </section>
         <section class="vf-content "><a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download these images</a><br/></section>    
-        <SourceAnnotatedImage annotatedImages={annotatedImages} sourceImgS3Url={sourceImgS3Url} vizarrURL={vizarrURL}/>
-        <section class="vf-content">
-            <div style="display: flex; justify-content: space-between; gap: 2rem;">
-              <ImageMetadata text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
-            {annotatedImages.length > 0 && (
-              <ImageMetadata text="Annotation" url={annotatedImgS3Url} imageRep={annotatedImageRep} imageAtrributes={annotatedImageAttributes} btnID="CopyAnnotationButton"/>
-            )}
-            </div>
-        </section>
+        <SourceAnnotatedImage annotatedImages={annotatedImages} sourceImage={sourceImage} vizarrURL={vizarrURL} btnID="CopyURLButton"/>
         <hr />
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-        <div><h3>Annotated Dataset</h3></div>
-        <div>
-            <h4>{datasets[sourceImage.submission_dataset_uuid].title}</h4>
-            <b>License: </b><a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a><br />
-            <b>Organism: </b> <span set:html={organism}/><br />
-            <b>Imaging method: </b> {imagingMethod}<br />
-            <b>Annotation type: </b><span id="annotation-type">{annotationTypeMethod.title}</span> <br />
-            <b>Annotation method: </b><span id="annotation-method">{annotationTypeMethod?.annotation_method || annotationTypeMethod?.annotation_criteria}</span> <br />
-        </div>
-        </section>
+        <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
         <script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
         <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
         <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
