@@ -1,0 +1,48 @@
+#slider{
+    display: flex; 
+    transition: transform 0.3s ease;
+}
+
+.slider-right-button{
+    position:absolute; 
+    right:0;
+    margin-right: 3%; 
+    top:50%; 
+    z-index:10; 
+    padding: 10px; 
+    border: solid white;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border-width: 0 10px 10px 0;
+    display: inline-block;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(-45deg)
+}
+
+.slider-left-button{
+    position:absolute; 
+    left:0;
+    margin-left: 3%; 
+    top:50%; 
+    z-index:10;
+    padding: 10px; 
+    border: solid white;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border-width: 0 10px 10px 0;
+    display: inline-block;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(135deg)
+}
+
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}

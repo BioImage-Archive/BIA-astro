@@ -66,3 +66,39 @@ export function aggregateDatasetStats(datasets) {
     }
     return dataset_uuids
 }
+
+export function getTaxons(study) {
+    const taxonHtmlList = []
+    const taxonList = []
+    for (var dataset of study.dataset) {
+        for (var biosample of dataset.biological_entity) {
+            for (var taxon of biosample.organism_classification) {
+                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
+                    taxonList.push(taxon)
+                    taxonHtmlList.push(taxonRender(taxon))
+                }
+            }
+        }
+    }
+    return taxonHtmlList
+}
+
+export function getAnnotationType(dataset) {
+  const fromAdditionalMetadata = dataset
+    .flatMap(dataset =>
+      dataset.additional_metadata
+        ?.filter(md => md.name === "annotation_type")
+        .map(md => md.value?.annotation_type?.[0].join(", ")) || []
+    )
+    .filter(Boolean); 
+  if (fromAdditionalMetadata.length > 0) return fromAdditionalMetadata;
+  const fromAnnotationProcess = dataset
+    .map(dataset => dataset.annotation_process?.[0]?.method_type?.[0])
+    .filter(Boolean);
+  return fromAnnotationProcess;
+}
+
+export function getMetadataValue(mdArray, key, field = null) {
+  const md = mdArray.find(md => md.name === key)?.value;
+  return field && md ? md[field]?.[0] : md;
+}
