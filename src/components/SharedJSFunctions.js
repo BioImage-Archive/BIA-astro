@@ -97,3 +97,8 @@ export function getAnnotationType(dataset) {
     .filter(Boolean);
   return fromAnnotationProcess;
 }
+
+export function getMetadataValue(mdArray, key, field = null) {
+  const md = mdArray.find(md => md.name === key)?.value;
+  return field && md ? md[field]?.[0] : md;
+}

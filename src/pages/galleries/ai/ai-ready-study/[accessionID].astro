@@ -1,13 +1,12 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getAnnotationType } from "../../../../components/SharedJSFunctions"
+import { getTaxons, getMetadataValue } from "../../../../components/SharedJSFunctions"
 import exports from "../../../../data/current-export/bia-ai-study-export.json";
 import images from "../../../../data/current-export/bia-ai-image-export.json";
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
 import AIDatasetFilesTable from "../../../../components/ai-gallery/AIDatasetFilesTable.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
-import { undefined } from "astro:schema";
 import "../../../../styles/image_slider.css"
 
 export function getStaticPaths() {
@@ -18,20 +17,23 @@ export function getStaticPaths() {
   });
 }
 
-function getThumbnail(img){
-  return img?.additional_metadata?.find(md => md.name === "thumbnail_uri")?.value?.thumbnail_uri?.[0]
-                 || img?.additional_metadata?.find(md => md.name === "image_thumbnail_uri")?.value["256_256"]
-                 || img?.additional_metadata?.find(md => md.name === "image_thumbnail_uri")?.value?.image_thumbnail_uri?.[0]
-                 || ""
+function extractMetadata(img) {
+  const map = new Map();
+  img?.additional_metadata?.forEach(md => map.set(md.name, md.value));
+  return map;
+}
+
+function getThumbnail(img) {
+  const meta = extractMetadata(img);
+  return meta.get("thumbnail_uri")?.thumbnail_uri?.[0] ||
+         meta.get("image_thumbnail_uri")?.["256_256"] ||
+         meta.get("image_thumbnail_uri")?.image_thumbnail_uri?.[0] || "";
 }
 
 const { accessionID } = Astro.params;
 const study = exports[accessionID];
-
 const annotatedImagesMap = new Map();
 const allInputImageUUIDs = new Set();
-
-
 for (const img of Object.values(images)) {
   if (img.creation_process?.input_image_uuid?.length) {
     const key = img.creation_process.input_image_uuid[0];
@@ -72,7 +74,7 @@ const totalViewableImages = datasets.reduce((count, ds) => count + ds.image.filt
 const totalFiles = datasets.reduce((count, ds) => count + ds.image.length, 0);
 const totalSizeBytes = datasets.reduce((sum, ds) => sum + ds.dataset_size, 0);
 
-const modelInformation = study?.additional_metadata?.find(md => md.name === "associated_ai_models")?.value?.associated_ai_models[0] || undefined;
+const modelInformation = getMetadataValue(study.additional_metadata, "associated_ai_models", "associated_ai_models") || undefined;
 
 function formatBytes(bytes) {
   if (bytes === 0) return "0 Bytes";
@@ -95,9 +97,9 @@ const breadcrumbs = [
 ]
 
 const studyContent = {
-  "Study summary": study?.additional_metadata.find(md=> md.name==="one_summary")?.value?.one_summary || study.description,
+  "Study summary": getMetadataValue(study.additional_metadata, "one_summary", "one_summary") || study.description,
   "License": "CC0",
-  "Tags": study?.additional_metadata.find(md=> md.name==="ai_tags")?.value?.ai_tags[0].join(", ") || study.keyword.join(", ")
+  "Tags": getMetadataValue(study.additional_metadata, "ai_tags", "ai_tags").join(", ") || study.keyword.join(", ")
 }
 const modelContent = {
   "Model description": modelInformation?.description,
@@ -108,7 +110,7 @@ const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
   dataset_title: dataset.title,
   organism: organism,
   imaging: imaging_method,
-  annotation_type: dataset.additional_metadata.find(md=> md.name === "annotation_type")?.value?.annotation_type?.[0].join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
+  annotation_type: getMetadataValue(dataset.additional_metadata, "annotation_type", "annotation_type")?.join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
   annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
 }))
 
@@ -207,8 +209,8 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
   </section>
   <hr/>
   <AIDatasetFilesTable datasets={datasets}/>
-<script type="application/json" id="files-data" set:html={JSON.stringify({ datasets })} />
-<script>
+  <script type="application/json" id="files-data" set:html={JSON.stringify({ datasets })} />
+  <script>
     document.addEventListener("DOMContentLoaded", function () {
       $("#viewable_images").DataTable({
         scrollX: true,
@@ -233,6 +235,6 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
       uuid[slideIndex-1].style.display = "block";  
       setTimeout(showSlides, 3500);
     }
-</script>
+  </script>
 </BaseLayoutWithBreadcrumbs>
 
