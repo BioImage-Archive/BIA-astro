@@ -2,7 +2,7 @@
     "45cf5aba-ac83-4a91-8e84-9836462136a8": {
         "object_creator": "bia_ingest",
         "uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -112,7 +112,9 @@
         "description": "Fluorescent nuclear images of normal or cancer cells from different tissue origins and sample preparation types",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/cf92da2f-cf96-4dae-8c2e-15a425fa11d0/static_display_512x512.png"
+        ],
         "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -430,7 +432,7 @@
     "b861c692-68f8-4c41-b583-162d4a44f793": {
         "object_creator": "bia_ingest",
         "uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
-        "version": 3,
+        "version": 4,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -457,7 +459,9 @@
         "description": "Expertly created ground truth segmentation masks",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/07db5c81-7990-4a37-8234-fb304e36514d/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
         "submitted_in_study": {
             "object_creator": "bia_ingest",

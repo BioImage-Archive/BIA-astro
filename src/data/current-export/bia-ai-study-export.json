@@ -138,9 +138,11 @@
         "dataset": [
             {
                 "image_count": 0,
-                "file_reference_count": 0,
-                "file_reference_size_bytes": 0,
-                "file_type_counts": {},
+                "file_reference_count": 982332,
+                "file_reference_size_bytes": 440365688310,
+                "file_type_counts": {
+                    "file": 982332
+                },
                 "object_creator": "bia_ingest",
                 "uuid": "aeca6c7b-fcad-48c2-8e9a-7dc2a1d91a34",
                 "version": 0,
@@ -327,9 +329,11 @@
             },
             {
                 "image_count": 0,
-                "file_reference_count": 0,
-                "file_reference_size_bytes": 0,
-                "file_type_counts": {},
+                "file_reference_count": 982332,
+                "file_reference_size_bytes": 1692839720,
+                "file_type_counts": {
+                    "file": 982332
+                },
                 "object_creator": "bia_ingest",
                 "uuid": "f9c8e982-640a-424c-bad8-c50e198f806b",
                 "version": 0,
@@ -7845,7 +7849,7 @@
                 },
                 "object_creator": "bia_ingest",
                 "uuid": "45cf5aba-ac83-4a91-8e84-9836462136a8",
-                "version": 0,
+                "version": 1,
                 "model": {
                     "type_name": "Dataset",
                     "version": 2
@@ -7955,7 +7959,9 @@
                 "description": "Fluorescent nuclear images of normal or cancer cells from different tissue origins and sample preparation types",
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-example.png"],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/cf92da2f-cf96-4dae-8c2e-15a425fa11d0/static_display_512x512.png"
+                ],
                 "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
                 "acquisition_process": [
                     {
@@ -8986,7 +8992,7 @@
                 ]
             },
             {
-                "image_count": 5,
+                "image_count": 40,
                 "file_reference_count": 388,
                 "file_reference_size_bytes": 399220454,
                 "file_type_counts": {
@@ -8994,7 +9000,7 @@
                 },
                 "object_creator": "bia_ingest",
                 "uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
-                "version": 3,
+                "version": 4,
                 "model": {
                     "type_name": "Dataset",
                     "version": 2
@@ -9021,7 +9027,9 @@
                 "description": "Expertly created ground truth segmentation masks",
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": ["https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634-annotation-example.png"],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/07db5c81-7990-4a37-8234-fb304e36514d/static_display_512_512.png"
+                ],
                 "submitted_in_study_uuid": "0ea2dc40-bf51-4ff8-82e9-2e4cbd8efd71",
                 "acquisition_process": [],
                 "specimen_imaging_preparation_protocol": [],
@@ -9059,6 +9067,1087 @@
                 ],
                 "other_creation_process": [],
                 "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "07db5c81-7990-4a37-8234-fb304e36514d",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_42dd9fab-c323-4068-877f-b6a7a700195a",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/Ganglioneuroblastoma_1.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/Ganglioneuroblastoma_1.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "42dd9fab-c323-4068-877f-b6a7a700195a"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/07db5c81-7990-4a37-8234-fb304e36514d/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "slice": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/07db5c81-7990-4a37-8234-fb304e36514d/static_display_512_512.png",
+                                    "size": [
+                                        512,
+                                        512
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "1dc2237e-64f1-4b10-bd9d-a48d181effc0",
+                        "original_file_reference_uuid": [
+                            "42dd9fab-c323-4068-877f-b6a7a700195a"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "0f0d319e-c161-40a4-b4e9-d1c244bfdc74",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_32354fbe-3409-437d-920f-8cc1bbbc16d6",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/normal_13.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/normal_13.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "32354fbe-3409-437d-920f-8cc1bbbc16d6"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/0f0d319e-c161-40a4-b4e9-d1c244bfdc74/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "f3dd9dfb-7e72-48ab-8507-d94195e639f0",
+                        "original_file_reference_uuid": [
+                            "32354fbe-3409-437d-920f-8cc1bbbc16d6"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "15bef492-14fa-41d6-9f6d-ad8bd119647f",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_c5ca75bb-29b1-4bdb-8e15-35904a7ac7b4",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/normal_23.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/normal_23.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "c5ca75bb-29b1-4bdb-8e15-35904a7ac7b4"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/15bef492-14fa-41d6-9f6d-ad8bd119647f/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "ee226386-5ba4-4323-9c9e-1866630888dc",
+                        "original_file_reference_uuid": [
+                            "c5ca75bb-29b1-4bdb-8e15-35904a7ac7b4"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "1e2bba28-8045-414d-b3a9-5cf205f8effc",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_b3643762-cf10-4ca1-898e-6d64ef4b5168",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth for randomly selected nuclei of the testset (25 nuclei per testset class, a subset of all nuclei of the testset classes; human experts can compete with this low number of nuclei per subset by calculating Dice coefficients between their annotations and the groundtruth annotations)",
+                                        "source image": "dataset/rawimages/Neuroblastoma_12.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/singlecell_groundtruth/Neuroblastoma_12singlemask.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "b3643762-cf10-4ca1-898e-6d64ef4b5168"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/1e2bba28-8045-414d-b3a9-5cf205f8effc/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "c5cbe13a-17aa-43ba-94df-43d6729df69a",
+                        "original_file_reference_uuid": [
+                            "b3643762-cf10-4ca1-898e-6d64ef4b5168"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "286371d9-7904-4ade-a9dc-13a15208803d",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_8dee7aad-7ac2-4a07-93e4-f442989afe3a",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/normal_23.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/normal_23.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "8dee7aad-7ac2-4a07-93e4-f442989afe3a"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/286371d9-7904-4ade-a9dc-13a15208803d/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "a5b870be-6728-412f-844b-97d5d1770d20",
+                        "original_file_reference_uuid": [
+                            "8dee7aad-7ac2-4a07-93e4-f442989afe3a"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "2b3c7b46-c31f-4b0a-ac1b-29c2dee8eebf",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_2f0ff08a-7afd-4200-a3eb-a12fa49f6fe0",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/otherspecimen_3.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/otherspecimen_3.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "2f0ff08a-7afd-4200-a3eb-a12fa49f6fe0"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/2b3c7b46-c31f-4b0a-ac1b-29c2dee8eebf/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "fea89f7e-c56c-4ece-aed7-52f5ee844a89",
+                        "original_file_reference_uuid": [
+                            "2f0ff08a-7afd-4200-a3eb-a12fa49f6fe0"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "35dee1fe-8c74-4f30-986a-a4fe60da2c73",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_21163797-aaa9-401b-b782-5f035994e69b",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/otherspecimen_3.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/otherspecimen_3.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "21163797-aaa9-401b-b782-5f035994e69b"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/35dee1fe-8c74-4f30-986a-a4fe60da2c73/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "722ef142-7a86-4cf1-8111-1acaf86475da",
+                        "original_file_reference_uuid": [
+                            "21163797-aaa9-401b-b782-5f035994e69b"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "3b074207-3260-4c10-9487-9600304c8cb1",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_72199dd0-1db0-4e3d-8942-3ca15c500ca5",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/otherspecimen_3.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/otherspecimen_3.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "72199dd0-1db0-4e3d-8942-3ca15c500ca5"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/3b074207-3260-4c10-9487-9600304c8cb1/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "06e03cc9-1e47-4666-b893-444239edb791",
+                        "original_file_reference_uuid": [
+                            "72199dd0-1db0-4e3d-8942-3ca15c500ca5"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "470faa84-d259-4ae4-93db-209a4f15793b",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_091c1494-3023-46c4-a9fc-6b18ac10e5aa",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth for randomly selected nuclei in PNG format",
+                                        "source image": "dataset/rawimages/normal_40.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_singlecell_groundtruth/normal_40_singlemask.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "091c1494-3023-46c4-a9fc-6b18ac10e5aa"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/470faa84-d259-4ae4-93db-209a4f15793b/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "86c537f1-aace-448f-9ecf-73ef8818b2a0",
+                        "original_file_reference_uuid": [
+                            "091c1494-3023-46c4-a9fc-6b18ac10e5aa"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "475c6a9e-1074-4034-9c8d-c9fb20066add",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_1b9bd9ae-e7ef-40c1-aef3-cde9671a8723",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/Ganglioneuroblastoma_1.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/Ganglioneuroblastoma_1.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "1b9bd9ae-e7ef-40c1-aef3-cde9671a8723"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/475c6a9e-1074-4034-9c8d-c9fb20066add/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "8ab83279-1c8d-48f0-8f38-9c20c7e11c0c",
+                        "original_file_reference_uuid": [
+                            "1b9bd9ae-e7ef-40c1-aef3-cde9671a8723"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "49483dbb-09c3-496c-a145-2c0b28e2efd6",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_f0828a44-eb95-4c8e-9dc6-0d862e9c0484",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/normal_37.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/normal_37.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "f0828a44-eb95-4c8e-9dc6-0d862e9c0484"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/49483dbb-09c3-496c-a145-2c0b28e2efd6/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "c84b426f-d068-45f9-a88e-c2c099d2d41e",
+                        "original_file_reference_uuid": [
+                            "f0828a44-eb95-4c8e-9dc6-0d862e9c0484"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "4dcdb3a7-8449-453f-a659-e5cb7ac2ea6b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_78cb5714-1953-4b75-b97f-d15178022742",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/normal_37.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/normal_37.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "78cb5714-1953-4b75-b97f-d15178022742"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "1ba0d341-1a5e-4bee-97d0-42757a33e431",
+                        "original_file_reference_uuid": [
+                            "78cb5714-1953-4b75-b97f-d15178022742"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "4faa5c89-ec9f-4cdb-9ee6-8cdd7c9dc9fc",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_b3385e79-3d49-49f4-b4fa-aeb1643b21ae",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/otherspecimen_8.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/otherspecimen_8.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "b3385e79-3d49-49f4-b4fa-aeb1643b21ae"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/4faa5c89-ec9f-4cdb-9ee6-8cdd7c9dc9fc/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "e9827c46-f58c-4436-9d44-1b3b10bf88de",
+                        "original_file_reference_uuid": [
+                            "b3385e79-3d49-49f4-b4fa-aeb1643b21ae"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "54c1ec02-37b5-40d4-bb0b-adca385c63de",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_baee4ff3-f3e0-45e7-bb62-8a13fa0f1d92",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/normal_13.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/normal_13.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "baee4ff3-f3e0-45e7-bb62-8a13fa0f1d92"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/54c1ec02-37b5-40d4-bb0b-adca385c63de/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "93ef67ea-ec1f-41f5-92dd-8967c137b626",
+                        "original_file_reference_uuid": [
+                            "baee4ff3-f3e0-45e7-bb62-8a13fa0f1d92"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "68195b20-822c-4581-869d-71c07f6d4557",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_33ea3ebf-f31b-4573-8faa-025787ef5da0",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_16.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/Neuroblastoma_16.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "33ea3ebf-f31b-4573-8faa-025787ef5da0"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/68195b20-822c-4581-869d-71c07f6d4557/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "97e431bb-db8f-411f-8897-c029ba9be7e1",
+                        "original_file_reference_uuid": [
+                            "33ea3ebf-f31b-4573-8faa-025787ef5da0"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "6b97f935-86f4-4c5b-9641-f4c7021688ff",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_ebbc85b4-661f-413c-8331-eedbdba41f28",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_12.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/Neuroblastoma_12.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "ebbc85b4-661f-413c-8331-eedbdba41f28"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/6b97f935-86f4-4c5b-9641-f4c7021688ff/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "dac3985c-4754-407c-b52e-3e4c52cc5fda",
+                        "original_file_reference_uuid": [
+                            "ebbc85b4-661f-413c-8331-eedbdba41f28"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "6f3750b8-3332-4735-bf81-e0ddcedab80a",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_2e961696-beec-40f2-8e9c-d83605f2295b",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/normal_40.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/normal_40.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "2e961696-beec-40f2-8e9c-d83605f2295b"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/6f3750b8-3332-4735-bf81-e0ddcedab80a/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "612d60a2-10a6-40c7-9d2b-b0c24fec4894",
+                        "original_file_reference_uuid": [
+                            "2e961696-beec-40f2-8e9c-d83605f2295b"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "833b4fc3-87c1-41fb-a12c-92af740be319",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_5ffa8a87-5c92-4c19-ad2f-a3eb2e517d66",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/normal_5.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/normal_5.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "5ffa8a87-5c92-4c19-ad2f-a3eb2e517d66"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/833b4fc3-87c1-41fb-a12c-92af740be319/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "a7854b0c-8fdd-4666-965d-676b433b1675",
+                        "original_file_reference_uuid": [
+                            "5ffa8a87-5c92-4c19-ad2f-a3eb2e517d66"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "85257961-daf8-459c-a62b-645a62ad0f82",
+                        "version": 0,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_d72b3ce3-4f39-4376-a82e-f5495e991191",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/normal_40.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/normal_40.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "d72b3ce3-4f39-4376-a82e-f5495e991191"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "f4e40bea-88ae-4fe2-92e3-2c764c3d2b58",
+                        "original_file_reference_uuid": [
+                            "d72b3ce3-4f39-4376-a82e-f5495e991191"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "863ec078-fc20-474d-93a3-0627ab8612d4",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_d7ad8bbc-8fc9-4917-9da3-494bd52a965b",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/normal_23.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/normal_23.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "d7ad8bbc-8fc9-4917-9da3-494bd52a965b"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/863ec078-fc20-474d-93a3-0627ab8612d4/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "7f06e718-5bb4-4d33-bf6b-365f4ff06cbd",
+                        "original_file_reference_uuid": [
+                            "d7ad8bbc-8fc9-4917-9da3-494bd52a965b"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "8808fadf-6c8c-416a-a9cd-9d3ec3320c41",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_38f363ea-6a4e-40ec-8a0f-0abac906dece",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/otherspecimen_8.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/otherspecimen_8.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "38f363ea-6a4e-40ec-8a0f-0abac906dece"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/8808fadf-6c8c-416a-a9cd-9d3ec3320c41/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "833659fa-06c8-4717-95ee-da668208347b",
+                        "original_file_reference_uuid": [
+                            "38f363ea-6a4e-40ec-8a0f-0abac906dece"
+                        ]
+                    },
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "89955a65-2178-4a1c-af4e-b9a1d2bcd87a",
@@ -9116,6 +10205,58 @@
                         "creation_process_uuid": "036aed41-2049-47bf-97fb-0b1fa908fc5a",
                         "original_file_reference_uuid": [
                             "d056cb02-a540-4060-9afd-f413b6885166"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "8a2b57d2-662c-4d7f-9be1-128a0b83446c",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_22f7e4d4-e574-442a-9864-686cad1d2fa7",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth for randomly selected nuclei in PNG format",
+                                        "source image": "dataset/rawimages/otherspecimen_8.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_singlecell_groundtruth/otherspecimen_8_singlemask.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "22f7e4d4-e574-442a-9864-686cad1d2fa7"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/8a2b57d2-662c-4d7f-9be1-128a0b83446c/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "2eeeaf8e-46f2-4309-b9dd-b9a3bacf99fe",
+                        "original_file_reference_uuid": [
+                            "22f7e4d4-e574-442a-9864-686cad1d2fa7"
                         ]
                     },
                     {
@@ -9179,6 +10320,214 @@
                     },
                     {
                         "object_creator": "bia_image_assignment",
+                        "uuid": "94c04a58-3cf8-410a-b937-32d3413ab802",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_06908fa3-49f6-48fd-9188-920d89bdf573",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/normal_37.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/normal_37.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "06908fa3-49f6-48fd-9188-920d89bdf573"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/94c04a58-3cf8-410a-b937-32d3413ab802/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "39b90c65-6c9d-4b7b-b989-aaea93cbf1cb",
+                        "original_file_reference_uuid": [
+                            "06908fa3-49f6-48fd-9188-920d89bdf573"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "9998bf86-c966-4890-a7ce-423e5a308814",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_8221bcbe-5a0f-4e22-a358-45781b7d95b5",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/normal_40.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/normal_40.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "8221bcbe-5a0f-4e22-a358-45781b7d95b5"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/9998bf86-c966-4890-a7ce-423e5a308814/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "5ca6c6da-3139-4091-ab17-4a79dbc8fb27",
+                        "original_file_reference_uuid": [
+                            "8221bcbe-5a0f-4e22-a358-45781b7d95b5"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "9b31cc82-bf0a-4aa2-9ccc-55637c62af01",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_235a7fe4-2df1-47fb-b86b-e1bdbb13336b",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth for randomly selected nuclei in PNG format",
+                                        "source image": "dataset/rawimages/otherspecimen_3.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_singlecell_groundtruth/otherspecimen_3_singlemask.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "235a7fe4-2df1-47fb-b86b-e1bdbb13336b"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/9b31cc82-bf0a-4aa2-9ccc-55637c62af01/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "481f1a6c-bdd3-4ab0-9c04-562f9254c693",
+                        "original_file_reference_uuid": [
+                            "235a7fe4-2df1-47fb-b86b-e1bdbb13336b"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "9ded32bb-7428-4ac5-8c43-72cf56dd19c1",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_b675a576-e0de-439d-a529-73a7ec3e2bb2",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth for randomly selected nuclei of the testset (25 nuclei per testset class, a subset of all nuclei of the testset classes; human experts can compete with this low number of nuclei per subset by calculating Dice coefficients between their annotations and the groundtruth annotations)",
+                                        "source image": "dataset/rawimages/Neuroblastoma_16.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/singlecell_groundtruth/Neuroblastoma_16singlemask.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "b675a576-e0de-439d-a529-73a7ec3e2bb2"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/9ded32bb-7428-4ac5-8c43-72cf56dd19c1/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "deb33ca8-c5e7-48c8-ae0b-c9d642764956",
+                        "original_file_reference_uuid": [
+                            "b675a576-e0de-439d-a529-73a7ec3e2bb2"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
                         "uuid": "ac0ce47d-78f0-4f57-b77d-73d598a2fbf9",
                         "version": 2,
                         "model": {
@@ -9234,6 +10583,214 @@
                         "creation_process_uuid": "f36de18d-7ee1-42c0-bbcc-282e95160ea6",
                         "original_file_reference_uuid": [
                             "a0b630dc-cae9-459d-a4c7-11bb1cb1e3f6"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "ae94c63f-36b2-4041-b55b-ff95ec1dcd54",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_b57ae08b-1b83-4e37-8d58-d77f1a228b34",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_12.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/Neuroblastoma_12.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "b57ae08b-1b83-4e37-8d58-d77f1a228b34"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/ae94c63f-36b2-4041-b55b-ff95ec1dcd54/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "549b58a1-4b46-47cd-adbc-889279e65017",
+                        "original_file_reference_uuid": [
+                            "b57ae08b-1b83-4e37-8d58-d77f1a228b34"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "b6dcc62f-8fb7-434a-a0b2-4c12e6e284a3",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_8880460c-cbd9-4713-b79c-fbe7ff120d8d",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Groundtruth, annotated segmentation masks in TIFF format",
+                                        "source image": "dataset/rawimages/normal_5.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth/normal_5.tif"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "8880460c-cbd9-4713-b79c-fbe7ff120d8d"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/b6dcc62f-8fb7-434a-a0b2-4c12e6e284a3/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "55a900fb-c548-4b6e-ac71-ae363e36e80a",
+                        "original_file_reference_uuid": [
+                            "8880460c-cbd9-4713-b79c-fbe7ff120d8d"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "b9a559f6-24de-4a51-8670-c3f9fd179a7b",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_8d2899f2-b98f-4ac9-91f1-0a95ee6d2c2c",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_12.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/Neuroblastoma_12.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "8d2899f2-b98f-4ac9-91f1-0a95ee6d2c2c"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/b9a559f6-24de-4a51-8670-c3f9fd179a7b/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "c2262935-037e-4875-82ea-7e8d44e61f7d",
+                        "original_file_reference_uuid": [
+                            "8d2899f2-b98f-4ac9-91f1-0a95ee6d2c2c"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "b9bc7aae-5d30-4460-bab8-af0c88facb71",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_33a22dfb-9431-4395-b405-6b9d23680cf3",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth for randomly selected nuclei in PNG format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_16.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_singlecell_groundtruth/Neuroblastoma_16_singlemask.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "33a22dfb-9431-4395-b405-6b9d23680cf3"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/b9bc7aae-5d30-4460-bab8-af0c88facb71/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "b5483a6a-3339-4dff-9545-c76ca8f07773",
+                        "original_file_reference_uuid": [
+                            "33a22dfb-9431-4395-b405-6b9d23680cf3"
                         ]
                     },
                     {
@@ -9352,6 +10909,266 @@
                         "creation_process_uuid": "64d4bf14-4eac-4ba8-af76-9979660c0fcf",
                         "original_file_reference_uuid": [
                             "2f2e15ff-fa4a-4bbe-ba46-5c4c237d744f"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d40e58cc-cb8a-4112-a83a-c3d10d9f093b",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_7ed55259-edca-417a-bbc5-480467fc414c",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_16.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/Neuroblastoma_16.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "7ed55259-edca-417a-bbc5-480467fc414c"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d40e58cc-cb8a-4112-a83a-c3d10d9f093b/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "0e647454-a5b3-46f0-b82a-663fa5ae77a6",
+                        "original_file_reference_uuid": [
+                            "7ed55259-edca-417a-bbc5-480467fc414c"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d823ec8e-c963-46c7-a683-cbdf10313ef6",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_768e1967-50f1-4587-8997-3909a23616d1",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/otherspecimen_8.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/otherspecimen_8.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "768e1967-50f1-4587-8997-3909a23616d1"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d823ec8e-c963-46c7-a683-cbdf10313ef6/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "b2c79b8a-e15e-4c81-b19b-2266230d7c02",
+                        "original_file_reference_uuid": [
+                            "768e1967-50f1-4587-8997-3909a23616d1"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d8ecde3b-38a5-472e-8137-3fba6c8771ec",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_ed9925b8-1304-4a44-9e00-151244c9f00c",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/normal_13.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/normal_13.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "ed9925b8-1304-4a44-9e00-151244c9f00c"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/d8ecde3b-38a5-472e-8137-3fba6c8771ec/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "b2dd8a0f-4857-4115-95e6-ed526904399d",
+                        "original_file_reference_uuid": [
+                            "ed9925b8-1304-4a44-9e00-151244c9f00c"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "ddef2ed7-b859-42ce-a7bf-aafff698b829",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_e7a82a06-c15b-4c21-bfd6-c10f44f80152",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Raw image in JPEG format",
+                                        "source image": "dataset/rawimages/Neuroblastoma_16.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/groundtruth_svgs/Neuroblastoma_16.jpg"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "e7a82a06-c15b-4c21-bfd6-c10f44f80152"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/ddef2ed7-b859-42ce-a7bf-aafff698b829/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "e75f7830-0ef7-4ea6-8eaa-a9a731ee525a",
+                        "original_file_reference_uuid": [
+                            "e7a82a06-c15b-4c21-bfd6-c10f44f80152"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "ffb3676f-81bb-4cfb-a98c-42fc6638cb3a",
+                        "version": 1,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_410a9b8f-a5d8-41cc-ad5a-678d8cd61131",
+                                "value": {
+                                    "attributes": {
+                                        "file description": "Visualization of groundtruth masks in PNG format",
+                                        "source image": "dataset/rawimages/normal_5.tif"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "dataset/visualized_groundtruth/normal_5.png"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "410a9b8f-a5d8-41cc-ad5a-678d8cd61131"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256_256": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD634/ffb3676f-81bb-4cfb-a98c-42fc6638cb3a/thumbnail_256_256.png",
+                                    "size": [
+                                        256,
+                                        256
+                                    ]
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b861c692-68f8-4c41-b583-162d4a44f793",
+                        "creation_process_uuid": "5cce8ef7-effc-4d74-8147-ceb3f482c169",
+                        "original_file_reference_uuid": [
+                            "410a9b8f-a5d8-41cc-ad5a-678d8cd61131"
                         ]
                     }
                 ]
