@@ -8,7 +8,16 @@ const { title, content, id, license } = Astro.props;
     </div>
     <div>
         {
-            id!=="annotated_datasets" ? Object.keys(content).map((key, value)=> <p><b>{key}: </b>{content[key]}</p>) : (
+            id!=="annotated_datasets" ? Object.keys(content).map((key) => {
+                    const value = content[key];
+                    const isLink = typeof value === "string" && (value.startsWith("http://") || value.startsWith("https://"));
+                    return (
+                    <p>
+                        <b>{key}: </b>
+                        {isLink ? <a href={value} target="_blank" rel="noopener noreferrer">{value}</a> : value}
+                    </p>
+                    );
+                }) : (
                 content.map( (dataset) => 
                     <p><b>{dataset.dataset_title}</b></p>
                         <div style="padding-left: 1.5rem;">
@@ -18,8 +27,8 @@ const { title, content, id, license } = Astro.props;
                             <p><b>Organism: </b> <span set:html={dataset.organism}/></p>
                             <p><b>Imaging method: </b> {dataset.imaging}</p>
                             <div>
-                                <p><b>Annotation type: </b> {dataset.annotation_type}</p>
-                                <p><b>Annotation method: </b> {dataset.annotation_method}</p>
+                                <p><b>Annotation type: </b> <span id="annotation-type">{dataset.annotation_type}</span></p>
+                                <p><b>Annotation method: </b> <span id="annotation-method">{dataset.annotation_method}</span></p>
                             </div>
                         </div>
             ))
