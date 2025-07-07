@@ -55,12 +55,20 @@ let annotatedImages = [];
 if (image.creation_process?.input_image_uuid?.[0]) {
   sourceImage = exports[image.creation_process.input_image_uuid[0]];
   annotatedImages = Object.values(exports).filter(img =>
-    img.creation_process?.input_image_uuid?.[0] === sourceImage.uuid
+    img.creation_process?.input_image_uuid?.[0] === sourceImage.uuid &&
+    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") && 
+    !img.additional_metadata?.some(md =>
+      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+    )
   );
 } else {
   sourceImage = image;
   annotatedImages = Object.values(exports).filter(img =>
-    img.creation_process?.input_image_uuid?.[0] === uuid
+    img.creation_process?.input_image_uuid?.[0] === uuid &&
+    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
+    !img.additional_metadata?.some(md =>
+      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+    )
   );
 }
 
@@ -104,7 +112,6 @@ const breadcrumbs = [
         <SourceAnnotatedImage annotatedImages={annotatedImages} sourceImage={sourceImage} vizarrURL={vizarrURL} btnID="CopyURLButton"/>
         <hr />
         <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
-        <script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
         <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
         <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
 </BaseLayout>
