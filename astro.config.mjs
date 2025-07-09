@@ -50,6 +50,16 @@ export default defineConfig({
     '/help-tools': '/bioimage-archive/help/supporting-tools',
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
   },
+  env: {
+    schema: {
+      PUBLIC_API_BASE_URL: {
+        type: "string",
+        required: true,
+        access: "public",
+        context: "client"
+      }
+    }
+  },
 
   adapter
 });
