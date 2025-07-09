@@ -73,7 +73,7 @@ const timestepSpan = text == "Annotation"? "annotated-timesteps": "source-timest
           document.getElementById("annotated-channels").innerText = `${rep.size_c} channels`;
           document.getElementById("annotated-timesteps").innerText = `${rep.size_t} timesteps`;
           const metaContainer = document.getElementById("annotated-metadata");
-          metaContainer.innerHTML = "";
+          metaContainer.innerHTML = "<h3>Additional metadata</h3>";
           Object.entries(attributes).forEach(([key, value]) => {
               const line = document.createElement("div");
               line.innerHTML = `<b>${key}:</b> ${value}<br />`;
