@@ -3,10 +3,9 @@ import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro';
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 import collection from '../../../data/collections/ai-ready-datasets.json';
-//import exports from "../../../data/old-export-format/bia-ai-export.json";
-import exports from "../../../data/current-export/bia-ai-study-export.json";
+import { getStudiesforAIGallery } from "../../../components/SharedJSFunctions"
 
-const studys = exports;
+const studys = await getStudiesforAIGallery(collection.accession_ids, "accession", "ai-ready");
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>

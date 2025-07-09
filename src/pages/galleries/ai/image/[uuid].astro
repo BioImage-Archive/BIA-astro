@@ -1,60 +1,42 @@
 ---
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { taxonRender, getMetadataValue } from "../../../../components/SharedJSFunctions.js";
+import { getMetadataValue, getImage, getStudyUUIDFromImage, getStudiesforAIGallery, getTaxons, getImagesForAIGallery} from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
-import exports from "../../../../data/current-export/bia-ai-image-export.json";
-import datasets from "../../../../data/current-export/bia-ai-dataset-export.json";
-import studyData from "../../../../data/old-export-format/bia-export.json";
-import AIStudyData from "../../../../data/current-export/bia-ai-study-export.json";
-import SpatialomicsStudyData from "../../../../data/old-export-format/bia-spatialomics-export.json";
+import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
 
+const { uuid } = Astro.params;
+const image = await getImage(uuid);
+const studyUUID = await getStudyUUIDFromImage(image);
+const studyInfo = Object.values(await getStudiesforAIGallery([studyUUID], "uuid", "ai-image"))[0];//getStudyData(sourceImage.submission_dataset_uuid);
+const images = await getImagesForAIGallery(studyInfo.dataset);
 
-export function getStaticPaths() {
-  return Object.keys(exports).map((uuid) => {
+export async function getStaticPaths() {
+  const allStudies = await getStudiesforAIGallery(collection.accession_ids, "accession", "ai-image-static"); // replace [] with list of known UUIDs if available
+
+  // Step 2: Extract all datasets from studies
+  const allDatasets = Object.values(allStudies)
+    .map(study => study.dataset)
+    .flat();
+  // Step 3: Get all images from datasets
+  const images = allDatasets.map(dataset => dataset.image).flat()
+  return Object.values(images).map((img) => {
     return {
-      params:  { uuid: uuid }
+      params:  { uuid: img.uuid }
     };
   });
 }
 
-function getStudyData(datasetID) {
-  const accessionID = datasets[datasetID].submitted_in_study.accession_id;
-  return (
-    studyData.datasets?.[accessionID] ??
-    AIStudyData?.[accessionID] ??
-    SpatialomicsStudyData.datasets?.[accessionID] ??
-    { title: "Unknown Study", dataset: [] }
-  );
-}
 
-function getTaxons(study) {
-    const taxonHtmlList = []
-    const taxonList = []
-    for (var dataset of study.dataset) {
-        for (var biosample of dataset.biological_entity) {
-            for (var taxon of biosample.organism_classification) {
-                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
-                    taxonList.push(taxon)
-                    taxonHtmlList.push(taxonRender(taxon))
-                }
-            }
-        }
-    }
-    return taxonHtmlList
-}
-
-const { uuid } = Astro.params;
-const image = exports[uuid];
 let sourceImage;
 let annotatedImages = [];
 
 if (image.creation_process?.input_image_uuid?.[0]) {
-  sourceImage = exports[image.creation_process.input_image_uuid[0]];
-  annotatedImages = Object.values(exports).filter(img =>
+  sourceImage = images[image.creation_process.input_image_uuid[0]];
+  annotatedImages = Object.values(images).filter(img =>
     img.creation_process?.input_image_uuid?.[0] === sourceImage.uuid &&
     img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") && 
     !img.additional_metadata?.some(md =>
@@ -63,7 +45,7 @@ if (image.creation_process?.input_image_uuid?.[0]) {
   );
 } else {
   sourceImage = image;
-  annotatedImages = Object.values(exports).filter(img =>
+  annotatedImages = Object.values(images).filter(img =>
     img.creation_process?.input_image_uuid?.[0] === uuid &&
     img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
     !img.additional_metadata?.some(md =>
@@ -72,7 +54,6 @@ if (image.creation_process?.input_image_uuid?.[0]) {
   );
 }
 
-const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
 const organism = getTaxons(studyInfo).join(", ");
 const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);

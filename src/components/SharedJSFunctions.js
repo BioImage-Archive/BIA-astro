@@ -102,3 +102,156 @@ export function getMetadataValue(mdArray, key, field = null) {
   const md = mdArray.find(md => md.name === key)?.value;
   return field && md ? md[field]?.[0] : md;
 }
+
+export async function getStudyUUIDFromImage(img){
+  const datasetUUID = img.submission_dataset_uuid
+  const dataset = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUUID}`).then(res => res.json());
+  return dataset.submitted_in_study_uuid
+}
+
+export async function getImage(uuid){
+  const image = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/image/${uuid}`).then(res => res.json());
+  const enrichedImage = await getEnrichedImage(image)
+  return enrichedImage
+}
+
+export async function getEnrichedImage(img){
+  const creationProcess = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/creation_process/${img.creation_process_uuid}`).then(res => res.json())
+  const imageRepresentation = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/image/${img.uuid}/image_representation?page_size=5`).then(res => res.json())
+  img.creation_process = creationProcess
+  img.representation = imageRepresentation
+  return img
+
+}
+
+export async function getImagesForAIGallery(datasets){
+  const imageEntries = await Promise.all(
+    datasets.map(async dataset => {
+      const images = dataset.image
+      const enrichedImages = await Promise.all(
+        images.map(async img => {return [img.uuid, await getEnrichedImage(img)]})
+      )
+      return enrichedImages
+    })
+  )
+  const images = imageEntries.flat()
+  return Object.fromEntries(images)
+
+}
+
+export async function getEnrichedDatasets(dataset, page) {
+  const isStatic = page === "ai-image-static";
+  const isAiReady = page === "ai-ready";
+
+  const metadata = dataset.additional_metadata || [];
+
+  // 1. Image Acquisition Process
+  let acquisitionProcess = [];
+  if (!isStatic) {
+    const iapUUIDs = metadata
+      .filter(md => md.name === "image_acquisition_protocol_uuid")
+      .flatMap(md => md.value?.image_acquisition_protocol_uuid || [])
+      .filter(Boolean);
+
+    acquisitionProcess = await Promise.all(
+      iapUUIDs.map(async uuid => {
+        try {
+          const res = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/image_acquisition_protocol/${uuid}`);
+          return await res.json();
+        } catch (err) {
+          console.warn(`Failed to fetch acquisition protocol for ${uuid}`, err);
+          return null;
+        }
+      })
+    );
+  }
+
+  // 2. Biological Entities
+  let biologicalEntities = [];
+  if (!isStatic) {
+    const sampleUUIDs = metadata
+      .filter(md => md.name === "bio_sample_uuid")
+      .flatMap(md => md.value?.bio_sample_uuid || [])
+      .filter(Boolean);
+
+    biologicalEntities = await Promise.all(
+      sampleUUIDs.map(async uuid => {
+        try {
+          const res = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/bio_sample/${uuid}`);
+          return await res.json();
+        } catch (err) {
+          console.warn(`Failed to fetch bio_sample for ${uuid}`, err);
+          return null;
+        }
+      })
+    );
+  }
+
+  // 3. Annotation Method
+  let annotationMethod = [];
+  if (!isStatic) {
+    const annotationUUID = metadata.find(md => md.name === "annotation_method_uuid")
+      ?.value?.annotation_method_uuid?.[0];
+
+    if (annotationUUID) {
+      try {
+        const res = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/annotation_method/${annotationUUID}`);
+        annotationMethod = [await res.json()];
+      } catch (err) {
+        console.warn(`Failed to fetch annotation method for ${annotationUUID}`, err);
+      }
+    }
+  }
+
+  // 4. File Reference Size
+  let fileReferenceSizeBytes = [];
+  if (!isStatic && !isAiReady) {
+    try {
+      const res = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${dataset.uuid}/stats?page_size=10`);
+      const data = await res.json();
+      fileReferenceSizeBytes = data.file_reference_size_bytes || [];
+    } catch (err) {
+      console.warn(`Failed to fetch dataset stats for ${dataset.uuid}`, err);
+    }
+  }
+
+  // 5. Images
+  let images = [];
+  if (!isAiReady) {
+    try {
+      const res = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${dataset.uuid}/image?page_size=10000`);
+      images = await res.json();
+    } catch (err) {
+      console.warn(`Failed to fetch images for dataset ${dataset.uuid}`, err);
+    }
+  }
+
+  // Assign to dataset
+  dataset.acquisition_process = acquisitionProcess.filter(Boolean);
+  dataset.biological_entity = biologicalEntities.filter(Boolean);
+  dataset.annotation_process = annotationMethod;
+  dataset.file_reference_size_bytes = fileReferenceSizeBytes;
+  dataset.image = images;
+
+  return dataset;
+}
+
+
+export async function getStudiesforAIGallery(ids, idType, page) {
+  const studyEntries = await Promise.all(
+    ids.map(async id => {
+        const study = idType === "accession"? 
+        await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/search/study/accession?accession_id=${id}&page_size=1`).then(res => res.json()) 
+        : await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/study/${id}`).then(res => res.json());
+      
+      const uuid = study?.uuid;
+      const datasets = await fetch(`https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/study/${uuid}/dataset?page_size=100`).then(res => res.json());
+      const enrichedDatasets = await Promise.all(
+        datasets.map(async dataset => {return getEnrichedDatasets(dataset, page)}) 
+      );
+      study.dataset = enrichedDatasets;
+      return [study.accession_id, study];
+    })
+  );
+  return Object.fromEntries(studyEntries);
+}
