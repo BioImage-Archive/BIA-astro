@@ -1,157 +1,117 @@
 ---
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
-import SourceImage from "../../../../components/SourceImage.astro"
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-
-import exports from "../../../../data/old-export-format/bia-images-export.json";
+import { taxonRender, getMetadataValue } from "../../../../components/SharedJSFunctions.js";
+import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
+import exports from "../../../../data/current-export/bia-ai-image-export.json";
+import datasets from "../../../../data/current-export/bia-ai-dataset-export.json";
 import studyData from "../../../../data/old-export-format/bia-export.json";
-import AIStudyData from "../../../../data/old-export-format/bia-ai-export.json";
+import AIStudyData from "../../../../data/current-export/bia-ai-study-export.json";
 import SpatialomicsStudyData from "../../../../data/old-export-format/bia-spatialomics-export.json";
+import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
+import "../../../../styles/image_slider.css"
+
 
 
 export function getStaticPaths() {
-  return Object.keys(exports["images"]).map((uuid) => {
+  return Object.keys(exports).map((uuid) => {
     return {
       params:  { uuid: uuid }
     };
   });
 }
 
-const { uuid } = Astro.params;
-
-const image = exports["images"][uuid];
-
-const tissue_x = (1e6 * image.PhysicalSizeX * image.sizeX).toPrecision(2);
-const tissue_y = (1e6 * image.PhysicalSizeY * image.sizeY).toPrecision(2);
-
-
-function getStudyData(accessionID, StudyData, AIStudyData, SpatialomicsStudyData) {
-    if (accessionID in StudyData["datasets"]) {
-        return StudyData["datasets"][accessionID]
-    } else if (accessionID in AIStudyData["datasets"]) {
-        return AIStudyData["datasets"][accessionID]
-    } else if (accessionID in SpatialomicsStudyData["datasets"]) {
-        return SpatialomicsStudyData["datasets"][accessionID]
-    }
+function getStudyData(datasetID) {
+  const accessionID = datasets[datasetID].submitted_in_study.accession_id;
+  return (
+    studyData.datasets?.[accessionID] ??
+    AIStudyData?.[accessionID] ??
+    SpatialomicsStudyData.datasets?.[accessionID] ??
+    { title: "Unknown Study", dataset: [] }
+  );
 }
 
-const study_info = getStudyData(image.study_accession_id, studyData, AIStudyData, SpatialomicsStudyData)
+function getTaxons(study) {
+    const taxonHtmlList = []
+    const taxonList = []
+    for (var dataset of study.dataset) {
+        for (var biosample of dataset.biological_entity) {
+            for (var taxon of biosample.organism_classification) {
+                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
+                    taxonList.push(taxon)
+                    taxonHtmlList.push(taxonRender(taxon))
+                }
+            }
+        }
+    }
+    return taxonHtmlList
+}
 
-const base_img_s3_url = image.vizarr_uri.replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=','')
+const { uuid } = Astro.params;
+const image = exports[uuid];
+let sourceImage;
+let annotatedImages = [];
 
+if (image.creation_process?.input_image_uuid?.[0]) {
+  sourceImage = exports[image.creation_process.input_image_uuid[0]];
+  annotatedImages = Object.values(exports).filter(img =>
+    img.creation_process?.input_image_uuid?.[0] === sourceImage.uuid &&
+    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") && 
+    !img.additional_metadata?.some(md =>
+      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+    )
+  );
+} else {
+  sourceImage = image;
+  annotatedImages = Object.values(exports).filter(img =>
+    img.creation_process?.input_image_uuid?.[0] === uuid &&
+    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
+    !img.additional_metadata?.some(md =>
+      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+    )
+  );
+}
+
+const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
+const organism = getTaxons(studyInfo).join(", ");
+const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
+const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
+const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
+const annotationDatasets = studyInfo.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
+const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
+  dataset_title: dataset.title,
+  organism: organism,
+  imaging: imagingMethod,
+annotation_type: getMetadataValue(dataset.additional_metadata, "annotation_type", "annotation_type")?.join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
+  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
+}))
+const license = {link: "https://creativecommons.org/publicdomain/zero/1.0/", text: "CC0"}
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/galleries",
   "/bioimage-archive/galleries/ai",
   "/bioimage-archive/galleries/ai/ai-ready-studies",
-  `/bioimage-archive/galleries/ai/ai-ready-study/${image.study_accession_id}`,
+  `/bioimage-archive/galleries/ai/ai-ready-study/${studyInfo.accession_id}`,
 ]
-
 ---
-
-<BaseLayoutWithBreadcrumbs pageTitle={image["alias"]} breadcrumbs={breadcrumbs}>
+<BaseLayoutWithBreadcrumbs pageTitle={uuid} breadcrumbs={breadcrumbs}>
     <div class="vf-stack vf-stack--500">
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div></div>
-            <div>
-                <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ image.study_accession_id }:{ image.alias }
+        <section class="vf-content | embl-grid--has-centered-content">
+        <div style="padding-left: 10%;padding-right: 10%">
+        <h1 class="vf-intro__heading vf-intro__heading--has-tag">{ studyInfo.accession_id }
                     <WebsiteStateButton/>
                 </h1>
-                <h2 class="vf-intro__subheading">{image.name}</h2>
-                {image.original_relpath}
-                <p class="studytitle">{image.study_title}</p>
-            </div>
-            <div>
-                Released {image.release_date}<br>
-                Modified 2023-05-07
-            </div>
-        </section>
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Image metadata</h3>
-                <b>Image size: </b> {tissue_x}μm x {tissue_y}μm<br>
-                {image.sizeX} x {image.sizeY} pixels<br />
-                {image.sizeC} channels
-                <br /> <br />
-                {Object.entries(image.attributes).map(([key, value]) => (
-                    <p>{key}: {value}</p>
-                ))}
-            </div>
-            <div>
-                <iframe style="width: 100%; height: 500px" name="vizarr" src={image.vizarr_uri}></iframe>
-            </div>
-            <div>
-                <h3>Access images</h3>
-                License: <a href="https://creativecommons.org/publicdomain/zero/1.0/">https://creativecommons.org/publicdomain/zero/1.0/</a>> <br/>
-                <br/>
-                <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a>
-                <br/>
-                <br/>
-
-                <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={base_img_s3_url}>Copy OME-Zarr URI</button>
-                <h3>Visualise</h3>
-                <a href={image.vizarr_uri}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
+                <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
+              <br />
+            <a href={`/bioimage-archive/galleries/ai/ai-ready-study/${studyInfo.accession_id}`}>
+                    <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
                 </a>
-                <a href={image.itk_uri}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
-                </a>
-
-                <script>
-
-                    let copyUrlButton = document.getElementById("CopyURLButton")
-                    let originalText = copyUrlButton.innerText;
-                    copyUrlButton.onclick=async() => {
-                        await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
-                    };
-
-                    async function copyUrl(url, button, originalText) {
-                        await navigator.clipboard.writeText(url);
-                        button.innerText = "URI Copied";
-                        setTimeout(() => {
-                            button.innerText = originalText;
-                        }, 700);
-                    }
-
-                </script>
-            </div>
+        </div>
         </section>
-        { ( image.source_image_uuid != null ) &&
-            <SourceImage image={ image} />
-        }
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Study</h3>
-            </div>
-            <div><b>Title:</b> {image.study_title}</div>
-            <div></div>
-        </section>
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Biosample</h3>
-            </div>
-            <div>
-                <b>Organism:</b> {study_info.organism}<br>
-                <b>Biological entity: </b>
-            </div>
-            <div></div>
-        </section>
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Specimen</h3>
-            </div>
-            <div>
-                <b>Sample preparation:</b> <br>
-            </div>
-            <div></div>
-        </section>
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Image acquisition</h3>
-            </div>
-            <div>
-                <b>Imaging Method:</b> <br>
-            </div>
-            <div></div>
-        </section>
+        <section class="vf-content "><a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download these images</a><br/></section>    
+        <SourceAnnotatedImage annotatedImages={annotatedImages} sourceImage={sourceImage} vizarrURL={vizarrURL} btnID="CopyURLButton"/>
+        <hr />
+        <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
+        <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
+        <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
 </BaseLayout>

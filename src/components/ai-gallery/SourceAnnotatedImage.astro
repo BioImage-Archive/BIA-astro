@@ -1,0 +1,62 @@
+---
+import ImageMetadata from "./ImageMetadata.astro";
+const { annotatedImages, sourceImage, vizarrURL} = Astro.props;
+
+function getAttributes(image) {
+  return image?.additional_metadata.find(meta =>
+    meta.name.startsWith("attributes_from_file_reference")
+  )?.value?.attributes || {};
+}
+
+const sourceImageAtrributes = getAttributes(sourceImage)
+const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
+const sourceImgS3Url = sourceImageRep.file_uri[0].replace(vizarrURL,'') || "";
+let annotatedImage = annotatedImages[0];
+const annotatedImageAttributes = getAttributes(annotatedImage);
+const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
+const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
+---
+<section class="vf-content">
+  {annotatedImages.length > 0 ? (
+    <>
+      <div class="vf-grid" style="display: flex; gap: 1rem;">
+        <div style="min-width: 48%"><h3><span>Source Image</span></h3><div>
+            <iframe src={vizarrURL+sourceImgS3Url} style="border: none;flex:1;height: 500px;width:100%;min-width:48%"></iframe>
+          </div>
+          <ImageMetadata text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
+        </div>
+        <div style="min-width: 48%">
+          <h3><span>Annotated Image <span id="AnnotatedImageLength">1</span> of {annotatedImages.length}</span></h3>
+          <div style="flex: 1; position: relative; overflow: hidden;">
+            <span class="imageslider"><button onclick="slide(-1)" id="image-slider" class="slider-left-button"></button></span>
+            <div id="slider">
+              {annotatedImages.map((img) => {
+                const rep = img.representation.find((r) => r.image_format === ".ome.zarr");
+                if (!rep || !rep.file_uri?.[0]) return null;
+                return (
+                  <iframe
+                    src={vizarrURL+rep.file_uri[0]}
+                    style="height: 500px; border: none;min-width:100%"
+                    id={img.uuid}
+                  ></iframe>
+                );
+              })}
+            </div>
+            <span class="imageslider"><button onclick="slide(1)" class="slider-right-button"></button></span>
+          </div>
+          <div style="margin-top: 0.3em;">
+          {annotatedImages.length > 0 && (
+            <ImageMetadata text="Annotation" url={annotatedImgS3Url} imageRep={annotatedImageRep} imageAtrributes={annotatedImageAttributes} btnID="CopyAnnotationButton"/>
+          )}
+          </div>
+        </div>   
+      </div>
+    </>
+  ) : (
+    <>
+      <h3><span>Source Image</span></h3>
+      <iframe src={vizarrURL+sourceImgS3Url} style="height: 500px; width: 100%;border: none;"></iframe>
+    </>
+  )}
+</section>
+<script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
