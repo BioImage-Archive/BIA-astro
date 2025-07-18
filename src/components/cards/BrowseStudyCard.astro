@@ -1,7 +1,7 @@
 ---
-import { getTaxons, formatListItem, getAnnotationType, getStudyImage } from "../SharedJSFunctions.js";
+import { getTaxons, formatListItem, getStudyImage } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
-const { study, studyPageRoot, taglist, cardImageOverride} = Astro.props;
+const { study, studyPageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
 
 
 function getImagingMethodType(study) {
@@ -42,9 +42,6 @@ function getDataForCardFilter(study) {
     return dataString
 }
 
-
-
-const annotationType = getAnnotationType(study.dataset);
 ---
 <article class="vf-card vf-card--brand vf-card--bordered" data-message={getDataForCardFilter(study)}>
     <img src={ getStudyImage(study, cardImageOverride) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
