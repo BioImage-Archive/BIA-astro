@@ -104,15 +104,17 @@ const timestepSpan = text == "Annotation"? "annotated-timesteps": "source-timest
 <script>
   const originalText = "Copy Annotation OME-Zarr URI";
     document.getElementById("CopyURLButton").onclick = async (e) => {
-        const url = e.target.dataset.url;
-        await navigator.clipboard.writeText(url);
-        e.target.innerText = "URI Copied";
-        setTimeout(() => e.target.innerText = originalText, 700);
+      const target = (e.target as HTMLElement)
+      const url = target.dataset.url;
+      await navigator.clipboard.writeText(url);
+      target.innerText = "URI Copied";
+      setTimeout(() => target.innerText = originalText, 700);
     };
     document.getElementById("CopyAnnotationButton").onclick = async (e) => {
-        const url = e.target.dataset.url;
-        await navigator.clipboard.writeText(url);
-        e.target.innerText = "URI Copied";
-        setTimeout(() => e.target.innerText = originalText, 700);
+      const target = (e.target as HTMLElement)
+      const url = target.dataset.url;
+      await navigator.clipboard.writeText(url);
+      target.innerText = "URI Copied";
+      setTimeout(() => target.innerText = originalText, 700);
     };
 </script>

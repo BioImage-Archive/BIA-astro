@@ -242,13 +242,12 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
 
       setInterval(() => {
         // Hide all slides and uuids
-        slides.forEach((s) => (s.style.display = "none"));
-        uuids.forEach((u) => (u.style.display = "none"));
+        slides.forEach((s) => ((s as HTMLElement).style.display = "none"));
+        uuids.forEach((u) => ((u as HTMLElement).style.display = "none"));
 
         // Show next
-        slides[index].style.display = "block";
-        uuids[index].style.display = "inline";
-
+        (slides[index] as HTMLElement).style.display = "block";
+        (uuids[index] as HTMLElement).style.display = "inline";
         index = (index + 1) % slides.length;
       }, 3500);
     });
