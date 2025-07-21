@@ -9,8 +9,8 @@ function getAttributes(image) {
 }
 
 const sourceImageAtrributes = getAttributes(sourceImage)
-const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
-const sourceImgS3Url = sourceImageRep.file_uri[0].replace(vizarrURL,'') || "";
+const sourceImageRep = sourceImage?.representation.find((r) => r.image_format === ".ome.zarr") || [];
+const sourceImgS3Url = sourceImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
 let annotatedImage = annotatedImages[0];
 const annotatedImageAttributes = getAttributes(annotatedImage);
 const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");

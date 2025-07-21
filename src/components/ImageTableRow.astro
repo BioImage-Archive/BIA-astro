@@ -13,7 +13,7 @@ function getThumbnail(uuid, imageMetadata) {
 function getDownloadSize(uuid, imageMetadata) {
   // TODO
   if (uuid in imageMetadata) {
-    const submitter_data = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
+    const submitter_data = imageMetadata[uuid].representation.find((rep)=>rep.image_format == ".tiff" || rep.image_format == ".jpg" || rep.image_format == ".ome.zarr")
     if (submitter_data != undefined) {
       return submitter_data.total_size_in_bytes
     }

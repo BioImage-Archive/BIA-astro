@@ -3,10 +3,10 @@ import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro';
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 import collection from '../../../data/collections/ai-ready-datasets.json';
-import { getStudiesforAIGallery } from "../../../components/SharedJSFunctions"
-import { getAnnotationType} from "../../../components/SharedJSFunctions";
+import { getAllStudyMetadataFromSearchAPI, getAnnotationType } from "../../../components/SharedJSFunctions"
+import { type Studies } from "../../../components/SharedInterface.astro"
 
-const studys = await getStudiesforAIGallery(collection.accession_ids, "accession", "ai-ready");
+const studys = await getAllStudyMetadataFromSearchAPI("study", "accession", collection.accession_ids) as Studies;
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>

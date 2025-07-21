@@ -7,10 +7,9 @@ import ViewableImageTable from '../../../../components/ViewableImageTable.astro'
 import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
 import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
-
+import { type Studies } from "../../../../components/SharedInterface.astro";
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import studyMetadata from "../../../../data/bia-study-metadata.json"
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue} from "../../../../components/SharedJSFunctions.js"
+import {getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getAllStudyMetadataFromSearchAPI} from "../../../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return spatialomicsCollection.accession_ids.map((id) => {
@@ -21,8 +20,7 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-const study = studyMetadata[accessionID];
-
+const study = (await getAllStudyMetadataFromSearchAPI("study", "accession",[accessionID]) as Studies)[accessionID];
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 
 let hasTranscripts = false;
@@ -32,16 +30,21 @@ const fetchDatasetDetails = async (datasetUuid) => {
     const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
     const response = await fetch(apiUrl);
     const fileData = await response.json();
-    const attributes = fileData.flatMap(file => file.additional_metadata || []);
-    const dataTypeAttr = attributes.find(attr => 
-        attr.name === 'attributes_from_biostudies.File' && (
-            attr.value?.attributes?.Data_Type === 'transcripts' ||
-            attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-            attr.value?.attributes?.Description?.includes('Feature barcode') ||
-            attr.value?.attributes?.Description?.includes('feature matrix')
-        )
-    );
-    return dataTypeAttr ? true : false;
+    try {
+    const attributes = fileData?.flatMap(file => file.additional_metadata || []) || [];
+      const dataTypeAttr = attributes.find(attr => 
+          attr.name === 'attributes_from_biostudies.File' && (
+              attr.value?.attributes?.Data_Type === 'transcripts' ||
+              attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+              attr.value?.attributes?.Description?.includes('Feature barcode') ||
+              attr.value?.attributes?.Description?.includes('feature matrix')
+          )
+      );
+      return dataTypeAttr ? true : false;
+    }catch (err) {
+        console.error("Failed to fetch dataset details");
+        return false; // Or throw if you want to propagate the error
+    }
 };    
 
 const checkForTranscripts = async () => {
@@ -65,9 +68,8 @@ if (hasTranscripts) {
   tableOfContents["Transcript files"] = "transcript_files";
 }
 
-
-const images = study.dataset.flatMap(dataset => dataset.image ?? [])
-
+console.log(study)
+const images = study?.dataset?.flatMap(dataset => dataset.image ?? [])
 const annotationDatasets = study.dataset.filter(dataset => 
   "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0
 );
