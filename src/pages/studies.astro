@@ -1,4 +1,5 @@
 ---
+export const prerender = false
 import BaseLayoutWithBreadcrumbs from '../layouts/BaseLayoutWithBreadcrumbs.astro';
 import StudyCard from '../components/cards/BrowseStudyCard.astro';
 import BrowseStudyHeading from '../components/BrowseStudiesHeading.astro';
@@ -6,6 +7,25 @@ import  "../styles/toggle.css"
 import "../styles/browse_controls.css"
 import "../styles/filter_cards.css"
 import studyMetadata from "../data/bia-study-metadata.json";
+import SearchResults from "../components/search.astro"
+
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get('query');
+
+let results = [];
+
+if (query) {
+  const res = await fetch(`https://alpha.bioimagearchive.org/search/search/fts?query=${encodeURIComponent(query)}`);
+  if (res.ok) {
+    const data = await res.json();
+    results = data.hits || [];
+  }
+}
+
+let isSearch = false;
+if(query){
+  isSearch = true;
+}
 
 const totalStudies = Object.keys(studyMetadata).length;
 
@@ -28,89 +48,92 @@ const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayoutWithBreadcrumbs pageTitle="Browse Studies">
-  <body>
-
-    <BrowseStudyHeading
-      heading="Browse the BioImage Archive"
-      contributeLink={"/bioimage-archive/submit"}
-    > 
-      <div slot="body_text">
-        <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
-        <p></p>
-        <p class="vf-hero__text">
-          Number of Studies: {formattedTotalStudies}<br>
-          Number of Files: {formattedTotalFiles}<br>
-          Number of OME-NGFF Images: {formattedTotalImages}</p>
+  {isSearch ? (<SearchResults query={query} results={results}/>)
+    : (
+      <body>
+      <BrowseStudyHeading
+        heading="Browse the BioImage Archive"
+        contributeLink={"/bioimage-archive/submit"}
+      > 
+        <div slot="body_text">
+          <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
           <p></p>
           <p class="vf-hero__text">
-        All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
+            Number of Studies: {formattedTotalStudies}<br>
+            Number of Files: {formattedTotalFiles}<br>
+            Number of OME-NGFF Images: {formattedTotalImages}</p>
+            <p></p>
+            <p class="vf-hero__text">
+          All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
 
-      </div>
-      <div slot="right_of_header" class="controls-container"> 
-        <div class="controls-inner">
-          <input type="text" id="searchInput" placeholder="Filter studies..." class="search-input">
-          <div class="filter-option">
-            <span> Limit to studies with viewable images:  </span>
-            <label class="switch" id="image_toggle_switch">
-              <input type="checkbox" id="image_toggle">
-              <span class="slider round"/>
-            </label>
+        </div>
+        <div slot="right_of_header" class="controls-container"> 
+          <div class="controls-inner">
+            <input type="text" id="searchInput" placeholder="Filter studies..." class="search-input">
+            <div class="filter-option">
+              <span> Limit to studies with viewable images:  </span>
+              <label class="switch" id="image_toggle_switch">
+                <input type="checkbox" id="image_toggle">
+                <span class="slider round"/>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-    </BrowseStudyHeading>
+      </BrowseStudyHeading>
 
 
-    <script>
-      var input = document.getElementById('searchInput') as HTMLInputElement;
-      var toggle = document.getElementById('image_toggle') as HTMLInputElement;
+      <script>
+        var input = document.getElementById('searchInput') as HTMLInputElement;
+        var toggle = document.getElementById('image_toggle') as HTMLInputElement;
 
-      toggle.addEventListener('change', () => filterElements(input.value, toggle));
-      input.addEventListener('keyup', () => filterElements(input.value, toggle));
+        toggle.addEventListener('change', () => filterElements(input.value, toggle));
+        input.addEventListener('keyup', () => filterElements(input.value, toggle));
 
-      function filterElements(inputText, toggle) {
-        const cards = document.querySelectorAll('.vf-card')
-        if (inputText == "" && !toggle.checked) {
-          cards.forEach((card) => displayElement(card as HTMLElement));
-        } else {
-          cards.forEach((card) => toggleCard(inputText.toLowerCase(), toggle.checked, card as HTMLElement));
-        }
-      }
-
-      function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
-        var cardData = card.dataset.message;
-        var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
-
-        if (requires_image) {
-          if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
-            displayElement(card)
+        function filterElements(inputText, toggle) {
+          const cards = document.querySelectorAll('.vf-card')
+          if (inputText == "" && !toggle.checked) {
+            cards.forEach((card) => displayElement(card as HTMLElement));
           } else {
-            hideElement(card)
-          }
-        } else {
-            if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
-            displayElement(card)
-          } else {
-            hideElement(card)
+            cards.forEach((card) => toggleCard(inputText.toLowerCase(), toggle.checked, card as HTMLElement));
           }
         }
-      }
 
-      function displayElement(card: HTMLElement) {            
-        card.style.display = ""
-      }
+        function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
+          var cardData = card.dataset.message;
+          var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
 
-      function hideElement(card: HTMLElement) {
-        card.style.display = "none"
-      }
-    </script>
+          if (requires_image) {
+            if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
+              displayElement(card)
+            } else {
+              hideElement(card)
+            }
+          } else {
+              if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
+              displayElement(card)
+            } else {
+              hideElement(card)
+            }
+          }
+        }
 
-    <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
-       
-        <div class="vf-card-container__inner" >
-            { Object.values(studyMetadata).map((study) => ( <StudyCard study={study} studyPageRoot="study"/> )) }
-        </div>
-    </section>
+        function displayElement(card: HTMLElement) {            
+          card.style.display = ""
+        }
 
-  </body>
+        function hideElement(card: HTMLElement) {
+          card.style.display = "none"
+        }
+      </script>
+
+      <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+        
+          <div class="vf-card-container__inner" >
+              { Object.values(studyMetadata).map((study) => ( <StudyCard study={study} studyPageRoot="study"/> )) }
+          </div>
+      </section>
+
+      </body>
+    )
+  }
 </BaseLayoutWithBreadcrumbs>
