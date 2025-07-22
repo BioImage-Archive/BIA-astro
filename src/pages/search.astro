@@ -1,0 +1,66 @@
+---
+export const prerender = false
+import BaseLayoutWithBreadcrumbs from '../layouts/BaseLayoutWithBreadcrumbs.astro';
+import StudyCard from '../components/cards/BrowseStudyCard.astro';
+import  "../styles/toggle.css"
+import "../styles/browse_controls.css"
+import "../styles/filter_cards.css"
+import SearchBar from "../components/SearchBar.astro";
+
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get('query');
+
+let results = [];
+
+if (query) {
+  const res = await fetch(`https://alpha.bioimagearchive.org/search/search/fts?query=${encodeURIComponent(query)}`);
+  if (res.ok) {
+    const data = await res.json();
+    results = data.hits || [];
+  }
+}
+
+---
+
+<BaseLayoutWithBreadcrumbs pageTitle="Search">
+<section class="vf-content">
+    <h1>Search Page</h1>
+  <div class="vf-grid vf-grid__col-2" >
+    <div style=>
+      <SearchBar query={query} />
+    </div>
+    <div>
+        <div class="vf-form" style="display: flex;">
+          <label for="sort" class="vf-form__label" style="flex: 1; margin:auto;margin-left: 40%">Sort by:</label>
+          <select name="sort" id="sort" class="vf-form__input" style="flex: 3">
+            <option value="relevance">Relevance</option>
+            <option value="az">A-Z (accession ID)</option>
+            <option value="za">Z-A (accession ID)</option>
+          </select>
+        </div>
+    </div>
+  </div>
+</section>
+<section class="vf-content">
+  <div>
+    {query && (
+      <>
+        <h3>Showing Search results for "<strong>{query}</strong>":</h3>
+        <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+        <div class="vf-card-container__inner">
+        {results.length === 0 ? (
+          <p>No results found.</p>
+        ) : (
+          results.map((item) => (
+            <StudyCard
+            study={item._source} studyPageRoot="study"
+            />
+          ))
+        )}
+        </div></section>
+      </>
+    )}
+  </div>
+</section>
+
+</BaseLayoutWithBreadcrumbs>

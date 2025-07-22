@@ -1,0 +1,19 @@
+---
+const { query } = Astro.props;
+---
+<form action="/bioimage-archive/search" method="get" class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end">
+<div class="vf-sidebar__inner">
+    <div class="vf-form__item">
+    <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem">Search</label>
+    <input
+        type="search"
+        name="query"
+        placeholder="Search BioImage Archive"
+        id="searchitem"
+        class="vf-form__input"
+        value={query || ''}
+    />
+    </div>
+    <button type="submit" class="vf-search__button | vf-button vf-button--primary">Search</button>
+</div>
+</form>
