@@ -46,7 +46,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
             const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
 
             // Destroy the existing DataTable instance if it exists
-            if (($.fn.DataTable as any).isDataTable('#sotables_file_references_table')) {
+            if (($.fn.DataTable as any).isDataTable('#annotation_file_references_table')) {
                 $('#annotation_file_references_table').DataTable().destroy();
                 $('#annotation_file_references_table').empty(); // Clear the table's HTML content
             }

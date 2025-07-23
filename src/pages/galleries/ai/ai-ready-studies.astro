@@ -7,6 +7,7 @@ import { getAllStudyMetadataFromSearchAPI, getAnnotationType } from "../../../co
 import { type Studies } from "../../../components/SharedInterface.astro"
 
 const studys = await getAllStudyMetadataFromSearchAPI("study", "accession", collection.accession_ids) as Studies;
+console.log(studys)
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>

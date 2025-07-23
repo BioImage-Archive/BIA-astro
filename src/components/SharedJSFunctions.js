@@ -194,25 +194,24 @@ export async function getEnrichedStudies(objs, objType, page=null){
     const studyEntries = await Promise.all(objs.map(async obj => {
       let study;
       let uuid;
+      let response;
       switch (objType){
           case "accession":
-            study = await getFromAPI(`${api}/search/study/accession?accession_id=${obj}&page_size=1`);
-            uuid = study.uuid;
-            study.dataset = Array.isArray(study.dataset) ? study.dataset : [];
+            response = await getFromAPI(`${searchAPI}search/fts?query=${obj}`);
             break;
           case "uuid":
             uuid = obj;
+            response = await getFromAPI(`${searchAPI}website/doc?uuid=${uuid}`)
             break;
           case "all":
             study = obj;
             study.dataset = Array.isArray(study.dataset) ? study.dataset : [];
-            uuid = study.uuid;
+            response = await getFromAPI(`${searchAPI}website/doc?uuid=${study.uuid}`)
             break;
           default:
             study = [];
             break;
         }
-        const response = await getFromAPI(`${searchAPI}website/doc?uuid=${uuid}`)
         const enrichedStudy = response?.hits?.[0]?._source || study
         const accessionID = enrichedStudy?.accession_id || study?.accession_id || `No accesion for ${obj}`;
         return [accessionID, enrichedStudy]
