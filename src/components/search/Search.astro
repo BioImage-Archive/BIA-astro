@@ -1,16 +1,16 @@
 ---
-import StudyCard from '../components/cards/BrowseStudyCard.astro';
-import SearchFilter from '../components/SearchFilter.astro';
-import  "../styles/toggle.css"
-import "../styles/browse_controls.css"
-import "../styles/filter_cards.css"
-import { getTaxons, getImagingMethodType } from "../components/SharedJSFunctions.js";
+import StudyCard from '../../components/cards/BrowseStudyCard.astro';
+import SearchFilter from '../../components/search/SearchFilter.astro';
+import  "../../styles/toggle.css"
+import "../../styles/browse_controls.css"
+import "../../styles/filter_cards.css"
+import { getTaxons, getImagingMethodType } from "../../components/SharedJSFunctions.js";
 
 const { query, results } = Astro.props;
 const organismList = new Set(results.map( (item) => getTaxons(item._source)).flat())
 const imagingMethodList = new Set(results.map( (item) => getImagingMethodType(item._source)).flat())
-const releaseDateList = new Set(results.map( (item) => item._source.release_date ).flat())
-const facets = {"organism": organismList, "imaging method": imagingMethodList}
+const releaseYearList = new Set(results.map( (item) => item._source.release_date.split("-")[0] ).flat())
+const facets = {"organism": organismList, "imaging method": imagingMethodList,"release year": releaseYearList}
 
 ---
 <section class="vf-content">
@@ -20,7 +20,7 @@ const facets = {"organism": organismList, "imaging method": imagingMethodList}
     <div>
         <div class="vf-form" style="display: flex;">
           <label for="sort" class="vf-form__label" style="flex: 1; margin:auto;margin-left: 40%">Sort by:</label>
-          <select name="sort" id="sort" class="vf-form__input" style="flex: 3">
+          <select name="sort" id="sort" class="vf-form__select" style="flex: 3">
             <option value="relevance">Relevance</option>
             <option value="az">A-Z (accession ID)</option>
             <option value="za">Z-A (accession ID)</option>
@@ -30,12 +30,13 @@ const facets = {"organism": organismList, "imaging method": imagingMethodList}
   </div>
 </section>
 <section class="vf-content">
-  <div class="vf-grid">
-    <p>Filter by: </p>
+  <div class="vf-grid vf-grid__col-5">
+    <div><h3 style="float: right">Filter by: </h3></div>
     {Object.keys(facets).map((facet) => <>
     <SearchFilter title={facet} filter={facets[facet]}/>
     </>
     )}
+    <div><button id="reset" class="vf-button vf-button--primary vf-button--sm">Reset filters</button></div>
   </div>
 </section>
 <section class="vf-content">
@@ -59,43 +60,45 @@ const facets = {"organism": organismList, "imaging method": imagingMethodList}
   </div>
 </section>
 
-<script>
-  var organism = document.getElementById('organism') as HTMLInputElement;
-  var imagingMethod = document.getElementById('imaging method') as HTMLInputElement;
-  organism.addEventListener('change', () => filterElements(organism.value));
-  imagingMethod.addEventListener('change', () => filterElements(imagingMethod.value));
 
-  function filterElements(inputText) {
-    console.log(inputText)
-    const cards = document.querySelectorAll('.vf-card')
-    if (inputText == "") {
-      cards.forEach((card) => displayElement(card as HTMLElement));
-    } else {
-      cards.forEach((card) => toggleCard(inputText.toLowerCase(), card as HTMLElement));
-    }
-  }
 
-  function toggleCard(input: string, card: HTMLElement) {
-    if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
-      displayElement(card)
-    } else {
-      hideElement(card)
-    }
-  }
-
-  function displayElement(card: HTMLElement) {            
-    card.style.display = ""
-  }
-
-  function hideElement(card: HTMLElement) {
-    card.style.display = "none"
-  }
-</script>
 <script type="module">
+  const organism = document.getElementById('organism');
+  const imagingMethod = document.getElementById('imaging method');
+  const releaseYear = document.getElementById('release year');
+
+  organism.addEventListener('change', filterCards);
+  imagingMethod.addEventListener('change', filterCards);
+  releaseYear.addEventListener('change', filterCards);
+
+  function filterCards() {
+    const selectedOrganism = organism.value.toLowerCase();
+    const selectedImagingMethod = imagingMethod.value.toLowerCase();
+    const selectedReleaseYear = releaseYear.value.toLowerCase();
+
+    const cards = document.querySelectorAll('.vf-card');
+
+    cards.forEach(card => {
+      const cardData = card.dataset.message.toLowerCase();
+
+      // Check each filter condition — skip if filter is empty (or default)
+      const matchesOrganism = !selectedOrganism || cardData.includes(selectedOrganism);
+      const matchesImagingMethod = !selectedImagingMethod || cardData.includes(selectedImagingMethod);
+      const matchesReleaseYear = !selectedReleaseYear || cardData.includes(selectedReleaseYear);
+
+      // Show card only if all conditions are true (AND logic)
+      if (matchesOrganism && matchesImagingMethod && matchesReleaseYear) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
   const sortSelect = document.getElementById('sort');
   const container = document.querySelector('.vf-card-container__inner');
   const originalCards = Array.from(container.querySelectorAll('.vf-card'));
-
+  
   function parseAccession(id) {
     const match = id.match(/^([A-Z\-]+)(\d+)$/i);
     if (!match) return [id, 0]; // fallback
@@ -127,7 +130,21 @@ const facets = {"organism": organismList, "imaging method": imagingMethodList}
 
     container.innerHTML = '';
     sortedCards.forEach(card => container.appendChild(card)); 
-  }
-);
+  } 
+  );
 
+  var resetFilters = document.getElementById('reset');
+
+  resetFilters.addEventListener("click", (event) => {
+    const selects = document.querySelectorAll("select");
+    selects.forEach((select) => {
+      if(select.id != "sort"){
+        select.selectedIndex = 0;
+      }
+    });
+    const cards = document.querySelectorAll('.vf-card');
+    cards.forEach((card) => {
+      card.style.display = "";
+    });
+  });
 </script>

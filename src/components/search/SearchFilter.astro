@@ -1,16 +1,16 @@
 ---
 const { title, filter } = Astro.props;
 const filterArray = Array.from(filter as string[]); 
+
 function capitalizeFirstLetter(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 ---
-<div>
-  <select name={title} id={title} class="vf-form__input">
-    <option  selected="selected" disabled selected value={title}>{capitalizeFirstLetter(title)}</option>
+<div class="vf-form__item vf-stack">
+  <select name={title} id={title} class="vf-form__select">
+    <option  selected="selected" disabled selected value="">{capitalizeFirstLetter(title)}</option>
     {filterArray.map((val) => (
       <option value={val} set:html={val}></option>
     ))}
-  </select>
 </div>
