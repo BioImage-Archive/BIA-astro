@@ -67,6 +67,20 @@ export function aggregateDatasetStats(datasets) {
     return dataset_uuids
 }
 
+export function getImagingMethodType(study) {
+    const imagingTypeList = []
+    for (var dataset of study.dataset) {
+        for (var ia of dataset.acquisition_process) {
+            for (var methodNames of ia.imaging_method_name) {
+                if (!imagingTypeList.includes(methodNames)) {
+                    imagingTypeList.push(methodNames)
+                }
+            }
+        }
+    }
+    return imagingTypeList
+}
+
 export function getTaxons(study) {
     const taxonHtmlList = []
     const taxonList = []

@@ -7,24 +7,20 @@ import  "../styles/toggle.css"
 import "../styles/browse_controls.css"
 import "../styles/filter_cards.css"
 import studyMetadata from "../data/bia-study-metadata.json";
-import SearchResults from "../components/search.astro"
+import SearchResults from "../components/Search.astro"
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query');
 
 let results = [];
-
+let pageTitle = "Browse Studies"
 if (query) {
   const res = await fetch(`https://alpha.bioimagearchive.org/search/search/fts?query=${encodeURIComponent(query)}`);
   if (res.ok) {
     const data = await res.json();
     results = data.hits || [];
+    pageTitle = "Studies"
   }
-}
-
-let isSearch = false;
-if(query){
-  isSearch = true;
 }
 
 const totalStudies = Object.keys(studyMetadata).length;
@@ -47,8 +43,8 @@ const formattedTotalStudies = totalStudies.toLocaleString();
 const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
-<BaseLayoutWithBreadcrumbs pageTitle="Browse Studies">
-  {isSearch ? (<SearchResults query={query} results={results}/>)
+<BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
+  {query ? (<SearchResults query={query} results={results}/>)
     : (
       <body>
       <BrowseStudyHeading

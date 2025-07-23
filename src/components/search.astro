@@ -1,11 +1,16 @@
 ---
 import StudyCard from '../components/cards/BrowseStudyCard.astro';
+import SearchFilter from '../components/SearchFilter.astro';
 import  "../styles/toggle.css"
 import "../styles/browse_controls.css"
 import "../styles/filter_cards.css"
-import SearchBar from "../components/SearchBar.astro";
+import { getTaxons, getImagingMethodType } from "../components/SharedJSFunctions.js";
 
 const { query, results } = Astro.props;
+const organismList = new Set(results.map( (item) => getTaxons(item._source)).flat())
+const imagingMethodList = new Set(results.map( (item) => getImagingMethodType(item._source)).flat())
+const releaseDateList = new Set(results.map( (item) => item._source.release_date ).flat())
+const facets = {"organism": organismList, "imaging method": imagingMethodList}
 
 ---
 <section class="vf-content">
@@ -22,6 +27,15 @@ const { query, results } = Astro.props;
           </select>
         </div>
     </div>
+  </div>
+</section>
+<section class="vf-content">
+  <div class="vf-grid">
+    <p>Filter by: </p>
+    {Object.keys(facets).map((facet) => <>
+    <SearchFilter title={facet} filter={facets[facet]}/>
+    </>
+    )}
   </div>
 </section>
 <section class="vf-content">
@@ -44,3 +58,76 @@ const { query, results } = Astro.props;
     )}
   </div>
 </section>
+
+<script>
+  var organism = document.getElementById('organism') as HTMLInputElement;
+  var imagingMethod = document.getElementById('imaging method') as HTMLInputElement;
+  organism.addEventListener('change', () => filterElements(organism.value));
+  imagingMethod.addEventListener('change', () => filterElements(imagingMethod.value));
+
+  function filterElements(inputText) {
+    console.log(inputText)
+    const cards = document.querySelectorAll('.vf-card')
+    if (inputText == "") {
+      cards.forEach((card) => displayElement(card as HTMLElement));
+    } else {
+      cards.forEach((card) => toggleCard(inputText.toLowerCase(), card as HTMLElement));
+    }
+  }
+
+  function toggleCard(input: string, card: HTMLElement) {
+    if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
+      displayElement(card)
+    } else {
+      hideElement(card)
+    }
+  }
+
+  function displayElement(card: HTMLElement) {            
+    card.style.display = ""
+  }
+
+  function hideElement(card: HTMLElement) {
+    card.style.display = "none"
+  }
+</script>
+<script type="module">
+  const sortSelect = document.getElementById('sort');
+  const container = document.querySelector('.vf-card-container__inner');
+  const originalCards = Array.from(container.querySelectorAll('.vf-card'));
+
+  function parseAccession(id) {
+    const match = id.match(/^([A-Z\-]+)(\d+)$/i);
+    if (!match) return [id, 0]; // fallback
+    return [match[1], parseInt(match[2], 10)];
+  }
+
+  sortSelect.addEventListener('change', (event) => {
+    const sortBy = event.target.value;
+    const cards = Array.from(container.querySelectorAll('.vf-card'));
+
+    let sortedCards;
+
+    if (sortBy === 'az' || sortBy === 'za') {
+      sortedCards = cards.sort((a, b) => {
+        const aId = a.dataset.message.split(";")[0]; // e.g. S-BIAD1234
+        const bId = b.dataset.message.split(";")[0];
+
+        const [aPrefix, aNum] = parseAccession(aId);
+        const [bPrefix, bNum] = parseAccession(bId);
+
+        const prefixCompare = aPrefix.localeCompare(bPrefix);
+        if (prefixCompare !== 0) return sortBy === 'az' ? prefixCompare : -prefixCompare;
+
+        return sortBy === 'az' ? aNum - bNum : bNum - aNum;
+      });
+    } else {
+      sortedCards = originalCards;
+    }
+
+    container.innerHTML = '';
+    sortedCards.forEach(card => container.appendChild(card)); 
+  }
+);
+
+</script>
