@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { taxonRender, getMetadataValue } from "../../../../components/SharedJSFunctions.js";
+import { taxonRender, getMetadataValue, getTaxons } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
 import exports from "../../../../data/current-export/bia-ai-image-export.json";
 import datasets from "../../../../data/current-export/bia-ai-dataset-export.json";
@@ -11,14 +11,8 @@ import SpatialomicsStudyData from "../../../../data/old-export-format/bia-spatia
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
-
-
 export function getStaticPaths() {
-  return Object.keys(exports).map((uuid) => {
-    return {
-      params:  { uuid: uuid }
-    };
-  });
+  return Object.keys(exports).map(uuid => ({params:  { uuid: uuid }}))
 }
 
 function getStudyData(datasetID) {
@@ -29,22 +23,6 @@ function getStudyData(datasetID) {
     SpatialomicsStudyData.datasets?.[accessionID] ??
     { title: "Unknown Study", dataset: [] }
   );
-}
-
-function getTaxons(study) {
-    const taxonHtmlList = []
-    const taxonList = []
-    for (var dataset of study.dataset) {
-        for (var biosample of dataset.biological_entity) {
-            for (var taxon of biosample.organism_classification) {
-                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
-                    taxonList.push(taxon)
-                    taxonHtmlList.push(taxonRender(taxon))
-                }
-            }
-        }
-    }
-    return taxonHtmlList
 }
 
 const { uuid } = Astro.params;

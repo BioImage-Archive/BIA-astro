@@ -779,7 +779,7 @@
     "95928ac4-c773-49bb-8083-fbc7ac75fd3a": {
         "object_creator": "bia_ingest",
         "uuid": "95928ac4-c773-49bb-8083-fbc7ac75fd3a",
-        "version": 3,
+        "version": 4,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -806,7 +806,9 @@
         "description": "Manual annotations performed by experts",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD686/12c2f5a0-932c-458f-89df-e06b950a6e95/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "912b24f6-f3d8-4a3d-80c0-e1f053c558ca",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -934,7 +936,7 @@
     "ac60eaa8-b698-448b-922a-798d3b61dc87": {
         "object_creator": "bia_ingest",
         "uuid": "ac60eaa8-b698-448b-922a-798d3b61dc87",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -994,7 +996,9 @@
         "description": "Ultrasound images of mouse embryo volumes",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD686/9b9d1a7f-a98e-4e52-931c-db2f3b623a5b/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "912b24f6-f3d8-4a3d-80c0-e1f053c558ca",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -1122,7 +1126,7 @@
     "9d72f2c9-8ffa-4457-b3e2-a910bd30d32e": {
         "object_creator": "bia_ingest",
         "uuid": "9d72f2c9-8ffa-4457-b3e2-a910bd30d32e",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -1149,7 +1153,9 @@
         "description": "Manually created segmentation mask for the otic vesicle (label 1) and enclosed calcite dots (label 2)",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1159/f10204cb-a04c-4812-a971-5a64bc7f1621/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "5bb92891-0de4-4633-be00-81eba4abcf4b",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -1343,7 +1349,7 @@
     "af9f4ff6-ca4d-43bc-930c-1a70f73effcd": {
         "object_creator": "bia_ingest",
         "uuid": "af9f4ff6-ca4d-43bc-930c-1a70f73effcd",
-        "version": 2,
+        "version": 3,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -1411,7 +1417,9 @@
         "description": "Multispecies infections within the otic vesicle of zebrafish",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1159/fc3b4ff5-54a9-4092-8cb9-b8b76632d7ae/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "5bb92891-0de4-4633-be00-81eba4abcf4b",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -1605,7 +1613,7 @@
     "36a744ef-82c0-47aa-b9c6-2814f7881723": {
         "object_creator": "bia_ingest",
         "uuid": "36a744ef-82c0-47aa-b9c6-2814f7881723",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -1632,7 +1640,9 @@
         "description": null,
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1367/26f71558-abee-42c9-a718-723c737af8a5/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "95acbee7-f43d-413c-995c-3cda5ae847f5",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -1850,7 +1860,7 @@
     "f4ce863d-ed1a-4fb8-8bc8-9d10312ecc48": {
         "object_creator": "bia_ingest",
         "uuid": "f4ce863d-ed1a-4fb8-8bc8-9d10312ecc48",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -1910,7 +1920,9 @@
         "description": "Z-stacks extracted from three SPIM time-lapse movies of the developing lateral root primordia of Arabidopsis thaliana. Each z-stack corresponds to a specific time point.",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1367/29e48c56-5a13-4646-81c2-1e7b8f53ae26/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "95acbee7-f43d-413c-995c-3cda5ae847f5",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -3405,7 +3417,7 @@
     "e79d479f-e35e-4254-bdd2-236eba4f29d8": {
         "object_creator": "bia_ingest",
         "uuid": "e79d479f-e35e-4254-bdd2-236eba4f29d8",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -3465,7 +3477,9 @@
         "description": "Epithelial wounds in Drosophila embryos, with accompanying segmentation masks of the wound area.",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/464d0759-7720-481a-8786-feaed22a08be/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "40c20d53-6f99-4e07-ad21-ed3a6964d255",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -3673,7 +3687,7 @@
     "aeca6c7b-fcad-48c2-8e9a-7dc2a1d91a34": {
         "object_creator": "bia_ingest",
         "uuid": "aeca6c7b-fcad-48c2-8e9a-7dc2a1d91a34",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -3740,7 +3754,9 @@
             }
         ],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1659/1e02db9b-d273-4562-a95e-e78d78c26fd7/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "55e59bd0-8083-47ac-b7cd-ee47597456aa",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -3883,7 +3899,7 @@
     "f9c8e982-640a-424c-bad8-c50e198f806b": {
         "object_creator": "bia_ingest",
         "uuid": "f9c8e982-640a-424c-bad8-c50e198f806b",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -3910,7 +3926,9 @@
         "description": "Nucleus segmentation using CellPose 2.0",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1659/cb06d5dc-cb93-4891-94bb-bd68ace22190/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "55e59bd0-8083-47ac-b7cd-ee47597456aa",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -5518,7 +5536,7 @@
     "ae9059d9-4bcd-4a5e-bc9e-6d4eab792143": {
         "object_creator": "bia_ingest",
         "uuid": "ae9059d9-4bcd-4a5e-bc9e-6d4eab792143",
-        "version": 4,
+        "version": 6,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -5896,7 +5914,7 @@
     "dafcb0bf-78ee-486e-a1a5-82b0e6bc6213": {
         "object_creator": "bia_ingest",
         "uuid": "dafcb0bf-78ee-486e-a1a5-82b0e6bc6213",
-        "version": 4,
+        "version": 5,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -5956,7 +5974,9 @@
         "description": "Raw images of synchronised Chinese Hamster Ovary (CHO) cells image data at the G2/M boundary using R0-3306 for the annotations. The data is already divided into training and test. The data was acquired using the widefield microscope Axio Observer 7 (Zeiss) equipped with a Colibri 7 LED illumination (Zeiss), a 20x/0.8 Plan Apochromat objective (Zeiss) and a Prime 95B sCMOS camera (Teledyne Photometrics).",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1269/a93097b1-45bd-41a7-92ae-9af82c0b0d39/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "0476bac0-b2fb-4816-90fb-5e09f622a4df",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -6267,7 +6287,7 @@
     "dce15e69-a0a9-407a-83ed-d4463fa1d470": {
         "object_creator": "bia_ingest",
         "uuid": "dce15e69-a0a9-407a-83ed-d4463fa1d470",
-        "version": 0,
+        "version": 1,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -6294,7 +6314,9 @@
         "description": "Manual annotation of cell mitotic rounding of synchronised Chinese Hamster Ovary (CHO) cells image data at the G2/M boundary using R0-3306. The data is already divided into training and test and paired with the raw images in the Study Components",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1269/ddf4b17b-e739-4dec-bac0-7923b426a4ef/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "0476bac0-b2fb-4816-90fb-5e09f622a4df",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
