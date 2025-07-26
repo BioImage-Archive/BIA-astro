@@ -43,7 +43,11 @@ for (const img of Object.values(images)) {
   if (img.creation_process?.input_image_uuid?.length && 
       img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
       !img.additional_metadata?.some(md =>
-      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+      (
+        md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
+      )
     )
     ) {
     const key = img.creation_process.input_image_uuid[0];
@@ -56,9 +60,7 @@ for (const img of Object.values(images)) {
 }
 
 const datasets = study.dataset.map(ds => {
-  const filteredImages = ds.image.filter(img =>
-    annotatedImagesMap.has(img.uuid) || allInputImageUUIDs.has(img.uuid)
-  ).map(img => {
+  const filteredImages = ds.image.map(img => {
     const filePattern = img?.additional_metadata?.find(md => md.name === "file_pattern")?.value?.file_pattern || "";
     const imageRep = images[img.uuid]?.representation.find(r => r.image_format === ".ome.zarr");
     return {
@@ -197,13 +199,28 @@ const breadcrumbs = [
                 </div>
               </td>
               <td>{sourceImage.uuid}</td>
-              <td>{sourceDataset.title}</td>
+              <td>{sourceDataset.find(dataset => dataset.image.some(image => image.uuid === sourceImage.uuid))?.title || ""}</td>
               <td>
                 <div class="uuid-container">
-                  {annotatedImgs.map((annImg, i) => (<span class="uuid" style={`display: ${i === 0 ? "inline" : "none"}`}>{annImg.uuid}</span>))}
+                  {annotatedImgs.map((annImg, i) => (
+                    <span class="uuid" style={`display: ${i === 0 ? "inline" : "none"}`}>{annImg.uuid}</span>
+                  ))}
                 </div>
               </td>
-              <td>{annotationDatasets.map(ds => ds.title).join(", ")}</td>
+              <td>
+                <div class="dataset-title-container">
+                  {annotatedImgs.map((annImg, i) => {
+                    const dataset = study.dataset.find(ds =>
+                      ds.image?.some(image => image.uuid === annImg.uuid)
+                    );
+                    return (
+                      <span class="dataset-title" style={`display: ${i === 0 ? "inline" : "none"}`}>
+                        {dataset?.title || "P"}
+                      </span>
+                    );
+                  })}
+                </div>
+              </td>
               <td>
                 <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>View</a>
               </td>
@@ -223,25 +240,22 @@ const breadcrumbs = [
       scrollX: true,
       columnDefs: [{ type: "natural", targets: 0 }],
     });
-
-    // For each row with a slideshow
     document.querySelectorAll("tr").forEach((row) => {
       const slides = row.querySelectorAll(".slides");
       const uuids = row.querySelectorAll(".uuid");
+      const titles = row.querySelectorAll(".dataset-title");
 
       if (slides.length <= 1 || uuids.length <= 1) return;
 
       let index = 0;
 
       setInterval(() => {
-        // Hide all slides and uuids
         slides.forEach((s) => (s.style.display = "none"));
         uuids.forEach((u) => (u.style.display = "none"));
-
-        // Show next
+        titles.forEach((t) => (t.style.display = "none"));
         slides[index].style.display = "block";
         uuids[index].style.display = "inline";
-
+        titles[index].style.display = "inline";
         index = (index + 1) % slides.length;
       }, 3500);
     });

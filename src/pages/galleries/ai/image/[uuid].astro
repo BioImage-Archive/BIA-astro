@@ -36,7 +36,11 @@ if (image.creation_process?.input_image_uuid?.[0]) {
     img.creation_process?.input_image_uuid?.[0] === sourceImage.uuid &&
     img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") && 
     !img.additional_metadata?.some(md =>
-      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+      ( 
+        md.value?.attributes?.["file description"] === "Raw image in JPEG format" ||
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
+      )
     )
   );
 } else {
@@ -45,7 +49,11 @@ if (image.creation_process?.input_image_uuid?.[0]) {
     img.creation_process?.input_image_uuid?.[0] === uuid &&
     img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
     !img.additional_metadata?.some(md =>
-      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+      ( 
+        md.value?.attributes?.["file description"] === "Raw image in JPEG format" ||
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
+      )
     )
   );
 }

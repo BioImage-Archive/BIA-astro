@@ -3892,6 +3892,243 @@
             }
         ]
     },
+    "S-BIAD1392": {
+        "object_creator": "bia_ingest",
+        "uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+        "version": 3,
+        "model": {
+            "type_name": "Study",
+            "version": 3
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_ingest",
+                "name": "Extras from biostudies.Submission.attributes",
+                "value": {
+                    "Keyword": [
+                        "PlantSeg",
+                        "Arabidopsis thaliana",
+                        "segmentation"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "biostudies json/pagetab entry",
+                "value": {
+                    "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/S-BIAD1392.json",
+                    "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/S-BIAD1392.tsv"
+                }
+            },
+            {
+                "provenance": "bia_curation",
+                "name": "one_summary",
+                "value": {
+                    "one_summary": [
+                        "3D images of fixed Arabidopsis thaliana ovules acquired by confocal laser scanning microscopy, with their corresponding segmentation masks for cell boundaries."
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_curation",
+                "name": "associated_ai_models",
+                "value": {
+                    "associated_ai_models": [
+                        {
+                            "description": "PlantSeg is a tool for cell instance aware segmentation in densely packed 3D volumetric images. The pipeline uses a two stages segmentation strategy (Neural Network + Segmentation). The pipeline is tuned for plant cell tissue acquired with confocal and light sheet microscopy.",
+                            "link": "https://github.com/kreshuklab/plant-seg"
+                        }
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_curation",
+                "name": "ai_tags",
+                "value": {
+                    "ai_tags": [
+                        [
+                            "cell boundary",
+                            "3D",
+                            "instance segmentation",
+                            "ground truth",
+                            "Arabidopsis thaliana",
+                            "fluorescence microscopy"
+                        ]
+                    ]
+                }
+            }
+        ],
+        "accession_id": "S-BIAD1392",
+        "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-5196-1122",
+                "display_name": "Rachele Tofanelli",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "Data curation",
+                    "Formal analysis"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Athul Vijayan",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "Conceptualization",
+                    "Data curation",
+                    "Software",
+                    "Formal analysis",
+                    "Validation",
+                    "Investigation",
+                    "Visualization",
+                    "Methodology"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0001-6688-0539",
+                "display_name": "Kay Schneitz",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "Conceptualization",
+                    "Software",
+                    "Formal analysis",
+                    "Supervision",
+                    "Methodology"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-2794-4266",
+                "display_name": "Adrian Wolny",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "EMBL, Heidelberg, Germany"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "Conceptualization",
+                    "Data curation",
+                    "Software",
+                    "Formal analysis",
+                    "Supervision",
+                    "Funding acquisition",
+                    "Validation",
+                    "Investigation",
+                    "Visualization",
+                    "Methodology",
+                    "Project administration",
+                    ""
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-1334-6388",
+                "display_name": "Anna Kreshuk",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "EMBL, Heidelberg, Germany"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "Conceptualization",
+                    "Software",
+                    "Formal analysis",
+                    "Supervision",
+                    "Funding acquisition",
+                    "Validation",
+                    "Investigation",
+                    "Methodology",
+                    "Project administration"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-0456-6912",
+                "display_name": "Teresa Zulueta-Coarasa",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": null,
+                        "website": null,
+                        "display_name": "European Bioinformatics Institute"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "Data curation",
+                    "Submitter"
+                ]
+            }
+        ],
+        "title": "PlantSeg core datasets: Ovules of Arabidopsis thaliana",
+        "release_date": "2024-10-01",
+        "description": "This submission includes 3D images of fixed Arabidopsis thaliana ovules at all developmental stages acquired by confocal laser scanning microscopy. It also contains the corresponding segmentation masks for cell boundaries.",
+        "keyword": [],
+        "acknowledgement": "",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [
+            {
+                "id": "FOR2581",
+                "funder": [
+                    {
+                        "display_name": "Deutsche Forschungsgemeinschaft",
+                        "id": null
+                    }
+                ]
+            }
+        ],
+        "funding_statement": "AK was funded by Baden-Wuerttemberg Stiftung. This work was supported by the DFG FOR2581 to the Kreshuk (P3) and Schneitz (P7) labs.",
+        "dataset": []
+    },
     "S-BIAD1367": {
         "object_creator": "bia_ingest",
         "uuid": "95acbee7-f43d-413c-995c-3cda5ae847f5",
@@ -5840,7 +6077,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "2a382f3a-aa6d-4ace-99fb-468335fa3809",
-                        "version": 0,
+                        "version": 2,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -5869,6 +6106,23 @@
                                 "value": {
                                     "uuid_unique_input": "66505525-b9cb-436b-87e9-b57aeedd0bf3"
                                 }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1269/2a382f3a-aa6d-4ace-99fb-468335fa3809/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "462e470b-e319-4226-a2b8-6cf6b2449f32"
+                                }
                             }
                         ],
                         "label": null,
@@ -5881,7 +6135,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea",
-                        "version": 0,
+                        "version": 2,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -5909,6 +6163,23 @@
                                 "name": "uuid_unique_input",
                                 "value": {
                                     "uuid_unique_input": "3b257613-efbe-4a2e-b682-6f819f8e2e8f"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1269/8921dcfb-4f5b-4ac1-a390-04b3ef2155ea/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "b23f303a-6f0e-45ac-8d36-8b0bc3558176"
                                 }
                             }
                         ],
@@ -9008,6 +9279,643 @@
                         ]
                     }
                 ]
+            }
+        ]
+    },
+    "S-BIAD843": {
+        "object_creator": "bia_ingest",
+        "uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
+        "version": 2,
+        "model": {
+            "type_name": "Study",
+            "version": 3
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_ingest",
+                "name": "Extras from biostudies.Submission.attributes",
+                "value": {
+                    "Keyword": [
+                        "3D",
+                        "Drosophila",
+                        "CellShape",
+                        "Packing",
+                        "WingDisc"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "biostudies json/pagetab entry",
+                "value": {
+                    "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.json",
+                    "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.tsv"
+                }
+            },
+            {
+                "provenance": "bia_curation",
+                "name": "one_summary",
+                "value": {
+                    "one_summary": [
+                        "Confocal and multi-photon 3D fluorecence images of Drosophila wing discs with instance segmentation masks of individual cells."
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_curation",
+                "name": "ai_tags",
+                "value": {
+                    "ai_tags": [
+                        [
+                            "cell boundary",
+                            "epithelium",
+                            "3D",
+                            "instance segmentation",
+                            "Drosophila",
+                            "fluorescence microscopy"
+                        ]
+                    ]
+                }
+            }
+        ],
+        "accession_id": "S-BIAD843",
+        "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "author": [
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0003-0565-4356",
+                "display_name": "Giulia Paci",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": "London, UK",
+                        "website": null,
+                        "display_name": "LMCB, University College London"
+                    }
+                ],
+                "contact_email": "g.paci@ucl.ac.uk",
+                "role": [
+                    "data acquisition",
+                    "data curator"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": null,
+                "display_name": "Ines Fernandez Mosquera",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": "London, UK",
+                        "website": null,
+                        "display_name": "LMCB, University College London"
+                    }
+                ],
+                "contact_email": null,
+                "role": [
+                    "data acquisition",
+                    "data annotator",
+                    "data curator"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0001-5402-7637",
+                "display_name": "Pablo Vicente Munuera",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": "London, UK",
+                        "website": null,
+                        "display_name": "LMCB, University College London"
+                    }
+                ],
+                "contact_email": "p.munuera@ucl.ac.uk",
+                "role": [
+                    "submitter"
+                ]
+            },
+            {
+                "rorid": null,
+                "address": null,
+                "website": null,
+                "orcid": "0000-0002-8722-4992",
+                "display_name": "Yanlan Mao",
+                "affiliation": [
+                    {
+                        "rorid": null,
+                        "address": "London, UK",
+                        "website": null,
+                        "display_name": "MRC Laboratory for Molecular Cell Biology, University College London"
+                    }
+                ],
+                "contact_email": "y.mao@ucl.ac.uk",
+                "role": [
+                    "conceptualisation",
+                    "corresponding author"
+                ]
+            }
+        ],
+        "title": "3D cell shape of Drosophila Wing Disc",
+        "release_date": "2023-08-14",
+        "description": "Individual 3D cell shapes of Drosophila Wing Disc",
+        "keyword": [],
+        "acknowledgement": "",
+        "see_also": [],
+        "related_publication": [],
+        "grant": [],
+        "funding_statement": "",
+        "dataset": [
+            {
+                "image_count": 1,
+                "file_reference_count": 2,
+                "file_reference_size_bytes": 16703775,
+                "file_type_counts": {
+                    "file": 2
+                },
+                "object_creator": "bia_ingest",
+                "uuid": "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc",
+                "version": 2,
+                "model": {
+                    "type_name": "Dataset",
+                    "version": 2
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "associations",
+                        "value": {
+                            "associations": [
+                                {
+                                    "image_analysis": null,
+                                    "image_correlation": null,
+                                    "biosample": "Wing disk",
+                                    "image_acquisition": "Confocal imaging",
+                                    "specimen": "Wing disk culture"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "image_acquisition_protocol_uuid",
+                        "value": {
+                            "image_acquisition_protocol_uuid": [
+                                "25914539-0f7d-4172-8124-4a409d7fd73d"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "specimen_imaging_preparation_protocol_uuid",
+                        "value": {
+                            "specimen_imaging_preparation_protocol_uuid": [
+                                "8b905657-fd98-4e60-b094-d2fa380c93ba"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "bio_sample_uuid",
+                        "value": {
+                            "bio_sample_uuid": [
+                                "fc88ba58-26bc-469d-a619-2248f8b94b6f"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "Study Component-1"
+                        }
+                    }
+                ],
+                "title": "Confocal fluorescence images",
+                "description": "Confocal fluorescence images of Drosophila wing disks expressing a cell outline marker",
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [],
+                "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "25914539-0f7d-4172-8124-4a409d7fd73d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisitionProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Image Acquisition-1"
+                                }
+                            }
+                        ],
+                        "title": "Confocal imaging",
+                        "protocol_description": "Voxel size 0.0430x0.0430x0.5002 micron^3",
+                        "imaging_instrument_description": "Leica Microsystems Stellaris 8 DIVE (Deep In-Vivo Explorer)",
+                        "fbbi_id": [
+                            "http://purl.obolibrary.org/obo/FBbi_00000251"
+                        ],
+                        "imaging_method_name": [
+                            "Confocal microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "8b905657-fd98-4e60-b094-d2fa380c93ba",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Wing disk culture",
+                        "protocol_description": "Late third instar wing imaginal discs were cultured in Shields and Sang M3 media (Sigma) supplemented with 2% FBS (Sigma), 1% pen/strep (Gibco), 3ng/ml ecdysone (Sigma) and 2ng/ml insulin (Sigma). Wing discs were cultured in 35mm fluorodishes (WPI) under 12mm filters (Millicell), as described in https://doi.org/10.1038%2Fs41567-019-0618-1",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "fc88ba58-26bc-469d-a619-2248f8b94b6f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Wing disk",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "fruit fly",
+                                "scientific_name": "Drosophila melanogaster",
+                                "ncbi_id": "NCBI:txid7227"
+                            }
+                        ],
+                        "biological_entity_description": "Drosophila wing disk, http://purl.obolibrary.org/obo/UBERON_6001778",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ],
+                "annotation_process": [],
+                "other_creation_process": [],
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "62c55886-5924-4e42-88b4-74b06df983c1",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_cd6ad095-01b4-4983-a1e6-78cce760a334",
+                                "value": {
+                                    "attributes": {
+                                        "Genotype/Line": "; ubiCAAX-GFP/+ ; neuPH-RFP/+",
+                                        "Channel 1": "CAAX"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "WD1_15-02_WT_confocalonly.ome.zarr.zip"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "cd6ad095-01b4-4983-a1e6-78cce760a334"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/813aa116-efaf-4c4e-9fa7-13df51882151.png",
+                                        "size": 256
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "slice": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/adce9d07-5d9a-49b1-8da9-9af525b200f2.png",
+                                        "size": 512
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "790b969b-c0b6-4817-ad8b-8d7acc3febbb"
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc",
+                        "creation_process_uuid": "e17e8023-3308-4f93-adaa-c69e445ca4c2",
+                        "original_file_reference_uuid": [
+                            "cd6ad095-01b4-4983-a1e6-78cce760a334"
+                        ]
+                    }
+                ]
+            },
+            {
+                "image_count": 0,
+                "file_reference_count": 2,
+                "file_reference_size_bytes": 37789571,
+                "file_type_counts": {
+                    "file": 2
+                },
+                "object_creator": "bia_ingest",
+                "uuid": "574f62b8-4657-4344-aa60-16daa5c07719",
+                "version": 0,
+                "model": {
+                    "type_name": "Dataset",
+                    "version": 2
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "associations",
+                        "value": {
+                            "associations": [
+                                {
+                                    "image_analysis": null,
+                                    "image_correlation": null,
+                                    "biosample": "Wing disk",
+                                    "image_acquisition": "Multi-photon imaging",
+                                    "specimen": "Wing disk culture"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "image_acquisition_protocol_uuid",
+                        "value": {
+                            "image_acquisition_protocol_uuid": [
+                                "d234afcc-4e06-4a24-a4f4-3c507e69650b"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "specimen_imaging_preparation_protocol_uuid",
+                        "value": {
+                            "specimen_imaging_preparation_protocol_uuid": [
+                                "8b905657-fd98-4e60-b094-d2fa380c93ba"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "bio_sample_uuid",
+                        "value": {
+                            "bio_sample_uuid": [
+                                "fc88ba58-26bc-469d-a619-2248f8b94b6f"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "Study Component-2"
+                        }
+                    }
+                ],
+                "title": "Multi-photon fluorescence images",
+                "description": "Multi-photon fluorescence images of Drosophila wing disks expressing a cell outline marker",
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [],
+                "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "d234afcc-4e06-4a24-a4f4-3c507e69650b",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisitionProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Image Acquisition-2"
+                                }
+                            }
+                        ],
+                        "title": "Multi-photon imaging",
+                        "protocol_description": "Voxel size 0.0430x0.0430x0.2985 micron^3",
+                        "imaging_instrument_description": "Leica Microsystems Stellaris 8 DIVE (Deep In-Vivo Explorer)",
+                        "fbbi_id": [
+                            "http://purl.obolibrary.org/obo/FBbi_00000254"
+                        ],
+                        "imaging_method_name": [
+                            "Multi-photon microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": false,
+                        "object_creator": "bia_ingest",
+                        "uuid": "8b905657-fd98-4e60-b094-d2fa380c93ba",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Wing disk culture",
+                        "protocol_description": "Late third instar wing imaginal discs were cultured in Shields and Sang M3 media (Sigma) supplemented with 2% FBS (Sigma), 1% pen/strep (Gibco), 3ng/ml ecdysone (Sigma) and 2ng/ml insulin (Sigma). Wing discs were cultured in 35mm fluorodishes (WPI) under 12mm filters (Millicell), as described in https://doi.org/10.1038%2Fs41567-019-0618-1",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": false,
+                        "object_creator": "bia_ingest",
+                        "uuid": "fc88ba58-26bc-469d-a619-2248f8b94b6f",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Wing disk",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "fruit fly",
+                                "scientific_name": "Drosophila melanogaster",
+                                "ncbi_id": "NCBI:txid7227"
+                            }
+                        ],
+                        "biological_entity_description": "Drosophila wing disk, http://purl.obolibrary.org/obo/UBERON_6001778",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ],
+                "annotation_process": [],
+                "other_creation_process": [],
+                "image": []
+            },
+            {
+                "image_count": 0,
+                "file_reference_count": 4,
+                "file_reference_size_bytes": 6703115,
+                "file_type_counts": {
+                    "file": 4
+                },
+                "object_creator": "bia_ingest",
+                "uuid": "d6497b69-79a3-48bc-9212-bd8350a0bb13",
+                "version": 1,
+                "model": {
+                    "type_name": "Dataset",
+                    "version": 2
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "annotation_method_uuid",
+                        "value": {
+                            "annotation_method_uuid": [
+                                "8cfa9852-26e4-4164-833a-87a9162284e1"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "Annotations-1"
+                        }
+                    },
+                    {
+                        "provenance": "bia_curation",
+                        "name": "annotation_type",
+                        "value": {
+                            "annotation_type": [
+                                [
+                                    "segmentation_mask"
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "title": "Segmentation masks",
+                "description": null,
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [],
+                "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
+                "acquisition_process": [],
+                "specimen_imaging_preparation_protocol": [],
+                "biological_entity": [],
+                "annotation_process": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "8cfa9852-26e4-4164-833a-87a9162284e1",
+                        "version": 0,
+                        "model": {
+                            "type_name": "AnnotationMethod",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Annotations-1"
+                                }
+                            }
+                        ],
+                        "title": "Segmentation masks",
+                        "protocol_description": "Cellpose (a generalist algorithm for cell segmentation) was used to predict the annotations. Then, using napari,  images were corrected.",
+                        "annotation_criteria": "Individual cells were labelled in 3D",
+                        "annotation_coverage": "100% of available data was annotated",
+                        "transformation_description": null,
+                        "spatial_information": null,
+                        "method_type": [
+                            "other"
+                        ],
+                        "annotation_source_indicator": null
+                    }
+                ],
+                "other_creation_process": [],
+                "image": []
             }
         ]
     },
