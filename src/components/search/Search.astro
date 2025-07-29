@@ -8,7 +8,7 @@ import { getTaxons, getImagingMethodType } from "../../components/SharedJSFuncti
 
 const { query, results, organism, imaging_method, release_year } = Astro.props;
 
-const organismList = new Set(results.map( (item) => getTaxons(item._source)).flat().sort())
+const organismList = new Set(results.map( (item) => getTaxons(item._source).map(o=> o.replace(/<[^>]*>/g, ''))).flat().sort())
 const imagingMethodList = new Set(results.map( (item) => getImagingMethodType(item._source)).flat().sort())
 const releaseYearList = new Set(results.map( (item) => item._source.release_date.split("-")[0] ).flat().sort())
 const facets = {"facet.organism": organismList, "facet.imaging_method": imagingMethodList,"facet.release_year": releaseYearList}
