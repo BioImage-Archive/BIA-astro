@@ -57,7 +57,6 @@ if (image.creation_process?.input_image_uuid?.[0]) {
     )
   );
 }
-
 const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
 const organism = getTaxons(studyInfo).join(", ");
 const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="

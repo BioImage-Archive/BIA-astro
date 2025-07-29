@@ -1,11 +1,11 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getSimpleAttributeValue } from "../../../../components/SharedJSFunctions"
+import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize } from "../../../../components/SharedJSFunctions"
 import exports from "../../../../data/current-export/bia-ai-study-export.json";
 import images from "../../../../data/current-export/bia-ai-image-export.json";
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
-import AIDatasetFilesTable from "../../../../components/ai-gallery/AIDatasetFilesTable.astro";
+import DatasetFilesTable from "../../../../components/DatasetFilesTable.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
@@ -26,17 +26,9 @@ function getThumbnail(img) {
          meta.get("image_thumbnail_uri")?.image_thumbnail_uri?.[0] || "";
 }
 
-function formatBytes(bytes) {
-  if (bytes === 0) return "0 Bytes";
-  const k = 1024;
-  const dm = 2; // decimal places
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-}
-
 const { accessionID } = Astro.params;
 const study = exports[accessionID];
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 const annotatedImagesMap = new Map();
 const allInputImageUUIDs = new Set();
 for (const img of Object.values(images)) {
@@ -58,25 +50,6 @@ for (const img of Object.values(images)) {
     annotatedImagesMap.get(key).push(img);
   }
 }
-
-const datasets = study.dataset.map(ds => {
-  const filteredImages = ds.image.map(img => {
-    const filePattern = img?.additional_metadata?.find(md => md.name === "file_pattern")?.value?.file_pattern || "";
-    const imageRep = images[img.uuid]?.representation.find(r => r.image_format === ".ome.zarr");
-    return {
-      uuid: img.uuid,
-      file_name: filePattern,
-      file_uri: imageRep?.file_uri?.[0] || "",
-    };
-  });
-  return {
-    uuid: ds.uuid,
-    image: filteredImages,
-    dataset_size: ds.file_reference_size_bytes || 0,
-    title: ds.title,
-  };
-})
-
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);
@@ -89,13 +62,10 @@ const sourceExampleImageURI = sourceDataset.flatMap(ds => ds?.example_image_uri 
 const annotationDatasets = study.dataset.filter(ds => ds.acquisition_process.length == 0 && ds.annotation_process.length > 0);
 const annotationExampleImageURI = annotationDatasets.find(ad => ad.example_image_uri.length > 0)?.example_image_uri[0];
 
-const totalViewableImages = datasets.reduce((count, ds) => count + ds.image.filter(img => !!img.file_uri).length, 0);
-const totalFiles = datasets.reduce((count, ds) => count + ds.image.length, 0);
-const totalSizeBytes = datasets.reduce((sum, ds) => sum + ds.dataset_size, 0);
 const headlineStats = {
-  "Total Viewable Images": totalViewableImages.toString(),
-  "Total Files": totalFiles.toString(),
-  "Total Size of Files": formatBytes(totalSizeBytes)
+  "Total Viewable Images":  study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
+  "Total files": study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0),
+  "Total size of files": formatBytesToHumanSize(study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0)),
 };
 const studyContent = {
   "Study summary": getSimpleAttributeValue(study, "one_summary") || study.description,
@@ -232,8 +202,7 @@ const breadcrumbs = [
     </div>
   </section>
   <hr/>
-  <AIDatasetFilesTable datasets={datasets}/>
-  <script type="application/json" id="files-data" set:html={JSON.stringify({ datasets })} />
+  <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
   <script type="module">
   document.addEventListener("DOMContentLoaded", function () {
     $("#viewable_images").DataTable({
