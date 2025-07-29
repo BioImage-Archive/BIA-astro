@@ -81,18 +81,23 @@ export function getImagingMethodType(study) {
     return imagingTypeList
 }
 
-export function getTaxons(study) {
+export function getTaxons(study, taxonType=null) {
     const taxonHtmlList = []
     const taxonList = []
+    const taxonStripped = []
     for (var dataset of study.dataset) {
         for (var biosample of dataset.biological_entity) {
             for (var taxon of biosample.organism_classification) {
                 if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
                     taxonList.push(taxon)
                     taxonHtmlList.push(taxonRender(taxon))
+                    taxonStripped.push(taxonRender(taxon).replace(/<\/?[^>]+(>|$)/g, ""))
                 }
             }
         }
+    }
+    if (taxonType === "stripped"){
+        return taxonStripped
     }
     return taxonHtmlList
 }

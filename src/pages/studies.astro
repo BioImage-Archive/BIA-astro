@@ -33,7 +33,7 @@ if (query) {
 }
 results = releaseYear ? results.filter( item => item._source.release_date.split("-")[0] === releaseYear) : results;
 results = imagingMethod ? results.filter( item => getImagingMethodType(item._source).join(", ").includes(imagingMethod)) : results;
-results = organism ? results.filter( item => getTaxons(item._source).map((o) => o.replace(/<[^>]*>/g, '')).join(", ").includes(organism)) : results;
+results = organism ? results.filter( item => getTaxons(item._source, "stripped").join(", ").includes(organism)) : results;
 
 const totalStudies = Object.keys(studyMetadata).length;
 
