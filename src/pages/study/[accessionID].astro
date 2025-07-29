@@ -5,12 +5,12 @@ import StudyContentsSummary from "../../components/study-page/StudyContentsSumma
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
+import { getAllStudyMetadataFromSearchAPI } from "../../components/SharedJSFunctions";
+import { type Studies } from "../../components/SharedInterface.astro";
+import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../components/SharedJSFunctions.js";
 
-import studyMetadata from "../../data/bia-study-metadata.json";
-
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../components/SharedJSFunctions.js"
-
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const studyMetadata = await getAllStudyMetadataFromSearchAPI("browse-static", "all", []) as Studies;
   return Object.values(studyMetadata).map((study) => {
     return {
       params: { accessionID: study.accession_id },
@@ -25,8 +25,8 @@ const tableOfContents = {
 };
 
 const { accessionID } = Astro.params;
-const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
-
+const studyInfo = await getAllStudyMetadataFromSearchAPI("study", "accession", [accessionID]);
+const study = studyInfo[accessionID]
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 
 function getFileTypes(study) {

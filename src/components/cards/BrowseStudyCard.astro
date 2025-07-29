@@ -6,6 +6,9 @@ const { study, studyPageRoot, taglist, annotationType, cardImageOverride} = Astr
 
 function getImagingMethodType(study) {
     const imagingTypeList = []
+    if (!study.dataset?.some(ds => ds.acquisition_process?.length)) {
+        return [];
+    }
     for (var dataset of study.dataset) {
         for (var ia of dataset.acquisition_process) {
             for (var methodNames of ia.imaging_method_name) {
@@ -36,7 +39,7 @@ function renderTaxonList(dataset) {
 }
 
 function getDataForCardFilter(study) {
-    const datasetWithImage = study.dataset.find((dataset) => dataset.image?.length > 0)
+    const datasetWithImage = study?.dataset.find((dataset) => dataset.image?.length > 0)
     var hasImage = datasetWithImage !== undefined
     const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
     return dataString

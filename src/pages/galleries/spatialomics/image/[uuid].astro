@@ -3,12 +3,13 @@ import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcr
 import SourceImage from "../../../../components/SourceImage.astro"
 import DatasetDetail from '../../../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-
+import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import fieldMap from "../../../../data/metadata-field-name-mapping.json";
 import datasetMetadata from "../../../../data/bia-dataset-metadata-for-images.json";
 import imageMetadata from "../../../../data/bia-image-metadata.json";
 import fallbackImage from "../../../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue } from "../../../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getAllStudyMetadataFromSearchAPI, getImage } from "../../../../components/SharedJSFunctions.js"
+import { type Studies, type Study } from "../../../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
@@ -16,18 +17,21 @@ const imageAcquisitionMap = fieldMap["image_acquisition"];
 const annotationMethodMap = fieldMap["annotation_method"];
 const protocolMap = fieldMap["protocol"];
 
-export function getStaticPaths() {
-  return Object.keys(imageMetadata).map((uuid) => {
+export async function getStaticPaths() {
+    const allStudies = await getAllStudyMetadataFromSearchAPI("study", "accession", spatialomicsCollection.accession_ids) as Studies; 
+    const allDatasets = Object.values(allStudies)
+        .map(study => study.dataset)
+        .flat();
+    const images = allDatasets.map(dataset => dataset.image).flat()
+    return Object.values(images).map((img) => {
     return {
-      params:  { uuid: uuid }
+      params:  { uuid: img.uuid }
     };
   });
 }
 
 const { uuid } = Astro.params;
-
-const image = imageMetadata[uuid];
-
+const image = await getImage(uuid, "browseImage");
 const imageDataset = datasetMetadata[image.submission_dataset_uuid]
 const imageStudy = imageDataset.submitted_in_study
 

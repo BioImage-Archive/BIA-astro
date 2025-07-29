@@ -5,19 +5,21 @@ import BrowseStudyHeading from '../components/BrowseStudiesHeading.astro';
 import  "../styles/toggle.css"
 import "../styles/browse_controls.css"
 import "../styles/filter_cards.css"
-import studyMetadata from "../data/bia-study-metadata.json";
+import { getAllStudyMetadataFromSearchAPI } from "../../src/components/SharedJSFunctions";
+import { type Studies } from "../../src/components/SharedInterface.astro";
 
+const studyMetadata = await getAllStudyMetadataFromSearchAPI("browse", "all", []) as Studies;
 const totalStudies = Object.keys(studyMetadata).length;
 
 const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
-  const studyFiles = study.dataset?.reduce((fileAcc, component) => {
+  const studyFiles = study?.dataset?.reduce((fileAcc, component) => {
     return fileAcc + (component.file_reference_count || 0);
   }, 0) || 0;
   return acc + studyFiles;
 }, 0);
 
 const totalImages = Object.values(studyMetadata).reduce((acc, study) => {
-  const studyImages = study.dataset?.reduce((imgAcc, component) => {
+  const studyImages = study?.dataset?.reduce((imgAcc, component) => {
     return imgAcc + (component.image_count || 0);
   }, 0) || 0;
   return acc + studyImages;

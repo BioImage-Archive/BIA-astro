@@ -1,18 +1,17 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getMetadataValue } from "../../../../components/SharedJSFunctions"
-import exports from "../../../../data/current-export/bia-ai-study-export.json";
-import images from "../../../../data/current-export/bia-ai-image-export.json";
+import { getTaxons, getMetadataValue, getAllStudyMetadataFromSearchAPI, getImagesForAIGallery } from "../../../../components/SharedJSFunctions"
+import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
 import AIDatasetFilesTable from "../../../../components/ai-gallery/AIDatasetFilesTable.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
 export function getStaticPaths() {
-  return Object.values(exports).map((dataset) => {
+  return Object.values(collection.accession_ids).map((accession_id) => {
     return {
-      params: { accessionID: dataset.accession_id },
+      params: { accessionID: accession_id },
     };
   });
 }
@@ -31,7 +30,9 @@ function getThumbnail(img) {
 }
 
 const { accessionID } = Astro.params;
+const exports = await getAllStudyMetadataFromSearchAPI("study", "accession", [accessionID]);
 const study = exports[accessionID];
+const images = await getImagesForAIGallery(study.dataset);
 const annotatedImagesMap = new Map();
 const allInputImageUUIDs = new Set();
 for (const img of Object.values(images)) {
@@ -67,9 +68,11 @@ const datasets = study.dataset.map(ds => ({
   title: ds.title
 }));
 
+
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(dataset => dataset.acquisition_process.length > 0 && dataset.annotation_process.length == 0)[0];
+
 const imaging_method = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
 const sourceExampleImageURI = sourceDataset?.example_image_uri
 // Need a better logic to identify source dataset and annotation dataset
@@ -238,13 +241,12 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
 
       setInterval(() => {
         // Hide all slides and uuids
-        slides.forEach((s) => (s.style.display = "none"));
-        uuids.forEach((u) => (u.style.display = "none"));
+        slides.forEach((s) => ((s as HTMLElement).style.display = "none"));
+        uuids.forEach((u) => ((u as HTMLElement).style.display = "none"));
 
         // Show next
-        slides[index].style.display = "block";
-        uuids[index].style.display = "inline";
-
+        (slides[index] as HTMLElement).style.display = "block";
+        (uuids[index] as HTMLElement).style.display = "inline";
         index = (index + 1) % slides.length;
       }, 3500);
     });
