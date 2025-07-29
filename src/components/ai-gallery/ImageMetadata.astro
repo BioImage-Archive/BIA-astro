@@ -52,7 +52,6 @@ const timestepSpan = text == "Annotation"? "annotated-timesteps": "source-timest
 </div>
 <script type="module">
     const numberOfAnnotatedImages = JSON.parse(document.getElementById("images-length").textContent);
-    console.log(numberOfAnnotatedImages)
     if(numberOfAnnotatedImages <= 1){
       document.getElementsByClassName("imageslider")[0].style.display = "none";
       document.getElementsByClassName("imageslider")[1].style.display = "none";

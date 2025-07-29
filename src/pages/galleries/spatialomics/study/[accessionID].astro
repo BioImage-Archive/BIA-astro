@@ -68,7 +68,6 @@ if (hasTranscripts) {
   tableOfContents["Transcript files"] = "transcript_files";
 }
 
-console.log(study)
 const images = study?.dataset?.flatMap(dataset => dataset.image ?? [])
 const annotationDatasets = study.dataset.filter(dataset => 
   "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0

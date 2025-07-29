@@ -190,29 +190,38 @@ async function getUniqueObjectsFromEndpoint(objs, method, endpoint){
     }
 }
 
+function getStudyFromResponse(response, accessionId){
+    return response.hits.filter(item => item._source.accession_id == accessionId)?.[0]?._source || undefined;
+}
+
 export async function getEnrichedStudies(objs, objType, page=null){
     const studyEntries = await Promise.all(objs.map(async obj => {
-      let study;
+      let study = {};
       let uuid;
       let response;
       switch (objType){
           case "accession":
             response = await getFromAPI(`${searchAPI}search/fts?query=${obj}`);
+            study = response?.hits?.length > 0 ? getStudyFromResponse(response, obj): await getFromAPI(`${api}/search/study/accession?accession_id=${obj}&page_size=10`);
+            study = study? study : await getFromAPI(`${api}/search/study/accession?accession_id=${obj}&page_size=10`);
+            study.dataset = study?.dataset?.length > 0 ? study.dataset: [];
             break;
           case "uuid":
             uuid = obj;
             response = await getFromAPI(`${searchAPI}website/doc?uuid=${uuid}`)
+            study = response?.hits?.[0]?._source
             break;
           case "all":
             study = obj;
             study.dataset = Array.isArray(study.dataset) ? study.dataset : [];
             response = await getFromAPI(`${searchAPI}website/doc?uuid=${study.uuid}`)
+            study = response?.hits?.[0]?._source || study
             break;
           default:
             study = [];
             break;
         }
-        const enrichedStudy = response?.hits?.[0]?._source || study
+        const enrichedStudy = study
         const accessionID = enrichedStudy?.accession_id || study?.accession_id || `No accesion for ${obj}`;
         return [accessionID, enrichedStudy]
     }));
