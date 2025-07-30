@@ -1,23 +1,7 @@
 ---
-import { getTaxons, formatListItem, getStudyImage } from "../SharedJSFunctions.js";
+import { getTaxons, formatListItem, getStudyImage, getImagingMethodType } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 const { study, studyPageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
-
-
-function getImagingMethodType(study) {
-    const imagingTypeList = []
-    for (var dataset of study.dataset) {
-        for (var ia of dataset.acquisition_process) {
-            for (var methodNames of ia.imaging_method_name) {
-                if (!imagingTypeList.includes(methodNames)) {
-                    imagingTypeList.push(methodNames)
-                }
-            }
-        }
-    }
-    return imagingTypeList
-}
-
 
 function getImagingType(study) {
     const imageTypeList = getImagingMethodType(study)

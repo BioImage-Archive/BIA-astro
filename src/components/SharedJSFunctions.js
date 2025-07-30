@@ -67,18 +67,37 @@ export function aggregateDatasetStats(datasets) {
     return dataset_uuids
 }
 
-export function getTaxons(study) {
+export function getImagingMethodType(study) {
+    const imagingTypeList = []
+    for (var dataset of study.dataset) {
+        for (var ia of dataset.acquisition_process) {
+            for (var methodNames of ia.imaging_method_name) {
+                if (!imagingTypeList.includes(methodNames)) {
+                    imagingTypeList.push(methodNames)
+                }
+            }
+        }
+    }
+    return imagingTypeList
+}
+
+export function getTaxons(study, taxonType=null) {
     const taxonHtmlList = []
     const taxonList = []
+    const taxonStripped = []
     for (var dataset of study.dataset) {
         for (var biosample of dataset.biological_entity) {
             for (var taxon of biosample.organism_classification) {
                 if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
                     taxonList.push(taxon)
                     taxonHtmlList.push(taxonRender(taxon))
+                    taxonStripped.push(taxonRender(taxon).replace(/<\/?[^>]+(>|$)/g, ""))
                 }
             }
         }
+    }
+    if (taxonType === "stripped"){
+        return taxonStripped
     }
     return taxonHtmlList
 }
