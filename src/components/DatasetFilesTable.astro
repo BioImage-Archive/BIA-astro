@@ -1,16 +1,16 @@
 ---
 
-const { datasetUUIDsAndFileStats } = Astro.props;
-
+const { datasetUUIDsAndFileStats, page } = Astro.props;
+const sectionClass = page && page === "gallery" ? "content": "intro";
 ---
 
-<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+<section class=`vf-${sectionClass} | embl-grid embl-grid--has-centered-content | section-spacing`>
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="file_references">
         Dataset files
       </h2>
     </div>
-    <div>
+    <div class="vf-grid__col--span-2">
       <p>     
         Shows up to 1000 files of any selected dataset.
       </p>
@@ -19,7 +19,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
         <option value="" disabled selected>Select a Dataset</option>
       </select>
       
-      <table id="file_references_table" class="display"></table>
+      <table id="file_references_table" class="vf-table display"></table>
     </div>
 
     <script>
