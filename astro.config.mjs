@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import mdx from "@astrojs/mdx";
 import yaml from '@rollup/plugin-yaml';
 
@@ -49,6 +49,17 @@ export default defineConfig({
     '/submit-annotations': '/bioimage-archive/help/submit-annotations',
     '/help-tools': '/bioimage-archive/help/supporting-tools',
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
+  },
+  env: {
+    schema: {
+      PUBLIC_SEARCH_API: envField.string({
+        type: "string",
+        required: true,
+        access: "public",
+        context: "client",
+        default: "https://alpha.bioimagearchive.org/search"
+      })
+    }
   },
 
   adapter
