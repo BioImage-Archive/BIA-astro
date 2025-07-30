@@ -9088,7 +9088,7 @@
         "creation_process": {
             "object_creator": "bia_image_assignment",
             "uuid": "036aed41-2049-47bf-97fb-0b1fa908fc5a",
-            "version": 0,
+            "version": 1,
             "model": {
                 "type_name": "CreationProcess",
                 "version": 3
@@ -9104,7 +9104,9 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [],
+            "input_image_uuid": [
+                "cf92da2f-cf96-4dae-8c2e-15a425fa11d0"
+            ],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -9456,7 +9458,7 @@
         "creation_process": {
             "object_creator": "bia_image_assignment",
             "uuid": "af8badfa-b6cd-4259-817e-f02e0fd0fe68",
-            "version": 0,
+            "version": 1,
             "model": {
                 "type_name": "CreationProcess",
                 "version": 3
@@ -9472,7 +9474,9 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [],
+            "input_image_uuid": [
+                "0e00ab95-0da0-47f2-af67-6fbdc2ab05e2"
+            ],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -10364,7 +10368,7 @@
         "creation_process": {
             "object_creator": "bia_image_assignment",
             "uuid": "f36de18d-7ee1-42c0-bbcc-282e95160ea6",
-            "version": 0,
+            "version": 1,
             "model": {
                 "type_name": "CreationProcess",
                 "version": 3
@@ -10380,7 +10384,9 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [],
+            "input_image_uuid": [
+                "9d3dc9ed-2985-472d-ae3a-fb986030d7bd"
+            ],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -11272,7 +11278,7 @@
         "creation_process": {
             "object_creator": "bia_image_assignment",
             "uuid": "195694f6-7bad-49e3-8271-2854d2d1d4b9",
-            "version": 0,
+            "version": 1,
             "model": {
                 "type_name": "CreationProcess",
                 "version": 3
@@ -11288,7 +11294,9 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [],
+            "input_image_uuid": [
+                "0931a00e-d4dc-4c82-9809-4fdeffb1fc2e"
+            ],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -11460,7 +11468,7 @@
         "creation_process": {
             "object_creator": "bia_image_assignment",
             "uuid": "64d4bf14-4eac-4ba8-af76-9979660c0fcf",
-            "version": 0,
+            "version": 1,
             "model": {
                 "type_name": "CreationProcess",
                 "version": 3
@@ -11476,7 +11484,7 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [],
+            "input_image_uuid": ["65946fbf-ffe9-485b-b4e9-0119ed3f8b15"],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
