@@ -1,20 +1,16 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getMetadataValue } from "../../../../components/SharedJSFunctions"
+import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize } from "../../../../components/SharedJSFunctions"
 import exports from "../../../../data/current-export/bia-ai-study-export.json";
 import images from "../../../../data/current-export/bia-ai-image-export.json";
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
-import AIDatasetFilesTable from "../../../../components/ai-gallery/AIDatasetFilesTable.astro";
+import DatasetFilesTable from "../../../../components/DatasetFilesTable.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
 export function getStaticPaths() {
-  return Object.values(exports).map((dataset) => {
-    return {
-      params: { accessionID: dataset.accession_id },
-    };
-  });
+  return Object.values(exports).map(study => ({params: { accessionID: study.accession_id }}));
 }
 
 function extractMetadata(img) {
@@ -26,19 +22,24 @@ function extractMetadata(img) {
 function getThumbnail(img) {
   const meta = extractMetadata(img);
   return meta.get("thumbnail_uri")?.thumbnail_uri?.[0] ||
-         meta.get("image_thumbnail_uri")?.["256_256"] ||
+         meta.get("image_thumbnail_uri")?.["256"]?.["uri"] ||
          meta.get("image_thumbnail_uri")?.image_thumbnail_uri?.[0] || "";
 }
 
 const { accessionID } = Astro.params;
 const study = exports[accessionID];
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 const annotatedImagesMap = new Map();
 const allInputImageUUIDs = new Set();
 for (const img of Object.values(images)) {
   if (img.creation_process?.input_image_uuid?.length && 
       img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
       !img.additional_metadata?.some(md =>
-      md.value?.attributes?.["file description"] === "Raw image in JPEG format"
+      (
+        md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
+      )
     )
     ) {
     const key = img.creation_process.input_image_uuid[0];
@@ -49,51 +50,46 @@ for (const img of Object.values(images)) {
     annotatedImagesMap.get(key).push(img);
   }
 }
-
-
-const datasets = study.dataset.map(ds => ({
-  uuid: ds.uuid,
-  image: ds.image.filter(img=> annotatedImagesMap.has(img.uuid) || allInputImageUUIDs.has(img.uuid)).map(img => {
-    const filePatternMeta = img?.additional_metadata?.find(md => md.name === "file_pattern");
-    const filePattern = filePatternMeta?.value?.file_pattern || "";
-    const imageRep = images[img.uuid]?.representation.find(r => r.image_format === ".ome.zarr");
-    return {
-      uuid: img.uuid,
-      file_name: filePattern,
-      file_uri: imageRep?.file_uri?.[0] || ""
-    };
-  }),
-  dataset_size: ds.file_reference_size_bytes || 0,
-  title: ds.title
-}));
-
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
-const sourceDataset = study.dataset.filter(dataset => dataset.acquisition_process.length > 0 && dataset.annotation_process.length == 0)[0];
-const imaging_method = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
-const sourceExampleImageURI = sourceDataset?.example_image_uri
+const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);
+const allSourceImages = sourceDataset.flatMap(ds => ds.image || []);
+const imaging_method = Array.from(
+  new Set(sourceDataset.flatMap(ds => ds?.acquisition_process?.[0]?.imaging_method_name || []))
+).join(', ');
+const sourceExampleImageURI = sourceDataset.flatMap(ds => ds?.example_image_uri || []).filter(Boolean);
 // Need a better logic to identify source dataset and annotation dataset
-const annotationDatasets = study.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
+const annotationDatasets = study.dataset.filter(ds => ds.acquisition_process.length == 0 && ds.annotation_process.length > 0);
 const annotationExampleImageURI = annotationDatasets.find(ad => ad.example_image_uri.length > 0)?.example_image_uri[0];
 
-const totalViewableImages = datasets.reduce((count, ds) => count + ds.image.filter(img => !!img.file_uri).length, 0);
-const totalFiles = datasets.reduce((count, ds) => count + ds.image.length, 0);
-const totalSizeBytes = datasets.reduce((sum, ds) => sum + ds.dataset_size, 0);
-
-const modelInformation = getMetadataValue(study.additional_metadata, "associated_ai_models", "associated_ai_models") || undefined;
-
-function formatBytes(bytes) {
-  if (bytes === 0) return "0 Bytes";
-  const k = 1024;
-  const dm = 2; // decimal places
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-}
 const headlineStats = {
-  "Total Viewable Images": totalViewableImages.toString(),
-  "Total Files": totalFiles.toString(),
-  "Total Size of Files": formatBytes(totalSizeBytes)
+  "Total Viewable Images":  study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
+  "Total files": study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0),
+  "Total size of files": formatBytesToHumanSize(study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0)),
+};
+const studyContent = {
+  "Study summary": getSimpleAttributeValue(study, "one_summary") || study.description,
+  "License": "CC0",
+  "Tags": getSimpleAttributeValue(study, "ai_tags")[0].join(", ") || study.keyword.join(", ")
+}
+const modelInformation = getSimpleAttributeValue(study, "associated_ai_models")?.[0] || undefined;
+const modelContent = {
+  "Model description": modelInformation?.description,
+  "Model link": modelInformation?.link
+}
+const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
+  dataset_title: dataset.title,
+  organism: organism,
+  imaging: imaging_method,
+  annotation_type: getSimpleAttributeValue(dataset, "annotation_type")?.join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
+  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
+}))
+const tableOfContents = {
+  "Curated Study Information": "study",
+  ...(modelInformation && { "Models Related To This Work": "models" }),
+  "Annotated Datasets": "annotated_datasets",
+  "Viewable Annotated Images": "all_images",
+  "All Files": "all_files",
 };
 const breadcrumbs = [
   "/bioimage-archive",
@@ -102,34 +98,7 @@ const breadcrumbs = [
   "/bioimage-archive/galleries/ai/ai-ready-studies",
 ]
 
-const studyContent = {
-  "Study summary": getMetadataValue(study.additional_metadata, "one_summary", "one_summary") || study.description,
-  "License": "CC0",
-  "Tags": getMetadataValue(study.additional_metadata, "ai_tags", "ai_tags").join(", ") || study.keyword.join(", ")
-}
-const modelContent = {
-  "Model description": modelInformation?.description,
-  "Model link": modelInformation?.link
-}
-
-const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
-  dataset_title: dataset.title,
-  organism: organism,
-  imaging: imaging_method,
-  annotation_type: getMetadataValue(dataset.additional_metadata, "annotation_type", "annotation_type")?.join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
-  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
-}))
-
-const tableOfContents = {
-  "Curated Study Information": "study",
-  "Models Related To This Work": "models",
-  "Annotated Datasets": "annotated_datasets",
-  "Viewable Annotated Images": "all_images",
-  "All Files": "all_files",
-};
-modelInformation === undefined ? delete tableOfContents["Models Related To This Work"] : "";
 ---
-
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
   <StudyTitleInfo study_info={study} />  
   <StudyContentsSummary tableOfContents={tableOfContents} 
@@ -181,7 +150,7 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
           </tr>
         </thead>
         <tbody class="vf_table__body">
-        {sourceDataset?.image?.filter(img=> annotatedImagesMap.has(img.uuid)).map((sourceImage, rowIndex) => {
+        {allSourceImages.filter(img=> annotatedImagesMap.has(img.uuid)).map((sourceImage, rowIndex) => {
           const annotatedImgs = annotatedImagesMap.get(sourceImage.uuid) || [];
           return (
             <tr>
@@ -200,13 +169,28 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
                 </div>
               </td>
               <td>{sourceImage.uuid}</td>
-              <td>{sourceDataset.title}</td>
+              <td>{sourceDataset.find(dataset => dataset.image.some(image => image.uuid === sourceImage.uuid))?.title || ""}</td>
               <td>
                 <div class="uuid-container">
-                  {annotatedImgs.map((annImg, i) => (<span class="uuid" style={`display: ${i === 0 ? "inline" : "none"}`}>{annImg.uuid}</span>))}
+                  {annotatedImgs.map((annImg, i) => (
+                    <span class="uuid" style={`display: ${i === 0 ? "inline" : "none"}`}>{annImg.uuid}</span>
+                  ))}
                 </div>
               </td>
-              <td>{annotationDatasets.map(ds => ds.title).join(", ")}</td>
+              <td>
+                <div class="dataset-title-container">
+                  {annotatedImgs.map((annImg, i) => {
+                    const dataset = study.dataset.find(ds =>
+                      ds.image?.some(image => image.uuid === annImg.uuid)
+                    );
+                    return (
+                      <span class="dataset-title" style={`display: ${i === 0 ? "inline" : "none"}`}>
+                        {dataset?.title || "P"}
+                      </span>
+                    );
+                  })}
+                </div>
+              </td>
               <td>
                 <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>View</a>
               </td>
@@ -218,40 +202,32 @@ modelInformation === undefined ? delete tableOfContents["Models Related To This 
     </div>
   </section>
   <hr/>
-  <AIDatasetFilesTable datasets={datasets}/>
-  <script type="application/json" id="files-data" set:html={JSON.stringify({ datasets })} />
-  <script>
+  <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} page="gallery"/>
+  <script type="module">
   document.addEventListener("DOMContentLoaded", function () {
     $("#viewable_images").DataTable({
       scrollX: true,
       columnDefs: [{ type: "natural", targets: 0 }],
     });
-
-    // For each row with a slideshow
     document.querySelectorAll("tr").forEach((row) => {
       const slides = row.querySelectorAll(".slides");
       const uuids = row.querySelectorAll(".uuid");
+      const titles = row.querySelectorAll(".dataset-title");
 
       if (slides.length <= 1 || uuids.length <= 1) return;
 
       let index = 0;
 
       setInterval(() => {
-        // Hide all slides and uuids
-        slides.forEach((s) => ((s as HTMLElement).style.display = "none"));
-        uuids.forEach((u) => ((u as HTMLElement).style.display = "none"));
-
-        // Show next
-        (slides[index] as HTMLElement).style.display = "block";
-        (uuids[index] as HTMLElement).style.display = "inline";
-
+        slides.forEach((s) => (s.style.display = "none"));
+        uuids.forEach((u) => (u.style.display = "none"));
+        titles.forEach((t) => (t.style.display = "none"));
+        slides[index].style.display = "block";
+        uuids[index].style.display = "inline";
+        titles[index].style.display = "inline";
         index = (index + 1) % slides.length;
       }, 3500);
     });
   });
 </script>
-
-
-
 </BaseLayoutWithBreadcrumbs>
-

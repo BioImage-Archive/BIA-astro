@@ -6,7 +6,7 @@ export function getPlaceholderHeroImage(accessionID) {
 }
 
 export function getStudyImage(study, cardImageOverride) {
-    const datasetWithImage = study.dataset.find((dataset) => dataset.example_image_uri.length > 0)
+    const datasetWithImage = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0).find((dataset) => dataset.example_image_uri.length > 0)
     if (cardImageOverride != null) {
       return cardImageOverride
     } else if (datasetWithImage == undefined) {
