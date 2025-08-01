@@ -1610,6 +1610,581 @@
             "funding_statement": ""
         }
     },
+    "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f": {
+        "object_creator": "bia_ingest",
+        "uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+        "version": 1,
+        "model": {
+            "type_name": "Dataset",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_ingest",
+                "name": "annotation_method_uuid",
+                "value": {
+                    "annotation_method_uuid": [
+                        "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "Annotations-1"
+                }
+            }
+        ],
+        "title": "Annotations",
+        "description": null,
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/static_display_512_512.png"
+        ],
+        "submitted_in_study_uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+        "submitted_in_study": {
+            "object_creator": "bia_ingest",
+            "uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+            "version": 5,
+            "model": {
+                "type_name": "Study",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_ingest",
+                    "name": "Extras from biostudies.Submission.attributes",
+                    "value": {
+                        "Keyword": [
+                            "PlantSeg",
+                            "Arabidopsis thaliana",
+                            "segmentation"
+                        ]
+                    }
+                },
+                {
+                    "provenance": "bia_ingest",
+                    "name": "biostudies json/pagetab entry",
+                    "value": {
+                        "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/S-BIAD1392.json",
+                        "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/S-BIAD1392.tsv"
+                    }
+                },
+                {
+                    "provenance": "bia_curation",
+                    "name": "one_summary",
+                    "value": {
+                        "one_summary": [
+                            "3D images of fixed Arabidopsis thaliana ovules acquired by confocal laser scanning microscopy, with their corresponding segmentation masks for cell boundaries."
+                        ]
+                    }
+                },
+                {
+                    "provenance": "bia_curation",
+                    "name": "associated_ai_models",
+                    "value": {
+                        "associated_ai_models": [
+                            {
+                                "description": "PlantSeg is a tool for cell instance aware segmentation in densely packed 3D volumetric images. The pipeline uses a two stages segmentation strategy (Neural Network + Segmentation). The pipeline is tuned for plant cell tissue acquired with confocal and light sheet microscopy.",
+                                "link": "https://github.com/kreshuklab/plant-seg"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "provenance": "bia_curation",
+                    "name": "ai_tags",
+                    "value": {
+                        "ai_tags": [
+                            [
+                                "cell boundary",
+                                "3D",
+                                "instance segmentation",
+                                "ground truth",
+                                "Arabidopsis thaliana",
+                                "fluorescence microscopy"
+                            ]
+                        ]
+                    }
+                }
+            ],
+            "accession_id": "S-BIAD1392",
+            "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "author": [
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0002-5196-1122",
+                    "display_name": "Rachele Tofanelli",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Data curation",
+                        "Formal analysis"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Athul Vijayan",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Data curation",
+                        "Software",
+                        "Formal analysis",
+                        "Validation",
+                        "Investigation",
+                        "Visualization",
+                        "Methodology"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0001-6688-0539",
+                    "display_name": "Kay Schneitz",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Software",
+                        "Formal analysis",
+                        "Supervision",
+                        "Methodology"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0003-2794-4266",
+                    "display_name": "Adrian Wolny",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "EMBL, Heidelberg, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Data curation",
+                        "Software",
+                        "Formal analysis",
+                        "Supervision",
+                        "Funding acquisition",
+                        "Validation",
+                        "Investigation",
+                        "Visualization",
+                        "Methodology",
+                        "Project administration",
+                        ""
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0003-1334-6388",
+                    "display_name": "Anna Kreshuk",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "EMBL, Heidelberg, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Software",
+                        "Formal analysis",
+                        "Supervision",
+                        "Funding acquisition",
+                        "Validation",
+                        "Investigation",
+                        "Methodology",
+                        "Project administration"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0002-0456-6912",
+                    "display_name": "Teresa Zulueta-Coarasa",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "European Bioinformatics Institute"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Data curation",
+                        "Submitter"
+                    ]
+                }
+            ],
+            "title": "PlantSeg core datasets: Ovules of Arabidopsis thaliana",
+            "release_date": "2024-10-01",
+            "description": "This submission includes 3D images of fixed Arabidopsis thaliana ovules at all developmental stages acquired by confocal laser scanning microscopy. It also contains the corresponding segmentation masks for cell boundaries.",
+            "keyword": [],
+            "acknowledgement": "",
+            "see_also": [],
+            "related_publication": [],
+            "grant": [
+                {
+                    "id": "FOR2581",
+                    "funder": [
+                        {
+                            "display_name": "Deutsche Forschungsgemeinschaft",
+                            "id": null
+                        }
+                    ]
+                }
+            ],
+            "funding_statement": "AK was funded by Baden-Wuerttemberg Stiftung. This work was supported by the DFG FOR2581 to the Kreshuk (P3) and Schneitz (P7) labs."
+        }
+    },
+    "b61a4819-938e-468b-9f4e-c65d991a8a99": {
+        "object_creator": "bia_ingest",
+        "uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+        "version": 1,
+        "model": {
+            "type_name": "Dataset",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_ingest",
+                "name": "associations",
+                "value": {
+                    "associations": [
+                        {
+                            "image_analysis": null,
+                            "image_correlation": null,
+                            "biosample": "Arabidopsis thaliana ovules",
+                            "image_acquisition": "Confocal laser scanning microscopy",
+                            "specimen": "Specimen"
+                        }
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "image_acquisition_protocol_uuid",
+                "value": {
+                    "image_acquisition_protocol_uuid": [
+                        "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "specimen_imaging_preparation_protocol_uuid",
+                "value": {
+                    "specimen_imaging_preparation_protocol_uuid": [
+                        "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "bio_sample_uuid",
+                "value": {
+                    "bio_sample_uuid": [
+                        "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                    ]
+                }
+            },
+            {
+                "provenance": "bia_ingest",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "Study Component-1"
+                }
+            }
+        ],
+        "title": "3D images of the Arabidopsis thaliana ovules",
+        "description": "z-stacks of fixed ovules of Arabidopsis thaliana at different developmental stages",
+        "analysis_method": [],
+        "correlation_method": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/static_display_512_512.png"
+        ],
+        "submitted_in_study_uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+        "submitted_in_study": {
+            "object_creator": "bia_ingest",
+            "uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+            "version": 5,
+            "model": {
+                "type_name": "Study",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_ingest",
+                    "name": "Extras from biostudies.Submission.attributes",
+                    "value": {
+                        "Keyword": [
+                            "PlantSeg",
+                            "Arabidopsis thaliana",
+                            "segmentation"
+                        ]
+                    }
+                },
+                {
+                    "provenance": "bia_ingest",
+                    "name": "biostudies json/pagetab entry",
+                    "value": {
+                        "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/S-BIAD1392.json",
+                        "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/S-BIAD1392.tsv"
+                    }
+                },
+                {
+                    "provenance": "bia_curation",
+                    "name": "one_summary",
+                    "value": {
+                        "one_summary": [
+                            "3D images of fixed Arabidopsis thaliana ovules acquired by confocal laser scanning microscopy, with their corresponding segmentation masks for cell boundaries."
+                        ]
+                    }
+                },
+                {
+                    "provenance": "bia_curation",
+                    "name": "associated_ai_models",
+                    "value": {
+                        "associated_ai_models": [
+                            {
+                                "description": "PlantSeg is a tool for cell instance aware segmentation in densely packed 3D volumetric images. The pipeline uses a two stages segmentation strategy (Neural Network + Segmentation). The pipeline is tuned for plant cell tissue acquired with confocal and light sheet microscopy.",
+                                "link": "https://github.com/kreshuklab/plant-seg"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "provenance": "bia_curation",
+                    "name": "ai_tags",
+                    "value": {
+                        "ai_tags": [
+                            [
+                                "cell boundary",
+                                "3D",
+                                "instance segmentation",
+                                "ground truth",
+                                "Arabidopsis thaliana",
+                                "fluorescence microscopy"
+                            ]
+                        ]
+                    }
+                }
+            ],
+            "accession_id": "S-BIAD1392",
+            "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+            "author": [
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0002-5196-1122",
+                    "display_name": "Rachele Tofanelli",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Data curation",
+                        "Formal analysis"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": null,
+                    "display_name": "Athul Vijayan",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Data curation",
+                        "Software",
+                        "Formal analysis",
+                        "Validation",
+                        "Investigation",
+                        "Visualization",
+                        "Methodology"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0001-6688-0539",
+                    "display_name": "Kay Schneitz",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "School of Life Sciences Weihenstephan, Technical University of Munich, Freising, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Software",
+                        "Formal analysis",
+                        "Supervision",
+                        "Methodology"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0003-2794-4266",
+                    "display_name": "Adrian Wolny",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "EMBL, Heidelberg, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Data curation",
+                        "Software",
+                        "Formal analysis",
+                        "Supervision",
+                        "Funding acquisition",
+                        "Validation",
+                        "Investigation",
+                        "Visualization",
+                        "Methodology",
+                        "Project administration",
+                        ""
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0003-1334-6388",
+                    "display_name": "Anna Kreshuk",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "EMBL, Heidelberg, Germany"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Conceptualization",
+                        "Software",
+                        "Formal analysis",
+                        "Supervision",
+                        "Funding acquisition",
+                        "Validation",
+                        "Investigation",
+                        "Methodology",
+                        "Project administration"
+                    ]
+                },
+                {
+                    "rorid": null,
+                    "address": null,
+                    "website": null,
+                    "orcid": "0000-0002-0456-6912",
+                    "display_name": "Teresa Zulueta-Coarasa",
+                    "affiliation": [
+                        {
+                            "rorid": null,
+                            "address": null,
+                            "website": null,
+                            "display_name": "European Bioinformatics Institute"
+                        }
+                    ],
+                    "contact_email": null,
+                    "role": [
+                        "Data curation",
+                        "Submitter"
+                    ]
+                }
+            ],
+            "title": "PlantSeg core datasets: Ovules of Arabidopsis thaliana",
+            "release_date": "2024-10-01",
+            "description": "This submission includes 3D images of fixed Arabidopsis thaliana ovules at all developmental stages acquired by confocal laser scanning microscopy. It also contains the corresponding segmentation masks for cell boundaries.",
+            "keyword": [],
+            "acknowledgement": "",
+            "see_also": [],
+            "related_publication": [],
+            "grant": [
+                {
+                    "id": "FOR2581",
+                    "funder": [
+                        {
+                            "display_name": "Deutsche Forschungsgemeinschaft",
+                            "id": null
+                        }
+                    ]
+                }
+            ],
+            "funding_statement": "AK was funded by Baden-Wuerttemberg Stiftung. This work was supported by the DFG FOR2581 to the Kreshuk (P3) and Schneitz (P7) labs."
+        }
+    },
     "36a744ef-82c0-47aa-b9c6-2814f7881723": {
         "object_creator": "bia_ingest",
         "uuid": "36a744ef-82c0-47aa-b9c6-2814f7881723",
@@ -2387,7 +2962,7 @@
     "5d2b4244-99a4-4b06-9a18-846c618f34fa": {
         "object_creator": "bia_ingest",
         "uuid": "5d2b4244-99a4-4b06-9a18-846c618f34fa",
-        "version": 0,
+        "version": 2,
         "model": {
             "type_name": "Dataset",
             "version": 2
@@ -2447,7 +3022,9 @@
         "description": "Embryos with epithelial wounds and accompanying segmentation masks of cells around the wound.",
         "analysis_method": [],
         "correlation_method": [],
-        "example_image_uri": [],
+        "example_image_uri": [
+            "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/8b17a724-0c47-43bf-ab0c-321f0d7b6231/static_display_512_512.png"
+        ],
         "submitted_in_study_uuid": "40c20d53-6f99-4e07-ad21-ed3a6964d255",
         "submitted_in_study": {
             "object_creator": "bia_ingest",
@@ -7115,632 +7692,6 @@
                 "biaflows",
                 "nextflow"
             ],
-            "acknowledgement": "",
-            "see_also": [],
-            "related_publication": [],
-            "grant": [],
-            "funding_statement": ""
-        }
-    },
-    "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc": {
-        "object_creator": "bia_ingest",
-        "uuid": "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc",
-        "version": 2,
-        "model": {
-            "type_name": "Dataset",
-            "version": 2
-        },
-        "additional_metadata": [
-            {
-                "provenance": "bia_ingest",
-                "name": "associations",
-                "value": {
-                    "associations": [
-                        {
-                            "image_analysis": null,
-                            "image_correlation": null,
-                            "biosample": "Wing disk",
-                            "image_acquisition": "Confocal imaging",
-                            "specimen": "Wing disk culture"
-                        }
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "image_acquisition_protocol_uuid",
-                "value": {
-                    "image_acquisition_protocol_uuid": [
-                        "25914539-0f7d-4172-8124-4a409d7fd73d"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "specimen_imaging_preparation_protocol_uuid",
-                "value": {
-                    "specimen_imaging_preparation_protocol_uuid": [
-                        "8b905657-fd98-4e60-b094-d2fa380c93ba"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "bio_sample_uuid",
-                "value": {
-                    "bio_sample_uuid": [
-                        "fc88ba58-26bc-469d-a619-2248f8b94b6f"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "uuid_unique_input",
-                "value": {
-                    "uuid_unique_input": "Study Component-1"
-                }
-            }
-        ],
-        "title": "Confocal fluorescence images",
-        "description": "Confocal fluorescence images of Drosophila wing disks expressing a cell outline marker",
-        "analysis_method": [],
-        "correlation_method": [],
-        "example_image_uri": [],
-        "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-        "submitted_in_study": {
-            "object_creator": "bia_ingest",
-            "uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-            "version": 2,
-            "model": {
-                "type_name": "Study",
-                "version": 3
-            },
-            "additional_metadata": [
-                {
-                    "provenance": "bia_ingest",
-                    "name": "Extras from biostudies.Submission.attributes",
-                    "value": {
-                        "Keyword": [
-                            "3D",
-                            "Drosophila",
-                            "CellShape",
-                            "Packing",
-                            "WingDisc"
-                        ]
-                    }
-                },
-                {
-                    "provenance": "bia_ingest",
-                    "name": "biostudies json/pagetab entry",
-                    "value": {
-                        "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.json",
-                        "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.tsv"
-                    }
-                },
-                {
-                    "provenance": "bia_curation",
-                    "name": "one_summary",
-                    "value": {
-                        "one_summary": [
-                            "Confocal and multi-photon 3D fluorecence images of Drosophila wing discs with instance segmentation masks of individual cells."
-                        ]
-                    }
-                },
-                {
-                    "provenance": "bia_curation",
-                    "name": "ai_tags",
-                    "value": {
-                        "ai_tags": [
-                            [
-                                "cell boundary",
-                                "epithelium",
-                                "3D",
-                                "instance segmentation",
-                                "Drosophila",
-                                "fluorescence microscopy"
-                            ]
-                        ]
-                    }
-                }
-            ],
-            "accession_id": "S-BIAD843",
-            "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
-            "author": [
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0003-0565-4356",
-                    "display_name": "Giulia Paci",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": "g.paci@ucl.ac.uk",
-                    "role": [
-                        "data acquisition",
-                        "data curator"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": null,
-                    "display_name": "Ines Fernandez Mosquera",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": null,
-                    "role": [
-                        "data acquisition",
-                        "data annotator",
-                        "data curator"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0001-5402-7637",
-                    "display_name": "Pablo Vicente Munuera",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": "p.munuera@ucl.ac.uk",
-                    "role": [
-                        "submitter"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0002-8722-4992",
-                    "display_name": "Yanlan Mao",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "MRC Laboratory for Molecular Cell Biology, University College London"
-                        }
-                    ],
-                    "contact_email": "y.mao@ucl.ac.uk",
-                    "role": [
-                        "conceptualisation",
-                        "corresponding author"
-                    ]
-                }
-            ],
-            "title": "3D cell shape of Drosophila Wing Disc",
-            "release_date": "2023-08-14",
-            "description": "Individual 3D cell shapes of Drosophila Wing Disc",
-            "keyword": [],
-            "acknowledgement": "",
-            "see_also": [],
-            "related_publication": [],
-            "grant": [],
-            "funding_statement": ""
-        }
-    },
-    "574f62b8-4657-4344-aa60-16daa5c07719": {
-        "object_creator": "bia_ingest",
-        "uuid": "574f62b8-4657-4344-aa60-16daa5c07719",
-        "version": 0,
-        "model": {
-            "type_name": "Dataset",
-            "version": 2
-        },
-        "additional_metadata": [
-            {
-                "provenance": "bia_ingest",
-                "name": "associations",
-                "value": {
-                    "associations": [
-                        {
-                            "image_analysis": null,
-                            "image_correlation": null,
-                            "biosample": "Wing disk",
-                            "image_acquisition": "Multi-photon imaging",
-                            "specimen": "Wing disk culture"
-                        }
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "image_acquisition_protocol_uuid",
-                "value": {
-                    "image_acquisition_protocol_uuid": [
-                        "d234afcc-4e06-4a24-a4f4-3c507e69650b"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "specimen_imaging_preparation_protocol_uuid",
-                "value": {
-                    "specimen_imaging_preparation_protocol_uuid": [
-                        "8b905657-fd98-4e60-b094-d2fa380c93ba"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "bio_sample_uuid",
-                "value": {
-                    "bio_sample_uuid": [
-                        "fc88ba58-26bc-469d-a619-2248f8b94b6f"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "uuid_unique_input",
-                "value": {
-                    "uuid_unique_input": "Study Component-2"
-                }
-            }
-        ],
-        "title": "Multi-photon fluorescence images",
-        "description": "Multi-photon fluorescence images of Drosophila wing disks expressing a cell outline marker",
-        "analysis_method": [],
-        "correlation_method": [],
-        "example_image_uri": [],
-        "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-        "submitted_in_study": {
-            "object_creator": "bia_ingest",
-            "uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-            "version": 2,
-            "model": {
-                "type_name": "Study",
-                "version": 3
-            },
-            "additional_metadata": [
-                {
-                    "provenance": "bia_ingest",
-                    "name": "Extras from biostudies.Submission.attributes",
-                    "value": {
-                        "Keyword": [
-                            "3D",
-                            "Drosophila",
-                            "CellShape",
-                            "Packing",
-                            "WingDisc"
-                        ]
-                    }
-                },
-                {
-                    "provenance": "bia_ingest",
-                    "name": "biostudies json/pagetab entry",
-                    "value": {
-                        "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.json",
-                        "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.tsv"
-                    }
-                },
-                {
-                    "provenance": "bia_curation",
-                    "name": "one_summary",
-                    "value": {
-                        "one_summary": [
-                            "Confocal and multi-photon 3D fluorecence images of Drosophila wing discs with instance segmentation masks of individual cells."
-                        ]
-                    }
-                },
-                {
-                    "provenance": "bia_curation",
-                    "name": "ai_tags",
-                    "value": {
-                        "ai_tags": [
-                            [
-                                "cell boundary",
-                                "epithelium",
-                                "3D",
-                                "instance segmentation",
-                                "Drosophila",
-                                "fluorescence microscopy"
-                            ]
-                        ]
-                    }
-                }
-            ],
-            "accession_id": "S-BIAD843",
-            "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
-            "author": [
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0003-0565-4356",
-                    "display_name": "Giulia Paci",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": "g.paci@ucl.ac.uk",
-                    "role": [
-                        "data acquisition",
-                        "data curator"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": null,
-                    "display_name": "Ines Fernandez Mosquera",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": null,
-                    "role": [
-                        "data acquisition",
-                        "data annotator",
-                        "data curator"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0001-5402-7637",
-                    "display_name": "Pablo Vicente Munuera",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": "p.munuera@ucl.ac.uk",
-                    "role": [
-                        "submitter"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0002-8722-4992",
-                    "display_name": "Yanlan Mao",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "MRC Laboratory for Molecular Cell Biology, University College London"
-                        }
-                    ],
-                    "contact_email": "y.mao@ucl.ac.uk",
-                    "role": [
-                        "conceptualisation",
-                        "corresponding author"
-                    ]
-                }
-            ],
-            "title": "3D cell shape of Drosophila Wing Disc",
-            "release_date": "2023-08-14",
-            "description": "Individual 3D cell shapes of Drosophila Wing Disc",
-            "keyword": [],
-            "acknowledgement": "",
-            "see_also": [],
-            "related_publication": [],
-            "grant": [],
-            "funding_statement": ""
-        }
-    },
-    "d6497b69-79a3-48bc-9212-bd8350a0bb13": {
-        "object_creator": "bia_ingest",
-        "uuid": "d6497b69-79a3-48bc-9212-bd8350a0bb13",
-        "version": 1,
-        "model": {
-            "type_name": "Dataset",
-            "version": 2
-        },
-        "additional_metadata": [
-            {
-                "provenance": "bia_ingest",
-                "name": "annotation_method_uuid",
-                "value": {
-                    "annotation_method_uuid": [
-                        "8cfa9852-26e4-4164-833a-87a9162284e1"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "uuid_unique_input",
-                "value": {
-                    "uuid_unique_input": "Annotations-1"
-                }
-            },
-            {
-                "provenance": "bia_curation",
-                "name": "annotation_type",
-                "value": {
-                    "annotation_type": [
-                        [
-                            "segmentation_mask"
-                        ]
-                    ]
-                }
-            }
-        ],
-        "title": "Segmentation masks",
-        "description": null,
-        "analysis_method": [],
-        "correlation_method": [],
-        "example_image_uri": [],
-        "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-        "submitted_in_study": {
-            "object_creator": "bia_ingest",
-            "uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-            "version": 2,
-            "model": {
-                "type_name": "Study",
-                "version": 3
-            },
-            "additional_metadata": [
-                {
-                    "provenance": "bia_ingest",
-                    "name": "Extras from biostudies.Submission.attributes",
-                    "value": {
-                        "Keyword": [
-                            "3D",
-                            "Drosophila",
-                            "CellShape",
-                            "Packing",
-                            "WingDisc"
-                        ]
-                    }
-                },
-                {
-                    "provenance": "bia_ingest",
-                    "name": "biostudies json/pagetab entry",
-                    "value": {
-                        "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.json",
-                        "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.tsv"
-                    }
-                },
-                {
-                    "provenance": "bia_curation",
-                    "name": "one_summary",
-                    "value": {
-                        "one_summary": [
-                            "Confocal and multi-photon 3D fluorecence images of Drosophila wing discs with instance segmentation masks of individual cells."
-                        ]
-                    }
-                },
-                {
-                    "provenance": "bia_curation",
-                    "name": "ai_tags",
-                    "value": {
-                        "ai_tags": [
-                            [
-                                "cell boundary",
-                                "epithelium",
-                                "3D",
-                                "instance segmentation",
-                                "Drosophila",
-                                "fluorescence microscopy"
-                            ]
-                        ]
-                    }
-                }
-            ],
-            "accession_id": "S-BIAD843",
-            "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
-            "author": [
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0003-0565-4356",
-                    "display_name": "Giulia Paci",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": "g.paci@ucl.ac.uk",
-                    "role": [
-                        "data acquisition",
-                        "data curator"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": null,
-                    "display_name": "Ines Fernandez Mosquera",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": null,
-                    "role": [
-                        "data acquisition",
-                        "data annotator",
-                        "data curator"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0001-5402-7637",
-                    "display_name": "Pablo Vicente Munuera",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "LMCB, University College London"
-                        }
-                    ],
-                    "contact_email": "p.munuera@ucl.ac.uk",
-                    "role": [
-                        "submitter"
-                    ]
-                },
-                {
-                    "rorid": null,
-                    "address": null,
-                    "website": null,
-                    "orcid": "0000-0002-8722-4992",
-                    "display_name": "Yanlan Mao",
-                    "affiliation": [
-                        {
-                            "rorid": null,
-                            "address": "London, UK",
-                            "website": null,
-                            "display_name": "MRC Laboratory for Molecular Cell Biology, University College London"
-                        }
-                    ],
-                    "contact_email": "y.mao@ucl.ac.uk",
-                    "role": [
-                        "conceptualisation",
-                        "corresponding author"
-                    ]
-                }
-            ],
-            "title": "3D cell shape of Drosophila Wing Disc",
-            "release_date": "2023-08-14",
-            "description": "Individual 3D cell shapes of Drosophila Wing Disc",
-            "keyword": [],
             "acknowledgement": "",
             "see_also": [],
             "related_publication": [],

@@ -10384,9 +10384,7 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [
-                "9d3dc9ed-2985-472d-ae3a-fb986030d7bd"
-            ],
+            "input_image_uuid": [],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -11294,9 +11292,7 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [
-                "0931a00e-d4dc-4c82-9809-4fdeffb1fc2e"
-            ],
+            "input_image_uuid": [],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -11468,7 +11464,7 @@
         "creation_process": {
             "object_creator": "bia_image_assignment",
             "uuid": "64d4bf14-4eac-4ba8-af76-9979660c0fcf",
-            "version": 1,
+            "version": 2,
             "model": {
                 "type_name": "CreationProcess",
                 "version": 3
@@ -11484,7 +11480,9 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": ["65946fbf-ffe9-485b-b4e9-0119ed3f8b15"],
+            "input_image_uuid": [
+                "65946fbf-ffe9-485b-b4e9-0119ed3f8b15"
+            ],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "66139451-bcbe-475b-8c4b-1aa6dd0cf498"
@@ -21331,6 +21329,2296 @@
             }
         ]
     },
+    "45aa9cdd-547e-4c2e-acdf-b4a736f32af6": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_8a7c27b6-91b1-42ad-831a-26dcdd38f73f",
+                "value": {
+                    "attributes": {
+                        "Annotation type": "Segmentation masks",
+                        "Source image": "Ovules/train/raw/N_536_ds2x_raw.tiff"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/label/N_536_ds2x_label.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "8a7c27b6-91b1-42ad-831a-26dcdd38f73f"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "62fa2b14-1734-48be-9d9b-b78773f3e35a"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/45aa9cdd-547e-4c2e-acdf-b4a736f32af6/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+        "creation_process_uuid": "e1909df4-175f-4c21-812f-f3546f2975c2",
+        "original_file_reference_uuid": [
+            "8a7c27b6-91b1-42ad-831a-26dcdd38f73f"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "e1909df4-175f-4c21-812f-f3546f2975c2",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": null,
+            "image_acquisition_protocol_uuid": [],
+            "input_image_uuid": [
+                "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
+            ],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [
+                "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+            ],
+            "acquisition_process": [],
+            "subject": null,
+            "annotation_method": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "7a7f864e-2648-413e-8b0d-cd6f3fa55e78",
+                    "version": 0,
+                    "model": {
+                        "type_name": "AnnotationMethod",
+                        "version": 4
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Annotations-1"
+                            }
+                        }
+                    ],
+                    "title": "Annotations",
+                    "protocol_description": "We imported z-stacks of ovules of different stages into MorphographX and processed the stacks using watershed-based segmentation followed by surface mesh formation. We found that the ITK watershed segmentation algorithm integrated in MorphographX was working well. However, hand correction by a domain expert was still required for optimal results.",
+                    "annotation_criteria": null,
+                    "annotation_coverage": "All images in the dataset have been annotated",
+                    "transformation_description": null,
+                    "spatial_information": null,
+                    "method_type": [
+                        "segmentation_mask"
+                    ],
+                    "annotation_source_indicator": null
+                }
+            ],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "21f41cce-a9bd-4f2e-8857-c0e316476020",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/label/N_536_ds2x_label.tiff"
+                ],
+                "total_size_in_bytes": 17162682,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "62fa2b14-1734-48be-9d9b-b78773f3e35a",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '21f41cce-a9bd-4f2e-8857-c0e316476020', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/45aa9cdd-547e-4c2e-acdf-b4a736f32af6/62fa2b14-1734-48be-9d9b-b78773f3e35a.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 20969113,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1008,
+                "size_y": 1008,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 310,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6"
+            }
+        ]
+    },
+    "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_a3b72323-4450-4477-90ea-2c86550c7124",
+                "value": {
+                    "attributes": {
+                        "Annotation type": "Segmentation masks",
+                        "Source image": "Ovules/val/raw/N_420_ds2x_raw.tiff"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/val/label/N_420_ds2x_label.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "a3b72323-4450-4477-90ea-2c86550c7124"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "fcef7826-5d31-4fa3-866d-7fb82d0f3c4c"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+        "creation_process_uuid": "e223ce15-34c2-454e-a1dd-ef0bbf95ffd8",
+        "original_file_reference_uuid": [
+            "a3b72323-4450-4477-90ea-2c86550c7124"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "e223ce15-34c2-454e-a1dd-ef0bbf95ffd8",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": null,
+            "image_acquisition_protocol_uuid": [],
+            "input_image_uuid": [
+                "d3f2c0dd-eb35-4caa-8877-935805839c68"
+            ],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [
+                "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+            ],
+            "acquisition_process": [],
+            "subject": null,
+            "annotation_method": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "7a7f864e-2648-413e-8b0d-cd6f3fa55e78",
+                    "version": 0,
+                    "model": {
+                        "type_name": "AnnotationMethod",
+                        "version": 4
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Annotations-1"
+                            }
+                        }
+                    ],
+                    "title": "Annotations",
+                    "protocol_description": "We imported z-stacks of ovules of different stages into MorphographX and processed the stacks using watershed-based segmentation followed by surface mesh formation. We found that the ITK watershed segmentation algorithm integrated in MorphographX was working well. However, hand correction by a domain expert was still required for optimal results.",
+                    "annotation_criteria": null,
+                    "annotation_coverage": "All images in the dataset have been annotated",
+                    "transformation_description": null,
+                    "spatial_information": null,
+                    "method_type": [
+                        "segmentation_mask"
+                    ],
+                    "annotation_source_indicator": null
+                }
+            ],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "89fccfe4-a1dc-492e-803b-a2f84f8d042c",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/val/label/N_420_ds2x_label.tiff"
+                ],
+                "total_size_in_bytes": 22517718,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "fcef7826-5d31-4fa3-866d-7fb82d0f3c4c",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '89fccfe4-a1dc-492e-803b-a2f84f8d042c', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec/fcef7826-5d31-4fa3-866d-7fb82d0f3c4c.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 24557034,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1332,
+                "size_y": 880,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 397,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec"
+            }
+        ]
+    },
+    "c1d4ee83-55b6-41ea-90b9-ba2b5253121c": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c",
+        "version": 3,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_6b54f643-3512-4ab8-8d95-a710cf21f173",
+                "value": {
+                    "attributes": {
+                        "Annotation type": "Segmentation masks",
+                        "Source image": "Ovules/train/raw/N_416_ds2x_raw.tiff"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/label/N_416_ds2x_label.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "6b54f643-3512-4ab8-8d95-a710cf21f173"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "8f6fe7cd-7184-4c6c-8b47-21bcebfa39ec"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_static_display_uri",
+                "value": {
+                    "slice": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/static_display_512_512.png",
+                        "size": 512
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+        "creation_process_uuid": "d98c2989-cd65-4115-934c-17814a15fd46",
+        "original_file_reference_uuid": [
+            "6b54f643-3512-4ab8-8d95-a710cf21f173"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "d98c2989-cd65-4115-934c-17814a15fd46",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": null,
+            "image_acquisition_protocol_uuid": [],
+            "input_image_uuid": [
+                "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
+            ],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [
+                "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+            ],
+            "acquisition_process": [],
+            "subject": null,
+            "annotation_method": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "7a7f864e-2648-413e-8b0d-cd6f3fa55e78",
+                    "version": 0,
+                    "model": {
+                        "type_name": "AnnotationMethod",
+                        "version": 4
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Annotations-1"
+                            }
+                        }
+                    ],
+                    "title": "Annotations",
+                    "protocol_description": "We imported z-stacks of ovules of different stages into MorphographX and processed the stacks using watershed-based segmentation followed by surface mesh formation. We found that the ITK watershed segmentation algorithm integrated in MorphographX was working well. However, hand correction by a domain expert was still required for optimal results.",
+                    "annotation_criteria": null,
+                    "annotation_coverage": "All images in the dataset have been annotated",
+                    "transformation_description": null,
+                    "spatial_information": null,
+                    "method_type": [
+                        "segmentation_mask"
+                    ],
+                    "annotation_source_indicator": null
+                }
+            ],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "8f6fe7cd-7184-4c6c-8b47-21bcebfa39ec",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': 'ca91bebe-4d87-47c3-908a-999e0209add7', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/8f6fe7cd-7184-4c6c-8b47-21bcebfa39ec.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 26050322,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1480,
+                "size_y": 1038,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 265,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c"
+            },
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "ca91bebe-4d87-47c3-908a-999e0209add7",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/label/N_416_ds2x_label.tiff"
+                ],
+                "total_size_in_bytes": 22875674,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c"
+            }
+        ]
+    },
+    "d9070ef4-25ee-4a3d-9162-6e47f95e2a56": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_b12a561b-a636-42c7-8493-c0c8f6f926e1",
+                "value": {
+                    "attributes": {
+                        "Annotation type": "Segmentation masks",
+                        "Source image": "Ovules/train/raw/N_458_ds2x_raw.tiff"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/label/N_458_ds2x_label.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "b12a561b-a636-42c7-8493-c0c8f6f926e1"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "c23a467d-fb66-4836-992d-ae9bd2fd830d"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/d9070ef4-25ee-4a3d-9162-6e47f95e2a56/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+        "creation_process_uuid": "24034e49-1775-4bf6-b3d0-8c9b1c7893c9",
+        "original_file_reference_uuid": [
+            "b12a561b-a636-42c7-8493-c0c8f6f926e1"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "24034e49-1775-4bf6-b3d0-8c9b1c7893c9",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": null,
+            "image_acquisition_protocol_uuid": [],
+            "input_image_uuid": [
+                "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
+            ],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [
+                "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+            ],
+            "acquisition_process": [],
+            "subject": null,
+            "annotation_method": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "7a7f864e-2648-413e-8b0d-cd6f3fa55e78",
+                    "version": 0,
+                    "model": {
+                        "type_name": "AnnotationMethod",
+                        "version": 4
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Annotations-1"
+                            }
+                        }
+                    ],
+                    "title": "Annotations",
+                    "protocol_description": "We imported z-stacks of ovules of different stages into MorphographX and processed the stacks using watershed-based segmentation followed by surface mesh formation. We found that the ITK watershed segmentation algorithm integrated in MorphographX was working well. However, hand correction by a domain expert was still required for optimal results.",
+                    "annotation_criteria": null,
+                    "annotation_coverage": "All images in the dataset have been annotated",
+                    "transformation_description": null,
+                    "spatial_information": null,
+                    "method_type": [
+                        "segmentation_mask"
+                    ],
+                    "annotation_source_indicator": null
+                }
+            ],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "20b98a75-5dcd-493a-9a52-bb70132ff149",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/label/N_458_ds2x_label.tiff"
+                ],
+                "total_size_in_bytes": 5619006,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "c23a467d-fb66-4836-992d-ae9bd2fd830d",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '20b98a75-5dcd-493a-9a52-bb70132ff149', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/d9070ef4-25ee-4a3d-9162-6e47f95e2a56/c23a467d-fb66-4836-992d-ae9bd2fd830d.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 6166675,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 461,
+                "size_y": 872,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 259,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56"
+            }
+        ]
+    },
+    "dfb77b45-1361-4f23-a12f-3c3a9ed042a1": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_89e7595a-8ec0-4eea-b870-a3cf989a767f",
+                "value": {
+                    "attributes": {
+                        "Annotation type": "Segmentation masks",
+                        "Source image": "Ovules/train/raw/N_404_ds2x_raw.tiff"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/label/N_404_ds2x_label.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "89e7595a-8ec0-4eea-b870-a3cf989a767f"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "db202a1f-5dfa-4411-aa16-398af7f99d46"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/dfb77b45-1361-4f23-a12f-3c3a9ed042a1/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+        "creation_process_uuid": "697d7be4-6ef5-43b5-b798-81dc789be021",
+        "original_file_reference_uuid": [
+            "89e7595a-8ec0-4eea-b870-a3cf989a767f"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "697d7be4-6ef5-43b5-b798-81dc789be021",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": null,
+            "image_acquisition_protocol_uuid": [],
+            "input_image_uuid": [
+                "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
+            ],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [
+                "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+            ],
+            "acquisition_process": [],
+            "subject": null,
+            "annotation_method": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "7a7f864e-2648-413e-8b0d-cd6f3fa55e78",
+                    "version": 0,
+                    "model": {
+                        "type_name": "AnnotationMethod",
+                        "version": 4
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Annotations-1"
+                            }
+                        }
+                    ],
+                    "title": "Annotations",
+                    "protocol_description": "We imported z-stacks of ovules of different stages into MorphographX and processed the stacks using watershed-based segmentation followed by surface mesh formation. We found that the ITK watershed segmentation algorithm integrated in MorphographX was working well. However, hand correction by a domain expert was still required for optimal results.",
+                    "annotation_criteria": null,
+                    "annotation_coverage": "All images in the dataset have been annotated",
+                    "transformation_description": null,
+                    "spatial_information": null,
+                    "method_type": [
+                        "segmentation_mask"
+                    ],
+                    "annotation_source_indicator": null
+                }
+            ],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "9fac8585-92c5-427d-86c4-9814549aad5a",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/label/N_404_ds2x_label.tiff"
+                ],
+                "total_size_in_bytes": 8799114,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "db202a1f-5dfa-4411-aa16-398af7f99d46",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '9fac8585-92c5-427d-86c4-9814549aad5a', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/dfb77b45-1361-4f23-a12f-3c3a9ed042a1/db202a1f-5dfa-4411-aa16-398af7f99d46.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 8163683,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 968,
+                "size_y": 563,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 321,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1"
+            }
+        ]
+    },
+    "10bdc5bc-8499-4aff-bf82-5ede63f9fed4": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_8ff78f06-ae42-4b92-8c6a-53113ead82d9",
+                "value": {
+                    "attributes": {
+                        "Dataset split": "train",
+                        "File description": "Raw 3D stack in TIFF format"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/raw/N_404_ds2x_raw.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "8ff78f06-ae42-4b92-8c6a-53113ead82d9"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "2f13e325-83dc-4ba2-b6b2-4179be13a276"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/10bdc5bc-8499-4aff-bf82-5ede63f9fed4/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+        "creation_process_uuid": "6b6db15a-e270-4df6-8e84-27897e790778",
+        "original_file_reference_uuid": [
+            "8ff78f06-ae42-4b92-8c6a-53113ead82d9"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "6b6db15a-e270-4df6-8e84-27897e790778",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "d93adb9f-446f-4e95-9c4f-9f51c2933d66",
+            "image_acquisition_protocol_uuid": [
+                "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+            ],
+            "input_image_uuid": [],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "e799855b-5132-4c1e-9f8c-3c4f63679e7d",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image Acquisition-1"
+                            }
+                        }
+                    ],
+                    "title": "Confocal laser scanning microscopy",
+                    "protocol_description": "Images acquired by confocal laser scanning microscopy with a voxel size of 0.075 \u00d7 0.075 \u00d7 0.235 \u03bcm. Confocal laser scanning microscopy of ovules stained with SR2200 and TO-PRO-3 iodide was performed on an upright Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems) equipped with GaAsP (HyD) detectors and a 63\u00d7 glycerol objective (HC PL APO CS2 63\u00d7/1.30 GLYC, CORR CS2). Scan speed was at 400 Hz, line average between 2 and 4, and the digital zoom between 1 and 2. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack. In case of the absence of GaAsP (HyD) detectors laser power and gain have to be adjusted according to the instrument at hand (Additional file 4). SR2200 fluorescence was excited with a 405 nm diode laser (50 mW) with a laser power ranging from 0.1 to 1.5% intensity and detected at 420 to 500 nm with the gain of the HyD detector set to 20. To-PRO-3 iodide fluorescence excitation was done at 642 nm with the white-light laser with a laser power ranging from 2 to 3.5% and detected at 655 to 720 nm with the gain of the HyD detector set to 200. Direct Red 23 fluorescence was excited using laser line 561 nm (white-light laser) with the laser power set to 5 to 8% and detected at 580 to 680 nm with the HyD gain set to 100. Calcofluor White fluorescence was excited using the 405 nm diode laser (50 mW) with the laser power set to 1 to 3% and detected at 420 to 490 nm with the HyD gain set to 100. For z-stacks 12-bit images were captured at a slice interval of 0.24 \u03bcm with optimized system resolution of 0.063 \u03bcm \u00d7 0.063 \u03bcm \u00d7 0.240 \u03bcm as final pixel size according to the Nyquist criterion. Scan speed was set to 400 Hz, the pinhole was set to 0.6 Airy units, line average was between 2 and 4, and the digital zoom was set between 1 and 2, as required. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack.",
+                    "imaging_instrument_description": "Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems)",
+                    "fbbi_id": [
+                        "http://purl.obolibrary.org/obo/FBbi_00000251"
+                    ],
+                    "imaging_method_name": [
+                        "confocal microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "d93adb9f-446f-4e95-9c4f-9f51c2933d66",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                ],
+                "sample_of_uuid": [
+                    "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Specimen",
+                        "protocol_description": "The mPS-PI staining was done as described (Truernit E, Bauby H, Dubreucq B, Grandjean O, Runions J, Barth\u00e9l\u00e9my J, et al., 2008). Fixing and clearing of dissected ovules in ClearSee was done essentially as described (Kurihara D, Mizuta Y, Sato Y, Higashiyama T., 2015). DirectRed 23 and Calcofluor White staining in ClearSee was done as outlined in (Ursache R, Andersen TG, Marhav\u00fd P, Geldner N., 2018). Staining with SR2200 was performed as described in (Musielak TJ, Schenkel L, Kolb M, Henschen A, Bayer M., 2015) with minor modifications.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8947078-f6b2-4086-b31f-2b762fc1c09e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Arabidopsis thaliana ovules",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "thale cress",
+                                "scientific_name": "Arabidopsis thaliana",
+                                "ncbi_id": "NCBI:txid3702"
+                            }
+                        ],
+                        "biological_entity_description": "ovules",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "2f13e325-83dc-4ba2-b6b2-4179be13a276",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': 'af47ed83-b043-4259-be1b-c25277e76efa', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/10bdc5bc-8499-4aff-bf82-5ede63f9fed4/2f13e325-83dc-4ba2-b6b2-4179be13a276.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 130475740,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 968,
+                "size_y": 563,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 321,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
+            },
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "af47ed83-b043-4259-be1b-c25277e76efa",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/raw/N_404_ds2x_raw.tiff"
+                ],
+                "total_size_in_bytes": 109202044,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
+            }
+        ]
+    },
+    "605de3ff-0ba5-4902-b83a-20d4ed15ae72": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "605de3ff-0ba5-4902-b83a-20d4ed15ae72",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_5d0d0834-cabf-489e-9558-b5abf65cd12c",
+                "value": {
+                    "attributes": {
+                        "Dataset split": "train",
+                        "File description": "Raw 3D stack in TIFF format"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/raw/N_536_ds2x_raw.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "5d0d0834-cabf-489e-9558-b5abf65cd12c"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "b94acc25-f061-4d5c-ad0e-b063ab93c8a6"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/605de3ff-0ba5-4902-b83a-20d4ed15ae72/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+        "creation_process_uuid": "671d7ccd-ac3f-4d08-af49-9d6fbdb4980e",
+        "original_file_reference_uuid": [
+            "5d0d0834-cabf-489e-9558-b5abf65cd12c"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "671d7ccd-ac3f-4d08-af49-9d6fbdb4980e",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "4dc0306d-2447-4e2b-bb75-9ffaa129abe1",
+            "image_acquisition_protocol_uuid": [
+                "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+            ],
+            "input_image_uuid": [],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "e799855b-5132-4c1e-9f8c-3c4f63679e7d",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image Acquisition-1"
+                            }
+                        }
+                    ],
+                    "title": "Confocal laser scanning microscopy",
+                    "protocol_description": "Images acquired by confocal laser scanning microscopy with a voxel size of 0.075 \u00d7 0.075 \u00d7 0.235 \u03bcm. Confocal laser scanning microscopy of ovules stained with SR2200 and TO-PRO-3 iodide was performed on an upright Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems) equipped with GaAsP (HyD) detectors and a 63\u00d7 glycerol objective (HC PL APO CS2 63\u00d7/1.30 GLYC, CORR CS2). Scan speed was at 400 Hz, line average between 2 and 4, and the digital zoom between 1 and 2. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack. In case of the absence of GaAsP (HyD) detectors laser power and gain have to be adjusted according to the instrument at hand (Additional file 4). SR2200 fluorescence was excited with a 405 nm diode laser (50 mW) with a laser power ranging from 0.1 to 1.5% intensity and detected at 420 to 500 nm with the gain of the HyD detector set to 20. To-PRO-3 iodide fluorescence excitation was done at 642 nm with the white-light laser with a laser power ranging from 2 to 3.5% and detected at 655 to 720 nm with the gain of the HyD detector set to 200. Direct Red 23 fluorescence was excited using laser line 561 nm (white-light laser) with the laser power set to 5 to 8% and detected at 580 to 680 nm with the HyD gain set to 100. Calcofluor White fluorescence was excited using the 405 nm diode laser (50 mW) with the laser power set to 1 to 3% and detected at 420 to 490 nm with the HyD gain set to 100. For z-stacks 12-bit images were captured at a slice interval of 0.24 \u03bcm with optimized system resolution of 0.063 \u03bcm \u00d7 0.063 \u03bcm \u00d7 0.240 \u03bcm as final pixel size according to the Nyquist criterion. Scan speed was set to 400 Hz, the pinhole was set to 0.6 Airy units, line average was between 2 and 4, and the digital zoom was set between 1 and 2, as required. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack.",
+                    "imaging_instrument_description": "Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems)",
+                    "fbbi_id": [
+                        "http://purl.obolibrary.org/obo/FBbi_00000251"
+                    ],
+                    "imaging_method_name": [
+                        "confocal microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "4dc0306d-2447-4e2b-bb75-9ffaa129abe1",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                ],
+                "sample_of_uuid": [
+                    "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Specimen",
+                        "protocol_description": "The mPS-PI staining was done as described (Truernit E, Bauby H, Dubreucq B, Grandjean O, Runions J, Barth\u00e9l\u00e9my J, et al., 2008). Fixing and clearing of dissected ovules in ClearSee was done essentially as described (Kurihara D, Mizuta Y, Sato Y, Higashiyama T., 2015). DirectRed 23 and Calcofluor White staining in ClearSee was done as outlined in (Ursache R, Andersen TG, Marhav\u00fd P, Geldner N., 2018). Staining with SR2200 was performed as described in (Musielak TJ, Schenkel L, Kolb M, Henschen A, Bayer M., 2015) with minor modifications.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8947078-f6b2-4086-b31f-2b762fc1c09e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Arabidopsis thaliana ovules",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "thale cress",
+                                "scientific_name": "Arabidopsis thaliana",
+                                "ncbi_id": "NCBI:txid3702"
+                            }
+                        ],
+                        "biological_entity_description": "ovules",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "4d0f05c1-9499-49e7-a668-d76797d5f656",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/raw/N_536_ds2x_raw.tiff"
+                ],
+                "total_size_in_bytes": 129956882,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "b94acc25-f061-4d5c-ad0e-b063ab93c8a6",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '4d0f05c1-9499-49e7-a668-d76797d5f656', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/605de3ff-0ba5-4902-b83a-20d4ed15ae72/b94acc25-f061-4d5c-ad0e-b063ab93c8a6.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 227199351,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1008,
+                "size_y": 1008,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 310,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
+            }
+        ]
+    },
+    "712f8669-7681-4dfc-8d9e-cdc68c4f8045": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "712f8669-7681-4dfc-8d9e-cdc68c4f8045",
+        "version": 3,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_accfee68-1ff6-4eba-91f5-5ef95b4f941f",
+                "value": {
+                    "attributes": {
+                        "Dataset split": "train",
+                        "File description": "Raw 3D stack in TIFF format"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/raw/N_416_ds2x_raw.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "accfee68-1ff6-4eba-91f5-5ef95b4f941f"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "108bb69d-2e52-4382-8100-e96173db24ee"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_static_display_uri",
+                "value": {
+                    "slice": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/static_display_512_512.png",
+                        "size": 512
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+        "creation_process_uuid": "91fd6db8-926f-4950-83ad-adc3436c1663",
+        "original_file_reference_uuid": [
+            "accfee68-1ff6-4eba-91f5-5ef95b4f941f"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "91fd6db8-926f-4950-83ad-adc3436c1663",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "77a05a2c-1853-4530-8d3a-0899b53897e0",
+            "image_acquisition_protocol_uuid": [
+                "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+            ],
+            "input_image_uuid": [],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "e799855b-5132-4c1e-9f8c-3c4f63679e7d",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image Acquisition-1"
+                            }
+                        }
+                    ],
+                    "title": "Confocal laser scanning microscopy",
+                    "protocol_description": "Images acquired by confocal laser scanning microscopy with a voxel size of 0.075 \u00d7 0.075 \u00d7 0.235 \u03bcm. Confocal laser scanning microscopy of ovules stained with SR2200 and TO-PRO-3 iodide was performed on an upright Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems) equipped with GaAsP (HyD) detectors and a 63\u00d7 glycerol objective (HC PL APO CS2 63\u00d7/1.30 GLYC, CORR CS2). Scan speed was at 400 Hz, line average between 2 and 4, and the digital zoom between 1 and 2. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack. In case of the absence of GaAsP (HyD) detectors laser power and gain have to be adjusted according to the instrument at hand (Additional file 4). SR2200 fluorescence was excited with a 405 nm diode laser (50 mW) with a laser power ranging from 0.1 to 1.5% intensity and detected at 420 to 500 nm with the gain of the HyD detector set to 20. To-PRO-3 iodide fluorescence excitation was done at 642 nm with the white-light laser with a laser power ranging from 2 to 3.5% and detected at 655 to 720 nm with the gain of the HyD detector set to 200. Direct Red 23 fluorescence was excited using laser line 561 nm (white-light laser) with the laser power set to 5 to 8% and detected at 580 to 680 nm with the HyD gain set to 100. Calcofluor White fluorescence was excited using the 405 nm diode laser (50 mW) with the laser power set to 1 to 3% and detected at 420 to 490 nm with the HyD gain set to 100. For z-stacks 12-bit images were captured at a slice interval of 0.24 \u03bcm with optimized system resolution of 0.063 \u03bcm \u00d7 0.063 \u03bcm \u00d7 0.240 \u03bcm as final pixel size according to the Nyquist criterion. Scan speed was set to 400 Hz, the pinhole was set to 0.6 Airy units, line average was between 2 and 4, and the digital zoom was set between 1 and 2, as required. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack.",
+                    "imaging_instrument_description": "Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems)",
+                    "fbbi_id": [
+                        "http://purl.obolibrary.org/obo/FBbi_00000251"
+                    ],
+                    "imaging_method_name": [
+                        "confocal microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "77a05a2c-1853-4530-8d3a-0899b53897e0",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                ],
+                "sample_of_uuid": [
+                    "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Specimen",
+                        "protocol_description": "The mPS-PI staining was done as described (Truernit E, Bauby H, Dubreucq B, Grandjean O, Runions J, Barth\u00e9l\u00e9my J, et al., 2008). Fixing and clearing of dissected ovules in ClearSee was done essentially as described (Kurihara D, Mizuta Y, Sato Y, Higashiyama T., 2015). DirectRed 23 and Calcofluor White staining in ClearSee was done as outlined in (Ursache R, Andersen TG, Marhav\u00fd P, Geldner N., 2018). Staining with SR2200 was performed as described in (Musielak TJ, Schenkel L, Kolb M, Henschen A, Bayer M., 2015) with minor modifications.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8947078-f6b2-4086-b31f-2b762fc1c09e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Arabidopsis thaliana ovules",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "thale cress",
+                                "scientific_name": "Arabidopsis thaliana",
+                                "ncbi_id": "NCBI:txid3702"
+                            }
+                        ],
+                        "biological_entity_description": "ovules",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "108bb69d-2e52-4382-8100-e96173db24ee",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '6501c44c-727b-424d-9573-3dd36c2f240c', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/108bb69d-2e52-4382-8100-e96173db24ee.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 364382658,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1480,
+                "size_y": 1038,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 265,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
+            },
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "6501c44c-727b-424d-9573-3dd36c2f240c",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/raw/N_416_ds2x_raw.tiff"
+                ],
+                "total_size_in_bytes": 313545218,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
+            }
+        ]
+    },
+    "ac8adeb7-c794-41ff-b72c-821e0b4afc9f": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_424e6752-f794-4def-93ac-289e883a89dc",
+                "value": {
+                    "attributes": {
+                        "Dataset split": "train",
+                        "File description": "Raw 3D stack in TIFF format"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/train/raw/N_458_ds2x_raw.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "424e6752-f794-4def-93ac-289e883a89dc"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "18939ea5-a0e8-4088-9bdd-381516ddabb5"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/ac8adeb7-c794-41ff-b72c-821e0b4afc9f/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+        "creation_process_uuid": "0c12d2bb-ba13-4707-9997-457eec181dd3",
+        "original_file_reference_uuid": [
+            "424e6752-f794-4def-93ac-289e883a89dc"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "0c12d2bb-ba13-4707-9997-457eec181dd3",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "e80458cd-76ca-4b90-9430-bb87e68376a4",
+            "image_acquisition_protocol_uuid": [
+                "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+            ],
+            "input_image_uuid": [],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "e799855b-5132-4c1e-9f8c-3c4f63679e7d",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image Acquisition-1"
+                            }
+                        }
+                    ],
+                    "title": "Confocal laser scanning microscopy",
+                    "protocol_description": "Images acquired by confocal laser scanning microscopy with a voxel size of 0.075 \u00d7 0.075 \u00d7 0.235 \u03bcm. Confocal laser scanning microscopy of ovules stained with SR2200 and TO-PRO-3 iodide was performed on an upright Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems) equipped with GaAsP (HyD) detectors and a 63\u00d7 glycerol objective (HC PL APO CS2 63\u00d7/1.30 GLYC, CORR CS2). Scan speed was at 400 Hz, line average between 2 and 4, and the digital zoom between 1 and 2. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack. In case of the absence of GaAsP (HyD) detectors laser power and gain have to be adjusted according to the instrument at hand (Additional file 4). SR2200 fluorescence was excited with a 405 nm diode laser (50 mW) with a laser power ranging from 0.1 to 1.5% intensity and detected at 420 to 500 nm with the gain of the HyD detector set to 20. To-PRO-3 iodide fluorescence excitation was done at 642 nm with the white-light laser with a laser power ranging from 2 to 3.5% and detected at 655 to 720 nm with the gain of the HyD detector set to 200. Direct Red 23 fluorescence was excited using laser line 561 nm (white-light laser) with the laser power set to 5 to 8% and detected at 580 to 680 nm with the HyD gain set to 100. Calcofluor White fluorescence was excited using the 405 nm diode laser (50 mW) with the laser power set to 1 to 3% and detected at 420 to 490 nm with the HyD gain set to 100. For z-stacks 12-bit images were captured at a slice interval of 0.24 \u03bcm with optimized system resolution of 0.063 \u03bcm \u00d7 0.063 \u03bcm \u00d7 0.240 \u03bcm as final pixel size according to the Nyquist criterion. Scan speed was set to 400 Hz, the pinhole was set to 0.6 Airy units, line average was between 2 and 4, and the digital zoom was set between 1 and 2, as required. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack.",
+                    "imaging_instrument_description": "Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems)",
+                    "fbbi_id": [
+                        "http://purl.obolibrary.org/obo/FBbi_00000251"
+                    ],
+                    "imaging_method_name": [
+                        "confocal microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "e80458cd-76ca-4b90-9430-bb87e68376a4",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                ],
+                "sample_of_uuid": [
+                    "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Specimen",
+                        "protocol_description": "The mPS-PI staining was done as described (Truernit E, Bauby H, Dubreucq B, Grandjean O, Runions J, Barth\u00e9l\u00e9my J, et al., 2008). Fixing and clearing of dissected ovules in ClearSee was done essentially as described (Kurihara D, Mizuta Y, Sato Y, Higashiyama T., 2015). DirectRed 23 and Calcofluor White staining in ClearSee was done as outlined in (Ursache R, Andersen TG, Marhav\u00fd P, Geldner N., 2018). Staining with SR2200 was performed as described in (Musielak TJ, Schenkel L, Kolb M, Henschen A, Bayer M., 2015) with minor modifications.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8947078-f6b2-4086-b31f-2b762fc1c09e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Arabidopsis thaliana ovules",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "thale cress",
+                                "scientific_name": "Arabidopsis thaliana",
+                                "ncbi_id": "NCBI:txid3702"
+                            }
+                        ],
+                        "biological_entity_description": "ovules",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "18939ea5-a0e8-4088-9bdd-381516ddabb5",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': '890f7295-a050-4aa7-9356-6d53d2c3cf9f', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/ac8adeb7-c794-41ff-b72c-821e0b4afc9f/18939ea5-a0e8-4088-9bdd-381516ddabb5.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 66912251,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 461,
+                "size_y": 872,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 259,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
+            },
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "890f7295-a050-4aa7-9356-6d53d2c3cf9f",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/train/raw/N_458_ds2x_raw.tiff"
+                ],
+                "total_size_in_bytes": 47850838,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
+            }
+        ]
+    },
+    "d3f2c0dd-eb35-4caa-8877-935805839c68": {
+        "object_creator": "bia_image_assignment",
+        "uuid": "d3f2c0dd-eb35-4caa-8877-935805839c68",
+        "version": 2,
+        "model": {
+            "type_name": "Image",
+            "version": 2
+        },
+        "additional_metadata": [
+            {
+                "provenance": "bia_image_assignment",
+                "name": "attributes_from_file_reference_f4185a4e-9a3f-41a5-94f0-4bed0740bdfd",
+                "value": {
+                    "attributes": {
+                        "Dataset split": "val",
+                        "File description": "Raw 3D stack in TIFF format"
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "file_pattern",
+                "value": {
+                    "file_pattern": "Ovules/val/raw/N_420_ds2x_raw.tiff"
+                }
+            },
+            {
+                "provenance": "bia_image_assignment",
+                "name": "uuid_unique_input",
+                "value": {
+                    "uuid_unique_input": "f4185a4e-9a3f-41a5-94f0-4bed0740bdfd"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "recommended_vizarr_representation",
+                "value": {
+                    "recommended_vizarr_representation": "c74ed27b-d8cb-482b-bcb8-8f6185178f20"
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_thumbnail_uri",
+                "value": {
+                    "256": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/d3f2c0dd-eb35-4caa-8877-935805839c68/thumbnail_256_256.png",
+                        "size": 256
+                    }
+                }
+            }
+        ],
+        "label": null,
+        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+        "creation_process_uuid": "ad293ed6-0730-4a23-b424-6f48c7433dad",
+        "original_file_reference_uuid": [
+            "f4185a4e-9a3f-41a5-94f0-4bed0740bdfd"
+        ],
+        "creation_process": {
+            "object_creator": "bia_image_assignment",
+            "uuid": "ad293ed6-0730-4a23-b424-6f48c7433dad",
+            "version": 0,
+            "model": {
+                "type_name": "CreationProcess",
+                "version": 3
+            },
+            "additional_metadata": [
+                {
+                    "provenance": "bia_image_assignment",
+                    "name": "uuid_unique_input",
+                    "value": {
+                        "uuid_unique_input": "d3f2c0dd-eb35-4caa-8877-935805839c68"
+                    }
+                }
+            ],
+            "subject_specimen_uuid": "95451527-d257-4980-839b-dc173ff9f350",
+            "image_acquisition_protocol_uuid": [
+                "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+            ],
+            "input_image_uuid": [],
+            "protocol_uuid": [],
+            "annotation_method_uuid": [],
+            "acquisition_process": [
+                {
+                    "default_open": true,
+                    "object_creator": "bia_ingest",
+                    "uuid": "e799855b-5132-4c1e-9f8c-3c4f63679e7d",
+                    "version": 0,
+                    "model": {
+                        "type_name": "ImageAcquisitionProtocol",
+                        "version": 3
+                    },
+                    "additional_metadata": [
+                        {
+                            "provenance": "bia_ingest",
+                            "name": "uuid_unique_input",
+                            "value": {
+                                "uuid_unique_input": "Image Acquisition-1"
+                            }
+                        }
+                    ],
+                    "title": "Confocal laser scanning microscopy",
+                    "protocol_description": "Images acquired by confocal laser scanning microscopy with a voxel size of 0.075 \u00d7 0.075 \u00d7 0.235 \u03bcm. Confocal laser scanning microscopy of ovules stained with SR2200 and TO-PRO-3 iodide was performed on an upright Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems) equipped with GaAsP (HyD) detectors and a 63\u00d7 glycerol objective (HC PL APO CS2 63\u00d7/1.30 GLYC, CORR CS2). Scan speed was at 400 Hz, line average between 2 and 4, and the digital zoom between 1 and 2. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack. In case of the absence of GaAsP (HyD) detectors laser power and gain have to be adjusted according to the instrument at hand (Additional file 4). SR2200 fluorescence was excited with a 405 nm diode laser (50 mW) with a laser power ranging from 0.1 to 1.5% intensity and detected at 420 to 500 nm with the gain of the HyD detector set to 20. To-PRO-3 iodide fluorescence excitation was done at 642 nm with the white-light laser with a laser power ranging from 2 to 3.5% and detected at 655 to 720 nm with the gain of the HyD detector set to 200. Direct Red 23 fluorescence was excited using laser line 561 nm (white-light laser) with the laser power set to 5 to 8% and detected at 580 to 680 nm with the HyD gain set to 100. Calcofluor White fluorescence was excited using the 405 nm diode laser (50 mW) with the laser power set to 1 to 3% and detected at 420 to 490 nm with the HyD gain set to 100. For z-stacks 12-bit images were captured at a slice interval of 0.24 \u03bcm with optimized system resolution of 0.063 \u03bcm \u00d7 0.063 \u03bcm \u00d7 0.240 \u03bcm as final pixel size according to the Nyquist criterion. Scan speed was set to 400 Hz, the pinhole was set to 0.6 Airy units, line average was between 2 and 4, and the digital zoom was set between 1 and 2, as required. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack.",
+                    "imaging_instrument_description": "Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems)",
+                    "fbbi_id": [
+                        "http://purl.obolibrary.org/obo/FBbi_00000251"
+                    ],
+                    "imaging_method_name": [
+                        "confocal microscopy"
+                    ]
+                }
+            ],
+            "subject": {
+                "object_creator": "bia_image_assignment",
+                "uuid": "95451527-d257-4980-839b-dc173ff9f350",
+                "version": 0,
+                "model": {
+                    "type_name": "Specimen",
+                    "version": 3
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "d3f2c0dd-eb35-4caa-8877-935805839c68"
+                        }
+                    }
+                ],
+                "imaging_preparation_protocol_uuid": [
+                    "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                ],
+                "sample_of_uuid": [
+                    "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                ],
+                "imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Specimen",
+                        "protocol_description": "The mPS-PI staining was done as described (Truernit E, Bauby H, Dubreucq B, Grandjean O, Runions J, Barth\u00e9l\u00e9my J, et al., 2008). Fixing and clearing of dissected ovules in ClearSee was done essentially as described (Kurihara D, Mizuta Y, Sato Y, Higashiyama T., 2015). DirectRed 23 and Calcofluor White staining in ClearSee was done as outlined in (Ursache R, Andersen TG, Marhav\u00fd P, Geldner N., 2018). Staining with SR2200 was performed as described in (Musielak TJ, Schenkel L, Kolb M, Henschen A, Bayer M., 2015) with minor modifications.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "sample_of": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8947078-f6b2-4086-b31f-2b762fc1c09e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Arabidopsis thaliana ovules",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "thale cress",
+                                "scientific_name": "Arabidopsis thaliana",
+                                "ncbi_id": "NCBI:txid3702"
+                            }
+                        ],
+                        "biological_entity_description": "ovules",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ]
+            },
+            "annotation_method": [],
+            "protocol": []
+        },
+        "representation": [
+            {
+                "object_creator": "bia_image_assignment",
+                "uuid": "a1ae82ce-543a-4994-8b01-3ddcc057084d",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_assignment",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "d3f2c0dd-eb35-4caa-8877-935805839c68"
+                        }
+                    }
+                ],
+                "image_format": ".tiff",
+                "file_uri": [
+                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD1392/Ovules/val/raw/N_420_ds2x_raw.tiff"
+                ],
+                "total_size_in_bytes": 184106508,
+                "voxel_physical_size_x": null,
+                "voxel_physical_size_y": null,
+                "voxel_physical_size_z": null,
+                "size_x": null,
+                "size_y": null,
+                "size_z": null,
+                "size_c": null,
+                "size_t": null,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "d3f2c0dd-eb35-4caa-8877-935805839c68"
+            },
+            {
+                "object_creator": "bia_image_conversion",
+                "uuid": "c74ed27b-d8cb-482b-bcb8-8f6185178f20",
+                "version": 0,
+                "model": {
+                    "type_name": "ImageRepresentation",
+                    "version": 4
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_image_conversion",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "{'image_representation_of_submitted_by_uploader': 'a1ae82ce-543a-4994-8b01-3ddcc057084d', 'conversion_function': {'conversion_function': 'bioformats2raw', 'version': '0.9.1'}, 'conversion_config': {}}"
+                        }
+                    }
+                ],
+                "image_format": ".ome.zarr",
+                "file_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/d3f2c0dd-eb35-4caa-8877-935805839c68/c74ed27b-d8cb-482b-bcb8-8f6185178f20.ome.zarr/0"
+                ],
+                "total_size_in_bytes": 299397399,
+                "voxel_physical_size_x": 1.0,
+                "voxel_physical_size_y": 1.0,
+                "voxel_physical_size_z": 1.0,
+                "size_x": 1332,
+                "size_y": 880,
+                "size_z": 1,
+                "size_c": 1,
+                "size_t": 397,
+                "image_viewer_setting": [],
+                "representation_of_uuid": "d3f2c0dd-eb35-4caa-8877-935805839c68"
+            }
+        ]
+    },
     "26f71558-abee-42c9-a718-723c737af8a5": {
         "object_creator": "bia_image_assignment",
         "uuid": "26f71558-abee-42c9-a718-723c737af8a5",
@@ -24191,7 +26479,7 @@
     "2c43429c-f314-4734-bf52-d5e0950f1450": {
         "object_creator": "bia_image_assignment",
         "uuid": "2c43429c-f314-4734-bf52-d5e0950f1450",
-        "version": 3,
+        "version": 4,
         "model": {
             "type_name": "Image",
             "version": 2
@@ -24234,6 +26522,16 @@
                     "256": {
                         "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/2c43429c-f314-4734-bf52-d5e0950f1450/thumbnail_256_256.png",
                         "size": 256
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_static_display_uri",
+                "value": {
+                    "slice": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/2c43429c-f314-4734-bf52-d5e0950f1450/static_display_512_512.png",
+                        "size": 512
                     }
                 }
             }
@@ -24457,7 +26755,7 @@
     "8b17a724-0c47-43bf-ab0c-321f0d7b6231": {
         "object_creator": "bia_image_assignment",
         "uuid": "8b17a724-0c47-43bf-ab0c-321f0d7b6231",
-        "version": 3,
+        "version": 4,
         "model": {
             "type_name": "Image",
             "version": 2
@@ -24501,6 +26799,16 @@
                     "256": {
                         "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/8b17a724-0c47-43bf-ab0c-321f0d7b6231/thumbnail_256_256.png",
                         "size": 256
+                    }
+                }
+            },
+            {
+                "provenance": "bia_image_conversion",
+                "name": "image_static_display_uri",
+                "value": {
+                    "slice": {
+                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/8b17a724-0c47-43bf-ab0c-321f0d7b6231/static_display_512_512.png",
+                        "size": 512
                     }
                 }
             }
@@ -32870,9 +35178,7 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [
-                "2a382f3a-aa6d-4ace-99fb-468335fa3809"
-            ],
+            "input_image_uuid": [],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "912bb3f3-831b-4037-8720-bab23e6d52f4"
@@ -33070,9 +35376,7 @@
             ],
             "subject_specimen_uuid": null,
             "image_acquisition_protocol_uuid": [],
-            "input_image_uuid": [
-                "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea"
-            ],
+            "input_image_uuid": [],
             "protocol_uuid": [],
             "annotation_method_uuid": [
                 "912bb3f3-831b-4037-8720-bab23e6d52f4"
@@ -39375,283 +41679,6 @@
                 "size_t": null,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "c88a001b-7a7a-4587-92a2-5e879ae0d234"
-            }
-        ]
-    },
-    "62c55886-5924-4e42-88b4-74b06df983c1": {
-        "object_creator": "bia_image_assignment",
-        "uuid": "62c55886-5924-4e42-88b4-74b06df983c1",
-        "version": 2,
-        "model": {
-            "type_name": "Image",
-            "version": 2
-        },
-        "additional_metadata": [
-            {
-                "provenance": "bia_image_assignment",
-                "name": "attributes_from_file_reference_cd6ad095-01b4-4983-a1e6-78cce760a334",
-                "value": {
-                    "attributes": {
-                        "Genotype/Line": "; ubiCAAX-GFP/+ ; neuPH-RFP/+",
-                        "Channel 1": "CAAX"
-                    }
-                }
-            },
-            {
-                "provenance": "bia_image_assignment",
-                "name": "file_pattern",
-                "value": {
-                    "file_pattern": "WD1_15-02_WT_confocalonly.ome.zarr.zip"
-                }
-            },
-            {
-                "provenance": "bia_image_assignment",
-                "name": "uuid_unique_input",
-                "value": {
-                    "uuid_unique_input": "cd6ad095-01b4-4983-a1e6-78cce760a334"
-                }
-            },
-            {
-                "provenance": "bia_image_assignment",
-                "name": "image_thumbnail_uri",
-                "value": {
-                    "256": {
-                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/813aa116-efaf-4c4e-9fa7-13df51882151.png",
-                        "size": 256
-                    }
-                }
-            },
-            {
-                "provenance": "bia_image_assignment",
-                "name": "image_static_display_uri",
-                "value": {
-                    "slice": {
-                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/adce9d07-5d9a-49b1-8da9-9af525b200f2.png",
-                        "size": 512
-                    }
-                }
-            },
-            {
-                "provenance": "bia_image_assignment",
-                "name": "recommended_vizarr_representation",
-                "value": {
-                    "recommended_vizarr_representation": "790b969b-c0b6-4817-ad8b-8d7acc3febbb"
-                }
-            }
-        ],
-        "label": null,
-        "submission_dataset_uuid": "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc",
-        "creation_process_uuid": "e17e8023-3308-4f93-adaa-c69e445ca4c2",
-        "original_file_reference_uuid": [
-            "cd6ad095-01b4-4983-a1e6-78cce760a334"
-        ],
-        "creation_process": {
-            "object_creator": "bia_image_assignment",
-            "uuid": "e17e8023-3308-4f93-adaa-c69e445ca4c2",
-            "version": 0,
-            "model": {
-                "type_name": "CreationProcess",
-                "version": 3
-            },
-            "additional_metadata": [
-                {
-                    "provenance": "bia_image_assignment",
-                    "name": "uuid_unique_input",
-                    "value": {
-                        "uuid_unique_input": "62c55886-5924-4e42-88b4-74b06df983c1"
-                    }
-                }
-            ],
-            "subject_specimen_uuid": "1c3be9f8-db44-40db-a1fc-96afe2088cb8",
-            "image_acquisition_protocol_uuid": [
-                "25914539-0f7d-4172-8124-4a409d7fd73d"
-            ],
-            "input_image_uuid": [],
-            "protocol_uuid": [],
-            "annotation_method_uuid": [],
-            "acquisition_process": [
-                {
-                    "default_open": true,
-                    "object_creator": "bia_ingest",
-                    "uuid": "25914539-0f7d-4172-8124-4a409d7fd73d",
-                    "version": 0,
-                    "model": {
-                        "type_name": "ImageAcquisitionProtocol",
-                        "version": 3
-                    },
-                    "additional_metadata": [
-                        {
-                            "provenance": "bia_ingest",
-                            "name": "uuid_unique_input",
-                            "value": {
-                                "uuid_unique_input": "Image Acquisition-1"
-                            }
-                        }
-                    ],
-                    "title": "Confocal imaging",
-                    "protocol_description": "Voxel size 0.0430x0.0430x0.5002 micron^3",
-                    "imaging_instrument_description": "Leica Microsystems Stellaris 8 DIVE (Deep In-Vivo Explorer)",
-                    "fbbi_id": [
-                        "http://purl.obolibrary.org/obo/FBbi_00000251"
-                    ],
-                    "imaging_method_name": [
-                        "Confocal microscopy"
-                    ]
-                }
-            ],
-            "subject": {
-                "object_creator": "bia_image_assignment",
-                "uuid": "1c3be9f8-db44-40db-a1fc-96afe2088cb8",
-                "version": 0,
-                "model": {
-                    "type_name": "Specimen",
-                    "version": 3
-                },
-                "additional_metadata": [
-                    {
-                        "provenance": "bia_image_assignment",
-                        "name": "uuid_unique_input",
-                        "value": {
-                            "uuid_unique_input": "62c55886-5924-4e42-88b4-74b06df983c1"
-                        }
-                    }
-                ],
-                "imaging_preparation_protocol_uuid": [
-                    "8b905657-fd98-4e60-b094-d2fa380c93ba"
-                ],
-                "sample_of_uuid": [
-                    "fc88ba58-26bc-469d-a619-2248f8b94b6f"
-                ],
-                "imaging_preparation_protocol": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "8b905657-fd98-4e60-b094-d2fa380c93ba",
-                        "version": 0,
-                        "model": {
-                            "type_name": "SpecimenImagingPreparationProtocol",
-                            "version": 3
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Specimen-1"
-                                }
-                            }
-                        ],
-                        "title": "Wing disk culture",
-                        "protocol_description": "Late third instar wing imaginal discs were cultured in Shields and Sang M3 media (Sigma) supplemented with 2% FBS (Sigma), 1% pen/strep (Gibco), 3ng/ml ecdysone (Sigma) and 2ng/ml insulin (Sigma). Wing discs were cultured in 35mm fluorodishes (WPI) under 12mm filters (Millicell), as described in https://doi.org/10.1038%2Fs41567-019-0618-1",
-                        "signal_channel_information": []
-                    }
-                ],
-                "sample_of": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "fc88ba58-26bc-469d-a619-2248f8b94b6f",
-                        "version": 0,
-                        "model": {
-                            "type_name": "BioSample",
-                            "version": 4
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Biosample-1"
-                                }
-                            }
-                        ],
-                        "title": "Wing disk",
-                        "organism_classification": [
-                            {
-                                "additional_metadata": [],
-                                "common_name": "fruit fly",
-                                "scientific_name": "Drosophila melanogaster",
-                                "ncbi_id": "NCBI:txid7227"
-                            }
-                        ],
-                        "biological_entity_description": "Drosophila wing disk, http://purl.obolibrary.org/obo/UBERON_6001778",
-                        "experimental_variable_description": [],
-                        "extrinsic_variable_description": [],
-                        "intrinsic_variable_description": [],
-                        "growth_protocol_uuid": null,
-                        "growth_protocol": null
-                    }
-                ]
-            },
-            "annotation_method": [],
-            "protocol": []
-        },
-        "representation": [
-            {
-                "object_creator": "bia_image_assignment",
-                "uuid": "73751de7-6208-4528-8b56-c514cf05b615",
-                "version": 0,
-                "model": {
-                    "type_name": "ImageRepresentation",
-                    "version": 4
-                },
-                "additional_metadata": [
-                    {
-                        "provenance": "bia_image_assignment",
-                        "name": "uuid_unique_input",
-                        "value": {
-                            "uuid_unique_input": "62c55886-5924-4e42-88b4-74b06df983c1"
-                        }
-                    }
-                ],
-                "image_format": ".ome.zarr.zip",
-                "file_uri": [
-                    "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/WD1_15-02_WT_confocalonly.ome.zarr.zip"
-                ],
-                "total_size_in_bytes": 7933589,
-                "voxel_physical_size_x": null,
-                "voxel_physical_size_y": null,
-                "voxel_physical_size_z": null,
-                "size_x": null,
-                "size_y": null,
-                "size_z": null,
-                "size_c": null,
-                "size_t": null,
-                "image_viewer_setting": [],
-                "representation_of_uuid": "62c55886-5924-4e42-88b4-74b06df983c1"
-            },
-            {
-                "object_creator": "bia_image_conversion",
-                "uuid": "790b969b-c0b6-4817-ad8b-8d7acc3febbb",
-                "version": 0,
-                "model": {
-                    "type_name": "ImageRepresentation",
-                    "version": 4
-                },
-                "additional_metadata": [
-                    {
-                        "provenance": "bia_image_conversion",
-                        "name": "uuid_unique_input",
-                        "value": {
-                            "uuid_unique_input": "73751de7-6208-4528-8b56-c514cf05b615 {'conversion_function': 'map_image_representation_to_2025_04_model'}"
-                        }
-                    }
-                ],
-                "image_format": ".ome.zarr",
-                "file_uri": [
-                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/aa63dc77-b95c-4515-9d4b-6e1e90107903.ome.zarr/0"
-                ],
-                "total_size_in_bytes": 10844246,
-                "voxel_physical_size_x": 4.298806423500096e-08,
-                "voxel_physical_size_y": 4.298806423500096e-08,
-                "voxel_physical_size_z": 5.002026153846154e-07,
-                "size_x": 512,
-                "size_y": 512,
-                "size_z": 36,
-                "size_c": 1,
-                "size_t": 1,
-                "image_viewer_setting": [],
-                "representation_of_uuid": "62c55886-5924-4e42-88b4-74b06df983c1"
             }
         ]
     }

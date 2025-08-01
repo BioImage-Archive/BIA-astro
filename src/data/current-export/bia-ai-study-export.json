@@ -2462,7 +2462,7 @@
                 },
                 "object_creator": "bia_ingest",
                 "uuid": "5d2b4244-99a4-4b06-9a18-846c618f34fa",
-                "version": 0,
+                "version": 2,
                 "model": {
                     "type_name": "Dataset",
                     "version": 2
@@ -2522,7 +2522,9 @@
                 "description": "Embryos with epithelial wounds and accompanying segmentation masks of cells around the wound.",
                 "analysis_method": [],
                 "correlation_method": [],
-                "example_image_uri": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/8b17a724-0c47-43bf-ab0c-321f0d7b6231/static_display_512_512.png"
+                ],
                 "submitted_in_study_uuid": "40c20d53-6f99-4e07-ad21-ed3a6964d255",
                 "acquisition_process": [
                     {
@@ -2620,7 +2622,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "2c43429c-f314-4734-bf52-d5e0950f1450",
-                        "version": 3,
+                        "version": 4,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -2665,6 +2667,16 @@
                                         "size": 256
                                     }
                                 }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "slice": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/2c43429c-f314-4734-bf52-d5e0950f1450/static_display_512_512.png",
+                                        "size": 512
+                                    }
+                                }
                             }
                         ],
                         "label": null,
@@ -2677,7 +2689,7 @@
                     {
                         "object_creator": "bia_image_assignment",
                         "uuid": "8b17a724-0c47-43bf-ab0c-321f0d7b6231",
-                        "version": 3,
+                        "version": 4,
                         "model": {
                             "type_name": "Image",
                             "version": 2
@@ -2721,6 +2733,16 @@
                                     "256": {
                                         "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/8b17a724-0c47-43bf-ab0c-321f0d7b6231/thumbnail_256_256.png",
                                         "size": 256
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "slice": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1410/8b17a724-0c47-43bf-ab0c-321f0d7b6231/static_display_512_512.png",
+                                        "size": 512
                                     }
                                 }
                             }
@@ -3895,7 +3917,7 @@
     "S-BIAD1392": {
         "object_creator": "bia_ingest",
         "uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
-        "version": 3,
+        "version": 5,
         "model": {
             "type_name": "Study",
             "version": 3
@@ -4127,7 +4149,854 @@
             }
         ],
         "funding_statement": "AK was funded by Baden-Wuerttemberg Stiftung. This work was supported by the DFG FOR2581 to the Kreshuk (P3) and Schneitz (P7) labs.",
-        "dataset": []
+        "dataset": [
+            {
+                "image_count": 5,
+                "file_reference_count": 31,
+                "file_reference_size_bytes": 494423898,
+                "file_type_counts": {
+                    "file": 31
+                },
+                "object_creator": "bia_ingest",
+                "uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+                "version": 1,
+                "model": {
+                    "type_name": "Dataset",
+                    "version": 2
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "annotation_method_uuid",
+                        "value": {
+                            "annotation_method_uuid": [
+                                "7a7f864e-2648-413e-8b0d-cd6f3fa55e78"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "Annotations-1"
+                        }
+                    }
+                ],
+                "title": "Annotations",
+                "description": null,
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/static_display_512_512.png"
+                ],
+                "submitted_in_study_uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+                "acquisition_process": [],
+                "specimen_imaging_preparation_protocol": [],
+                "biological_entity": [],
+                "annotation_process": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "7a7f864e-2648-413e-8b0d-cd6f3fa55e78",
+                        "version": 0,
+                        "model": {
+                            "type_name": "AnnotationMethod",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Annotations-1"
+                                }
+                            }
+                        ],
+                        "title": "Annotations",
+                        "protocol_description": "We imported z-stacks of ovules of different stages into MorphographX and processed the stacks using watershed-based segmentation followed by surface mesh formation. We found that the ITK watershed segmentation algorithm integrated in MorphographX was working well. However, hand correction by a domain expert was still required for optimal results.",
+                        "annotation_criteria": null,
+                        "annotation_coverage": "All images in the dataset have been annotated",
+                        "transformation_description": null,
+                        "spatial_information": null,
+                        "method_type": [
+                            "segmentation_mask"
+                        ],
+                        "annotation_source_indicator": null
+                    }
+                ],
+                "other_creation_process": [],
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_8a7c27b6-91b1-42ad-831a-26dcdd38f73f",
+                                "value": {
+                                    "attributes": {
+                                        "Annotation type": "Segmentation masks",
+                                        "Source image": "Ovules/train/raw/N_536_ds2x_raw.tiff"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/label/N_536_ds2x_label.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "8a7c27b6-91b1-42ad-831a-26dcdd38f73f"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "62fa2b14-1734-48be-9d9b-b78773f3e35a"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/45aa9cdd-547e-4c2e-acdf-b4a736f32af6/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+                        "creation_process_uuid": "e1909df4-175f-4c21-812f-f3546f2975c2",
+                        "original_file_reference_uuid": [
+                            "8a7c27b6-91b1-42ad-831a-26dcdd38f73f"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_a3b72323-4450-4477-90ea-2c86550c7124",
+                                "value": {
+                                    "attributes": {
+                                        "Annotation type": "Segmentation masks",
+                                        "Source image": "Ovules/val/raw/N_420_ds2x_raw.tiff"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/val/label/N_420_ds2x_label.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "a3b72323-4450-4477-90ea-2c86550c7124"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "fcef7826-5d31-4fa3-866d-7fb82d0f3c4c"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+                        "creation_process_uuid": "e223ce15-34c2-454e-a1dd-ef0bbf95ffd8",
+                        "original_file_reference_uuid": [
+                            "a3b72323-4450-4477-90ea-2c86550c7124"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c",
+                        "version": 3,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_6b54f643-3512-4ab8-8d95-a710cf21f173",
+                                "value": {
+                                    "attributes": {
+                                        "Annotation type": "Segmentation masks",
+                                        "Source image": "Ovules/train/raw/N_416_ds2x_raw.tiff"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/label/N_416_ds2x_label.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "6b54f643-3512-4ab8-8d95-a710cf21f173"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "8f6fe7cd-7184-4c6c-8b47-21bcebfa39ec"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "slice": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/c1d4ee83-55b6-41ea-90b9-ba2b5253121c/static_display_512_512.png",
+                                        "size": 512
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+                        "creation_process_uuid": "d98c2989-cd65-4115-934c-17814a15fd46",
+                        "original_file_reference_uuid": [
+                            "6b54f643-3512-4ab8-8d95-a710cf21f173"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_b12a561b-a636-42c7-8493-c0c8f6f926e1",
+                                "value": {
+                                    "attributes": {
+                                        "Annotation type": "Segmentation masks",
+                                        "Source image": "Ovules/train/raw/N_458_ds2x_raw.tiff"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/label/N_458_ds2x_label.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "b12a561b-a636-42c7-8493-c0c8f6f926e1"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "c23a467d-fb66-4836-992d-ae9bd2fd830d"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/d9070ef4-25ee-4a3d-9162-6e47f95e2a56/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+                        "creation_process_uuid": "24034e49-1775-4bf6-b3d0-8c9b1c7893c9",
+                        "original_file_reference_uuid": [
+                            "b12a561b-a636-42c7-8493-c0c8f6f926e1"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_89e7595a-8ec0-4eea-b870-a3cf989a767f",
+                                "value": {
+                                    "attributes": {
+                                        "Annotation type": "Segmentation masks",
+                                        "Source image": "Ovules/train/raw/N_404_ds2x_raw.tiff"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/label/N_404_ds2x_label.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "89e7595a-8ec0-4eea-b870-a3cf989a767f"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "db202a1f-5dfa-4411-aa16-398af7f99d46"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/dfb77b45-1361-4f23-a12f-3c3a9ed042a1/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "0bc1b3ca-49db-4b74-85fa-531cb6ddb53f",
+                        "creation_process_uuid": "697d7be4-6ef5-43b5-b798-81dc789be021",
+                        "original_file_reference_uuid": [
+                            "89e7595a-8ec0-4eea-b870-a3cf989a767f"
+                        ]
+                    }
+                ]
+            },
+            {
+                "image_count": 5,
+                "file_reference_count": 31,
+                "file_reference_size_bytes": 3986309282,
+                "file_type_counts": {
+                    "file": 31
+                },
+                "object_creator": "bia_ingest",
+                "uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+                "version": 1,
+                "model": {
+                    "type_name": "Dataset",
+                    "version": 2
+                },
+                "additional_metadata": [
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "associations",
+                        "value": {
+                            "associations": [
+                                {
+                                    "image_analysis": null,
+                                    "image_correlation": null,
+                                    "biosample": "Arabidopsis thaliana ovules",
+                                    "image_acquisition": "Confocal laser scanning microscopy",
+                                    "specimen": "Specimen"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "image_acquisition_protocol_uuid",
+                        "value": {
+                            "image_acquisition_protocol_uuid": [
+                                "e799855b-5132-4c1e-9f8c-3c4f63679e7d"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "specimen_imaging_preparation_protocol_uuid",
+                        "value": {
+                            "specimen_imaging_preparation_protocol_uuid": [
+                                "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "bio_sample_uuid",
+                        "value": {
+                            "bio_sample_uuid": [
+                                "c8947078-f6b2-4086-b31f-2b762fc1c09e"
+                            ]
+                        }
+                    },
+                    {
+                        "provenance": "bia_ingest",
+                        "name": "uuid_unique_input",
+                        "value": {
+                            "uuid_unique_input": "Study Component-1"
+                        }
+                    }
+                ],
+                "title": "3D images of the Arabidopsis thaliana ovules",
+                "description": "z-stacks of fixed ovules of Arabidopsis thaliana at different developmental stages",
+                "analysis_method": [],
+                "correlation_method": [],
+                "example_image_uri": [
+                    "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/static_display_512_512.png"
+                ],
+                "submitted_in_study_uuid": "cf3c8465-0829-4340-aa6a-a1d967bf869c",
+                "acquisition_process": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "e799855b-5132-4c1e-9f8c-3c4f63679e7d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "ImageAcquisitionProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Image Acquisition-1"
+                                }
+                            }
+                        ],
+                        "title": "Confocal laser scanning microscopy",
+                        "protocol_description": "Images acquired by confocal laser scanning microscopy with a voxel size of 0.075 \u00d7 0.075 \u00d7 0.235 \u03bcm. Confocal laser scanning microscopy of ovules stained with SR2200 and TO-PRO-3 iodide was performed on an upright Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems) equipped with GaAsP (HyD) detectors and a 63\u00d7 glycerol objective (HC PL APO CS2 63\u00d7/1.30 GLYC, CORR CS2). Scan speed was at 400 Hz, line average between 2 and 4, and the digital zoom between 1 and 2. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack. In case of the absence of GaAsP (HyD) detectors laser power and gain have to be adjusted according to the instrument at hand (Additional file 4). SR2200 fluorescence was excited with a 405 nm diode laser (50 mW) with a laser power ranging from 0.1 to 1.5% intensity and detected at 420 to 500 nm with the gain of the HyD detector set to 20. To-PRO-3 iodide fluorescence excitation was done at 642 nm with the white-light laser with a laser power ranging from 2 to 3.5% and detected at 655 to 720 nm with the gain of the HyD detector set to 200. Direct Red 23 fluorescence was excited using laser line 561 nm (white-light laser) with the laser power set to 5 to 8% and detected at 580 to 680 nm with the HyD gain set to 100. Calcofluor White fluorescence was excited using the 405 nm diode laser (50 mW) with the laser power set to 1 to 3% and detected at 420 to 490 nm with the HyD gain set to 100. For z-stacks 12-bit images were captured at a slice interval of 0.24 \u03bcm with optimized system resolution of 0.063 \u03bcm \u00d7 0.063 \u03bcm \u00d7 0.240 \u03bcm as final pixel size according to the Nyquist criterion. Scan speed was set to 400 Hz, the pinhole was set to 0.6 Airy units, line average was between 2 and 4, and the digital zoom was set between 1 and 2, as required. Laser power or gain was adjusted for z compensation to obtain an optimal z-stack.",
+                        "imaging_instrument_description": "Leica TCS SP8 X WLL2 HyVolution 2 (Leica Microsystems)",
+                        "fbbi_id": [
+                            "http://purl.obolibrary.org/obo/FBbi_00000251"
+                        ],
+                        "imaging_method_name": [
+                            "confocal microscopy"
+                        ]
+                    }
+                ],
+                "specimen_imaging_preparation_protocol": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "9b0d867e-9ffc-42cf-8eb3-4784d0fbbc9d",
+                        "version": 0,
+                        "model": {
+                            "type_name": "SpecimenImagingPreparationProtocol",
+                            "version": 3
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Specimen-1"
+                                }
+                            }
+                        ],
+                        "title": "Specimen",
+                        "protocol_description": "The mPS-PI staining was done as described (Truernit E, Bauby H, Dubreucq B, Grandjean O, Runions J, Barth\u00e9l\u00e9my J, et al., 2008). Fixing and clearing of dissected ovules in ClearSee was done essentially as described (Kurihara D, Mizuta Y, Sato Y, Higashiyama T., 2015). DirectRed 23 and Calcofluor White staining in ClearSee was done as outlined in (Ursache R, Andersen TG, Marhav\u00fd P, Geldner N., 2018). Staining with SR2200 was performed as described in (Musielak TJ, Schenkel L, Kolb M, Henschen A, Bayer M., 2015) with minor modifications.",
+                        "signal_channel_information": []
+                    }
+                ],
+                "biological_entity": [
+                    {
+                        "default_open": true,
+                        "object_creator": "bia_ingest",
+                        "uuid": "c8947078-f6b2-4086-b31f-2b762fc1c09e",
+                        "version": 0,
+                        "model": {
+                            "type_name": "BioSample",
+                            "version": 4
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_ingest",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "Biosample-1"
+                                }
+                            }
+                        ],
+                        "title": "Arabidopsis thaliana ovules",
+                        "organism_classification": [
+                            {
+                                "additional_metadata": [],
+                                "common_name": "thale cress",
+                                "scientific_name": "Arabidopsis thaliana",
+                                "ncbi_id": "NCBI:txid3702"
+                            }
+                        ],
+                        "biological_entity_description": "ovules",
+                        "experimental_variable_description": [],
+                        "extrinsic_variable_description": [],
+                        "intrinsic_variable_description": [],
+                        "growth_protocol_uuid": null,
+                        "growth_protocol": null
+                    }
+                ],
+                "annotation_process": [],
+                "other_creation_process": [],
+                "image": [
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_8ff78f06-ae42-4b92-8c6a-53113ead82d9",
+                                "value": {
+                                    "attributes": {
+                                        "Dataset split": "train",
+                                        "File description": "Raw 3D stack in TIFF format"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/raw/N_404_ds2x_raw.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "8ff78f06-ae42-4b92-8c6a-53113ead82d9"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "2f13e325-83dc-4ba2-b6b2-4179be13a276"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/10bdc5bc-8499-4aff-bf82-5ede63f9fed4/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+                        "creation_process_uuid": "6b6db15a-e270-4df6-8e84-27897e790778",
+                        "original_file_reference_uuid": [
+                            "8ff78f06-ae42-4b92-8c6a-53113ead82d9"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "605de3ff-0ba5-4902-b83a-20d4ed15ae72",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_5d0d0834-cabf-489e-9558-b5abf65cd12c",
+                                "value": {
+                                    "attributes": {
+                                        "Dataset split": "train",
+                                        "File description": "Raw 3D stack in TIFF format"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/raw/N_536_ds2x_raw.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "5d0d0834-cabf-489e-9558-b5abf65cd12c"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "b94acc25-f061-4d5c-ad0e-b063ab93c8a6"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/605de3ff-0ba5-4902-b83a-20d4ed15ae72/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+                        "creation_process_uuid": "671d7ccd-ac3f-4d08-af49-9d6fbdb4980e",
+                        "original_file_reference_uuid": [
+                            "5d0d0834-cabf-489e-9558-b5abf65cd12c"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "712f8669-7681-4dfc-8d9e-cdc68c4f8045",
+                        "version": 3,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_accfee68-1ff6-4eba-91f5-5ef95b4f941f",
+                                "value": {
+                                    "attributes": {
+                                        "Dataset split": "train",
+                                        "File description": "Raw 3D stack in TIFF format"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/raw/N_416_ds2x_raw.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "accfee68-1ff6-4eba-91f5-5ef95b4f941f"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "108bb69d-2e52-4382-8100-e96173db24ee"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_static_display_uri",
+                                "value": {
+                                    "slice": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/static_display_512_512.png",
+                                        "size": 512
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/712f8669-7681-4dfc-8d9e-cdc68c4f8045/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+                        "creation_process_uuid": "91fd6db8-926f-4950-83ad-adc3436c1663",
+                        "original_file_reference_uuid": [
+                            "accfee68-1ff6-4eba-91f5-5ef95b4f941f"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_424e6752-f794-4def-93ac-289e883a89dc",
+                                "value": {
+                                    "attributes": {
+                                        "Dataset split": "train",
+                                        "File description": "Raw 3D stack in TIFF format"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/train/raw/N_458_ds2x_raw.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "424e6752-f794-4def-93ac-289e883a89dc"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "18939ea5-a0e8-4088-9bdd-381516ddabb5"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/ac8adeb7-c794-41ff-b72c-821e0b4afc9f/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+                        "creation_process_uuid": "0c12d2bb-ba13-4707-9997-457eec181dd3",
+                        "original_file_reference_uuid": [
+                            "424e6752-f794-4def-93ac-289e883a89dc"
+                        ]
+                    },
+                    {
+                        "object_creator": "bia_image_assignment",
+                        "uuid": "d3f2c0dd-eb35-4caa-8877-935805839c68",
+                        "version": 2,
+                        "model": {
+                            "type_name": "Image",
+                            "version": 2
+                        },
+                        "additional_metadata": [
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "attributes_from_file_reference_f4185a4e-9a3f-41a5-94f0-4bed0740bdfd",
+                                "value": {
+                                    "attributes": {
+                                        "Dataset split": "val",
+                                        "File description": "Raw 3D stack in TIFF format"
+                                    }
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "file_pattern",
+                                "value": {
+                                    "file_pattern": "Ovules/val/raw/N_420_ds2x_raw.tiff"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_assignment",
+                                "name": "uuid_unique_input",
+                                "value": {
+                                    "uuid_unique_input": "f4185a4e-9a3f-41a5-94f0-4bed0740bdfd"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "recommended_vizarr_representation",
+                                "value": {
+                                    "recommended_vizarr_representation": "c74ed27b-d8cb-482b-bcb8-8f6185178f20"
+                                }
+                            },
+                            {
+                                "provenance": "bia_image_conversion",
+                                "name": "image_thumbnail_uri",
+                                "value": {
+                                    "256": {
+                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD1392/d3f2c0dd-eb35-4caa-8877-935805839c68/thumbnail_256_256.png",
+                                        "size": 256
+                                    }
+                                }
+                            }
+                        ],
+                        "label": null,
+                        "submission_dataset_uuid": "b61a4819-938e-468b-9f4e-c65d991a8a99",
+                        "creation_process_uuid": "ad293ed6-0730-4a23-b424-6f48c7433dad",
+                        "original_file_reference_uuid": [
+                            "f4185a4e-9a3f-41a5-94f0-4bed0740bdfd"
+                        ]
+                    }
+                ]
+            }
+        ]
     },
     "S-BIAD1367": {
         "object_creator": "bia_ingest",
@@ -9279,643 +10148,6 @@
                         ]
                     }
                 ]
-            }
-        ]
-    },
-    "S-BIAD843": {
-        "object_creator": "bia_ingest",
-        "uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-        "version": 2,
-        "model": {
-            "type_name": "Study",
-            "version": 3
-        },
-        "additional_metadata": [
-            {
-                "provenance": "bia_ingest",
-                "name": "Extras from biostudies.Submission.attributes",
-                "value": {
-                    "Keyword": [
-                        "3D",
-                        "Drosophila",
-                        "CellShape",
-                        "Packing",
-                        "WingDisc"
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_ingest",
-                "name": "biostudies json/pagetab entry",
-                "value": {
-                    "json": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.json",
-                    "pagetab": "https://www.ebi.ac.uk/biostudies/files/S-BIAD843/S-BIAD843.tsv"
-                }
-            },
-            {
-                "provenance": "bia_curation",
-                "name": "one_summary",
-                "value": {
-                    "one_summary": [
-                        "Confocal and multi-photon 3D fluorecence images of Drosophila wing discs with instance segmentation masks of individual cells."
-                    ]
-                }
-            },
-            {
-                "provenance": "bia_curation",
-                "name": "ai_tags",
-                "value": {
-                    "ai_tags": [
-                        [
-                            "cell boundary",
-                            "epithelium",
-                            "3D",
-                            "instance segmentation",
-                            "Drosophila",
-                            "fluorescence microscopy"
-                        ]
-                    ]
-                }
-            }
-        ],
-        "accession_id": "S-BIAD843",
-        "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
-        "author": [
-            {
-                "rorid": null,
-                "address": null,
-                "website": null,
-                "orcid": "0000-0003-0565-4356",
-                "display_name": "Giulia Paci",
-                "affiliation": [
-                    {
-                        "rorid": null,
-                        "address": "London, UK",
-                        "website": null,
-                        "display_name": "LMCB, University College London"
-                    }
-                ],
-                "contact_email": "g.paci@ucl.ac.uk",
-                "role": [
-                    "data acquisition",
-                    "data curator"
-                ]
-            },
-            {
-                "rorid": null,
-                "address": null,
-                "website": null,
-                "orcid": null,
-                "display_name": "Ines Fernandez Mosquera",
-                "affiliation": [
-                    {
-                        "rorid": null,
-                        "address": "London, UK",
-                        "website": null,
-                        "display_name": "LMCB, University College London"
-                    }
-                ],
-                "contact_email": null,
-                "role": [
-                    "data acquisition",
-                    "data annotator",
-                    "data curator"
-                ]
-            },
-            {
-                "rorid": null,
-                "address": null,
-                "website": null,
-                "orcid": "0000-0001-5402-7637",
-                "display_name": "Pablo Vicente Munuera",
-                "affiliation": [
-                    {
-                        "rorid": null,
-                        "address": "London, UK",
-                        "website": null,
-                        "display_name": "LMCB, University College London"
-                    }
-                ],
-                "contact_email": "p.munuera@ucl.ac.uk",
-                "role": [
-                    "submitter"
-                ]
-            },
-            {
-                "rorid": null,
-                "address": null,
-                "website": null,
-                "orcid": "0000-0002-8722-4992",
-                "display_name": "Yanlan Mao",
-                "affiliation": [
-                    {
-                        "rorid": null,
-                        "address": "London, UK",
-                        "website": null,
-                        "display_name": "MRC Laboratory for Molecular Cell Biology, University College London"
-                    }
-                ],
-                "contact_email": "y.mao@ucl.ac.uk",
-                "role": [
-                    "conceptualisation",
-                    "corresponding author"
-                ]
-            }
-        ],
-        "title": "3D cell shape of Drosophila Wing Disc",
-        "release_date": "2023-08-14",
-        "description": "Individual 3D cell shapes of Drosophila Wing Disc",
-        "keyword": [],
-        "acknowledgement": "",
-        "see_also": [],
-        "related_publication": [],
-        "grant": [],
-        "funding_statement": "",
-        "dataset": [
-            {
-                "image_count": 1,
-                "file_reference_count": 2,
-                "file_reference_size_bytes": 16703775,
-                "file_type_counts": {
-                    "file": 2
-                },
-                "object_creator": "bia_ingest",
-                "uuid": "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc",
-                "version": 2,
-                "model": {
-                    "type_name": "Dataset",
-                    "version": 2
-                },
-                "additional_metadata": [
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "associations",
-                        "value": {
-                            "associations": [
-                                {
-                                    "image_analysis": null,
-                                    "image_correlation": null,
-                                    "biosample": "Wing disk",
-                                    "image_acquisition": "Confocal imaging",
-                                    "specimen": "Wing disk culture"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "image_acquisition_protocol_uuid",
-                        "value": {
-                            "image_acquisition_protocol_uuid": [
-                                "25914539-0f7d-4172-8124-4a409d7fd73d"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "specimen_imaging_preparation_protocol_uuid",
-                        "value": {
-                            "specimen_imaging_preparation_protocol_uuid": [
-                                "8b905657-fd98-4e60-b094-d2fa380c93ba"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "bio_sample_uuid",
-                        "value": {
-                            "bio_sample_uuid": [
-                                "fc88ba58-26bc-469d-a619-2248f8b94b6f"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "uuid_unique_input",
-                        "value": {
-                            "uuid_unique_input": "Study Component-1"
-                        }
-                    }
-                ],
-                "title": "Confocal fluorescence images",
-                "description": "Confocal fluorescence images of Drosophila wing disks expressing a cell outline marker",
-                "analysis_method": [],
-                "correlation_method": [],
-                "example_image_uri": [],
-                "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-                "acquisition_process": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "25914539-0f7d-4172-8124-4a409d7fd73d",
-                        "version": 0,
-                        "model": {
-                            "type_name": "ImageAcquisitionProtocol",
-                            "version": 3
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Image Acquisition-1"
-                                }
-                            }
-                        ],
-                        "title": "Confocal imaging",
-                        "protocol_description": "Voxel size 0.0430x0.0430x0.5002 micron^3",
-                        "imaging_instrument_description": "Leica Microsystems Stellaris 8 DIVE (Deep In-Vivo Explorer)",
-                        "fbbi_id": [
-                            "http://purl.obolibrary.org/obo/FBbi_00000251"
-                        ],
-                        "imaging_method_name": [
-                            "Confocal microscopy"
-                        ]
-                    }
-                ],
-                "specimen_imaging_preparation_protocol": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "8b905657-fd98-4e60-b094-d2fa380c93ba",
-                        "version": 0,
-                        "model": {
-                            "type_name": "SpecimenImagingPreparationProtocol",
-                            "version": 3
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Specimen-1"
-                                }
-                            }
-                        ],
-                        "title": "Wing disk culture",
-                        "protocol_description": "Late third instar wing imaginal discs were cultured in Shields and Sang M3 media (Sigma) supplemented with 2% FBS (Sigma), 1% pen/strep (Gibco), 3ng/ml ecdysone (Sigma) and 2ng/ml insulin (Sigma). Wing discs were cultured in 35mm fluorodishes (WPI) under 12mm filters (Millicell), as described in https://doi.org/10.1038%2Fs41567-019-0618-1",
-                        "signal_channel_information": []
-                    }
-                ],
-                "biological_entity": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "fc88ba58-26bc-469d-a619-2248f8b94b6f",
-                        "version": 0,
-                        "model": {
-                            "type_name": "BioSample",
-                            "version": 4
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Biosample-1"
-                                }
-                            }
-                        ],
-                        "title": "Wing disk",
-                        "organism_classification": [
-                            {
-                                "additional_metadata": [],
-                                "common_name": "fruit fly",
-                                "scientific_name": "Drosophila melanogaster",
-                                "ncbi_id": "NCBI:txid7227"
-                            }
-                        ],
-                        "biological_entity_description": "Drosophila wing disk, http://purl.obolibrary.org/obo/UBERON_6001778",
-                        "experimental_variable_description": [],
-                        "extrinsic_variable_description": [],
-                        "intrinsic_variable_description": [],
-                        "growth_protocol_uuid": null,
-                        "growth_protocol": null
-                    }
-                ],
-                "annotation_process": [],
-                "other_creation_process": [],
-                "image": [
-                    {
-                        "object_creator": "bia_image_assignment",
-                        "uuid": "62c55886-5924-4e42-88b4-74b06df983c1",
-                        "version": 2,
-                        "model": {
-                            "type_name": "Image",
-                            "version": 2
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "attributes_from_file_reference_cd6ad095-01b4-4983-a1e6-78cce760a334",
-                                "value": {
-                                    "attributes": {
-                                        "Genotype/Line": "; ubiCAAX-GFP/+ ; neuPH-RFP/+",
-                                        "Channel 1": "CAAX"
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "file_pattern",
-                                "value": {
-                                    "file_pattern": "WD1_15-02_WT_confocalonly.ome.zarr.zip"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "cd6ad095-01b4-4983-a1e6-78cce760a334"
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "image_thumbnail_uri",
-                                "value": {
-                                    "256": {
-                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/813aa116-efaf-4c4e-9fa7-13df51882151.png",
-                                        "size": 256
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "image_static_display_uri",
-                                "value": {
-                                    "slice": {
-                                        "uri": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD843/6e74b24c-d675-4da1-8651-c64be4bfbe49/adce9d07-5d9a-49b1-8da9-9af525b200f2.png",
-                                        "size": 512
-                                    }
-                                }
-                            },
-                            {
-                                "provenance": "bia_image_assignment",
-                                "name": "recommended_vizarr_representation",
-                                "value": {
-                                    "recommended_vizarr_representation": "790b969b-c0b6-4817-ad8b-8d7acc3febbb"
-                                }
-                            }
-                        ],
-                        "label": null,
-                        "submission_dataset_uuid": "1ebe4a12-b51c-403c-8c27-ea52f09dc2dc",
-                        "creation_process_uuid": "e17e8023-3308-4f93-adaa-c69e445ca4c2",
-                        "original_file_reference_uuid": [
-                            "cd6ad095-01b4-4983-a1e6-78cce760a334"
-                        ]
-                    }
-                ]
-            },
-            {
-                "image_count": 0,
-                "file_reference_count": 2,
-                "file_reference_size_bytes": 37789571,
-                "file_type_counts": {
-                    "file": 2
-                },
-                "object_creator": "bia_ingest",
-                "uuid": "574f62b8-4657-4344-aa60-16daa5c07719",
-                "version": 0,
-                "model": {
-                    "type_name": "Dataset",
-                    "version": 2
-                },
-                "additional_metadata": [
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "associations",
-                        "value": {
-                            "associations": [
-                                {
-                                    "image_analysis": null,
-                                    "image_correlation": null,
-                                    "biosample": "Wing disk",
-                                    "image_acquisition": "Multi-photon imaging",
-                                    "specimen": "Wing disk culture"
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "image_acquisition_protocol_uuid",
-                        "value": {
-                            "image_acquisition_protocol_uuid": [
-                                "d234afcc-4e06-4a24-a4f4-3c507e69650b"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "specimen_imaging_preparation_protocol_uuid",
-                        "value": {
-                            "specimen_imaging_preparation_protocol_uuid": [
-                                "8b905657-fd98-4e60-b094-d2fa380c93ba"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "bio_sample_uuid",
-                        "value": {
-                            "bio_sample_uuid": [
-                                "fc88ba58-26bc-469d-a619-2248f8b94b6f"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "uuid_unique_input",
-                        "value": {
-                            "uuid_unique_input": "Study Component-2"
-                        }
-                    }
-                ],
-                "title": "Multi-photon fluorescence images",
-                "description": "Multi-photon fluorescence images of Drosophila wing disks expressing a cell outline marker",
-                "analysis_method": [],
-                "correlation_method": [],
-                "example_image_uri": [],
-                "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-                "acquisition_process": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "d234afcc-4e06-4a24-a4f4-3c507e69650b",
-                        "version": 0,
-                        "model": {
-                            "type_name": "ImageAcquisitionProtocol",
-                            "version": 3
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Image Acquisition-2"
-                                }
-                            }
-                        ],
-                        "title": "Multi-photon imaging",
-                        "protocol_description": "Voxel size 0.0430x0.0430x0.2985 micron^3",
-                        "imaging_instrument_description": "Leica Microsystems Stellaris 8 DIVE (Deep In-Vivo Explorer)",
-                        "fbbi_id": [
-                            "http://purl.obolibrary.org/obo/FBbi_00000254"
-                        ],
-                        "imaging_method_name": [
-                            "Multi-photon microscopy"
-                        ]
-                    }
-                ],
-                "specimen_imaging_preparation_protocol": [
-                    {
-                        "default_open": false,
-                        "object_creator": "bia_ingest",
-                        "uuid": "8b905657-fd98-4e60-b094-d2fa380c93ba",
-                        "version": 0,
-                        "model": {
-                            "type_name": "SpecimenImagingPreparationProtocol",
-                            "version": 3
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Specimen-1"
-                                }
-                            }
-                        ],
-                        "title": "Wing disk culture",
-                        "protocol_description": "Late third instar wing imaginal discs were cultured in Shields and Sang M3 media (Sigma) supplemented with 2% FBS (Sigma), 1% pen/strep (Gibco), 3ng/ml ecdysone (Sigma) and 2ng/ml insulin (Sigma). Wing discs were cultured in 35mm fluorodishes (WPI) under 12mm filters (Millicell), as described in https://doi.org/10.1038%2Fs41567-019-0618-1",
-                        "signal_channel_information": []
-                    }
-                ],
-                "biological_entity": [
-                    {
-                        "default_open": false,
-                        "object_creator": "bia_ingest",
-                        "uuid": "fc88ba58-26bc-469d-a619-2248f8b94b6f",
-                        "version": 0,
-                        "model": {
-                            "type_name": "BioSample",
-                            "version": 4
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Biosample-1"
-                                }
-                            }
-                        ],
-                        "title": "Wing disk",
-                        "organism_classification": [
-                            {
-                                "additional_metadata": [],
-                                "common_name": "fruit fly",
-                                "scientific_name": "Drosophila melanogaster",
-                                "ncbi_id": "NCBI:txid7227"
-                            }
-                        ],
-                        "biological_entity_description": "Drosophila wing disk, http://purl.obolibrary.org/obo/UBERON_6001778",
-                        "experimental_variable_description": [],
-                        "extrinsic_variable_description": [],
-                        "intrinsic_variable_description": [],
-                        "growth_protocol_uuid": null,
-                        "growth_protocol": null
-                    }
-                ],
-                "annotation_process": [],
-                "other_creation_process": [],
-                "image": []
-            },
-            {
-                "image_count": 0,
-                "file_reference_count": 4,
-                "file_reference_size_bytes": 6703115,
-                "file_type_counts": {
-                    "file": 4
-                },
-                "object_creator": "bia_ingest",
-                "uuid": "d6497b69-79a3-48bc-9212-bd8350a0bb13",
-                "version": 1,
-                "model": {
-                    "type_name": "Dataset",
-                    "version": 2
-                },
-                "additional_metadata": [
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "annotation_method_uuid",
-                        "value": {
-                            "annotation_method_uuid": [
-                                "8cfa9852-26e4-4164-833a-87a9162284e1"
-                            ]
-                        }
-                    },
-                    {
-                        "provenance": "bia_ingest",
-                        "name": "uuid_unique_input",
-                        "value": {
-                            "uuid_unique_input": "Annotations-1"
-                        }
-                    },
-                    {
-                        "provenance": "bia_curation",
-                        "name": "annotation_type",
-                        "value": {
-                            "annotation_type": [
-                                [
-                                    "segmentation_mask"
-                                ]
-                            ]
-                        }
-                    }
-                ],
-                "title": "Segmentation masks",
-                "description": null,
-                "analysis_method": [],
-                "correlation_method": [],
-                "example_image_uri": [],
-                "submitted_in_study_uuid": "619c866f-5ff8-4de1-a6b2-6bd679c7b268",
-                "acquisition_process": [],
-                "specimen_imaging_preparation_protocol": [],
-                "biological_entity": [],
-                "annotation_process": [
-                    {
-                        "default_open": true,
-                        "object_creator": "bia_ingest",
-                        "uuid": "8cfa9852-26e4-4164-833a-87a9162284e1",
-                        "version": 0,
-                        "model": {
-                            "type_name": "AnnotationMethod",
-                            "version": 4
-                        },
-                        "additional_metadata": [
-                            {
-                                "provenance": "bia_ingest",
-                                "name": "uuid_unique_input",
-                                "value": {
-                                    "uuid_unique_input": "Annotations-1"
-                                }
-                            }
-                        ],
-                        "title": "Segmentation masks",
-                        "protocol_description": "Cellpose (a generalist algorithm for cell segmentation) was used to predict the annotations. Then, using napari,  images were corrected.",
-                        "annotation_criteria": "Individual cells were labelled in 3D",
-                        "annotation_coverage": "100% of available data was annotated",
-                        "transformation_description": null,
-                        "spatial_information": null,
-                        "method_type": [
-                            "other"
-                        ],
-                        "annotation_source_indicator": null
-                    }
-                ],
-                "other_creation_process": [],
-                "image": []
             }
         ]
     },
