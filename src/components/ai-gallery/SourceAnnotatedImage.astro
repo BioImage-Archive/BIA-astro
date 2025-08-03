@@ -1,5 +1,7 @@
 ---
-import ImageMetadata from "./ImageMetadata.astro";
+import ImageInfo from "./ImageInfo.astro";
+import neuroglancerURL from "../../data/current-export/bia-ai-neuroglancer.json";
+import { getMetadataValue } from "../SharedJSFunctions.js";
 const { annotatedImages, sourceImage, vizarrURL} = Astro.props;
 
 function getAttributes(image) {
@@ -11,19 +13,43 @@ function getAttributes(image) {
 const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
 const sourceImgS3Url = sourceImageRep?.file_uri[0].replace(vizarrURL,'') || "";
+const hasNeuroGlancerURL = neuroglancerURL?.[sourceImage.uuid] || "";
 let annotatedImage = annotatedImages[0];
 const annotatedImageAttributes = getAttributes(annotatedImage);
 const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
 const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
 ---
 <section class="vf-content">
-  {annotatedImages.length > 0 ? (
+  {hasNeuroGlancerURL.length > 0? (
+    <div class="vf-grid">
+      <div class="vf-grid__col--span-2"><iframe src={hasNeuroGlancerURL} style="height: 600px; width: 100%;border: none;"></iframe></div>
+    </div>
+    <div class="vf-grid">
+      <div style="min-width: 48%;">
+      <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
+      </div>
+      <div style="min-width: 48%;">
+        {annotatedImages.filter((img)=>!img.additional_metadata?.some(md => 
+            md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+              md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"))
+              .map((img, index)=> {
+                  const imageRep = img.representation.find((r) => r.image_format === ".ome.zarr")
+                  return (
+                    <ImageInfo text={`Annotation ${index+1}`} url={imageRep?.file_uri?.[0].replace(vizarrURL,'') || ""} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
+                  )
+        })}
+      
+      </div>
+    </div>
+  )
+  : 
+  annotatedImages.length > 0 ? (
     <>
       <div class="vf-grid" style="display: flex; gap: 1rem;">
         <div style="min-width: 48%"><h3><span>Source Image</span></h3><div>
             <iframe src={vizarrURL+sourceImgS3Url} style="border: none;flex:1;height: 500px;width:100%;min-width:48%"></iframe>
           </div>
-          <ImageMetadata text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
+          <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
         </div>
         <div style="min-width: 48%">
           <h3><span>Annotated Image <span id="AnnotatedImageLength">1</span> of {annotatedImages.length}</span></h3>
@@ -46,7 +72,7 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
           </div>
           <div style="margin-top: 0.3em;">
           {annotatedImages.length > 0 && (
-            <ImageMetadata text="Annotation" url={annotatedImgS3Url} imageRep={annotatedImageRep} imageAtrributes={annotatedImageAttributes} btnID="CopyAnnotationButton"/>
+            <ImageInfo text="Annotation" url={annotatedImgS3Url} imageRep={annotatedImageRep} imageAtrributes={annotatedImageAttributes} btnID="CopyAnnotationButton"/>
           )}
           </div>
         </div>   
@@ -58,5 +84,6 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
       <iframe src={vizarrURL+sourceImgS3Url} style="height: 500px; width: 100%;border: none;"></iframe>
     </>
   )}
+  
 </section>
 <script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
