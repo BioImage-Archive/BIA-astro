@@ -16,7 +16,7 @@ const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK"
     <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url} id={itkViewer}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
     </a>
-    <button onclick=`handleCopyButton(${btnID})` class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={vizarrURL+url}>Copy {text} OME-Zarr URI</button><br/>
+    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={vizarrURL+url}>Copy {text} OME-Zarr URI</button><br/>
     <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} text={text} />
     </div>
 </div>
@@ -72,14 +72,18 @@ const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK"
 </script>
 
 <script type="module">
-  function handleCopyButton(id){
-    document.getElementById(id).onclick = async (e) => {
-        const target = e.target;
-        const url = target.dataset.url;
-        const originalText = target.innerText
+  window.addEventListener("DOMContentLoaded", () => {
+    const copyButtons = document.querySelectorAll("button[data-url]");
+    copyButtons.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const url = btn.dataset.url;
+        const originalText = btn.innerText;
         await navigator.clipboard.writeText(url);
-        target.innerText = "URI Copied";
-        setTimeout(() => target.innerText = originalText, 700);
-    };
-  }
+        btn.innerText = "URI Copied";
+        setTimeout(() => {
+          btn.innerText = originalText;
+        }, 700);
+      });
+    });
+  });
 </script>

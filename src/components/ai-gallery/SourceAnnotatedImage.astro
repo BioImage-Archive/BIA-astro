@@ -1,7 +1,6 @@
 ---
 import ImageInfo from "./ImageInfo.astro";
 import neuroglancerURL from "../../data/current-export/bia-ai-neuroglancer.json";
-import { getMetadataValue } from "../SharedJSFunctions.js";
 const { annotatedImages, sourceImage, vizarrURL} = Astro.props;
 
 function getAttributes(image) {
@@ -14,76 +13,29 @@ const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
 const sourceImgS3Url = sourceImageRep?.file_uri[0].replace(vizarrURL,'') || "";
 const hasNeuroGlancerURL = neuroglancerURL?.[sourceImage.uuid] || "";
-let annotatedImage = annotatedImages[0];
-const annotatedImageAttributes = getAttributes(annotatedImage);
-const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
-const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
 ---
+<a href={hasNeuroGlancerURL}><button class="vf-button vf-button--primary vf-button--sm">Open overlay in Neuroglancer viewer</button></a>
 <section class="vf-content">
-  {hasNeuroGlancerURL.length > 0? (
-    <div class="vf-grid">
-      <div class="vf-grid__col--span-2"><iframe src={hasNeuroGlancerURL} style="height: 600px; width: 100%;border: none;"></iframe></div>
+  <div class="vf-grid">
+    <div class="vf-grid__col--span-2"><iframe src={hasNeuroGlancerURL} style="height: 600px; width: 100%;border: none;"></iframe></div>
+  </div>
+
+  </div>
+  <div class="vf-grid">
+    <div style="min-width: 48%;">
+    <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
     </div>
-    <div class="vf-grid">
-      <div style="min-width: 48%;">
-      <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
-      </div>
-      <div style="min-width: 48%;">
-        {annotatedImages.filter((img)=>!img.additional_metadata?.some(md => 
-            md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
-              md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"))
-              .map((img, index)=> {
-                  const imageRep = img.representation.find((r) => r.image_format === ".ome.zarr")
-                  return (
-                    <ImageInfo text={`Annotation ${index+1}`} url={imageRep?.file_uri?.[0].replace(vizarrURL,'') || ""} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
-                  )
-        })}
-      
-      </div>
-    </div>
-  )
-  : 
-  annotatedImages.length > 0 ? (
-    <>
-      <div class="vf-grid" style="display: flex; gap: 1rem;">
-        <div style="min-width: 48%"><h3><span>Source Image</span></h3><div>
-            <iframe src={vizarrURL+sourceImgS3Url} style="border: none;flex:1;height: 500px;width:100%;min-width:48%"></iframe>
-          </div>
-          <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
-        </div>
-        <div style="min-width: 48%">
-          <h3><span>Annotated Image <span id="AnnotatedImageLength">1</span> of {annotatedImages.length}</span></h3>
-          <div style="flex: 1; position: relative; overflow: hidden;">
-            <span class="imageslider"><button onclick="slide(-1)" id="image-slider" class="slider-left-button"></button></span>
-            <div id="slider">
-              {annotatedImages.map((img) => {
-                const rep = img.representation.find((r) => r.image_format === ".ome.zarr");
-                if (!rep || !rep.file_uri?.[0]) return null;
+    <div style="min-width: 48%;">
+      {annotatedImages.filter((img)=>!img.additional_metadata?.some(md => 
+          md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+            md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"))
+            .map((img, index)=> {
+                const imageRep = img.representation.find((r) => r.image_format === ".ome.zarr")
                 return (
-                  <iframe
-                    src={vizarrURL+rep.file_uri[0]}
-                    style="height: 500px; border: none;min-width:100%"
-                    id={img.uuid}
-                  ></iframe>
-                );
-              })}
-            </div>
-            <span class="imageslider"><button onclick="slide(1)" class="slider-right-button"></button></span>
-          </div>
-          <div style="margin-top: 0.3em;">
-          {annotatedImages.length > 0 && (
-            <ImageInfo text="Annotation" url={annotatedImgS3Url} imageRep={annotatedImageRep} imageAtrributes={annotatedImageAttributes} btnID="CopyAnnotationButton"/>
-          )}
-          </div>
-        </div>   
-      </div>
-    </>
-  ) : (
-    <>
-      <h3><span>Source Image</span></h3>
-      <iframe src={vizarrURL+sourceImgS3Url} style="height: 500px; width: 100%;border: none;"></iframe>
-    </>
-  )}
-  
+                  <ImageInfo text={`Annotation ${index+1}`} url={imageRep?.file_uri?.[0].replace(vizarrURL,'') || ""} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
+                )
+      })}
+    </div>
+  </div>
 </section>
 <script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
