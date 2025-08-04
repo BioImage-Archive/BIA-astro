@@ -1,5 +1,5 @@
 ---
-const { imageRep, imageAtrributes, text} = Astro.props;
+const { imageRep, imageAtrributes} = Astro.props;
 
 function getMicronSize(rep) {
   if (!rep?.voxel_physical_size_x || !rep?.voxel_physical_size_y) return ["0", "0"];
@@ -10,20 +10,14 @@ function getMicronSize(rep) {
 }
 
 const [tissue_x, tissue_y] = getMicronSize(imageRep);
-
-const divID = text == "Annotation"? "annotated-metadata": "source-metadata";
-const sizeSpan = text == "Annotation"? "annotated-size": "source-size";
-const pxielSpan = text == "Annotation"? "annotated-pixels": "source-pixels";
-const channelSpan = text == "Annotation"? "annotated-channels": "source-channels";
-const timestepSpan = text == "Annotation"? "annotated-timesteps": "source-timesteps";
 ---
 <h3>Image metadata</h3>
-    <b>Image size: </b> <span id={sizeSpan}>{tissue_x}μm x {tissue_y}μm</span><br>
-    <span id={pxielSpan}>{imageRep?.size_x} x {imageRep?.size_y} pixels</span><br />
-    <span id={channelSpan}>{imageRep?.size_c} channels</span><br />
-    <span id={timestepSpan}>{imageRep?.size_t} timesteps</span>
+    <b>Image size: </b> <span>{tissue_x}μm x {tissue_y}μm</span><br>
+    <span>{imageRep?.size_x} x {imageRep?.size_y} pixels</span><br />
+    <span>{imageRep?.size_c} channels</span><br />
+    <span>{imageRep?.size_t} timesteps</span>
     <br /> <br />
-    <div id={divID}>
+    <div>
     {
       imageAtrributes && Object.keys(imageAtrributes).length === 0 ? <span></span> : (
         <>

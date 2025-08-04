@@ -17,60 +17,9 @@ const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK"
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
     </a>
     <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={vizarrURL+url}>Copy {text} OME-Zarr URI</button><br/>
-    <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} text={text} />
+    <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} />
     </div>
 </div>
-<script type="module">
-    const numberOfAnnotatedImages = JSON.parse(document.getElementById("images-length").textContent);
-    if(numberOfAnnotatedImages <= 1){
-      document.getElementsByClassName("imageslider")[0].style.display = "none";
-      document.getElementsByClassName("imageslider")[1].style.display = "none";
-    }else{
-      let currentSlide = 0;
-      const slider = document.getElementById("slider");
-      const slides = slider.children;
-      const updateMetadata = (uuid) => {
-          const image = JSON.parse(document.getElementById("images-json").textContent).find(ai => ai.uuid === uuid)
-          const rep = image.representation.find((r) => r.image_format === ".ome.zarr");
-          const attributes = image.additional_metadata.find(meta =>
-              meta.name.startsWith("attributes_from_file_reference")
-          )?.value?.attributes || {};
-          const micronX = (1e6 * rep.voxel_physical_size_x ** 2).toPrecision(2);
-          const micronY = (1e6 * rep.voxel_physical_size_y ** 2).toPrecision(2);
-          document.getElementById("annotated-size").innerText = `${micronX}μm x ${micronY}μm`;
-          document.getElementById("annotated-pixels").innerText = `${rep.size_x} x ${rep.size_y} pixels`;
-          document.getElementById("annotated-channels").innerText = `${rep.size_c} channels`;
-          document.getElementById("annotated-timesteps").innerText = `${rep.size_t} timesteps`;
-          const metaContainer = document.getElementById("annotated-metadata");
-          metaContainer.innerHTML = "<h3>Additional metadata</h3>";
-          Object.entries(attributes).forEach(([key, value]) => {
-              const line = document.createElement("div");
-              line.innerHTML = `<b>${key}:</b> ${value}<br />`;
-              metaContainer.appendChild(line);
-          });
-          const s3url = rep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=', '');
-          const copyBtn = document.getElementById("CopyAnnotationButton");
-          copyBtn.dataset.url = 'https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source='+s3url;
-          document.getElementById("OpenAnnotationInVizarr").href = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+rep.file_uri[0];
-          document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
-          const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
-          const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
-          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
-          document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria
-      };
-      window.slide = function(direction) {
-          const total = slides.length;
-          currentSlide = (currentSlide + direction + total) % total;
-          slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-          const currentUUID = slides[currentSlide].id;
-          document.getElementById("AnnotatedImageLength").innerText = currentSlide+1;
-          updateMetadata(currentUUID);
-      };
-      updateMetadata(slides[0].id);
-    }
-    
-</script>
-
 <script type="module">
   window.addEventListener("DOMContentLoaded", () => {
     const copyButtons = document.querySelectorAll("button[data-url]");
