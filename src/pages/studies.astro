@@ -11,9 +11,6 @@ import SearchResults from "../components/search/Search.astro"
 import { getTaxons, getImagingMethodType } from "../components/SharedJSFunctions.js";
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 
-const isProd = import.meta.env.PROD;
-const searchAPIurl = isProd ? PUBLIC_SEARCH_API : PUBLIC_SEARCH_API; // Placeholder, as there is only dev instance
-
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query');
 
@@ -24,7 +21,7 @@ const releaseYear = url.searchParams.get('facet.release_year');
 let results = [];
 let pageTitle = "Browse Studies"
 if (query) {
-  const res = await fetch(`${searchAPIurl}/search/fts?query=${encodeURIComponent(query)}`);
+  const res = await fetch(`${PUBLIC_SEARCH_API}/search/fts?query=${encodeURIComponent(query)}`);
   if (res.ok) {
     const data = await res.json();
     results = data.hits || [];
