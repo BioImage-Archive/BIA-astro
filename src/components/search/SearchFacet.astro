@@ -1,0 +1,115 @@
+---
+const { title, id, filter, selectedValue, facetType, counts } = Astro.props;
+const filterArray = Array.from(filter as string[]);
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the vf is better than not using it
+---
+<div class="facet-section" id={`facet-section-${id}`}>
+  <legend 
+    class="facet-legend | vf-form__helper" 
+    onclick={`toggleFacet('${id}')`}
+    tabindex="0" 
+    role="button"
+  >
+    <span class="facet-arrow" aria-hidden="true"></span>
+    {title}
+  </legend>
+  <div class="facet-option" id={`facet-option-${id}`}>
+    {filterArray.map((val, index) => (
+      <div class="facet-option">
+        <div class="facet-label-group">
+        <input
+          type={facetType}
+          name={id}
+          value={val}
+          id={`${id}-${index}`}
+          class={inputClass}
+          checked={selectedValue? Object.values(selectedValue).includes(val) : false}
+          onchange={`document.getElementById('facets')?.submit()`}
+        />
+        <label class="vf-form__label" for={`${id}-${index}`}>{capitalizeFirstLetter(val)}</label>
+        </div>
+        <div class="facet-count">{Object.values(counts).find(obj => obj.key === val)?.doc_count || 0}</div>
+      </div>
+      
+    ))}
+  </div>
+</div>
+<script is:browser>
+  function toggleFacet(id) {
+    const section = document.getElementById(`facet-section-${id}`);
+    const options = document.getElementById(`facet-option-${id}`);
+    if (section && options) {
+      const isCollapsed = section.classList.toggle('collapsed');
+      options.style.display = isCollapsed ? 'none' : 'block';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.facet-section').forEach((section) => {
+      const secClass = isMobile()? "collapsed": "open";
+      const styleDisplay = isMobile()? "none": "block";
+      section.classList.add(secClass);
+      const options = section.querySelector('.facet-option');
+      if (options) options.style.display = styleDisplay;
+    });
+  });
+
+  function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
+  }
+
+</script>
+<style>
+  .facet-section {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .facet-legend {
+    cursor: pointer;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  .facet-arrow::before {
+    content: ">";
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .facet-section:not(.collapsed) .facet-arrow::before {
+    content: ">";
+    transform: rotate(90deg);
+  }
+
+  .facet-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.25rem 0;
+  padding: 0 0rem;
+}
+
+.facet-label-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.facet-count {
+  font-size: 0.9rem;
+  color: #666;
+  min-width: 2rem;
+  text-align: right;
+}
+</style>

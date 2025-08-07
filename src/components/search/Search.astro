@@ -1,74 +1,125 @@
 ---
 import StudyCard from '../../components/cards/BrowseStudyCard.astro';
-import SearchFilter from '../../components/search/SearchFilter.astro';
+import SearchFacet from './SearchFacet.astro';
+import SearchSelectedFacet from './SearchSelectedFacet.astro';
 import  "../../styles/toggle.css"
 import "../../styles/browse_controls.css"
 import "../../styles/filter_cards.css"
-import { getTaxons, getImagingMethodType } from "../../components/SharedJSFunctions.js";
 
-const { query, results, organism, imaging_method, release_year } = Astro.props;
+const { query, results, facetData, organism, imagingMethod, releaseYear } = Astro.props;
 
-const organismList = new Set(results.map( (item) => getTaxons(item._source, "stripped")).flat().sort())
-const imagingMethodList = new Set(results.map( (item) => getImagingMethodType(item._source)).flat().sort())
-const releaseYearList = new Set(results.map( (item) => item._source.release_date.split("-")[0] ).flat().sort())
-const facets = {"facet.organism": organismList, "facet.imaging_method": imagingMethodList,"facet.release_year": releaseYearList}
-const selectedValues = {"facet.organism": organism, "facet.imaging_method": imaging_method,"facet.release_year": release_year}
-const titles = {"facet.organism": "Organism", "facet.imaging_method": "Imaging Method","facet.release_year": "Release Year"}
+export function generateParamString(url, query, organism, imagingMethod, releaseYear, urlType){
+  url += `?query=${encodeURIComponent(query)}`;
+  url = addSelectedFacetToSearchURL(organism, urlType === "search"? "organism" : "facets.scientific_name", url);
+  url = addSelectedFacetToSearchURL(imagingMethod, urlType === "search"? "imaging_method" :"facets.imaging_method", url); 
+  url = addSelectedFacetToSearchURL(releaseYear, urlType === "search"? "year" : "facets.release_date", url);
+  return url
+}
+
+export function addSelectedFacetToSearchURL(selectedList, facet, url){
+    return selectedList && selectedList.length > 0 ? url+"&"+new URLSearchParams(selectedList.map(select => {return `&${facet}=${encodeURIComponent(select)}`}).join("&")).toString(): url;
+}
+
+const studiesURL = "/bioimage-archive/studies"
+
+const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
+  let selectedValue, title, facetType;
+  const listOfValues = Object.values(data?.buckets).map( (val) => val?.key_as_string || val?.key).sort()
+  switch (facet) {
+    case "scientific_name":
+      selectedValue = organism;
+      title = "Organism";
+      facetType = "checkbox";
+      break;
+    case "imaging_method":
+      selectedValue = imagingMethod;
+      title = "Imaging Method";
+      facetType = "checkbox";
+      break;
+    case "release_date":
+      selectedValue = releaseYear;
+      title = "Release Year";
+      facetType = "checkbox";
+      break;
+    default:
+      return acc; // Skip unknown facets
+  }
+
+  acc[`facets.${facet}`] = {
+    listOfValues,
+    selectedValue,
+    title,
+    facetType,
+    counts: data?.buckets || []
+  };
+
+  return acc;
+}, {});
+
 ---
-<section class="vf-content">
-  <br>
-  <div class="vf-grid vf-grid__col-2" >
-    <div><h2>Search results for <a href=`/bioimage-archive/studies?query=${query}`><strong>{query}</strong></a></h3></div>
-    <div>
-        <div class="vf-form" style="display: flex;">
-          <label for="sort" class="vf-form__label" style="flex: 1; margin:auto;margin-left: 40%">Sort by:</label>
-          <select name="sort" id="sort" class="vf-form__select" style="flex: 3">
-            <option value="relevance">Relevance</option>
-            <option value="az">A-Z (accession ID)</option>
-            <option value="za">Z-A (accession ID)</option>
-          </select>
-        </div>
+<section class="vf-content | vf-grid vf-grid__col-5">
+  <div>
+    <br />
+    <div style="display: flex;">        
+      <div style="padding-top: 0.4em">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16">
+        <rect width="16" height="16" fill="none" />
+        <path fill="currentColor" d="M6 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2 4a3 3 0 0 1 3-3h6a3 3 0 1 1 0 6H5a3 3 
+          0 0 1-3-3m3-2a2 2 0 1 0 0 4h6a2 2 0 1 0 0-4zm6 10a1 1 0 1 0 0-2a1 1 0 0 0 0 2m-9-1a3 3 0 0 1 3-3h6a3 
+          3 0 1 1 0 6H5a3 3 0 0 1-3-3m3-2a2 2 0 1 0 0 4h6a2 2 0 1 0 0-4z" />
+        </svg> 
+      </div>
+      <div><h3> Filter by</h3></div>
     </div>
-  </div>
-</section>
-<section class="vf-content">
-  <div class="vf-grid vf-grid__col-5">
-    <div><h3 style="float: right">Filter by: </h3></div>
-    <div class="vf-grid__col--span-3">
-      <form id="filters" method="GET" action="/bioimage-archive/studies" class="vf-grid vf-grid__col-3">
-        {Object.keys(facets).map((facet) => <>
-        <SearchFilter title={titles[facet]} id={facet} filter={facets[facet]} selectedValue={selectedValues[facet]} />
+    <div>
+      <form id="facets" method="GET" action="/bioimage-archive/studies" class="vf-form">
+        {Object.entries(facets).map(([id, facet], i) => <>
+        <SearchFacet title={facet['title']} id={id} filter={facet["listOfValues"]} selectedValue={facet["selectedValue"]} facetType={facet["facetType"]} counts={facet["counts"]} />
         </>
         )}
         <input type="hidden" name="query" value={query}  />
       </form>
     </div>
-    <div><button class="vf-button vf-button--primary vf-button--sm" onclick={`location.href='/bioimage-archive/studies?query=${query}'`}>Reset filters</button></div>
   </div>
-</section>
-<section class="vf-content">
-  <div>
+  <div class="vf-grid__col--span-4" style="min-width:50%">
     {query && (
       <>
-        <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
-        <div class="vf-card-container__inner">
-        {results.length === 0 ? (
-          <p>No results found.</p>
-        ) : (
-          results.map((item) => (
-            <StudyCard
-            study={item._source} studyPageRoot="study"
-            />
-          ))
-        )}
-        </div></section>
+        <section class="vf-content">
+          <div class="vf-grid" style="display: flex;">
+            <div><h2>Search results for <a href={`/bioimage-archive/studies?query=${query}`}><strong>{query}</strong></a></h2></div>
+            <div class="vf-form" style="display: flex" id="sortBy">
+            <label for="sort" class="vf-form__label" style="flex: 1; margin:auto;margin-left: 30%">Sort by:</label>
+            <select name="sort" id="sort" class="vf-form__select" style="flex: 3">
+              <option value="relevance">Relevance</option>
+              <option value="az">A-Z (accession ID)</option>
+              <option value="za">Z-A (accession ID)</option>
+            </select>
+            </div>
+          </div>
+          <div>{results.length} results</div>
+          <div id="selected-facets" style="margin-top: 1rem; margin-bottom: 1rem;">
+            <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
+            <SearchSelectedFacet selectedList={imagingMethod} url={studiesURL} text={"Imaging Method"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
+            <SearchSelectedFacet selectedList={releaseYear} url={studiesURL} text={"Release Year"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/>           
+          </div>
+          <div class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+            <div class="vf-card-container__inner">
+            {results.length === 0 ? (
+              <p>No results found.</p>
+            ) : (
+              results.map((item) => (
+                <StudyCard
+                study={item._source} studyPageRoot="study"
+                />
+              ))
+            )}
+            </div>
+          </div>
+        </section>
       </>
     )}
   </div>
 </section>
-
-
-
 <script type="module">
   const sortSelect = document.getElementById('sort');
   const container = document.querySelector('.vf-card-container__inner');
