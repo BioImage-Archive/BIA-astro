@@ -23,14 +23,14 @@ if (query){
   searchURL = generateParamString(`${PUBLIC_SEARCH_API}/search/fts`, query, organism, imagingMethod, releaseYear, "search");
 }
 
-let results = [];
+let hits = [];
 let facetData = [];
 let pageTitle = "Browse Studies"
 if (query) {
   const res = await fetch(searchURL);
   if (res.ok) {
     const data = await res.json();
-    results = data.hits.hits || [];
+    hits = data.hits || [];
     facetData = data.facets || [];
     pageTitle = "Search Studies"
   }
@@ -56,7 +56,7 @@ const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
-  {query ? (<body><SearchResults query={query} facetData={facetData} results={results} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/></body>)
+  {query ? (<body><SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/></body>)
     : (
       <body>
       <BrowseStudyHeading

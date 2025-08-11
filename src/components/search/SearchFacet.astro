@@ -1,4 +1,6 @@
 ---
+import { type Facet } from "./Search.astro"
+
 const { title, id, filter, selectedValue, facetType, counts } = Astro.props;
 const filterArray = Array.from(filter as string[]);
 
@@ -16,7 +18,7 @@ const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the
     role="button"
   >
     <span class="facet-arrow" aria-hidden="true"></span>
-    {title}
+    {capitalizeFirstLetter(title)}
   </legend>
   <div class="facet-option" id={`facet-option-${id}`}>
     {filterArray.map((val, index) => (
@@ -33,13 +35,14 @@ const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the
         />
         <label class="vf-form__label" for={`${id}-${index}`}>{capitalizeFirstLetter(val)}</label>
         </div>
-        <div class="facet-count">{Object.values(counts).find(obj => obj.key === val)?.doc_count || 0}</div>
+        <div class="facet-count">{Object.values(counts as Facet).find(obj => obj?.key_as_string === val || obj?.key === val)?.doc_count || 0}</div>
       </div>
       
     ))}
   </div>
 </div>
-<script is:browser>
+
+<script is:inline>
   function toggleFacet(id) {
     const section = document.getElementById(`facet-section-${id}`);
     const options = document.getElementById(`facet-option-${id}`);

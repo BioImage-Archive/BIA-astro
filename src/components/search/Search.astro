@@ -6,7 +6,36 @@ import  "../../styles/toggle.css"
 import "../../styles/browse_controls.css"
 import "../../styles/filter_cards.css"
 
-const { query, results, facetData, organism, imagingMethod, releaseYear } = Astro.props;
+interface SearchHits<T = unknown> {
+  total: {
+    value: number;
+    relation: string; 
+  };
+  max_score: number | null;
+  hits: T[]; 
+}
+
+export interface Facet {
+  key: string;
+  key_as_string?: string;
+  doc_count: number;
+}
+
+interface FacetData {
+  buckets: Facet[];
+  doc_count_error_upper_bound: number;
+  sum_other_doc_count: number;
+}
+
+const { query, hits, facetData, organism, imagingMethod, releaseYear } =
+  Astro.props as {
+    query: string;
+    hits: SearchHits<Record<string, unknown>>;
+    facetData: FacetData;
+    organism: string;
+    imagingMethod: string;
+    releaseYear: string;
+  };
 
 export function generateParamString(url, query, organism, imagingMethod, releaseYear, urlType){
   url += `?query=${encodeURIComponent(query)}`;
@@ -20,11 +49,15 @@ export function addSelectedFacetToSearchURL(selectedList, facet, url){
     return selectedList && selectedList.length > 0 ? url+"&"+new URLSearchParams(selectedList.map(select => {return `&${facet}=${encodeURIComponent(select)}`}).join("&")).toString(): url;
 }
 
+const totalResults = hits.total.value
+const results = hits.hits
 const studiesURL = "/bioimage-archive/studies"
 
 const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
   let selectedValue, title, facetType;
-  const listOfValues = Object.values(data?.buckets).map( (val) => val?.key_as_string || val?.key).sort()
+  const listOfValues = Object.values(data?.buckets as Facet)
+    .map( (val) => val?.key_as_string || val?.key)
+    .sort((a, b) => a.toString().toLowerCase().localeCompare(b.toString().toLowerCase()))
   switch (facet) {
     case "scientific_name":
       selectedValue = organism;
@@ -96,7 +129,7 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
             </select>
             </div>
           </div>
-          <div>{results.length} results</div>
+          <div>1-{results.length} of {totalResults} results</div>
           <div id="selected-facets" style="margin-top: 1rem; margin-bottom: 1rem;">
             <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
             <SearchSelectedFacet selectedList={imagingMethod} url={studiesURL} text={"Imaging Method"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 

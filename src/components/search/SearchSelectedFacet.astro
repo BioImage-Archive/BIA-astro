@@ -2,8 +2,6 @@
 const { selectedList, url, text, query, organism, imagingMethod, releaseYear } = Astro.props;
 import { generateParamString } from "./Search.astro"
 import { capitalizeFirstLetter } from "./SearchFacet.astro"
-
-
 ---
 {selectedList && selectedList.length > 0  && (
     <>
@@ -16,8 +14,6 @@ import { capitalizeFirstLetter } from "./SearchFacet.astro"
     </>
     )   
 }
-
-
 <style>
   .facet-remove-btn {
   display: inline-block;
@@ -39,4 +35,3 @@ import { capitalizeFirstLetter } from "./SearchFacet.astro"
   height: 50%;
 }
 </style>
-
