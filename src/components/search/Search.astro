@@ -172,19 +172,18 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
     return [match[1], parseInt(match[2], 10)];
   }
 
-  function renderPage(page) {
-    container.innerHTML = '';
-    const start = (page - 1) * pageSize;
-    const end = Math.min(start + pageSize, totalResults);
-    const pageCards = sortedCards.slice(start, end);
-    pageCards.forEach(card => container.appendChild(card));
-    
-    renderPaginationControls();
+  function renderPage(page) {    
     if (resultsCountSpan) {
       if (sortedCards.length === 0) {
         resultsCountSpan.textContent = `0 of ${totalResults} results`;
       } else {
+        container.innerHTML = '';
+        const start = (page - 1) * pageSize;
+        const end = Math.min(start + pageSize, totalResults);
+        const pageCards = sortedCards.slice(start, end);
+        pageCards.forEach(card => container.appendChild(card));
         resultsCountSpan.textContent = `${start + 1}-${end} of ${totalResults} results`;
+        renderPaginationControls();
       }
     }
   }
@@ -265,11 +264,10 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
         return sortBy === 'az' ? aNum - bNum : bNum - aNum;
       });
     } else {
-      // Default: revert to original order
       sortedCards = [...originalCards];
     }
 
-    currentPage = 1; // Reset to first page after sorting
+    currentPage = 1;
     renderPage(currentPage);
   });
   renderPage(currentPage);
