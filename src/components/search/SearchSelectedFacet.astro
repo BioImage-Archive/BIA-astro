@@ -1,14 +1,13 @@
 ---
 const { selectedList, url, text, query, organism, imagingMethod, releaseYear } = Astro.props;
 import { generateParamString } from "./Search.astro"
-import { capitalizeFirstLetter } from "./SearchFacet.astro"
 ---
 {selectedList && selectedList.length > 0  && (
     <>
     {text}: 
     {selectedList.map( selected => 
     <a href={generateParamString(url, query, organism.filter( (im) => im != selected), imagingMethod.filter( (im) => im != selected), releaseYear.filter( (im) => im != selected), "studies")} 
-        class="facet-remove-btn">{capitalizeFirstLetter(selected)}</a>
+        class="facet-remove-btn">{selected}</a>
     )
     }
     </>

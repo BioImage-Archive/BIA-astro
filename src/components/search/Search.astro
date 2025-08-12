@@ -6,13 +6,24 @@ import  "../../styles/toggle.css"
 import "../../styles/browse_controls.css"
 import "../../styles/filter_cards.css"
 
-interface SearchHits<T = unknown> {
+interface source {
+  accession_id: string;
+  release_date: string;
+  [key: string]: any; // allows any extra properties
+}
+
+interface hit {
+  _source: source;
+  [key: string]: any;
+}
+
+interface SearchHits{
   total: {
     value: number;
     relation: string; 
   };
   max_score: number | null;
-  hits: T[]; 
+  hits: hit; 
 }
 
 export interface Facet {
@@ -27,14 +38,16 @@ interface FacetData {
   sum_other_doc_count: number;
 }
 
-const { query, hits, facetData, organism, imagingMethod, releaseYear } =
+const { query, hits, facetData, organism, imagingMethod, releaseYear, sortBy, sortOrder } =
   Astro.props as {
     query: string;
-    hits: SearchHits<Record<string, unknown>>;
+    hits: SearchHits;
     facetData: FacetData;
     organism: string;
     imagingMethod: string;
     releaseYear: string;
+    sortBy: string;
+    sortOrder: string;
   };
 
 export function generateParamString(url, query, organism, imagingMethod, releaseYear, urlType){
@@ -49,41 +62,84 @@ export function addSelectedFacetToSearchURL(selectedList, facet, url){
     return selectedList && selectedList.length > 0 ? url+"&"+new URLSearchParams(selectedList.map(select => {return `&${facet}=${encodeURIComponent(select)}`}).join("&")).toString(): url;
 }
 
-const totalResults = hits.total.value
-const results = hits.hits
+const totalResults = hits.total.value;
+let results;
+
+// Sorting on Server side till the API can sort results.
+
+function parseAccession(id) {
+    const match = id.match(/^([A-Z\-]+)(\d+)$/i);
+    if (!match) return [id, 0];
+    return [match[1], parseInt(match[2], 10)];
+  }
+
+function sortAcession(aId, bId, sortOrder){
+  const [aPrefix, aNum] = parseAccession(aId);
+      const [bPrefix, bNum] = parseAccession(bId);
+      const prefixCompare = aPrefix.localeCompare(bPrefix);
+      if (prefixCompare !== 0) return sortOrder === 'descending' ? -prefixCompare : prefixCompare;
+      return sortOrder === 'descending' ? bNum - aNum : aNum - bNum;
+}
+
+function sortReleaseDate(aReleaseDate, bReleaseDate, sortOrder){
+  const aTime = new Date(aReleaseDate).getTime();
+  const bTime = new Date(bReleaseDate).getTime();
+  return sortOrder === 'descending' ? bTime - aTime : aTime - bTime
+}
+
+switch(sortBy) {
+  case "relevance":
+    results = sortOrder === "descending"? hits.hits.reverse() : hits.hits;
+    break;
+  case "accession":
+    results = hits.hits.sort((a, b) => {return sortAcession(a?._source?.accession_id, b?._source?.accession_id, sortOrder)});
+    break;
+  case "release_date":
+    results = hits.hits.sort(function(a,b){ return sortReleaseDate(a?._source?.release_date, b?._source?.release_date, sortOrder)});
+    break;
+  default:
+    results = hits.hits;
+    break;
+}
+
 const studiesURL = "/bioimage-archive/studies"
 
 const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
-  let selectedValue, title, facetType;
-  const listOfValues = Object.values(data?.buckets as Facet)
-    .map( (val) => val?.key_as_string || val?.key)
-    .sort((a, b) => a.toString().toLowerCase().localeCompare(b.toString().toLowerCase()))
+  let selectedValue, title;
+
+const valuesAndCounts = Object.values(data?.buckets as Facet)
+  .sort((a, b) => {
+    const aKey = a?.key_as_string || a?.key;
+    const bKey = b?.key_as_string || b?.key;
+    return aKey.toString().toLowerCase().localeCompare(bKey.toString().toLowerCase());
+  })
+  .reduce((obj, val) => {
+    const key = val?.key_as_string || val?.key;
+    obj[key] = val.doc_count;
+    return obj;
+  }, {} as Record<string, number>);
+
   switch (facet) {
     case "scientific_name":
       selectedValue = organism;
       title = "Organism";
-      facetType = "checkbox";
       break;
     case "imaging_method":
       selectedValue = imagingMethod;
       title = "Imaging Method";
-      facetType = "checkbox";
       break;
     case "release_date":
       selectedValue = releaseYear;
       title = "Release Year";
-      facetType = "checkbox";
       break;
     default:
-      return acc; // Skip unknown facets
+      return acc;
   }
 
   acc[`facets.${facet}`] = {
-    listOfValues,
+    valuesAndCounts,
     selectedValue,
-    title,
-    facetType,
-    counts: data?.buckets || []
+    title
   };
 
   return acc;
@@ -107,10 +163,13 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
     <div>
       <form id="facets" method="GET" action="/bioimage-archive/studies" class="vf-form">
         {Object.entries(facets).map(([id, facet], i) => <>
-        <SearchFacet title={facet['title']} id={id} filter={facet["listOfValues"]} selectedValue={facet["selectedValue"]} facetType={facet["facetType"]} counts={facet["counts"]} />
+        <SearchFacet facet={facet} id={id} />
         </>
         )}
         <input type="hidden" name="query" value={query}  />
+        {sortBy && (<input type="hidden" name="sortBy" value={sortBy}  />)}
+        {sortOrder && (<input type="hidden" name="sortOrder" value={sortOrder} />)}
+        
       </form>
     </div>
   </div>
@@ -118,15 +177,19 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
     {query && (
       <>
         <section class="vf-content">
-          <div class="vf-grid" style="display: flex;min-width:90%">
-            <div><h2>Search results for <a href={`/bioimage-archive/studies?query=${query}`}><strong>{query}</strong></a></h2></div>
-            <div class="vf-form" style="display: flex" id="sortBy">
-            <label for="sort" class="vf-form__label" style="flex: 1; margin:auto;margin-left: 30%">Sort by:</label>
-            <select name="sort" id="sort" class="vf-form__select" style="flex: 3">
-              <option value="relevance">Relevance</option>
-              <option value="az">A-Z (accession ID)</option>
-              <option value="za">Z-A (accession ID)</option>
+          <div class="vf-grid vf-grid__col-3">
+            <div class="vf-grid__col--span-2"><h2>Search results for <a href={`/bioimage-archive/studies?query=${query}`}><strong>{query}</strong></a></h2></div>
+            <div class="vf-form vf-grid__col--span-1" style="display: flex;height: 50%" id="sort">
+            <label for="sortBy" class="vf-form__label" style="flex: 3; margin:auto;">Sort by:</label>
+            <select name="sortBy" id="sortBy" class="vf-form__select" style="flex: 6">
+              <option value="relevance" selected={sortBy === "relevance"} >Relevance</option>
+              <option value="accession" selected={sortBy === "accession"} >Accession ID</option>
+              <option value="release_date" selected={sortBy === "release_date"}>Release Date</option>
             </select>
+            <div class="sort-order-buttons" style="flex: 1">
+              <button type="button" data-order="ascending" class={sortOrder === "ascending" || !sortOrder ? "active": ""} >⋀</button>
+              <button type="button" data-order="descending" class={sortOrder === "descending" ? "active": ""}>⋁</button>
+            </div>
             </div>
           </div>
           <section>
@@ -157,30 +220,22 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
 </section>
 <script type="application/json" id="total-search-result" set:html={JSON.stringify(totalResults)} />
 <script type="module">
-  const sortSelect = document.getElementById('sort');
   const container = document.querySelector('.vf-card-container__inner');
   const originalCards = Array.from(container.querySelectorAll('.vf-card'));
   const totalResults = JSON.parse(document.getElementById('total-search-result').textContent);
   const resultsCountSpan = document.getElementById('paginated-results');
   const pageSize = 9;
   let currentPage = 1;
-  let sortedCards = [...originalCards]; 
-
-  function parseAccession(id) {
-    const match = id.match(/^([A-Z\-]+)(\d+)$/i);
-    if (!match) return [id, 0];
-    return [match[1], parseInt(match[2], 10)];
-  }
 
   function renderPage(page) {    
     if (resultsCountSpan) {
-      if (sortedCards.length === 0) {
+      if (originalCards.length === 0) {
         resultsCountSpan.textContent = `0 of ${totalResults} results`;
       } else {
         container.innerHTML = '';
         const start = (page - 1) * pageSize;
         const end = Math.min(start + pageSize, totalResults);
-        const pageCards = sortedCards.slice(start, end);
+        const pageCards = originalCards.slice(start, end);
         pageCards.forEach(card => container.appendChild(card));
         resultsCountSpan.textContent = `${start + 1}-${end} of ${totalResults} results`;
         renderPaginationControls();
@@ -189,7 +244,7 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
   }
 
   function renderPaginationControls() {
-    const totalPages = Math.ceil(sortedCards.length / pageSize);
+    const totalPages = Math.ceil(originalCards.length / pageSize);
     let startPage = Math.max(1, currentPage - 2);
     let endPage = Math.min(totalPages, startPage + 4);
     if (endPage - startPage < 4) {
@@ -210,7 +265,7 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
       if (i === currentPage) {
         html += `
           <li class="vf-pagination__item vf-pagination__item--is-active">
-            <span>${i}</span>
+            <span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">${i}</span>
           </li>
         `;
       } else {
@@ -247,28 +302,63 @@ const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
       });
     });
   }
-  sortSelect.addEventListener('change', (event) => {
-    const sortBy = event.target.value;
-
-    if (sortBy === 'az' || sortBy === 'za') {
-      sortedCards.sort((a, b) => {
-        const aId = a.dataset.message.split(";")[0];
-        const bId = b.dataset.message.split(";")[0];
-
-        const [aPrefix, aNum] = parseAccession(aId);
-        const [bPrefix, bNum] = parseAccession(bId);
-
-        const prefixCompare = aPrefix.localeCompare(bPrefix);
-        if (prefixCompare !== 0) return sortBy === 'az' ? prefixCompare : -prefixCompare;
-
-        return sortBy === 'az' ? aNum - bNum : bNum - aNum;
-      });
-    } else {
-      sortedCards = [...originalCards];
-    }
-
-    currentPage = 1;
-    renderPage(currentPage);
-  });
   renderPage(currentPage);
 </script>
+<script type="module">
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+      // Reload the page to reset all state
+      window.location.reload();
+    }
+  });
+  const sortSelect = document.getElementById('sortBy');
+  sortSelect.addEventListener('change', (event) => {
+    const sortBy = event.target.value;
+    const url = new URL(window.location.href);
+    url.searchParams.set('sortBy', sortBy);
+    window.location.href = url.toString();
+  });
+
+  document.querySelectorAll('.sort-order-buttons button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sort-order-buttons button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const sortOrder = btn.dataset.order;
+    const url = new URL(window.location.href);
+    url.searchParams.set('sortOrder', sortOrder);
+    window.location.href = url.toString();
+  });
+});
+</script>
+<style>
+.sort-order-buttons {
+  margin-left: 1%;
+  display: inline-flex;
+  background: white;
+}
+
+.sort-order-buttons button {
+  background: white;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  background-position: right 1rem top 50%, 0 0;
+  background-repeat: no-repeat, repeat;
+  background-size: 1.125em;
+  border: 1.5px solid #707372;
+  border-radius: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #54585a;
+  display: block;
+}
+
+.sort-order-buttons button:hover {
+  background: #e2e2e2;
+}
+
+.sort-order-buttons button.active {
+  background: #3b6fb6;
+  color: white;
+  border-color: #3b6fb6;
+}
+</style>

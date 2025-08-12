@@ -1,16 +1,19 @@
 ---
 import { type Facet } from "./Search.astro"
 
-const { title, id, filter, selectedValue, facetType, counts } = Astro.props;
-const filterArray = Array.from(filter as string[]);
+const { facet, id } = Astro.props;
+const title= facet['title'];
+const filter= facet["valuesAndCounts"];
+const selectedValue= facet["selectedValue"];
 
 export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the vf is better than not using it
+//const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the vf is better than not using it
 ---
 <div class="facet-section" id={`facet-section-${id}`}>
+  <div class="facet-title">
   <legend 
     class="facet-legend | vf-form__helper" 
     onclick={`toggleFacet('${id}')`}
@@ -19,23 +22,25 @@ const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the
   >
     <span class="facet-arrow" aria-hidden="true"></span>
     {capitalizeFirstLetter(title)}
+    
   </legend>
+  <div class="facet-count">{Object.values(filter).length}</div>
+  </div>
   <div class="facet-option" id={`facet-option-${id}`}>
-    {filterArray.map((val, index) => (
+    {Object.entries(filter).map(([key, count], index) => (
       <div class="facet-option">
         <div class="facet-label-group">
         <input
-          type={facetType}
+          type="checkbox"
           name={id}
-          value={val}
+          value={key}
           id={`${id}-${index}`}
-          class={inputClass}
-          checked={selectedValue? Object.values(selectedValue).includes(val) : false}
+          checked={selectedValue? Object.values(selectedValue).includes(key) : false}
           onchange={`document.getElementById('facets')?.submit()`}
         />
-        <label class="vf-form__label" for={`${id}-${index}`}>{capitalizeFirstLetter(val)}</label>
+        <label class="vf-form__label" for={`${id}-${index}`}>{key}</label>
         </div>
-        <div class="facet-count">{Object.values(counts as Facet).find(obj => obj?.key_as_string === val || obj?.key === val)?.doc_count || 0}</div>
+        <div class="facet-count">{count}</div>
       </div>
       
     ))}
@@ -103,6 +108,14 @@ const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the
   padding: 0 0rem;
 }
 
+  .facet-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.25rem 0;
+  padding: 0 0rem;
+}
+
 .facet-label-group {
   display: flex;
   align-items: center;
@@ -114,5 +127,6 @@ const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the
   color: #666;
   min-width: 2rem;
   text-align: right;
+  display: flex;
 }
 </style>

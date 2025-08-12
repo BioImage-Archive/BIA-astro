@@ -13,6 +13,8 @@ import { PUBLIC_SEARCH_API } from "astro:env/client";
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query');
+const sortBy = url.searchParams.get('sortBy');
+const sortOrder = url.searchParams.get('sortOrder');
 const organism = url.searchParams.getAll('facets.scientific_name');
 const imagingMethod = url.searchParams.getAll('facets.imaging_method');
 const releaseYear = url.searchParams.getAll('facets.release_date');
@@ -56,7 +58,7 @@ const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
-  {query ? (<body><SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/></body>)
+  {query ? (<body><SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} sortBy={sortBy} sortOrder={sortOrder}/></body>)
     : (
       <body>
       <BrowseStudyHeading
