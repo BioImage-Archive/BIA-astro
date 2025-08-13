@@ -29,7 +29,7 @@ export function capitalizeFirstLetter(str: string): string {
   <div class="facet-options" id={`facet-option-${id}`}>
     {Object.entries(filter).map(([key, count], index) => (
       <div class="facet-option">
-        <div class="facet-label-group" style="width: 100%">
+        <div class="facet-label-group">
           <input
             type="checkbox"
             name={id}
@@ -38,9 +38,13 @@ export function capitalizeFirstLetter(str: string): string {
             checked={selectedValue ? Object.values(selectedValue).includes(key) : false}
             onchange={`document.getElementById('facets')?.submit()`}
           />
-          <label for={`${id}-${index}`} style="width: 100%" class="facet-label vf-grid">{key}<div class="facet-count">{count}</div></label>
+         <label for={`${id}-${index}`} class="facet-label">
+            <div class="facet-label-inner">
+              <div>{key}</div>
+              <div class="facet-count">{count}</div>
+            </div>
+          </label>
         </div>
-        
       </div>
     ))}
   </div>
@@ -61,7 +65,7 @@ export function capitalizeFirstLetter(str: string): string {
       const secClass = isMobile()? "collapsed": "open";
       const styleDisplay = isMobile()? "none": "block";
       section.classList.add(secClass);
-      const options = section.querySelector('.facet-option');
+      const options = section.querySelector('.facet-options');
       if (options) options.style.display = styleDisplay;
     });
   });
@@ -100,6 +104,7 @@ export function capitalizeFirstLetter(str: string): string {
   }
   .facet-label {
     display: flex;
+    width: 100%
   }
   .facet-option {
     display: flex;
@@ -125,13 +130,21 @@ export function capitalizeFirstLetter(str: string): string {
     align-items: left;
     gap: 0.3rem;
     color: #3b6fb6;
+    width: 100%
   }
 
   .facet-count {
     font-size: 0.9rem;
     color: #666;
-    min-width: 1rem;
+    width: 1rem;
     text-align: right;
     align-items: end;
   }
+
+  .facet-label-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 </style>
