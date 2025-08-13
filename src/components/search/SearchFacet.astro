@@ -26,23 +26,22 @@ export function capitalizeFirstLetter(str: string): string {
   </legend>
   <div class="facet-count">{Object.values(filter).length}</div>
   </div>
-  <div class="facet-option" id={`facet-option-${id}`}>
+  <div class="facet-options" id={`facet-option-${id}`}>
     {Object.entries(filter).map(([key, count], index) => (
       <div class="facet-option">
-        <div class="facet-label-group">
-        <input
-          type="checkbox"
-          name={id}
-          value={key}
-          id={`${id}-${index}`}
-          checked={selectedValue? Object.values(selectedValue).includes(key) : false}
-          onchange={`document.getElementById('facets')?.submit()`}
-        />
-        <label class="vf-form__label" for={`${id}-${index}`}>{key}</label>
+        <div class="facet-label-group" style="width: 100%">
+          <input
+            type="checkbox"
+            name={id}
+            value={key}
+            id={`${id}-${index}`}
+            checked={selectedValue ? Object.values(selectedValue).includes(key) : false}
+            onchange={`document.getElementById('facets')?.submit()`}
+          />
+          <label for={`${id}-${index}`} style="width: 100%" class="facet-label vf-grid">{key}<div class="facet-count">{count}</div></label>
         </div>
-        <div class="facet-count">{count}</div>
+        
       </div>
-      
     ))}
   </div>
 </div>
@@ -99,34 +98,40 @@ export function capitalizeFirstLetter(str: string): string {
     content: ">";
     transform: rotate(90deg);
   }
-
+  .facet-label {
+    display: flex;
+  }
   .facet-option {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.25rem 0;
-  padding: 0 0rem;
-}
+    display: flex;
+    justify-content: space-between;
+    margin: 0.25rem 0;
+    padding: 0 0rem;
+  }
+
+  .facet-label:hover {
+    background-color: lightgray;
+  }
 
   .facet-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.25rem 0;
-  padding: 0 0rem;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.25rem 0;
+    padding: 0 0rem;
+  }
 
-.facet-label-group {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
+  .facet-label-group {
+    display: flex;
+    align-items: left;
+    gap: 0.3rem;
+    color: #3b6fb6;
+  }
 
-.facet-count {
-  font-size: 0.9rem;
-  color: #666;
-  min-width: 2rem;
-  text-align: right;
-  display: flex;
-}
+  .facet-count {
+    font-size: 0.9rem;
+    color: #666;
+    min-width: 1rem;
+    text-align: right;
+    align-items: end;
+  }
 </style>
