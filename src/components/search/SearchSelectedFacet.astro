@@ -1,0 +1,36 @@
+---
+const { selectedList, url, text, query, organism, imagingMethod, releaseYear } = Astro.props;
+import { generateParamString } from "./Search.astro"
+---
+{selectedList && selectedList.length > 0  && (
+    <>
+    {text}: 
+    {selectedList.map( selected => 
+    <a href={generateParamString(url, query, organism.filter( (im) => im != selected), imagingMethod.filter( (im) => im != selected), releaseYear.filter( (im) => im != selected), "studies")} 
+        class="facet-remove-btn">{selected}</a>
+    )
+    }
+    </>
+    )   
+}
+<style>
+  .facet-remove-btn {
+  display: inline-block;
+  background-color: #e1ecf4;
+  color: #0366d6;
+  border-radius: 2em;
+  padding: 0.3em 0.8em;
+  margin: 0 0.5em 0.5em 0;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.facet-remove-btn:hover {
+  background-color: #d1e3f3;
+}
+
+#sortBy {
+  height: 50%;
+}
+</style>

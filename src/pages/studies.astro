@@ -8,30 +8,35 @@ import "../styles/browse_controls.css"
 import "../styles/filter_cards.css"
 import studyMetadata from "../data/bia-study-metadata.json";
 import SearchResults from "../components/search/Search.astro"
-import { getTaxons, getImagingMethodType } from "../components/SharedJSFunctions.js";
+import { generateParamString } from "../components/search/Search.astro"
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query');
+const sortBy = url.searchParams.get('sortBy');
+const sortOrder = url.searchParams.get('sortOrder');
+const organism = url.searchParams.getAll('facets.scientific_name');
+const imagingMethod = url.searchParams.getAll('facets.imaging_method');
+const releaseYear = url.searchParams.getAll('facets.release_date');
 
-const organism = url.searchParams.get('facet.organism');
-const imagingMethod = url.searchParams.get('facet.imaging_method');
-const releaseYear = url.searchParams.get('facet.release_year');
+let searchURL
+if (query){
+  searchURL = `${PUBLIC_SEARCH_API}/search/fts?query=${encodeURIComponent(query)}`;
+  searchURL = generateParamString(`${PUBLIC_SEARCH_API}/search/fts`, query, organism, imagingMethod, releaseYear, "search");
+}
 
-let results = [];
+let hits = [];
+let facetData = [];
 let pageTitle = "Browse Studies"
 if (query) {
-  const res = await fetch(`${PUBLIC_SEARCH_API}/search/fts?query=${encodeURIComponent(query)}`);
+  const res = await fetch(searchURL);
   if (res.ok) {
     const data = await res.json();
-    results = data.hits || [];
+    hits = data.hits || [];
+    facetData = data.facets || [];
     pageTitle = "Search Studies"
   }
 }
-results = releaseYear ? results.filter( item => item._source.release_date.split("-")[0] === releaseYear) : results;
-results = imagingMethod ? results.filter( item => getImagingMethodType(item._source).join(", ").includes(imagingMethod)) : results;
-results = organism ? results.filter( item => getTaxons(item._source, "stripped").join(", ").includes(organism)) : results;
-
 const totalStudies = Object.keys(studyMetadata).length;
 
 const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
@@ -53,7 +58,7 @@ const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
-  {query ? (<SearchResults query={query} results={results} organism={organism} imaging_method={imagingMethod} release_year={releaseYear}/>)
+  {query ? (<body><SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} sortBy={sortBy} sortOrder={sortOrder}/></body>)
     : (
       <body>
       <BrowseStudyHeading
