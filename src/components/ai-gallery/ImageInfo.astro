@@ -1,0 +1,38 @@
+---
+import ImageMetadata from "./ImageMetadata.astro";
+
+const { url, imageRep, imageAtrributes, text, btnID} = Astro.props;
+
+const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
+
+const vizarrViewer = text == "Annotation"? "OpenAnnotationInVizarr": "OpenSourceInVizarr";
+const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK";
+
+---
+<div style="min-width: 48%">
+    <a href={vizarrURL+url} id={vizarrViewer}>
+        <button class="vf-button vf-button--primary vf-button--sm">Open {text} in Vizarr viewer</button>
+    </a> 
+    <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url} id={itkViewer}>
+        <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
+    </a>
+    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={vizarrURL+url}>Copy {text} OME-Zarr URI</button><br/>
+    <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} />
+    </div>
+</div>
+<script type="module">
+  window.addEventListener("DOMContentLoaded", () => {
+    const copyButtons = document.querySelectorAll("button[data-url]");
+    copyButtons.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const url = btn.dataset.url;
+        const originalText = btn.innerText;
+        await navigator.clipboard.writeText(url);
+        btn.innerText = "URI Copied";
+        setTimeout(() => {
+          btn.innerText = originalText;
+        }, 700);
+      });
+    });
+  });
+</script>
