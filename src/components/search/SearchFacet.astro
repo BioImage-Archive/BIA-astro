@@ -1,8 +1,7 @@
 ---
-import { type Facet } from "./Search.astro"
-
 const { facet, id } = Astro.props;
 const title= facet['title'];
+const totalCounts = facet['totalFacetCounts'];
 const filter= facet["valuesAndCounts"];
 const selectedValue= facet["selectedValue"];
 
@@ -24,7 +23,7 @@ export function capitalizeFirstLetter(str: string): string {
     {capitalizeFirstLetter(title)}
     
   </legend>
-  <div class="facet-count">{Object.values(filter).length}</div>
+  <div class="facet-count">{totalCounts}</div>
   </div>
   <div class="facet-options" id={`facet-option-${id}`}>
     {Object.entries(filter).map(([key, count], index) => (
@@ -136,7 +135,6 @@ export function capitalizeFirstLetter(str: string): string {
   .facet-count {
     font-size: 0.9rem;
     color: #666;
-    width: 1rem;
     text-align: right;
     align-items: end;
   }
