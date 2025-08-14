@@ -21508,9 +21508,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1008,
                 "size_y": 1008,
-                "size_z": 1,
+                "size_z": 310,
                 "size_c": 1,
-                "size_t": 310,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "45aa9cdd-547e-4c2e-acdf-b4a736f32af6"
             }
@@ -21695,9 +21695,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1332,
                 "size_y": 880,
-                "size_z": 1,
+                "size_z": 397,
                 "size_c": 1,
-                "size_t": 397,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "962b9bfa-ae6f-4928-b5c3-f3b685a9c3ec"
             }
@@ -21859,9 +21859,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1480,
                 "size_y": 1038,
-                "size_z": 1,
+                "size_z": 265,
                 "size_c": 1,
-                "size_t": 265,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "c1d4ee83-55b6-41ea-90b9-ba2b5253121c"
             },
@@ -22079,9 +22079,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 461,
                 "size_y": 872,
-                "size_z": 1,
+                "size_z": 259,
                 "size_c": 1,
-                "size_t": 259,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "d9070ef4-25ee-4a3d-9162-6e47f95e2a56"
             }
@@ -22266,9 +22266,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 968,
                 "size_y": 563,
-                "size_z": 1,
+                "size_z": 321,
                 "size_c": 1,
-                "size_t": 321,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "dfb77b45-1361-4f23-a12f-3c3a9ed042a1"
             }
@@ -22500,9 +22500,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 968,
                 "size_y": 563,
-                "size_z": 1,
+                "size_z": 321,
                 "size_c": 1,
-                "size_t": 321,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "10bdc5bc-8499-4aff-bf82-5ede63f9fed4"
             },
@@ -22800,9 +22800,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1008,
                 "size_y": 1008,
-                "size_z": 1,
+                "size_z": 310,
                 "size_c": 1,
-                "size_t": 310,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "605de3ff-0ba5-4902-b83a-20d4ed15ae72"
             }
@@ -23044,9 +23044,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1480,
                 "size_y": 1038,
-                "size_z": 1,
+                "size_z": 265,
                 "size_c": 1,
-                "size_t": 265,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "712f8669-7681-4dfc-8d9e-cdc68c4f8045"
             },
@@ -23311,9 +23311,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 461,
                 "size_y": 872,
-                "size_z": 1,
+                "size_z": 259,
                 "size_c": 1,
-                "size_t": 259,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "ac8adeb7-c794-41ff-b72c-821e0b4afc9f"
             },
@@ -23611,9 +23611,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1332,
                 "size_y": 880,
-                "size_z": 1,
+                "size_z": 397,
                 "size_c": 1,
-                "size_t": 397,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "d3f2c0dd-eb35-4caa-8877-935805839c68"
             }
@@ -23778,9 +23778,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1330,
                 "size_y": 620,
-                "size_z": 1,
+                "size_z": 486,
                 "size_c": 1,
-                "size_t": 486,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "26f71558-abee-42c9-a718-723c737af8a5"
             },
@@ -23998,9 +23998,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 800,
                 "size_y": 540,
-                "size_z": 1,
+                "size_z": 150,
                 "size_c": 1,
-                "size_t": 150,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "b163f396-7765-496b-b6ce-2a1cdd734fbd"
             }
@@ -24152,9 +24152,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1590,
                 "size_y": 450,
-                "size_z": 1,
+                "size_z": 403,
                 "size_c": 1,
-                "size_t": 403,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "b6b368bd-5076-4cca-8f0a-0beedd711c89"
             },
@@ -24372,9 +24372,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1000,
                 "size_y": 450,
-                "size_z": 1,
+                "size_z": 200,
                 "size_c": 1,
-                "size_t": 200,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "e35b6434-b120-4ef1-a7ee-2694ebb36ddd"
             }
@@ -24526,9 +24526,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1330,
                 "size_y": 620,
-                "size_z": 1,
+                "size_z": 486,
                 "size_c": 1,
-                "size_t": 486,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "faee929f-0b16-47a1-a154-481b13b3c25c"
             },
@@ -24793,9 +24793,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1330,
                 "size_y": 620,
-                "size_z": 1,
+                "size_z": 486,
                 "size_c": 1,
-                "size_t": 486,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "01521340-de5c-49af-a74e-5f9f499f58f9"
             },
@@ -25106,9 +25106,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1330,
                 "size_y": 620,
-                "size_z": 1,
+                "size_z": 486,
                 "size_c": 1,
-                "size_t": 486,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "29e48c56-5a13-4646-81c2-1e7b8f53ae26"
             }
@@ -25340,9 +25340,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1590,
                 "size_y": 450,
-                "size_z": 1,
+                "size_z": 403,
                 "size_c": 1,
-                "size_t": 403,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "481eac43-daae-4e02-ae18-ecdbf0c57517"
             },
@@ -25607,9 +25607,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 800,
                 "size_y": 540,
-                "size_z": 1,
+                "size_z": 150,
                 "size_c": 1,
-                "size_t": 150,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "934cc24a-84a0-466c-8b83-b8fe0ea9c0be"
             },
@@ -25907,9 +25907,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 1000,
                 "size_y": 450,
-                "size_z": 1,
+                "size_z": 200,
                 "size_c": 1,
-                "size_t": 200,
+                "size_t": 1,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "b5baaf47-5ef8-410e-9f44-8daed61de6e1"
             }
@@ -26435,9 +26435,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 512,
                 "size_y": 512,
-                "size_z": 49,
+                "size_z": 1,
                 "size_c": 1,
-                "size_t": 1,
+                "size_t": 49,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "e4cdc2fb-0ce3-4334-87eb-90195449643a"
             },
@@ -26711,9 +26711,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 512,
                 "size_y": 512,
-                "size_z": 50,
+                "size_z": 1,
                 "size_c": 1,
-                "size_t": 1,
+                "size_t": 50,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "2c43429c-f314-4734-bf52-d5e0950f1450"
             },
@@ -28816,9 +28816,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 512,
                 "size_y": 512,
-                "size_z": 49,
+                "size_z": 1,
                 "size_c": 1,
-                "size_t": 1,
+                "size_t": 49,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "2ae0329d-25f3-4cb7-9859-a11aaa6c4b1c"
             },
@@ -29095,9 +29095,9 @@
                 "voxel_physical_size_z": 1.0,
                 "size_x": 512,
                 "size_y": 512,
-                "size_z": 121,
+                "size_z": 1,
                 "size_c": 1,
-                "size_t": 1,
+                "size_t": 121,
                 "image_viewer_setting": [],
                 "representation_of_uuid": "464d0759-7720-481a-8786-feaed22a08be"
             },
