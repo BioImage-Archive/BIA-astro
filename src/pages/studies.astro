@@ -15,9 +15,9 @@ const query = url.searchParams.get('query') || "";
 const hasImages = url.searchParams.get('hasImages') === 'true' || false;
 const sortBy = url.searchParams.get('sortBy');
 const sortOrder = url.searchParams.get('sortOrder');
-const organism = url.searchParams.getAll('facets.scientific_name');
-const imagingMethod = url.searchParams.getAll('facets.imaging_method');
-const releaseYear = url.searchParams.getAll('facets.release_date');
+const organism = url.searchParams.getAll('facet.organism');
+const imagingMethod = url.searchParams.getAll('facet.imaging_method');
+const releaseYear = url.searchParams.getAll('facet.year');
 
 let searchURL = "";
 if (query || query === "") {
@@ -26,8 +26,7 @@ if (query || query === "") {
     query,
     organism,
     imagingMethod,
-    releaseYear,
-    "search"
+    releaseYear
   );
 }
 

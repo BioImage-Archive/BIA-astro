@@ -1,8 +1,8 @@
 ---
 const { facet, id } = Astro.props;
-const title= facet['title'];
+const title = facet['title'];
 const totalCounts = facet['totalFacetCounts'];
-const filter= facet["valuesAndCounts"];
+const filter = facet["valuesAndCounts"];
 const selectedValue= facet["selectedValue"];
 
 export function capitalizeFirstLetter(str: string): string {

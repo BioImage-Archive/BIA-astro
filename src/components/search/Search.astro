@@ -50,11 +50,11 @@ const { query, hits, facetData, organism, imagingMethod, releaseYear, sortBy, so
     sortOrder: string;
   };
 
-export function generateParamString(url, query, organism, imagingMethod, releaseYear, urlType){
+export function generateParamString(url, query, organism, imagingMethod, releaseYear){
   url += `?query=${encodeURIComponent(query)}`;
-  url = addSelectedFacetToSearchURL(organism, urlType === "search"? "organism" : "facets.scientific_name", url);
-  url = addSelectedFacetToSearchURL(imagingMethod, urlType === "search"? "imaging_method" :"facets.imaging_method", url); 
-  url = addSelectedFacetToSearchURL(releaseYear, urlType === "search"? "year" : "facets.release_date", url);
+  url = addSelectedFacetToSearchURL(organism, "facet.organism" , url);
+  url = addSelectedFacetToSearchURL(imagingMethod, "facet.imaging_method", url); 
+  url = addSelectedFacetToSearchURL(releaseYear, "facet.year", url);
   return url
 }
 
@@ -105,7 +105,7 @@ switch(sortBy) {
 const studiesURL = "/bioimage-archive/studies"
 
 const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
-  let selectedValue, title;
+  let selectedValue, title, facet_search_id;
 
 const valuesAndCounts = Object.values(data?.buckets as Facet)
   .sort((a, b) => {
@@ -123,20 +123,23 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
     case "scientific_name":
       selectedValue = organism;
       title = "Organism";
+      facet_search_id = "organism";
       break;
     case "imaging_method":
       selectedValue = imagingMethod;
       title = "Imaging Method";
+      facet_search_id = "imaging_method";
       break;
     case "release_date":
       selectedValue = releaseYear;
       title = "Release Year";
+      facet_search_id = "year";
       break;
     default:
       return acc;
   }
   const totalFacetCounts = Object.values(valuesAndCounts).length + (data?.sum_other_doc_count || 0)
-  acc[`facets.${facet}`] = {
+  acc[`facet.${facet_search_id}`] = {
     valuesAndCounts,
     selectedValue,
     totalFacetCounts,

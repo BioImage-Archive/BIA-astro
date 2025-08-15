@@ -6,7 +6,7 @@ import { generateParamString } from "./Search.astro"
     <>
     {text}: 
     {selectedList.map( selected => 
-    <a href={generateParamString(url, query, organism.filter( (im) => im != selected), imagingMethod.filter( (im) => im != selected), releaseYear.filter( (im) => im != selected), "studies")} 
+    <a href={generateParamString(url, query, organism.filter( (im) => im != selected), imagingMethod.filter( (im) => im != selected), releaseYear.filter( (im) => im != selected))} 
         class="facet-remove-btn">{selected}</a>
     )
     }
