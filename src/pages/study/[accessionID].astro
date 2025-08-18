@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import BaseLayoutWithBreadcrumbs from "../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
@@ -6,17 +7,8 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 
-import studyMetadata from "../../data/bia-study-metadata.json";
-
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../components/SharedJSFunctions.js"
-
-export function getStaticPaths() {
-  return Object.values(studyMetadata).map((study) => {
-    return {
-      params: { accessionID: study.accession_id },
-    };
-  });
-}
+import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromAPI} from "../../components/SharedJSFunctions.js"
+import { type Study } from "../../components/SharedInterface.astro"
 
 const tableOfContents = {
   "Study Information": "study",
@@ -25,8 +17,7 @@ const tableOfContents = {
 };
 
 const { accessionID } = Astro.params;
-const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
-
+const study = await getStudyFromAPI("accession", accessionID) as Study;
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 
 function getFileTypes(study) {

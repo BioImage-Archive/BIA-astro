@@ -1,14 +1,13 @@
 ---
+export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
-import SourceImage from "../../../../components/SourceImage.astro"
 import DatasetDetail from '../../../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../../../data/metadata-field-name-mapping.json";
 import datasetMetadata from "../../../../data/bia-dataset-metadata-for-images.json";
-import imageMetadata from "../../../../data/bia-image-metadata.json";
 import fallbackImage from "../../../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue } from "../../../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI } from "../../../../components/SharedJSFunctions.js"
 
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
@@ -16,17 +15,9 @@ const imageAcquisitionMap = fieldMap["image_acquisition"];
 const annotationMethodMap = fieldMap["annotation_method"];
 const protocolMap = fieldMap["protocol"];
 
-export function getStaticPaths() {
-  return Object.keys(imageMetadata).map((uuid) => {
-    return {
-      params:  { uuid: uuid }
-    };
-  });
-}
-
 const { uuid } = Astro.params;
 
-const image = imageMetadata[uuid];
+const image = await getImageFromAPI(uuid);
 
 const imageDataset = datasetMetadata[image.submission_dataset_uuid]
 const imageStudy = imageDataset.submitted_in_study

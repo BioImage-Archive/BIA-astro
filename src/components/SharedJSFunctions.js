@@ -1,3 +1,6 @@
+import { PUBLIC_SEARCH_API } from "astro:env/client";
+const api = "https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2"
+
 export function getPlaceholderHeroImage(accessionID) {
     const match = accessionID.match(/(\d{1,5})$/);
     const accessionIDNumber = parseInt(match[1]);
@@ -115,4 +118,43 @@ export function getAnnotationType(dataset) {
 export function getMetadataValue(mdArray, key, field = null) {
   const md = mdArray.find(md => md.name === key)?.value;
   return field && md ? md[field]?.[0] : md;
+}
+
+async function getFromAPI(url){
+    try {
+        const res = await fetch(url);
+        return await res.json();
+    } catch (err) {
+        console.warn(`Failed to fetch ${url}`, err);
+        return null
+    }
+}
+
+export async function getStudyFromAPI(idType, id){
+    let response;
+    let study;
+    switch (idType){
+        case "accession":
+            response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${id}`);
+            study = response?.hits?.hits?.[0]?._source || undefined;
+            break;
+        case "uuid":
+            response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/doc?uuid=${id}`);
+            study = response?.hits?.[0]?._source || undefined;
+            break;
+        default:
+            break;
+    }
+    return study
+}
+
+export async function getImageFromAPI(uuid){
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}`);
+    const image = response?.hits?.hits?.[0]?._source; 
+    return image
+}
+
+export async function getDataset(uuid){
+  const dataset = await getFromAPI(`${api}/dataset/${uuid}`);
+  return dataset;
 }

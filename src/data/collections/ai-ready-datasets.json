@@ -3,7 +3,17 @@
   "title": "AI ready studies",
   "subtitle": "A selection of AI related studies",
   "description": "This is a collection of  AI/Machine Learning studies from the BioImage Archive from which one or more images have been converted to OME-Zarr. It is intended to present the AI related datasets with relevant tags and visualisation of images from the archive's collection, and to provide easy access to AI datasets and encourage tool development.",
-  "accession_ids": [],
+  "accession_ids": [
+    "S-BIAD1659", 
+    "S-BIAD1735", 
+    "S-BIAD1410", 
+    "S-BIAD1392", 
+    "S-BIAD1367", 
+    "S-BIAD1269", 
+    "S-BIAD1159", 
+    "S-BIAD686",
+    "S-BIAD634"
+  ],
   "accession_ids_pre_migration": [
     "S-BIAD531",
     "S-BIAD599",

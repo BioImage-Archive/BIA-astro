@@ -4,9 +4,17 @@ import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 
 import collection from '../../../data/collections/ai-benchmark-datasets.json';
-import studyMetadata from '../../../data/bia-study-metadata.json'
+import {getStudyFromAPI} from "../../../components/SharedJSFunctions.js"
 import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
+const studiesEntries = await Promise.all(
+  Object.entries(additionalStudyInfo).map(async ([accessionID, studyAIInfo]) => {
+    const study = await getStudyFromAPI("accession", accessionID);
+    return [accessionID, study] as const;
+  })
+);
+
+const studyMetadata = Object.fromEntries(studiesEntries);
 
 ---
 <BaseLayout pageTitle={ collection.name }>

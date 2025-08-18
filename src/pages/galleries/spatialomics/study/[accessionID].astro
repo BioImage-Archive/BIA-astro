@@ -7,10 +7,9 @@ import ViewableImageTable from '../../../../components/ViewableImageTable.astro'
 import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
 import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
-
+import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import studyMetadata from "../../../../data/bia-study-metadata.json"
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue} from "../../../../components/SharedJSFunctions.js"
+import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromAPI} from "../../../../components/SharedJSFunctions.js"
 
 export function getStaticPaths() {
   return spatialomicsCollection.accession_ids.map((id) => {
@@ -21,7 +20,7 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-const study = studyMetadata[accessionID];
+const study = await getStudyFromAPI("accession", accessionID) as Study;
 
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 
