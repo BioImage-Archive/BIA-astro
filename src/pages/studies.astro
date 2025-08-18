@@ -1,43 +1,58 @@
 ---
-export const prerender = false
+export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../layouts/BaseLayoutWithBreadcrumbs.astro';
-import StudyCard from '../components/cards/BrowseStudyCard.astro';
 import BrowseStudyHeading from '../components/BrowseStudiesHeading.astro';
-import  "../styles/toggle.css"
-import "../styles/browse_controls.css"
-import "../styles/filter_cards.css"
+import "../styles/toggle.css";
+import "../styles/browse_controls.css";
+import "../styles/filter_cards.css";
 import studyMetadata from "../data/bia-study-metadata.json";
-import SearchResults from "../components/search/Search.astro"
-import { generateParamString } from "../components/search/Search.astro"
+import SearchResults, { type SearchHits, type FacetData } from "../components/search/Search.astro";
+import { generateParamString } from "../components/search/Search.astro";
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 
 const url = new URL(Astro.request.url);
-const query = url.searchParams.get('query');
+const query = url.searchParams.get('query') || "";
+const hasImages = url.searchParams.get('hasImages') === 'true' || false;
 const sortBy = url.searchParams.get('sortBy');
 const sortOrder = url.searchParams.get('sortOrder');
-const organism = url.searchParams.getAll('facets.scientific_name');
-const imagingMethod = url.searchParams.getAll('facets.imaging_method');
-const releaseYear = url.searchParams.getAll('facets.release_date');
+const organism = url.searchParams.getAll('facet.organism');
+const imagingMethod = url.searchParams.getAll('facet.imaging_method');
+const releaseYear = url.searchParams.getAll('facet.year');
 
-let searchURL
-if (query){
-  searchURL = `${PUBLIC_SEARCH_API}/search/fts?query=${encodeURIComponent(query)}`;
-  searchURL = generateParamString(`${PUBLIC_SEARCH_API}/search/fts`, query, organism, imagingMethod, releaseYear, "search");
+let searchURL = "";
+if (query || query === "") {
+  searchURL = generateParamString(
+    `${PUBLIC_SEARCH_API}/search/fts`,
+    query,
+    organism,
+    imagingMethod,
+    releaseYear
+  );
 }
 
-let hits = [];
-let facetData = [];
-let pageTitle = "Browse Studies"
-if (query) {
+let hits = {} as SearchHits;
+let facetData = {} as FacetData;
+
+let pageTitle = query.length === 0? "Browse Studies": "Search Studies"; 
+if (query || query === "") {
   const res = await fetch(searchURL);
   if (res.ok) {
     const data = await res.json();
-    hits = data.hits || [];
-    facetData = data.facets || [];
-    pageTitle = "Search Studies"
+    hits = data.hits;
+    facetData = data.facets;
   }
 }
-const totalStudies = Object.keys(studyMetadata).length;
+
+const totalStudies = hits.total.value;
+
+if (hasImages) {
+  hits = {
+    ...hits, // keep total, max_score
+    hits: hits.hits.filter(
+      hit => hit._source?.dataset?.some(dataset => dataset.image?.length > 0)
+    )
+  };
+}
 
 const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
   const studyFiles = study.dataset?.reduce((fileAcc, component) => {
@@ -58,13 +73,9 @@ const formattedTotalFiles = totalFiles.toLocaleString();
 const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
-  {query ? (<body><SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} sortBy={sortBy} sortOrder={sortOrder}/></body>)
-    : (
-      <body>
-      <BrowseStudyHeading
-        heading="Browse the BioImage Archive"
-        contributeLink={"/bioimage-archive/submit"}
-      > 
+  <body>
+  {query.length === 0 && (
+      <BrowseStudyHeading heading="Browse the BioImage Archive" contributeLink={"/bioimage-archive/submit"}> 
         <div slot="body_text">
           <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
           <p></p>
@@ -75,75 +86,32 @@ const formattedTotalImages = totalImages.toLocaleString();
             <p></p>
             <p class="vf-hero__text">
           All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
-
         </div>
         <div slot="right_of_header" class="controls-container"> 
           <div class="controls-inner">
-            <input type="text" id="searchInput" placeholder="Filter studies..." class="search-input">
             <div class="filter-option">
               <span> Limit to studies with viewable images:  </span>
               <label class="switch" id="image_toggle_switch">
-                <input type="checkbox" id="image_toggle">
-                <span class="slider round"/>
+                <input type="checkbox" id="image_toggle" checked={hasImages===true}>
+                <span class="slider round"></span>
               </label>
             </div>
           </div>
         </div>
       </BrowseStudyHeading>
-
-
-      <script>
-        var input = document.getElementById('searchInput') as HTMLInputElement;
-        var toggle = document.getElementById('image_toggle') as HTMLInputElement;
-
-        toggle.addEventListener('change', () => filterElements(input.value, toggle));
-        input.addEventListener('keyup', () => filterElements(input.value, toggle));
-
-        function filterElements(inputText, toggle) {
-          const cards = document.querySelectorAll('.vf-card')
-          if (inputText == "" && !toggle.checked) {
-            cards.forEach((card) => displayElement(card as HTMLElement));
-          } else {
-            cards.forEach((card) => toggleCard(inputText.toLowerCase(), toggle.checked, card as HTMLElement));
-          }
-        }
-
-        function toggleCard(input: string, requires_image: boolean, card: HTMLElement) {
-          var cardData = card.dataset.message;
-          var hasImage = cardData.substring(cardData.lastIndexOf("has_img") + 9);
-
-          if (requires_image) {
-            if (hasImage =='true' && card.dataset.message.toLowerCase().indexOf(input) > -1) {
-              displayElement(card)
-            } else {
-              hideElement(card)
-            }
-          } else {
-              if (card.dataset.message.toLowerCase().indexOf(input) > -1) {
-              displayElement(card)
-            } else {
-              hideElement(card)
-            }
-          }
-        }
-
-        function displayElement(card: HTMLElement) {            
-          card.style.display = ""
-        }
-
-        function hideElement(card: HTMLElement) {
-          card.style.display = "none"
-        }
-      </script>
-
-      <section class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
-        
-          <div class="vf-card-container__inner" >
-              { Object.values(studyMetadata).map((study) => ( <StudyCard study={study} studyPageRoot="study"/> )) }
-          </div>
-      </section>
-
-      </body>
     )
   }
+  <SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} sortBy={sortBy} sortOrder={sortOrder}/>
+  </body>
 </BaseLayoutWithBreadcrumbs>
+
+<script type="module">
+  var toggle = document.getElementById('image_toggle');
+
+  toggle.addEventListener('change', (event) => {
+    const sortBy = event.target.value;
+    const url = new URL(window.location.href);
+    url.searchParams.set('hasImages', toggle.checked);
+    window.location.href = url.toString();
+  });
+</script>

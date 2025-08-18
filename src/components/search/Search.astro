@@ -17,7 +17,7 @@ interface hit {
   [key: string]: any;
 }
 
-interface SearchHits{
+export interface SearchHits{
   total: {
     value: number;
     relation: string; 
@@ -26,13 +26,13 @@ interface SearchHits{
   hits: hit; 
 }
 
-export interface Facet {
+interface Facet {
   key: string;
   key_as_string?: string;
   doc_count: number;
 }
 
-interface FacetData {
+export interface FacetData {
   buckets: Facet[];
   doc_count_error_upper_bound: number;
   sum_other_doc_count: number;
@@ -50,11 +50,11 @@ const { query, hits, facetData, organism, imagingMethod, releaseYear, sortBy, so
     sortOrder: string;
   };
 
-export function generateParamString(url, query, organism, imagingMethod, releaseYear, urlType){
+export function generateParamString(url, query, organism, imagingMethod, releaseYear){
   url += `?query=${encodeURIComponent(query)}`;
-  url = addSelectedFacetToSearchURL(organism, urlType === "search"? "organism" : "facets.scientific_name", url);
-  url = addSelectedFacetToSearchURL(imagingMethod, urlType === "search"? "imaging_method" :"facets.imaging_method", url); 
-  url = addSelectedFacetToSearchURL(releaseYear, urlType === "search"? "year" : "facets.release_date", url);
+  url = addSelectedFacetToSearchURL(organism, "facet.organism" , url);
+  url = addSelectedFacetToSearchURL(imagingMethod, "facet.imaging_method", url); 
+  url = addSelectedFacetToSearchURL(releaseYear, "facet.year", url);
   return url
 }
 
@@ -105,7 +105,7 @@ switch(sortBy) {
 const studiesURL = "/bioimage-archive/studies"
 
 const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
-  let selectedValue, title;
+  let selectedValue, title, facet_search_id;
 
 const valuesAndCounts = Object.values(data?.buckets as Facet)
   .sort((a, b) => {
@@ -123,22 +123,26 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
     case "scientific_name":
       selectedValue = organism;
       title = "Organism";
+      facet_search_id = "organism";
       break;
     case "imaging_method":
       selectedValue = imagingMethod;
       title = "Imaging Method";
+      facet_search_id = "imaging_method";
       break;
     case "release_date":
       selectedValue = releaseYear;
       title = "Release Year";
+      facet_search_id = "year";
       break;
     default:
       return acc;
   }
-
-  acc[`facets.${facet}`] = {
+  const totalFacetCounts = Object.values(valuesAndCounts).length + (data?.sum_other_doc_count || 0)
+  acc[`facet.${facet_search_id}`] = {
     valuesAndCounts,
     selectedValue,
+    totalFacetCounts,
     title
   };
 
@@ -173,28 +177,31 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
       </form>
     </div>
   </div>
-  <div class=".vf-u-grid__col--span-1--sm vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="min-width:70%;">
-    {query && (
+  <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="min-width:50%">
+    { (query || query === "") && (
       <>
         <section class="vf-content">
           <div class="vf-grid vf-grid__col-3">
-            <div class="vf-grid__col--span-2"><h2>Search results for <a href={`/bioimage-archive/studies?query=${query}`}><strong>{query}</strong></a></h2></div>
-            <div class="vf-form vf-grid__col--span-1" style="display: flex;height: 50%" id="sort">
-            <label for="sortBy" class="vf-form__label" style="flex: 3; margin:auto;">Sort by:</label>
-            <select name="sortBy" id="sortBy" class="vf-form__select" style="flex: 6">
+            <div class="vf-grid__col--span-2">{query && (<h2>Search results for <a href={`/bioimage-archive/studies?query=${query}`}><strong>{query}</strong></a></h2>)}</div>
+            <div></div>
+          </div>
+          <section>
+          <div class="vf-grid vf-grid__col-3">
+            <div class="vf-grid__col--span-2" style="display: flex; align-items: center;"><span id="paginated-results" >1-{results.length} of {totalResults} results</span></div>
+            <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
+            <label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
+            <select name="sortBy" id="sortBy" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100 vf-u-padding__left--200" style="flex: 5; height: 2.5em">
               <option value="relevance" selected={sortBy === "relevance"} >Relevance</option>
               <option value="accession" selected={sortBy === "accession"} >Accession ID</option>
               <option value="release_date" selected={sortBy === "release_date"}>Release Date</option>
             </select>
             <div class="sort-order-buttons" style="flex: 1">
-              <button type="button" data-order="ascending" class={sortOrder === "ascending" || !sortOrder ? "active": ""} >⋀</button>
-              <button type="button" data-order="descending" class={sortOrder === "descending" ? "active": ""}>⋁</button>
+              <button type="button" data-order="ascending" class={sortOrder === "ascending" || !sortOrder ? "active vf-form__select": "vf-form__select"} >⋀</button>
+              <button type="button" data-order="descending" class={sortOrder === "descending" ? "active vf-form__select": "vf-form__select"}>⋁</button>
             </div>
             </div>
           </div>
-          <section>
-          <div><span id="paginated-results">1-{results.length} of {totalResults} results</span></div>
-          <div id="selected-facets" style="margin-top: 1rem; margin-bottom: 1rem;">
+          <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
             <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
             <SearchSelectedFacet selectedList={imagingMethod} url={studiesURL} text={"Imaging Method"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
             <SearchSelectedFacet selectedList={releaseYear} url={studiesURL} text={"Release Year"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/>           
@@ -331,25 +338,39 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
 });
 </script>
 <style>
+#sort {
+  position: relative;
+}
+  
+#sort select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: white;
+}
+
+#sort::after {
+  content: "⋁"; /* your symbol here */
+  position: absolute;
+  right: 5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* don’t block clicks */
+  font-size: 1.25rem;
+  color: #555;
+}
+
 .sort-order-buttons {
-  margin-left: 1%;
+  margin-left: 0.5em;
   display: inline-flex;
   background: white;
+  height: 2.2em;
 }
 
 .sort-order-buttons button {
   background: white;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  background-position: right 1rem top 50%, 0 0;
-  background-repeat: no-repeat, repeat;
-  background-size: 1.125em;
-  border: 1.5px solid #707372;
-  border-radius: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  color: #54585a;
   display: block;
+  padding: 0 0.5rem;
 }
 
 .sort-order-buttons button:hover {
