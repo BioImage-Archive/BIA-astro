@@ -1,7 +1,6 @@
 ---
-import imageMetadata from "../data/bia-image-metadata.json";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
-import { getSimpleAttributeValue } from "./SharedJSFunctions";
+import { getSimpleAttributeValue, getImageFromAPI } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
@@ -20,6 +19,11 @@ function getDownloadSize(uuid, imageMetadata) {
   }
   return "Unknown"
 }
+
+const imageMetadata = {
+  [image.uuid]: await getImageFromAPI(image.uuid)
+};
+
 
 ---
 <tr>
