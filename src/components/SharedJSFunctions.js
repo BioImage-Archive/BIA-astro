@@ -112,18 +112,17 @@ export function getAnnotationType(datasets) {
           if (Array.isArray(innerArray)) {
             innerArray.forEach(type => {
               if (typeof type === 'string') {
-                annotationTypes.add(type.trim().toLowerCase());
+                annotationTypes.add(type.replace(/_/g, ' ').trim().toLowerCase());
               }
             });
           } else if (typeof innerArray === 'string') {
-            // Handle case where innerArray might be a direct string
-            annotationTypes.add(innerArray.trim().toLowerCase());
+            annotationTypes.add(innerArray.replace(/_/g, ' ').trim().toLowerCase());
           }
         });
       } else if (typeof annotationMetaData.value === 'string') {
         // Case 2: It's a direct string (e.g., "type1,type2" or just "type1")
         annotationMetaData.value.split(',').forEach(typePart => {
-          const cleanedType = typePart.trim().toLowerCase();
+          const cleanedType = typePart.replace(/_/g, ' ').trim().toLowerCase();
           if (cleanedType) {
             annotationTypes.add(cleanedType);
           }
@@ -138,7 +137,7 @@ export function getAnnotationType(datasets) {
         if (process.method_type && Array.isArray(process.method_type) && process.method_type.length > 0) {
           process.method_type.forEach(type => {
             if (typeof type === 'string') {
-              const cleanedType = type.trim().toLowerCase();
+              const cleanedType = type.replace(/_/g, ' ').trim().toLowerCase();
               if (cleanedType) {
                 annotationTypes.add(cleanedType);
               }
