@@ -1,4 +1,5 @@
 import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
+import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 export function getPlaceholderHeroImage(accessionID) {
     const match = accessionID.match(/(\d{1,5})$/);
@@ -117,6 +118,11 @@ export function getAnnotationType(dataset) {
 export function getMetadataValue(mdArray, key, field = null) {
   const md = mdArray.find(md => md.name === key)?.value;
   return field && md ? md[field]?.[0] : md;
+}
+
+export function getThumbnail(img) {
+    const thumbnail_uri = getMetadataValue(img.additional_metadata, "image_thumbnail_uri")?.["256"]?.["uri"] || imageFallback.src;
+    return thumbnail_uri;
 }
 
 async function getFromAPI(url){

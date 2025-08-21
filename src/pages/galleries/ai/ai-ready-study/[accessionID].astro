@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
@@ -11,19 +11,6 @@ import "../../../../styles/image_slider.css"
 
 export function getStaticPaths() {
   return Object.values(collection.accession_ids).map(accession => ({params: { accessionID: accession }}));
-}
-
-function extractMetadata(img) {
-  const map = new Map();
-  img?.additional_metadata?.forEach(md => map.set(md.name, md.value));
-  return map;
-}
-
-function getThumbnail(img) {
-  const meta = extractMetadata(img);
-  return meta.get("thumbnail_uri")?.thumbnail_uri?.[0] ||
-         meta.get("image_thumbnail_uri")?.["256"]?.["uri"] ||
-         meta.get("image_thumbnail_uri")?.image_thumbnail_uri?.[0] || "";
 }
 
 const { accessionID } = Astro.params;

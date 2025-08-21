@@ -1,38 +1,26 @@
 ---
-import imageFallback from "../assets/bioimage-archive/image_fallback.png"
-import { getSimpleAttributeValue, getImageFromAPI } from "./SharedJSFunctions";
+import { getImageFromAPI, getThumbnail } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
-function getThumbnail(uuid, imageMetadata) {
-  const thumbnail_uri = imageMetadata?.[uuid] ? getSimpleAttributeValue(imageMetadata[uuid], "thumbnail_uri")?.[0] : null;
-  return thumbnail_uri ?? imageFallback.src;
-}
-
-function getDownloadSize(uuid, imageMetadata) {
-  // TODO
-  if (uuid in imageMetadata) {
-    const submitter_data = imageMetadata[uuid].representation.find((rep)=>rep.use_type == "UPLOADED_BY_SUBMITTER")
-    if (submitter_data != undefined) {
-      return submitter_data.total_size_in_bytes
-    }
+function getDownloadSize(imageMetadata) {
+  const submitter_data = imageMetadata.representation.find((rep)=>rep.total_size_in_bytes > 0)
+  if (submitter_data != undefined) {
+    return submitter_data.total_size_in_bytes
   }
   return "Unknown"
 }
 
-const imageMetadata = {
-  [image.uuid]: await getImageFromAPI(image.uuid)
-};
-
+const imageMetadata = await getImageFromAPI(image.uuid);
 
 ---
 <tr>
   <td>
-    <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}><img class="vf-figure__image" src={getThumbnail(image.uuid, imageMetadata)}/></a>
+    <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}><img class="vf-figure__image" src={getThumbnail(image)}/></a>
   </td>
   <td>{image.uuid}</td>
   <td>{datasetTitle}</td>
-  <td>{getDownloadSize(image.uuid, imageMetadata)}</td>
+  <td>{getDownloadSize(imageMetadata)}</td>
   <td>
     <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}>View</a>
   </td>
