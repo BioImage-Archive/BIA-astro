@@ -6,12 +6,12 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 
-import studyMetadata from "../../data/bia-study-metadata.json";
+import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromAPI, getAllStudiesFromMongo} from "../../components/SharedJSFunctions.js"
+import { type Study } from "../../components/SharedInterface.astro"
 
-import {formatListItem, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID} from "../../components/SharedJSFunctions.js"
-
-export function getStaticPaths() {
-  return Object.values(studyMetadata).map((study) => {
+export async function getStaticPaths() {
+  const studyMetadata = await getAllStudiesFromMongo();
+  return studyMetadata.map((study) => {
     return {
       params: { accessionID: study.accession_id },
     };
@@ -25,8 +25,7 @@ const tableOfContents = {
 };
 
 const { accessionID } = Astro.params;
-const study = accessionID in studyMetadata ? studyMetadata[accessionID] : undefined;
-
+const study = await getStudyFromAPI("accession", accessionID) as Study;
 const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 
 function getFileTypes(study) {

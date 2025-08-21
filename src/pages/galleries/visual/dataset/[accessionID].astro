@@ -1,47 +1,55 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-
-import exports from "../../../../data/old-export-format/bia-export.json";
 import studyImage from "../../../../assets/bioimage-archive/study.png";
 import biosampleImage from "../../../../assets/bioimage-archive/biosample.png";
 import imacqImage from "../../../../assets/bioimage-archive/im_acquisition.png";
-import specimenImage from "../../../../assets/bioimage-archive/specimen.png";
+import {getStudyFromAPI, getStudyImage} from "../../../../components/SharedJSFunctions"
+import type { Study } from '../../../../components/SharedInterface.astro';
+
 
 export function getStaticPaths() {
-  return Object.values(exports["datasets"]).map((dataset) => {
+  const accessionIDs = [
+  "S-BSST223", "S-BSST429", "S-BIAD144", "S-BIAD217", "S-BIAD368", "S-BIAD425", 
+  "S-BIAD570", "S-BIAD582", "S-BIAD606", "S-BIAD608", "S-BIAD620", "S-BIAD661", 
+  "S-BIAD626", "S-BIAD627", "S-BIAD725", "S-BIAD746", "S-BIAD826", "S-BIAD886", 
+  "S-BIAD901", "S-BIAD915", "S-BIAD916", "S-BIAD922", "S-BIAD928", "S-BIAD952", 
+  "S-BIAD954", "S-BIAD961", "S-BIAD963", "S-BIAD968", "S-BIAD976", "S-BIAD978", 
+  "S-BIAD987", "S-BIAD988", "S-BIAD993", "S-BIAD999", "S-BIAD1008"
+]
+  return Object.values(accessionIDs).map((accession) => {
     return {
-      params:  {accessionID: dataset.accession_id }
+      params:  {accessionID: accession }
     };
   });
 }
 
 const { accessionID } = Astro.params;
-const study = exports["datasets"][accessionID];
-
-const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
+const study = await getStudyFromAPI("accession",accessionID);
+const images = study?.dataset?.flatMap(ds => ds.image) || [];
+const numberOfImages = images.length;
 ---
-<BaseLayout pageTitle= {study.accession_id} >
+<BaseLayout pageTitle= {study?.accession_id || ""} >
   <body>
   <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-    <StudyTitleInfo study_info={study} />
+    {study && (<StudyTitleInfo study_info={study}/>)}
   </section>
 
   <section  class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
         <h2 class="vf-section-header__heading">Content</h2>
         <ul class="vf-list">
-          <li>{study.n_images} images</li>
+          <li>{numberOfImages} images</li>
         </ul>
       </div>
       <div>                  
           <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-              <img class="vf-figure__image" src={ study.example_image_uri }>
+              <img class="vf-figure__image" src="">
           </figure>  
-          { study.description }
+          { study?.description || ""}
       </div>
       <div>
-        <a href={study.links[0]["url"]}>
+        <a href={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study?.accession_id || ""}`}>
           <button class="vf-button vf-button--primary vf-button--sm">Original study</button>
         </a>
       </div>
@@ -57,16 +65,16 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div>
       <br />
       <br />
-      <a href={study.links[0]["url"]}>
+      <a href={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study?.accession_id || ""}`}>
         <button class="vf-button vf-button--primary vf-button--sm"
           >Original submission page</button
         >
       </a>
       <p><b>Licence:</b> CC0</p>
       {
-        study.models_description != null && (
+        study?.models_description != null && (
           <p>
-            <b>Models: </b> {study.models_description}
+            <b>Models: </b> {study?.models_description}
           </p>
         )
       }
@@ -82,7 +90,7 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div>
       <br />
       <b>Organism: </b>
-      {study.organism}
+      {study?.organism}
     </div>
     <div></div>
   </section>
@@ -95,7 +103,7 @@ const images = study.image_uuids.map((uuid) => exports["images"][uuid]);
     <div>
       <br />
       <b>Imaging method: </b>
-      {study.imaging_type}
+      {study?.imaging_type}
     </div>
     <div></div>
   </section>

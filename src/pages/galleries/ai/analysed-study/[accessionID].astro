@@ -1,9 +1,8 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
-
 import BenchmarkedDatasetPage from "../../../../components/ai-benchmarking/BenchmarkedDatasetPage.astro"
-
-import studyMetadata from "../../../../data/bia-study-metadata.json"
+import {getStudyFromAPI} from "../../../../components/SharedJSFunctions.js"
+import { type Study } from "../../../../components/SharedInterface.astro"
 import additionalStudyMetadata from "../../../../data/ai-dataset-benchmarking/additional-study-metadata.json"
 import tableInfo from "../../../../data/ai-dataset-benchmarking/model-dataset-table.json"
 
@@ -17,7 +16,10 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-
+const study = await getStudyFromAPI("accession", accessionID) as Study;
+const studyMetadata = {
+  [accessionID]: study
+};
 
 const breadcrumbs = [
   "/bioimage-archive",
