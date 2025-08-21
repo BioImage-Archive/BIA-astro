@@ -51,7 +51,7 @@ function getDataForCardFilter(study) {
 
         {annotationType && annotationType.length > 0 && (
             <p class="vf-card__text">
-                <b>Annotation Type:</b> {annotationType.join(", ")}
+                <b>Annotation Type:</b> {annotationType.join(", ") || "No information available"}
             </p>
         )}
     </div>
