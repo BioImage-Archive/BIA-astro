@@ -152,7 +152,6 @@ export function getAnnotationType(datasets) {
   return Array.from(annotationTypes).sort();
 }
 
-
 export function getMetadataValue(mdArray, key, field = null) {
   const md = mdArray.find(md => md.name === key)?.value;
   return field && md ? md[field]?.[0] : md;

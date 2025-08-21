@@ -67,7 +67,6 @@ const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
   dataset_title: dataset.title,
   organism: organism,
   imaging: imagingMethod,
-  // TODO: Test this
   annotation_type: getAnnotationType([dataset]).join(", ") || "No information available",
   annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
 }))
