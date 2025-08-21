@@ -1,5 +1,4 @@
 ---
-export const prerender = false;
 import BaseLayoutWithBreadcrumbs from "../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
@@ -7,8 +6,17 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 
-import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromAPI} from "../../components/SharedJSFunctions.js"
+import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromAPI, getAllStudiesFromMongo} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
+
+export async function getStaticPaths() {
+  const studyMetadata = await getAllStudiesFromMongo();
+  return studyMetadata.map((study) => {
+    return {
+      params: { accessionID: study.accession_id },
+    };
+  });
+}
 
 const tableOfContents = {
   "Study Information": "study",

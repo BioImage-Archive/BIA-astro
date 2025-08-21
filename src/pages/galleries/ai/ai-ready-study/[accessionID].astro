@@ -1,10 +1,9 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getStudyFromAPI } from "../../../../components/SharedJSFunctions"
+import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
-import images from "../../../../data/current-export/bia-ai-image-export.json";
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
 import DatasetFilesTable from "../../../../components/DatasetFilesTable.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
@@ -30,27 +29,7 @@ function getThumbnail(img) {
 const { accessionID } = Astro.params;
 const study = await getStudyFromAPI("accession", accessionID) as Study;
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
-const annotatedImagesMap = new Map();
-const allInputImageUUIDs = new Set();
-for (const img of Object.values(images)) {
-  if (img.creation_process?.input_image_uuid?.length && 
-      img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
-      !img.additional_metadata?.some(md =>
-      (
-        md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
-      )
-    )
-    ) {
-    const key = img.creation_process.input_image_uuid[0];
-    allInputImageUUIDs.add(img.uuid)
-    if (!annotatedImagesMap.has(key)) {
-      annotatedImagesMap.set(key, []);
-    }
-    annotatedImagesMap.get(key).push(img);
-  }
-}
+const annotatedImagesMap = await generateSourceAnnotatedImageMap(study)
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);
@@ -163,9 +142,9 @@ const breadcrumbs = [
                 <div class="slideshow-container" data-row={rowIndex}>
                 {annotatedImgs.length > 1 ? annotatedImgs.map((annImg, i) => (
                   <div class="slides fade" style={`display: ${i === 0 ? "block" : "none"}`}>
-                  <a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
+                  <a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
                   </div>
-                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
+                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
                 }
                 </div>
               </td>

@@ -1,5 +1,4 @@
-import { PUBLIC_SEARCH_API } from "astro:env/client";
-const api = "https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2"
+import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getPlaceholderHeroImage(accessionID) {
     const match = accessionID.match(/(\d{1,5})$/);
@@ -154,7 +153,50 @@ export async function getImageFromAPI(uuid){
     return image
 }
 
-export async function getDataset(uuid){
-  const dataset = await getFromAPI(`${api}/dataset/${uuid}`);
+export async function getDatasetFromMongo(uuid){
+  const dataset = await getFromAPI(`${PUBLIC_MONGO_API}/dataset/${uuid}`);
   return dataset;
+}
+
+
+export async function getAllStudiesFromMongo(){
+  const studies = await getFromAPI(`${PUBLIC_MONGO_API}/search/study?page_size=10000`);
+  return Object.values(studies);
+}
+
+function imageFilter(img){
+    return (img.creation_process?.input_image_uuid?.length && 
+    img.representation.some(imgRep => imgRep.image_format.includes(".ome.zarr")) &&
+    !img.additional_metadata?.some(md =>
+        (
+            md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 
+            md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
+            md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
+        )
+    ))
+}
+
+export async function getSourceAnnotatedImagePairs(uuid){
+    const creationProcessLinkingImage = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/creation_process?page_size=20`)
+    const imageLinkingCreationProcess = await Promise.all(creationProcessLinkingImage.flatMap( async (cp) => (await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${cp.uuid}/image?page_size=1`))[0]))
+    const annotatedImages = await Promise.all(imageLinkingCreationProcess.flatMap( async (img) => await getImageFromAPI(img.uuid)))
+    return annotatedImages
+}
+
+export async function generateSourceAnnotatedImageMap(study){
+    const annotatedImagesMap = new Map();
+    const allInputImageUUIDs = new Set();
+    const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image) || [];
+    const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
+    for (const img of Object.values(images)) {
+        if (imageFilter(img)) {
+            const key = img.creation_process.input_image_uuid[0];
+            allInputImageUUIDs.add(img.uuid)
+            if (!annotatedImagesMap.has(key)) {
+                annotatedImagesMap.set(key, []);
+            }
+            annotatedImagesMap.get(key).push(img);
+        }
+    }
+    return annotatedImagesMap
 }
