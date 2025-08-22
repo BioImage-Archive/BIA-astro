@@ -1,0 +1,40 @@
+---
+const { paginationData } = Astro.props;
+const currentPage = paginationData.page;
+const totalPages = paginationData.total_pages 
+
+function buildPageURL(targetPage) {
+  const url = new URL( Astro.request.url);
+  url.searchParams.set("pagination.page", targetPage);
+  return url.toString();
+}
+
+let startPage = Math.max(1, currentPage - 2);
+let endPage = Math.min(totalPages, startPage + 7);
+
+if (endPage - startPage < 4) {
+  startPage = Math.max(1, endPage - 7);
+}
+
+---
+<nav class="vf-pagination" aria-label="Pagination">
+    <ul class="vf-pagination__list | vf-list vf-list--inline">
+    <li class="vf-pagination__item vf-pagination__item--previous-page">
+      {currentPage > 1
+        ? <a href={buildPageURL(1)}>First</a>
+        : <span>First</span>}
+    </li>
+    {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(p => (
+      <li class={`vf-pagination__item ${p === currentPage ? "vf-pagination__item--is-active" : ""}`}>
+        {p === currentPage
+          ? <span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">{p}</span>
+          : <a href={buildPageURL(p)}>{p}</a>}
+      </li>
+    ))}
+    <li class="vf-pagination__item vf-pagination__item--next-page">
+      {currentPage < totalPages
+        ? <a href={buildPageURL(totalPages)}>Last</a>
+        : <span>Last</span>}
+    </li>
+    </ul>
+</nav>

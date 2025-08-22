@@ -2,9 +2,11 @@
 import StudyCard from '../../components/cards/BrowseStudyCard.astro';
 import SearchFacet from './SearchFacet.astro';
 import SearchSelectedFacet from './SearchSelectedFacet.astro';
+import PaginationControl from '../PaginationControl.astro';
 import  "../../styles/toggle.css"
 import "../../styles/browse_controls.css"
 import "../../styles/filter_cards.css"
+import { PUBLIC_SEARCH_API } from 'astro:env/client';
 
 interface source {
   accession_id: string;
@@ -38,11 +40,18 @@ export interface FacetData {
   sum_other_doc_count: number;
 }
 
-const { query, hits, facetData, organism, imagingMethod, releaseYear, sortBy, sortOrder } =
+export interface PaginationData {
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+const { query, hits, facetData, paginationData, organism, imagingMethod, releaseYear, sortBy, sortOrder } =
   Astro.props as {
     query: string;
     hits: SearchHits;
     facetData: FacetData;
+    paginationData: PaginationData;
     organism: string;
     imagingMethod: string;
     releaseYear: string;
@@ -50,11 +59,19 @@ const { query, hits, facetData, organism, imagingMethod, releaseYear, sortBy, so
     sortOrder: string;
   };
 
-export function generateParamString(url, query, organism, imagingMethod, releaseYear){
-  url += `?query=${encodeURIComponent(query)}`;
+export function generateParamString(url: string, query: string, organism: string[], imagingMethod: string[], releaseYear: string[], page: number){
+  const pageSize = 9;
+  
+  if (url.includes(PUBLIC_SEARCH_API)){
+    url += `?pagination.page_size=${pageSize}`;
+    url += `&query=${encodeURIComponent(query)}`;
+  }else{
+    url += `?query=${encodeURIComponent(query)}`;
+  }
   url = addSelectedFacetToSearchURL(organism, "facet.organism" , url);
   url = addSelectedFacetToSearchURL(imagingMethod, "facet.imaging_method", url); 
   url = addSelectedFacetToSearchURL(releaseYear, "facet.year", url);
+  url += `&pagination.page=${page}`;
   return url
 }
 
@@ -103,7 +120,6 @@ switch(sortBy) {
 }
 
 const studiesURL = "/bioimage-archive/studies"
-
 const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
   let selectedValue, title, facet_search_id;
 
@@ -148,7 +164,6 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
 
   return acc;
 }, {});
-
 ---
 <section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
   <div class=".vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
@@ -187,7 +202,11 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
           </div>
           <section>
           <div class="vf-grid vf-grid__col-3">
-            <div class="vf-grid__col--span-2" style="display: flex; align-items: center;"><span id="paginated-results" >1-{results.length} of {totalResults} results</span></div>
+            <div class="vf-grid__col--span-2" style="display: flex; align-items: center;">
+              <span id="paginated-results">
+                  {(paginationData.page - 1) * paginationData.page_size + 1} - {Math.min(paginationData.page * paginationData.page_size, totalResults)} of {totalResults} results
+                </span>
+              </div>
             <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
             <label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
             <select name="sortBy" id="sortBy" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100 vf-u-padding__left--200" style="flex: 5; height: 2.5em">
@@ -202,8 +221,8 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
             </div>
           </div>
           <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
-            <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
-            <SearchSelectedFacet selectedList={imagingMethod} url={studiesURL} text={"Imaging Method"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/> 
+            <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} /> 
+            <SearchSelectedFacet selectedList={imagingMethod} url={studiesURL} text={"Imaging Method"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} /> 
             <SearchSelectedFacet selectedList={releaseYear} url={studiesURL} text={"Release Year"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/>           
           </div>
           <div class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
@@ -218,6 +237,8 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
               ))
             )}
             </div>
+            <br/>
+            <PaginationControl  paginationData={paginationData}/>
           </div>
           </section>
         </section>
@@ -225,92 +246,6 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
     )}
   </div>
 </section>
-<script type="application/json" id="total-search-result" set:html={JSON.stringify(totalResults)} />
-<script type="module">
-  const container = document.querySelector('.vf-card-container__inner');
-  const originalCards = Array.from(container.querySelectorAll('.vf-card'));
-  const totalResults = JSON.parse(document.getElementById('total-search-result').textContent);
-  const resultsCountSpan = document.getElementById('paginated-results');
-  const pageSize = 9;
-  let currentPage = 1;
-
-  function renderPage(page) {    
-    if (resultsCountSpan) {
-      if (originalCards.length === 0) {
-        resultsCountSpan.textContent = `0 of ${totalResults} results`;
-      } else {
-        container.innerHTML = '';
-        const start = (page - 1) * pageSize;
-        const end = Math.min(start + pageSize, totalResults);
-        const pageCards = originalCards.slice(start, end);
-        pageCards.forEach(card => container.appendChild(card));
-        resultsCountSpan.textContent = `${start + 1}-${end} of ${totalResults} results`;
-        renderPaginationControls();
-      }
-    }
-  }
-
-  function renderPaginationControls() {
-    const totalPages = Math.ceil(originalCards.length / pageSize);
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, startPage + 4);
-    if (endPage - startPage < 4) {
-      startPage = Math.max(1, endPage - 4);
-    }
-
-    let html = `
-      <br/><nav class="vf-pagination" aria-label="Pagination">
-        <ul class="vf-pagination__list | vf-list vf-list--inline">
-          <li class="vf-pagination__item vf-pagination__item--previous-page">
-            ${currentPage > 1 
-              ? `<a href="#" aria-label="Previous page" data-page="${currentPage - 1}">Previous</a>`
-              : `<span>Previous</span>`}
-          </li>
-    `;
-
-    for (let i = startPage; i <= endPage; i++) {
-      if (i === currentPage) {
-        html += `
-          <li class="vf-pagination__item vf-pagination__item--is-active">
-            <span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">${i}</span>
-          </li>
-        `;
-      } else {
-        html += `
-          <li class="vf-pagination__item">
-            <a href="#" data-page="${i}">${i}</a>
-          </li>
-        `;
-      }
-    }
-
-    html += `
-          <li class="vf-pagination__item vf-pagination__item--next-page">
-            ${currentPage < totalPages
-              ? `<a href="#" aria-label="Next page" data-page="${currentPage + 1}">Next</a>`
-              : `<span>Next</span>`}
-          </li>
-        </ul>
-      </nav>
-    `;
-
-    let paginationContainer = document.getElementById('pagination-controls');
-    if (!paginationContainer) {
-      paginationContainer = document.createElement('div');
-      paginationContainer.id = 'pagination-controls';
-      container.parentNode.insertBefore(paginationContainer, container.nextSibling);
-    }
-    paginationContainer.innerHTML = html;
-    paginationContainer.querySelectorAll('a[data-page]').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        currentPage = parseInt(link.getAttribute('data-page'), 10);
-        renderPage(currentPage);
-      });
-    });
-  }
-  renderPage(currentPage);
-</script>
 <script type="module">
   window.addEventListener('pageshow', (event) => {
     if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
