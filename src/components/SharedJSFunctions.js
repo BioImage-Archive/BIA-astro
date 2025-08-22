@@ -97,19 +97,59 @@ export function getTaxons(study) {
     return taxonHtmlList
 }
 
-export function getAnnotationType(dataset) {
-  const fromAdditionalMetadata = dataset
-    .flatMap(dataset =>
-      dataset.additional_metadata
-        ?.filter(md => md.name === "annotation_type")
-        .map(md => md.value?.annotation_type?.[0].join(", ")) || []
-    )
-    .filter(Boolean); 
-  if (fromAdditionalMetadata.length > 0) return fromAdditionalMetadata;
-  const fromAnnotationProcess = dataset
-    .map(dataset => dataset.annotation_process?.[0]?.method_type?.[0])
-    .filter(Boolean);
-  return fromAnnotationProcess;
+export function getAnnotationType(datasets) {
+  const annotationTypes = new Set();
+
+  datasets.forEach(dataset => {
+    // 1. Process annotation_type from additional_metadata
+    const annotationMetaData = dataset.additional_metadata?.find(md => md.name === "annotation_type");
+
+    if (annotationMetaData) {
+      if (Array.isArray(annotationMetaData.value?.annotation_type)) {
+        // Case 1: It's an array of arrays!
+        // We need to iterate through the outer array, and then through the inner array.
+        annotationMetaData.value.annotation_type.forEach(innerArray => {
+          if (Array.isArray(innerArray)) {
+            innerArray.forEach(type => {
+              if (typeof type === 'string') {
+                annotationTypes.add(type.replace(/_/g, ' ').trim().toLowerCase());
+              }
+            });
+          } else if (typeof innerArray === 'string') {
+            annotationTypes.add(innerArray.replace(/_/g, ' ').trim().toLowerCase());
+          }
+        });
+      } else if (typeof annotationMetaData.value === 'string') {
+        // Case 2: It's a direct string (e.g., "type1,type2" or just "type1")
+        annotationMetaData.value.split(',').forEach(typePart => {
+          const cleanedType = typePart.replace(/_/g, ' ').trim().toLowerCase();
+          if (cleanedType) {
+            annotationTypes.add(cleanedType);
+          }
+        });
+      }
+    }
+
+    // 2. Fallback to method_type from annotation_process
+    // This comes from the logic in [accessionID].astro page
+    if (dataset.annotation_process && dataset.annotation_process.length > 0) {
+      dataset.annotation_process.forEach(process => {
+        if (process.method_type && Array.isArray(process.method_type) && process.method_type.length > 0) {
+          process.method_type.forEach(type => {
+            if (typeof type === 'string') {
+              const cleanedType = type.replace(/_/g, ' ').trim().toLowerCase();
+              if (cleanedType) {
+                annotationTypes.add(cleanedType);
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+
+  // Convert Set to Array and sort for consistent display
+  return Array.from(annotationTypes).sort();
 }
 
 export function getMetadataValue(mdArray, key, field = null) {
