@@ -46,7 +46,7 @@ if (query || query === "") {
   }
 }
 
-const totalStudies = hits.total.value;
+const totalStudies = Object.values(studyMetadata).length;
 
 const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
   const studyFiles = study.dataset?.reduce((fileAcc, component) => {

@@ -1,55 +1,22 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType } from "../../../../components/SharedJSFunctions"
-import exports from "../../../../data/current-export/bia-ai-study-export.json";
-import images from "../../../../data/current-export/bia-ai-image-export.json";
+import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import { type Study } from "../../../../components/SharedInterface.astro"
+import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
 import DatasetFilesTable from "../../../../components/DatasetFilesTable.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
 export function getStaticPaths() {
-  return Object.values(exports).map(study => ({params: { accessionID: study.accession_id }}));
-}
-
-function extractMetadata(img) {
-  const map = new Map();
-  img?.additional_metadata?.forEach(md => map.set(md.name, md.value));
-  return map;
-}
-
-function getThumbnail(img) {
-  const meta = extractMetadata(img);
-  return meta.get("thumbnail_uri")?.thumbnail_uri?.[0] ||
-         meta.get("image_thumbnail_uri")?.["256"]?.["uri"] ||
-         meta.get("image_thumbnail_uri")?.image_thumbnail_uri?.[0] || "";
+  return Object.values(collection.accession_ids).map(accession => ({params: { accessionID: accession }}));
 }
 
 const { accessionID } = Astro.params;
-const study = exports[accessionID];
+const study = await getStudyFromAPI("accession", accessionID) as Study;
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
-const annotatedImagesMap = new Map();
-const allInputImageUUIDs = new Set();
-for (const img of Object.values(images)) {
-  if (img.creation_process?.input_image_uuid?.length && 
-      img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
-      !img.additional_metadata?.some(md =>
-      (
-        md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
-      )
-    )
-    ) {
-    const key = img.creation_process.input_image_uuid[0];
-    allInputImageUUIDs.add(img.uuid)
-    if (!annotatedImagesMap.has(key)) {
-      annotatedImagesMap.set(key, []);
-    }
-    annotatedImagesMap.get(key).push(img);
-  }
-}
+const annotatedImagesMap = await generateSourceAnnotatedImageMap(study)
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);
@@ -57,7 +24,7 @@ const allSourceImages = sourceDataset.flatMap(ds => ds.image || []);
 const imaging_method = Array.from(
   new Set(sourceDataset.flatMap(ds => ds?.acquisition_process?.[0]?.imaging_method_name || []))
 ).join(', ');
-const sourceExampleImageURI = sourceDataset.flatMap(ds => ds?.example_image_uri || []).filter(Boolean);
+const sourceExampleImageURI = sourceDataset.flatMap(ds => ds?.example_image_uri || []).filter(Boolean)[0];
 // Need a better logic to identify source dataset and annotation dataset
 const annotationDatasets = study.dataset.filter(ds => ds.acquisition_process.length == 0 && ds.annotation_process.length > 0);
 const annotationExampleImageURI = annotationDatasets.find(ad => ad.example_image_uri.length > 0)?.example_image_uri[0];
@@ -162,9 +129,9 @@ const breadcrumbs = [
                 <div class="slideshow-container" data-row={rowIndex}>
                 {annotatedImgs.length > 1 ? annotatedImgs.map((annImg, i) => (
                   <div class="slides fade" style={`display: ${i === 0 ? "block" : "none"}`}>
-                  <a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
+                  <a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
                   </div>
-                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${annImg?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
+                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
                 }
                 </div>
               </td>

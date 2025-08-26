@@ -1,63 +1,23 @@
 ---
+export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { taxonRender, getMetadataValue, getTaxons, getAnnotationType } from "../../../../components/SharedJSFunctions.js";
+import { getTaxons, getAnnotationType, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getSourceAnnotatedImagePairs } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
-import exports from "../../../../data/current-export/bia-ai-image-export.json";
-import datasets from "../../../../data/current-export/bia-ai-dataset-export.json";
-import studyData from "../../../../data/old-export-format/bia-export.json";
-import AIStudyData from "../../../../data/current-export/bia-ai-study-export.json";
-import SpatialomicsStudyData from "../../../../data/old-export-format/bia-spatialomics-export.json";
+import { type Study } from "../../../../components/SharedInterface.astro"
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
-import "../../../../styles/image_slider.css"
-
-export function getStaticPaths() {
-  return Object.keys(exports).map(uuid => ({params:  { uuid: uuid }}))
-}
-
-function getStudyData(datasetID) {
-  const accessionID = datasets[datasetID].submitted_in_study.accession_id;
-  return (
-    studyData.datasets?.[accessionID] ??
-    AIStudyData?.[accessionID] ??
-    SpatialomicsStudyData.datasets?.[accessionID] ??
-    { title: "Unknown Study", dataset: [] }
-  );
-}
+import "../../../../styles/image_slider.css";
 
 const { uuid } = Astro.params;
-const image = exports[uuid];
+const image = await getImageFromAPI(uuid);
+const dataset = await getDatasetFromMongo(image.submission_dataset_uuid);
+const studyInfo = await getStudyFromAPI("uuid", dataset.submitted_in_study_uuid) as Study;
+
 let sourceImage;
 let annotatedImages = [];
-
-if (image.creation_process?.input_image_uuid?.[0]) {
-  sourceImage = exports[image.creation_process.input_image_uuid[0]];
-  annotatedImages = Object.values(exports).filter(img =>
-    img.creation_process?.input_image_uuid?.[0] === sourceImage.uuid &&
-    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") && 
-    !img.additional_metadata?.some(md =>
-      ( 
-        md.value?.attributes?.["file description"] === "Raw image in JPEG format" ||
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
-      )
-    )
-  );
-} else {
-  sourceImage = image;
-  annotatedImages = Object.values(exports).filter(img =>
-    img.creation_process?.input_image_uuid?.[0] === uuid &&
-    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
-    !img.additional_metadata?.some(md =>
-      ( 
-        md.value?.attributes?.["file description"] === "Raw image in JPEG format" ||
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
-        md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"
-      )
-    )
-  );
-}
-const studyInfo = getStudyData(sourceImage.submission_dataset_uuid);
+//const annotatedImagesMap = await generateSourceAnnotatedImageMap(studyInfo)
+sourceImage = image;
+annotatedImages = await getSourceAnnotatedImagePairs(sourceImage.uuid)
 const organism = getTaxons(studyInfo).join(", ");
 const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);

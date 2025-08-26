@@ -2,15 +2,13 @@
 export const prerender = false;
 
 import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
-import SourceImage from "../../components/SourceImage.astro"
 import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
-import datasetMetadata from "../../data/bia-dataset-metadata-for-images.json";
-import imageMetadata from "../../data/bia-image-metadata.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI } from "../../components/SharedJSFunctions.js"
+import { type Study } from "../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
@@ -20,10 +18,9 @@ const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
 
-const image = imageMetadata[uuid];
-
-const imageDataset = datasetMetadata[image.submission_dataset_uuid]
-const imageStudy = imageDataset.submitted_in_study
+const image = await getImageFromAPI(uuid);
+const imageDataset = await getDatasetFromMongo(image.submission_dataset_uuid);
+const imageStudy = await getStudyFromAPI("uuid", imageDataset.submitted_in_study_uuid) as Study;
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = image.representation.find(

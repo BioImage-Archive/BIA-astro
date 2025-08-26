@@ -204,7 +204,7 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
           <div class="vf-grid vf-grid__col-3">
             <div class="vf-grid__col--span-2" style="display: flex; align-items: center;">
               <span id="paginated-results">
-                  {(paginationData.page - 1) * paginationData.page_size + 1} - {Math.min(paginationData.page * paginationData.page_size, totalResults)} of {totalResults} results
+                  {results.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
                 </span>
               </div>
             <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
@@ -237,8 +237,7 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
               ))
             )}
             </div>
-            <br/>
-            <PaginationControl  paginationData={paginationData}/>
+            {results.length != 0 && (<br/><PaginationControl  paginationData={paginationData}/>)}
           </div>
           </section>
         </section>

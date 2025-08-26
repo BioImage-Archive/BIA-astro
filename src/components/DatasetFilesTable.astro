@@ -21,9 +21,10 @@ const sectionClass = page && page === "gallery" ? "content": "intro";
       
       <table id="file_references_table" class="vf-table display"></table>
     </div>
+    
+    <script>     
+    import { PUBLIC_MONGO_API } from "astro:env/client";
 
-    <script>
-      
       document.addEventListener("DOMContentLoaded", function () {
         const dropdown = document.getElementById("dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
         const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids as string); // Ensure datasetUuids is parsed correctly
@@ -43,7 +44,7 @@ const sectionClass = page && page === "gallery" ? "content": "intro";
         const initializeDataTable = (datasetUuid: string, totalFiles: number) => {
             // set page size parameter of the api url with an upper limit of 1000
             const pageSize = totalFiles < 1000 ? totalFiles : 1000;
-            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+            const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
 
             // Destroy the existing DataTable instance if it exists
             if (dataTable) {
