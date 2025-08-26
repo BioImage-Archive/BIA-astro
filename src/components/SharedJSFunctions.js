@@ -210,7 +210,7 @@ export async function getAllStudiesFromMongo(){
   return Object.values(studies);
 }
 
-function imageFilter(img){
+function isImaegAnAnnotation(img){
     return (img.creation_process?.input_image_uuid?.length && 
     img.representation.some(imgRep => imgRep.image_format.includes(".ome.zarr")) &&
     !img.additional_metadata?.some(md =>
@@ -231,13 +231,11 @@ export async function getSourceAnnotatedImagePairs(uuid){
 
 export async function generateSourceAnnotatedImageMap(study){
     const annotatedImagesMap = new Map();
-    const allInputImageUUIDs = new Set();
     const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image) || [];
     const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
     for (const img of Object.values(images)) {
-        if (imageFilter(img)) {
+        if (isImaegAnAnnotation(img)) {
             const key = img.creation_process.input_image_uuid[0];
-            allInputImageUUIDs.add(img.uuid)
             if (!annotatedImagesMap.has(key)) {
                 annotatedImagesMap.set(key, []);
             }
