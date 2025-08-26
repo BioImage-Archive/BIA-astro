@@ -4,11 +4,8 @@ import { getImageFromAPI, getThumbnail } from "./SharedJSFunctions";
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
 function getDownloadSize(imageMetadata) {
-  const submitter_data = imageMetadata.representation.find((rep)=>rep.total_size_in_bytes > 0)
-  if (submitter_data != undefined) {
-    return submitter_data.total_size_in_bytes
-  }
-  return "Unknown"
+  const submitter_data = imageMetadata?.representation.find((rep)=>rep.total_size_in_bytes > 0)?.total_size_in_bytes ?? "Unkown"
+  return submitter_data
 }
 
 const imageMetadata = await getImageFromAPI(image.uuid);

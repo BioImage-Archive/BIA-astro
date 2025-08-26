@@ -9,7 +9,7 @@ export function getPlaceholderHeroImage(accessionID) {
 }
 
 export function getStudyImage(study, cardImageOverride) {
-    const datasetWithImage = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0).find((dataset) => dataset.example_image_uri.length > 0)
+    const datasetWithImage = study.dataset.filter(ds => ds?.acquisition_process?.length > 0 && ds?.annotation_process?.length == 0).find((dataset) => dataset.example_image_uri.length > 0)
     if (cardImageOverride != null) {
       return cardImageOverride
     } else if (datasetWithImage == undefined) {
@@ -59,7 +59,7 @@ export function getSimpleAttributeValue(obj, attrName) {
   
   
 export function getDatasetStatsByUUID(study) {
-    return aggregateDatasetStats(study.dataset);
+    return aggregateDatasetStats(study?.dataset || []);
 }
 
 export function aggregateDatasetStats(datasets) {
@@ -204,16 +204,30 @@ export async function getDatasetFromMongo(uuid){
   return dataset;
 }
 
+export async function getStudyUsingAccessionIDFromMongo(accessionID){
+  const study = await getFromAPI(`${PUBLIC_MONGO_API}/search/study/accession?accession_id=${accessionID}&page_size=1`);
+  study.dataset = await getFromAPI(`${PUBLIC_MONGO_API}/study/${study.uuid}/dataset?page_size=10`);
+  study.dataset = await Promise.all(
+    study.dataset.map(async (ds) => {
+      const images = await getFromAPI(
+        `${PUBLIC_MONGO_API}/dataset/${ds.uuid}/image?page_size=10`
+      );
+      return { ...ds, image: images };
+    })
+  );
+  return study;
+}
+
 
 export async function getAllStudiesFromMongo(){
   const studies = await getFromAPI(`${PUBLIC_MONGO_API}/search/study?page_size=10000`);
   return Object.values(studies);
 }
 
-function isImaegAnAnnotation(img){
+function isImageAnAnnotation(img){
     return (img.creation_process?.input_image_uuid?.length && 
     img.representation.some(imgRep => imgRep.image_format.includes(".ome.zarr")) &&
-    !img.additional_metadata?.some(md =>
+    !img?.additional_metadata?.some(md =>
         (
             md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 
             md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
@@ -225,7 +239,7 @@ function isImaegAnAnnotation(img){
 export async function getSourceAnnotatedImagePairs(uuid){
     const creationProcessLinkingImage = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/creation_process?page_size=20`)
     const imageLinkingCreationProcess = await Promise.all(creationProcessLinkingImage.flatMap( async (cp) => (await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${cp.uuid}/image?page_size=1`))[0]))
-    const annotatedImages = await Promise.all(imageLinkingCreationProcess.flatMap( async (img) => await getImageFromAPI(img.uuid)))
+    const annotatedImages = (await Promise.all(imageLinkingCreationProcess.flatMap( async (img) => await getImageFromAPI(img.uuid)))).filter(img => isImageAnAnnotation(img));
     return annotatedImages
 }
 
@@ -234,7 +248,7 @@ export async function generateSourceAnnotatedImageMap(study){
     const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image) || [];
     const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
     for (const img of Object.values(images)) {
-        if (isImaegAnAnnotation(img)) {
+        if (isImageAnAnnotation(img)) {
             const key = img.creation_process.input_image_uuid[0];
             if (!annotatedImagesMap.has(key)) {
                 annotatedImagesMap.set(key, []);
