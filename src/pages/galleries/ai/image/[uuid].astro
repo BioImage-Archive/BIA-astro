@@ -2,7 +2,7 @@
 export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { getMetadataValue, getTaxons, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getSourceAnnotatedImagePairs } from "../../../../components/SharedJSFunctions.js";
+import { getTaxons, getAnnotationType, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getSourceAnnotatedImagePairs } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
@@ -27,7 +27,7 @@ const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
   dataset_title: dataset.title,
   organism: organism,
   imaging: imagingMethod,
-annotation_type: getMetadataValue(dataset.additional_metadata, "annotation_type", "annotation_type")?.join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
+  annotation_type: getAnnotationType([dataset]).join(", ") || "No information available",
   annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
 }))
 const license = {link: "https://creativecommons.org/publicdomain/zero/1.0/", text: "CC0"}

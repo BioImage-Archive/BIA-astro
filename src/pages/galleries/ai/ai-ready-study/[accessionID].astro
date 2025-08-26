@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
@@ -48,8 +48,8 @@ const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
   dataset_title: dataset.title,
   organism: organism,
   imaging: imaging_method,
-  annotation_type: getSimpleAttributeValue(dataset, "annotation_type")?.join(", ") || dataset.annotation_process[0].method_type[0] || "No information avaialable",
-  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information avaialable"
+  annotation_type: getAnnotationType([dataset]).join(", ") || "No information available",
+  annotation_method: dataset.annotation_process[0]?.protocol_description || dataset.annotation_process[0]?.annotation_criteria || "No information available"
 }))
 const tableOfContents = {
   "Curated Study Information": "study",

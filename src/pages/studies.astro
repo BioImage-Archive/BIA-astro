@@ -6,15 +6,15 @@ import "../styles/toggle.css";
 import "../styles/browse_controls.css";
 import "../styles/filter_cards.css";
 import studyMetadata from "../data/bia-study-metadata.json";
-import SearchResults, { type SearchHits, type FacetData } from "../components/search/Search.astro";
+import SearchResults, { type SearchHits, type FacetData, type PaginationData } from "../components/search/Search.astro";
 import { generateParamString } from "../components/search/Search.astro";
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query') || "";
-const hasImages = url.searchParams.get('hasImages') === 'true' || false;
 const sortBy = url.searchParams.get('sortBy');
 const sortOrder = url.searchParams.get('sortOrder');
+const page = Number(url.searchParams.get('pagination.page')) || 1;
 const organism = url.searchParams.getAll('facet.organism');
 const imagingMethod = url.searchParams.getAll('facet.imaging_method');
 const releaseYear = url.searchParams.getAll('facet.year');
@@ -26,12 +26,14 @@ if (query || query === "") {
     query,
     organism,
     imagingMethod,
-    releaseYear
+    releaseYear,
+    page
   );
 }
 
 let hits = {} as SearchHits;
 let facetData = {} as FacetData;
+let paginationData = {} as PaginationData;
 
 let pageTitle = query.length === 0? "Browse Studies": "Search Studies"; 
 if (query || query === "") {
@@ -40,19 +42,11 @@ if (query || query === "") {
     const data = await res.json();
     hits = data.hits;
     facetData = data.facets;
+    paginationData = data.pagination;
   }
 }
 
-const totalStudies = hits.total.value;
-
-if (hasImages) {
-  hits = {
-    ...hits, // keep total, max_score
-    hits: hits.hits.filter(
-      hit => hit._source?.dataset?.some(dataset => dataset.image?.length > 0)
-    )
-  };
-}
+const totalStudies = Object.values(studyMetadata).length;
 
 const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
   const studyFiles = study.dataset?.reduce((fileAcc, component) => {
@@ -87,21 +81,13 @@ const formattedTotalImages = totalImages.toLocaleString();
             <p class="vf-hero__text">
           All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
         </div>
-        <div slot="right_of_header" class="controls-container"> 
-          <div class="controls-inner">
-            <div class="filter-option">
-              <span> Limit to studies with viewable images:  </span>
-              <label class="switch" id="image_toggle_switch">
-                <input type="checkbox" id="image_toggle" checked={hasImages===true}>
-                <span class="slider round"></span>
-              </label>
-            </div>
-          </div>
-        </div>
       </BrowseStudyHeading>
     )
   }
-  <SearchResults query={query} facetData={facetData} hits={hits} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} sortBy={sortBy} sortOrder={sortOrder}/>
+  <SearchResults query={query} paginationData={paginationData} facetData={facetData} hits={hits} 
+  organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} 
+  sortBy={sortBy} sortOrder={sortOrder} 
+  page={page}/>
   </body>
 </BaseLayoutWithBreadcrumbs>
 
