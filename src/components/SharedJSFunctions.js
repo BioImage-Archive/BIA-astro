@@ -9,10 +9,10 @@ export function getPlaceholderHeroImage(accessionID) {
 }
 
 export function getStudyImage(study, cardImageOverride) {
-    const datasetWithImage = study.dataset.filter(ds => ds?.acquisition_process?.length > 0 && ds?.annotation_process?.length == 0).find((dataset) => dataset.example_image_uri.length > 0)
+    const datasetWithImage = study.dataset.filter(ds => ds?.acquisition_process?.length > 0 && ds?.annotation_process?.length == 0).find((dataset) => dataset.example_image_uri.length > 0) ?? study.dataset.filter(ds => ds.example_image_uri.length > 0)[0];
     if (cardImageOverride != null) {
       return cardImageOverride
-    } else if (datasetWithImage == undefined) {
+    } else if (datasetWithImage == undefined || datasetWithImage.example_image_uri[0] === undefined) {
       return getPlaceholderHeroImage(study.accession_id)
     } else {
       return datasetWithImage.example_image_uri[0]
@@ -199,13 +199,46 @@ export async function getImageFromAPI(uuid){
     return image
 }
 
+export async function getEnrichedSubject(subject){
+    subject.sample_of = await Promise.all(subject.sample_of_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/bio_sample/${uuid}`)));
+    subject.imaging_preparation_protocol = await Promise.all(subject.imaging_preparation_protocol_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/specimen_imaging_preparation_protocol/${uuid}`)));
+    return subject
+}
+
+export async function getCreationProcessImage(creationProcess){
+    creationProcess.acquisition_process = await Promise.all(creationProcess.image_acquisition_protocol_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/image_acquisition_protocol/${uuid}`)));
+    creationProcess.annotation_method = await Promise.all(creationProcess.annotation_method_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/annotation_method/${uuid}`)));
+    const specimenUUID = creationProcess?.subject_specimen_uuid || "";
+    if (specimenUUID === ""){
+      return creationProcess;
+    }
+    const subject = await getFromAPI(`${PUBLIC_MONGO_API}/specimen/${specimenUUID}`);
+    creationProcess.subject = await getEnrichedSubject(subject);
+    return creationProcess
+}
+
+export async function getImageFromMongo(uuid){
+  const image = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}`);
+  image.representation = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/image_representation?page_size=10`);
+  image.creation_process = await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${image.creation_process_uuid}`);
+  image.creation_process = await getCreationProcessImage(image.creation_process)
+  return image;
+
+}
+
 export async function getDatasetFromMongo(uuid){
   const dataset = await getFromAPI(`${PUBLIC_MONGO_API}/dataset/${uuid}`);
   return dataset;
 }
 
-export async function getStudyUsingAccessionIDFromMongo(accessionID){
-  const study = await getFromAPI(`${PUBLIC_MONGO_API}/search/study/accession?accession_id=${accessionID}&page_size=1`);
+export async function getStudyFromMongo(identifier){
+  let study
+  if (identifier.length > 15){
+    study = await getFromAPI(`${PUBLIC_MONGO_API}/study/${identifier}`);
+  }else{
+    study = await getFromAPI(`${PUBLIC_MONGO_API}/search/study/accession?accession_id=${identifier}&page_size=1`);
+  }
+  
   study.dataset = await getFromAPI(`${PUBLIC_MONGO_API}/study/${study.uuid}/dataset?page_size=10`);
   study.dataset = await Promise.all(
     study.dataset.map(async (ds) => {

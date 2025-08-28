@@ -20,7 +20,8 @@ const annotatedImagesMap = await generateSourceAnnotatedImageMap(study)
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);
-const allSourceImages = sourceDataset.flatMap(ds => ds.image || []);
+const skipImageUUID = ["2a382f3a-aa6d-4ace-99fb-468335fa3809", "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea"]
+const allSourceImages = sourceDataset.flatMap(ds => ds.image || []).filter(img => !skipImageUUID.includes(img.uuid));
 const imaging_method = Array.from(
   new Set(sourceDataset.flatMap(ds => ds?.acquisition_process?.[0]?.imaging_method_name || []))
 ).join(', ');
