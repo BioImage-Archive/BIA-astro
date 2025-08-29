@@ -16,7 +16,8 @@ function parseNeuroglancerUrl(url: string) {
   const state = JSON.parse(decoded);
   const result: Record<string, { order: number; name: string }> = {};
   state.layers.forEach((layer: any, index: number) => {
-    const uuid = layer.source?.url.match(/\/S-[^\/]+\/([0-9a-f-]{36})\//)?.[1];
+    const source = layer.source?.url ?? layer.source;
+    const uuid = source.match(/\/S-[^\/]+\/([0-9a-f-]{36})\//)?.[1]
     if (uuid) {
       result[uuid] = {
         order: index + 1,
@@ -31,13 +32,12 @@ const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format.includes(".ome.zarr"));
 const sourceImgS3Url = sourceImageRep?.file_uri[0].replace(vizarrURL,'') || "";
 const hasNeuroGlancerURL = neuroglancerURL?.[sourceImage.uuid] || "";
-
 const ngLayers = parseNeuroglancerUrl(hasNeuroGlancerURL); 
 const sortedAnnotatedImages = annotatedImages
   .filter(img => ngLayers[img.uuid]) 
   .sort((a, b) => ngLayers[a.uuid].order - ngLayers[b.uuid].order);
 
-let annotatedImage = sortedAnnotatedImages[0];
+let annotatedImage = sortedAnnotatedImages[0] ?? annotatedImages[0];
 const annotatedImageAttributes = getAttributes(annotatedImage);
 const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format.includes(".ome.zarr"));
 const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
@@ -119,7 +119,7 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
       const slides = slider.children;
       const updateMetadata = (uuid) => {
           const image = JSON.parse(document.getElementById("images-json").textContent).find(ai => ai.uuid === uuid)
-          const rep = image.representation.find((r) => r.image_format === ".ome.zarr");
+          const rep = image.representation.find((r) => r.image_format.includes(".ome.zarr"));
           const attributes = image.additional_metadata.find(meta =>
               meta.name.startsWith("attributes_from_file_reference")
           )?.value?.attributes || {};
