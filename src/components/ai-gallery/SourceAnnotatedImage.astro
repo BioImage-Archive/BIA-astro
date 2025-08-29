@@ -9,11 +9,35 @@ function getAttributes(image) {
   )?.value?.attributes || {};
 }
 
+function parseNeuroglancerUrl(url: string) {
+  const fragment = url.split("#!")[1];
+  if (!fragment) return {};
+  const decoded = decodeURIComponent(fragment);
+  const state = JSON.parse(decoded);
+  const result: Record<string, { order: number; name: string }> = {};
+  state.layers.forEach((layer: any, index: number) => {
+    const source = layer.source?.url ?? layer.source;
+    const uuid = source.match(/\/S-[^\/]+\/([0-9a-f-]{36})\//)?.[1]
+    if (uuid) {
+      result[uuid] = {
+        order: index + 1,
+        name: layer.name
+      };
+    }
+  });
+  return result;
+}
+
 const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format.includes(".ome.zarr"));
 const sourceImgS3Url = sourceImageRep?.file_uri[0].replace(vizarrURL,'') || "";
 const hasNeuroGlancerURL = neuroglancerURL?.[sourceImage.uuid] || "";
-let annotatedImage = annotatedImages[0];
+const ngLayers = parseNeuroglancerUrl(hasNeuroGlancerURL); 
+const sortedAnnotatedImages = annotatedImages
+  .filter(img => ngLayers[img.uuid]) 
+  .sort((a, b) => ngLayers[a.uuid].order - ngLayers[b.uuid].order);
+
+let annotatedImage = sortedAnnotatedImages[0] ?? annotatedImages[0];
 const annotatedImageAttributes = getAttributes(annotatedImage);
 const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format.includes(".ome.zarr"));
 const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
@@ -29,16 +53,13 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
       <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
       </div>
       <div style="min-width: 48%;">
-        {annotatedImages.filter((img)=>!img.additional_metadata?.some(md => 
-            md.value?.attributes?.["file description"] === "Visualization of groundtruth masks in PNG format" ||
-              md.value?.attributes?.["file description"] === "Visualization of groundtruth for randomly selected nuclei in PNG format"))
-              .map((img, index)=> {
-                  const imageRep = img.representation.find((r) => r.image_format.includes(".ome.zarr"))
-                  return (
-                    <ImageInfo text={`Annotation ${index+1}`} url={imageRep?.file_uri?.[0].replace(vizarrURL,'') || ""} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
-                  )
-        })}
-      
+        {sortedAnnotatedImages.map((img, index)=> {
+          const imageRep = img.representation.find((r) => r.image_format.includes(".ome.zarr"))
+            return (
+              <ImageInfo text={`Annotation ${index+1}`} url={imageRep?.file_uri?.[0].replace(vizarrURL,'') || ""} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
+            )
+        }
+    )}  
       </div>
     </div>
   )
@@ -98,7 +119,7 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
       const slides = slider.children;
       const updateMetadata = (uuid) => {
           const image = JSON.parse(document.getElementById("images-json").textContent).find(ai => ai.uuid === uuid)
-          const rep = image.representation.find((r) => r.image_format === ".ome.zarr");
+          const rep = image.representation.find((r) => r.image_format.includes(".ome.zarr"));
           const attributes = image.additional_metadata.find(meta =>
               meta.name.startsWith("attributes_from_file_reference")
           )?.value?.attributes || {};
