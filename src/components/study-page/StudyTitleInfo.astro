@@ -3,20 +3,40 @@ import WebsiteStateButton from "../WebsiteStateButton.astro";
 
 const { study_info: studyInfo } = Astro.props;
 
-const authors = "author" in studyInfo ? studyInfo.author : [{display_name: ""}];
+const authors = "author" in studyInfo ? studyInfo.author : [{ display_name: "" }];
 
-function authorFormat(author_name, i, author_list) {
-    if (i + 1 === author_list.length) {
-        return author_name;
-    } else {
-        return author_name + ", ";
+// 1. Create a unique list of affiliations
+const allAffiliations = authors.flatMap(author => author.affiliation || []);
+const uniqueAffiliations = Array.from(
+    new Map(allAffiliations.map(affil => [affil.display_name, affil])).values()
+);
+
+// 2. Create a map for quick lookup of institution IDs
+const institutionMap = new Map();
+uniqueAffiliations.forEach((affil, index) => {
+    institutionMap.set(affil.display_name, index + 1);
+});
+
+function authorFormat(author, i, author_list) {
+    let authorString = author.display_name;
+    
+    // Get the affiliation IDs for the current author
+    const affiliationIds = author.affiliation
+        ? author.affiliation.map(affil => institutionMap.get(affil.display_name))
+        : [];
+
+    // Add superscript numbers
+    if (affiliationIds.length > 0) {
+        authorString += `<sup>${affiliationIds.join(', ')}</sup>`;
     }
-}
 
-// TODO: Organisation information - note this may be hard with current datamodels.
-// Javascript considers objects to be unique, so two objects with the same fields do not === each other.
-// In order to get a list of unique organisations as biostudies does we may need to do the filtering in the export
-// or consider changing the models.
+    return authorString;
+    // if (i + 1 === author_list.length) {
+    //     return authorString;
+    // } else {
+    //     return authorString + ", ";
+    // }
+}
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
@@ -31,9 +51,31 @@ function authorFormat(author_name, i, author_list) {
         <p>Released {studyInfo.release_date}</p>
         <p>
             {
-                authors.map((contributor, i) =>
-                    authorFormat(contributor.display_name, i, authors),
-                )
+                authors.map((contributor, i) => (
+                    // Use a Fragment and set:html to correctly render the HTML string
+                    <Fragment>
+                        <span set:html={authorFormat(contributor, i, authors)}></span>
+                        {contributor.orcid &&
+                            <a href={`https://orcid.org/${contributor.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0.25rem;"><img src="/src/assets/bioimage-archive/orcid.svg" alt="ORCID" style="height: 1.2em; vertical-align: middle;"/></a>
+                        }
+                        {/* Correctly place comma after the ORCID icon, but not after the last author */}
+                        {i + 1 < authors.length ? ", " : ""}
+                    </Fragment>
+                ))
+            }
+        </p>
+        
+        <p style="color: #3B8FB6; font-size: 0.9em; font-family: 'IBM Plex Sans', sans-serif;">
+            {
+                uniqueAffiliations.map((affil, index) => (
+                    <>
+                        <sup style="margin-right: -0.25rem">{index + 1}</sup>
+                        <a href={affil.website || '#'} target="_blank" rel="noopener noreferrer" style="color: inherit;">
+                            {affil.display_name}
+                        </a>
+                        {index + 1 === uniqueAffiliations.length ? "" : " "}
+                    </>
+                ))
             }
         </p>
     </div>
