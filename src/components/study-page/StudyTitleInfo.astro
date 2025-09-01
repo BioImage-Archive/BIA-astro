@@ -19,15 +19,15 @@ uniqueAffiliations.forEach((affil, index) => {
 
 function authorFormat(author) {
     let authorString = author.display_name;
-    
+
     // Get the affiliation IDs for the current author
     const affiliationIds = author.affiliation
         ? author.affiliation.map(affil => institutionMap.get(affil.display_name))
         : [];
 
-    // Add superscript numbers
+    // Add superscript numbers with styling
     if (affiliationIds.length > 0) {
-        authorString += `<sup>${affiliationIds.join(', ')}</sup>`;
+        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em;">${affiliationIds.join(', ')}</sup>`;
     }
 
     return authorString;
