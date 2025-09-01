@@ -14,9 +14,10 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
+
 const study = await getStudyFromAPI("accession", accessionID) as Study;
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
-const annotatedImagesMap = await generateSourceAnnotatedImageMap(study)
+const annotatedImagesMap = await generateSourceAnnotatedImageMap(study);
 const organism = getTaxons(study).join(", ");
 // Need a better logic to identify source dataset and annotation dataset
 const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);

@@ -7,7 +7,7 @@ import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getImageFromMongo, getStudyFromMongo } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
@@ -18,17 +18,16 @@ const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
 
-const image = await getImageFromAPI(uuid);
+const image = (await getImageFromAPI(uuid) ?? await getImageFromMongo(uuid));
 const imageDataset = await getDatasetFromMongo(image.submission_dataset_uuid);
-const imageStudy = await getStudyFromAPI("uuid", imageDataset.submitted_in_study_uuid) as Study;
+const imageStudy = (await getStudyFromAPI("uuid", imageDataset.submitted_in_study_uuid) as Study ??
+  await getStudyFromMongo(imageDataset.submitted_in_study_uuid));
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
-const interactiveImageRepresentation = image.representation.find(
+const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
-)
-
+) ?? image.representation.find( (rep) => rep.image_format.includes("ome.zarr")) )
 const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
-
 const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
 const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
 
@@ -37,7 +36,7 @@ const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neurogl
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
 const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link") : null
 
-const creation_process = image.creation_process
+const creation_process = image?.creation_process || [];
 
 let specimen
 if ("subject" in creation_process && creation_process.subject != null) {
