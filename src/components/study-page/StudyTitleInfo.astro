@@ -17,7 +17,7 @@ uniqueAffiliations.forEach((affil, index) => {
     institutionMap.set(affil.display_name, index + 1);
 });
 
-function authorFormat(author, i, author_list) {
+function authorFormat(author) {
     let authorString = author.display_name;
     
     // Get the affiliation IDs for the current author
@@ -31,11 +31,6 @@ function authorFormat(author, i, author_list) {
     }
 
     return authorString;
-    // if (i + 1 === author_list.length) {
-    //     return authorString;
-    // } else {
-    //     return authorString + ", ";
-    // }
 }
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -52,14 +47,11 @@ function authorFormat(author, i, author_list) {
         <p>
             {
                 authors.map((contributor, i) => (
-                    // Use a Fragment and set:html to correctly render the HTML string
+                    // Combine elements to remove unwanted whitespace
                     <Fragment>
-                        <span set:html={authorFormat(contributor, i, authors)}></span>
-                        {contributor.orcid &&
+                        <span set:html={authorFormat(contributor)}></span>{contributor.orcid &&
                             <a href={`https://orcid.org/${contributor.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0.25rem;"><img src="/src/assets/bioimage-archive/orcid.svg" alt="ORCID" style="height: 1.2em; vertical-align: middle;"/></a>
-                        }
-                        {/* Correctly place comma after the ORCID icon, but not after the last author */}
-                        {i + 1 < authors.length ? ", " : ""}
+                        }{i + 1 < authors.length ? "," : ""}
                     </Fragment>
                 ))
             }
