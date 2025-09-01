@@ -242,10 +242,13 @@ export async function getStudyFromMongo(identifier){
   study.dataset = await getFromAPI(`${PUBLIC_MONGO_API}/study/${study.uuid}/dataset?page_size=10`);
   study.dataset = await Promise.all(
     study.dataset.map(async (ds) => {
+      const stats = await getFromAPI(
+        `${PUBLIC_MONGO_API}/dataset/${ds.uuid}/stats?page_size=1`
+      );
       const images = await getFromAPI(
         `${PUBLIC_MONGO_API}/dataset/${ds.uuid}/image?page_size=10`
       );
-      return { ...ds, image: images };
+      return { ...ds, ...stats, image: images };
     })
   );
   return study;
