@@ -23,7 +23,7 @@ function authorFormat(author) {
         ? author.affiliation.map(affil => institutionMap.get(affil.display_name))
         : [];
     if (affiliationIds.length > 0) {
-        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em;">${affiliationIds.join(', ')}</sup>`;
+        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em;">${affiliationIds.join(',')}</sup>`;
     }
     return authorString;
 }
@@ -52,13 +52,15 @@ function authorFormat(author) {
                             }
                             <div class="author-card">
                                 <h4>{contributor.display_name}</h4>
-                                {contributor.role && <p>{contributor.role}</p>}
                                 {contributor.email && <p>{contributor.email}</p>}
+                                {contributor.role && <p>{contributor.role}</p>}
                                 {contributor.orcid && <p>ORCID: {contributor.orcid}</p>}
                                 {contributor.affiliation && (
                                     <ul>
-                                        {contributor.affiliation.map(affil => (
-                                            <li>{affil.display_name}</li>
+                                        {contributor.affiliation.map((affil, idx) => (
+                                            <li>
+                                                <span>{affil.display_name}</span>
+                                            </li>
                                         ))}
                                     </ul>
                                 )}
@@ -85,26 +87,80 @@ function authorFormat(author) {
     </div>
 </section>
 
+
 <style>
+.authors-list {
+    position: relative;
+    z-index: 2;
+}
+
 .author-container {
     position: relative;
     display: inline-block;
 }
 
-.author-card {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    width: 250px;
-    top: 1.5em;
-    left: 0;
-    display: none;
+.orcid-link img {
+    height: 1.2em;
+    vertical-align: middle;
+    margin-left: 0;
 }
 
-.author-container:hover .author-card {
+.author-toggle-icon {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    line-height: 1.25em;
+    text-align: center;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: white;
+    background-color: #3B8FB6;
+    border-radius: 50%;
+    margin-left: 0.25em;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.author-card {
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    background-color: white;
+    border: 1px solid #3B8FB6;
+    border-top: 5px solid #3B8FB6;
+    padding: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    width: 250px;
+    display: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #4C5052;
+}
+
+.author-container:hover .author-card,
+.author-toggle-icon:hover + .author-card {
     display: block;
+}
+
+.author-card h4 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.author-card p {
+    margin: 0.5rem 0;
+    font-size: 0.85em;
+}
+
+.author-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+}
+
+.author-card ul li {
+    font-size: 0.85em;
+    margin-bottom: 0.25rem;
 }
 </style>
