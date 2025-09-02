@@ -22,6 +22,10 @@ function authorFormat(author) {
     const affiliationIds = author.affiliation
         ? author.affiliation.map(affil => institutionMap.get(affil.display_name))
         : [];
+    
+    // Sort the affiliation IDs numerically
+    affiliationIds.sort((a, b) => a - b); 
+
     if (affiliationIds.length > 0) {
         authorString += `<sup style="color: #3B8FB6; font-size: 0.65em;">${affiliationIds.join(',')}</sup>`;
     }
