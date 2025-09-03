@@ -76,15 +76,11 @@ function authorFormat(author) {
                                 </a>
                             }
                             <div class="author-card">
-                                <h4>{author.display_name}</h4>
-                                {author.contact_email && <p>{author.contact_email}</p>}
-                                    {author.role && (
-                                        <p>
-                                            {author.role.join(', ')}
-                                        </p>
-                                    )}
-                                {author.orcid && <p>ORCID: {author.orcid}</p>}
-                                {author.affiliation && (
+                                <h4>{author.display_name}</h4>                                
+                                    {author.role && (<p>{author.role.join(', ')}</p>)}
+                                    {author.contact_email && <p>{author.contact_email}</p>}
+                                    {author.orcid && <p>ORCID: {author.orcid}</p>}
+                                    {author.affiliation && (
                                     <ul>
                                         {author.affiliation.map((affil, idx) => (
                                             <li>
