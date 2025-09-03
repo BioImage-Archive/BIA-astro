@@ -45,23 +45,27 @@ function authorFormat(author) {
         <p>Released {studyInfo.release_date}</p>
         <p class="authors-list">
             {
-                authors.map((contributor, i) => (
+                authors.map((author, i) => (
                     <Fragment>
                         <div class="author-container">
-                            <span set:html={authorFormat(contributor)}></span>
-                            {contributor.orcid &&
-                                <a href={`https://orcid.org/${contributor.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
+                            <span set:html={authorFormat(author)}></span>
+                            {author.orcid &&
+                                <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
                                     <img src="/src/assets/bioimage-archive/orcid.svg" alt="ORCID" style="height: 1.2em; vertical-align: middle;"/>
                                 </a>
                             }
                             <div class="author-card">
-                                <h4>{contributor.display_name}</h4>
-                                {contributor.email && <p>{contributor.email}</p>}
-                                {contributor.role && <p>{contributor.role}</p>}
-                                {contributor.orcid && <p>ORCID: {contributor.orcid}</p>}
-                                {contributor.affiliation && (
+                                <h4>{author.display_name}</h4>
+                                {author.contact_email && <p>{author.contact_email}</p>}
+                                    {author.role && (
+                                        <p>
+                                            {author.role.join(', ')}
+                                        </p>
+                                    )}
+                                {author.orcid && <p>ORCID: {author.orcid}</p>}
+                                {author.affiliation && (
                                     <ul>
-                                        {contributor.affiliation.map((affil, idx) => (
+                                        {author.affiliation.map((affil, idx) => (
                                             <li>
                                                 <span>{affil.display_name}</span>
                                             </li>
