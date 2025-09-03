@@ -1,5 +1,6 @@
 ---
 import WebsiteStateButton from "../WebsiteStateButton.astro";
+import orcidImage from "../../assets/bioimage-archive/orcid.svg";
 
 const { study_info: studyInfo } = Astro.props;
 
@@ -69,7 +70,7 @@ function authorFormat(author) {
                             <span set:html={authorFormat(author)}></span>
                             {author.orcid &&
                                 <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
-                                    <img src="/src/assets/bioimage-archive/orcid.svg" alt="ORCID" style="height: 1.2em; vertical-align: middle;"/>
+                                    <img src={orcidImage.src} alt="ORCID" style="height: 1.2em; vertical-align: middle;"/>
                                 </a>
                             }
                             <div class="author-card">
