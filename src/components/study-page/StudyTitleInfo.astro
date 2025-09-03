@@ -33,13 +33,20 @@ uniqueAffiliations.forEach((affil, index) => {
 
 function authorFormat(author) {
     let authorString = author.display_name;
-    const affiliationIds = author.affiliation
-        ? author.affiliation.map(affil => institutionMap.get(affil.display_name))
-        : [];
+    
+    // Create a Set to get unique affiliations for the current author
+    const uniqueAuthorAffiliations = new Set();
+    if (author.affiliation) {
+        author.affiliation.forEach(affil => uniqueAuthorAffiliations.add(affil.display_name));
+    }
+    
+    // Map the unique affiliations to their IDs from the global institutionMap
+    const affiliationIds = Array.from(uniqueAuthorAffiliations)
+        .map(affilName => institutionMap.get(affilName));
     
     // Sort the affiliation IDs numerically
-    affiliationIds.sort((a, b) => a - b); 
-
+    affiliationIds.sort((a, b) => a - b);
+    
     if (affiliationIds.length > 0) {
         authorString += `<sup style="color: #3B8FB6; font-size: 0.65em;">${affiliationIds.join(',')}</sup>`;
     }
