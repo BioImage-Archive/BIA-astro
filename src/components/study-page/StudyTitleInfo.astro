@@ -7,9 +7,23 @@ const authors = "author" in studyInfo ? studyInfo.author : [{ display_name: "" }
 
 // 1. Create a unique list of affiliations
 const allAffiliations = authors.flatMap(author => author.affiliation || []);
-const uniqueAffiliations = Array.from(
-    new Map(allAffiliations.map(affil => [affil.display_name, affil])).values()
-);
+const affiliationMap = new Map();
+
+allAffiliations.forEach(affil => {
+    // If the affiliation is not yet in the map, add it
+    if (!affiliationMap.has(affil.display_name)) {
+        affiliationMap.set(affil.display_name, { ...affil });
+    } else {
+        // If it's already in the map, check if there's a website to add
+        const existingAffil = affiliationMap.get(affil.display_name);
+        if (!existingAffil.website && affil.website) {
+            existingAffil.website = affil.website;
+        }
+    }
+});
+
+// 2. Convert the map back to an array
+const uniqueAffiliations = Array.from(affiliationMap.values());
 
 // 2. Create a map for quick lookup of institution IDs
 const institutionMap = new Map();
