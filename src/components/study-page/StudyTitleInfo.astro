@@ -97,10 +97,8 @@ function authorFormat(author) {
             {
                 uniqueAffiliations.map((affil, index) => (
                     <>
-                        <sup style="margin-right: -0.2em">{index + 1}</sup>
-                        <a href={affil.website || '#'} target="_blank" rel="noopener noreferrer" style="color: inherit;">
-                            {affil.display_name}
-                        </a>
+                        <sup style="margin-right: -0.2em;margin-left:0.5em;">{index + 1}</sup>
+                        {affil.display_name}
                         {index + 1 === uniqueAffiliations.length ? "" : " "}
                     </>
                 ))
