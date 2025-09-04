@@ -46,7 +46,14 @@ function authorFormat(author) {
     affiliationIds.sort((a, b) => a - b);
     
     if (affiliationIds.length > 0) {
-        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em; margin-left: 0.2em;">${affiliationIds.join(', ')}</sup>`;    }
+        // Create an array of links for each affiliation ID
+        const affiliationLinks = affiliationIds.map(id => {
+            return `<a href="#affiliation-${id}" style="color: inherit; text-decoration: none;">${id}</a>`;
+        });
+        
+        // Join the links with a comma and wrap in a superscript tag
+        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em; margin-left: 0.2em;">${affiliationLinks.join(', ')}</sup>`;
+    }
     return authorString;
 }
 ---
@@ -96,11 +103,12 @@ function authorFormat(author) {
         <p style="color: #3B8FB6; font-size: 0.9em; font-family: 'IBM Plex Sans', sans-serif;">
             {
                 uniqueAffiliations.map((affil, index) => (
-                    <>
+                    // Add a span with a unique ID for each affiliation
+                    <span class="js-affiliation" id={`affiliation-${index + 1}`}>
                         <sup style="margin-right: -0.2em;margin-left:0.5em;">{index + 1}</sup>
                         {affil.display_name}
                         {index + 1 === uniqueAffiliations.length ? "" : " "}
-                    </>
+                    </span>
                 ))
             }
         </p>
@@ -182,4 +190,55 @@ function authorFormat(author) {
     font-size: 0.85em;
     margin-bottom: 0.25rem;
 }
+
+.highlight {
+  background-color: #B0F8CD;
+  transition: background-color 0.3s ease-in-out;
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const allAffiliations = document.querySelectorAll('.js-affiliation');
+  let activeHighlightTimeout;
+
+  document.body.addEventListener('click', (event) => {
+    // Check if the clicked element is a link inside a superscript
+    const targetLink = event.target.closest('sup a');
+
+    if (targetLink) {
+      // Prevent the default anchor jump behavior to handle it with JavaScript
+      event.preventDefault();
+
+      // Get the ID from the href (e.g., "#affiliation-2" -> "affiliation-2")
+      const targetId = targetLink.getAttribute('href').substring(1);
+      const targetAffiliation = document.getElementById(targetId);
+
+      if (targetAffiliation) {
+        // Clear any previous highlights
+        allAffiliations.forEach(affil => {
+          affil.classList.remove('highlight');
+        });
+
+        // Add the highlight class to the target element
+        targetAffiliation.classList.add('highlight');
+
+        // Scroll into view
+        targetAffiliation.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+
+        // Remove highlight after a few seconds
+        if (activeHighlightTimeout) {
+            clearTimeout(activeHighlightTimeout);
+        }
+
+        activeHighlightTimeout = setTimeout(() => {
+          targetAffiliation.classList.remove('highlight');
+        }, 3000); // Highlight for 3 seconds
+      }
+    }
+  });
+});
+</script>
