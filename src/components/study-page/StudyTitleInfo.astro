@@ -46,8 +46,7 @@ function authorFormat(author) {
     affiliationIds.sort((a, b) => a - b);
     
     if (affiliationIds.length > 0) {
-        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em;">${affiliationIds.join(',')}</sup>`;
-    }
+        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em; margin-left: 0.2em;">${affiliationIds.join(', ')}</sup>`;    }
     return authorString;
 }
 ---
