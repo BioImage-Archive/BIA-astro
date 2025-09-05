@@ -103,9 +103,8 @@ function authorFormat(author) {
         <p style="color: #3B8FB6; font-size: 0.9em; font-family: 'IBM Plex Sans', sans-serif;">
             {
                 uniqueAffiliations.map((affil, index) => (
-                    // Add a span with a unique ID for each affiliation
                     <span class="js-affiliation" id={`affiliation-${index + 1}`}>
-                        <sup style="margin-right: -0.2em;margin-left:0.5em;">{index + 1}</sup>
+                        <sup class="affiliation-sup">{index + 1}</sup>
                         {affil.display_name}
                         {index + 1 === uniqueAffiliations.length ? "" : " "}
                     </span>
@@ -194,6 +193,21 @@ function authorFormat(author) {
 .highlight {
   background-color: #B0F8CD;
   transition: background-color 0.3s ease-in-out;
+}
+
+.js-affiliation {
+    display: inline;
+    line-height: 1.2;
+}
+
+.affiliation-sup {
+    font-size: 0.7em;
+    line-height: 1;
+    vertical-align: top;
+    position: relative;
+    top: -0.1em;
+    margin-right: -0.2em;
+    margin-left: 0.5em;
 }
 </style>
 
