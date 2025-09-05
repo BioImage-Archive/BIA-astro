@@ -291,12 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
   affiliationContainers.forEach(container => {
     // When the mouse enters an affiliation...
     container.addEventListener('mouseenter', () => {
-      const affilName = container.dataset.affiliationName;
+      const affilName = (container as HTMLElement).dataset.affiliationName;
       if (!affilName) return;
 
       // ...find all authors that have this affiliation and highlight them.
       authorContainers.forEach(author => {
-        const authorAffils = author.dataset.affiliations;
+        const authorAffils = (author as HTMLElement).dataset.affiliations;
         if (authorAffils && authorAffils.includes(`|${affilName}|`)) {
           author.classList.add('highlight');
         }
