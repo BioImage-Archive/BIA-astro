@@ -15,8 +15,9 @@ allAffiliations.forEach(affil => {
         affiliationMap.set(affil.display_name, { ...affil });
     } else {
         const existingAffil = affiliationMap.get(affil.display_name);
-        if (!existingAffil.website && affil.website) {
-            existingAffil.website = affil.website;
+
+        if (!existingAffil.address && affil.address) {
+            existingAffil.address = affil.address;
         }
     }
 });
@@ -68,11 +69,11 @@ function authorFormat(author) {
         </h1>
         <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
         <p>Released {studyInfo.release_date}</p>
-        <p class="authors-list">
+        <div class="authors-list">
             {
                 authors.map((author, i) => (
                     <Fragment>
-                        <div class="author-container">
+                        <span class="author-container">
                             <span set:html={authorFormat(author)}></span>
                             {author.orcid &&
                                 <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
@@ -86,7 +87,7 @@ function authorFormat(author) {
                                     {author.orcid && <p>ORCID: {author.orcid}</p>}
                                     {author.affiliation && (
                                     <ul>
-                                        {author.affiliation.map((affil, idx) => (
+                                        {author.affiliation.map((affil) => (
                                             <li>
                                                 <span>{affil.display_name}</span>
                                             </li>
@@ -94,24 +95,35 @@ function authorFormat(author) {
                                     </ul>
                                 )}
                             </div>
-                        </div>{i + 1 < authors.length ? "," : ""}
+                        </span>{i + 1 < authors.length ? "," : ""}
                     </Fragment>
                 ))
             }
-        </p>
+        </div>
 
-        <p style="color: #3B8FB6; font-size: 0.9em; font-family: 'IBM Plex Sans', sans-serif;">
+        <div>
             {
                 uniqueAffiliations.map((affil, index) => (
-                    <span class="js-affiliation" id={`affiliation-${index + 1}`}>
-                        <sup class="affiliation-sup">{index + 1}</sup>
-                        {affil.display_name}
-                        {index + 1 === uniqueAffiliations.length ? "" : " "}
-                    </span>
+                    <Fragment>
+                        <span class="affiliation-container">
+                            <span class="js-affiliation" id={`affiliation-${index + 1}`}>
+                                <sup class="affiliation-sup">{index + 1}</sup>
+                                {affil.display_name}
+                            </span>
+                            
+                            <div class="affiliation-card">
+                                {affil.address ? (
+                                    <p><strong>Address:</strong> {affil.address}</p>
+                                ) : (
+                                    <p>Address: Not available</p> 
+                                )}
+                            </div>
+                        </span>{index + 1 === uniqueAffiliations.length ? "" : " "}
+                    </Fragment>
                 ))
             }
-        </p>
-    </div>
+        </div>
+        </div>
 </section>
 
 
@@ -119,33 +131,18 @@ function authorFormat(author) {
 .authors-list {
     position: relative;
     z-index: 2;
+    margin-bottom: 1rem;
 }
 
 .author-container {
     position: relative;
-    display: inline-block;
+    display: inline;
 }
 
 .orcid-link img {
     height: 1.2em;
     vertical-align: middle;
     margin-left: 0;
-}
-
-.author-toggle-icon {
-    display: inline-block;
-    width: 1.25em;
-    height: 1.25em;
-    line-height: 1.25em;
-    text-align: center;
-    font-size: 0.75em;
-    font-weight: bold;
-    color: white;
-    background-color: #3B8FB6;
-    border-radius: 50%;
-    margin-left: 0.25em;
-    cursor: pointer;
-    vertical-align: top;
 }
 
 .author-card {
@@ -164,8 +161,7 @@ function authorFormat(author) {
     color: #4C5052;
 }
 
-.author-container:hover .author-card,
-.author-toggle-icon:hover + .author-card {
+.author-container:hover .author-card {
     display: block;
 }
 
@@ -193,6 +189,37 @@ function authorFormat(author) {
 .highlight {
   background-color: #B0F8CD;
   transition: background-color 0.3s ease-in-out;
+}
+
+.affiliation-container {
+    position: relative;
+    display: inline;
+    color: #3B8FB6; font-size: 0.9em; font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.affiliation-card {
+    position: absolute;
+    bottom: 1.5rem; 
+    left: 0;
+    background-color: white;
+    border: 1px solid #3B8FB6;
+    border-top: 5px solid #3B8FB6;
+    padding: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    width: 250px;
+    display: none; 
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #4C5052;
+}
+
+.affiliation-card p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.affiliation-container:hover .affiliation-card {
+    display: block;
 }
 
 .js-affiliation {
