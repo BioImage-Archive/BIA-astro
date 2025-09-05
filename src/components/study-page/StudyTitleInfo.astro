@@ -118,7 +118,7 @@ function authorFormat(author) {
                                 {affil.address ? (
                                     <p><strong>Address:</strong> {affil.address}</p>
                                 ) : (
-                                    <p>Address: Not available</p> 
+                                    <p><strong>Address:</strong> Not available</p> 
                                 )}
                             </div>
                         </span>{index + 1 === uniqueAffiliations.length ? "" : " "}
@@ -196,7 +196,9 @@ function authorFormat(author) {
 .affiliation-container {
     position: relative;
     display: inline;
-    color: #3B8FB6; font-size: 0.9em; font-family: 'IBM Plex Sans', sans-serif;
+    color: #3B8FB6; 
+    font-size: 0.9em; 
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .affiliation-card {
