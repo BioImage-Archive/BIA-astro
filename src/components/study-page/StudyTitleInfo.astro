@@ -71,33 +71,36 @@ function authorFormat(author) {
         <p>Released {studyInfo.release_date}</p>
         <div class="authors-list">
             {
-                authors.map((author, i) => (
-                    <Fragment>
-                        <span class="author-container">
-                            <span set:html={authorFormat(author)}></span>
-                            {author.orcid &&
-                                <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
-                                    <img src={orcidImage.src} alt="ORCID" style="height: 1.2em; vertical-align: middle;"/>
-                                </a>
-                            }
-                            <div class="author-card">
-                                <h4>{author.display_name}</h4>                                
+                authors.map((author, i) => {
+                    const affiliationNames = author.affiliation ? author.affiliation.map(a => a.display_name).join('|') : '';
+                    return (
+                        <Fragment>
+                            <span class="author-container" data-affiliations={`|${affiliationNames}|`}>
+                                <span set:html={authorFormat(author)}></span>
+                                {author.orcid &&
+                                    <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
+                                        <img src={orcidImage.src} alt="ORCID" style="height: 1.2em; vertical-align: middle;"/>
+                                    </a>
+                                }
+                                <div class="author-card">
+                                    <h4>{author.display_name}</h4>                                
                                     {author.role && (<p>{author.role.join(', ')}</p>)}
                                     {author.contact_email && <p>{author.contact_email}</p>}
                                     {author.orcid && <p>ORCID: {author.orcid}</p>}
                                     {author.affiliation && (
-                                    <ul>
-                                        {author.affiliation.map((affil) => (
-                                            <li>
-                                                <span>{affil.display_name}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </div>
-                        </span>{i + 1 < authors.length ? "," : ""}
-                    </Fragment>
-                ))
+                                        <ul>
+                                            {author.affiliation.map((affil) => (
+                                                <li>
+                                                    <span>{affil.display_name}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            </span>{i + 1 < authors.length ? "," : ""}
+                        </Fragment>
+                    );
+                })
             }
         </div>
 
@@ -105,7 +108,7 @@ function authorFormat(author) {
             {
                 uniqueAffiliations.map((affil, index) => (
                     <Fragment>
-                        <span class="affiliation-container">
+                        <span class="affiliation-container" data-affiliation-name={affil.display_name}>
                             <span class="js-affiliation" id={`affiliation-${index + 1}`}>
                                 <sup class="affiliation-sup">{index + 1}</sup>
                                 {affil.display_name}
@@ -125,7 +128,6 @@ function authorFormat(author) {
         </div>
         </div>
 </section>
-
 
 <style>
 .authors-list {
@@ -240,7 +242,7 @@ function authorFormat(author) {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const allAffiliations = document.querySelectorAll('.js-affiliation');
+  const allJsAffiliations = document.querySelectorAll('.js-affiliation');
   let activeHighlightTimeout;
 
   document.body.addEventListener('click', (event) => {
@@ -256,8 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetAffiliation = document.getElementById(targetId);
 
       if (targetAffiliation) {
-        // Clear any previous highlights
-        allAffiliations.forEach(affil => {
+        allJsAffiliations.forEach(affil => {
           affil.classList.remove('highlight');
         });
 
@@ -280,6 +281,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000); // Highlight for 3 seconds
       }
     }
+  });
+
+  const affiliationContainers = document.querySelectorAll('.affiliation-container');
+  const authorContainers = document.querySelectorAll('.author-container');
+
+  affiliationContainers.forEach(container => {
+    // When the mouse enters an affiliation...
+    container.addEventListener('mouseenter', () => {
+      const affilName = container.dataset.affiliationName;
+      if (!affilName) return;
+
+      // ...find all authors that have this affiliation and highlight them.
+      authorContainers.forEach(author => {
+        const authorAffils = author.dataset.affiliations;
+        if (authorAffils && authorAffils.includes(`|${affilName}|`)) {
+          author.classList.add('highlight');
+        }
+      });
+    });
+
+    // When the mouse leaves the affiliation...
+    container.addEventListener('mouseleave', () => {
+      // ...remove the highlight from all authors.
+      authorContainers.forEach(author => {
+        author.classList.remove('highlight');
+      });
+    });
   });
 });
 </script>
