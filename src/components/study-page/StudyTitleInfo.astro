@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.addEventListener('click', (event) => {
     // Check if the clicked element is a link inside a superscript
-    const targetLink = event.target.closest('sup a');
+    const targetLink = (event.target instanceof Element) ? event.target.closest('sup a') : null;
 
     if (targetLink) {
       // Prevent the default anchor jump behavior to handle it with JavaScript
