@@ -80,6 +80,7 @@ const breadcrumbs = [
 
     <div style="overflow-wrap: anywhere;">
       <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div>
+      <div><b>Keywords: </b> {study.keyword.join(", ")}</div>
       <div><b>Licence: </b> <a href={study.licence}>{study.licence}</a><div>
     </div>
   </section>
