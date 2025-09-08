@@ -270,8 +270,8 @@ async function getStudyFromMongo(idType, identifier){
     return study;
 }
 
-export async function getImage(uuid, mongoReqType=null) {
-    return await getImageFromSearch(uuid) ?? await getImageFromMongo(uuid, mongoReqType);
+export async function getImage(uuid, isTableRows=false) {
+    return await getImageFromSearch(uuid) ?? await getImageFromMongo(uuid, isTableRows);
 }
 
 
@@ -306,22 +306,22 @@ async function getCreationProcessImage(creationProcess){
     return creationProcess
 }
 
-async function getImageFromMongo(uuid, mongoReqType=null){
+async function getImageFromMongo(uuid, isTableRows=null){
     const image = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}`);
     try{
       image.representation = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/image_representation?page_size=10`);
     } catch (err){
       image.representation = []
     }
-    if (mongoReqType != "rep"){
-      try {
-        image.creation_process = await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${image.creation_process_uuid}`);    
-        image.creation_process = await getCreationProcessImage(image.creation_process)
-      } catch (err){
-        image.creationProcess = []
-      }
+    if (isTableRows){
+      return image
     }
-    
+    try {
+      image.creation_process = await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${image.creation_process_uuid}`);    
+      image.creation_process = await getCreationProcessImage(image.creation_process)
+    } catch (err){
+      image.creationProcess = []
+    }
     return image;
 }
 
