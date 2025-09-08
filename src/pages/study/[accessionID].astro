@@ -82,6 +82,9 @@ const breadcrumbs = [
       <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div>
       <div><b>Keywords: </b> {study.keyword.join(", ")}</div>
       <div><b>Licence: </b> <a href={study.licence}>{study.licence}</a><div>
+      {study.study.acknowledgement && (
+        <div><b>Acknowledgements: </b> <Fragment set:html={multilineTextRender(study.acknowledgement)}></Fragment></div>
+      )}
     </div>
   </section>
 
