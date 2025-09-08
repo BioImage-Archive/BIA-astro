@@ -60,7 +60,8 @@ function formatPhysicalDimension(value, text) {
 }
 
 function formatPhysicalDimensions(imageRepresentation) {
-    const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
+    console.log(imageRepresentation)
+    const fields = [ "voxel_physical_size_x", "voxel_physical_size_y", "voxel_physical_size_z"]
     const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
     return formattedStr != "" ? formattedStr : 'Unknown'
 }
