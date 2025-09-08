@@ -57,21 +57,14 @@ export default defineConfig({
         required: true,
         access: "public",
         context: "client",
-        default: "http://localhost:8081"
+        default: "https://alpha.bioimagearchive.org/search"
       }),
       PUBLIC_MONGO_API: envField.string({
         type: "string",
         required: true,
         access: "public",
         context: "client",
-        default: "http://localhost:8080/v2"
-      }),
-      PUBLIC_API_TYPE: envField.string({
-        type: "string",
-        required: true,
-        access: "public",
-        context: "client",
-        default: "search"
+        default: "https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2"
       })
     }
   },

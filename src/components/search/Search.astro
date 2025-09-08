@@ -79,7 +79,7 @@ export function addSelectedFacetToSearchURL(selectedList, facet, url){
     return selectedList && selectedList.length > 0 ? url+"&"+new URLSearchParams(selectedList.map(select => {return `&${facet}=${encodeURIComponent(select)}`}).join("&")).toString(): url;
 }
 
-const totalResults = hits.total.value;
+const totalResults = hits?.total?.value || 0;
 let results;
 
 // Sorting on Server side till the API can sort results.
@@ -115,7 +115,7 @@ switch(sortBy) {
     results = hits.hits.sort(function(a,b){ return sortReleaseDate(a?._source?.release_date, b?._source?.release_date, sortOrder)});
     break;
   default:
-    results = hits.hits;
+    results = hits?.hits || [];
     break;
 }
 

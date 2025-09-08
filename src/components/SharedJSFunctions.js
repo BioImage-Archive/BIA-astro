@@ -1,4 +1,4 @@
-import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API, PUBLIC_API_TYPE } from "astro:env/client";
+import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 export function getPlaceholderHeroImage(accessionID) {
@@ -168,42 +168,55 @@ export function getThumbnail(img) {
     return thumbnail_uri;
 }
 
-export async function getFromAPI(url){
+export async function getFromAPI(url, fallback = null){
     try {
         const res = await fetch(url);
         return await res.json();
     } catch (err) {
-        console.warn(`Failed to fetch ${url}`, err);
-        return null
+        //console.warn(`Failed to fetch ${url}`, err);
+        return fallback
     }
 }
 
+async function fetchEntities(uuids, endpoint) {
+  if (!Array.isArray(uuids) || uuids.length === 0) return [];
+  return Promise.all(
+    uuids.map((uuid) => getFromAPI(`${PUBLIC_MONGO_API}/${endpoint}/${uuid}`))
+  ).then((res) => res.filter(Boolean)); // drop nulls
+}
+
 export async function getAllStudies(){
-  return PUBLIC_API_TYPE === "search"? await getAllStudiesFromSearch() : await getAllStudiesFromMongo();
+    return (await getAllStudiesFromSearch() ?? await getAllStudiesFromMongo());
 }
 
 async function getAllStudiesFromMongo(){
-    const studies = await getFromAPI(`${PUBLIC_MONGO_API}/search/study?page_size=10000`);
-    return Object.values(studies);
+    return (await getFromAPI(`${PUBLIC_MONGO_API}/search/study?page_size=10000`, [])) || [];
 }
 
 async function getAllStudiesFromSearch() {
-  let studies = await getFromAPI(
-    `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100`
-  );
-  const total_pages = studies.pagination.total_pages;
-  let allHits = studies.hits.hits;
-  for (let i = studies.pagination.page + 1; i <= total_pages; i++) {
-    const results = await getFromAPI(
-      `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100&pagination.page=${i}`
+    const firstPage = await getFromAPI(
+      `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100`
     );
-    allHits = allHits.concat(results.hits.hits);
-  }
-  return allHits.map((hit) => hit._source);
+    if (!firstPage) return null;
+
+    const totalPages = firstPage.pagination.total_pages;
+    const allHits = [...firstPage.hits.hits];
+
+    const otherPages = await Promise.all(
+      Array.from({ length: totalPages - 1 }, (_, i) =>
+        getFromAPI(
+          `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100&pagination.page=${i + 2}`,
+          { hits: { hits: [] } }
+        )
+      )
+    );
+
+    otherPages.forEach((p) => allHits.push(...p.hits.hits));
+    return allHits.map((hit) => hit._source);
 }
 
 export async function getStudy(idType, identifier){
-  return PUBLIC_API_TYPE === "search"? await getStudyFromSearch(idType, identifier) : await getStudyFromMongo(idType, identifier);
+    return (await getStudyFromSearch(idType, identifier) ?? await getStudyFromMongo(idType, identifier));
 }
 
 async function getStudyFromSearch(idType, identifier){
@@ -227,29 +240,38 @@ async function getStudyFromSearch(idType, identifier){
 }
 
 async function getStudyFromMongo(idType, identifier){
-  let study
-  study = idType === "accession"? await getFromAPI(`${PUBLIC_MONGO_API}/search/study/accession?accession_id=${identifier}&page_size=1`): await getFromAPI(`${PUBLIC_MONGO_API}/study/${identifier}`);
-  if (study === null){
+    let study
+    study = idType === "accession"? await getFromAPI(`${PUBLIC_MONGO_API}/search/study/accession?accession_id=${identifier}&page_size=1`): await getFromAPI(`${PUBLIC_MONGO_API}/study/${identifier}`);
+    if (study === null){
+      return study;
+    }
+    study.dataset = await getFromAPI(`${PUBLIC_MONGO_API}/study/${study.uuid}/dataset?page_size=10`);
+    
+    study.dataset = await Promise.all(
+      study.dataset.map(async (ds) => {
+        const [stats, images, biological_entity, 
+          specimen_imaging_preparation_protocol, acquisition_process, 
+          annotation_process] = await Promise.all([
+        getFromAPI(`${PUBLIC_MONGO_API}/dataset/${ds.uuid}/stats?page_size=1`, {}),
+        getFromAPI(`${PUBLIC_MONGO_API}/dataset/${ds.uuid}/image?page_size=10`, []),
+        fetchEntities(getSimpleAttributeValue(ds, "bio_sample_uuid"), "bio_sample"),
+        fetchEntities(getSimpleAttributeValue(ds, "specimen_imaging_preparation_protocol_uuid"), "specimen_imaging_preparation_protocol"),
+        fetchEntities(getSimpleAttributeValue(ds, "image_acquisition_protocol_uuid"), "image_acquisition_protocol"),
+        fetchEntities(getSimpleAttributeValue(ds, "annotation_method_uuid"), "annotation_method")
+      ]);
+        return { ...ds, ...stats, image: images, 
+                  biological_entity: biological_entity, 
+                  specimen_imaging_preparation_protocol: specimen_imaging_preparation_protocol,
+                  acquisition_process: acquisition_process, 
+                  annotation_process: annotation_process
+                };
+      })
+    );
     return study;
-  }
-  study.dataset = await getFromAPI(`${PUBLIC_MONGO_API}/study/${study.uuid}/dataset?page_size=10`);
-  
-  study.dataset = await Promise.all(
-    study.dataset.map(async (ds) => {
-      const stats = await getFromAPI(
-        `${PUBLIC_MONGO_API}/dataset/${ds.uuid}/stats?page_size=1`
-      );
-      const images = await getFromAPI(
-        `${PUBLIC_MONGO_API}/dataset/${ds.uuid}/image?page_size=10`
-      );
-      return { ...ds, ...stats, image: images, biological_entity: [], acquisition_process: [], annotation_process: []};
-    })
-  );
-  return study;
 }
 
-export async function getImage(uuid) {
-  return PUBLIC_API_TYPE === "search"? getImageFromSearch(uuid) : getImageFromMongo(uuid);
+export async function getImage(uuid, mongoReqType=null) {
+    return await getImageFromSearch(uuid) ?? await getImageFromMongo(uuid, mongoReqType);
 }
 
 
@@ -266,24 +288,41 @@ async function getEnrichedSubject(subject){
 }
 
 async function getCreationProcessImage(creationProcess){
-    creationProcess.acquisition_process = await Promise.all(creationProcess.image_acquisition_protocol_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/image_acquisition_protocol/${uuid}`)));
-    creationProcess.annotation_method = await Promise.all(creationProcess.annotation_method_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/annotation_method/${uuid}`)));
+    creationProcess.acquisition_process = await fetchEntities(
+      creationProcess.image_acquisition_protocol_uuid,
+      "image_acquisition_protocol"
+    );
+
+    creationProcess.annotation_method = await fetchEntities(
+      creationProcess.annotation_method_uuid,
+      "annotation_method"
+    );
     const specimenUUID = creationProcess?.subject_specimen_uuid || "";
     if (specimenUUID === ""){
       return creationProcess;
     }
     const subject = await getFromAPI(`${PUBLIC_MONGO_API}/specimen/${specimenUUID}`);
-    creationProcess.subject = await getEnrichedSubject(subject);
+    creationProcess.subject = await getEnrichedSubject(subject) ?? [];
     return creationProcess
 }
 
-async function getImageFromMongo(uuid){
-  const image = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}`);
-  image.representation = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/image_representation?page_size=10`);
-  image.creation_process = await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${image.creation_process_uuid}`);
-  image.creation_process = await getCreationProcessImage(image.creation_process)
-  return image;
-
+async function getImageFromMongo(uuid, mongoReqType=null){
+    const image = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}`);
+    try{
+      image.representation = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/image_representation?page_size=10`);
+    } catch (err){
+      image.representation = []
+    }
+    if (mongoReqType != "rep"){
+      try {
+        image.creation_process = await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${image.creation_process_uuid}`);    
+        image.creation_process = await getCreationProcessImage(image.creation_process)
+      } catch (err){
+        image.creationProcess = []
+      }
+    }
+    
+    return image;
 }
 
 function isImageAnAnnotation(img){
