@@ -7,7 +7,7 @@ import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getImageFromMongo, getStudyFromMongo } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImage, getStudy } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
@@ -18,23 +18,22 @@ const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
 
-const image = (await getImageFromAPI(uuid) ?? await getImageFromMongo(uuid));
-const imageDataset = await getDatasetFromMongo(image.submission_dataset_uuid);
-const imageStudy = (await getStudyFromAPI("uuid", imageDataset.submitted_in_study_uuid) as Study ??
-  await getStudyFromMongo(imageDataset.submitted_in_study_uuid));
-
+const image = await getImage(uuid);
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
-const interactiveImageRepresentation = (image.representation.find(
+const interactiveImageRepresentation = image ? (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
-) ?? image.representation.find( (rep) => rep.image_format.includes("ome.zarr")) )
-const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
+) ?? image.representation.find( (rep) => rep.image_format.includes("ome.zarr")) ) : {};
+const acessionID = image ? interactiveImageRepresentation?.file_uri?.[0].replace("https://uk1s3.embassy.ebi.ac.uk/", "").split("/")[1]: {};
+const imageStudy = image ? await getStudy("accession", acessionID) as Study : {};
+const imageDataset = imageStudy.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
+const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation?.file_uri?.[0]}` : null
 const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
-const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
+const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation?.file_uri?.[0]}` : null
 
 
 const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
-const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
-const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link") : null
+const pref_ng_image_rep = image?.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid) || null;
+const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link") : null;
 
 const creation_process = image?.creation_process || [];
 
@@ -95,7 +94,7 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
 
 
 
-const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
+const userProvidedAttribute = image?.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes || null;
 
 
 const breadcrumbs = [
@@ -106,7 +105,7 @@ const breadcrumbs = [
 
 ---
 
-<BaseLayoutWithBreadcrumbs pageTitle={image.uuid} breadcrumbs={breadcrumbs}>
+<BaseLayoutWithBreadcrumbs pageTitle={uuid} breadcrumbs={breadcrumbs}>
   <body>
     <div class="vf-stack vf-stack--500">
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -156,7 +155,7 @@ const breadcrumbs = [
                 <br/>
                 {
                     interactiveImageRepresentation && (
-                        <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
+                        <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactiveImageRepresentation?.file_uri?.[0]}>Copy OME-Zarr URI</button>
                     )
                 }
                 {

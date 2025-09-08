@@ -4,18 +4,17 @@ import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 
 import collection from '../../../data/collections/ai-benchmark-datasets.json';
-import {getStudyFromAPI} from "../../../components/SharedJSFunctions.js"
+import {getStudy} from "../../../components/SharedJSFunctions.js"
 import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
 const studiesEntries = await Promise.all(
   Object.entries(additionalStudyInfo).map(async ([accessionID, studyAIInfo]) => {
-    const study = await getStudyFromAPI("accession", accessionID);
+    const study = await getStudy("accession", accessionID);
     return [accessionID, study] as const;
   })
 );
 
 const studyMetadata = Object.fromEntries(studiesEntries);
-
 ---
 <BaseLayout pageTitle={ collection.name }>
 
@@ -27,7 +26,7 @@ const studyMetadata = Object.fromEntries(studiesEntries);
 
     <section class="vf-card-container | vf-card-container__col-4 | vf-u-background-color-ui--white | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <StudyCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-study"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
+          { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( studyMetadata[accessionID] && <StudyCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-study"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
         </div>
     </section>
   </body>

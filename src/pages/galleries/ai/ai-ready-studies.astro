@@ -3,12 +3,12 @@ import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro';
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 import collection from '../../../data/collections/ai-ready-datasets.json';
-import { getAnnotationType, getStudyFromAPI} from "../../../components/SharedJSFunctions";
+import { getAnnotationType, getStudy} from "../../../components/SharedJSFunctions";
 import { type Studies } from "../../../components/SharedInterface.astro"
 
 const studiesEntries = await Promise.all(
   Object.values(collection.accession_ids).map(async (accessionID) => {
-    const study = await getStudyFromAPI("accession", accessionID);
+    const study = await getStudy("accession", accessionID);
     return [accessionID, study] as const;
   })
 );
@@ -27,7 +27,18 @@ const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
 
     <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
         <div class="vf-card-container__inner">
-          { Object.values(studyMetadata).map((study) => ( <StudyCard study={study} studyPageRoot={`galleries/ai/ai-ready-study`} taglist={study.additional_metadata.find(md => md.name==="ai_tags")?.value?.ai_tags[0] || []} annotationType={getAnnotationType(study.dataset)} /> )) }
+          {Object.values(studyMetadata).map(
+            (study) =>
+              study && (
+                <StudyCard key={study.id} study={study} studyPageRoot="galleries/ai/ai-ready-study"
+                  taglist={
+                    study.additional_metadata.find((md) => md.name === "ai_tags")
+                      ?.value?.ai_tags[0] ?? []
+                  }
+                  annotationType={getAnnotationType(study.dataset)}
+                />
+              )
+          )}
         </div>
     </section>
   </body>

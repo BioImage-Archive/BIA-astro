@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import BenchmarkedDatasetPage from "../../../../components/ai-benchmarking/BenchmarkedDatasetPage.astro"
-import {getStudyFromAPI} from "../../../../components/SharedJSFunctions.js"
+import {getStudy} from "../../../../components/SharedJSFunctions.js"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import additionalStudyMetadata from "../../../../data/ai-dataset-benchmarking/additional-study-metadata.json"
 import tableInfo from "../../../../data/ai-dataset-benchmarking/model-dataset-table.json"
@@ -16,7 +16,7 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-const study = await getStudyFromAPI("accession", accessionID) as Study;
+const study = await getStudy("accession", accessionID) as Study;
 const studyMetadata = {
   [accessionID]: study
 };
@@ -27,11 +27,14 @@ const breadcrumbs = [
   "/bioimage-archive/galleries/ai",
   "/bioimage-archive/galleries/ai/analysed-studies",
 ]
-
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={accessionID} breadcrumbs={breadcrumbs}>
-  <BenchmarkedDatasetPage accessionID={accessionID} studyMetadata={studyMetadata} additionalStudyMetadata={additionalStudyMetadata} tableInfo={tableInfo}/>
+  {
+    studyMetadata[accessionID] ? 
+      <BenchmarkedDatasetPage accessionID={accessionID} studyMetadata={studyMetadata} additionalStudyMetadata={additionalStudyMetadata} tableInfo={tableInfo}/> : 
+      <p>Oops something went wrong. No study data available for this accession ID.</p>
+}
 </BaseLayoutWithBreadcrumbs>
 
 

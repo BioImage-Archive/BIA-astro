@@ -9,6 +9,7 @@ import studyMetadata from "../data/bia-study-metadata.json";
 import SearchResults, { type SearchHits, type FacetData, type PaginationData } from "../components/search/Search.astro";
 import { generateParamString } from "../components/search/Search.astro";
 import { PUBLIC_SEARCH_API } from "astro:env/client";
+import { getFromAPI } from "../components/SharedJSFunctions";
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query') || "";
@@ -37,12 +38,11 @@ let paginationData = {} as PaginationData;
 
 let pageTitle = query.length === 0? "Browse Studies": "Search Studies"; 
 if (query || query === "") {
-  const res = await fetch(searchURL);
-  if (res.ok) {
-    const data = await res.json();
-    hits = data.hits;
-    facetData = data.facets;
-    paginationData = data.pagination;
+  const data = await getFromAPI(searchURL);
+  if (data) {
+    hits = data?.hits || {};
+    facetData = data?.facets || {};
+    paginationData = data?.pagination || {};
   }
 }
 
@@ -73,11 +73,6 @@ const formattedTotalImages = totalImages.toLocaleString();
         <div slot="body_text">
           <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
           <p></p>
-          <p class="vf-hero__text">
-            Number of Studies: {formattedTotalStudies}<br>
-            Number of Files: {formattedTotalFiles}<br>
-            Number of OME-NGFF Images: {formattedTotalImages}</p>
-            <p></p>
             <p class="vf-hero__text">
           All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
         </div>

@@ -2,13 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import BrowseDatasetHeading from '../../components/BrowseStudiesHeading.astro';
 import DatasetCard from '../../components/cards/BrowseStudyCard.astro';
-import {getStudyFromAPI} from "../../components/SharedJSFunctions.js"
+import {getStudy} from "../../components/SharedJSFunctions.js"
 import collection from '../../data/collections/spatialomics.json';
 import { type Studies } from "../../components/SharedInterface.astro"
 
 const studiesEntries = await Promise.all(
   Object.values(collection.accession_ids).map(async (accessionID) => {
-    const study = await getStudyFromAPI("accession", accessionID);
+    const study = await getStudy("accession", accessionID);
     return [accessionID, study] as const;
   })
 );
@@ -27,7 +27,7 @@ const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
 
       <section class="vf-card-container vf-card-container__col-3 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;"> 
         <div class="vf-card-container__inner">
-          { Object.values(collection.accession_ids).map((accessionID) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot="galleries/spatialomics/study"/> )) }
+          { Object.values(collection.accession_ids).map((accessionID) => ( studyMetadata[accessionID] && <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot="galleries/spatialomics/study"/> )) }
         </div>
      </section>  
   </body>

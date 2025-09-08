@@ -9,7 +9,7 @@ import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromAPI} from "../../../../components/SharedJSFunctions.js"
+import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudy} from "../../../../components/SharedJSFunctions.js"
 import { PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getStaticPaths() {
@@ -21,40 +21,54 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-const study = await getStudyFromAPI("accession", accessionID) as Study;
+let study: Study | undefined;
 
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
+try {
+  study = await getStudy("accession", accessionID) as Study;
+} catch (err) {
+  console.error(`Failed to fetch study ${accessionID}:`, err);
+  study = undefined;
+}
 
+// Fallback: empty stats if no study
+const datasetUUIDsAndFileStats = study ? getDatasetStatsByUUID(study) : [];
+
+// transcripts flag
 let hasTranscripts = false;
 
-const fetchDatasetDetails = async (datasetUuid) => {
-    const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
+const fetchDatasetDetails = async (datasetUuid: string) => {
+  try {
+    const pageSize = 1000; 
     const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
     const response = await fetch(apiUrl);
+    if (!response.ok) return false;
     const fileData = await response.json();
+    if (!Array.isArray(fileData)) return false;
     const attributes = fileData.flatMap(file => file.additional_metadata || []);
-    const dataTypeAttr = attributes.find(attr => 
-        attr.name === 'attributes_from_biostudies.File' && (
-            attr.value?.attributes?.Data_Type === 'transcripts' ||
-            attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-            attr.value?.attributes?.Description?.includes('Feature barcode') ||
-            attr.value?.attributes?.Description?.includes('feature matrix')
-        )
+    return attributes.some(attr =>
+      attr.name === "attributes_from_biostudies.File" &&
+      (
+        attr.value?.attributes?.Data_Type === "transcripts" ||
+        attr.value?.attributes?.Data_Type === "Transcript_Coordinates" ||
+        attr.value?.attributes?.Description?.includes("Feature barcode") ||
+        attr.value?.attributes?.Description?.includes("feature matrix")
+      )
     );
-    return dataTypeAttr ? true : false;
-};    
-
-const checkForTranscripts = async () => {
-    for (const [uuid, fileCount, title] of datasetUUIDsAndFileStats) {
-        const dataType = await fetchDatasetDetails(uuid);
-        if (dataType) {
-            hasTranscripts = true;
-            break;
-        }
-    }
+  } catch (err) {
+    console.error(`Failed to fetch dataset details for ${datasetUuid}:`, err);
+    return false;
+  }
 };
 
-await checkForTranscripts();
+if (study) {
+  for (const [uuid] of datasetUUIDsAndFileStats) {
+    const dataType = await fetchDatasetDetails(uuid);
+    if (dataType) {
+      hasTranscripts = true;
+      break;
+    }
+  }
+}
 
 const tableOfContents = {
   "Study Information": "study",
@@ -66,20 +80,24 @@ if (hasTranscripts) {
 }
 
 
-const images = study.dataset.flatMap(dataset => dataset.image ?? [])
+const images = study?.dataset?.flatMap(dataset => dataset.image ?? []) ?? [];
 
-const annotationDatasets = study.dataset.filter(dataset => 
-  "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0
-);
-const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatasets);
+const annotationDatasets = study?.dataset?.filter(
+  dataset => "annotation_process" in dataset && dataset.annotation_process?.length > 0
+) ?? [];
+
+const annotationDatasetUUIDsAndFileStats = annotationDatasets.length > 0
+  ? aggregateDatasetStats(annotationDatasets)
+  : [];
 
 if (annotationDatasets.length > 0) {
   tableOfContents["Annotation Datasets"] = "annotation_datasets";
-  tableOfContents["Annotation files"] = "annotation_table"
+  tableOfContents["Annotation files"] = "annotation_table";
 }
-const nonannotationDatasets = study.dataset.filter(dataset => 
-  !("annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0)
-);
+
+const nonannotationDatasets = study?.dataset?.filter(
+  dataset => !("annotation_process" in dataset && dataset.annotation_process?.length > 0)
+) ?? [];
 
 tableOfContents["Dataset files"] = "file_references";
 
@@ -90,12 +108,13 @@ const breadcrumbs = [
 ]
 
 
-const omics_links = getSimpleAttributeValue(study, 'see_also_omics')
-const code_links = getSimpleAttributeValue(study, 'see_also_code')
+const omics_links = study ? getSimpleAttributeValue(study, "see_also_omics") : [];
+const code_links = study ? getSimpleAttributeValue(study, "see_also_code") : [];
 
 ---
 
-<BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
+<BaseLayoutWithBreadcrumbs pageTitle={accessionID} breadcrumbs={breadcrumbs}>
+  {study ?
   <body>
     <StudyTitleInfo study_info={study} />
 
@@ -182,5 +201,10 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
   
     <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} title="All" table_id="file_references"/>
  
-  </body>
+  </body> 
+  :
+  (
+    <p>Oops something went wrong. No study data available for this accession ID.</p>
+  ) 
+  }
 </BaseLayout>
