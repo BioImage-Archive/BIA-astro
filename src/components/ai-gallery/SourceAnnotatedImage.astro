@@ -1,6 +1,5 @@
 ---
 import ImageInfo from "./ImageInfo.astro";
-import neuroglancerURL from "../../data/current-export/bia-ai-neuroglancer.json";
 import { getSimpleAttributeValue } from "../../components/SharedJSFunctions"
 const { annotatedImages, sourceImage, vizarrURL} = Astro.props;
 
@@ -32,7 +31,7 @@ function parseNeuroglancerUrl(url: string) {
 const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format.includes(".ome.zarr"));
 const sourceImgS3Url = sourceImageRep?.file_uri[0].replace(vizarrURL,'') || "";
-const hasNeuroGlancerURL = getSimpleAttributeValue(sourceImage, "neuroglancer_view_link") || neuroglancerURL?.[sourceImage.uuid] || "";
+const hasNeuroGlancerURL = getSimpleAttributeValue(sourceImage, "neuroglancer_view_link") || "";
 const ngLayers = parseNeuroglancerUrl(hasNeuroGlancerURL); 
 const sortedAnnotatedImages = annotatedImages
   .filter(img => ngLayers[img.uuid]) 
