@@ -173,7 +173,7 @@ export async function getFromAPI(url, fallback = null){
         const res = await fetch(url);
         return await res.json();
     } catch (err) {
-        //console.warn(`Failed to fetch ${url}`, err);
+        console.warn(`Failed to fetch ${url}`, err);
         return fallback
     }
 }
