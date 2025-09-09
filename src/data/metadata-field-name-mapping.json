@@ -22,7 +22,9 @@
         "protocol_description": "Protocol description"
     },
     "correlation_method": {
-        "protocol_description": "Protocol description"
+        "protocol_description": "Protocol description",
+        "fiducials_used": "Fiducials used",
+        "transformation_matrix": "Transformation matrix"
     },
     "annotation_method": {
         "protocol_description": "Protocol description",
