@@ -236,16 +236,16 @@ export async function generateSourceAnnotatedImageMap(study){
     const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image).filter(img => !skipImageUUID.includes(img.uuid)) || [];
     const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
     for (const img of Object.values(images)) {
-        if (isImageAnAnnotation(img)) {
-            const key = img.creation_process.input_image_uuid[0];
-            if (skipImageUUID.includes(key)) {
-              continue;
-            }
-            if (!annotatedImagesMap.has(key)) {
-                annotatedImagesMap.set(key, []);
-            }
-            annotatedImagesMap.get(key).push(img);
-        }
+        // if (isImageAnAnnotation(img)) {
+        //     const key = img.creation_process.input_image_uuid[0];
+        //     if (skipImageUUID.includes(key)) {
+        //       continue;
+        //     }
+        //     if (!annotatedImagesMap.has(key)) {
+        //         annotatedImagesMap.set(key, []);
+        //     }
+        //     annotatedImagesMap.get(key).push(img);
+        // }
     }
     return annotatedImagesMap
 }
