@@ -2,7 +2,10 @@
     "biosample": {
         "organism_classification": "Organism(s) taxonomic information",
         "biological_entity_description": "Description of biological entity",
-        "growth_protocol": "Growth protocol"
+        "growth_protocol": "Growth protocol",
+        "experimental_variable_description": "Experimental variable",
+        "extrinsic_variable_description": "Extrinsic variable",
+        "intrinsic_variable_description": "Intrinsic variable"
     },
     "specimen_imaging_preparation_protocol": {
         "protocol_description": "Protocol description"
