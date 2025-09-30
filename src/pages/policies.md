@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/PoliciesLayout.astro
-title: BioImage Archive policies
+title: BioImage Archive Policies
 ---
 
 # BioImage Archive Policies
