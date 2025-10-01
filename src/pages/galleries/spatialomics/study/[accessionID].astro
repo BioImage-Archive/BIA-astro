@@ -32,6 +32,7 @@ const fetchDatasetDetails = async (datasetUuid) => {
     const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
     const response = await fetch(apiUrl);
     const fileData = await response.json();
+    if (!Array.isArray(fileData)) return false;
     const attributes = fileData.flatMap(file => file.additional_metadata || []);
     const dataTypeAttr = attributes.find(attr => 
         attr.name === 'attributes_from_biostudies.File' && (
