@@ -3,12 +3,12 @@ import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro';
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 import collection from '../../../data/collections/ai-ready-datasets.json';
-import { getAnnotationType, getStudyFromAPI} from "../../../components/SharedJSFunctions";
+import { getAnnotationType, getStudyFromApiByAccession} from "../../../components/SharedJSFunctions";
 import { type Studies } from "../../../components/SharedInterface.astro"
 
 const studiesEntries = await Promise.all(
   Object.values(collection.accession_ids).map(async (accessionID) => {
-    const study = await getStudyFromAPI("accession", accessionID);
+    const study = await getStudyFromApiByAccession(accessionID);
     return [accessionID, study] as const;
   })
 );

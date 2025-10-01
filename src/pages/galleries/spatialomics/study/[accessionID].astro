@@ -9,7 +9,7 @@ import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromAPI} from "../../../../components/SharedJSFunctions.js"
+import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromApiByAccession} from "../../../../components/SharedJSFunctions.js"
 import { PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getStaticPaths() {
@@ -21,7 +21,7 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-const study = await getStudyFromAPI("accession", accessionID) as Study;
+const study = await getStudyFromApiByAccession(accessionID) as Study;
 
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 

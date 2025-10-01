@@ -1,6 +1,6 @@
 ---
 import modelMetadata from "../../data/ai-dataset-benchmarking/model-metadata.json"
-import { getStudyFromAPI } from "../SharedJSFunctions";
+import { getStudyFromApiByAccession } from "../SharedJSFunctions";
 
 const { tableRows, studyOrModelPageMode } = Astro.props;
 
@@ -11,7 +11,7 @@ export async function getDatasetUUIDNameMap(tableRows) {
     }
     const datasetUUIDNameMap = new Map();
     for (var accessionID of studyIDs) {
-        const study = await getStudyFromAPI("accession", accessionID);
+        const study = await getStudyFromApiByAccession(accessionID);
         for (var dataset of study.dataset) {
             datasetUUIDNameMap.set(dataset.uuid, dataset.title)
         }
