@@ -1,5 +1,5 @@
 ---
-import { getImageFromApiByUUID, getThumbnail } from "./SharedJSFunctions";
+import { getImageFromAPI, getThumbnail } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
@@ -8,7 +8,7 @@ function getDownloadSize(imageMetadata) {
   return submitter_data
 }
 
-const imageMetadata = await getImageFromApiByUUID(image.uuid);
+const imageMetadata = await getImageFromAPI(image.uuid);
 
 ---
 <tr>

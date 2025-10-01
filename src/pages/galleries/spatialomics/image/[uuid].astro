@@ -7,7 +7,7 @@ import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro'
 import fieldMap from "../../../../data/metadata-field-name-mapping.json";
 
 import fallbackImage from "../../../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromApiByUUID, getStudyFromApiByAccession } from "../../../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByAccession } from "../../../../components/SharedJSFunctions.js"
 import { type Study } from "../../../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
@@ -18,7 +18,7 @@ const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
 
-const image = await getImageFromApiByUUID(uuid);
+const image = await getImageFromAPI(uuid);
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = image.representation.find(
     (rep) => rep.uuid === vizarrRepUuid

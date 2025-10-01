@@ -183,7 +183,7 @@ export async function getStudyFromApiByAccession(accessionID){
     return study;
 }
 
-export async function getImageFromApiByUUID(uuid){
+export async function getImageFromAPI(uuid){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}`);
     const image = response?.hits?.hits?.[0]?._source; 
     return image
@@ -226,7 +226,7 @@ function isImageAnAnnotation(img){
 export async function getSourceAnnotatedImagePairs(uuid){
     const creationProcessLinkingImage = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/creation_process?page_size=20`)
     const imageLinkingCreationProcess = await Promise.all(creationProcessLinkingImage.flatMap( async (cp) => (await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${cp.uuid}/image?page_size=1`))[0]))
-    const annotatedImages = (await Promise.all(imageLinkingCreationProcess.flatMap( async (img) => await getImageFromApiByUUID(img.uuid)))).filter(img => isImageAnAnnotation(img));
+    const annotatedImages = (await Promise.all(imageLinkingCreationProcess.flatMap( async (img) => await getImageFromAPI(img.uuid)))).filter(img => isImageAnAnnotation(img));
     return annotatedImages
 }
 
@@ -234,7 +234,7 @@ export async function generateSourceAnnotatedImageMap(study){
     const annotatedImagesMap = new Map();
     const skipImageUUID = ["2a382f3a-aa6d-4ace-99fb-468335fa3809", "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea", "d0b3f24f-4a9c-499b-99e4-343de48e7c82"]
     const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image).filter(img => !skipImageUUID.includes(img.uuid)) || [];
-    const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromApiByUUID(image.uuid)));
+    const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
     for (const img of Object.values(images)) {
         if (isImageAnAnnotation(img)) {
             const key = img.creation_process.input_image_uuid[0];
