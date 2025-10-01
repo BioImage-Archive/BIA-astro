@@ -180,9 +180,9 @@ export async function getStudyFromAPI(idType, id){
     let study;
     switch (idType){
         case "accession":
-            response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${identifier}`);
+            response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${id}`);
             study = response?.hits?.hits?.find(
-                (hit) => hit._source?.accession_id === identifier
+                (hit) => hit._source?.accession_id === id
               )?._source || undefined;
             break;
         case "uuid":
