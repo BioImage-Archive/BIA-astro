@@ -1,9 +1,8 @@
 ---
-import { formatListItem, taxonRender, multilineTextRender } from "../SharedJSFunctions";
-import studyMetadata from "../../data/bia-study-metadata.json"
+import { formatListItem, taxonRender, multilineTextRender, getStudyFromAPI } from "../SharedJSFunctions";
 
 const { dataset, datasetAIInfo, studyAccessionID } = Astro.props;
-
+const studyMetadata = Object.fromEntries([[studyAccessionID, await getStudyFromAPI("accession", studyAccessionID)]])
 
 function getTaxons(dataset) {
     var taxons
