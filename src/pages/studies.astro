@@ -5,7 +5,6 @@ import BrowseStudyHeading from '../components/BrowseStudiesHeading.astro';
 import "../styles/toggle.css";
 import "../styles/browse_controls.css";
 import "../styles/filter_cards.css";
-import studyMetadata from "../data/bia-study-metadata.json";
 import SearchResults, { type SearchHits, type FacetData, type PaginationData } from "../components/search/Search.astro";
 import { generateParamString } from "../components/search/Search.astro";
 import { PUBLIC_SEARCH_API } from "astro:env/client";
@@ -45,26 +44,6 @@ if (query || query === "") {
     paginationData = data.pagination;
   }
 }
-
-const totalStudies = Object.values(studyMetadata).length;
-
-const totalFiles = Object.values(studyMetadata).reduce((acc, study) => {
-  const studyFiles = study.dataset?.reduce((fileAcc, component) => {
-    return fileAcc + (component.file_reference_count || 0);
-  }, 0) || 0;
-  return acc + studyFiles;
-}, 0);
-
-const totalImages = Object.values(studyMetadata).reduce((acc, study) => {
-  const studyImages = study.dataset?.reduce((imgAcc, component) => {
-    return imgAcc + (component.image_count || 0);
-  }, 0) || 0;
-  return acc + studyImages;
-}, 0);
-
-const formattedTotalStudies = totalStudies.toLocaleString();
-const formattedTotalFiles = totalFiles.toLocaleString();
-const formattedTotalImages = totalImages.toLocaleString();
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
   <body>
@@ -73,11 +52,6 @@ const formattedTotalImages = totalImages.toLocaleString();
         <div slot="body_text">
           <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
           <p></p>
-          <p class="vf-hero__text">
-            Number of Studies: {formattedTotalStudies}<br>
-            Number of Files: {formattedTotalFiles}<br>
-            Number of OME-NGFF Images: {formattedTotalImages}</p>
-            <p></p>
             <p class="vf-hero__text">
           All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
         </div>

@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromAPI, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromApiByAccession, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
@@ -15,7 +15,7 @@ export function getStaticPaths() {
 
 const { accessionID } = Astro.params;
 
-const study = await getStudyFromAPI("accession", accessionID) as Study;
+const study = await getStudyFromApiByAccession(accessionID) as Study;
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
 const annotatedImagesMap = await generateSourceAnnotatedImageMap(study);
 const organism = getTaxons(study).join(", ");

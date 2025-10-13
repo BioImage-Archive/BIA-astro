@@ -9,7 +9,7 @@ import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromAPI} from "../../../../components/SharedJSFunctions.js"
+import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromApiByAccession} from "../../../../components/SharedJSFunctions.js"
 import { PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getStaticPaths() {
@@ -21,7 +21,7 @@ export function getStaticPaths() {
 }
 
 const { accessionID } = Astro.params;
-const study = await getStudyFromAPI("accession", accessionID) as Study;
+const study = await getStudyFromApiByAccession(accessionID) as Study;
 
 const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 
@@ -32,6 +32,7 @@ const fetchDatasetDetails = async (datasetUuid) => {
     const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
     const response = await fetch(apiUrl);
     const fileData = await response.json();
+    if (!Array.isArray(fileData)) return false;
     const attributes = fileData.flatMap(file => file.additional_metadata || []);
     const dataTypeAttr = attributes.find(attr => 
         attr.name === 'attributes_from_biostudies.File' && (

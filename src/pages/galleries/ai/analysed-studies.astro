@@ -4,12 +4,12 @@ import BrowseDatasetHeading from '../../../components/BrowseStudiesHeading.astro
 import StudyCard from '../../../components/cards/BrowseStudyCard.astro';
 
 import collection from '../../../data/collections/ai-benchmark-datasets.json';
-import {getStudyFromAPI} from "../../../components/SharedJSFunctions.js"
+import {getStudyFromApiByAccession} from "../../../components/SharedJSFunctions.js"
 import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
 const studiesEntries = await Promise.all(
   Object.entries(additionalStudyInfo).map(async ([accessionID, studyAIInfo]) => {
-    const study = await getStudyFromAPI("accession", accessionID);
+    const study = await getStudyFromApiByAccession(accessionID);
     return [accessionID, study] as const;
   })
 );

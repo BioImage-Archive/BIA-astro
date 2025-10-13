@@ -175,22 +175,12 @@ async function getFromAPI(url){
     }
 }
 
-export async function getStudyFromAPI(idType, id){
-    let response;
-    let study;
-    switch (idType){
-        case "accession":
-            response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${id}`);
-            study = response?.hits?.hits?.[0]?._source || undefined;
-            break;
-        case "uuid":
-            response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/doc?uuid=${id}`);
-            study = response?.hits?.[0]?._source || undefined;
-            break;
-        default:
-            break;
-    }
-    return study
+export async function getStudyFromApiByAccession(accessionID){
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${accessionID}`);
+    const study = response?.hits?.hits?.find(
+        (hit) => hit._source?.accession_id === accessionID
+      )?._source || undefined;
+    return study;
 }
 
 export async function getImageFromAPI(uuid){
@@ -199,67 +189,31 @@ export async function getImageFromAPI(uuid){
     return image
 }
 
-export async function getEnrichedSubject(subject){
-    subject.sample_of = await Promise.all(subject.sample_of_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/bio_sample/${uuid}`)));
-    subject.imaging_preparation_protocol = await Promise.all(subject.imaging_preparation_protocol_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/specimen_imaging_preparation_protocol/${uuid}`)));
-    return subject
-}
+export async function getAllStudiesFromAPI(){
+  const firstPage = await getFromAPI(
+      `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100`
+    );
+    if (!firstPage) return null;
 
-export async function getCreationProcessImage(creationProcess){
-    creationProcess.acquisition_process = await Promise.all(creationProcess.image_acquisition_protocol_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/image_acquisition_protocol/${uuid}`)));
-    creationProcess.annotation_method = await Promise.all(creationProcess.annotation_method_uuid.map(async uuid => await getFromAPI(`${PUBLIC_MONGO_API}/annotation_method/${uuid}`)));
-    const specimenUUID = creationProcess?.subject_specimen_uuid || "";
-    if (specimenUUID === ""){
-      return creationProcess;
-    }
-    const subject = await getFromAPI(`${PUBLIC_MONGO_API}/specimen/${specimenUUID}`);
-    creationProcess.subject = await getEnrichedSubject(subject);
-    return creationProcess
-}
+    const totalPages = firstPage.pagination.total_pages;
+    const allHits = [...firstPage.hits.hits];
 
-export async function getImageFromMongo(uuid){
-  const image = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}`);
-  image.representation = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/image_representation?page_size=10`);
-  image.creation_process = await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${image.creation_process_uuid}`);
-  image.creation_process = await getCreationProcessImage(image.creation_process)
-  return image;
+    const otherPages = await Promise.all(
+      Array.from({ length: totalPages - 1 }, (_, i) =>
+        getFromAPI(
+          `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100&pagination.page=${i + 2}`,
+          { hits: { hits: [] } }
+        )
+      )
+    );
 
-}
-
-export async function getDatasetFromMongo(uuid){
-  const dataset = await getFromAPI(`${PUBLIC_MONGO_API}/dataset/${uuid}`);
-  return dataset;
-}
-
-export async function getStudyFromMongo(identifier){
-  let study
-  if (identifier.length > 15){
-    study = await getFromAPI(`${PUBLIC_MONGO_API}/study/${identifier}`);
-  }else{
-    study = await getFromAPI(`${PUBLIC_MONGO_API}/search/study/accession?accession_id=${identifier}&page_size=1`);
-  }
-  
-  study.dataset = await getFromAPI(`${PUBLIC_MONGO_API}/study/${study.uuid}/dataset?page_size=10`);
-  study.dataset = await Promise.all(
-    study.dataset.map(async (ds) => {
-      const images = await getFromAPI(
-        `${PUBLIC_MONGO_API}/dataset/${ds.uuid}/image?page_size=10`
-      );
-      return { ...ds, image: images };
-    })
-  );
-  return study;
-}
-
-
-export async function getAllStudiesFromMongo(){
-  const studies = await getFromAPI(`${PUBLIC_MONGO_API}/search/study?page_size=10000`);
-  return Object.values(studies);
+    otherPages.forEach((p) => allHits.push(...p.hits.hits));
+    return allHits.map((hit) => hit._source);
 }
 
 function isImageAnAnnotation(img){
     return (img.creation_process?.input_image_uuid?.length && 
-    img.representation.some(imgRep => imgRep.image_format.includes(".ome.zarr")) &&
+    img.representation.some(imgRep => imgRep.image_format === ".ome.zarr") &&
     !img?.additional_metadata?.some(md =>
         (
             md.value?.attributes?.["file description"] === "Raw image in JPEG format" || 

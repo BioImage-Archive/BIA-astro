@@ -2,7 +2,7 @@
 export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { getTaxons, getAnnotationType, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getSourceAnnotatedImagePairs } from "../../../../components/SharedJSFunctions.js";
+import { getTaxons, getAnnotationType, getImageFromAPI, getStudyFromApiByAccession, getSourceAnnotatedImagePairs } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
@@ -10,12 +10,11 @@ import "../../../../styles/image_slider.css";
 
 const { uuid } = Astro.params;
 const image = await getImageFromAPI(uuid);
-const dataset = await getDatasetFromMongo(image.submission_dataset_uuid);
-const studyInfo = await getStudyFromAPI("uuid", dataset.submitted_in_study_uuid) as Study;
+const acessionID = image ? image.representation.find( (rep) => rep.image_format === ".ome.zarr")?.file_uri?.[0].replace("https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/", "").split("/")[0]: {};
+const studyInfo = await getStudyFromApiByAccession(acessionID) as Study;
 
 let sourceImage;
 let annotatedImages = [];
-//const annotatedImagesMap = await generateSourceAnnotatedImageMap(studyInfo)
 sourceImage = image;
 annotatedImages = await getSourceAnnotatedImagePairs(sourceImage.uuid)
 const organism = getTaxons(studyInfo).join(", ");

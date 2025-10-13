@@ -7,7 +7,7 @@ import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getDatasetFromMongo, getStudyFromAPI, getImageFromMongo, getStudyFromMongo } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByAccession } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
@@ -18,15 +18,16 @@ const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
 
-const image = (await getImageFromAPI(uuid) ?? await getImageFromMongo(uuid));
-const imageDataset = await getDatasetFromMongo(image.submission_dataset_uuid);
-const imageStudy = (await getStudyFromAPI("uuid", imageDataset.submitted_in_study_uuid) as Study ??
-  await getStudyFromMongo(imageDataset.submitted_in_study_uuid));
+const image = await getImageFromAPI(uuid);
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
-) ?? image.representation.find( (rep) => rep.image_format.includes("ome.zarr")) )
+) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
+
+const acessionID = image ? interactiveImageRepresentation?.file_uri?.[0].replace("https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/", "").split("/")[0]: {};
+const imageStudy = image ? await getStudyFromApiByAccession(acessionID) as Study : {};
+const imageDataset = imageStudy.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
 const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
 const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
 const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
@@ -61,7 +62,7 @@ function formatPhysicalDimension(value, text) {
 }
 
 function formatPhysicalDimensions(imageRepresentation) {
-    const fields = [ "physical_size_x", "physical_size_y", "physical_size_z"]
+    const fields = [ "voxel_physical_size_x", "voxel_physical_size_y", "voxel_physical_size_z"]
     const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
     return formattedStr != "" ? formattedStr : 'Unknown'
 }

@@ -5,7 +5,7 @@ import { formatRowAnalysisParameters , getDatasetUUIDNameMap} from "./Benchmarki
 const { tableRows, studyOrModelPageMode } = Astro.props;
 
 
-const datasetUUIDNameMap = getDatasetUUIDNameMap(tableRows)
+const datasetUUIDNameMap = await getDatasetUUIDNameMap(tableRows)
 const hasReferenceImage = tableRows.filter(row => row.annotation_data_set_uuid != null).length > 0 ? true : false
 ---
 
