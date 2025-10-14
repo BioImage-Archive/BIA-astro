@@ -1,7 +1,7 @@
 ---
 
 ---
-
+<link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
 <div>
   <h2>Training</h2>
   <div class="vf-grid vf-tabs">
@@ -74,8 +74,8 @@
                     ? `<div class="vf-summary__location">
                         <div class="vf-u-margin__top--400"></div>
                         <span>${item.fields.status}</span> |
-                        <span>${item.fields.date_time_clean}</span> |
-                        <span>${item.fields.venue.toString() === "null" ? "Online" : item.fields.venue}</span>
+                        <span><i class="icon icon-common icon-calendar-alt"></i> ${item.fields.date_time_clean}</span> |
+                        <span><i class="icon icon-common icon-location"></i> ${item.fields.venue.toString() === "null" ? "Online" : item.fields.venue}</span>
                         </div>`
                     : ""
                 }
