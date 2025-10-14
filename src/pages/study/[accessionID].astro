@@ -55,7 +55,7 @@ const breadcrumbs = [
 ]
 ---
 
-<BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
+<BaseLayoutWithBreadcrumbs pageTitle={`${study.accession_id}: ${study.title}`} breadcrumbs={breadcrumbs}>
   <body>
     <StudyTitleInfo study_info={study}/>
 
