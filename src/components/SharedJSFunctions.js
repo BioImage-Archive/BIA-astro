@@ -1,4 +1,4 @@
-import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API, PUBLIC_ON_DEMAND_TUTORIAL, PUBLIC_LIVE_TUTORIAL } from "astro:env/client";
+import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 export function getPlaceholderHeroImage(accessionID) {
@@ -296,9 +296,7 @@ export async function generateSourceAnnotatedImageMap(study){
     return annotatedImagesMap
 }
 
-export async function getTutorialURLs(urlType){
-    const onDemandTutorials = (await getFromAPI(PUBLIC_ON_DEMAND_TUTORIAL))['entries']
-    const quickTour = onDemandTutorials.filter(tutorial => tutorial.fields.subtitle[0] === "Quick tour")[0]
-    const submission_url = `${quickTour.fields.url}/submitting-data-to-bioimage-archive-2/submission/`
-    return urlType === "submission"? submission_url : quickTour.fields.url
+export function getTutorialURLs(urlType){
+    const quickTourURL = "https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour"
+    return urlType === "submission"? `${quickTourURL}/submitting-data-to-bioimage-archive-2/submission/` : quickTourURL
 }

@@ -88,7 +88,8 @@
         console.error("Error fetching tutorials:", error);
         }
     }
-    import { PUBLIC_LIVE_TUTORIAL, PUBLIC_ON_DEMAND_TUTORIAL } from "astro:env/client";
+    const PUBLIC_LIVE_TUTORIAL = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_events?format=json&query=domain_source:ebiweb_training_events%20AND%20timeframe:upcoming&start=0&size=2&fieldurl=true&fields=title,description,start_date,end_date,date_time_clean,resource_training_page,type,training_type,url,venue,materials,status,timeframe,resource_training_page,course_image&facetcount=0&sort=start_date&facets=resource_training_page:BioImage%20Archive"
+    const PUBLIC_ON_DEMAND_TUTORIAL = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=2&fields=title,subtitle,description,type,url&sort=title&facets=resource_training_page:BioImage%20Archive"
     document.addEventListener("DOMContentLoaded", () => {
         fetchTutorials(PUBLIC_LIVE_TUTORIAL, "live-tutorials", "live");
         fetchTutorials(PUBLIC_ON_DEMAND_TUTORIAL, "ondemand-tutorials", "ondemand");

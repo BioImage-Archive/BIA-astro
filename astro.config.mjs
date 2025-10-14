@@ -65,20 +65,6 @@ export default defineConfig({
         access: "public",
         context: "client",
         default: "https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2"
-      }),
-      PUBLIC_ON_DEMAND_TUTORIAL: envField.string({
-        type: "string",
-        required: true,
-        access: "public",
-        context: "client",
-        default: "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=2&fields=title,subtitle,description,type,url&sort=title&facets=resource_training_page:BioImage%20Archive"
-      }),
-      PUBLIC_LIVE_TUTORIAL: envField.string({
-        type: "string",
-        required: true,
-        access: "public",
-        context: "client",
-        default: "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_events?format=json&query=domain_source:ebiweb_training_events%20AND%20timeframe:upcoming&start=0&size=2&fieldurl=true&fields=title,description,start_date,end_date,date_time_clean,resource_training_page,type,training_type,url,venue,materials,status,timeframe,resource_training_page,course_image&facetcount=50&sort=start_date&facets=resource_training_page:BioImage%20Archive"
       })
     }
   },
