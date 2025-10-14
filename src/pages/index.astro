@@ -8,7 +8,6 @@ import helpImage from "../assets/bioimage-archive/help_embl_green.png";
 import policiesImage from "../assets/bioimage-archive/policies_embl_green.png";
 import aboutImage from "../assets/bioimage-archive/aboutus_embl_green.png";
 
-import onlineTutorialImage from "../assets/bioimage-archive/online_tutorial_image.png";
 import getInTouchImage from "../assets/bioimage-archive/get_in_touch.png";
 import emailImage from "../assets/bioimage-archive/email_embl_green.png";
 import githubImage from "../assets/bioimage-archive/github_embl_green.png";
@@ -22,6 +21,7 @@ import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png"
 import euImage from "../assets/bioimage-archive/EU_logo.jpg";
 
 import SearchBar from "../components/search/SearchBar.astro";
+import TrainingSection from "../components/TrainingSection.astro";
 
 const cards = [
   {
@@ -191,23 +191,13 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
   </section>
 
   <!-- Tutorial and get in touch -->
+  <section style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
+   <TrainingSection />
+  </section>
   <section
   class="vf-grid vf-grid__col-2"
   style="margin-left: 10%; margin-right: 10%;"
   >
-    <div>
-      <h2>Learn more</h2>
-      <a
-        href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/"
-        class="logo-img"
-      >
-        <img
-          class="vf-figure__image"
-          src={onlineTutorialImage.src}
-          alt="Online tutorial"
-        />
-      </a>
-    </div>
     <div>
       <h2>Stay in touch</h2>
       <section

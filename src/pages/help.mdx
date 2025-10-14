@@ -3,6 +3,10 @@ title: Help Overview
 layout: ../layouts/HelpLayout.astro
 ---
 import onlineImage from '/src/assets/bioimage-archive/online_tutorial_image.png';
+import TrainingSection from "../components/TrainingSection.astro";
+import {getTutorialURLs} from '../components/SharedJSFunctions.js';
+
+export const tutorial_url = await getTutorialURLs("quick-tour");
 
 ## Help Overview
 
@@ -10,6 +14,8 @@ Please use the sidebar menu on the left to navigate the help pages.
 
 If this is the first time you are submitting to the BioImage Archive, we have a comprehensive online tutorial that covers all you need to know to get started:
 
-<a href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/">
+<a href={tutorial_url}>
     <img class="padding-bottom-large" src={onlineImage.src} alt="BioImage Archive Online Tutorial" width="250px"/>
 </a>
+<hr />
+<TrainingSection />

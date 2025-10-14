@@ -1,10 +1,13 @@
 ---
 import onlineImage from '../assets/bioimage-archive/online_tutorial_image.png';
 import paperImage from '../assets/bioimage-archive/BioImage_Archive_paper.png';
+import { getTutorialURLs } from './SharedJSFunctions';
+
+export const tutorial_url = getTutorialURLs("quick-tour");
 ---
 
 <h3>Further information</h3>
-<a href="https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/">
+<a href={tutorial_url}>
     <img class="padding-bottom-large" src={onlineImage.src} alt="BioImage Archive Online Tutorial" width="250px"/>
 </a>
 <hr/>

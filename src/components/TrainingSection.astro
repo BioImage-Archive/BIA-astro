@@ -1,0 +1,97 @@
+---
+
+---
+<link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+<div>
+  <h2>Training</h2>
+  <div class="vf-grid vf-tabs">
+    <ul class="vf-tabs__list" data-vf-js-tabs>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--1">Live training</a>
+      </li>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--2">On-demand training</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="vf-tabs-content" data-vf-js-tabs-content>
+    <section class="vf-tabs__section" id="vf-tabs__section--1">
+      <div id="live-tutorials"></div>
+      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/live-events">View all live training</a>
+    </section>
+    <section class="vf-tabs__section" id="vf-tabs__section--2">
+      <div id="ondemand-tutorials"></div>
+      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/on-demand">View all on-demand training</a>
+    </section>
+  </div>
+</div>
+
+<script>
+    const formatDesc = (content) => {
+        if (!content) return "";
+        let safeContent = content.replace(/(<([^>]+)>)/gi, "");
+        return safeContent.length > 200
+        ? safeContent.slice(0, 200).split(" ").slice(0, -1).join(" ") + "..."
+        : safeContent;
+    };
+
+    async function fetchTutorials(url, containerId, type = "live") {
+        try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        const tutorials = data.entries || data;
+        if(tutorials.length == 0){
+            container.innerHTML = "No courses found";
+        }
+        tutorials.forEach((item) => {
+            const html = `
+            <div class="vf-summary vf-summary--event">
+                <p class="vf-summary__date">${item.fields.type}</p>
+                <h3 class="vf-summary__title">
+                <a href="${item.fields.url[0]}" target="_blank" class="vf-summary__link">
+                    ${item.fields.title}
+                    ${
+                    item.fields.subtitle &&
+                    item.fields.subtitle[0] &&
+                    item.fields.subtitle[0].length > 0 &&
+                    item.fields.subtitle.toString() !== "null"
+                        ? ": " + item.fields.subtitle
+                        : ""
+                    }
+                </a>
+                </h3>
+                <div>
+                <div class="vf-summary__text">
+                    ${formatDesc(item.fields.description[0] || "")}
+                </div>
+                ${
+                    type === "live"
+                    ? `<div class="vf-summary__location">
+                        <div class="vf-u-margin__top--400"></div>
+                        <span>${item.fields.status}</span> |
+                        <span><i class="icon icon-common icon-calendar-alt"></i> ${item.fields.date_time_clean}</span> |
+                        <span><i class="icon icon-common icon-location"></i> ${item.fields.venue.toString() === "null" ? "Online" : item.fields.venue}</span>
+                        </div>`
+                    : ""
+                }
+                </div>
+            </div>
+            `;
+            container.insertAdjacentHTML("beforeend", html);
+        });
+        } catch (error) {
+        console.error("Error fetching tutorials:", error);
+        }
+    }
+    const PUBLIC_LIVE_TUTORIAL = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_events?format=json&query=domain_source:ebiweb_training_events%20AND%20timeframe:upcoming&start=0&size=2&fieldurl=true&fields=title,description,start_date,end_date,date_time_clean,resource_training_page,type,training_type,url,venue,materials,status,timeframe,resource_training_page,course_image&facetcount=0&sort=start_date&facets=resource_training_page:BioImage%20Archive"
+    const PUBLIC_ON_DEMAND_TUTORIAL = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=2&fields=title,subtitle,description,type,url&sort=title&facets=resource_training_page:BioImage%20Archive"
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchTutorials(PUBLIC_LIVE_TUTORIAL, "live-tutorials", "live");
+        fetchTutorials(PUBLIC_ON_DEMAND_TUTORIAL, "ondemand-tutorials", "ondemand");
+    });
+</script>

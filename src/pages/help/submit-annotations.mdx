@@ -6,6 +6,9 @@ import ftp_aspera from "/src/assets/bioimage-archive/ftp-aspera.png" ;
 import filelist_button from "/src/assets/bioimage-archive/filelist_button.png" ;
 import BIA_annotation_template_view from "/src/assets/bioimage-archive/BIA_annotation_template_view.png" ;
 import "/src/styles/figure_styling.css" ;
+import {getTutorialURLs} from '../../components/SharedJSFunctions.js';
+
+export const submission_url = getTutorialURLs("submission");
 
 Submitting Annotations to the BioImage Archive
 ---------------------------------------
@@ -75,7 +78,7 @@ When all annotation files and file lists have been uploaded, you can create your
 
 Fill in all the necessary fields in the web forms that will be offered. You can also add sections to your submission if necessary. Please **add a link to the image dataset the annotations belong to, using the Link field of the form**. Make sure that the validation panel on the left indicates "all ok". When that is the case, click on "Submit". 
 
-For detailed guidance on how to fill the submission form, how to add sections and edit your submission, please check the [Submission subsection](https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour/submitting-data-to-resource-name/submission/) of BIA online tutorial.
+For detailed guidance on how to fill the submission form, how to add sections and edit your submission, please check the <a href={submission_url}>Submission subsection</a> of BIA online tutorial.
 
 After your submission is loaded into the BioImage Archive database, it will be assigned a unique BioImage Archive accession number (i.e., dataset identifier); details on how to access and share your study with others will be available in a confirmation window and will also be sent via e-mail. Your submission will however only be visible to you until its 'Release Date'.
 
