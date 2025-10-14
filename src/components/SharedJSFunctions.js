@@ -165,7 +165,7 @@ export function getThumbnail(img) {
     return thumbnail_uri;
 }
 
-export async function getFromAPI(url){
+async function getFromAPI(url){
     try {
         const res = await fetch(url);
         return await res.json();
