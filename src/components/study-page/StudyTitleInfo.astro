@@ -1,26 +1,66 @@
 ---
 import WebsiteStateButton from "../WebsiteStateButton.astro";
+import orcidImage from "../../assets/bioimage-archive/orcid.svg";
 
 const { study_info: studyInfo } = Astro.props;
 
-const authors = "author" in studyInfo ? studyInfo.author : [{display_name: ""}];
+const authors = "author" in studyInfo ? studyInfo.author : [{ display_name: "" }];
 
-function authorFormat(author_name, i, author_list) {
-    if (i + 1 === author_list.length) {
-        return author_name;
+// 1. Create a unique list of affiliations
+const allAffiliations = authors.flatMap(author => author.affiliation || []);
+const affiliationMap = new Map();
+
+allAffiliations.forEach(affil => {
+    if (!affiliationMap.has(affil.display_name)) {
+        affiliationMap.set(affil.display_name, { ...affil });
     } else {
-        return author_name + ", ";
-    }
-}
+        const existingAffil = affiliationMap.get(affil.display_name);
 
-// TODO: Organisation information - note this may be hard with current datamodels.
-// Javascript considers objects to be unique, so two objects with the same fields do not === each other.
-// In order to get a list of unique organisations as biostudies does we may need to do the filtering in the export
-// or consider changing the models.
+        if (!existingAffil.address && affil.address) {
+            existingAffil.address = affil.address;
+        }
+    }
+});
+
+const uniqueAffiliations = Array.from(affiliationMap.values());
+
+// 2. Create a map for quick lookup of institution IDs
+const institutionMap = new Map();
+uniqueAffiliations.forEach((affil, index) => {
+    institutionMap.set(affil.display_name, index + 1);
+});
+
+function authorFormat(author) {
+    let authorString = author.display_name;
+    
+    // Create a Set to get unique affiliations for the current author
+    const uniqueAuthorAffiliations = new Set();
+    if (author.affiliation) {
+        author.affiliation.forEach(affil => uniqueAuthorAffiliations.add(affil.display_name));
+    }
+    
+    // Map the unique affiliations to their IDs from the global institutionMap
+    const affiliationIds = Array.from(uniqueAuthorAffiliations)
+        .map(affilName => institutionMap.get(affilName));
+    
+    // Sort the affiliation IDs numerically
+    affiliationIds.sort((a, b) => a - b);
+    
+    if (affiliationIds.length > 0) {
+        // Create an array of links for each affiliation ID
+        const affiliationLinks = affiliationIds.map(id => {
+            return `<a href="#affiliation-${id}" style="color: inherit; text-decoration: none;">${id}</a>`;
+        });
+        
+        // Join the links with a comma and wrap in a superscript tag
+        authorString += `<sup style="color: #3B8FB6; font-size: 0.65em; margin-left: 0.2em;">${affiliationLinks.join(', ')}</sup>`;
+    }
+    return authorString;
+}
 ---
+
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
-
     </div>
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
@@ -29,12 +69,247 @@ function authorFormat(author_name, i, author_list) {
         </h1>
         <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
         <p>Released {studyInfo.release_date}</p>
-        <p>
+        <div class="authors-list">
             {
-                authors.map((contributor, i) =>
-                    authorFormat(contributor.display_name, i, authors),
-                )
+                authors.map((author, i) => {
+                    const affiliationNames = author.affiliation ? author.affiliation.map(a => a.display_name).join('|') : '';
+                    return (
+                        <Fragment>
+                            <span class="author-container" data-affiliations={`|${affiliationNames}|`}>
+                                <span set:html={authorFormat(author)}></span>
+                                {author.orcid &&
+                                    <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
+                                        <img src={orcidImage.src} alt="ORCID" style="height: 1.2em; vertical-align: middle;"/>
+                                    </a>
+                                }
+                                <div class="author-card">
+                                    <h4>{author.display_name}</h4>                                
+                                    {author.role && (<p>{author.role.join(', ')}</p>)}
+                                    {author.contact_email && <p>{author.contact_email}</p>}
+                                    {author.orcid && <p>ORCID: {author.orcid}</p>}
+                                    {author.affiliation && (
+                                        <ul>
+                                            {author.affiliation.map((affil) => (
+                                                <li>
+                                                    <span>{affil.display_name}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            </span>{i + 1 < authors.length ? "," : ""}
+                        </Fragment>
+                    );
+                })
             }
-        </p>
-    </div>
+        </div>
+
+        <div>
+            {
+                uniqueAffiliations.map((affil, index) => (
+                    <Fragment>
+                        <span class="affiliation-container" data-affiliation-name={affil.display_name}>
+                            <span class="js-affiliation" id={`affiliation-${index + 1}`}>
+                                <sup class="affiliation-sup">{index + 1}</sup>
+                                {affil.display_name}
+                            </span>
+                            
+                            <div class="affiliation-card">
+                                {affil.address ? (
+                                    <p><strong>Address:</strong> {affil.address}</p>
+                                ) : (
+                                    <p><strong>Address:</strong> Not available</p> 
+                                )}
+                            </div>
+                        </span>{index + 1 === uniqueAffiliations.length ? "" : " "}
+                    </Fragment>
+                ))
+            }
+        </div>
+        </div>
 </section>
+
+<style>
+.authors-list {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 1rem;
+}
+
+.author-container {
+    position: relative;
+    display: inline;
+}
+
+.orcid-link img {
+    height: 1.2em;
+    vertical-align: middle;
+    margin-left: 0;
+}
+
+.author-card {
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    background-color: white;
+    border: 1px solid #3B8FB6;
+    border-top: 5px solid #3B8FB6;
+    padding: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    width: 250px;
+    display: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #4C5052;
+}
+
+.author-container:hover .author-card {
+    display: block;
+}
+
+.author-card h4 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.author-card p {
+    margin: 0.5rem 0;
+    font-size: 0.85em;
+}
+
+.author-card ul {
+    padding-left: 1rem;
+    margin: 0.5rem 0 0;
+}
+
+.author-card ul li {
+    font-size: 0.85em;
+    margin-bottom: 0.25rem;
+}
+
+.highlight {
+  background-color: #B0F8CD;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.affiliation-container {
+    position: relative;
+    display: inline;
+    color: #3B8FB6; 
+    font-size: 0.9em; 
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.affiliation-card {
+    position: absolute;
+    top: 1.5rem; 
+    left: 0;
+    background-color: white;
+    border: 1px solid #3B8FB6;
+    border-top: 5px solid #3B8FB6;
+    padding: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    width: 250px;
+    display: none; 
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #4C5052;
+}
+
+.affiliation-card p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.affiliation-container:hover .affiliation-card {
+    display: block;
+}
+
+.js-affiliation {
+    display: inline;
+    line-height: 1.2;
+}
+
+.affiliation-sup {
+    font-size: 0.7em;
+    line-height: 1;
+    vertical-align: top;
+    position: relative;
+    top: -0.1em;
+    margin-right: -0.2em;
+    margin-left: 0.5em;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const allJsAffiliations = document.querySelectorAll('.js-affiliation');
+  let activeHighlightTimeout;
+
+  document.body.addEventListener('click', (event) => {
+    // Check if the clicked element is a link inside a superscript
+    const targetLink = (event.target instanceof Element) ? event.target.closest('sup a') : null;
+
+    if (targetLink) {
+      // Prevent the default anchor jump behavior to handle it with JavaScript
+      event.preventDefault();
+
+      // Get the ID from the href (e.g., "#affiliation-2" -> "affiliation-2")
+      const targetId = targetLink.getAttribute('href').substring(1);
+      const targetAffiliation = document.getElementById(targetId);
+
+      if (targetAffiliation) {
+        allJsAffiliations.forEach(affil => {
+          affil.classList.remove('highlight');
+        });
+
+        // Add the highlight class to the target element
+        targetAffiliation.classList.add('highlight');
+
+        // Scroll into view
+        targetAffiliation.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+
+        // Remove highlight after a few seconds
+        if (activeHighlightTimeout) {
+            clearTimeout(activeHighlightTimeout);
+        }
+
+        activeHighlightTimeout = setTimeout(() => {
+          targetAffiliation.classList.remove('highlight');
+        }, 3000); // Highlight for 3 seconds
+      }
+    }
+  });
+
+  const affiliationContainers = document.querySelectorAll('.affiliation-container');
+  const authorContainers = document.querySelectorAll('.author-container');
+
+  affiliationContainers.forEach(container => {
+    // When the mouse enters an affiliation...
+    container.addEventListener('mouseenter', () => {
+      const affilName = (container as HTMLElement).dataset.affiliationName;
+      if (!affilName) return;
+
+      // ...find all authors that have this affiliation and highlight them.
+      authorContainers.forEach(author => {
+        const authorAffils = (author as HTMLElement).dataset.affiliations;
+        if (authorAffils && authorAffils.includes(`|${affilName}|`)) {
+          author.classList.add('highlight');
+        }
+      });
+    });
+
+    // When the mouse leaves the affiliation...
+    container.addEventListener('mouseleave', () => {
+      // ...remove the highlight from all authors.
+      authorContainers.forEach(author => {
+        author.classList.remove('highlight');
+      });
+    });
+  });
+});
+</script>
