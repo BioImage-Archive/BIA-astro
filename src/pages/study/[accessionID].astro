@@ -28,6 +28,33 @@ const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
 
+// Pre-process grants to group them by funder name
+const groupedGrants = {};
+
+if (study?.grant && Array.isArray(study.grant)) {
+  for (const grant of study.grant) {
+    // We use the first funder's display name as the grouping key for simplicity
+    const funderName = 
+      (grant.funder && Array.isArray(grant.funder) && grant.funder.length > 0)
+        ? grant.funder[0].display_name
+        : 'Other Grant'; // Fallback name if no funder is specified
+
+    // Ensure we have a grant ID
+    if (grant.id) {
+        if (!groupedGrants[funderName]) {
+            groupedGrants[funderName] = [];
+        }
+        
+        // Store the grant ID and the funder name (for the Europe PMC query's 'ga' parameter)
+        groupedGrants[funderName].push({
+            id: grant.id,
+            funderName: funderName
+        });
+    }
+  }
+}
+// End grant pre-processing
+
 function getFileTypes(study) {
     const fileTypeList = []
     for (var dataset of study.dataset) {
@@ -100,30 +127,35 @@ const breadcrumbs = [
         <b>Funding statement: </b> <Fragment set:html={multilineTextRender(study.funding_statement)}></Fragment>
       </div>
     )}
-    {study.grant && Array.isArray(study.grant) && study.grant.length > 0 && (
+    {Object.keys(groupedGrants).length > 0 && (
       <div class="study-info-item">
         <b>Grant information:</b>
         <ul>
-          {study.grant.map((grant) => (
+          {/* Iterate over the grouped grants (funderName -> list of grant objects) */}
+          {Object.entries(groupedGrants).map(([funderName, grants]) => (
             <li style="font-size: inherit; line-height: inherit;">
-              {/* Display the Funder names */}
-              {grant.funder && Array.isArray(grant.funder) ? 
-                grant.funder.map(f => f.display_name).join(", ") : 
-                'Unknown Funder'
-              }
-              : 
-              {/* Display and link the Grant ID (if present) to Europe PMC search */}
-              {grant.id ? (
-                <a 
-                  href={`https://europepmc.org/grantfinder/grantdetails?query=gid:%22${encodeURIComponent(grant.id)}%22%20ga:%22${encodeURIComponent(grant.funder[0].display_name)}%22`}
-                  target="_blank"
-                  title={`Search Europe PMC for Grant ID: ${grant.id}`}
-                >
-                  {grant.id}
-                </a>
-              ) : (
-                `No Grant ID provided`
-              )}
+                {funderName}:
+                {/* Map over the grant IDs associated with this funder */}
+                {grants.map((grant, index) => {
+                    // Construct the specific Europe PMC query using gid:"ID" ga:"FUNDER NAME"
+                    const epaQuery = `gid:"${grant.id}" ga:"${grant.funderName}"`;
+                    const encodedQuery = encodeURIComponent(epaQuery);
+                    const finalHref = `https://europepmc.org/grantfinder/grantdetails?query=${encodedQuery}`;
+
+                    return (
+                        <Fragment>
+                            <a 
+                                href={finalHref} 
+                                target="_blank"
+                                title={`Search Europe PMC for Grant ID: ${grant.id} funded by ${grant.funderName}`}
+                            >
+                                {grant.id}
+                            </a>
+                            {/* Add a space separator if it's not the last grant ID in the list */}
+                            {index < grants.length - 1 && ' '}
+                        </Fragment>
+                    )
+                })}
             </li>
           ))}
         </ul>
