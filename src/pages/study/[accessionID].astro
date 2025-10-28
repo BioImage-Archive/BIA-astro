@@ -100,12 +100,31 @@ const breadcrumbs = [
         <b>Funding statement: </b> <Fragment set:html={multilineTextRender(study.funding_statement)}></Fragment>
       </div>
     )}
-    {study.grant && Array.isArray(study.grant) && study.grant.length > 0 && study.grant[0].funder && (
+    {study.grant && Array.isArray(study.grant) && study.grant.length > 0 && (
       <div class="study-info-item">
         <b>Grant information:</b>
         <ul>
-          {study.grant[0].funder.map((funder) => (
-            <li style="font-size: inherit; line-height: inherit;">{funder.display_name}: <a href={`https://europepmc.org/grantfinder/grantdetails?query=gid:%22${funder.id}%22%20ga:%22${encodeURIComponent(funder.display_name)}%22`} target="_blank">{funder.id}</a></li>
+          {study.grant.map((grant) => (
+            <li style="font-size: inherit; line-height: inherit;">
+              {/* Display the Funder names */}
+              {grant.funder && Array.isArray(grant.funder) ? 
+                grant.funder.map(f => f.display_name).join(", ") : 
+                'Unknown Funder'
+              }
+              : 
+              {/* Display and link the Grant ID (if present) to Europe PMC search */}
+              {grant.id ? (
+                <a 
+                  href={`https://europepmc.org/grantfinder/grantdetails?query=gid:%22${encodeURIComponent(grant.id)}%22%20ga:%22${encodeURIComponent(grant.funder[0].display_name)}%22`}
+                  target="_blank"
+                  title={`Search Europe PMC for Grant ID: ${grant.id}`}
+                >
+                  {grant.id}
+                </a>
+              ) : (
+                `No Grant ID provided`
+              )}
+            </li>
           ))}
         </ul>
       </div>
