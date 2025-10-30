@@ -59,6 +59,7 @@ await checkForTranscripts();
 
 const tableOfContents = {
   "Study Information": "study",
+  "Imaging Datasets": "study_components",
   "Viewable Images": "viewable_images",
 };
 
@@ -76,13 +77,13 @@ const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatas
 
 if (annotationDatasets.length > 0) {
   tableOfContents["Annotation Datasets"] = "annotation_datasets";
-  tableOfContents["Annotation files"] = "annotation_table"
+  tableOfContents["Annotation Dataset Files"] = "annotation_table"
 }
 const nonannotationDatasets = study.dataset.filter(dataset => 
   !("annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0)
 );
 
-tableOfContents["Dataset files"] = "file_references";
+tableOfContents["Dataset Files"] = "file_references";
 
 const breadcrumbs = [
   "/bioimage-archive",
