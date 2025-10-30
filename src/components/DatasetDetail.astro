@@ -37,9 +37,15 @@ function renderValue(key, value) {
     }
 }
 
-const renderField = Object.keys(data).map((key) => {
+const renderField = Object.keys(fieldMap).map((key) => {
     if (key in fieldMap && !(data[key] == null)) {
-        return `<div style="overflow-wrap: anywhere;"><b>${fieldMap[key]}:</b>&nbsp; ${renderValue(key, data[key])}</div>`;
+        if (Array.isArray(data[key])) {
+            if (data[key].length > 0) {
+            return `<div style="overflow-wrap: anywhere;"><b>${fieldMap[key]}:</b>&nbsp; ${renderValue(key, data[key])}</div>`;
+            }
+        } else {
+            return `<div style="overflow-wrap: anywhere;"><b>${fieldMap[key]}:</b>&nbsp; ${renderValue(key, data[key])}</div>`;
+        }
     }
 });
 
