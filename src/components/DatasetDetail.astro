@@ -37,7 +37,7 @@ function renderValue(key, value) {
     }
 }
 
-const renderField = Object.keys(data).map((key) => {
+const renderField = Object.keys(fieldMap).map((key) => {
     if (key in fieldMap && !(data[key] == null)) {
         if (Array.isArray(data[key])) {
             if (data[key].length > 0) {

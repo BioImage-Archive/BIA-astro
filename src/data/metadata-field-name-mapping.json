@@ -27,10 +27,10 @@
         "transformation_matrix": "Transformation matrix"
     },
     "annotation_method": {
+        "method_type": "Annotation type",
         "protocol_description": "Protocol description",
         "annotation_criteria": "Criteria",
-        "annotation_coverage": "Coverage",
-        "method_type": "Method type"
+        "annotation_coverage": "Coverage"
     },
     "protocol": {
         "protocol_description": "Protocol description"
