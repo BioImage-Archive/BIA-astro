@@ -1,0 +1,206 @@
+---
+import { getFromAPI } from "../components/SharedJSFunctions.js"
+const { accessionID } = Astro.props;
+const dirNumber = accessionID.replace("S-BIAD", "").replace("EMPIAR-", "");
+const ftpLink = accessionID.includes("EMPIAR")
+  ? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`
+  : await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
+const ftpHttpsLink = ftpLink?.httpLink || ftpLink;
+---
+
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+  <div class="vf-section-header">
+    <h2 class="vf-section-header__heading" id="file_references">
+      Browse files
+    </h2>
+  </div>
+
+  <div class="vf-grid__col--span-2">
+    <div class="ftp-container">
+      <div id="file-list" class="file-list">
+        <div class="loading">Loading files...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="ftpLink" set:html={JSON.stringify(ftpHttpsLink + "/")} />
+<script>
+  (async () => {
+    const ftpLink = JSON.parse(document.getElementById("ftpLink").textContent);
+    const fileListEl = document.getElementById("file-list");
+
+    async function fetchDirectory(url, container) {
+      container.innerHTML = `<div class="loading">Loading...</div>`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+        const html = await res.text();
+
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const links = [...doc.querySelectorAll("a")]
+          .map(a => a.getAttribute("href"))
+          .filter(href => href && !href.startsWith("?") && !href.startsWith("/") && href !== "../");
+
+        if (links.length === 0) {
+          container.innerHTML = `<p class="empty">No files found</p>`;
+          return;
+        }
+
+        const list = document.createElement("ul");
+        list.className = "vf-list vf-list--tight vf-list--unordered tree-list";
+
+        for (const href of links) {
+          const isFolder = href.endsWith("/");
+          const name = decodeURIComponent(href.replace(/\/$/, ""));
+          const item = document.createElement("li");
+          item.className = `vf-list__item ${isFolder ? "folder" : "file"}`;
+
+          if (isFolder) {
+            item.innerHTML = `
+              <div class="entry folder-entry">
+                <span class="arrow">▶</span>
+                <span class="icon">📁</span>
+                <button class="name vf-list--definition__details vf-button vf-button--link" data-path="${url}${href}">${name}</button>
+              </div>
+              <div class="folder-content" style="display:none;"></div>
+            `;
+          } else {
+            item.innerHTML = `
+              <div class="entry file-entry">
+                <span class="icon">📄</span>
+                <a href="${url}${href}" target="_blank">${name}</a>
+              </div>
+            `;
+          }
+
+          list.appendChild(item);
+        }
+
+        container.innerHTML = "";
+        container.appendChild(list);
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = `<p style="color:red;">⚠️ Failed to load ${url}</p>`;
+      }
+    }
+
+    // Initial fetch
+    await fetchDirectory(ftpLink, fileListEl);
+
+    // Folder expand/collapse
+    fileListEl.addEventListener("click", async (e) => {
+      const btn = e.target.closest(".name");
+      if (!btn) return;
+
+      const folderPath = btn.dataset.path;
+      const entry = btn.closest(".folder");
+      const arrow = entry.querySelector(".arrow");
+      const content = entry.querySelector(".folder-content");
+
+      const isExpanded = content.style.display === "block";
+
+      if (isExpanded) {
+        content.style.display = "none";
+        arrow.textContent = "▶";
+        return;
+      }
+
+      arrow.textContent = "▼";
+
+      if (!content.dataset.loaded) {
+        await fetchDirectory(folderPath, content);
+        content.dataset.loaded = "true";
+      }
+
+      content.style.display = "block";
+    });
+  })();
+</script>
+
+<style>
+  .ftp-container {
+    font-family: system-ui, sans-serif;
+    font-size: 0.95rem;
+  }
+
+  .tree-list {
+    list-style: none;
+    margin: 0;
+    padding-left: 0.75rem;
+  }
+
+  .entry {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.05rem 0;
+  }
+
+  .folder-entry {
+    all: unset;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #222;
+  }
+
+  .folder-entry .name {
+    cursor: pointer;
+    font-size: 0.1rem;
+    color: #222;
+    border-color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+    line-height: 0%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0px 0px;
+    margin: 0px 0px 0px 0px;
+  }
+
+  .folder-entry .name:hover {
+    text-decoration: underline;
+  }
+
+  .file-entry a {
+    color: #0070f3;
+    text-decoration: none;
+  }
+
+  .file-entry a:hover {
+    text-decoration: underline;
+  }
+
+  .icon {
+    width: 1rem;
+    text-align: center;
+  }
+
+  .arrow {
+    width: 0.9rem;
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease;
+    color: #555;
+    font-size: 0.8rem;
+  }
+
+  .arrow.expanded {
+    transform: rotate(90deg);
+  }
+
+  .folder-content {
+    margin-left: 1rem;
+    border-left: 1px dashed #ddd;
+    padding-left: 0.4rem;
+  }
+
+  .loading,
+  .empty {
+    font-style: italic;
+    color: #777;
+    margin-left: 1rem;
+  }
+</style>

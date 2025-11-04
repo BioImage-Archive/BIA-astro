@@ -4,7 +4,7 @@ import StudyTitleInfo from '../../../../components/study-page/StudyTitleInfo.ast
 import StudyContentsSummary from '../../../../components/study-page/StudyContentsSummary.astro'
 import DatasetInfo  from "../../../../components/spatialomics/DatasetInfo.astro"
 import ViewableImageTable from '../../../../components/ViewableImageTable.astro';
-import DatasetFilesTable from '../../../../components/DatasetFilesTable.astro';
+import StudyFiles from '../../../../components/StudyFiles.astro';
 import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
@@ -181,7 +181,7 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
 
     <hr/>
   
-    <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} title="All" table_id="file_references"/>
+    <StudyFiles accessionID={accessionID}/>
  
   </body>
 </BaseLayout>
