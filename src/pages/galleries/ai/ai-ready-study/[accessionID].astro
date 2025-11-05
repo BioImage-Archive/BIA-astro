@@ -95,6 +95,9 @@ const breadcrumbs = [
             </figcaption>
           </figure>
         </div>
+        <div slot="ftp-link">
+      <StudyFiles accessionID={accessionID}/>
+    </div>
   </StudyContentsSummary>
   <hr/>
   <StudyComponents title="Curated Study Information", id="study" content={studyContent} />
@@ -169,8 +172,6 @@ const breadcrumbs = [
       </table>
     </div>
   </section>
-  <hr/>
-  <StudyFiles accessionID={accessionID}/>
   <script type="module">
   document.addEventListener("DOMContentLoaded", function () {
     $("#viewable_images").DataTable({

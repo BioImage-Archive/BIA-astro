@@ -70,6 +70,9 @@ const breadcrumbs = [
         <img class="vf-figure__image" src={getStudyImage(study)} />
       </figure>
     </div>
+    <div slot="ftp-link">
+      <StudyFiles accessionID={accessionID}/>
+    </div>
   </StudyContentsSummary>
 
   <hr/>
@@ -104,6 +107,4 @@ const breadcrumbs = [
 
   <ViewableImageTable study={study} images={images}/>
 
-  <hr/>
-  <StudyFiles datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} accessionID={accessionID}/>
 </BaseLayout>

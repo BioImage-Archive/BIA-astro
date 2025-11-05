@@ -112,6 +112,9 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
         />
       </figure>
     </div>
+    <div slot="ftp-link">
+      <StudyFiles accessionID={accessionID}/>
+    </div>
     </StudyContentsSummary>
 
     <hr/>
@@ -178,10 +181,6 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
     )}
 
     {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
-
-    <hr/>
-  
-    <StudyFiles accessionID={accessionID}/>
  
   </body>
 </BaseLayout>
