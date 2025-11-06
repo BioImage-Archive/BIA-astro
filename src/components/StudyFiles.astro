@@ -7,4 +7,4 @@ const ftpLink = accessionID.includes("EMPIAR")
   : await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
 const ftpHttpsLink = ftpLink?.httpLink || ftpLink;
 ---
-<a href={ftpHttpsLink+"/"}><button class="vf-button vf-button--primary vf-button--sm">HTTP FTP link</button></a>
+<a href={ftpHttpsLink+"/"}><button class="vf-button vf-button--primary vf-button--sm">Browse files</button></a>
