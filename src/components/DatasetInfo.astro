@@ -10,54 +10,70 @@ const imageAcquisitionMap = fieldMap["image_acquisition"];
 const analysisMethodMap = fieldMap["analysis_method"];
 const annotationMethodMap = fieldMap["annotation_method"];
 const correlationMethodMap = fieldMap["correlation_method"];
+
+const detail_section_style= "margin-bottom: 1rem;"
+
 ---
+<style>
+    .details > div{
+        padding-left: 20px
+    }
+</style>
 
 <div style="margin-bottom: 1rem;">
+    
     <div>
         <b style="font-size: 14pt;">{dataset.title}</b>
     </div>
-    <ul>
-        <div>
+    <div class="details">
+
+        <div style={detail_section_style}>
             <b>Description:</b>&nbsp;{dataset.description}
         </div>
         {
             "biological_entity" in dataset &&
                 dataset.biological_entity &&
                 dataset.biological_entity.length > 0 && (
-                    <b>Biosamples:</b>
-                    <ul>
-                        {dataset.biological_entity.map((biosample) => (
-                            <DatasetDetail
-                                data={biosample}
-                                fieldMap={biosampleMap}
-                            />
-                        ))}
-                    </ul>
+                    <div class="details">
+                        <b>Biosamples:</b>
+                        <div style={detail_section_style}>
+                            {dataset.biological_entity.map((biosample) => (
+                                <DatasetDetail
+                                    data={biosample}
+                                    fieldMap={biosampleMap}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 )
         }
         {
             "specimen_imaging_preparation_protocol" in dataset &&
                 dataset.specimen_imaging_preparation_protocol &&
                 dataset.specimen_imaging_preparation_protocol.length > 0 && (
-                    <b>Specimen Preparation Protocols:</b>
-                    <ul>
-                        {dataset.specimen_imaging_preparation_protocol.map(
-                            (sipp) => (
-                                <DatasetDetail
-                                    data={sipp}
-                                    fieldMap={sippMap}
-                                />
-                            ),
-                        )}
-                    </ul>
+                    <div class="details">
+                        <b>Specimen Preparation Protocols:</b>
+                        <div style={detail_section_style}>
+                            {dataset.specimen_imaging_preparation_protocol.map(
+                                (sipp) => (
+                                    <DatasetDetail
+                                        data={sipp}
+                                        fieldMap={sippMap}
+                                    />
+                                ),
+                            )}
+                        </div>
+                    </div>
                 )
         }
         {
             "acquisition_process" in dataset &&
                 dataset.acquisition_process &&
                 dataset.acquisition_process.length > 0 && (
+                    <div class="details">
+
                     <b>Image Acquisition Processes:</b>
-                    <ul>
+                    <div style={detail_section_style}>
                         {dataset.acquisition_process.map(
                             (image_acquisition) => (
                                 <DatasetDetail
@@ -66,15 +82,18 @@ const correlationMethodMap = fieldMap["correlation_method"];
                                 />
                             ),
                         )}
-                    </ul>
+                    </div>
+                    </div>
                 )
         }
         {
             "other_creation_process" in dataset &&
                 dataset.other_creation_process &&
                 dataset.other_creation_process.length > 0 && (
+                                        <div class="details">
+
                     <b>Creation Protocols:</b>
-                    <ul>
+                    <div style={detail_section_style}>
                         {dataset.other_creation_process.map(
                             (sgp) => (
                                 <DatasetDetail
@@ -83,47 +102,54 @@ const correlationMethodMap = fieldMap["correlation_method"];
                                 />
                             ),
                         )}
-                    </ul>
+                    </div>
+                                        </div>
                 )
         }
         {
             "analysis_method" in dataset && dataset.analysis_method && dataset.analysis_method.length > 0 && (
                 <b>Image Analysis Methods:</b>
-                <ul>
+                <div style={detail_section_style}>
                     {dataset.analysis_method.map((analysis_method) => (
                         <DatasetDetail
                             data={analysis_method}
                             fieldMap={analysisMethodMap}
                         />
                     ))}
-                </ul>
+                </div>
             )
         }
         {
             "correlation_method" in dataset && dataset.correlation_method && dataset.correlation_method.length > 0 && (
+                                    <div class="details">
+
                 <b>Correlation Methods:</b>
-                <ul>
+                <div style={detail_section_style}>
                     {dataset.correlation_method.map((correlation_method) => (
                         <DatasetDetail
                             data={correlation_method}
                             fieldMap={correlationMethodMap}
                         />
                     ))}
-                </ul>
+                </div>
+                                    </div>
             )
         }
         {
             "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0 && (
+                                    <div class="details">
+
                 <b>Annotation Methods:</b>
-                <ul>
+                <div style={detail_section_style}>
                     {dataset.annotation_process.map((annotation_method) => (
                         <DatasetDetail
                             data={annotation_method}
                             fieldMap={annotationMethodMap}
                         />
                     ))}
-                </ul>
+                </div>
+                </div>
             )
         }
-    </ul>
+    </div>
 </div>
