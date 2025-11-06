@@ -5,7 +5,7 @@ import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
-import DatasetFilesTable from "../../../../components/DatasetFilesTable.astro";
+import StudyFiles from "../../../../components/StudyFiles.astro";
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
 import "../../../../styles/image_slider.css"
 
@@ -57,7 +57,6 @@ const tableOfContents = {
   ...(modelInformation && { "Models Related To This Work": "models" }),
   "Annotated Datasets": "annotated_datasets",
   "Viewable Annotated Images": "all_images",
-  "All Files": "all_files",
 };
 const breadcrumbs = [
   "/bioimage-archive",
@@ -95,6 +94,9 @@ const breadcrumbs = [
             </figcaption>
           </figure>
         </div>
+        <div slot="ftp-link">
+      <StudyFiles accessionID={accessionID}/>
+    </div>
   </StudyContentsSummary>
   <hr/>
   <StudyComponents title="Curated Study Information", id="study" content={studyContent} />
@@ -169,8 +171,6 @@ const breadcrumbs = [
       </table>
     </div>
   </section>
-  <hr/>
-  <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats} page="gallery"/>
   <script type="module">
   document.addEventListener("DOMContentLoaded", function () {
     $("#viewable_images").DataTable({

@@ -5,6 +5,7 @@ import StudyContentsSummary from "../../components/study-page/StudyContentsSumma
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
+import StudyFiles from "../../components/StudyFiles.astro";
 
 import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
@@ -21,7 +22,6 @@ export async function getStaticPaths() {
 const tableOfContents = {
   "Study Information": "study",
   "Viewable Images": "viewable_images",
-  "Dataset files": "file_references",
 };
 
 const { accessionID } = Astro.params;
@@ -95,6 +95,9 @@ const breadcrumbs = [
       <figure class="vf-figure vf-figure--align vf-figure--align-centered">
         <img class="vf-figure__image" src={getStudyImage(study)} />
       </figure>
+    </div>
+    <div slot="ftp-link">
+      <StudyFiles accessionID={accessionID}/>
     </div>
   </StudyContentsSummary>
 
@@ -182,10 +185,6 @@ const breadcrumbs = [
   <hr/>
 
   <ViewableImageTable study={study} images={images}/>
-
-  <hr/>
-
-  <DatasetFilesTable datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>
 
 </BaseLayout>
 

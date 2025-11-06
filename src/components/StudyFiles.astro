@@ -1,0 +1,10 @@
+---
+import { getFromAPI } from "../components/SharedJSFunctions.js"
+const { accessionID } = Astro.props;
+const dirNumber = accessionID.replace("S-BIAD", "").replace("EMPIAR-", "");
+const ftpLink = accessionID.includes("EMPIAR")
+  ? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`
+  : await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
+const ftpHttpsLink = ftpLink?.httpLink || ftpLink;
+---
+<a href={ftpHttpsLink+"/"}><button class="vf-button vf-button--primary vf-button--sm">Browse files</button></a>
