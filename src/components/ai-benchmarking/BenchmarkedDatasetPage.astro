@@ -10,7 +10,8 @@ import { formatListItem, multilineTextRender } from "../SharedJSFunctions";
 const { accessionID, studyMetadata, additionalStudyMetadata, tableInfo} = Astro.props;
 
 const tableOfContents = {
-  "Model Information": "model",
+  "Curated Study Information": "study",
+  "Annotated Datasets": "study_components",
   "Benchmarking": "benchmarking",
   "Model Predictions": "predictions"
 };
@@ -77,7 +78,7 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
 
   <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
-      <h2 class="vf-section-header__heading">Study Information</h2>
+      <h2 class="vf-section-header__heading">Curated Study Information</h2>
     </div>
 
     <div style="overflow-wrap: anywhere;">
@@ -95,7 +96,7 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
 
   <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>
-      <h2 class="vf-section-header__heading">Datasets</h2>
+      <h2 class="vf-section-header__heading">Annotated Datasets</h2>
     </div>
     <div>
       {

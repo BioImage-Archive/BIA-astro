@@ -58,12 +58,13 @@ const checkForTranscripts = async () => {
 //await checkForTranscripts();
 
 const tableOfContents = {
-  "Study Information": "study",
+  "Curated Study Information": "study",
+  "Imaging Datasets": "study_components",
   "Viewable Images": "viewable_images",
 };
 
 if (hasTranscripts) {
-  tableOfContents["Transcript files"] = "transcript_files";
+  tableOfContents["Omics Component"] = "transcript_files";
 }
 
 
@@ -76,7 +77,6 @@ const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatas
 
 if (annotationDatasets.length > 0) {
   tableOfContents["Annotation Datasets"] = "annotation_datasets";
-  //tableOfContents["Annotation files"] = "annotation_table"
 }
 const nonannotationDatasets = study.dataset.filter(dataset => 
   !("annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0)
@@ -120,7 +120,7 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
 
     <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
-        <h2 class="vf-section-header__heading">Study Information</h2>
+        <h2 class="vf-section-header__heading">Curated Study Information</h2>
       </div>
 
       <div style="overflow-wrap: anywhere;">
