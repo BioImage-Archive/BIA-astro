@@ -31,7 +31,6 @@ const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
 
 // Pre-process grants to group them by funder name
 const groupedGrants = {};
-
 if (study?.grant && Array.isArray(study.grant)) {
   for (const grant of study.grant) {
     // We use the first funder's display name as the grouping key for simplicity
@@ -140,7 +139,7 @@ const breadcrumbs = [
             <li style="font-size: inherit; line-height: inherit;">
                 {funderName}:
                 {/* Map over the grant IDs associated with this funder */}
-                {grants.map((grant, index) => {
+                {Object.values(grants).map((grant, index) => {
                     // Construct the specific Europe PMC query using gid:"ID" ga:"FUNDER NAME"
                     const epaQuery = `gid:"${grant.id}" ga:"${grant.funderName}"`;
                     const encodedQuery = encodeURIComponent(epaQuery);
@@ -156,7 +155,7 @@ const breadcrumbs = [
                                 {grant.id}
                             </a>
                             {/* Add a space separator if it's not the last grant ID in the list */}
-                            {index < grants.length - 1 && ' '}
+                            {Array.isArray(grants) &&  index < grants?.length - 1 && ' '}
                         </Fragment>
                     )
                 })}
