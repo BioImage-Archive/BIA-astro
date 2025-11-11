@@ -1,5 +1,15 @@
 # BIA Astro prototype implementation
 
+## Configuration
+
+Configure your environment by either create a .env file from .env_template or set environment variables for the items in .env_template. Set the following environment variables:
+
+| Variable                | Description                              | Value                                              |
+| :---------------------- | :--------------------------------------- | :------------------------------------------------- |
+| `PUBLIC_SEARCH_API`     | Endpoint for BIA elasticsearch API       | `https://alpha.bioimagearchive.org/search`         |
+| `PUBLIC_MONGO_API`      | Endpoint for BIA MONGO API               | `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2` |
+
+
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
