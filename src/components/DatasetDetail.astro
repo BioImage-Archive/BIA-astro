@@ -33,7 +33,7 @@ function renderValue(key, value) {
         return `${growthProtocolRender(value)}`;
 
     } else {
-        return multilineTextRender(value)
+        return multilineTextRender(value.toString().replace(/[\r\n|\r|\n]+/g, ", "))
     }
 }
 
