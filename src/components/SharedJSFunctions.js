@@ -175,6 +175,13 @@ export async function getFromAPI(url){
     }
 }
 
+export async function getStudyFromApiByUUID(uuid){
+    // This can work with dataset uuid or study uuid.
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${uuid}`);
+    const study = response?.hits?.hits?.[0]?._source; 
+    return study
+}
+
 export async function getStudyFromApiByAccession(accessionID){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${accessionID}`);
     const study = response?.hits?.hits?.find(

@@ -7,7 +7,7 @@ import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByAccession } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByUUID } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
@@ -25,8 +25,8 @@ const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
 ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
 
-const acessionID = image ? interactiveImageRepresentation?.file_uri?.[0].replace("https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/", "").split("/")[0]: {};
-const imageStudy = image ? await getStudyFromApiByAccession(acessionID) as Study : {};
+const datasetUUID = image ? image.submission_dataset_uuid : "";
+const imageStudy = datasetUUID ? await getStudyFromApiByUUID(datasetUUID) as Study : {};
 const imageDataset = imageStudy.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
 const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
 const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
