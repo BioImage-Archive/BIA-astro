@@ -21,6 +21,7 @@ export async function getStaticPaths() {
 
 const tableOfContents = {
   "Study Information": "study",
+  "Linked Information": "linked_information", 
   "Datasets": "study_components",
   "Viewable Images": "viewable_images",
 };
@@ -28,6 +29,10 @@ const tableOfContents = {
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
+
+if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
+  delete tableOfContents["Linked Information"];
+}
 
 // Pre-process grants to group them by funder name
 const groupedGrants = {};

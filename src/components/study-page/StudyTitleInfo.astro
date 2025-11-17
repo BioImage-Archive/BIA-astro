@@ -123,6 +123,9 @@ function authorFormat(author) {
                                 ) : (
                                     <p><strong>Address:</strong> Not available</p> 
                                 )}
+                                {affil.rorid && (
+                                    <p><strong>RORID:</strong> {affil.rorid}</p>
+                                )}
                             </div>
                         </span>{index + 1 === uniqueAffiliations.length ? "" : " "}
                     </Fragment>
