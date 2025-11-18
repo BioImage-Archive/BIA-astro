@@ -1,6 +1,6 @@
 {
-  "cd3e28e2-3071-4aaa-9534-7b7da5a0892d": {
-    "uuid": "cd3e28e2-3071-4aaa-9534-7b7da5a0892d",
+  "b1472fb9-b1aa-42d0-9187-4741c56c4b74": {
+    "uuid": "b1472fb9-b1aa-42d0-9187-4741c56c4b74",
     "label": "HeLa cell",
     "submitted_in_study_accession": "EMPIAR-10311",
     "imaging_method": "FIB-SEM",
@@ -8,7 +8,7 @@
     "thumbnail_src": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/EMPIAR-10311/cd3e28e2-3071-4aaa-9534-7b7da5a0892d/554fdc0c-dde0-41f7-8c2c-9d6257e85aa2.png",
     "static_display_src": "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/EMPIAR-10311/cd3e28e2-3071-4aaa-9534-7b7da5a0892d/c7c8a39b-e226-4667-9e8d-d617b63d6baf.png",
     "ome_zarr_image_uri": "https://bioimaging-01-pub.livingobjects.ebi.ac.uk/phase1test/EMPIAR-10311-IM1.zarr",
-    "view_link": "https://neuroglancer-demo.appspot.com/#!%7B%22dimensions%22:%7B%22t%22:%5B1%2C%22%22%5D%2C%22z%22:%5B0.008%2C%22m%22%5D%2C%22y%22:%5B0.005%2C%22m%22%5D%2C%22x%22:%5B0.005%2C%22m%22%5D%7D%2C%22displayDimensions%22:%5B%22x%22%2C%22y%22%2C%22z%22%5D%2C%22position%22:%5B0%2C389.3145751953125%2C965.9187622070312%2C3466.778076171875%5D%2C%22crossSectionScale%22:3.1581929096897676%2C%22projectionOrientation%22:%5B-0.22687052190303802%2C-0.13153555989265442%2C0.008670561015605927%2C0.9649626612663269%5D%2C%22projectionScale%22:4096%2C%22layers%22:%5B%7B%22type%22:%22image%22%2C%22source%22:%22https://bioimaging-01-pub.livingobjects.ebi.ac.uk/phase1test/EMPIAR-10311-IM1.zarr/%7Czarr2:%22%2C%22localDimensions%22:%7B%22c%27%22:%5B1%2C%22%22%5D%7D%2C%22localPosition%22:%5B0%5D%2C%22tab%22:%22source%22%2C%22name%22:%22EMPIAR-10311-IM1.zarr%22%7D%5D%2C%22selectedLayer%22:%7B%22layer%22:%22EMPIAR-10311-IM1.zarr%22%7D%2C%22layout%22:%224panel%22%7D",
+    "view_link": "https://neuroglancer-demo.appspot.com/#!%7B%22dimensions%22:%7B%22t%22:%5B1%2C%22%22%5D%2C%22z%22:%5B8e-9%2C%22m%22%5D%2C%22y%22:%5B5e-9%2C%22m%22%5D%2C%22x%22:%5B5e-9%2C%22m%22%5D%7D%2C%22displayDimensions%22:%5B%22x%22%2C%22y%22%2C%22z%22%5D%2C%22position%22:%5B0%2C893.81298828125%2C1202.4185791015625%2C2903.33935546875%5D%2C%22crossSectionScale%22:7.279047385453418%2C%22projectionScale%22:268435456%2C%22layers%22:%5B%7B%22type%22:%22image%22%2C%22source%22:%22https://bioimaging-01-pub.livingobjects.ebi.ac.uk/phase1test/EMPIAR-10311-IM1.zarr/%7Czarr2:%22%2C%22localDimensions%22:%7B%22c%27%22:%5B1%2C%22%22%5D%7D%2C%22localPosition%22:%5B0%5D%2C%22tab%22:%22rendering%22%2C%22shaderControls%22:%7B%22normalized%22:%7B%22range%22:%5B56%2C244%5D%2C%22window%22:%5B9%2C255%5D%7D%7D%2C%22name%22:%22EMPIAR-10311-IM1.zarr%22%7D%5D%2C%22selectedLayer%22:%7B%22layer%22:%22EMPIAR-10311-IM1.zarr%22%7D%2C%22layout%22:%224panel-alt%22%7D",
     "size_x": 6616,
     "size_y": 2828,
     "size_z": 1727,
@@ -21,8 +21,8 @@
     "voxel_size_y": 5e-09,
     "voxel_size_z": 8e-09
   },
-  "6f7079e3-c9d8-4573-976a-f956d9a8f48f": {
-    "uuid": "6f7079e3-c9d8-4573-976a-f956d9a8f48f",
+  "10a2686d-46b0-4d65-b39a-1f1d08725c2f": {
+    "uuid": "10a2686d-46b0-4d65-b39a-1f1d08725c2f",
     "label": "Human organoid",
     "submitted_in_study_accession": "EMPIAR-11380",
     "imaging_method": "FIB-SEM",
@@ -43,8 +43,8 @@
     "voxel_size_y": 3e-08,
     "voxel_size_z": 3e-08
   },
-  "bed2d07b-2db4-4543-b170-45d8308d9c25": {
-    "uuid": "bed2d07b-2db4-4543-b170-45d8308d9c25",
+  "6a59feed-b9e1-4b08-9109-11d755005a90": {
+    "uuid": "6a59feed-b9e1-4b08-9109-11d755005a90",
     "label": "Gemmata obscuriglobus",
     "submitted_in_study_accession": "EMPIAR-10553",
     "imaging_method": "FIB-SEM",
@@ -65,8 +65,8 @@
     "voxel_size_y": 1e-08,
     "voxel_size_z": 1e-08
   },
-  "1acbf84b-5f05-4746-b85f-c70d140b6440": {
-    "uuid": "1acbf84b-5f05-4746-b85f-c70d140b6440",
+  "48b8b18b-862c-42a8-9449-d94165b9957d": {
+    "uuid": "48b8b18b-862c-42a8-9449-d94165b9957d",
     "label": "A. thaliana root phloem pole",
     "submitted_in_study_accession": "EMPIAR-10442",
     "imaging_method": "SBF-SEM",
@@ -87,8 +87,8 @@
     "voxel_size_y": 1e-08,
     "voxel_size_z": 4e-08
   },
-  "9b8bf3f1-0412-4472-8e10-7d0d39dc7d08": {
-    "uuid": "9b8bf3f1-0412-4472-8e10-7d0d39dc7d08",
+  "be8edb4a-dfa1-4f7a-a272-e67992615214": {
+    "uuid": "be8edb4a-dfa1-4f7a-a272-e67992615214",
     "label": "Whole platynereis dumerilii, 6 dpf",
     "submitted_in_study_accession": "EMPIAR-10365",
     "imaging_method": "SBF-SEM",
@@ -109,8 +109,8 @@
     "voxel_size_y": 1e-08,
     "voxel_size_z": 1e-08
   },
-  "7286f675-48c5-4c01-b6db-648e733f5478": {
-    "uuid": "7286f675-48c5-4c01-b6db-648e733f5478",
+  "79ba92ef-6404-4b3c-91fc-2ed73abf7cd2": {
+    "uuid": "79ba92ef-6404-4b3c-91fc-2ed73abf7cd2",
     "label": "HeLa cell",
     "submitted_in_study_accession": "EMPIAR-10819",
     "imaging_method": "FIB-SEM",
@@ -131,8 +131,8 @@
     "voxel_size_y": 5e-09,
     "voxel_size_z": 5e-09
   },
-  "fb803a58-d456-4f18-8f3f-f3973d425e81": {
-    "uuid": "fb803a58-d456-4f18-8f3f-f3973d425e81",
+  "e1993e97-e902-4b22-aa21-985068fd6f4a": {
+    "uuid": "e1993e97-e902-4b22-aa21-985068fd6f4a",
     "label": "Plasmodium falciparum gametocytes",
     "submitted_in_study_accession": "EMPIAR-12160",
     "imaging_method": "FIB-SEM",
@@ -153,8 +153,8 @@
     "voxel_size_y": 5e-09,
     "voxel_size_z": 1.5e-08
   },
-  "34a2a2d3-9f83-45f6-8d97-de0a5e7277a2": {
-    "uuid": "34a2a2d3-9f83-45f6-8d97-de0a5e7277a2",
+  "06b31fe7-5543-45e2-81f2-7e59b22b68b4": {
+    "uuid": "06b31fe7-5543-45e2-81f2-7e59b22b68b4",
     "label": "U2OS cell at leading edge of a wound assay",
     "submitted_in_study_accession": "EMPIAR-11003",
     "imaging_method": "FIB-SEM",
@@ -175,8 +175,8 @@
     "voxel_size_y": 5e-09,
     "voxel_size_z": 8e-09
   },
-  "95ca2b8e-f849-481b-b0c2-65cf6ac54e90": {
-    "uuid": "95ca2b8e-f849-481b-b0c2-65cf6ac54e90",
+  "d0b81b4e-9632-4f6d-8a0c-ffd8b8383c31": {
+    "uuid": "d0b81b4e-9632-4f6d-8a0c-ffd8b8383c31",
     "label": "Term human placental vili",
     "submitted_in_study_accession": "EMPIAR-10967",
     "imaging_method": "SBF-SEM",
@@ -197,8 +197,8 @@
     "voxel_size_y": 4e-09,
     "voxel_size_z": 5e-08
   },
-  "42db9fb5-0f2a-4310-b40b-bc358a6e48b9": {
-    "uuid": "42db9fb5-0f2a-4310-b40b-bc358a6e48b9",
+  "32954e1d-69df-4a0e-9c5e-a04f02d622d6": {
+    "uuid": "32954e1d-69df-4a0e-9c5e-a04f02d622d6",
     "label": "Zebrafish lobe, Merkel cells",
     "submitted_in_study_accession": "EMPIAR-12377",
     "imaging_method": "Array Tomography SEM",
@@ -219,8 +219,8 @@
     "voxel_size_y": 1e-08,
     "voxel_size_z": 6e-08
   },
-  "fd628e5d-9174-4179-beb4-a3dd2d0de6ed": {
-    "uuid": "fd628e5d-9174-4179-beb4-a3dd2d0de6ed",
+  "7e2d7aae-7546-416d-a8c1-c90330e81240": {
+    "uuid": "7e2d7aae-7546-416d-a8c1-c90330e81240",
     "label": "Notoroid in transverse orientation",
     "submitted_in_study_accession": "EMPIAR-12161",
     "imaging_method": "SBF-SEM",
@@ -241,8 +241,8 @@
     "voxel_size_y": 8.321670815348625e-09,
     "voxel_size_z": 5.0000000000000004e-08
   },
-  "7b596a14-efa9-4156-97d6-db0502d2be63": {
-    "uuid": "7b596a14-efa9-4156-97d6-db0502d2be63",
+  "7445f7fb-e2d7-4003-a6c8-bec4accfd97e": {
+    "uuid": "7445f7fb-e2d7-4003-a6c8-bec4accfd97e",
     "label": "Zebrafish lobe, Immume cells",
     "submitted_in_study_accession": "EMPIAR-12377",
     "imaging_method": "Array Tomography SEM",
@@ -263,8 +263,8 @@
     "voxel_size_y": 9.998520219007586e-09,
     "voxel_size_z": 6e-08
   },
-  "8bf3c882-6c45-4b28-9f46-030aac5e177a": {
-    "uuid": "8bf3c882-6c45-4b28-9f46-030aac5e177a",
+  "655cd9e6-b514-401c-ad25-8ace959dd4d4": {
+    "uuid": "655cd9e6-b514-401c-ad25-8ace959dd4d4",
     "label": "Parasitophorous vacuole containing Toxoplasma gondii \u2206CAP parasites.",
     "submitted_in_study_accession": "EMPIAR-10326",
     "imaging_method": "FIB-SEM",
@@ -285,8 +285,8 @@
     "voxel_size_y": 5e-09,
     "voxel_size_z": 5e-09
   },
-  "67726fa7-e1e3-44cb-a0fc-a61fa1a76b16": {
-    "uuid": "67726fa7-e1e3-44cb-a0fc-a61fa1a76b16",
+  "1efd3ca3-c232-4282-b92a-116de370e997": {
+    "uuid": "1efd3ca3-c232-4282-b92a-116de370e997",
     "label": "Tuwongella immobilis",
     "submitted_in_study_accession": "EMPIAR-10554",
     "imaging_method": "FIB-SEM",
@@ -307,8 +307,8 @@
     "voxel_size_y": 8e-09,
     "voxel_size_z": 5e-08
   },
-  "0a6eb342-bef6-4805-b076-0d2bbf23d5d9": {
-    "uuid": "0a6eb342-bef6-4805-b076-0d2bbf23d5d9",
+  "dfb90fe6-a888-4394-bf29-7204407fc94d": {
+    "uuid": "dfb90fe6-a888-4394-bf29-7204407fc94d",
     "label": "Hippocampal neurons from WT and FAM92A1 knockout mice",
     "submitted_in_study_accession": "EMPIAR-12041",
     "imaging_method": "FIB-SEM",
@@ -329,8 +329,8 @@
     "voxel_size_y": 5e-09,
     "voxel_size_z": 5e-09
   },
-  "2e32dd1d-864b-449b-ae23-3fdc4abdb1e8": {
-    "uuid": "2e32dd1d-864b-449b-ae23-3fdc4abdb1e8",
+  "11f7e6cf-90fe-49fa-80ae-21e360c0f66c": {
+    "uuid": "11f7e6cf-90fe-49fa-80ae-21e360c0f66c",
     "label": "Parapodia from Platynereis dumerilii",
     "submitted_in_study_accession": "EMPIAR-10310",
     "imaging_method": "FIB-SEM",
@@ -351,8 +351,8 @@
     "voxel_size_y": 1e-08,
     "voxel_size_z": 1e-08
   },
-  "a2816c2a-da91-46b4-a1a3-7d85edb80617": {
-    "uuid": "a2816c2a-da91-46b4-a1a3-7d85edb80617",
+  "c0e25b04-85bd-4779-bd92-21781977791e": {
+    "uuid": "c0e25b04-85bd-4779-bd92-21781977791e",
     "label": "Cryo serial pFIB/SEM of HeLa cells",
     "submitted_in_study_accession": "EMPIAR-11419",
     "imaging_method": "Cryo-FIB/SEM",
@@ -373,8 +373,8 @@
     "voxel_size_y": 6.75e-09,
     "voxel_size_z": 5e-08
   },
-  "c0272aa9-64af-4747-b6c3-fd29a887bf2f": {
-    "uuid": "c0272aa9-64af-4747-b6c3-fd29a887bf2f",
+  "996380be-64eb-4616-b2f9-97248262c2f0": {
+    "uuid": "996380be-64eb-4616-b2f9-97248262c2f0",
     "label": "Coniferous bisaccate pollen",
     "submitted_in_study_accession": "EMPIAR-10903",
     "imaging_method": "FIB-SEM",
@@ -395,8 +395,8 @@
     "voxel_size_y": 1.2e-08,
     "voxel_size_z": 1.2e-08
   },
-  "0df91b16-88df-4189-a50e-ec61481533f9": {
-    "uuid": "0df91b16-88df-4189-a50e-ec61481533f9",
+  "df0319b1-71c8-4909-a809-d95dc9780f6c": {
+    "uuid": "df0319b1-71c8-4909-a809-d95dc9780f6c",
     "label": "Sanguina nivaloides (snow alga)",
     "submitted_in_study_accession": "EMPIAR-11694",
     "imaging_method": "FIB-SEM",
@@ -417,8 +417,8 @@
     "voxel_size_y": 8e-09,
     "voxel_size_z": 8e-09
   },
-  "48be1d39-28e7-47c3-9ee7-0f2d8c0aaa2f": {
-    "uuid": "48be1d39-28e7-47c3-9ee7-0f2d8c0aaa2f",
+  "48e66077-c9de-4113-9abb-963224a622ab": {
+    "uuid": "48e66077-c9de-4113-9abb-963224a622ab",
     "label": "Thalamocortical projections in visual cortex L4",
     "submitted_in_study_accession": "EMPIAR-12513",
     "imaging_method": "Unknown",
