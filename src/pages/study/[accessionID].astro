@@ -79,7 +79,16 @@ const headlineStats = {
   "Total size of files": formatBytesToHumanSize(study?.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0) || 0),
 };
 
-
+const linkTypeFormatting = {
+  "biostudies": "BioStudies",
+  "https": "HTTPS",
+  "arrayexpress": "ArrayExpress",
+  "empiar": "EMPIAR"
+}
+function formatLinkType(link_type) {
+  if (!link_type) return "";
+  return linkTypeFormatting[link_type.toLowerCase()] ?? link_type;
+}
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/studies",
@@ -218,7 +227,7 @@ const breadcrumbs = [
               const { link, link_type, description } = linkedInfo;
               return (
                 <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>
-                  {link_type? <b>{link_type}.</b> : ""}
+                  {link_type? <b>{formatLinkType(link_type)}.</b> : ""}
                   {description? `${description}: ` : ""}
                   {link? <a href={link} target="_blank">{link}</a>: ""}
                 </li>
