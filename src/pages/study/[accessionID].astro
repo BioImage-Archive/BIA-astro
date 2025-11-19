@@ -21,6 +21,7 @@ export async function getStaticPaths() {
 
 const tableOfContents = {
   "Study Information": "study",
+  "Linked Information": "linked_information", 
   "Datasets": "study_components",
   "Viewable Images": "viewable_images",
 };
@@ -28,6 +29,10 @@ const tableOfContents = {
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
+
+if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
+  delete tableOfContents["Linked Information"];
+}
 
 // Pre-process grants to group them by funder name
 const groupedGrants = {};
@@ -54,7 +59,6 @@ if (study?.grant && Array.isArray(study.grant)) {
   }
 }
 // End grant pre-processing
-
 function getFileTypes(study) {
     const fileTypeList = []
     for (var dataset of study.dataset) {
@@ -75,7 +79,16 @@ const headlineStats = {
   "Total size of files": formatBytesToHumanSize(study?.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_size_bytes, 0) || 0),
 };
 
-
+const linkTypeFormatting = {
+  "biostudies": "BioStudies",
+  "https": "HTTPS",
+  "arrayexpress": "ArrayExpress",
+  "empiar": "EMPIAR"
+}
+function formatLinkType(link_type) {
+  if (!link_type) return "";
+  return linkTypeFormatting[link_type.toLowerCase()] ?? link_type;
+}
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/studies",
@@ -120,6 +133,40 @@ const breadcrumbs = [
     <div class="study-info-item">
       <b>Licence: </b> <a href={study.licence}>{study.licence}</a>
     </div>
+    {Array.isArray(study.related_publication) && study.related_publication.length > 0 && (
+      <div class="study-info-item">
+        <b>Publication:</b>
+        <ul>
+          {study.related_publication.map((pub, i) => {
+            const { authors_name, publication_year, title, pubmed_id, doi } = pub;
+            const titleLink = pubmed_id ? `https://pubmed.ncbi.nlm.nih.gov/${pubmed_id}` : null;
+            const doiLink = doi ? doi : null;
+            return (
+              <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>
+                {authors_name || "Unknown authors"}.
+                {titleLink ? (
+                  <a href={titleLink} target="_blank">{title || "Untitled"}</a>
+                ) : (
+                  title || "Untitled"
+                )}
+                {publication_year && ` (${publication_year})`}
+                {doi && (
+                  <>
+                    . doi:{" "}
+                    {doiLink ? (
+                      <a href={doiLink} target="_blank">{doi.replace("https://doi.org/", "")}</a>
+                    ) : (
+                      doi
+                    )}
+                  </>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    )}
+
     {study.acknowledgement && (
       <div class="study-info-item">
         <b>Acknowledgements: </b> <Fragment set:html={multilineTextRender(study.acknowledgement)}></Fragment>
@@ -168,6 +215,31 @@ const breadcrumbs = [
 </section>
 
   <hr/>
+  {Array.isArray(study.see_also) && study.see_also.length > 0 && (
+    <section id="linked_information" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Linked Information</h2>
+      </div>
+      <div>
+        <ul>
+          {
+            study.see_also.map((linkedInfo, i) => {
+              const { link, link_type, description } = linkedInfo;
+              return (
+                <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>
+                  {link_type? <b>{formatLinkType(link_type)}.</b> : ""}
+                  {description? `${description}: ` : ""}
+                  {link? <a href={link} target="_blank">{link}</a>: ""}
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
+
+    </section>
+    <hr/>
+  )}
 
   <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
     <div>

@@ -4,6 +4,8 @@ import orcidImage from "../../assets/bioimage-archive/orcid.svg";
 
 const { study_info: studyInfo } = Astro.props;
 
+const doiURI = studyInfo?.doi || "";
+const doiText = doiURI.replace("https://doi.org/", "").toUpperCase()
 const authors = "author" in studyInfo ? studyInfo.author : [{ display_name: "" }];
 
 // 1. Create a unique list of affiliations
@@ -68,7 +70,8 @@ function authorFormat(author) {
             <WebsiteStateButton/>
         </h1>
         <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
-        <p>Released {studyInfo.release_date}</p>
+        {doiURI && <p>DOI: <a href={doiURI}>{doiText}</a></p> }
+        <p>Released: {studyInfo.release_date}</p>
         <div class="authors-list">
             {
                 authors.map((author, i) => {
@@ -106,22 +109,25 @@ function authorFormat(author) {
 
         <div>
             {
-                uniqueAffiliations.map((affil, index) => (
-                    <Fragment>
+                uniqueAffiliations.map((affil, index) => (  
+                    <Fragment>                            
                         <span class="affiliation-container" data-affiliation-name={affil.display_name}>
                             <span class="js-affiliation" id={`affiliation-${index + 1}`}>
                                 <sup class="affiliation-sup">{index + 1}</sup>
                                 {affil.display_name}
                             </span>
-                            
-                            <div class="affiliation-card">
-                                {affil.address ? (
-                                    <p><strong>Address:</strong> {affil.address}</p>
-                                ) : (
-                                    <p><strong>Address:</strong> Not available</p> 
-                                )}
-                            </div>
-                        </span>{index + 1 === uniqueAffiliations.length ? "" : " "}
+                            {(affil.address || affil.rorid) && (
+                                <div class="affiliation-card">
+                                    {affil.rorid && (
+                                        <p><strong>RORID:</strong> {affil.rorid}</p>
+                                    )}
+                                    {affil.rorid === null && affil.address && (
+                                        <p><strong>Address:</strong> {affil.address}</p>
+                                    )}                 
+                                </div>
+                            )}
+                        </span>
+                        {index + 1 === uniqueAffiliations.length ? "" : " "}
                     </Fragment>
                 ))
             }
