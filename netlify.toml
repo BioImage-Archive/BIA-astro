@@ -2,6 +2,9 @@
   from = "/"
   to = "/bioimage-archive"
   status = 301
+[build.environment]
+  PUBLIC_SEARCH_API="https://alpha.bioimagearchive.org/search"
+  PUBLIC_MONGO_API="https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2"
 [build]
   base = "/"
   publish = "dist"
