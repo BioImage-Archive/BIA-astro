@@ -40,7 +40,7 @@ interface Image {
                     <img src={image.thumbnail_src} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
                 </td>
                 <td>
-                    <a href={"/bioimage-archive/dataset/" + image.submitted_in_study_accession}>
+                    <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>
                         {image.label}
                     </a>
                 </td>
