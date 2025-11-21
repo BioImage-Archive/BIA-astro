@@ -16,7 +16,7 @@ const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK"
     <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url} id={itkViewer}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
     </a>
-    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={vizarrURL+url}>Copy {text} OME-Zarr URI</button><br/>
+    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={url}>Copy {text} OME-Zarr URI</button><br/>
     <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} />
     </div>
 </div>
