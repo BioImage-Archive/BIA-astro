@@ -139,12 +139,13 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
           });
           const s3url = rep.file_uri[0].replace('https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source=', '');
           const copyBtn = document.getElementById("CopyAnnotationButton");
-          copyBtn.dataset.url = 'https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source='+s3url;
+
+          copyBtn.dataset.url = s3url;
+
           document.getElementById("OpenAnnotationInVizarr").href = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+rep.file_uri[0];
           document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
           const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
-          const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
-          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
+          const annotationTypeMethod = studyInfo.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
           document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria
       };
       window.slide = function(direction) {

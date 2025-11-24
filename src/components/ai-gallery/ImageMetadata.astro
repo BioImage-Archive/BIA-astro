@@ -12,20 +12,22 @@ function getMicronSize(rep) {
 const [tissue_x, tissue_y] = getMicronSize(imageRep);
 ---
 <h3>Image metadata</h3>
-    <b>Image size: </b> <span>{tissue_x}μm x {tissue_y}μm</span><br>
-    <span>{imageRep?.size_x} x {imageRep?.size_y} pixels</span><br />
-    <span>{imageRep?.size_c} channels</span><br />
-    <span>{imageRep?.size_t} timesteps</span>
+    <b>Image size: </b> <span id="annotated-size">{tissue_x}μm x {tissue_y}μm</span><br>
+    <span id="annotated-pixels">{imageRep?.size_x} x {imageRep?.size_y} pixels</span><br />
+    <span id="annotated-channels">{imageRep?.size_c} channels</span><br />
+    <span id="annotated-timesteps">{imageRep?.size_t} timesteps</span>
     <br /> <br />
-    <div>
+    
+    <div id="annotated-metadata">
     {
-      imageAtrributes && Object.keys(imageAtrributes).length === 0 ? <span></span> : (
+      imageAtrributes && Object.keys(imageAtrributes).length === 0 ?
+      <span></span> : (
         <>
           <h3>Additional metadata</h3>
           {Object.entries(imageAtrributes).map(([key, value]) => (
             <>
             <b>{key}:</b> {value}<br />
-        </>
+            </>
         ))}
         </>
       )
