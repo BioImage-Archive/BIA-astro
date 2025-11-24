@@ -145,8 +145,7 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
           document.getElementById("OpenAnnotationInVizarr").href = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="+rep.file_uri[0];
           document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
           const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
-          const annotationTypeMethod = studyInfo.dataset.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};
-          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
+          const annotationTypeMethod = studyInfo.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
           document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria
       };
       window.slide = function(direction) {
