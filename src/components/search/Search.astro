@@ -105,15 +105,15 @@ function sortReleaseDate(aReleaseDate, bReleaseDate, sortOrder){
 }
 
 switch(sortBy) {
-  case "relevance":
-    results = sortOrder === "descending"? hits.hits.reverse() : hits.hits;
-    break;
-  case "accession":
-    results = hits.hits.sort((a, b) => {return sortAcession(a?._source?.accession_id, b?._source?.accession_id, sortOrder)});
-    break;
-  case "release_date":
-    results = hits.hits.sort(function(a,b){ return sortReleaseDate(a?._source?.release_date, b?._source?.release_date, sortOrder)});
-    break;
+  // case "relevance":
+  //   results = sortOrder === "descending"? hits.hits.reverse() : hits.hits;
+  //   break;
+  // case "accession":
+  //   results = hits.hits.sort((a, b) => {return sortAcession(a?._source?.accession_id, b?._source?.accession_id, sortOrder)});
+  //   break;
+  // case "release_date":
+  //   results = hits.hits.sort(function(a,b){ return sortReleaseDate(a?._source?.release_date, b?._source?.release_date, sortOrder)});
+  //   break;
   default:
     results = hits.hits;
     break;
