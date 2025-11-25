@@ -254,24 +254,24 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
       window.location.reload();
     }
   });
-  const sortSelect = document.getElementById('sortBy');
-  sortSelect.addEventListener('change', (event) => {
-    const sortBy = event.target.value;
-    const url = new URL(window.location.href);
-    url.searchParams.set('sortBy', sortBy);
-    window.location.href = url.toString();
-  });
+  // const sortSelect = document.getElementById('sortBy');
+  // sortSelect.addEventListener('change', (event) => {
+  //   const sortBy = event.target.value;
+  //   const url = new URL(window.location.href);
+  //   url.searchParams.set('sortBy', sortBy);
+  //   window.location.href = url.toString();
+  // });
 
-  document.querySelectorAll('.sort-order-buttons button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sort-order-buttons button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const sortOrder = btn.dataset.order;
-    const url = new URL(window.location.href);
-    url.searchParams.set('sortOrder', sortOrder);
-    window.location.href = url.toString();
-  });
-});
+  // document.querySelectorAll('.sort-order-buttons button').forEach(btn => {
+  // btn.addEventListener('click', () => {
+  //   document.querySelectorAll('.sort-order-buttons button').forEach(b => b.classList.remove('active'));
+  //   btn.classList.add('active');
+  //   const sortOrder = btn.dataset.order;
+  //   const url = new URL(window.location.href);
+  //   url.searchParams.set('sortOrder', sortOrder);
+  //   window.location.href = url.toString();
+  // });
+  // });
 </script>
 <!-- <style>
 #sort {
