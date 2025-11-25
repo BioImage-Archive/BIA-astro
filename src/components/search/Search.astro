@@ -207,6 +207,7 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
                   {results.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
                 </span>
               </div>
+            {/* 
             <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
             <label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
             <select name="sortBy" id="sortBy" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100 vf-u-padding__left--200" style="flex: 5; height: 2.5em">
@@ -219,6 +220,7 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
               <button type="button" data-order="descending" class={sortOrder === "descending" ? "active vf-form__select": "vf-form__select"}>⋁</button>
             </div>
             </div>
+            */}
           </div>
           <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
             <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} /> 
