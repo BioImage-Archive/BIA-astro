@@ -11,8 +11,8 @@ import { PUBLIC_SEARCH_API } from "astro:env/client";
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query') || "";
-// const sortBy = url.searchParams.get('sortBy');
-// const sortOrder = url.searchParams.get('sortOrder');
+const sortBy = url.searchParams.get('sortBy');
+const sortOrder = url.searchParams.get('sortOrder');
 const page = Number(url.searchParams.get('pagination.page')) || 1;
 const organism = url.searchParams.getAll('facet.organism');
 const imagingMethod = url.searchParams.getAll('facet.imaging_method');
@@ -60,7 +60,7 @@ if (query || query === "") {
   }
   <SearchResults query={query} paginationData={paginationData} facetData={facetData} hits={hits} 
   organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} 
-  sortBy={null} sortOrder={null} 
+  sortBy={sortBy} sortOrder={sortOrder} 
   page={page}/>
   </body>
 </BaseLayoutWithBreadcrumbs>
