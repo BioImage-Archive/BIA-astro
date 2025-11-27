@@ -5,6 +5,11 @@ const totalCounts = facet['totalFacetCounts'];
 const filter = facet["valuesAndCounts"];
 const selectedValue= facet["selectedValue"];
 
+// Get the number of filter options available
+// Show TOP 10 warning if we have 10 or more
+const filterCount = Object.keys(filter).length;
+const showWarning = filterCount >= 10;
+
 export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -13,17 +18,25 @@ export function capitalizeFirstLetter(str: string): string {
 ---
 <div class="facet-section" id={`facet-section-${id}`}>
   <div class="facet-title">
-  <legend 
-    class="facet-legend | vf-form__helper" 
-    onclick={`toggleFacet('${id}')`}
-    tabindex="0" 
-    role="button"
-  >
-    <span class="facet-arrow" aria-hidden="true"></span>
-    {capitalizeFirstLetter(title)}
-    
-  </legend>
-  <div class="facet-count">{totalCounts}</div>
+    <div class="facet-title-and-warning">
+      <legend
+        class="facet-legend | vf-form__helper" 
+        onclick={`toggleFacet('${id}')`}
+        tabindex="0" 
+        role="button"
+      >
+        <span class="facet-arrow" aria-hidden="true"></span>
+        <div class="facet-title-text-and-warning">
+          {capitalizeFirstLetter(title)}
+          {showWarning && (
+            <div class="facet-warning">
+              <span class="warning-label">Top 10</span>
+            </div>
+          )}
+        </div>
+      </legend>
+    </div>
+    <div class="facet-count">{totalCounts}</div>
   </div>
   <div class="facet-options" id={`facet-option-${id}`}>
     {Object.entries(filter).map(([key, count], index) => (
