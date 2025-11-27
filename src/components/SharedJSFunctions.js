@@ -230,10 +230,9 @@ function isImageAnAnnotation(img){
     ))
 }
 
-export async function getSourceAnnotatedImagePairs(uuid){
-    const creationProcessLinkingImage = await getFromAPI(`${PUBLIC_MONGO_API}/image/${uuid}/creation_process?page_size=20`)
-    const imageLinkingCreationProcess = await Promise.all(creationProcessLinkingImage.flatMap( async (cp) => (await getFromAPI(`${PUBLIC_MONGO_API}/creation_process/${cp.uuid}/image?page_size=1`))[0]))
-    const annotatedImages = (await Promise.all(imageLinkingCreationProcess.flatMap( async (img) => await getImageFromAPI(img.uuid)))).filter(img => isImageAnAnnotation(img));
+export async function getDerivedImagesFromSourceImage(uuid){
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}&includeDerivedImages=true`);
+    const annotatedImages = response?.hits?.hits.map(img => img._source).filter(img => img.uuid !== uuid && isImageAnAnnotation(img));
     return annotatedImages
 }
 
