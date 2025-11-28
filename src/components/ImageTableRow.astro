@@ -1,5 +1,5 @@
 ---
-import { getImageFromAPI, getThumbnail } from "./SharedJSFunctions";
+import { getImageFromAPI, getThumbnail, formatBytesToHumanSize } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
@@ -17,7 +17,7 @@ const imageMetadata = await getImageFromAPI(image.uuid);
   </td>
   <td>{image.uuid}</td>
   <td>{datasetTitle}</td>
-  <td>{getDownloadSize(imageMetadata)}</td>
+  <td>{formatBytesToHumanSize(getDownloadSize(imageMetadata))}</td>
   <td>
     <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}>View</a>
   </td>

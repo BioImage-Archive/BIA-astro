@@ -2,7 +2,7 @@ import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 export function getPlaceholderHeroImage(accessionID) {
-    const match = accessionID.match(/(\d{1,5})$/);
+    const match = (accessionID.match(/(\d{1,5})$/)) || ['0','1'];
     const accessionIDNumber = parseInt(match[1]);
     const imageNumber = (accessionIDNumber % 45) + 1;
     return `/bioimage-archive/default-hero/placeholder_logo_${imageNumber}.png`
@@ -192,9 +192,17 @@ export async function getStudyFromApiByAccession(accessionID){
 
 export async function getImageFromAPI(uuid){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}`);
-    const image = response?.hits?.hits?.[0]?._source; 
+    const image = response?.hits?.hits?.[0]?._source || null;
     return image
 }
+
+export async function getImagesFromAPI(uuid_list){
+  const image_list = await Promise.all(
+    uuid_list.map((uuid) => getImageFromAPI(uuid))
+  );
+  return image_list;
+}
+
 
 export async function getAllStudiesFromAPI(){
   const firstPage = await getFromAPI(
