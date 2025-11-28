@@ -230,9 +230,15 @@ function isImageAnAnnotation(img){
     ))
 }
 
-export async function getDerivedImagesFromSourceImage(uuid){
+export async function getAnnotationFromDerivedImages(sourceImageUUID) {
+  const derivedImages = await getDerivedImagesFromSourceImage(sourceImageUUID)
+  const annotatedImages = derivedImages.filter(img => isImageAnAnnotation(img))
+  return annotatedImages  
+}
+
+async function getDerivedImagesFromSourceImage(uuid){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}&includeDerivedImages=true`);
-    const derivedImages = response?.hits?.hits.map(img => img._source).filter(img => img.uuid !== uuid && isImageAnAnnotation(img));
+    const derivedImages = response?.hits?.hits.map(img => img._source).filter(img => img.uuid !== uuid);
     return derivedImages
 }
 

@@ -2,7 +2,7 @@
 export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { getTaxons, getAnnotationType, getImageFromAPI, getStudyFromApiByUUID, getDerivedImagesFromSourceImage } from "../../../../components/SharedJSFunctions.js";
+import { getTaxons, getAnnotationType, getImageFromAPI, getStudyFromApiByUUID, getAnnotationFromDerivedImages } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
@@ -16,7 +16,7 @@ const studyInfo = datasetUUID ? await getStudyFromApiByUUID(datasetUUID) as Stud
 let sourceImage;
 let annotatedImages = [];
 sourceImage = image;
-annotatedImages = await getDerivedImagesFromSourceImage(sourceImage.uuid)
+annotatedImages = await getAnnotationFromDerivedImages(sourceImage.uuid)
 const organism = getTaxons(studyInfo).join(", ");
 const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
