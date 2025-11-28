@@ -1,7 +1,16 @@
 ---
 import ImageRow from "./ImageTableRow.astro"
-const { study, images, imagePageRoot } = Astro.props;
+import { getImageFromAPI, asyncPool } from "./SharedJSFunctions";
 
+const { study, images, imagePageRoot } = Astro.props;
+const imagesWithMetadata = await asyncPool(
+  100,                                // max concurrent API calls
+  images,
+  async (image) => {
+    const metadata = await getImageFromAPI(image.uuid);
+    return { image, metadata };
+  }
+);
 ---
 
 <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
@@ -23,10 +32,14 @@ const { study, images, imagePageRoot } = Astro.props;
         </thead>
         <tbody>
           {
-            images.map((image) => (
-              <ImageRow image={image} datasetTitle={study.dataset.find((dataset) => dataset.uuid === image.submission_dataset_uuid).title} imagePageRoot={imagePageRoot}/>
-            ))
-          }
+            imagesWithMetadata.map(({ image, metadata }) => (
+            <ImageRow
+              image={image}
+              metadata={metadata}
+              datasetTitle={study.dataset.find((d) => d.uuid === image.submission_dataset_uuid).title}
+              imagePageRoot={imagePageRoot}
+            />
+          ))}
         </tbody>
       </table>
     </div>

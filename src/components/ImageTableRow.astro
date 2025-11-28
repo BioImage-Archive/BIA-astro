@@ -1,7 +1,7 @@
 ---
 import { getImageFromAPI, getThumbnail } from "./SharedJSFunctions";
 
-const { image, datasetTitle, imagePageRoot } = Astro.props;
+const { image, metadata, datasetTitle, imagePageRoot } = Astro.props;
 
 function getDownloadSize(imageMetadata) {
   const submitter_data = imageMetadata?.representation.find((rep)=>rep.total_size_in_bytes > 0)?.total_size_in_bytes ?? "Unkown"
@@ -17,7 +17,7 @@ const imageMetadata = await getImageFromAPI(image.uuid);
   </td>
   <td>{image.uuid}</td>
   <td>{datasetTitle}</td>
-  <td>{getDownloadSize(imageMetadata)}</td>
+  <td>{getDownloadSize(metadata)}</td>
   <td>
     <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}>View</a>
   </td>
