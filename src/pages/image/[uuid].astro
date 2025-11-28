@@ -4,7 +4,7 @@ export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
-import Specimen from '../../components/image/specimen.astro';
+import Specimen from '../../components/image/Specimen.astro';
 import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
@@ -12,8 +12,6 @@ import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
 import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
-const biosampleMap = fieldMap["biosample"];
-const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
 const imageAcquisitionMap = fieldMap["image_acquisition"];
 const annotationMethodMap = fieldMap["annotation_method"];
 const protocolMap = fieldMap["protocol"];
@@ -240,8 +238,8 @@ const breadcrumbs = [
         <hr/>
 
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Study</h3>
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Study</h2>
             </div>
             <div style="overflow-wrap: anywhere;">
                 <b>Title</b>: {imageStudy.title}<br/>
@@ -253,8 +251,8 @@ const breadcrumbs = [
         <hr/>
 
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Dataset</h3>
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Dataset</h2>
             </div>
             <div>
                 <b>Title</b>: {imageDataset.title}<br/>
@@ -265,8 +263,8 @@ const breadcrumbs = [
         <hr/>
         
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Subject</h3>
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Subject</h2>
             </div>
             <div>
             {
@@ -289,9 +287,9 @@ const breadcrumbs = [
 
         <hr/>
 
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Creation</h3>
+        <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Creation</h2>
             </div>
             <div>
                 {
@@ -344,7 +342,9 @@ const breadcrumbs = [
                 }
                 {
                     input_images.length > 0 && (
-                        <b>Input Images:</b>
+                        <div>
+                            <b>Input Images:</b>
+                        </div>
                         <ImageTable images={input_images}/>
                     )
                 }
