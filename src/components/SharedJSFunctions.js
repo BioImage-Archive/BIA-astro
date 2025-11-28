@@ -232,8 +232,8 @@ function isImageAnAnnotation(img){
 
 export async function getDerivedImagesFromSourceImage(uuid){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}&includeDerivedImages=true`);
-    const annotatedImages = response?.hits?.hits.map(img => img._source).filter(img => img.uuid !== uuid && isImageAnAnnotation(img));
-    return annotatedImages
+    const derivedImages = response?.hits?.hits.map(img => img._source).filter(img => img.uuid !== uuid && isImageAnAnnotation(img));
+    return derivedImages
 }
 
 export async function generateSourceAnnotatedImageMap(study){
