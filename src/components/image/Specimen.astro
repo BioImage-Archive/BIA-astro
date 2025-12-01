@@ -9,7 +9,7 @@ var { specimen } = Astro.props;
 ---
 <>
 {
-    "sample_of" in specimen &&
+    Array.isArray(specimen.sample_of) &&
         specimen.sample_of.length > 0 && (
             <b>Biosamples:</b>
             <ul>
@@ -23,7 +23,7 @@ var { specimen } = Astro.props;
         )
 }
 {
-     "imaging_preparation_protocol" in specimen &&
+     Array.isArray(specimen.sample_of) &&
         specimen.imaging_preparation_protocol.length > 0 && (
             <b>Specimen Preparation Protocols:</b>
             <ul>
