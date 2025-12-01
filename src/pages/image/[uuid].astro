@@ -4,14 +4,14 @@ export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
+import Specimen from '../../components/image/Specimen.astro';
+import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByUUID } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
-const biosampleMap = fieldMap["biosample"];
-const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
 const imageAcquisitionMap = fieldMap["image_acquisition"];
 const annotationMethodMap = fieldMap["annotation_method"];
 const protocolMap = fieldMap["protocol"];
@@ -39,9 +39,38 @@ const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "
 
 const creation_process = image?.creation_process || [];
 
+var input_images = [];
+if ("input_image_uuid" in creation_process && creation_process.input_image_uuid.length > 0) {
+    input_images = await getImagesFromAPI(creation_process.input_image_uuid)
+}
+
+
 let specimen
 if ("subject" in creation_process && creation_process.subject != null) {
     specimen = creation_process.subject
+}
+let inherited_specimens
+if (specimen == null && input_images.length > 0) {
+    inherited_specimens = await recursivelyGetSpecimenInfo(input_images, new Map())
+}
+
+async function recursivelyGetSpecimenInfo(image_list, collected) {
+  for (const image of image_list) {
+    const specimen = image?.creation_process?.subject || null;
+
+    if (specimen != null) {
+      collected.set(specimen.uuid, specimen);
+      continue;
+    }
+    const next_image_uuids = image?.creation_process?.input_image_uuid || [];
+
+    if (collected.size == 0 && next_image_uuids.length > 0) {
+      const next_images = await getImagesFromAPI(next_image_uuids);
+      await recursivelyGetSpecimenInfo(next_images, collected);
+    }
+  }
+  const specimens = Array.from(collected.values());
+  return specimens
 }
 
 
@@ -206,13 +235,11 @@ const breadcrumbs = [
             </div>
         </section>
 
-        <!-- TODO: Include links to source images using  <SourceImage image={ image}/> for derived images -->
-
         <hr/>
 
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Study</h3>
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Study</h2>
             </div>
             <div style="overflow-wrap: anywhere;">
                 <b>Title</b>: {imageStudy.title}<br/>
@@ -224,8 +251,8 @@ const breadcrumbs = [
         <hr/>
 
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Dataset</h3>
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Dataset</h2>
             </div>
             <div>
                 <b>Title</b>: {imageDataset.title}<br/>
@@ -236,46 +263,33 @@ const breadcrumbs = [
         <hr/>
         
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Subject</h3>
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Subject</h2>
             </div>
             <div>
             {
-                specimen != null && "sample_of" in specimen &&
-                    specimen.sample_of.length > 0 && (
-                        <b>Biosamples:</b>
-                        <ul>
-                            {specimen.sample_of.map((biosample) => (
-                                <DatasetDetail
-                                    data={biosample}
-                                    fieldMap={biosampleMap}
-                                />
-                            ))}
-                        </ul>
-                    )
+                specimen != null && (
+                    <Specimen specimen={specimen}/>
+                )
             }
             {
-                specimen != null && "imaging_preparation_protocol" in specimen &&
-                    specimen.imaging_preparation_protocol.length > 0 && (
-                        <b>Specimen Preparation Protocols:</b>
-                        <ul>
-                            {specimen.imaging_preparation_protocol.map((sipp) => (
-                                <DatasetDetail
-                                    data={sipp}
-                                    fieldMap={sippMap}
-                                />
-                            ))}
-                        </ul>
-                    )
+                specimen == null && inherited_specimens && inherited_specimens.length > 0 && (
+                    <b>Source Specimen Information</b>
+                    <ul> 
+                        {inherited_specimens.map((specimen) => (
+                            <Specimen specimen={specimen}/>
+                        ))}
+                    </ul>
+                )
             }
             </div>
         </section>
 
         <hr/>
 
-        <section class="vf-content | embl-grid embl-grid--has-centered-content">
-            <div>
-                <h3>Creation</h3>
+        <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Creation</h2>
             </div>
             <div>
                 {
@@ -325,6 +339,14 @@ const breadcrumbs = [
                                 )}
                             </ul>
                         )
+                }
+                {
+                    input_images.length > 0 && (
+                        <div>
+                            <b>Input Images:</b>
+                        </div>
+                        <ImageTable images={input_images}/>
+                    )
                 }
             </div>
         </section>

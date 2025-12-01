@@ -1,0 +1,37 @@
+---
+import { getThumbnail } from "../SharedJSFunctions";
+
+const { images, imagePageRoot } = Astro.props;
+
+---
+<div>
+  <table id="viewable_input_images_table" class="display vf-table">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>UUID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        images.map((image) => (
+          <tr>
+              <td>
+                <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}><img class="vf-figure__image" style="max-height: 150px;" src={getThumbnail(image)}/></a>
+              </td>
+              <td>{image.uuid}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+          $("#viewable_input_images_table").DataTable({
+            scrollX: true,
+            columnDefs: [{ type: "natural", targets: 0 }],
+          });
+        });
+
+</script>

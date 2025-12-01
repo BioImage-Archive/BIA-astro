@@ -1,0 +1,39 @@
+---
+import DatasetDetail from '../../components/DatasetDetail.astro';
+import fieldMap from "../../data/metadata-field-name-mapping.json";
+const biosampleMap = fieldMap["biosample"];
+const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
+
+var { specimen } = Astro.props;
+
+---
+<>
+{
+    Array.isArray(specimen.sample_of) &&
+        specimen.sample_of.length > 0 && (
+            <b>Biosamples:</b>
+            <ul>
+                {specimen.sample_of.map((biosample) => (
+                    <DatasetDetail
+                        data={biosample}
+                        fieldMap={biosampleMap}
+                    />
+                ))}
+            </ul>
+        )
+}
+{
+     Array.isArray(specimen.sample_of) &&
+        specimen.imaging_preparation_protocol.length > 0 && (
+            <b>Specimen Preparation Protocols:</b>
+            <ul>
+                {specimen.imaging_preparation_protocol.map((sipp) => (
+                    <DatasetDetail
+                        data={sipp}
+                        fieldMap={sippMap}
+                    />
+                ))}
+            </ul>
+        )
+}
+</>
