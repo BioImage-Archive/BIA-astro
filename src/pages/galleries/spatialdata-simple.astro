@@ -1,6 +1,6 @@
 ---
-import EMPIARLayout from '../../layouts/EMPIARLayout.astro';
-import vemImages from '../../data/collections/spatialdata_summaries_simple.json';
+import BaseLayout from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
+import sdataImages from '../../data/collections/spatialdata_summaries_simple.json';
 ---
 
 <script is:inline>
@@ -53,7 +53,7 @@ function copySpatialURI(button) {
 }
 </script>
 
-<EMPIARLayout pageTitle="Spatialdata Gallery — Simple">
+<BaseLayout pageTitle="Spatialdata Gallery — Simple">
   <body>
     <section style="max-width: var(--vf-content-max-width,1200px); margin: 0 auto; padding: 2rem 1rem;">
       <h1>Spatialdata — Simple View</h1>
@@ -61,7 +61,7 @@ function copySpatialURI(button) {
     </section>
 
     <section class="simple-grid" style="max-width: var(--vf-content-max-width,1200px); margin: 0 auto; padding: 1rem;">
-      { Object.entries(vemImages).map(([uuid, image]) => (
+      { Object.entries(sdataImages).map(([uuid, image]) => (
         <article class="simple-card" key={uuid}>
           { image.thumbnail_src ? (
             <div class="card-thumb-wrap">
@@ -74,6 +74,7 @@ function copySpatialURI(button) {
           </div>
           <div class="card-actions">
             {image.view_link ? <a class="btn view" href={image.view_link} target="_blank" rel="noopener">View</a> : null}
+            {image.submitted_in_study_accession ? <a class="btn raw" href={"/bioimage-archive/study/" + image.submitted_in_study_accession} title="View Metadata"> Experiment Metadata</a> : null}
             {image.raw_data_link ? <button class="btn raw" title="Copy Spatialdata URI" onclick="copySpatialURI(this)" data-uri={image.raw_data_link}>Copy Spatialdata uri</button> : null}
           </div>
         </article>
@@ -120,16 +121,19 @@ function copySpatialURI(button) {
       }
       .card-actions {
         display: flex;
-        gap: 8px;
+        flex-wrap: wrap;
+        gap: 6px;
       }
       .btn {
         display: inline-block;
-        padding: 8px 10px;
+        padding: 6px 8px;
         border-radius: 6px;
         text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
+        font-weight: 500;
+        font-size: 0.75rem;
         border: 1px solid transparent;
+        flex: 0 1 auto;
+        white-space: nowrap;
       }
       .btn.view {
         background: #3b6fb6;
@@ -143,4 +147,4 @@ function copySpatialURI(button) {
       .btn:hover { opacity: 0.95; }
     </style>
   </body>
-</EMPIARLayout>
+</BaseLayout>
