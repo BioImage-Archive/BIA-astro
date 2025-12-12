@@ -5,10 +5,21 @@ import 'datatables.net';
 import DataTable from 'datatables.net-dt';
 import Header from '../components/Header.astro';
 import Navigation from '../components/Navigation.astro';
+import { PUBLIC_GTAG } from "astro:env/client";
 const { pageTitle } = Astro.props;
 ---
 <html lang="en" class="vf-js" style="scroll-padding-top: 48px">
   <head>
+    <!-- Google tag (gtag.js) -->
+		<script is:inline async src={"https://www.googletagmanager.com/gtag/js?id=" + PUBLIC_GTAG}></script>
+		<script
+			set:html={`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '${PUBLIC_GTAG}');
+			`}
+		/>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/bioimage-archive/favicon.svg" />
     <meta name="viewport" content="width=device-width" />

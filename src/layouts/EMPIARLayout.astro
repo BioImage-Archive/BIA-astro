@@ -4,6 +4,7 @@ import "/src/styles/bars_and_sections.css"
 import EMPIARHeader from '../components/EMPIARHeader.astro';
 import Navigation from '../components/Navigation.astro';
 import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { PUBLIC_GTAG } from "astro:env/client";
 
 const { pageTitle, breadcrumbs } = Astro.props;
 
@@ -12,6 +13,16 @@ const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
 ---
 <html lang="en" class="vf-js">
   <head>
+    <!-- Google tag (gtag.js) -->
+		<script is:inline async src={"https://www.googletagmanager.com/gtag/js?id=" + PUBLIC_GTAG}></script>
+		<script
+			set:html={`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '${PUBLIC_GTAG}');
+			`}
+		/>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/bioimage-archive/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
