@@ -1,10 +1,21 @@
 ---
 const { pageTitle } = Astro.props;
+import { PUBLIC_GTAG } from "astro:env/client";
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
+		<!-- Google tag (gtag.js) -->
+		<script is:inline async src={"https://www.googletagmanager.com/gtag/js?id=" + PUBLIC_GTAG}></script>
+		<script
+			set:html={`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '${PUBLIC_GTAG}');
+			`}
+		/>
 		<meta charset="UTF-8" />
 		<link rel="icon" type="image/svg+xml" href="/bioimage-archive/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />

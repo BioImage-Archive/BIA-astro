@@ -65,6 +65,13 @@ export default defineConfig({
         access: "public",
         context: "client",
         default: "https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2"
+      }),
+      PUBLIC_GTAG: envField.string({
+        type: "string",
+        required: true,
+        access: "public",
+        context: "client",
+        default: ""
       })
     }
   },
