@@ -40,21 +40,80 @@ or, for interactive access:
     $ ftp ftp.ebi.ac.uk Name: anonymous ftp> cd biostudies/fire/S-BIAD/570/S-BIAD570/Files/ ftp> get STAN0B0F6_2022-02-25.tiff 
 ```
 ### Downloading data via Aspera
+When downloading large volumes of data, the Aspera protocol can be useful. The information in the section is based on [how to transfer files to and from EMBL](https://embl.service-now.com/kb?id=kb_article_view&sys_kb_id=21320fd5c3b8ba10bf313dfc05013146#OPTION-3---ASCP-BINARY--What-You-Need).
 
-When downloading large volumes of data, the Aspera protocol can be useful. You will need to [download the Aspera ascp command line interface](https://www.ibm.com/support/fixcentral/swg/selectFixes?parent=ibm~Other\%20software&product=ibm/Other\%20software/IBM\%20Aspera\%20CLI&release=All&platform=All&function=all). Please select the correct operating system. The ascp command line client is present in the bin folder in the installation directory. Your command for download should be like this:
-```
-    ascp -P33001 -i <key> bsaspera@fasp-beta.ebi.ac.uk:<files to download> <download location on your machine>
-```
-where:
+The steps required to use the *ascp* tool are:
 
-* `-P33001` and `bsaspera@fasp-beta.ebi.ac.uk` define the port, user and server for the Aspera connection.
-* `<key>` is the public key for the Aspera connection which has the value `<aspera cli installation directory>/etc/asperaweb_id_dsa.openssh` for Linux/MacOS and `<aspera cli installation directory>\etc\asperaweb_id_dsa.openssh` for Windows.
-* `<files to download>` might be all files for a certain study, as explained above. Please note that Aspera paths do not need to have pub as the root folder.
+1. **Get the *ascp* command line binary.**
+   - Download the appropriate aspera transfer sdk for your operating system from: [Aspera Transfer SDK - IBM API Hub - IBM Developer](https://developer.ibm.com/apis/catalog/aspera--aspera-transfer-sdk/downloads/downloads.json)
+   - Unzip/untar into a suitable directory, for example, `C:\aspera` on Windows or `/opt/aspera` on Linux
+   - Navigate to the `aspera/bin` directory. This is the location where you will find the *ascp* binary.
 
-For instance, here's the command line to download the file `aeipf_denoised_reads.fna` from submission `S-BSST12` to the directory `C:\Temp` on Windows:
-```
-    "C:\cli\bin\ascp.exe" -P33001 -i "C:\cli\etc\asperaweb_id_dsa.openssh" bsaspera@fasp-beta.ebi.ac.uk:/S-BSST/012/S-BSST12/Files/aeipf_denoised_reads.fna C:\Temp\
-```
+2. **Get the Public SSH key for use with EMBL-EBI Aspera public account IBM Aspera transfers**.
+
+   To use IBM Aspera for downloading public data from EMBL-EBI, you will need the correct private SSH key for authentication. This key has to be saved in a file on your computer and the path to this file will be needed when running the *ascp* command. The file must have restrictive permissions that allow only the current user to access it. On \*nix platforms this is equivalent to mode *0600*.
+
+   The key is available for download [here](https://drive.google.com/drive/folders/1ZQcGVM0JxvTavjIU-4Ils1sN759BQEA1?usp=sharing) and also below:
+
+   ```
+   -----BEGIN OPENSSH PRIVATE KEY-----
+   b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+   QyNTUxOQAAACAn56FmhbC61KwdCOgiHbyDhYo1JV5LIxaN8XksrUB4UAAAAKg7YRgnO2EY
+   JwAAAAtzc2gtZWQyNTUxOQAAACAn56FmhbC61KwdCOgiHbyDhYo1JV5LIxaN8XksrUB4UA
+   AAAEAgc79aAbfysxJRwJHSlyNOpNhRgKQApCAc1uYoxTtBuyfnoWaFsLrUrB0I6CIdvIOF
+   ijUlXksjFo3xeSytQHhQAAAAIXJvb3RAdHJhbnNmZXJzZXJ2ZXIubXloaXNwZWVkLmNvbQ
+   ECAwQ=
+   -----END OPENSSH PRIVATE KEY-----
+   ```
+
+   You must save this key to a file on your own machine, e.g. `/home/user/.ssh/aspera-public-private-key.key` with permissions 0600 (on \*nix - `chmod 600 <path to key>`). You will need the path to this key when executing the *ascp* command.
+
+3. **Get the path to the file(s) you want to download.**
+   - Get the common root for all files in the study:
+     ```
+     curl https://www.ebi.ac.uk/biostudies/api/v1/studies/<accession id>/info -s | jq -r .ftpLink | sed 's#ftp://ftp.ebi.ac.uk##g'
+     ```
+     e.g. for S-BIAD2119:
+     ```
+     curl https://www.ebi.ac.uk/biostudies/api/v1/studies/S-BIAD2119/info -s | jq -r .ftpLink | sed 's#ftp://ftp.ebi.ac.uk##g'
+     ```
+   - Get the relative path to individual files from the file list of the relevant study component of the study.
+   - Form the path for a file by
+     ```
+     <common root>/Files/<relative path to individual file>
+     ```
+     e.g.
+     ```
+     /pub/databases/biostudies/S-BIAD/119/S-BIAD2119/Files/microscopy_image/microscopy_image/TH_sympathetic_nerve/sample1/slice_0000.tif
+     ```
+
+     The example above comes from a study on 'nfs' at the time of writing. If the study is on 'fire' (our FIle REplication service), the path will be of the form
+     ```
+     /biostudies/fire/S-BIAD/570/S-BIAD570/Files/STAN0B0F6_2022-02-25.tiff
+     ```
+
+     Following the steps above should give the correct path regardless of whether the study is on nfs or fire.
+
+4. **Download the file(s)**.
+
+   Assuming you are in the `aspera/bin` directory, your command for download should be like this:
+
+   ```
+   ./ascp -P33001 -Q -l 300M -i <key> fasp-public@fasp.ebi.ac.uk:<file to download> <download location on your machine>
+   ```
+
+   Where
+   - `-P33001` and `fasp-public@fasp-beta.ebi.ac.uk` define the port, user and server for the Aspera connection.
+   - `<key>` is the path to the public key for use with the EMBL-EBI Aspera connection (see subsection above).
+   - `<file to download>` is the remote download path (see subsection above).
+   - `-Q` enables quiet mode suppressing progress output and logs, so the command runs more silently.
+   - `-l 300M` sets the target transfer rate limit to 300 megabits per second.
+
+   For instance, here's the command line to download the file `microscopy_image/microscopy_image/TH_sympathetic_nerve/sample1/slice_0000.tif` from submission S-BIAD2119 to the directory `~/temp` on linux:
+   ```
+   ./ascp -P33001 -Q -l 300M -i ~/.ssh/aspera-public-private-key.key fasp-public@fasp.ebi.ac.uk:/pub/databases/biostudies/S-BIAD/119/S-BIAD2119/Files/microscopy_image/microscopy_image/TH_sympathetic_nerve/sample1/slice_0000.tif  ~/temp/
+   ```
+
 ### Downloading data using Globus
 
 The BioImage Archive supports file downloads through Globus as well. You can click on the Globus icon to open up the [EMBL-EBI Public Data collection](https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=%2Fbiostudies%2F) in the Globus File Manager app. You may want to install [Globus Connect Personal](https://www.globus.org/globus-connect-personal) which creates a personal collection on your machine for [transferring multiple files](https://docs.globus.org/how-to/get-started/).
