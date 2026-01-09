@@ -190,6 +190,12 @@ export async function getStudyFromApiByAccession(accessionID){
     return study;
 }
 
+export async function getSimilarStudies(studyUuid){
+  const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/similar/dataset/${studyUuid}`);
+  const studies = response?.hits?.map(s => s._source) || undefined;
+  return studies;
+}
+
 export async function getImageFromAPI(uuid){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}`);
     const image = response?.hits?.hits?.[0]?._source || null;

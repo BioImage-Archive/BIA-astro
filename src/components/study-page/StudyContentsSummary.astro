@@ -1,5 +1,5 @@
 ---
-const { tableOfContents, originalStudyLink, headlineStats} = Astro.props;
+const { tableOfContents, originalStudyLink, headlineStats, similarStudies} = Astro.props;
 
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -29,6 +29,45 @@ const { tableOfContents, originalStudyLink, headlineStats} = Astro.props;
       >
     </a>
     <slot name="ftp-link" />
+  {
+    similarStudies && (
+<table class="similar-table">
+  <thead>
+    <tr>
+      <th>Similar studies</th>
+    </tr>
+  </thead>
+  <tbody>
+    {similarStudies.slice(1).map((study, idx) => {
+      const rowClass = idx % 2 === 0 ? "alt" : "";
+      return (
+        <tr class={rowClass}>
+          <td>
+            <a href={`/bioimage-archive/study/${study["accession_id"]}`}>
+              {study["title"]}
+            </a>
+          </td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
+
+<style>
+  .similar-table {
+  width: 30vw;
+  border-collapse: collapse;
+}  .similar-table th,
+  .similar-table td {
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .similar-table tr.alt {
+    background: #f5f5f5;
+  }
+</style>    )
+  }
   </div>
 </section>
 {

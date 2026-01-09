@@ -7,7 +7,7 @@ import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 
-import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI, getSimilarStudies} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -33,6 +33,9 @@ const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
 if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
   delete tableOfContents["Linked Information"];
 }
+
+const similarStudies = await getSimilarStudies(study.uuid);
+
 
 // Pre-process grants to group them by funder name
 const groupedGrants = {};
@@ -103,6 +106,7 @@ const breadcrumbs = [
     tableOfContents={tableOfContents} 
     originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
     headlineStats={headlineStats}
+    similarStudies={similarStudies}
   >
     <div slot="hero-image">
       <figure class="vf-figure vf-figure--align vf-figure--align-centered">
