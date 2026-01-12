@@ -1,19 +1,57 @@
 ---
-const { selectedList, url, text, query, organism, imagingMethod, releaseYear } = Astro.props;
-import { generateParamString } from "./Search.astro"
+import { generateParamString } from "../SharedJSFunctions.js";
+import {type SelectedFacets} from "./SearchInterface.astro";
+
+const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal} = Astro.props;
+
+
 const page = 1;
+function removeFacetValue(
+  facets: SelectedFacets,
+  key: string,
+  value: string
+): SelectedFacets {
+  return {
+    ...facets,
+    [key]: (facets[key] ?? []).filter((v) => v !== value),
+  };
+}
+
+function removeRange(facets: SelectedFacets, gteKey: string, lteKey: string): SelectedFacets {
+  const next = { ...facets };
+  delete next[gteKey];
+  delete next[lteKey];
+  return next;
+}
+const gteKey = kind ==="range"? `${key}.gte` : "";
+const lteKey = kind ==="range"? `${key}.lte` : "";
+
+const show = (minVal && minVal !== "") || (maxVal && maxVal !== "");
+const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxVal !== "" ? maxVal : "…"}`;
 ---
 {selectedList && selectedList.length > 0  && (
     <>
     {text}: 
     {selectedList.map( selected => 
-    <a href={generateParamString(url, query, organism.filter( (im) => im != selected), imagingMethod.filter( (im) => im != selected), releaseYear.filter( (im) => im != selected), page)} 
+    <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected))} 
         class="facet-remove-btn">{selected}</a>
     )
     }
     </>
     )   
 }
+{show && (
+  <>
+    {text}:
+    <a
+      href={generateParamString(url, query, page, removeRange(selectedFacets, gteKey, lteKey))}
+      class="facet-remove-btn"
+    >
+      {label}
+    </a>
+  </>
+)}
+
 <style>
   .facet-remove-btn {
   display: inline-block;

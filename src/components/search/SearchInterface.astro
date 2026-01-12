@@ -1,0 +1,42 @@
+---
+
+interface source {
+  accession_id: string;
+  release_date: string;
+  [key: string]: any; // allows any extra properties
+}
+
+interface hit {
+  _source: source;
+  [key: string]: any;
+}
+
+export interface SearchHits{
+  total: {
+    value: number;
+    relation: string; 
+  };
+  max_score: number | null;
+  hits: hit; 
+}
+
+export interface Facet {
+  key: string;
+  key_as_string?: string;
+  doc_count: number;
+}
+
+export interface FacetData {
+  buckets: Facet[];
+  doc_count_error_upper_bound: number;
+  sum_other_doc_count: number;
+}
+
+export interface PaginationData {
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+export type SelectedFacets = Record<string, string[]>;
+

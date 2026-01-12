@@ -9,22 +9,19 @@ import SearchResults from "../components/search/Search.astro";
 
 const url = new URL(Astro.request.url);
 const query = url.searchParams.get('query') || "";
-let pageTitle = query.length === 0? "Browse Studies": "Search Studies"; 
+let pageTitle = query.length === 0? "Browse Images": "Search Images"; 
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
   <body>
   {query.length === 0 && (
       <BrowseStudyHeading heading="Browse the BioImage Archive" contributeLink={"/bioimage-archive/submit"}> 
         <div slot="body_text">
-          <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. Current summary of metrics for this site is as follows: </p>
-          <p></p>
-            <p class="vf-hero__text">
-          All studies (including ones not yet prepared for this site) can be found <a href="https://www.ebi.ac.uk/biostudies/BioImages/studies">here</a>.</p>
+          <p class="vf-hero__text">We are currently working on processing all BioImage Archive studies in order to display and access their images in the web browser on this page. </p>
         </div>
       </BrowseStudyHeading>
     )
   }
-  <SearchResults query={query} url={url} searchType="study"/>
+  <SearchResults query={query} url={url} searchType="image"/>
   </body>
 </BaseLayoutWithBreadcrumbs>
 

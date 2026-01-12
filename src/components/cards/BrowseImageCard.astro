@@ -1,0 +1,90 @@
+---
+import { getTaxons, formatListItem, getThumbnail, getImagingMethodType, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
+import "../../styles/dataset_card.css"
+const { image, imagePageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
+
+function getImagingType(study) {
+    const imageTypeList = getImagingMethodType(study)
+    const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
+    if (imgTypeDisplay.length > 50 * imageTypeList.length) {
+        // Avoid displaying full method text on dataset cards.
+        return 'See details of study'
+    } else {
+        return imgTypeDisplay
+    }
+}
+
+function renderTaxonList(dataset) {
+    const taxonList = getTaxons(dataset)
+    return taxonList.reduce(formatListItem, "")
+}
+
+const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
+const interactiveImageRepresentation = (image.representation.find(
+    (rep) => rep.uuid == vizarrRepUuid
+) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
+
+const scientificNames = [
+  ...new Set(
+    (image?.creation_process?.subject?.sample_of ?? [])
+      .flatMap(sample => sample?.organism_classification ?? [])
+      .map(o => o?.scientific_name)
+      .filter(Boolean)
+  )
+];
+
+const imagingMethod = [
+  ...new Set(
+    (image?.creation_process?.acquisition_process ?? [])
+      .flatMap(ap => ap?.imaging_method_name ?? [])
+      .filter(Boolean)
+  )
+];
+
+const imageFormat = [
+  ...new Set(
+    (image?.representation ?? [])
+      .flatMap(rep => rep?.image_format ?? [])
+      .filter(Boolean)
+  )
+];
+---
+<article class="vf-card vf-card--brand vf-card--bordered" data-message={image.uuid}>
+    <img src={ getThumbnail(image) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading">
+            <a class="vf-card__link" href={`/bioimage-archive/${imagePageRoot}/${image.uuid}`} >
+                { image.uuid }
+                <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
+            </a>
+        </h3>
+        <p class="vf-card__text">
+        { }<br><br>
+        
+        <b>Imaging method: </b>{imagingMethod.join(", ")}<br>
+        <b>Organism: </b>{scientificNames.join(", ")}<br>
+        <b>Image format: </b>{imageFormat.join(", ")}<br>
+        <b>Image Metadata</b>:<br>
+        {interactiveImageRepresentation && (
+            <>
+            Physical Image size: {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided"}<br>
+            Pixel Image size: {formatPixelDimensions(interactiveImageRepresentation)}<br>
+            {interactiveImageRepresentation.size_c && (<p><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</p>)}
+            {interactiveImageRepresentation.size_t && (<p><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</p>)}
+            </>
+        )}
+        </p>
+
+        {taglist && taglist.length > 0 && (
+            <p class="vf-card__text">
+                <b>Tags:</b> {taglist.reduce(formatListItem, "")}
+            </p>
+        )}
+
+        {annotationType && annotationType.length > 0 && (
+            <p class="vf-card__text">
+                <b>Annotation Type:</b> {annotationType.join(", ") || "No information available"}
+            </p>
+        )}
+    </div>
+</article>
