@@ -1,6 +1,15 @@
 ---
 const { tableOfContents, originalStudyLink, headlineStats} = Astro.props;
 
+let original_study_button_label = "Original submission";
+
+if (originalStudyLink?.startsWith("https://www.ebi.ac.uk/empiar/")) {
+  original_study_button_label = "View in EMPIAR";
+} else if (originalStudyLink?.startsWith("https://www.ebi.ac.uk/biostudies/BioImages/studies/EMPIAR")) {
+  original_study_button_label = "View in EMPIAR";
+} else if (originalStudyLink?.startsWith("https://www.ebi.ac.uk/bioimage-archive/")) {
+  original_study_button_label = "View in BioImage Archive";
+}
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
   <div>
@@ -25,7 +34,7 @@ const { tableOfContents, originalStudyLink, headlineStats} = Astro.props;
   <div>
     <a href={originalStudyLink}>
       <button class="vf-button vf-button--primary vf-button--sm"
-        >Original study</button
+        >{original_study_button_label}</button
       >
     </a>
     <slot name="ftp-link" />
