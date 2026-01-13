@@ -241,20 +241,22 @@ const breadcrumbs = [
     <hr/>
   )}
 
-  <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
-    <div>
-      <h2 class="vf-section-header__heading">Datasets</h2>
-    </div>
-    <div>
-      {
-        study.dataset.map((dataset) => (
-          <DatasetInfo dataset={dataset} />
-        ))
-      }
-    </div>
-  </section>
 
-  <hr/>
+  {Array.isArray(study.dataset) && study.dataset.length > 0 && (
+    <section id="study_components" class="vf-content | embl-grid embl-grid--has-centered-content">
+      <div>
+        <h2 class="vf-section-header__heading">Datasets</h2>
+      </div>
+      <div>
+        {
+          study.dataset.map((dataset) => (
+            <DatasetInfo dataset={dataset} />
+          ))
+        }
+      </div>
+    </section>
+    <hr/>
+  )}
 
   <ViewableImageTable study={study} images={images}/>
 
