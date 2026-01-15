@@ -212,7 +212,7 @@ export function formatPixelDimensions(img_rep) {
 export function generateParamString(baseURL, query, page, selectedFacets){
   const pageSize = 9;
   const url = new URL(baseURL, "http://local");
-  url.searchParams.set("query", query ?? "");
+  query !== "" && url.searchParams.set("query", query ?? "");
   url.origin !== "http://local" && url.searchParams.set("pagination.page_size", String(pageSize));
   url.origin !== "http://local" && url.searchParams.set("pagination.page", String(page));
   for (const [facetKey, values] of Object.entries(selectedFacets)) {

@@ -1,6 +1,7 @@
 ---
 import { generateParamString } from "../SharedJSFunctions.js";
 import {type SelectedFacets} from "./SearchInterface.astro";
+import { capitalizeFirstLetter } from "./SearchFacet.astro"
 
 const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal} = Astro.props;
 
@@ -34,7 +35,10 @@ const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxV
     {text}: 
     {selectedList.map( selected => 
     <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected))} 
-        class="facet-remove-btn">{selected}</a>
+        class="facet-remove-btn" aria-label={`Remove ${text}: ${selected}`}
+      >
+        <span class="facet-value">{capitalizeFirstLetter(selected.replaceAll("_", " "))}</span>
+        <span class="facet-x" aria-hidden="true">×</span></a>
     )
     }
     </>
@@ -46,11 +50,28 @@ const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxV
     <a
       href={generateParamString(url, query, page, removeRange(selectedFacets, gteKey, lteKey))}
       class="facet-remove-btn"
-    >
-      {label}
+      aria-label={`Remove ${text}: ${label}`}
+      >
+        <span class="facet-value">{label}</span>
+        <span class="facet-x" aria-hidden="true">×</span>
     </a>
   </>
 )}
+{
+  kind === "query" && query!=="" && (
+    <>
+    {text}:
+    <a
+      href={generateParamString(url, "", page, [])}
+      class="facet-remove-btn"
+      aria-label={`Remove ${text}: ${query}`}
+    >
+      <span class="facet-value">{query}</span>
+      <span class="facet-x" aria-hidden="true">×</span>
+    </a>
+  </>
+  )
+}
 
 <style>
   .facet-remove-btn {
@@ -68,4 +89,14 @@ const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxV
 .facet-remove-btn:hover {
   background-color: #d1e3f3;
 }
+.facet-x {
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0.8;
+    margin-left: 0.5em;
+  }
+
+  .facet-remove-btn:hover .facet-x {
+    opacity: 1;
+  }
 </style>

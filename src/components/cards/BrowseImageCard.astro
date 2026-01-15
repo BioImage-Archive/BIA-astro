@@ -1,23 +1,7 @@
 ---
-import { getTaxons, formatListItem, getThumbnail, getImagingMethodType, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
+import { getTaxons, formatListItem, getThumbnail, getImagingMethodType, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, getStudyFromApiByUUID } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 const { image, imagePageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
-
-function getImagingType(study) {
-    const imageTypeList = getImagingMethodType(study)
-    const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
-    if (imgTypeDisplay.length > 50 * imageTypeList.length) {
-        // Avoid displaying full method text on dataset cards.
-        return 'See details of study'
-    } else {
-        return imgTypeDisplay
-    }
-}
-
-function renderTaxonList(dataset) {
-    const taxonList = getTaxons(dataset)
-    return taxonList.reduce(formatListItem, "")
-}
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = (image.representation.find(
@@ -48,31 +32,36 @@ const imageFormat = [
       .filter(Boolean)
   )
 ];
+
+const studyInfo = await getStudyFromApiByUUID(image.submission_dataset_uuid)
+const accessionId = studyInfo?.accession_id || "";
 ---
-<article class="vf-card vf-card--brand vf-card--bordered" data-message={image.uuid}>
-    <img src={ getThumbnail(image) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
-    <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading">
-            <a class="vf-card__link" href={`/bioimage-archive/${imagePageRoot}/${image.uuid}`} >
-                { image.uuid }
-                <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
-            </a>
-        </h3>
+<article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:300px" data-message={image.uuid}>
+    
+    <div class="image-container ">
+        <img src={ getThumbnail(image) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+
+        <div class="size-bar">
+            <span class="physical-size">
+                <code>{ Number(image.total_physical_size_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.total_physical_size_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.total_physical_size_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
+            </span>
+            <span class="image-size">
+                <code>{ interactiveImageRepresentation.size_x }<span class="x-text">×</span>{ interactiveImageRepresentation.size_y }<span class="x-text">×</span>{ interactiveImageRepresentation.size_z }</code><span class="unit-text"> px</span>
+            </span>
+            <span class="voxel-size">
+                <code>{ Math.round(interactiveImageRepresentation.voxel_physical_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(interactiveImageRepresentation.voxel_physical_size_y * 1e9) }{interactiveImageRepresentation.voxel_physical_size_z !== 1 && (<><span class="x-text">×</span>{Math.round(interactiveImageRepresentation.voxel_physical_size_z * 1e9) }</>)}</code><span class="unit-text"> nm voxels</span>
+            </span>
+        </div>
+    </div>
+    <div class="vf-card__content">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href={`/bioimage-archive/${imagePageRoot}/${image.uuid}`} ></a></h3>
         <p class="vf-card__text">
-        { }<br><br>
-        
-        <b>Imaging method: </b>{imagingMethod.join(", ")}<br>
-        <b>Organism: </b>{scientificNames.join(", ")}<br>
-        <b>Image format: </b>{imageFormat.join(", ")}<br>
-        <b>Image Metadata</b>:<br>
-        {interactiveImageRepresentation && (
-            <>
-            Physical Image size: {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided"}<br>
-            Pixel Image size: {formatPixelDimensions(interactiveImageRepresentation)}<br>
-            {interactiveImageRepresentation.size_c && (<p><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</p>)}
-            {interactiveImageRepresentation.size_t && (<p><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</p>)}
-            </>
-        )}
+            <b>Study: </b><a href=`/bioimage-archive/study/${accessionId}`>{accessionId}</a><br>
+            <b>Imaging method: </b>{imagingMethod.join(", ")}<br>
+            <b>Organism: </b>{scientificNames.join(", ")}<br>
+            <b>Image format: </b>{imageFormat.join(", ")}<br>
+            {interactiveImageRepresentation.size_c && (<><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</>)}
+            {interactiveImageRepresentation.size_t && (<><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</>)}
         </p>
 
         {taglist && taglist.length > 0 && (
@@ -86,5 +75,122 @@ const imageFormat = [
                 <b>Annotation Type:</b> {annotationType.join(", ") || "No information available"}
             </p>
         )}
-    </div>
 </article>
+<style>
+    .row {
+        margin-bottom: 5px;
+    }
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 8px 12px 4px 12px;
+        justify-content: center;
+    }
+    button {
+        padding: 6px 12px;
+        border: 1px solid #666;
+        border-radius: 4px;
+        background: #f5f5f5;
+        transition: all 0.2s ease;
+    }
+    button:hover {
+        background: #e0e0e0;
+        transform: translateY(-1px);
+    }
+    button a {
+        text-decoration: none;
+        color: #333;
+    }
+    .title-container {
+        height: 2em;  /* Two lines of text */
+        margin: 0;
+        overflow: hidden;
+    }
+    .title-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.8em;
+        line-height: 1.2em;
+    }
+    .subtitle-text {
+        font-size: 0.9em;
+        color: #666;
+        margin: 0;
+        padding: 0;
+    }
+    .image-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    .size-bar {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 8px 12px;
+        font-size: 0.9em;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        border-radius: 4px;
+        max-width: 80%;
+    }
+    .physical-size, .image-size, .voxel-size {
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .x-text {
+        font-size: 0.8em;
+        vertical-align: middle;
+        color: #666;
+    }
+    .unit-text {
+        font-size: 0.8em;
+        color: #666;
+    }
+    .custom-card {
+        border: 2px solid #999;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .custom-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+    }
+
+    .study-link {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    .study-link a {
+        color: #333;
+        text-decoration: none;
+    }
+    .study-link a:hover {
+        text-decoration: underline;
+    }
+    .license-badge {
+        position: absolute;
+        top: 45px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 2px;
+        border-radius: 4px;
+    }
+    .license-badge img {
+        height: var(--license-badge-height, 20px);
+        width: auto;
+    }
+</style>

@@ -28,6 +28,7 @@ const selectedFacets: SelectedFacets = {
   "facet.organism": url.searchParams.getAll("facet.organism"),
   "facet.imaging_method": url.searchParams.getAll("facet.imaging_method"),
   "facet.year": url.searchParams.getAll("facet.year"),
+  "facet.annotation_type": url.searchParams.getAll("facet.annotation_type"),
 
   "facet.image_format": url.searchParams.getAll("facet.image_format"),
   "size_c.eq": url.searchParams.getAll("size_c.eq"),
@@ -63,8 +64,8 @@ let hits = {} as SearchHits;
 let facetData = {} as FacetData;
 let paginationData = {} as PaginationData;
 
-
-if (query || query === "") {
+const hasQueryParam = query || query ==="";
+if (hasQueryParam) {
   const searchURL = generateParamString(
     searchEndpoint,
     query,
@@ -82,7 +83,7 @@ if (query || query === "") {
 }
 
 
-const totalResults = hits.total.value;
+const totalResults = hits?.total?.value ?? 0;
 let results;
 
 // Sorting on Server side till the API can sort results.
@@ -126,14 +127,10 @@ function hasBuckets(x: any): x is FacetData {
   return !!x && Array.isArray(x.buckets);
 }
 
-function hasMinMax(x: any): x is { min: number; max: number } {
+function hasMinMax(x: any): x is { min: number; max: number; globalMin: number; globalMax: number } {
   return !!x && typeof x.min === "number" && typeof x.max === "number";
 }
 
-
-function handleRangeFilters(){
-
-}
 
 const FACET_CONFIG: Record<
   string,
@@ -142,6 +139,7 @@ const FACET_CONFIG: Record<
   scientific_name: { title: "Organism", type: "terms", queryKey: "facet.organism" },
   imaging_method: { title: "Imaging Method", type: "terms", queryKey: "facet.imaging_method" },
   release_date: { title: "Release Year", type: "terms", queryKey: "facet.year" },
+  annotation_type: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_type" },
 
   image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
   number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
@@ -204,6 +202,8 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       field: cfg.field,
       min: data.min,
       max: data.max,
+      globalMin: data.globalMin,
+      globalMax: data.globalMax,
       selectedMin: selectedFacets[gteKey]?.[0] ?? "",
       selectedMax: selectedFacets[lteKey]?.[0] ?? "",
       gteKey,
@@ -218,7 +218,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
 
 ---
 <section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
-  <div class=".vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
+  <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
     <br />
     <div style="display: flex;">        
       <div style="padding-top: 0.4em">
@@ -245,7 +245,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     </div>
   </div>
   <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="min-width:50%">
-    { (query || query === "") && (
+    { (hasQueryParam) && (
       <>
         <section class="vf-content">
           <div class="vf-grid vf-grid__col-3">
@@ -275,6 +275,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
             */}
           </div>
           <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
+            <SearchSelectedFacet query={query} url={searchPageURL} text="Query" kind="query" />
             {Object.entries(facets).map(([facetKey, facet]) => (
               <SearchSelectedFacet
                 key={facetKey}
@@ -289,7 +290,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
               />
             ))}
           </div>
-          <div class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+          <div class="vf-card-container vf-card-container__col-4 vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
             <div class="vf-card-container__inner">
             {results.length === 0 ? (
               <p>No results found.</p>
@@ -391,6 +392,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     const minEl = container.querySelector(".range-min");
     const maxEl = container.querySelector(".range-max");
     const progress = container.querySelector(".range-progress");
+    const label = container.closest(".range-facet")?.querySelector(".range-label");
     const gte = container.closest(".range-facet")?.querySelector(".range-gte");
     const lte = container.closest(".range-facet")?.querySelector(".range-lte");
 
@@ -418,7 +420,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     progress.style.left = left + "%";
     progress.style.width = (right - left) + "%";
 
-
+    label.textContent = `${a} – ${b}`;
   
     container.dataset.dirty = "1";
 
@@ -441,6 +443,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       gte.disabled = true;
       lte.disabled = true;
       container.dataset.dirty = "0";
+      label.textContent = label.dataset.default ?? `${minBound} – ${maxBound}`;
     }
   }
 

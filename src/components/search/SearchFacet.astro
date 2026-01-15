@@ -1,4 +1,6 @@
 ---
+import {formatBytesToHumanSize} from "../SharedJSFunctions"
+
 const { facet, id} = Astro.props;
 const title = facet['title'];
 const totalCounts = facet['totalFacetCounts'];
@@ -10,13 +12,11 @@ const selectedValue= facet["selectedValue"];
 const filterCount = facet.kind === "terms"? Object.keys(filter).length: 0;
 const showWarning = filterCount >= 10;
 
-const minBound = Number.isFinite(facet.min) ? facet.min : 0;
-const maxBound = Number.isFinite(facet.max) ? facet.max : 100;
-
+const minBound = Number.isFinite(facet.globalMin) ? facet.globalMin : 0;
+const maxBound = Number.isFinite(facet.globalMax) ? facet.globalMax : 100;
 // Initial values: selected -> else bounds
 const initialMin = facet.selectedMin !== "" ? Number(facet.selectedMin) : minBound;
 const initialMax = facet.selectedMax !== "" ? Number(facet.selectedMax) : maxBound;
-
 // optional: step; if your values are huge, consider 1 or 10/100/1024 etc.
 const step = 1;
 
@@ -27,7 +27,13 @@ export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-const facetType = facet.title ==="Channels"? "radio": "checkbox";
+function formatBytes(value, field){
+  return field === "total_size_in_bytes"? formatBytesToHumanSize(value): value 
+
+}
+
+
+const facetType = "checkbox";//facet.title ==="Channels"? "radio": "checkbox";
 //const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the vf is better than not using it
 ---
 <div class="facet-section" id={`facet-section-${id}`}>
@@ -66,7 +72,7 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
             />
           <label for={`${id}-${index}`} class="facet-label">
               <div class="facet-label-inner">
-                <div>{key}</div>
+                <div>{title !=="Image Format"? capitalizeFirstLetter(key.replaceAll("_", " ")) : key}</div>
                 <div class="facet-count">{count}</div>
               </div>
             </label>
@@ -75,8 +81,12 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
     ))}
     {facet.kind === "range" && (
       <fieldset class="vf-form__fieldset range-facet">
-
-        <!-- IMPORTANT: hidden inputs start EMPTY unless user already filtered -->
+        <div class="range-value">
+        <span class="range-label" data-default={`${minBound} – ${maxBound}`}>
+          {facet.selectedMin && facet.selectedMax ? `${formatBytes(initialMin, facet.field)} - ${formatBytes(initialMax, facet.field)}` 
+          : `${formatBytes(minBound, facet.field)} – ${formatBytes(maxBound , facet.field)}`}
+        </span>
+      </div>
         <input
           type="hidden"
           name={facet.gteKey}
@@ -100,11 +110,6 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
 
           <input class="range-input range-min" type="range" min={minBound} max={maxBound} step={step} value={initialMin} />
           <input class="range-input range-max" type="range" min={minBound} max={maxBound} step={step} value={initialMax} />
-        </div>
-
-        <div class="range-minmax">
-          <small>{minBound}</small>
-          <small>{maxBound}</small>
         </div>
       </fieldset>
     )}
@@ -139,6 +144,11 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
 
 </script>
 <style>
+  .range-facet .range-value{
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0.25rem 0 0.75rem;
+  }
   .facet-section {
     border-bottom: 1px solid #ccc;
     margin-bottom: 0.5rem;
@@ -248,8 +258,6 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
     height: 6px;
     border-radius: 999px;
     background: #2f5ea8; /* blue like screenshot */
-    margin-left: 18px;
-    margin-right: 18px;
     pointer-events: none;
   }
 
@@ -278,13 +286,13 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
     -webkit-appearance: none;
     appearance: none;
     pointer-events: auto;     /* re-enable dragging on the thumb */
-    width: 34px;
-    height: 34px;
+    width: 24px;
+    height: 24px;
     border-radius: 999px;
     background: #2f5ea8;
     border: 8px solid #2f5ea8; /* thick ring feel */
     box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-    margin-top: -14px; /* aligns thumb center with 6px track */
+    margin-top: -10px; /* aligns thumb center with 6px track */
   }
 
   /* Inner white dot */
@@ -303,19 +311,12 @@ const facetType = facet.title ==="Channels"? "radio": "checkbox";
   /* Firefox thumb */
   .range-input::-moz-range-thumb{
     pointer-events: auto;
-    width: 34px;
-    height: 34px;
+    width: 24px;
+    height: 24px;
     border: none;
     border-radius: 999px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     background:
       radial-gradient(circle at center, #ffffff 0 8px, #2f5ea8 9px);
-  }
-
-  .range-minmax{
-    display:flex;
-    justify-content: space-between;
-    margin-top: 0.4rem;
-    color: #6b7280;
   }
 </style>
