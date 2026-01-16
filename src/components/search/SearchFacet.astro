@@ -1,6 +1,4 @@
 ---
-import {formatBytesToHumanSize} from "../SharedJSFunctions"
-
 const { facet, id} = Astro.props;
 const title = facet['title'];
 const totalCounts = facet['totalFacetCounts'];
@@ -26,15 +24,7 @@ const uid = `range-${facet.field}`;
 export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
-function formatBytes(value, field){
-  return field === "total_size_in_bytes"? formatBytesToHumanSize(value): value 
-
-}
-
-
-const facetType = "checkbox";//facet.title ==="Channels"? "radio": "checkbox";
-//const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the vf is better than not using it
+const facetType = "checkbox";
 ---
 <div class="facet-section" id={`facet-section-${id}`}>
   <div class="facet-title">
@@ -83,8 +73,7 @@ const facetType = "checkbox";//facet.title ==="Channels"? "radio": "checkbox";
       <fieldset class="vf-form__fieldset range-facet">
         <div class="range-value">
         <span class="range-label" data-default={`${minBound} – ${maxBound}`}>
-          {facet.selectedMin && facet.selectedMax ? `${formatBytes(initialMin, facet.field)} - ${formatBytes(initialMax, facet.field)}` 
-          : `${formatBytes(minBound, facet.field)} – ${formatBytes(maxBound , facet.field)}`}
+          {facet.selectedMin && facet.selectedMax ? `${initialMin} - ${initialMax}` : `${minBound} – ${maxBound}`}
         </span>
       </div>
         <input
@@ -145,7 +134,6 @@ const facetType = "checkbox";//facet.title ==="Channels"? "radio": "checkbox";
 </script>
 <style>
   .range-facet .range-value{
-    font-size: 1.25rem;
     font-weight: 700;
     margin: 0.25rem 0 0.75rem;
   }

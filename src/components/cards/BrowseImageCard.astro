@@ -13,7 +13,7 @@ const scientificNames = [
     (image?.creation_process?.subject?.sample_of ?? [])
       .flatMap(sample => sample?.organism_classification ?? [])
       .map(o => o?.scientific_name)
-      .filter(Boolean)
+      .filter(Boolean).sort()
   )
 ];
 
@@ -21,47 +21,90 @@ const imagingMethod = [
   ...new Set(
     (image?.creation_process?.acquisition_process ?? [])
       .flatMap(ap => ap?.imaging_method_name ?? [])
-      .filter(Boolean)
+      .filter(Boolean).sort()
   )
 ];
 
 const imageFormat = [
   ...new Set(
     (image?.representation ?? [])
-      .flatMap(rep => rep?.image_format ?? [])
-      .filter(Boolean)
+      .flatMap(rep => rep?.image_format.replace("\.", "") ?? [])
+      .filter(Boolean).sort()
   )
 ];
 
 const studyInfo = await getStudyFromApiByUUID(image.submission_dataset_uuid)
 const accessionId = studyInfo?.accession_id || "";
+const isNonZeroNumber = (v) => {
+  const n = Number(v);
+  return Number.isFinite(n) && n !== 0;
+};
+
+const hasPhysical =
+  isNonZeroNumber(image?.total_physical_size_x) ||
+  isNonZeroNumber(image?.total_physical_size_y) ||
+  isNonZeroNumber(image?.total_physical_size_z);
+
+const hasPixel =
+  isNonZeroNumber(interactiveImageRepresentation?.size_x) ||
+  isNonZeroNumber(interactiveImageRepresentation?.size_y) ||
+  isNonZeroNumber(interactiveImageRepresentation?.size_z);
+
+const hasVoxel =
+  isNonZeroNumber(interactiveImageRepresentation?.voxel_physical_size_x) ||
+  isNonZeroNumber(interactiveImageRepresentation?.voxel_physical_size_y) ||
+  isNonZeroNumber(interactiveImageRepresentation?.voxel_physical_size_z);
+
+const showSizeBar = hasPhysical || hasPixel || hasVoxel;
 ---
-<article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:300px" data-message={image.uuid}>
+<article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:400px" data-message={image.uuid}>
     
     <div class="image-container ">
         <img src={ getThumbnail(image) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
-
-        <div class="size-bar">
-            <span class="physical-size">
-                <code>{ Number(image.total_physical_size_x * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.total_physical_size_y * 1e6).toPrecision(2) }<span class="x-text">×</span>{ Number(image.total_physical_size_z * 1e6).toPrecision(2) }</code><span class="unit-text"> µm</span>
-            </span>
-            <span class="image-size">
-                <code>{ interactiveImageRepresentation.size_x }<span class="x-text">×</span>{ interactiveImageRepresentation.size_y }<span class="x-text">×</span>{ interactiveImageRepresentation.size_z }</code><span class="unit-text"> px</span>
-            </span>
-            <span class="voxel-size">
-                <code>{ Math.round(interactiveImageRepresentation.voxel_physical_size_x * 1e9) }<span class="x-text">×</span>{ Math.round(interactiveImageRepresentation.voxel_physical_size_y * 1e9) }{interactiveImageRepresentation.voxel_physical_size_z !== 1 && (<><span class="x-text">×</span>{Math.round(interactiveImageRepresentation.voxel_physical_size_z * 1e9) }</>)}</code><span class="unit-text"> nm voxels</span>
-            </span>
+        {
+            showSizeBar && (
+            <div class="size-bar">
+                {
+                    hasPhysical && (
+                        <span class="physical-size">
+                            <code>{ Number(image.total_physical_size_x * 1e6).toPrecision(2) }<span class="x-text">×</span>
+                            { Number(image.total_physical_size_y * 1e6).toPrecision(2) }
+                            {image?.total_physical_size_z !== 1 && (<><span class="x-text">×</span>{Number(image?.total_physical_size_z * 1e9) }</>)}</code><span class="unit-text"> µm</span>
+                        </span>
+                    )
+                }
+                {
+                    hasPixel && (
+                        <span class="image-size">
+                            <code>{ interactiveImageRepresentation?.size_x }<span class="x-text">×</span>
+                            { interactiveImageRepresentation?.size_y }
+                            {interactiveImageRepresentation?.size_z !== 1 && (<><span class="x-text">×</span>{interactiveImageRepresentation?.size_z}</>)}</code><span class="unit-text"> px</span>
+                        </span>
+                    )
+                }
+                {
+                    hasVoxel && (
+                        <span class="voxel-size">
+                            <code>{ Math.round(interactiveImageRepresentation?.voxel_physical_size_x * 1e9) }<span class="x-text">×</span>
+                            { Math.round(interactiveImageRepresentation?.voxel_physical_size_y * 1e9) }
+                            {interactiveImageRepresentation?.voxel_physical_size_z !== 1 && (<><span class="x-text">×</span>{Math.round(interactiveImageRepresentation?.voxel_physical_size_z * 1e9) }</>)}</code><span class="unit-text"> nm voxels</span>
+                        </span>
+                    )
+                }
+                </div>
+            )
+        }   
+        <div class="study-link">
+            <a href={"/bioimage-archive/study/" + accessionId}>{ accessionId }</a>
         </div>
     </div>
     <div class="vf-card__content">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href={`/bioimage-archive/${imagePageRoot}/${image.uuid}`} ></a></h3>
         <p class="vf-card__text">
-            <b>Study: </b><a href=`/bioimage-archive/study/${accessionId}`>{accessionId}</a><br>
             <b>Imaging method: </b>{imagingMethod.join(", ")}<br>
             <b>Organism: </b>{scientificNames.join(", ")}<br>
             <b>Image format: </b>{imageFormat.join(", ")}<br>
-            {interactiveImageRepresentation.size_c && (<><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</>)}
-            {interactiveImageRepresentation.size_t && (<><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</>)}
+            {interactiveImageRepresentation?.size_c && (<><b>Number of channels:</b> {interactiveImageRepresentation?.size_c}<br /></>)}
+            {interactiveImageRepresentation?.size_t && (<><b>Number of timesteps:</b> {interactiveImageRepresentation?.size_t}</>)}
         </p>
 
         {taglist && taglist.length > 0 && (
@@ -75,6 +118,8 @@ const accessionId = studyInfo?.accession_id || "";
                 <b>Annotation Type:</b> {annotationType.join(", ") || "No information available"}
             </p>
         )}
+        <h3 class="vf-card__heading"><a class="vf-card__link" href={`/bioimage-archive/${imagePageRoot}/${image.uuid}`} ></a></h3>
+    </div>
 </article>
 <style>
     .row {
@@ -155,15 +200,6 @@ const accessionId = studyInfo?.accession_id || "";
         font-size: 0.8em;
         color: #666;
     }
-    .custom-card {
-        border: 2px solid #999;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-    .custom-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-    }
 
     .study-link {
         position: absolute;
@@ -173,6 +209,7 @@ const accessionId = studyInfo?.accession_id || "";
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 0.9em;
+        z-index: 999;
     }
     .study-link a {
         color: #333;

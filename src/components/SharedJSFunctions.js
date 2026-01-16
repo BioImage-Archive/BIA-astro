@@ -209,8 +209,7 @@ export function formatPixelDimensions(img_rep) {
     return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
 }
 
-export function generateParamString(baseURL, query, page, selectedFacets){
-  const pageSize = 9;
+export function generateParamString(baseURL, query, page, selectedFacets, pageSize){
   const url = new URL(baseURL, "http://local");
   query !== "" && url.searchParams.set("query", query ?? "");
   url.origin !== "http://local" && url.searchParams.set("pagination.page_size", String(pageSize));

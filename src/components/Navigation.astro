@@ -1,26 +1,84 @@
 ---
-const pageData = {
-    "": "Home",
-    studies: "Browse",
-    submit: "Submit",
-    galleries: "Galleries",
-    help: "Help",
-    policies: "Policies",
-    "about-us": "About"
-}
+const nav = [
+  { key: "", label: "Home", href: "/bioimage-archive/" },
+  {
+    key: "studies",
+    label: "Browse",
+    href: "/bioimage-archive/studies",
+    children: [
+      { label: "Studies", href: "/bioimage-archive/studies" },
+      { label: "Images", href: "/bioimage-archive/images" }
+    ],
+  },
+  {
+    key: "submit",
+    label: "Submit",
+    href: "/bioimage-archive/submit"
+  },
+
+  {
+    key: "galleries",
+    label: "Galleries",
+    href: "/bioimage-archive/galleries",
+    children: [
+      { label: "AI Gallery", href: "/bioimage-archive/galleries/ai" },
+      { label: "Volume EM", href: "/bioimage-archive/galleries/volumeem" },
+      { label: "Spatial Omics", href: "/bioimage-archive/galleries/spatialomics" },
+    ],
+  },
+
+  {
+    key: "help",
+    label: "Help",
+    href: "/bioimage-archive/help",
+    children: [
+      { label: "About the new website", href: "/bioimage-archive/help/about-the-new-website" },
+      { label: "FAQ", href: "/bioimage-archive/help/faq" },
+      { label: "Searching Data", href: "/bioimage-archive/help/search" },
+      { label: "Downloading Data", href: "/bioimage-archive/help/downloading-data" },
+      { label: "Supporting Tools", href: "/bioimage-archive/help/supporting-tools" },
+      { label: "Contribute to Galleries", href: "/bioimage-archive/help/galleries-contribute" }
+    ],
+  },
+
+  {
+    key: "policies",
+    label: "Policies",
+    href: "/bioimage-archive/policies",
+    children: [
+      { label: "BioImage Archive Policies", href: "/bioimage-archive/policies/" },
+      { label: "Image archiving at EBI", href: "/bioimage-archive/policies/imagesatebi" }
+    ],
+  },
+
+  { 
+    key: "about-us", 
+    label: "About", 
+    href: "/bioimage-archive/about-us",
+    children: [
+      { label: "Case Studies", href: "/bioimage-archive/case-studies" },
+      { label: "Project Developments", href: "/bioimage-archive/project-developments" },
+      { label: "Contact Us", href: "/bioimage-archive/contact-us" }
+    ],
+   },
+];
+
 const pathname = Astro.url.pathname;
-const basePath = pathname.split('/')[2];
+const basePath = pathname.split("/")[2] ?? "";
+const isCurrent = (href) =>
+  href.replace(/\/+$/, "") === pathname;
 
-
-
+const hasActiveChild = (item) =>
+  item.children?.some((child) => isCurrent(child.href));
 ---
 <style>
-  .active { 
+  .nav-item.is-active {
+    border-bottom: 2px solid #3b6fb6;
+  }
+  .vf-navigation__link.is-current,
+  .nav-dropdown__link.is-current {
     color: #3b6fb6;
     font-weight: bold;
-    }
-  li.active {
-    border-bottom: 2px solid;
   }
   .navbar {
     position: sticky;
@@ -31,15 +89,95 @@ const basePath = pathname.split('/')[2];
     margin: 0.25rem 0 8px;
     padding: 0 8px 0 8px;
   }
+  .nav-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    gap: 0.25rem;
+  }
+
+  .nav-item {
+    position: relative;
+    padding: 8px;
+  }
+
+  .nav-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100%);
+    left: 0;
+    background: white;
+    border: 1px solid #D0D0CE;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    padding: 6px 0;
+    z-index: 10;
+  }
+
+  .nav-dropdown__item {
+    list-style: none;
+  }
+
+  .nav-dropdown__link {
+    display: block;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown__link:hover,
+  .nav-dropdown__link:focus {
+    background: #f2f2f2;
+  }
+
+  /* show on hover OR keyboard focus */
+  .nav-item:hover > .nav-dropdown,
+  .nav-item:focus-within > .nav-dropdown {
+    display: block;
+  }
+
 </style>
 
-<nav class="vf-navigation | vf-navigation--main | navbar | vf-u-fullbleed" style="display: block;">
-  <ul class="vf-navigation__list | vf-list" style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0px;">
-    {Object.entries(pageData).map(([key, value]) => (
-      <li class={basePath === key ? "vf-navigation__item | active" : "vf-navigation__item"}  style="padding: 8px;">
-          <a href={`/bioimage-archive/${key}`} class={basePath === key ? "vf-navigation__link | active" : "vf-navigation__link"}>{value}</a>
-      </li>
-      )
-    )}
+<nav class="vf-navigation vf-navigation--main navbar vf-u-fullbleed">
+  <ul class="vf-navigation__list vf-list nav-list">
+    {nav.map((item) => {
+      const sectionActive = basePath === item.key;
+      const childActive = hasActiveChild(item);
+
+      return (
+        <li
+          class={`vf-navigation__item nav-item ${
+            sectionActive || childActive ? "is-active" : ""
+          }`}
+        >
+          <a
+            href={item.href}
+            class={`vf-navigation__link ${
+              sectionActive || childActive ? "is-current" : ""
+            }`}
+          >
+            {item.label}
+          </a>
+
+          {item.children?.length ? (
+            <ul class="nav-dropdown" aria-label={`${item.label} submenu`}>
+              {item.children.map((child) => (
+                <li class="nav-dropdown__item">
+                  <a
+                    href={child.href}
+                    class={`nav-dropdown__link ${
+                      isCurrent(child.href) ? "is-current" : ""
+                    }`}
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </li>
+      );
+    })}
   </ul>
 </nav>

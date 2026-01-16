@@ -1,9 +1,13 @@
 ---
 const { query = "" } = Astro.props;
+const pathname = Astro.url.pathname;
+const isImagesPage = pathname.startsWith("/bioimage-archive/images");
 ---
 
 <form
-  action="/bioimage-archive/studies"
+  action={isImagesPage
+    ? "/bioimage-archive/images"
+    : "/bioimage-archive/studies"}
   method="get"
   class="vf-form vf-form--search vf-form--search--mini vf-sidebar vf-sidebar--end searchWrap"
   id="searchForm"
@@ -31,8 +35,8 @@ const { query = "" } = Astro.props;
         <div class="vf-grid__col--span-4 searchInGroup">
           <div class="sectionLabel">Search in: </div>
           <div class="optionsRow" role="list">
-            <button type="button" class="searchType isActive" data-scope="study">Study</button>
-            <button type="button" class="searchType" data-scope="image">Image</button>
+            <button type="button" class={`searchType ${!isImagesPage ? "isActive" : ""}`}data-scope="study">Study</button>
+            <button type="button" class={`searchType ${isImagesPage ? "isActive" : ""}`} data-scope="image">Image</button>
           </div>
         </div>
         <div>

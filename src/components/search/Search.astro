@@ -23,6 +23,7 @@ const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bio
 const sortBy = url.searchParams.get('sortBy');
 const sortOrder = url.searchParams.get('sortOrder');
 const page = Number(url.searchParams.get('pagination.page')) || 1;
+const pageSize = Number(url.searchParams.get('pagination.page_size')) || 9;
 
 const selectedFacets: SelectedFacets = {
   "facet.organism": url.searchParams.getAll("facet.organism"),
@@ -70,7 +71,8 @@ if (hasQueryParam) {
     searchEndpoint,
     query,
     page,
-    selectedFacets
+    selectedFacets,
+    pageSize
   );
 
   const res = await fetch(searchURL);
@@ -145,13 +147,13 @@ const FACET_CONFIG: Record<
   number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
 
   z_planes: { title: "Z-Planes", type: "range", field: "size_z" },
-  image_pixel_x: { title: "Image Pixel X", type: "range", field: "size_x" },
-  image_pixel_y: { title: "Image Pixel Y", type: "range", field: "size_y" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "range", field: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "range", field: "size_y" },
   time_steps: { title: "Time Steps", type: "range", field: "size_t" },
   total_size_in_bytes: { title: "Total Size (bytes)", type: "range", field: "total_size_in_bytes" },
-  total_physical_size_x: { title: "Physical Size X", type: "range", field: "total_physical_size_x" },
-  total_physical_size_y: { title: "Physical Size Y", type: "range", field: "total_physical_size_y" },
-  total_physical_size_z: { title: "Physical Size Z", type: "range", field: "total_physical_size_z" },
+  total_physical_size_x: { title: "Physical Size X (m)", type: "range", field: "total_physical_size_x" },
+  total_physical_size_y: { title: "Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
+  total_physical_size_z: { title: "Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
 };
 
 const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
@@ -253,15 +255,26 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
             <div></div>
           </div>
           <section>
-          <div class="vf-grid vf-grid__col-3">
-            <div class="vf-grid__col--span-2" style="display: flex; align-items: center;">
+          <div class="vf-grid vf-grid__col-5">
+            <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
               <span id="paginated-results">
                   {results.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
                 </span>
               </div>
-            {/* 
+            {
+              <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
+                <label for="pageSize" class="vf-form__label vf-u-type__text-body--4 vf-u-padding--100" style="margin: 0;padding: 0;border: 0;">Page Size:</label>
+                <select name="pageSize" id="pageSize" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100" style="height: 2.5em;width: auto;min-width: 8rem;">
+                  <option value="9" selected={pageSize === 9} >Default</option>
+                  <option value="25" selected={pageSize === 25} >25</option>
+                  <option value="50" selected={pageSize === 50}>50</option>
+                  <option value="100" selected={pageSize === 100}>100</option>
+                </select>
+
+              </div>
+            /* 
             <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
-            <label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
+            /*<label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
             <select name="sortBy" id="sortBy" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100 vf-u-padding__left--200" style="flex: 5; height: 2.5em">
               <option value="relevance" selected={sortBy === "relevance"} >Relevance</option>
               <option value="accession" selected={sortBy === "accession"} >Accession ID</option>
@@ -317,6 +330,13 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       window.location.reload();
     }
   });
+  const sortSelect = document.getElementById('pageSize');
+   sortSelect.addEventListener('change', (event) => {
+     const pageSize = event.target.value;
+     const url = new URL(window.location.href);
+     url.searchParams.set('pagination.page_size', pageSize);
+     window.location.href = url.toString();
+   });
   // const sortSelect = document.getElementById('sortBy');
   // sortSelect.addEventListener('change', (event) => {
   //   const sortBy = event.target.value;
@@ -420,7 +440,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     progress.style.left = left + "%";
     progress.style.width = (right - left) + "%";
 
-    label.textContent = `${a} – ${b}`;
+    label.textContent = `${Number(a).toPrecision(2)} – ${Number(b).toPrecision(2)}`;
   
     container.dataset.dirty = "1";
 
@@ -443,7 +463,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       gte.disabled = true;
       lte.disabled = true;
       container.dataset.dirty = "0";
-      label.textContent = label.dataset.default ?? `${minBound} – ${maxBound}`;
+      label.textContent = label.dataset.default ?? `${Number(minBound).toPrecision(2)} – ${Number(maxBound).toPrecision(2)}`;
     }
   }
 

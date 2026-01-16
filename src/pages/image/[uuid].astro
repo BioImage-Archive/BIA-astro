@@ -115,9 +115,8 @@ const breadcrumbs = [
                     interactiveImageRepresentation && (
                         <span>
                             <h3>Image metadata</h3>
-
-                            <b>Physical Image size: </b> {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided" }<br>
-                            <b>Pixel Image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br>
+                            <b>Physical image size: </b> {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided" }<br />
+                            <b>Pixel image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br />
                             {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
                             {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
                             {userProvidedAttribute && ( 
