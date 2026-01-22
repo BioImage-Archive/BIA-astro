@@ -32,6 +32,10 @@ const vizarrIFrameSource = interactiveImageRepresentation ? `https://uk1s3.embas
 const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
 const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
 
+const uploadedBySubmitterRepresentation = image.representation.find(
+    (rep) => rep.image_format !== ".ome.zarr" && rep.file_uri?.length === 1
+)
+const uploadedBySubmitterUri = uploadedBySubmitterRepresentation?.file_uri?.[0] ?? null
 
 const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
@@ -187,6 +191,13 @@ const breadcrumbs = [
                 {
                     interactiveImageRepresentation && (
                         <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
+                    )
+                }
+                {
+                    uploadedBySubmitterUri && (
+                        <a href={uploadedBySubmitterUri}>
+                            <button class="vf-button vf-button--primary vf-button--sm">Download original</button>
+                        </a>
                     )
                 }
                 {
