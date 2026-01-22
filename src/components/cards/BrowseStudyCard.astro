@@ -25,10 +25,21 @@ function getDataForCardFilter(study) {
     const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
     return dataString
 }
-
+const studyCardImage = getStudyImage(study, cardImageOverride);
+const isFallback = String(studyCardImage).includes("placeholder");
+const fallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
+const imagingMethod = getImagingType(study);
+const organism = renderTaxonList(study);
 ---
-<article class="vf-card vf-card--brand vf-card--bordered" data-message={getDataForCardFilter(study)}>
-    <img src={ getStudyImage(study, cardImageOverride) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+<article class="vf-card vf-card--brand vf-card--bordered custom-card" data-message={getDataForCardFilter(study)}>
+    <div class="image-container">
+        <img src={  studyCardImage} alt={fallbackMessage} title={fallbackMessage} class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+        {isFallback && (
+                <div class="image-overlay" role="note" aria-label={fallbackMessage}>
+                    <span>{fallbackMessage}</span>
+                </div>
+            )}
+    </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
             <a class="vf-card__link" href={`/bioimage-archive/${studyPageRoot}/${study.accession_id}`} >
@@ -39,8 +50,8 @@ function getDataForCardFilter(study) {
         <p class="vf-card__text">
         { study.title }<br><br>
         <b>Release date: </b>{ study.release_date }<br>
-        <b>Imaging method: </b>{getImagingType(study)}<br>
-        <b>Organism: </b><Fragment set:html={renderTaxonList(study)}></Fragment>
+        {imagingMethod && (<><b>Imaging method: </b>{imagingMethod} <br /></>)}
+        {organism && (<><b>Organism: </b><Fragment set:html={organism}></Fragment></>)}
         </p>
 
         {taglist && taglist.length > 0 && (
@@ -56,3 +67,26 @@ function getDataForCardFilter(study) {
         )}
     </div>
 </article>
+<style>
+    .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 12px;
+        opacity: 1;
+        pointer-events: none;
+        z-index: 999;
+    }
+
+    .image-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+</style>

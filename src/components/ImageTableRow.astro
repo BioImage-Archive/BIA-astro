@@ -1,23 +1,24 @@
 ---
-import { getImageFromAPI, getThumbnail, formatBytesToHumanSize } from "./SharedJSFunctions";
+import { getThumbnail, formatBytesToHumanSize, getSimpleAttributeValue } from "./SharedJSFunctions";
 
 const { image, datasetTitle, imagePageRoot } = Astro.props;
 
-function getDownloadSize(imageMetadata) {
-  const submitter_data = imageMetadata?.representation.find((rep)=>rep.total_size_in_bytes > 0)?.total_size_in_bytes ?? "Unkown"
-  return submitter_data
+function getDownloadSize(image) {
+  const file_size = image?.total_size_in_bytes > 0? image.total_size_in_bytes : "Unkown"
+  return file_size
 }
 
-const imageMetadata = await getImageFromAPI(image.uuid);
-
+const image_size = formatBytesToHumanSize(getDownloadSize(image))
+const file_path = image?.label || image?.file_path ;
 ---
 <tr>
   <td>
     <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}><img class="vf-figure__image" src={getThumbnail(image)}/></a>
   </td>
   <td>{image.uuid}</td>
+  <td>{file_path}</td>
   <td>{datasetTitle}</td>
-  <td>{formatBytesToHumanSize(getDownloadSize(imageMetadata))}</td>
+  <td>{image_size}</td>
   <td>
     <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}>View</a>
   </td>

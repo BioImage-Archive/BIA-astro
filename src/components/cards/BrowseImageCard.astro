@@ -1,6 +1,8 @@
 ---
-import { getTaxons, formatListItem, getThumbnail, getImagingMethodType, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, getStudyFromApiByUUID } from "../SharedJSFunctions.js";
+import { formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
+import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
+
 const { image, imagePageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
@@ -33,8 +35,8 @@ const imageFormat = [
   )
 ];
 
-const studyInfo = await getStudyFromApiByUUID(image.submission_dataset_uuid)
-const accessionId = studyInfo?.accession_id || "";
+const accessionId = image?.accession_id || "";
+
 const isNonZeroNumber = (v) => {
   const n = Number(v);
   return Number.isFinite(n) && n !== 0;
@@ -50,44 +52,34 @@ const hasPixel =
   isNonZeroNumber(interactiveImageRepresentation?.size_y) ||
   isNonZeroNumber(interactiveImageRepresentation?.size_z);
 
-const hasVoxel =
-  isNonZeroNumber(interactiveImageRepresentation?.voxel_physical_size_x) ||
-  isNonZeroNumber(interactiveImageRepresentation?.voxel_physical_size_y) ||
-  isNonZeroNumber(interactiveImageRepresentation?.voxel_physical_size_z);
-
-const showSizeBar = hasPhysical || hasPixel || hasVoxel;
+const showSizeBar = hasPhysical || hasPixel;
+const thumbnail_uri =  getThumbnail(image);
+const isFallback = thumbnail_uri === imageFallback.src;
+const fallbackMessage = isFallback ? "Preview not available yet." : "";
 ---
 <article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:400px" data-message={image.uuid}>
     
     <div class="image-container ">
-        <img src={ getThumbnail(image) } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+        <img src={thumbnail_uri } alt={fallbackMessage} title={fallbackMessage} class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+        {isFallback && (
+            <div class="image-overlay" role="note" aria-label={fallbackMessage}>
+                <span>{fallbackMessage}</span>
+            </div>
+        )}
         {
             showSizeBar && (
             <div class="size-bar">
                 {
                     hasPhysical && (
                         <span class="physical-size">
-                            <code>{ Number(image.total_physical_size_x * 1e6).toPrecision(2) }<span class="x-text">×</span>
-                            { Number(image.total_physical_size_y * 1e6).toPrecision(2) }
-                            {image?.total_physical_size_z !== 1 && (<><span class="x-text">×</span>{Number(image?.total_physical_size_z * 1e9) }</>)}</code><span class="unit-text"> µm</span>
+                            <code>{ formatPhysicalDimensions(image)}</code>
                         </span>
                     )
                 }
                 {
                     hasPixel && (
                         <span class="image-size">
-                            <code>{ interactiveImageRepresentation?.size_x }<span class="x-text">×</span>
-                            { interactiveImageRepresentation?.size_y }
-                            {interactiveImageRepresentation?.size_z !== 1 && (<><span class="x-text">×</span>{interactiveImageRepresentation?.size_z}</>)}</code><span class="unit-text"> px</span>
-                        </span>
-                    )
-                }
-                {
-                    hasVoxel && (
-                        <span class="voxel-size">
-                            <code>{ Math.round(interactiveImageRepresentation?.voxel_physical_size_x * 1e9) }<span class="x-text">×</span>
-                            { Math.round(interactiveImageRepresentation?.voxel_physical_size_y * 1e9) }
-                            {interactiveImageRepresentation?.voxel_physical_size_z !== 1 && (<><span class="x-text">×</span>{Math.round(interactiveImageRepresentation?.voxel_physical_size_z * 1e9) }</>)}</code><span class="unit-text"> nm voxels</span>
+                            <code>{ formatPixelDimensions(interactiveImageRepresentation)}</code>
                         </span>
                     )
                 }
@@ -95,7 +87,7 @@ const showSizeBar = hasPhysical || hasPixel || hasVoxel;
             )
         }   
         <div class="study-link">
-            <a href={"/bioimage-archive/study/" + accessionId}>{ accessionId }</a>
+            { accessionId }
         </div>
     </div>
     <div class="vf-card__content">
@@ -209,7 +201,6 @@ const showSizeBar = hasPhysical || hasPixel || hasVoxel;
         padding: 4px 8px;
         border-radius: 4px;
         font-size: 0.9em;
-        z-index: 999;
     }
     .study-link a {
         color: #333;
@@ -229,5 +220,19 @@ const showSizeBar = hasPhysical || hasPixel || hasVoxel;
     .license-badge img {
         height: var(--license-badge-height, 20px);
         width: auto;
+    }
+    .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 12px;
+        opacity: 1;
+        pointer-events: none;
+        z-index: 999;
     }
 </style>

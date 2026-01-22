@@ -1,4 +1,4 @@
-import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
+import { PUBLIC_SEARCH_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 export function getPlaceholderHeroImage(accessionID) {
@@ -165,38 +165,48 @@ export function getThumbnail(img) {
     return thumbnail_uri;
 }
 
+export function formatBytes(value, field){
+  return field === "total_size_in_bytes"? formatBytesToHumanSize(value) : value
+}
+
 function formatPhysicalDimension(value, text) {
     if (text === "") {
         if (value != null) {
-            return value + "m"
+            return Number(value).toPrecision(2)
         } else {
             return text
         }
     } else {
-        if (value != null) {
-            return text + " x " + value + "m"
+        if (value != null && value !== 1) {
+            return text + " x " + Number(value).toPrecision(2)
         } else {
             return text
         }
     }
 }
 
-export function formatPhysicalDimensions(imageRepresentation) {
+export function formatPhysicalVoxelDimensions(imageRepresentation) {
     const fields = [ "voxel_physical_size_x", "voxel_physical_size_y", "voxel_physical_size_z"]
     const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
-    return formattedStr != "" ? formattedStr : 'Unknown'
+    return formattedStr != "" ? formattedStr + " m/pixel" : 'Unknown'
+}
+
+export function formatPhysicalDimensions(image) {
+    const fields = [ "total_physical_size_x", "total_physical_size_y", "total_physical_size_z"]
+    const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(image[field], text), "")
+    return formattedStr != "" ? formattedStr + " m" : 'Unknown'
 }
 
 
 function formatPixelDimension(value, text) {
     if (text === "") {
-        if (value != null) {
+        if (value != null && value !== 1) {
             return value
         } else {
             return text
         }
     } else {
-        if (value != null) {
+        if (value != null && value !== 1) {
             return text + " x " + value
         } else {
             return text
@@ -206,13 +216,13 @@ function formatPixelDimension(value, text) {
 
 export function formatPixelDimensions(img_rep) {
     const fields = [ "size_x", "size_y", "size_z"]
-    return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
+    return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "") + " px" 
 }
 
 export function generateParamString(baseURL, query, page, selectedFacets, pageSize){
   const url = new URL(baseURL, "http://local");
   query !== "" && url.searchParams.set("query", query ?? "");
-  url.origin !== "http://local" && url.searchParams.set("pagination.page_size", String(pageSize));
+  url.origin !== "http://local" | pageSize > 9 && url.searchParams.set("pagination.page_size", String(pageSize));
   url.origin !== "http://local" && url.searchParams.set("pagination.page", String(page));
   for (const [facetKey, values] of Object.entries(selectedFacets)) {
     if (!values?.length) continue;

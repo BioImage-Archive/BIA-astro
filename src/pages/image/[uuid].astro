@@ -9,7 +9,7 @@ import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 const imageAcquisitionMap = fieldMap["image_acquisition"];
@@ -79,8 +79,6 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
     thumbnail_uri ? `<img style="width: 100%; height: 500px" src="${thumbnail_uri}" />` :
     `<img style="height: 500px;" src="${fallbackImage.src}" />`
 
-
-
 const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
 
 
@@ -115,7 +113,8 @@ const breadcrumbs = [
                     interactiveImageRepresentation && (
                         <span>
                             <h3>Image metadata</h3>
-                            <b>Physical image size: </b> {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided" }<br />
+                            <b>Physical image size: </b> {formatPhysicalDimensions(image) ?? "Not provided" }<br />
+                            <b>Physical voxel size: </b> {formatPhysicalVoxelDimensions(interactiveImageRepresentation) ?? "Not provided" }<br />
                             <b>Pixel image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br />
                             {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
                             {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
@@ -125,7 +124,7 @@ const breadcrumbs = [
                                     <h4>Additional user metadata</h4>
                                     {Object.entries(userProvidedAttribute).map(([key, value]) => (<div><b>{key}:</b> {value}</div>)) }
                                 </div> 
-                            )}
+                            )} 
                         </span>
                     )
                 }

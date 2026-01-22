@@ -1,12 +1,12 @@
 ---
-import { generateParamString } from "../SharedJSFunctions.js";
+import { generateParamString, formatBytes } from "../SharedJSFunctions.js";
 import {type SelectedFacets} from "./SearchInterface.astro";
 import { capitalizeFirstLetter } from "./SearchFacet.astro"
 
-const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal} = Astro.props;
-
+const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal, pageSize} = Astro.props;
 
 const page = 1;
+
 function removeFacetValue(
   facets: SelectedFacets,
   key: string,
@@ -18,23 +18,29 @@ function removeFacetValue(
   };
 }
 
+function removeQueryParam(url) {
+  const next = new URL(url);
+  next.searchParams.delete("query");
+  return next.toString();
+}
+
 function removeRange(facets: SelectedFacets, gteKey: string, lteKey: string): SelectedFacets {
   const next = { ...facets };
   delete next[gteKey];
   delete next[lteKey];
   return next;
 }
-const gteKey = kind ==="range"? `${key}.gte` : "";
-const lteKey = kind ==="range"? `${key}.lte` : "";
+const gteKey = kind ==="range" || kind ==="slider"? `${key}.gte` : "";
+const lteKey = kind ==="range" || kind ==="slider" ? `${key}.lte` : "";
 
 const show = (minVal && minVal !== "") || (maxVal && maxVal !== "");
-const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxVal !== "" ? maxVal : "…"}`;
+const label = `${minVal && minVal !== "" ? formatBytes(minVal, key) : "…" } – ${maxVal && maxVal !== "" ? formatBytes(maxVal, key) : "…"}`;
 ---
 {selectedList && selectedList.length > 0  && (
     <>
     {text}: 
     {selectedList.map( selected => 
-    <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected))} 
+    <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected), pageSize)} 
         class="facet-remove-btn" aria-label={`Remove ${text}: ${selected}`}
       >
         <span class="facet-value">{capitalizeFirstLetter(selected.replaceAll("_", " "))}</span>
@@ -48,7 +54,7 @@ const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxV
   <>
     {text}:
     <a
-      href={generateParamString(url, query, page, removeRange(selectedFacets, gteKey, lteKey))}
+      href={generateParamString(url, query, page, removeRange(selectedFacets, gteKey, lteKey), pageSize)}
       class="facet-remove-btn"
       aria-label={`Remove ${text}: ${label}`}
       >
@@ -62,7 +68,7 @@ const label = `${minVal && minVal !== "" ? minVal : "…" } – ${maxVal && maxV
     <>
     {text}:
     <a
-      href={generateParamString(url, "", page, [])}
+      href={generateParamString(removeQueryParam(Astro.url), "", page, [], pageSize)}
       class="facet-remove-btn"
       aria-label={`Remove ${text}: ${query}`}
     >

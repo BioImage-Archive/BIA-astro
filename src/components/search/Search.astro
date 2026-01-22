@@ -59,6 +59,15 @@ const selectedFacets: SelectedFacets = {
 
   "total_physical_size_z.gte": url.searchParams.getAll("total_physical_size_z.gte"),
   "total_physical_size_z.lte": url.searchParams.getAll("total_physical_size_z.lte"),
+
+  "voxel_physical_size_x.gte": url.searchParams.getAll("voxel_physical_size_x.gte"),
+  "voxel_physical_size_x.lte": url.searchParams.getAll("voxel_physical_size_x.lte"),
+
+  "voxel_physical_size_y.gte": url.searchParams.getAll("voxel_physical_size_y.gte"),
+  "voxel_physical_size_y.lte": url.searchParams.getAll("voxel_physical_size_y.lte"),
+
+  "voxel_physical_size_z.gte": url.searchParams.getAll("voxel_physical_size_z.gte"),
+  "voxel_physical_size_z.lte": url.searchParams.getAll("voxel_physical_size_z.lte"),
 };
 
 let hits = {} as SearchHits;
@@ -129,14 +138,14 @@ function hasBuckets(x: any): x is FacetData {
   return !!x && Array.isArray(x.buckets);
 }
 
-function hasMinMax(x: any): x is { min: number; max: number; globalMin: number; globalMax: number } {
-  return !!x && typeof x.min === "number" && typeof x.max === "number";
+function hasMinMax(x: any): x is { min: number; max: number; globalMin: number; globalMax: number; globalCount: number } {
+  return !!x && typeof x.globalMin === "number" && typeof x.globalMax === "number";
 }
 
 
 const FACET_CONFIG: Record<
   string,
-  { title: string; type: "terms" | "range"; queryKey?: string; field?: string }
+  { title: string; type: "terms" | "range" | "slider"; queryKey?: string; field?: string }
 > = {
   scientific_name: { title: "Organism", type: "terms", queryKey: "facet.organism" },
   imaging_method: { title: "Imaging Method", type: "terms", queryKey: "facet.imaging_method" },
@@ -146,14 +155,19 @@ const FACET_CONFIG: Record<
   image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
   number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
 
-  z_planes: { title: "Z-Planes", type: "range", field: "size_z" },
-  image_pixel_x: { title: "Image Pixel X (px)", type: "range", field: "size_x" },
-  image_pixel_y: { title: "Image Pixel Y (px)", type: "range", field: "size_y" },
-  time_steps: { title: "Time Steps", type: "range", field: "size_t" },
-  total_size_in_bytes: { title: "Total Size (bytes)", type: "range", field: "total_size_in_bytes" },
-  total_physical_size_x: { title: "Physical Size X (m)", type: "range", field: "total_physical_size_x" },
-  total_physical_size_y: { title: "Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
-  total_physical_size_z: { title: "Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
+  z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "slider", field: "size_y" },
+  time_steps: { title: "Time Steps", type: "slider", field: "size_t" },
+  total_size_in_bytes: { title: "Total Size (bytes)", type: "slider", field: "total_size_in_bytes" },
+  total_physical_size_x: { title: "Total Physical Size X (m)", type: "range", field: "total_physical_size_x" },
+  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
+  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
+  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "range", field: "voxel_physical_size_x" },
+  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "range", field: "voxel_physical_size_y" },
+  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "range", field: "voxel_physical_size_z" },
+
+
 };
 
 const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
@@ -192,20 +206,21 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   }
 
   // RANGE FACETS (min/max)
-  if (cfg.type === "range") {
+  if (cfg.type === "range" || cfg.type === "slider") {
     if (!hasMinMax(data)) return acc;
 
     const gteKey = `${cfg.field}.gte`;
     const lteKey = `${cfg.field}.lte`;
 
     acc[cfg.field!] = {
-      kind: "range",
+      kind: cfg.type,
       title: cfg.title,
       field: cfg.field,
       min: data.min,
       max: data.max,
       globalMin: data.globalMin,
       globalMax: data.globalMax,
+      globalCount: data.globalCount,
       selectedMin: selectedFacets[gteKey]?.[0] ?? "",
       selectedMax: selectedFacets[lteKey]?.[0] ?? "",
       gteKey,
@@ -217,7 +232,6 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
 
   return acc;
 }, {} as Record<string, any>);
-
 ---
 <section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
   <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
@@ -300,6 +314,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                 kind={facet.kind}
                 minVal={facet?.selectedMin || ""} 
                 maxVal={facet?.selectedMax || ""}
+                pageSize={pageSize}
               />
             ))}
           </div>
@@ -404,18 +419,24 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
 </style> -->
 
 <script type="module">
+
+  function formatBytesToHumanSize(sizeBytes) {
+    var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
+    return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+}
+
   function pct(v, min, max) {
     return ((v - min) / (max - min)) * 100;
   }
 
   function syncSlider(container, from) {
-    const minEl = container.querySelector(".range-min");
-    const maxEl = container.querySelector(".range-max");
-    const progress = container.querySelector(".range-progress");
-    const label = container.closest(".range-facet")?.querySelector(".range-label");
-    const gte = container.closest(".range-facet")?.querySelector(".range-gte");
-    const lte = container.closest(".range-facet")?.querySelector(".range-lte");
-
+    const minEl = container.querySelector(".slider-min");
+    const maxEl = container.querySelector(".slider-max");
+    const progress = container.querySelector(".slider-progress");
+    const label = container.closest(".slider-facet")?.querySelector(".slider-label");
+    const gte = container.closest(".slider-facet")?.querySelector(".slider-gte");
+    const lte = container.closest(".slider-facet")?.querySelector(".slider-lte");
+    
     if (!minEl || !maxEl || !progress || !gte || !lte) return;
 
     const minBound = Number(container.dataset.min);
@@ -440,8 +461,12 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     progress.style.left = left + "%";
     progress.style.width = (right - left) + "%";
 
-    label.textContent = `${Number(a).toPrecision(2)} – ${Number(b).toPrecision(2)}`;
-  
+    if (label.classList.contains("total_size_in_bytes")) {
+      label.textContent = `${formatBytesToHumanSize(a)} – ${formatBytesToHumanSize(b)}`;
+    }else{
+      label.textContent = `${Math.floor(a)} – ${Math.ceil(b)}`;
+    }
+
     container.dataset.dirty = "1";
 
 
@@ -463,18 +488,23 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       gte.disabled = true;
       lte.disabled = true;
       container.dataset.dirty = "0";
-      label.textContent = label.dataset.default ?? `${Number(minBound).toPrecision(2)} – ${Number(maxBound).toPrecision(2)}`;
+      if (label.classList.contains("total_size_in_bytes")) {
+        label.textContent = label.dataset.default ?? `${formatBytesToHumanSize(a)} – ${formatBytesToHumanSize(b)}`;
+      }else{
+        label.textContent = label.dataset.default ?? `${Math.floor(minBound)} – ${Math.ceil(maxBound)}`;
+      }
+      
     }
   }
 
 
-  document.querySelectorAll(".range-slider").forEach((container) => {
+  document.querySelectorAll(".slider-slider").forEach((container) => {
     // if URL already had values, hidden inputs will already be non-empty
     // we still need to draw progress bar
     syncSlider(container, "init");
 
-    const minEl = container.querySelector(".range-min");
-    const maxEl = container.querySelector(".range-max");
+    const minEl = container.querySelector(".slider-min");
+    const maxEl = container.querySelector(".slider-max");
     minEl?.addEventListener("input", () => syncSlider(container, "min"));
     maxEl?.addEventListener("input", () => syncSlider(container, "max"));
 
@@ -482,4 +512,118 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     minEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
     maxEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
   });
+
+function clamp(n, lo, hi) {
+    if (!Number.isFinite(n)) return NaN;
+    return Math.min(hi, Math.max(lo, n));
+  }
+
+  function getForm() {
+    return document.getElementById("facets");
+  }
+
+  function syncNames() {
+      const gHas = gte.value.trim() !== "";
+      const lHas = lte.value.trim() !== "";
+
+      if (gHas) gte.setAttribute("name", gte.dataset.name);
+      else gte.removeAttribute("name");
+
+      if (lHas) lte.setAttribute("name", lte.dataset.name);
+      else lte.removeAttribute("name");
+    }
+
+  function submitFacets() {
+    const form = getForm();
+    if (!form) return;
+    // Ensure empty fields have no name before submission
+    form.querySelectorAll("input[data-name]").forEach((el) => {
+      console.log(el.value)
+      if (el.value.trim() === "") el.removeAttribute("name");
+      else el.setAttribute("name", el.dataset.name);
+    });
+    form.requestSubmit?.() ?? form.submit();
+  }
+
+  function initRangeFacet(fieldset) {
+    const gte = fieldset.querySelector('input.range-gte[type="number"]');
+    const lte = fieldset.querySelector('input.range-lte[type="number"]');
+    const gteHidden = fieldset.querySelector('input.range-gte-hidden[type="hidden"]');
+    const lteHidden = fieldset.querySelector('input.range-lte-hidden[type="hidden"]');
+    if (!gte || !lte || !gteHidden || !lteHidden) return;
+
+    const minBound = Number(gte.min);
+    const maxBound = Number(gte.max);
+
+    let debounceTimer = null;
+    const DEBOUNCE_MS = 800;
+
+    function commit(from) {
+      const rawA = gte.value === "" ? NaN : Number(gte.value);
+      const rawB = lte.value === "" ? NaN : Number(lte.value);
+
+      let a = clamp(rawA, minBound, maxBound);
+      let b = clamp(rawB, minBound, maxBound);
+
+      // auto-fill other side (optional)
+      if (from === "gte" && Number.isFinite(a) && !Number.isFinite(b)) {
+        b = maxBound;
+        lte.value = String(b);
+      }
+      if (from === "lte" && Number.isFinite(b) && !Number.isFinite(a)) {
+        a = minBound;
+        gte.value = String(a);
+      }
+
+      // prevent crossing
+      if (Number.isFinite(a) && Number.isFinite(b) && a > b) {
+        if (from === "gte") {
+          a = b;
+          gte.value = String(a);
+        } else {
+          b = a;
+          lte.value = String(b);
+        }
+      }
+
+      // ✅ Only submit via hidden inputs; disable if empty
+      if (Number.isFinite(a)) {
+        gteHidden.value = String(a);
+        gteHidden.disabled = false;
+      } else {
+        gteHidden.value = "";
+        gteHidden.disabled = true;
+      }
+
+      if (Number.isFinite(b)) {
+        lteHidden.value = String(b);
+        lteHidden.disabled = false;
+      } else {
+        lteHidden.value = "";
+        lteHidden.disabled = true;
+      }
+
+      submitFacets();
+    }
+
+    function debounceCommit(from) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => commit(from), DEBOUNCE_MS);
+    }
+
+    gte.addEventListener("input", () => debounceCommit("gte"));
+    lte.addEventListener("input", () => debounceCommit("lte"));
+    gte.addEventListener("blur", () => commit("gte"));
+    lte.addEventListener("blur", () => commit("lte"));
+
+    // Enter = apply immediately
+    gte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("gte"); }});
+    lte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("lte"); }});
+  }
+
+document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
+
+
+  document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
+
 </script>
