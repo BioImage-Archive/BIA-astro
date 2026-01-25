@@ -7,7 +7,9 @@ import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 
-import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI, generateSourceAnnotatedImageMap} from "../../components/SharedJSFunctions.js"
+import AnnotatedImageTable from "../../components/AnnotatedImageTable.astro"
+import "../../styles/image_slider.css"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -30,8 +32,27 @@ const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
 
+// Check if this study has annotated images
+const annotatedImagesMap = await generateSourceAnnotatedImageMap(study);
+const hasAnnotations = annotatedImagesMap.size > 0;
+
+let sourceDataset: any[] = [];
+let allSourceImages: any[] = [];
+if (hasAnnotations) {
+  sourceDataset = study.dataset.filter(ds =>
+    ds.acquisition_process?.length > 0 && ds.annotation_process?.length == 0
+  );
+  allSourceImages = sourceDataset.flatMap(ds => ds.image || []);
+}
+
 if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
   delete tableOfContents["Linked Information"];
+}
+
+// Update table of contents title based on whether study has annotations
+if (hasAnnotations) {
+  delete tableOfContents["Viewable Images"];
+  tableOfContents["Viewable Annotated Images"] = "viewable_images";
 }
 
 // Pre-process grants to group them by funder name
@@ -258,7 +279,16 @@ const breadcrumbs = [
     <hr/>
   )}
 
-  <ViewableImageTable study={study} images={images}/>
+  {hasAnnotations ? (
+    <AnnotatedImageTable
+      study={study}
+      sourceImages={allSourceImages}
+      annotatedImagesMap={annotatedImagesMap}
+      sourceDataset={sourceDataset}
+    />
+  ) : (
+    <ViewableImageTable study={study} images={images}/>
+  )}
 
 </BaseLayout>
 

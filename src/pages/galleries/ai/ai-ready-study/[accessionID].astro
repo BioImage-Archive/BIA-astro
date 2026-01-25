@@ -1,7 +1,8 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromApiByAccession, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import { getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromApiByAccession, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import AnnotatedImageTable from "../../../../components/AnnotatedImageTable.astro"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
@@ -102,100 +103,12 @@ const breadcrumbs = [
   <StudyComponents title="Curated Study Information", id="study" content={studyContent} />
   {modelInformation === undefined ? <br /> :  <StudyComponents title="Models Related To This Work" id="models" content={modelContent} />}
   <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent}/>
-  <section class="vf-content | embl-grid embl-grid--has-centered-content">
-    <div>
-      <h2 class="vf-section-header__heading" id="all_images">Viewable Annotated Images</h2>
-    </div>
-    <div class="vf-grid__col--span-2">
-      <table id="viewable_images" class="display vf-table">
-        <thead class="vf-table__header">
-          <tr>
-            <th class="vf-table__heading" scope="col">Image Preview</th>
-            <th class="vf-table__heading" scope="col">Annotation Preview</th>
-            <th class="vf-table__heading" scope="col">Image UUID</th>
-            <th class="vf-table__heading" scope="col">Image Dataset</th>
-            <th class="vf-table__heading" scope="col">Annotation UUID</th>
-            <th class="vf-table__heading" scope="col">Annotation Dataset</th>
-            <th class="vf-table__heading" scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="vf_table__body">
-        {allSourceImages.filter(img=> annotatedImagesMap.has(img.uuid)).map((sourceImage, rowIndex) => {
-          const annotatedImgs = annotatedImagesMap.get(sourceImage.uuid) || [];
-          return (
-            <tr>
-              <td>
-                <a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}>
-                <img src={getThumbnail(sourceImage)} alt="Preview" width="80" /></td>
-                </a>
-              <td>
-                <div class="slideshow-container" data-row={rowIndex}>
-                {annotatedImgs.length > 1 ? annotatedImgs.map((annImg, i) => (
-                  <div class="slides fade" style={`display: ${i === 0 ? "block" : "none"}`}>
-                  <a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
-                  </div>
-                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
-                }
-                </div>
-              </td>
-              <td>{sourceImage.uuid}</td>
-              <td>{sourceDataset.find(dataset => dataset.image.some(image => image.uuid === sourceImage.uuid))?.title || ""}</td>
-              <td>
-                <div class="uuid-container">
-                  {annotatedImgs.map((annImg, i) => (
-                    <span class="uuid" style={`display: ${i === 0 ? "inline" : "none"}`}>{annImg.uuid}</span>
-                  ))}
-                </div>
-              </td>
-              <td>
-                <div class="dataset-title-container">
-                  {annotatedImgs.map((annImg, i) => {
-                    const dataset = study.dataset.find(ds =>
-                      ds.image?.some(image => image.uuid === annImg.uuid)
-                    );
-                    return (
-                      <span class="dataset-title" style={`display: ${i === 0 ? "inline" : "none"}`}>
-                        {dataset?.title || "P"}
-                      </span>
-                    );
-                  })}
-                </div>
-              </td>
-              <td>
-                <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>View</a>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-      </table>
-    </div>
-  </section>
-  <script type="module">
-  document.addEventListener("DOMContentLoaded", function () {
-    $("#viewable_images").DataTable({
-      scrollX: true,
-      columnDefs: [{ type: "natural", targets: 0 }],
-    });
-    document.querySelectorAll("tr").forEach((row) => {
-      const slides = row.querySelectorAll(".slides");
-      const uuids = row.querySelectorAll(".uuid");
-      const titles = row.querySelectorAll(".dataset-title");
-
-      if (slides.length <= 1 || uuids.length <= 1) return;
-
-      let index = 0;
-
-      setInterval(() => {
-        slides.forEach((s) => (s.style.display = "none"));
-        uuids.forEach((u) => (u.style.display = "none"));
-        titles.forEach((t) => (t.style.display = "none"));
-        slides[index].style.display = "block";
-        uuids[index].style.display = "inline";
-        titles[index].style.display = "inline";
-        index = (index + 1) % slides.length;
-      }, 3500);
-    });
-  });
-</script>
+  <AnnotatedImageTable
+    study={study}
+    sourceImages={allSourceImages}
+    annotatedImagesMap={annotatedImagesMap}
+    sourceDataset={sourceDataset}
+    imagePageRoot="/bioimage-archive/galleries/ai/image/"
+    sectionId="all_images"
+  />
 </BaseLayoutWithBreadcrumbs>
