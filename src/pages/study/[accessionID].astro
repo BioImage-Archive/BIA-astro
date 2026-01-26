@@ -7,7 +7,7 @@ import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 
-import { multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -71,7 +71,19 @@ function getFileTypes(study) {
     return fileTypeList
 }
 
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
+const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
+const exampleStudyImage = getStudyImage(study);
+
+function getImageUUIDFromStudyImage(exampleURI, images){
+  const thumbnailImage = images.find(img => {
+    const meta = getMetadataValue(img.additional_metadata, "image_static_display_uri");
+    return meta?.slice?.uri === exampleURI;
+  });
+  return thumbnailImage?.uuid || ""
+}
+
+const studyImagePageLink = getImageUUIDFromStudyImage(exampleStudyImage, images);
+console.log(exampleStudyImage)
 
 const headlineStats = {
   "Total Viewable Images":  study?.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0) || 0,
@@ -106,7 +118,7 @@ const breadcrumbs = [
   >
     <div slot="hero-image">
       <figure class="vf-figure vf-figure--align vf-figure--align-centered">
-        <img class="vf-figure__image" src={getStudyImage(study)} />
+        <a href={studyImagePageLink? `/bioimage-archive/image/${studyImagePageLink}`: ""}><img class="vf-figure__image" src={exampleStudyImage} /></a>
       </figure>
     </div>
     <div slot="ftp-link">
@@ -115,7 +127,8 @@ const breadcrumbs = [
   </StudyContentsSummary>
 
   <hr/>
-
+  <ViewableImageTable study={study} images={images}/>
+  <hr />
 <section id="study" class="vf-content | embl-grid embl-grid--has-centered-content">
   <div>
     <h2 class="vf-section-header__heading">Study Information</h2>
@@ -255,10 +268,7 @@ const breadcrumbs = [
         }
       </div>
     </section>
-    <hr/>
   )}
-
-  <ViewableImageTable study={study} images={images}/>
 
 </BaseLayout>
 

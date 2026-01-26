@@ -1,6 +1,6 @@
 ---
 import "/src/styles/bars_and_sections.css"
-
+import Footer from '../components/Footer.astro';
 import EMPIARHeader from '../components/EMPIARHeader.astro';
 import Navigation from '../components/Navigation.astro';
 import Breadcrumbs from "../components/Breadcrumbs.astro";
@@ -48,6 +48,7 @@ const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
     <Navigation />
     <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
     <slot />
+    <Footer />
   </body>
   
   <!-- Script required for bottom bar -->

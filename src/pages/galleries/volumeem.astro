@@ -68,6 +68,7 @@ function copyURI(button) {
         const dialog = document.createElement('dialog');
         dialog.innerHTML = `
             <div style="padding: 20px; text-align: left; max-width: 600px;">
+                <button aria-label="Close" onclick="this.closest('dialog').close()" style="position: absolute;top: 10px;right: 10px;background: none;border: none;font-size: 20px;font-weight: bold;cursor: pointer;line-height: 1;">×</button>
                 <h3 style="margin-bottom: 15px; text-align: center;">OME-Zarr S3 Location</h3>
                 <div style="margin-bottom: 15px;">
                     <h4 style="margin: 10px 0;">S3 URI:</h4>
@@ -80,7 +81,6 @@ function copyURI(button) {
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                     <button onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy S3 URI</button>
                     <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' \\'${s3Info.key.split('/').pop()}\\' --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
-                    <button onclick="this.closest('dialog').close()">Close</button>
                 </div>
             </div>
         `;

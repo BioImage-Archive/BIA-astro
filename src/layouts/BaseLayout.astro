@@ -4,6 +4,7 @@ import 'datatables.net';
 
 import DataTable from 'datatables.net-dt';
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
 import { PUBLIC_GTAG } from "astro:env/client";
 const { pageTitle } = Astro.props;
@@ -47,6 +48,7 @@ const { pageTitle } = Astro.props;
     <Header />
     <Navigation />
     <slot />
+    <Footer />
   </body>
   
   <!-- Script required for bottom bar -->

@@ -108,15 +108,18 @@ const detail_section_style= "margin-bottom: 1rem;"
         }
         {
             "analysis_method" in dataset && dataset.analysis_method && dataset.analysis_method.length > 0 && (
-                <b>Image Analysis Methods:</b>
-                <div style={detail_section_style}>
-                    {dataset.analysis_method.map((analysis_method) => (
-                        <DatasetDetail
-                            data={analysis_method}
-                            fieldMap={analysisMethodMap}
-                        />
-                    ))}
-                </div>
+                <div class="details">
+                    <b>Image Analysis Methods:</b>
+                    <div style={detail_section_style}>
+                        {dataset.analysis_method.map((analysis_method) => (
+                            <DatasetDetail
+                                data={analysis_method}
+                                fieldMap={analysisMethodMap}
+                            />
+                        ))}
+                    </div>
+                    </div>
+                
             )
         }
         {
