@@ -38,7 +38,7 @@ const headlineStats = {
 const studyContent = {
   "Study summary": getSimpleAttributeValue(study, "one_summary") || study.description,
   "License": "CC0",
-  "Tags": getSimpleAttributeValue(study, "ai_tags")[0].join(", ") || study.keyword.join(", ")
+  "Tags": getSimpleAttributeValue(study, "ai_tags")?.[0].join(", ") || study.keyword.join(", ")
 }
 const modelInformation = getSimpleAttributeValue(study, "associated_ai_models")?.[0] || undefined;
 const modelContent = {

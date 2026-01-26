@@ -9,7 +9,7 @@ import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 const imageAcquisitionMap = fieldMap["image_acquisition"];
@@ -74,56 +74,10 @@ async function recursivelyGetSpecimenInfo(image_list, collected) {
 }
 
 
-function formatPhysicalDimension(value, text) {
-    if (text === "") {
-        if (value != null) {
-            return value + "m"
-        } else {
-            return text
-        }
-    } else {
-        if (value != null) {
-            return text + " x " + value + "m"
-        } else {
-            return text
-        }
-    }
-}
-
-function formatPhysicalDimensions(imageRepresentation) {
-    const fields = [ "voxel_physical_size_x", "voxel_physical_size_y", "voxel_physical_size_z"]
-    const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
-    return formattedStr != "" ? formattedStr : 'Unknown'
-}
-
-
-function formatPixelDimension(value, text) {
-    if (text === "") {
-        if (value != null) {
-            return value
-        } else {
-            return text
-        }
-    } else {
-        if (value != null) {
-            return text + " x " + value
-        } else {
-            return text
-        }
-    }
-}
-
-function formatPixelDimensions(img_rep) {
-    const fields = [ "size_x", "size_y", "size_z"]
-    return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
-}
-
 const thumbnail_uri = getSimpleAttributeValue(image, "thumbnail_uri")?.[0];
 const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarrIFrameSource}"></iframe>` :
     thumbnail_uri ? `<img style="width: 100%; height: 500px" src="${thumbnail_uri}" />` :
     `<img style="height: 500px;" src="${fallbackImage.src}" />`
-
-
 
 const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
 
@@ -159,9 +113,9 @@ const breadcrumbs = [
                     interactiveImageRepresentation && (
                         <span>
                             <h3>Image metadata</h3>
-
-                            <b>Physical Image size: </b> {formatPhysicalDimensions(interactiveImageRepresentation) ?? "Not provided" }<br>
-                            <b>Pixel Image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br>
+                            <b>Physical image size: </b> {formatPhysicalDimensions(image) ?? "Not provided" }<br />
+                            <b>Physical voxel size: </b> {formatPhysicalVoxelDimensions(interactiveImageRepresentation) ?? "Not provided" }<br />
+                            <b>Pixel image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br />
                             {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
                             {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
                             {userProvidedAttribute && ( 
@@ -170,7 +124,7 @@ const breadcrumbs = [
                                     <h4>Additional user metadata</h4>
                                     {Object.entries(userProvidedAttribute).map(([key, value]) => (<div><b>{key}:</b> {value}</div>)) }
                                 </div> 
-                            )}
+                            )} 
                         </span>
                     )
                 }

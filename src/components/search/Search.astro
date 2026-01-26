@@ -1,85 +1,100 @@
 ---
 import StudyCard from '../../components/cards/BrowseStudyCard.astro';
+import ImageCard from '../../components/cards/BrowseImageCard.astro';
 import SearchFacet from './SearchFacet.astro';
 import SearchSelectedFacet from './SearchSelectedFacet.astro';
 import PaginationControl from '../PaginationControl.astro';
 import  "../../styles/toggle.css"
 import "../../styles/browse_controls.css"
 import "../../styles/filter_cards.css"
-import { PUBLIC_SEARCH_API } from 'astro:env/client';
+import { generateParamString } from "../SharedJSFunctions.js"
+import {type SelectedFacets, type SearchHits, type FacetData, type PaginationData} from "./SearchInterface.astro"
+import { PUBLIC_SEARCH_API } from "astro:env/client";
 
-interface source {
-  accession_id: string;
-  release_date: string;
-  [key: string]: any; // allows any extra properties
-}
-
-interface hit {
-  _source: source;
-  [key: string]: any;
-}
-
-export interface SearchHits{
-  total: {
-    value: number;
-    relation: string; 
-  };
-  max_score: number | null;
-  hits: hit; 
-}
-
-interface Facet {
-  key: string;
-  key_as_string?: string;
-  doc_count: number;
-}
-
-export interface FacetData {
-  buckets: Facet[];
-  doc_count_error_upper_bound: number;
-  sum_other_doc_count: number;
-}
-
-export interface PaginationData {
-  page: number;
-  page_size: number;
-  total_pages: number;
-}
-
-const { query, hits, facetData, paginationData, organism, imagingMethod, releaseYear, sortBy, sortOrder } =
+const { url, query, searchType} =
   Astro.props as {
+    url: URL;
     query: string;
-    hits: SearchHits;
-    facetData: FacetData;
-    paginationData: PaginationData;
-    organism: string;
-    imagingMethod: string;
-    releaseYear: string;
-    sortBy: string;
-    sortOrder: string;
+    searchType: string;
   };
 
-export function generateParamString(url: string, query: string, organism: string[], imagingMethod: string[], releaseYear: string[], page: number){
-  const pageSize = 9;
-  
-  if (url.includes(PUBLIC_SEARCH_API)){
-    url += `?pagination.page_size=${pageSize}`;
-    url += `&query=${encodeURIComponent(query)}`;
-  }else{
-    url += `?query=${encodeURIComponent(query)}`;
+const searchEndpoint = searchType === "study"? `${PUBLIC_SEARCH_API}/search/fts`: `${PUBLIC_SEARCH_API}/search/fts/image`;
+const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bioimage-archive/images";
+const sortBy = url.searchParams.get('sortBy');
+const sortOrder = url.searchParams.get('sortOrder');
+const page = Number(url.searchParams.get('pagination.page')) || 1;
+const pageSize = Number(url.searchParams.get('pagination.page_size')) || 9;
+
+const selectedFacets: SelectedFacets = {
+  "facet.organism": url.searchParams.getAll("facet.organism"),
+  "facet.imaging_method": url.searchParams.getAll("facet.imaging_method"),
+  "facet.year": url.searchParams.getAll("facet.year"),
+  "facet.annotation_type": url.searchParams.getAll("facet.annotation_type"),
+
+  "facet.image_format": url.searchParams.getAll("facet.image_format"),
+  "size_c.eq": url.searchParams.getAll("size_c.eq"),
+
+  // NEW: range filters (store as single-value arrays for compatibility)
+  "size_x.gte": url.searchParams.getAll("size_x.gte"),
+  "size_x.lte": url.searchParams.getAll("size_x.lte"),
+
+  "size_y.gte": url.searchParams.getAll("size_y.gte"),
+  "size_y.lte": url.searchParams.getAll("size_y.lte"),
+
+  "size_z.gte": url.searchParams.getAll("size_z.gte"),
+  "size_z.lte": url.searchParams.getAll("size_z.lte"),
+
+
+  "size_t.gte": url.searchParams.getAll("size_t.gte"),
+  "size_t.lte": url.searchParams.getAll("size_t.lte"),
+
+  "total_size_in_bytes.gte": url.searchParams.getAll("total_size_in_bytes.gte"),
+  "total_size_in_bytes.lte": url.searchParams.getAll("total_size_in_bytes.lte"),
+
+  "total_physical_size_x.gte": url.searchParams.getAll("total_physical_size_x.gte"),
+  "total_physical_size_x.lte": url.searchParams.getAll("total_physical_size_x.lte"),
+
+  "total_physical_size_y.gte": url.searchParams.getAll("total_physical_size_y.gte"),
+  "total_physical_size_y.lte": url.searchParams.getAll("total_physical_size_y.lte"),
+
+  "total_physical_size_z.gte": url.searchParams.getAll("total_physical_size_z.gte"),
+  "total_physical_size_z.lte": url.searchParams.getAll("total_physical_size_z.lte"),
+
+  "voxel_physical_size_x.gte": url.searchParams.getAll("voxel_physical_size_x.gte"),
+  "voxel_physical_size_x.lte": url.searchParams.getAll("voxel_physical_size_x.lte"),
+
+  "voxel_physical_size_y.gte": url.searchParams.getAll("voxel_physical_size_y.gte"),
+  "voxel_physical_size_y.lte": url.searchParams.getAll("voxel_physical_size_y.lte"),
+
+  "voxel_physical_size_z.gte": url.searchParams.getAll("voxel_physical_size_z.gte"),
+  "voxel_physical_size_z.lte": url.searchParams.getAll("voxel_physical_size_z.lte"),
+};
+
+let hits = {} as SearchHits;
+let facetData = {} as FacetData;
+let paginationData = {} as PaginationData;
+
+const hasQueryParam = query || query ==="";
+if (hasQueryParam) {
+  const searchURL = generateParamString(
+    searchEndpoint,
+    query,
+    page,
+    selectedFacets,
+    pageSize
+  );
+
+  const res = await fetch(searchURL);
+  if (res.ok) {
+    const data = await res.json();
+    hits = data.hits;
+    facetData = data.facets;
+    paginationData = data.pagination;
   }
-  url = addSelectedFacetToSearchURL(organism, "facet.organism" , url);
-  url = addSelectedFacetToSearchURL(imagingMethod, "facet.imaging_method", url); 
-  url = addSelectedFacetToSearchURL(releaseYear, "facet.year", url);
-  url += `&pagination.page=${page}`;
-  return url
 }
 
-export function addSelectedFacetToSearchURL(selectedList, facet, url){
-    return selectedList && selectedList.length > 0 ? url+"&"+new URLSearchParams(selectedList.map(select => {return `&${facet}=${encodeURIComponent(select)}`}).join("&")).toString(): url;
-}
 
-const totalResults = hits.total.value;
+const totalResults = hits?.total?.value ?? 0;
 let results;
 
 // Sorting on Server side till the API can sort results.
@@ -119,54 +134,107 @@ switch(sortBy) {
     break;
 }
 
-const studiesURL = "/bioimage-archive/studies"
-const facets = Object.entries(facetData).reduce((acc, [facet, data]) => {
-  let selectedValue, title, facet_search_id;
+function hasBuckets(x: any): x is FacetData {
+  return !!x && Array.isArray(x.buckets);
+}
 
-const valuesAndCounts = Object.values(data?.buckets as Facet)
-  .sort((a, b) => {
-    const aKey = a?.key_as_string || a?.key;
-    const bKey = b?.key_as_string || b?.key;
-    return aKey.toString().toLowerCase().localeCompare(bKey.toString().toLowerCase());
-  })
-  .reduce((obj, val) => {
-    const key = val?.key_as_string || val?.key;
-    obj[key] = val.doc_count;
-    return obj;
-  }, {} as Record<string, number>);
+function hasMinMax(x: any): x is { min: number; max: number; globalMin: number; globalMax: number; globalCount: number } {
+  return !!x && typeof x.globalMin === "number" && typeof x.globalMax === "number";
+}
 
-  switch (facet) {
-    case "scientific_name":
-      selectedValue = organism;
-      title = "Organism";
-      facet_search_id = "organism";
-      break;
-    case "imaging_method":
-      selectedValue = imagingMethod;
-      title = "Imaging Method";
-      facet_search_id = "imaging_method";
-      break;
-    case "release_date":
-      selectedValue = releaseYear;
-      title = "Release Year";
-      facet_search_id = "year";
-      break;
-    default:
-      return acc;
+
+const FACET_CONFIG: Record<
+  string,
+  { title: string; type: "terms" | "range" | "slider"; queryKey?: string; field?: string }
+> = {
+  scientific_name: { title: "Organism", type: "terms", queryKey: "facet.organism" },
+  imaging_method: { title: "Imaging Method", type: "terms", queryKey: "facet.imaging_method" },
+  release_date: { title: "Release Year", type: "terms", queryKey: "facet.year" },
+  annotation_type: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_type" },
+
+  image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
+  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
+
+  z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "slider", field: "size_y" },
+  time_steps: { title: "Time Steps", type: "slider", field: "size_t" },
+  total_size_in_bytes: { title: "Total Size (bytes)", type: "slider", field: "total_size_in_bytes" },
+  total_physical_size_x: { title: "Total Physical Size X (m)", type: "range", field: "total_physical_size_x" },
+  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
+  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
+  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "range", field: "voxel_physical_size_x" },
+  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "range", field: "voxel_physical_size_y" },
+  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "range", field: "voxel_physical_size_z" },
+
+
+};
+
+const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
+  const cfg = FACET_CONFIG[facetKey];
+  if (!cfg) return acc;
+
+  // TERMS FACETS (buckets)
+  if (cfg.type === "terms") {
+    if (!hasBuckets(data)) return acc;
+
+    const valuesAndCounts = data.buckets
+      .slice()
+      .sort((a, b) => {
+        const aKey = (a.key_as_string ?? a.key ?? "").toString().toLowerCase();
+        const bKey = (b.key_as_string ?? b.key ?? "").toString().toLowerCase();
+        return aKey.localeCompare(bKey);
+      })
+      .reduce((obj, bucket) => {
+        const k = (bucket.key_as_string ?? bucket.key ?? "").toString();
+        obj[k] = bucket.doc_count;
+        return obj;
+      }, {} as Record<string, number>);
+
+    const totalFacetCounts =
+      Object.keys(valuesAndCounts).length + (data.sum_other_doc_count ?? 0);
+
+    acc[cfg.queryKey!] = {
+      kind: "terms",
+      valuesAndCounts,
+      selectedValue: selectedFacets[cfg.queryKey!] ?? [],
+      totalFacetCounts,
+      title: cfg.title,
+    };
+
+    return acc;
   }
-  const totalFacetCounts = Object.values(valuesAndCounts).length + (data?.sum_other_doc_count || 0)
-  acc[`facet.${facet_search_id}`] = {
-    valuesAndCounts,
-    selectedValue,
-    totalFacetCounts,
-    title
-  };
+
+  // RANGE FACETS (min/max)
+  if (cfg.type === "range" || cfg.type === "slider") {
+    if (!hasMinMax(data)) return acc;
+
+    const gteKey = `${cfg.field}.gte`;
+    const lteKey = `${cfg.field}.lte`;
+
+    acc[cfg.field!] = {
+      kind: cfg.type,
+      title: cfg.title,
+      field: cfg.field,
+      min: data.min,
+      max: data.max,
+      globalMin: data.globalMin,
+      globalMax: data.globalMax,
+      globalCount: data.globalCount,
+      selectedMin: selectedFacets[gteKey]?.[0] ?? "",
+      selectedMax: selectedFacets[lteKey]?.[0] ?? "",
+      gteKey,
+      lteKey,
+    };
+
+    return acc;
+  }
 
   return acc;
-}, {});
+}, {} as Record<string, any>);
 ---
 <section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
-  <div class=".vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
+  <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
     <br />
     <div style="display: flex;">        
       <div style="padding-top: 0.4em">
@@ -180,7 +248,7 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
       <div><h3> Filter by</h3></div>
     </div>
     <div>
-      <form id="facets" method="GET" action="/bioimage-archive/studies" class="vf-form">
+      <form id="facets" method="GET" action={searchPageURL} class="vf-form">
         {Object.entries(facets).map(([id, facet], i) => <>
         <SearchFacet facet={facet} id={id} />
         </>
@@ -193,23 +261,34 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
     </div>
   </div>
   <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="min-width:50%">
-    { (query || query === "") && (
+    { (hasQueryParam) && (
       <>
         <section class="vf-content">
           <div class="vf-grid vf-grid__col-3">
-            <div class="vf-grid__col--span-2">{query && (<h2>Search results for <a href={`/bioimage-archive/studies?query=${query}`}><strong>{query}</strong></a></h2>)}</div>
+            <div class="vf-grid__col--span-2">{query && (<h2>Search results for <a href={`${searchPageURL}?query=${query}`}><strong>{query}</strong></a></h2>)}</div>
             <div></div>
           </div>
           <section>
-          <div class="vf-grid vf-grid__col-3">
-            <div class="vf-grid__col--span-2" style="display: flex; align-items: center;">
+          <div class="vf-grid vf-grid__col-5">
+            <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
               <span id="paginated-results">
                   {results.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
                 </span>
               </div>
-            {/* 
+            {
+              <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
+                <label for="pageSize" class="vf-form__label vf-u-type__text-body--4 vf-u-padding--100" style="margin: 0;padding: 0;border: 0;">Page Size:</label>
+                <select name="pageSize" id="pageSize" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100" style="height: 2.5em;width: auto;min-width: 8rem;">
+                  <option value="9" selected={pageSize === 9} >Default</option>
+                  <option value="30" selected={pageSize === 30} >30</option>
+                  <option value="60" selected={pageSize === 60} >60</option>
+                  <option value="90" selected={pageSize === 90}>90</option>
+                </select>
+
+              </div>
+            /* 
             <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
-            <label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
+            /*<label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
             <select name="sortBy" id="sortBy" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100 vf-u-padding__left--200" style="flex: 5; height: 2.5em">
               <option value="relevance" selected={sortBy === "relevance"} >Relevance</option>
               <option value="accession" selected={sortBy === "accession"} >Accession ID</option>
@@ -223,19 +302,31 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
             */}
           </div>
           <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
-            <SearchSelectedFacet selectedList={organism} url={studiesURL} text={"Organism"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} /> 
-            <SearchSelectedFacet selectedList={imagingMethod} url={studiesURL} text={"Imaging Method"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear} /> 
-            <SearchSelectedFacet selectedList={releaseYear} url={studiesURL} text={"Release Year"} query={query} organism={organism} imagingMethod={imagingMethod} releaseYear={releaseYear}/>           
+            <SearchSelectedFacet query={query} url={searchPageURL} text="Query" kind="query" />
+            {Object.entries(facets).map(([facetKey, facet]) => (
+              <SearchSelectedFacet
+                key={facetKey}
+                selectedList={facet.selectedValue}
+                url={searchPageURL}
+                text={facet.title}
+                query={query}
+                selectedFacets={selectedFacets}
+                kind={facet.kind}
+                minVal={facet?.selectedMin || ""} 
+                maxVal={facet?.selectedMax || ""}
+                pageSize={pageSize}
+              />
+            ))}
           </div>
-          <div class="vf-card-container | vf-card-container__col-4 | vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9;">
+          <div class="vf-card-container vf-card-container__col-4 vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
             <div class="vf-card-container__inner">
             {results.length === 0 ? (
               <p>No results found.</p>
             ) : (
               results.map((item) => (
-                <StudyCard
-                study={item._source} studyPageRoot="study"
-                />
+                searchType === "study"? (<StudyCard study={item._source} studyPageRoot="study" />):
+                (<ImageCard image={item._source} imagePageRoot="image" />)
+                
               ))
             )}
             </div>
@@ -254,6 +345,13 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
       window.location.reload();
     }
   });
+  const sortSelect = document.getElementById('pageSize');
+   sortSelect.addEventListener('change', (event) => {
+     const pageSize = event.target.value;
+     const url = new URL(window.location.href);
+     url.searchParams.set('pagination.page_size', pageSize);
+     window.location.href = url.toString();
+   });
   // const sortSelect = document.getElementById('sortBy');
   // sortSelect.addEventListener('change', (event) => {
   //   const sortBy = event.target.value;
@@ -319,3 +417,213 @@ const valuesAndCounts = Object.values(data?.buckets as Facet)
   border-color: #3b6fb6;
 }
 </style> -->
+
+<script type="module">
+
+  function formatBytesToHumanSize(sizeBytes) {
+    var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
+    return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+}
+
+  function pct(v, min, max) {
+    return ((v - min) / (max - min)) * 100;
+  }
+
+  function syncSlider(container, from) {
+    const minEl = container.querySelector(".slider-min");
+    const maxEl = container.querySelector(".slider-max");
+    const progress = container.querySelector(".slider-progress");
+    const label = container.closest(".slider-facet")?.querySelector(".slider-label");
+    const gte = container.closest(".slider-facet")?.querySelector(".slider-gte");
+    const lte = container.closest(".slider-facet")?.querySelector(".slider-lte");
+    
+    if (!minEl || !maxEl || !progress || !gte || !lte) return;
+
+    const minBound = Number(container.dataset.min);
+    const maxBound = Number(container.dataset.max);
+
+    let a = Number(minEl.value);
+    let b = Number(maxEl.value);
+
+    // prevent crossing
+    if (a > b) {
+      if (from === "min") {
+        a = b;
+        minEl.value = String(a);
+      } else {
+        b = a;
+        maxEl.value = String(b);
+      }
+    }
+
+    const left = pct(a, minBound, maxBound);
+    const right = pct(b, minBound, maxBound);
+    progress.style.left = left + "%";
+    progress.style.width = (right - left) + "%";
+
+    if (label.classList.contains("total_size_in_bytes")) {
+      label.textContent = `${formatBytesToHumanSize(a)} – ${formatBytesToHumanSize(b)}`;
+    }else{
+      label.textContent = `${Math.floor(a)} – ${Math.ceil(b)}`;
+    }
+
+    container.dataset.dirty = "1";
+
+
+    const hadInitial = gte.dataset.initial === "1" || lte.dataset.initial === "1";
+
+    if (from !== "init" || hadInitial) {
+      gte.value = String(a);
+      lte.value = String(b);
+    }
+
+
+    gte.disabled = gte.value === "";
+    lte.disabled = lte.value === "";
+
+
+    if (a === minBound && b === maxBound) {
+      gte.value = "";
+      lte.value = "";
+      gte.disabled = true;
+      lte.disabled = true;
+      container.dataset.dirty = "0";
+      if (label.classList.contains("total_size_in_bytes")) {
+        label.textContent = label.dataset.default ?? `${formatBytesToHumanSize(a)} – ${formatBytesToHumanSize(b)}`;
+      }else{
+        label.textContent = label.dataset.default ?? `${Math.floor(minBound)} – ${Math.ceil(maxBound)}`;
+      }
+      
+    }
+  }
+
+
+  document.querySelectorAll(".slider-slider").forEach((container) => {
+    // if URL already had values, hidden inputs will already be non-empty
+    // we still need to draw progress bar
+    syncSlider(container, "init");
+
+    const minEl = container.querySelector(".slider-min");
+    const maxEl = container.querySelector(".slider-max");
+    minEl?.addEventListener("input", () => syncSlider(container, "min"));
+    maxEl?.addEventListener("input", () => syncSlider(container, "max"));
+
+    const form = document.getElementById("facets");
+    minEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
+    maxEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
+  });
+
+function clamp(n, lo, hi) {
+    if (!Number.isFinite(n)) return NaN;
+    return Math.min(hi, Math.max(lo, n));
+  }
+
+  function getForm() {
+    return document.getElementById("facets");
+  }
+
+  function syncNames() {
+      const gHas = gte.value.trim() !== "";
+      const lHas = lte.value.trim() !== "";
+
+      if (gHas) gte.setAttribute("name", gte.dataset.name);
+      else gte.removeAttribute("name");
+
+      if (lHas) lte.setAttribute("name", lte.dataset.name);
+      else lte.removeAttribute("name");
+    }
+
+  function submitFacets() {
+    const form = getForm();
+    if (!form) return;
+    // Ensure empty fields have no name before submission
+    form.querySelectorAll("input[data-name]").forEach((el) => {
+      console.log(el.value)
+      if (el.value.trim() === "") el.removeAttribute("name");
+      else el.setAttribute("name", el.dataset.name);
+    });
+    form.requestSubmit?.() ?? form.submit();
+  }
+
+  function initRangeFacet(fieldset) {
+    const gte = fieldset.querySelector('input.range-gte[type="number"]');
+    const lte = fieldset.querySelector('input.range-lte[type="number"]');
+    const gteHidden = fieldset.querySelector('input.range-gte-hidden[type="hidden"]');
+    const lteHidden = fieldset.querySelector('input.range-lte-hidden[type="hidden"]');
+    if (!gte || !lte || !gteHidden || !lteHidden) return;
+
+    const minBound = Number(gte.min);
+    const maxBound = Number(gte.max);
+
+    let debounceTimer = null;
+    const DEBOUNCE_MS = 1500;
+
+    function commit(from) {
+      const rawA = gte.value === "" ? NaN : Number(gte.value);
+      const rawB = lte.value === "" ? NaN : Number(lte.value);
+
+      let a = clamp(rawA, minBound, maxBound);
+      let b = clamp(rawB, minBound, maxBound);
+
+      // auto-fill other side (optional)
+      if (from === "gte" && Number.isFinite(a) && !Number.isFinite(b)) {
+        b = maxBound;
+        lte.value = String(b);
+      }
+      if (from === "lte" && Number.isFinite(b) && !Number.isFinite(a)) {
+        a = minBound;
+        gte.value = String(a);
+      }
+
+      // prevent crossing
+      if (Number.isFinite(a) && Number.isFinite(b) && a > b) {
+        if (from === "gte") {
+          a = b;
+          gte.value = String(a);
+        } else {
+          b = a;
+          lte.value = String(b);
+        }
+      }
+
+      // ✅ Only submit via hidden inputs; disable if empty
+      if (Number.isFinite(a)) {
+        gteHidden.value = String(a);
+        gteHidden.disabled = false;
+      } else {
+        gteHidden.value = "";
+        gteHidden.disabled = true;
+      }
+
+      if (Number.isFinite(b)) {
+        lteHidden.value = String(b);
+        lteHidden.disabled = false;
+      } else {
+        lteHidden.value = "";
+        lteHidden.disabled = true;
+      }
+
+      submitFacets();
+    }
+
+    function debounceCommit(from) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => commit(from), DEBOUNCE_MS);
+    }
+
+    gte.addEventListener("input", () => debounceCommit("gte"));
+    lte.addEventListener("input", () => debounceCommit("lte"));
+    gte.addEventListener("blur", () => commit("gte"));
+    lte.addEventListener("blur", () => commit("lte"));
+
+    // Enter = apply immediately
+    gte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("gte"); }});
+    lte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("lte"); }});
+  }
+
+document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
+
+
+  document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
+
+</script>

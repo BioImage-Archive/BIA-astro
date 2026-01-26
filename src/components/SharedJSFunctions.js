@@ -1,4 +1,4 @@
-import { PUBLIC_SEARCH_API, PUBLIC_MONGO_API } from "astro:env/client";
+import { PUBLIC_SEARCH_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
 export function getPlaceholderHeroImage(accessionID) {
@@ -163,6 +163,83 @@ export function getMetadataValue(mdArray, key, field = null) {
 export function getThumbnail(img) {
     const thumbnail_uri = getMetadataValue(img.additional_metadata, "image_thumbnail_uri")?.["256"]?.["uri"] || imageFallback.src;
     return thumbnail_uri;
+}
+
+export function formatBytes(value, field){
+  return field === "total_size_in_bytes"? formatBytesToHumanSize(value) : value
+}
+
+function formatPhysicalDimension(value, text) {
+    if (text === "") {
+        if (value != null) {
+            return Number(value).toPrecision(2)
+        } else {
+            return text
+        }
+    } else {
+        if (value != null && value !== 1) {
+            return text + " x " + Number(value).toPrecision(2)
+        } else {
+            return text
+        }
+    }
+}
+
+export function formatPhysicalVoxelDimensions(imageRepresentation) {
+    const fields = [ "voxel_physical_size_x", "voxel_physical_size_y", "voxel_physical_size_z"]
+    const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
+    return formattedStr != "" ? formattedStr + " m/pixel" : 'Unknown'
+}
+
+export function formatPhysicalDimensions(image) {
+    const fields = [ "total_physical_size_x", "total_physical_size_y", "total_physical_size_z"]
+    const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(image[field], text), "")
+    return formattedStr != "" ? formattedStr + " m" : 'Unknown'
+}
+
+
+function formatPixelDimension(value, text) {
+    if (text === "") {
+        if (value != null && value !== 1) {
+            return value
+        } else {
+            return text
+        }
+    } else {
+        if (value != null && value !== 1) {
+            return text + " x " + value
+        } else {
+            return text
+        }
+    }
+}
+
+export function formatPixelDimensions(img_rep) {
+    const fields = [ "size_x", "size_y", "size_z"]
+    return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "") + " px" 
+}
+
+export function generateParamString(baseURL, query, page, selectedFacets, pageSize){
+  const url = new URL(baseURL, "http://local");
+  query !== "" && url.searchParams.set("query", query ?? "");
+  url.origin !== "http://local" | pageSize > 9 && url.searchParams.set("pagination.page_size", String(pageSize));
+  url.origin !== "http://local" && url.searchParams.set("pagination.page", String(page));
+  for (const [facetKey, values] of Object.entries(selectedFacets)) {
+    if (!values?.length) continue;
+    url.searchParams.delete(facetKey);
+    for (const v of values) {
+      if (v === null || v === undefined) continue;
+      const s = String(v).trim();
+      if (s === "") continue;
+
+      if (facetKey === "size_c.eq" && v === "More than 5" && url.origin !== "http://local"){
+        url.searchParams.append("size_c.gt", "5")
+      }else{
+        url.searchParams.append(facetKey, v);
+      }
+    }
+  }
+  return url.origin === "http://local" ? `${url.pathname}${url.search}` : url.toString()
 }
 
 export async function getFromAPI(url){

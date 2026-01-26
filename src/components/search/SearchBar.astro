@@ -1,19 +1,146 @@
 ---
-const { query } = Astro.props;
+const { query = "" } = Astro.props;
+const pathname = Astro.url.pathname;
+const isImagesPage = pathname.startsWith("/bioimage-archive/images");
 ---
-<form action="/bioimage-archive/studies" method="get" class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end">
-<div class="vf-sidebar__inner">
-    <div class="vf-form__item">
-    <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem">Search</label>
-    <input
+
+<form
+  action={isImagesPage
+    ? "/bioimage-archive/images"
+    : "/bioimage-archive/studies"}
+  method="get"
+  class="vf-form vf-form--search vf-form--search--mini vf-sidebar vf-sidebar--end searchWrap"
+  id="searchForm"
+>
+  <div class="vf-sidebar__inner">
+    <div class="vf-form__item searchBar">
+      <label class="vf-form__label vf-u-sr-only vf-search__label" for="searchitem">
+        Search
+      </label>
+
+      <input
         type="search"
         name="query"
-        placeholder="Search BioImage Archive"
+        placeholder="Search Studies or Images"
         id="searchitem"
+        autocomplete="off"
         class="vf-form__input"
         value={query}
-    />
+      />
     </div>
-    <button type="submit" class="vf-search__button | vf-button vf-button--primary">Search</button>
-</div>
+  </div>
+  <div class="searchOptionsPopUp" id="searchPopUp" role="dialog" aria-label="Search options">
+    <div>
+      <div class="vf-grid vf-grid__col-5 popUpWrap">
+        <div class="vf-grid__col--span-4 searchInGroup">
+          <div class="sectionLabel">Search in: </div>
+          <div class="optionsRow" role="list">
+            <button type="button" class={`searchType ${!isImagesPage ? "isActive" : ""}`}data-scope="study">Study</button>
+            <button type="button" class={`searchType ${isImagesPage ? "isActive" : ""}`} data-scope="image">Image</button>
+          </div>
+        </div>
+        <div>
+          <button
+            type="submit"
+            id="search-submit-button"
+            class="vf-search__button vf-button vf-button--primary"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>
+
+<style>
+  .searchWrap {
+    position: relative;
+  }
+
+  .searchOptionsPopUp {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 0.1em;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+    padding: 0.5em;
+    display: none;
+    z-index: 30;
+  }
+  .searchOptionsPopUp.isOpen {
+    display: block;
+  }
+
+  .popUpWrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .optionsRow {
+    display: flex;
+    gap: 1em;
+  }
+
+  .searchType {
+    padding: 0.5em 1em;
+    border-radius: 999px;
+    border: 1px solid #e1e1e1;
+    background: #f6f6f6;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  .searchInGroup {
+    min-width: 70%;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+  .searchType.isActive {
+    background: #3B6FB6;
+    border-color: #193F90;
+    color: white;
+  }
+
+  #search-submit-button {
+    margin-left: auto;
+    white-space: nowrap;
+    display: inline;
+  }
+</style>
+
+<script type="module">
+  const form = document.getElementById("searchForm");
+  const popover = document.getElementById("searchPopUp");
+
+  const STUDIES_ACTION = "/bioimage-archive/studies";
+  const IMAGES_ACTION = "/bioimage-archive/images";
+
+  const openPopover = () => popover.classList.add("isOpen");
+  const closePopover = () => popover.classList.remove("isOpen");
+
+  form.addEventListener("focusin", openPopover);
+
+  form.addEventListener("focusout", (e) => {
+    if (!form.contains(e.relatedTarget)) closePopover();
+  });
+
+  document.addEventListener("mousedown", (e) => {
+    if (!form.contains(e.target)) closePopover();
+  });
+
+  form.querySelectorAll("[data-scope]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const scope = btn.getAttribute("data-scope");
+    form.action = scope === "image" ? IMAGES_ACTION : STUDIES_ACTION;
+    form.querySelectorAll(".searchType").forEach((p) =>
+      p.classList.remove("isActive")
+    );
+    btn.classList.add("isActive");
+  });
+});
+</script>

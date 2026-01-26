@@ -1,5 +1,7 @@
 ---
-const { facet, id } = Astro.props;
+import { formatBytes } from "../SharedJSFunctions.js"
+
+const { facet, id} = Astro.props;
 const title = facet['title'];
 const totalCounts = facet['totalFacetCounts'];
 const filter = facet["valuesAndCounts"];
@@ -7,14 +9,23 @@ const selectedValue= facet["selectedValue"];
 
 // Get the number of filter options available
 // Show TOP 10 warning if we have 10 or more
-const filterCount = Object.keys(filter).length;
+const filterCount = facet.kind === "terms"? Object.keys(filter).length: 0;
 const showWarning = filterCount >= 10;
+
+const minBound = Number.isFinite(facet.globalMin) ? Math.floor(facet.globalMin) : 0;
+const maxBound = Number.isFinite(facet.globalMax) ? Math.ceil(facet.globalMax): 100;
+
+const globalCount = Number.isFinite(facet.globalCount) ? Math.floor(facet.globalCount) : 0;
+// Initial values: selected -> else bounds
+const initialMin = facet.selectedMin !== "" ? Number(facet.selectedMin) : minBound;
+const initialMax = facet.selectedMax !== "" ? Number(facet.selectedMax) : maxBound;
+// optional: step; if your values are huge, consider 1 or 10/100/1024 etc.
+const step = 1;
 
 export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-//const inputClass = facetType === "radio" ? "" : ""; // TO-DO: Check if using the vf is better than not using it
 ---
 <div class="facet-section" id={`facet-section-${id}`}>
   <div class="facet-title">
@@ -39,26 +50,104 @@ export function capitalizeFirstLetter(str: string): string {
     <div class="facet-count">{totalCounts}</div>
   </div>
   <div class="facet-options" id={`facet-option-${id}`}>
-    {Object.entries(filter).map(([key, count], index) => (
+    {facet.kind === "terms" && Object.entries(filter).map(([key, count], index) => (
       <div class="facet-option">
-        <div class="facet-label-group">
-          <input
-            type="checkbox"
-            name={id}
-            value={key}
-            id={`${id}-${index}`}
-            checked={selectedValue ? Object.values(selectedValue).includes(key) : false}
-            onchange={`document.getElementById('facets')?.submit()`}
-          />
-         <label for={`${id}-${index}`} class="facet-label">
-            <div class="facet-label-inner">
-              <div>{key}</div>
-              <div class="facet-count">{count}</div>
-            </div>
-          </label>
-        </div>
+          <div class="facet-label-group">
+            <input
+              type="checkbox"
+              name={id}
+              value={key}
+              id={`${id}-${index}`}
+              checked={selectedValue ? Object.values(selectedValue).includes(key) : false}
+              onchange={`document.getElementById('facets')?.submit()`}
+            />
+          <label for={`${id}-${index}`} class="facet-label">
+              <div class="facet-label-inner">
+                <div>{title !=="Image Format"? capitalizeFirstLetter(key.replaceAll("_", " ")) : key}</div>
+                <div class="facet-count">{count}</div>
+              </div>
+            </label>
+          </div>
       </div>
     ))}
+    {facet.kind === "slider" && (
+      <fieldset class="vf-form__fieldset slider-facet">
+        <div class="slider-value">
+        <span class={`slider-label ${facet.field}`} data-default={`${formatBytes(minBound, facet.field)} – ${formatBytes(maxBound, facet.field)}`}>
+          {facet.selectedMin && facet.selectedMax ? `${formatBytes(initialMin, facet.field)} - ${formatBytes(initialMax, facet.field)}` 
+          : `${formatBytes(minBound, facet.field)} – ${formatBytes(maxBound, facet.field)}`}
+        </span>
+      </div>
+        <input
+          type="hidden"
+          name={facet.gteKey}
+          class="slider-gte"
+          value={facet.selectedMin !== "" ? String(initialMin) : ""}
+          data-initial={facet.selectedMin !== "" ? "1" : "0"}
+          disabled={facet.selectedMin === ""}
+        />
+        <input
+          type="hidden"
+          name={facet.lteKey}
+          class="slider-lte"
+          value={facet.selectedMax !== "" ? String(initialMax) : ""}
+          data-initial={facet.selectedMax !== "" ? "1" : "0"}
+          disabled={facet.selectedMax === ""}
+        />
+
+        <div class="slider-slider" data-min={minBound} data-max={maxBound}>
+          <div class="slider-track"></div>
+          <div class="slider-progress"></div>
+
+          <input class="slider-input slider-min" type="range" min={minBound} max={maxBound} step={step} value={initialMin} />
+          <input class="slider-input slider-max" type="range" min={minBound} max={maxBound} step={step} value={initialMax} />
+        </div>
+      </fieldset>
+    )}
+    {facet.kind === "range" && (
+    <fieldset class="vf-form__fieldset range-facet">
+      {/* Hidden “submitted” inputs (like slider) */}
+      <input
+        type="hidden"
+        name={facet.gteKey}
+        class="range-gte-hidden"
+        value={facet.selectedMin !== "" ? String(initialMin) : ""}
+        disabled={facet.selectedMin === ""}
+      />
+      <input
+        type="hidden"
+        name={facet.lteKey}
+        class="range-lte-hidden"
+        value={facet.selectedMax !== "" ? String(initialMax) : ""}
+        disabled={facet.selectedMax === ""}
+      />
+
+      Min:
+      <input
+        type="number"
+        class="range-gte"
+        value={facet.selectedMin !== "" ? String(initialMin) : ""}
+        placeholder={String(minBound)}
+        min={minBound}
+        max={maxBound}
+        step={Number(maxBound / globalCount).toPrecision(2)}
+        style="min-width: 25%;max-width: 25%;"
+      />
+      Max:
+      <input
+        type="number"
+        class="range-lte"
+        value={facet.selectedMax !== "" ? String(initialMax) : ""}
+        placeholder={String(maxBound)}
+        min={minBound}
+        max={maxBound}
+        step={Number(maxBound / globalCount).toPrecision(2)}
+        style="min-width: 25%;max-width: 25%;"
+      />
+    </fieldset>
+  )}
+
+
   </div>
 </div>
 
@@ -89,6 +178,10 @@ export function capitalizeFirstLetter(str: string): string {
 
 </script>
 <style>
+  .slider-facet .slider-value{
+    font-weight: 700;
+    margin: 0.25rem 0 0.75rem;
+  }
   .facet-section {
     border-bottom: 1px solid #ccc;
     margin-bottom: 0.5rem;
@@ -169,5 +262,94 @@ export function capitalizeFirstLetter(str: string): string {
     text-transform: uppercase;
     font-weight: normal;
     margin-right: 4px;
+  }
+</style>
+
+<style is:inline>
+  .slider-slider{
+    position: relative;
+    height: 44px; /* gives room for big thumbs */
+    display: grid;
+    align-items: center;
+  }
+
+  /* Track (full length) */
+  .slider-track{
+    position:absolute;
+    left: 18px;   /* keeps ends clear under thumbs */
+    right: 18px;
+    height: 6px;
+    border-radius: 999px;
+    background: #d8dde6;
+  }
+
+  /* Selected slider highlight */
+  .slider-progress{
+    position:absolute;
+    left: 0%;
+    width: 0%;
+    height: 6px;
+    border-radius: 999px;
+    background: #2f5ea8; /* blue like screenshot */
+    pointer-events: none;
+  }
+
+  /* Overlapped slider inputs */
+  .slider-input{
+    position:absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 44px;
+    background: transparent;
+    pointer-events: none; /* important: let thumbs handle events */
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  /* WebKit track (invisible; we use our own track divs) */
+  .slider-input::-webkit-slider-runnable-track{
+    height: 6px;
+    background: transparent;
+  }
+
+  /* WebKit thumb */
+  .slider-input::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: auto;     /* re-enable dragging on the thumb */
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #2f5ea8;
+    border: 8px solid #2f5ea8; /* thick ring feel */
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    margin-top: -10px; /* aligns thumb center with 6px track */
+  }
+
+  /* Inner white dot */
+  .slider-input::-webkit-slider-thumb{
+    background:
+      radial-gradient(circle at center, #ffffff 0 8px, #2f5ea8 9px);
+  }
+
+  /* Firefox track (invisible) */
+  .slider-input::-moz-slider-track{
+    height: 6px;
+    background: transparent;
+    border: none;
+  }
+
+  /* Firefox thumb */
+  .slider-input::-moz-slider-thumb{
+    pointer-events: auto;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    background:
+      radial-gradient(circle at center, #ffffff 0 8px, #2f5ea8 9px);
   }
 </style>
