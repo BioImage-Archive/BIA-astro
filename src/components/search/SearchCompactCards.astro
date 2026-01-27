@@ -34,55 +34,34 @@ const hasPixel =
 
 
 const showSizeBar = hasPhysical || hasPixel;
-
 ---
 <article class="compact-card custom-card" style={`overflow: hidden;aspect-ratio: ${aspectRatio};`}>
     <div class="image-container">
-        <a class="vf-link" href={`/bioimage-archive/${resultType}/${resultType === "study"? result.accession_id: result.uuid}`} ></a>
-            <img src={ thumbnail } alt="" loading="lazy" style="aspect-ratio: 1/1;">
+        <a class="vf-link" href={`/bioimage-archive/${resultType}/${resultType === "study"? result.accession_id: result.uuid}`} >
+        <img src={ thumbnail } alt="" loading="lazy" style="aspect-ratio: 1/1;">
         </a>
         {isFallback && (
                 <div class="image-overlay" role="note" aria-label={resultType === "study"? studyfallbackMessage : imageFallbackMessage}>
                     <span>{resultType === "study"? studyfallbackMessage : imageFallbackMessage}</span>
                 </div>
-            )}
-
+        )}
         {resultType === "study" && <div class="icon-container">{result.release_date}</div>}
-        <div class="study-link">
-            <a href={`/bioimage-archive/study/` + result.accession_id}>{ result.accession_id }</a>
-        </div>
-        <div class="compact-size-bar" style={`z-index: ${isFallback? 999: 1}`}>
+        <div class="study-link"><a href={`/bioimage-archive/study/` + result.accession_id}>{ result.accession_id }</a></div>
+        {
+            (resultType === "study" || showSizeBar) && <><div class="compact-size-bar" style={`z-index: ${isFallback? 999: 1};`}>
             {
-                resultType ==="study"? (
-                    <>
-                    {result.title.length > 100? result.title.substring(0, 100)+ "..." : result.title + "." }
-                    </>
-                ) : (
-                    showSizeBar && (
-            <div class="size-bar">
-                {
-                    hasPhysical && (
-                        <span class="physical-size">
-                            <code>{ formatPhysicalDimensions(result)}</code>
-                        </span>
-                        <br />
+                resultType ==="study"? 
+                    (<>{result.title.length > 100? result.title.substring(0, 100)+ "..." : result.title + "." }</>) : (
+                        showSizeBar && (
+                                <>
+                                {hasPhysical && (<code>{ formatPhysicalDimensions(result)}</code>)}
+                                {hasPixel && (<code>{ formatPixelDimensions(interactiveImageRepresentation)}</code>)}
+                                </>
+                            )
                     )
-                }
-                {
-                    hasPixel && (
-                        <span class="image-size">
-                            <code>{ formatPixelDimensions(interactiveImageRepresentation)}</code>
-                        </span>
-                    )
-                }
-                </div>
-            )
-
-
-                )
             }
-        </div>
-
+            </div></>
+        }
     </div>
 </article>
 

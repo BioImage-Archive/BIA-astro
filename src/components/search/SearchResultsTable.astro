@@ -52,7 +52,7 @@ export function getImageRep(image){
                         <td>{item._source.title}</td>
                         <td>{getImagingType(item._source)}</td>
                         <td><Fragment set:html={renderTaxonList(item._source)}></Fragment></td>
-                        <td>{getAnnotationMethod(item._source)}</td>
+                        <td>{getAnnotationMethod(item._source).join(", ")}</td>
                     </tr>
                 ): (
                     <tr>
