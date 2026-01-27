@@ -1,6 +1,37 @@
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
+// Rate limiting configuration
+const MAX_CONCURRENT_REQUESTS = 5;
+const REQUEST_DELAY_MS = 5;
+
+// Simple promise-based throttling for API requests
+async function throttledPromiseAll(tasks, maxConcurrent = MAX_CONCURRENT_REQUESTS, delayMs = REQUEST_DELAY_MS) {
+  const results = [];
+  const executing = new Set();
+
+  for (const task of tasks) {
+    const promise = Promise.resolve().then(() => task()).then(result => {
+      executing.delete(promise);
+      return result;
+    });
+
+    executing.add(promise);
+    results.push(promise);
+
+    if (executing.size >= maxConcurrent) {
+      await Promise.race(executing);
+    }
+
+    // Small delay between starting new requests
+    if (delayMs > 0) {
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
+  }
+
+  return Promise.all(results);
+}
+
 export function getPlaceholderHeroImage(accessionID) {
     const match = (accessionID.match(/(\d{1,5})$/)) || ['0','1'];
     const accessionIDNumber = parseInt(match[1]);
@@ -274,8 +305,8 @@ export async function getImageFromAPI(uuid){
 }
 
 export async function getImagesFromAPI(uuid_list){
-  const image_list = await Promise.all(
-    uuid_list.map((uuid) => getImageFromAPI(uuid))
+  const image_list = await throttledPromiseAll(
+    uuid_list.map(uuid => () => getImageFromAPI(uuid))
   );
   return image_list;
 }
@@ -290,9 +321,9 @@ export async function getAllStudiesFromAPI(){
     const totalPages = firstPage.pagination.total_pages;
     const allHits = [...firstPage.hits.hits];
 
-    const otherPages = await Promise.all(
+    const otherPages = await throttledPromiseAll(
       Array.from({ length: totalPages - 1 }, (_, i) =>
-        getFromAPI(
+        () => getFromAPI(
           `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100&pagination.page=${i + 2}`,
           { hits: { hits: [] } }
         )
@@ -331,7 +362,9 @@ export async function generateSourceAnnotatedImageMap(study){
     const annotatedImagesMap = new Map();
     const skipImageUUID = ["2a382f3a-aa6d-4ace-99fb-468335fa3809", "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea", "d0b3f24f-4a9c-499b-99e4-343de48e7c82"]
     const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image).filter(img => !skipImageUUID.includes(img.uuid)) || [];
-    const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
+    const images = await throttledPromiseAll(
+      imagesFromStudies.map(image => () => getImageFromAPI(image.uuid))
+    );
     for (const img of Object.values(images)) {
         if (isImageAnAnnotation(img)) {
             const key = img.creation_process.input_image_uuid[0];
