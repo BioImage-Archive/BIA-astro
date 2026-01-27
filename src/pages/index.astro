@@ -9,6 +9,7 @@ import policiesImage from "../assets/bioimage-archive/policies_embl_green.png";
 import aboutImage from "../assets/bioimage-archive/aboutus_embl_green.png";
 
 import getInTouchImage from "../assets/bioimage-archive/get_in_touch.png";
+import biaLogo from "../assets/bioimage-archive/BIA_new_logo.png"
 import emailImage from "../assets/bioimage-archive/email_embl_green.png";
 import githubImage from "../assets/bioimage-archive/github_embl_green.png";
 import blueskyImage from "../assets/bioimage-archive/bluesky_embl_green.png";
@@ -77,7 +78,7 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
       <section style="display: flex; gap: 10px;">
         <div>
           <img
-            src="https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/pages/assets/BIA-Logo.png"
+            src={biaLogo.src}
             style="width: 110px;"
           />
         </div>
@@ -145,8 +146,8 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 
   <!-- News -->
   <section
-  class="vf-stack"
-  style="background-color: rgb(226, 237, 239); padding: 16px 10%;"
+  class="vf-stack "
+  style="background-color: #D1E3F6; padding: 1% 1%; margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
   >
     <h2>News</h2>
     <section class="vf-grid vf-grid__col-2">
@@ -157,13 +158,13 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 
         <a
           href="https://www.ebi.ac.uk/about/news/updates-from-data-resources/bioimage-archive-galleries/"
-          class="vf-card__link"
+          class="vf-link vf-card__link"
         >
           Read more
         </a>
       </div>
       <div>
-        <a href="galleries" class="logo-img">
+        <a href="galleries" class="vf-link logo-img">
           <img
             class="vf-figure__image"
             src={newsExampleImage.src}
@@ -178,7 +179,7 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
       <div>
         <a
           href="https://listserver.ebi.ac.uk/mailman/listinfo/bioimage-archive-announce"
-          class="logo-img"
+          class="vf-link logo-img"
         >
           <button
             class="vf-button vf-button--primary"
@@ -204,7 +205,7 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
         style="margin-left: 0%; margin-right: 60%;"
       >
         <div class="column column-block">
-          <a href="mailto:bioimage-archive@ebi.ac.uk" class="logo-img">
+          <a href="mailto:bioimage-archive@ebi.ac.uk" class="vf-link logo-img">
             <img
               class="vf-figure__image"
               src={emailImage.src}
@@ -213,7 +214,7 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
           >
         </div>
         <div class="column column-block">
-          <a href="https://github.com/BioImage-Archive" class="logo-img">
+          <a href="https://github.com/BioImage-Archive" class="vf-link logo-img">
             <img
               class="vf-figure__image"
               src={githubImage.src}
@@ -222,7 +223,7 @@ import MenuCard from "../components/cards/LandingPageMenuCard.astro";
           >
         </div>
         <div class="column column-block">
-          <a href="https://bsky.app/profile/bioimagearchive.bsky.social" class="logo-img">
+          <a href="https://bsky.app/profile/bioimagearchive.bsky.social" class="vf-link logo-img">
             <img
               class="vf-figure__image"
               src={blueskyImage.src}

@@ -1,0 +1,110 @@
+---
+const { results, resultType, cardImageOverride } = Astro.props;
+import { getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue } from "../SharedJSFunctions.js";
+import {getImagingType, renderTaxonList, getAnnotationMethod} from "../cards/BrowseStudyCard.astro"
+
+
+export function getImageRep(image){
+    const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
+    const interactiveImageRepresentation = (image.representation.find(
+        (rep) => rep.uuid == vizarrRepUuid
+    ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
+    return interactiveImageRepresentation
+}
+---
+<table class="vf-table">
+    <thead>
+        <tr>
+            {resultType === "study"? (
+                <th>Study</th>
+                <th>Accession ID</th>
+                <th>Release Date</th>
+                <th>Title</th>
+                <th>Imaging Method</th>
+                <th>Organism</th>
+                <th>Annotation Method</th>
+            ) : (
+                <th>Image</th>
+                <th>Organism</th>
+                <th>Imaging Method</th>
+                <th>Image Formats</th>
+                <th>Physical Size</th>
+                <th>Pixels</th>
+                <th>Channels</th>
+                <th>Time Steps</th>
+            )
+        
+        }   
+        </tr>
+    </thead>
+    <tbody>
+        {
+            results.map((item) => (
+                resultType === "study"? (
+                    <tr>
+                        <td style="width: 100px;">
+                            <a class="vf-card__link" href={`/bioimage-archive/study/${item._source.accession_id}`} >
+                            <img src={getStudyImage(item._source, cardImageOverride)} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                            </a>
+                        </td>
+                        <td><a class="vf-card__link" href={`/bioimage-archive/study/${item._source.accession_id}`} >{ item._source.accession_id }</a></td>
+                        <td>{item._source.release_date}</td>
+                        <td>{item._source.title}</td>
+                        <td>{getImagingType(item._source)}</td>
+                        <td><Fragment set:html={renderTaxonList(item._source)}></Fragment></td>
+                        <td>{getAnnotationMethod(item._source)}</td>
+                    </tr>
+                ): (
+                    <tr>
+                        <td style="width: 100px;">
+                            <a class="vf-card__link" href={`/bioimage-archive/image/${item._source.uuid}`} >
+                                <img src={getThumbnail(item._source)} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
+                            </a>
+                        </td>
+                        <td>{[...new Set((item._source?.creation_process?.subject?.sample_of ?? []).flatMap(sample => sample?.organism_classification ?? []).map(o => o?.scientific_name).filter(Boolean).sort())].join(", ")}</td>
+                        <td>{[...new Set((item._source?.creation_process?.acquisition_process ?? []).flatMap(ap => ap?.imaging_method_name ?? []).filter(Boolean).sort())].join(", ")}</td>
+                        <td>{[...new Set((item._source?.representation ?? []).flatMap(rep => rep?.image_format.replace("\.", "") ?? []).filter(Boolean).sort())].join(", ")}</td>
+                        <td>{formatPhysicalDimensions(item._source)}</td>
+                        <td>{getImageRep(item._source) && formatPixelDimensions(getImageRep(item._source))}</td>
+                        <td>{getImageRep(item._source)?.size_c || ""}</td>
+                        <td>{getImageRep(item._source)?.size_t|| ""}</td>
+                    </tr>
+
+                )
+            ))
+        }
+
+    </tbody>
+</table>
+
+<style>
+    .vf-table {
+        width: 100% !important;
+        border-collapse: collapse;
+        margin: 1em 0;
+    }
+    .vf-table th,
+    .vf-table td {
+        padding: 0.5em;
+        border: 1px solid #ddd;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .vf-table th {
+        background-color: #f5f5f5;
+        font-weight: 600;
+    }
+    .vf-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .vf-table tr:hover {
+        background-color: #f0f0f0;
+    }
+    .vf-table a {
+        color: #3b6fb6;
+        text-decoration: none;
+    }
+    .vf-table a:hover {
+        text-decoration: underline;
+    }
+</style>

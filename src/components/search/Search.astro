@@ -9,6 +9,8 @@ import "../../styles/browse_controls.css"
 import "../../styles/filter_cards.css"
 import { generateParamString } from "../SharedJSFunctions.js"
 import {type SelectedFacets, type SearchHits, type FacetData, type PaginationData} from "./SearchInterface.astro"
+import SearchResultsTable  from "./SearchResultsTable.astro"
+import SearchResultsCompactCards  from "./SearchCompactCards.astro"
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 
 const { url, query, searchType} =
@@ -23,7 +25,7 @@ const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bio
 const sortBy = url.searchParams.get('sortBy');
 const sortOrder = url.searchParams.get('sortOrder');
 const page = Number(url.searchParams.get('pagination.page')) || 1;
-const pageSize = Number(url.searchParams.get('pagination.page_size')) || 9;
+const pageSize = Number(url.searchParams.get('pagination.page_size')) || 12;
 
 const selectedFacets: SelectedFacets = {
   "facet.organism": url.searchParams.getAll("facet.organism"),
@@ -233,111 +235,100 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   return acc;
 }, {} as Record<string, any>);
 ---
-<section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
-  <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
-    <br />
-    <div style="display: flex;">        
-      <div style="padding-top: 0.4em">
-      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16">
-        <rect width="16" height="16" fill="none" />
-        <path fill="currentColor" d="M6 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2 4a3 3 0 0 1 3-3h6a3 3 0 1 1 0 6H5a3 3 
-          0 0 1-3-3m3-2a2 2 0 1 0 0 4h6a2 2 0 1 0 0-4zm6 10a1 1 0 1 0 0-2a1 1 0 0 0 0 2m-9-1a3 3 0 0 1 3-3h6a3 
-          3 0 1 1 0 6H5a3 3 0 0 1-3-3m3-2a2 2 0 1 0 0 4h6a2 2 0 1 0 0-4z" />
-        </svg> 
-      </div>
-      <div><h3> Filter by</h3></div>
-    </div>
-    <div>
-      <form id="facets" method="GET" action={searchPageURL} class="vf-form">
-        {Object.entries(facets).map(([id, facet], i) => <>
-        <SearchFacet facet={facet} id={id} />
-        </>
-        )}
-        <input type="hidden" name="query" value={query}  />
-        <!-- {sortBy && (<input type="hidden" name="sortBy" value={sortBy}  />)}
-        {sortOrder && (<input type="hidden" name="sortOrder" value={sortOrder} />)} -->
-        
-      </form>
-    </div>
-  </div>
-  <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="min-width:50%">
-    { (hasQueryParam) && (
-      <>
-        <section class="vf-content">
-          <div class="vf-grid vf-grid__col-3">
-            <div class="vf-grid__col--span-2">{query && (<h2>Search results for <a href={`${searchPageURL}?query=${query}`}><strong>{query}</strong></a></h2>)}</div>
-            <div></div>
-          </div>
-          <section>
-          <div class="vf-grid vf-grid__col-5">
-            <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
-              <span id="paginated-results">
-                  {results.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
-                </span>
-              </div>
-            {
-              <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
-                <label for="pageSize" class="vf-form__label vf-u-type__text-body--4 vf-u-padding--100" style="margin: 0;padding: 0;border: 0;">Page Size:</label>
-                <select name="pageSize" id="pageSize" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100" style="height: 2.5em;width: auto;min-width: 8rem;">
-                  <option value="9" selected={pageSize === 9} >Default</option>
-                  <option value="30" selected={pageSize === 30} >30</option>
-                  <option value="60" selected={pageSize === 60} >60</option>
-                  <option value="90" selected={pageSize === 90}>90</option>
-                </select>
+<style>
+.toggle-switch {
+    display: inline-flex;
+    background: #f0f0f0;
+    padding: 4px;
+    border-radius: 20px;
+}
+.toggle-option {
+    position: relative;
+    cursor: pointer;
+}
+.toggle-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.toggle-label {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+.toggle-option input:checked + .toggle-label {
+    background: #3b6fb6;
+    color: white;
+}
+.toggle-option:hover input:not(:checked) + .toggle-label {
+    background: #e0e0e0;
+}
+.controls-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5em;
+    margin: 0 auto;
+}
+ .controls-container {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 1em;
+  box-shadow: 0 0px 0px;
+}
 
-              </div>
-            /* 
-            <div class="vf-form vf-grid__col--span-1" style="display: flex; align-items: center;" id="sort">
-            /*<label for="sortBy" class="vf-form__label vf-u-type__text-body--3 vf-u-padding--0" style="flex: 2; margin:auto;">Sort by:</label>
-            <select name="sortBy" id="sortBy" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100 vf-u-padding__left--200" style="flex: 5; height: 2.5em">
-              <option value="relevance" selected={sortBy === "relevance"} >Relevance</option>
-              <option value="accession" selected={sortBy === "accession"} >Accession ID</option>
-              <option value="release_date" selected={sortBy === "release_date"}>Release Date</option>
-            </select>
-            <div class="sort-order-buttons" style="flex: 1">
-              <button type="button" data-order="ascending" class={sortOrder === "ascending" || !sortOrder ? "active vf-form__select": "vf-form__select"} >⋀</button>
-              <button type="button" data-order="descending" class={sortOrder === "descending" ? "active vf-form__select": "vf-form__select"}>⋁</button>
-            </div>
-            </div>
-            */}
-          </div>
-          <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
-            <SearchSelectedFacet query={query} url={searchPageURL} text="Query" kind="query" />
-            {Object.entries(facets).map(([facetKey, facet]) => (
-              <SearchSelectedFacet
-                key={facetKey}
-                selectedList={facet.selectedValue}
-                url={searchPageURL}
-                text={facet.title}
-                query={query}
-                selectedFacets={selectedFacets}
-                kind={facet.kind}
-                minVal={facet?.selectedMin || ""} 
-                maxVal={facet?.selectedMax || ""}
-                pageSize={pageSize}
-              />
-            ))}
-          </div>
-          <div class="vf-card-container vf-card-container__col-4 vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
-            <div class="vf-card-container__inner">
-            {results.length === 0 ? (
-              <p>No results found.</p>
-            ) : (
-              results.map((item) => (
-                searchType === "study"? (<StudyCard study={item._source} studyPageRoot="study" />):
-                (<ImageCard image={item._source} imagePageRoot="image" />)
-                
-              ))
-            )}
-            </div>
-            {results.length != 0 && (<br/><PaginationControl  paginationData={paginationData}/>)}
-          </div>
-          </section>
-        </section>
-      </>
-    )}
-  </div>
-</section>
+.column-toggle-container {
+    text-align: center;
+    padding: 0.5em;
+}
+.column-toggle {
+    display: inline-flex;
+    background: #f0f0f0;
+    padding: 4px;
+    border-radius: 20px;
+    gap: 4px;
+    margin-bottom: 1em;
+}
+.column-option {
+    position: relative;
+    cursor: pointer;
+}
+.column-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.column-label {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+.column-option input:checked + .column-label {
+    background: #3b6fb6;
+    color: white;
+}
+.column-option:hover input:not(:checked) + .column-label {
+    background: #e0e0e0;
+}
+
+.grid-container {
+    background-color: var(--vf-u-background-color-ui--white);
+    width: 100%;
+    padding: 0 1rem;
+}
+.grid-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.25rem;
+    max-width: var(--vf-content-max-width, 1200px);
+    margin: 0 auto;
+}
+</style>
+
 <script type="module">
   window.addEventListener('pageshow', (event) => {
     if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
@@ -345,81 +336,13 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       window.location.reload();
     }
   });
-  const sortSelect = document.getElementById('pageSize');
-   sortSelect.addEventListener('change', (event) => {
+  const pagination = document.getElementById('pageSize');
+   pagination.addEventListener('change', (event) => {
      const pageSize = event.target.value;
      const url = new URL(window.location.href);
      url.searchParams.set('pagination.page_size', pageSize);
      window.location.href = url.toString();
    });
-  // const sortSelect = document.getElementById('sortBy');
-  // sortSelect.addEventListener('change', (event) => {
-  //   const sortBy = event.target.value;
-  //   const url = new URL(window.location.href);
-  //   url.searchParams.set('sortBy', sortBy);
-  //   window.location.href = url.toString();
-  // });
-
-  // document.querySelectorAll('.sort-order-buttons button').forEach(btn => {
-  // btn.addEventListener('click', () => {
-  //   document.querySelectorAll('.sort-order-buttons button').forEach(b => b.classList.remove('active'));
-  //   btn.classList.add('active');
-  //   const sortOrder = btn.dataset.order;
-  //   const url = new URL(window.location.href);
-  //   url.searchParams.set('sortOrder', sortOrder);
-  //   window.location.href = url.toString();
-  // });
-  // });
-</script>
-<!-- <style>
-#sort {
-  position: relative;
-}
-  
-#sort select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: white;
-}
-
-#sort::after {
-  content: "⋁"; /* your symbol here */
-  position: absolute;
-  right: 5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none; /* don’t block clicks */
-  font-size: 1.25rem;
-  color: #555;
-}
-
-.sort-order-buttons {
-  margin-left: 0.5em;
-  display: inline-flex;
-  background: white;
-  height: 2.2em;
-}
-
-.sort-order-buttons button {
-  background: white;
-  display: block;
-  padding: 0 0.5rem;
-}
-
-.sort-order-buttons button:hover {
-  background: #e2e2e2;
-}
-
-.sort-order-buttons button.active {
-  background: #3b6fb6;
-  color: white;
-  border-color: #3b6fb6;
-}
-</style> -->
-
-<script type="module">
-
   function formatBytesToHumanSize(sizeBytes) {
     var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
     return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
@@ -513,7 +436,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     maxEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
   });
 
-function clamp(n, lo, hi) {
+  function clamp(n, lo, hi) {
     if (!Number.isFinite(n)) return NaN;
     return Math.min(hi, Math.max(lo, n));
   }
@@ -538,7 +461,6 @@ function clamp(n, lo, hi) {
     if (!form) return;
     // Ensure empty fields have no name before submission
     form.querySelectorAll("input[data-name]").forEach((el) => {
-      console.log(el.value)
       if (el.value.trim() === "") el.removeAttribute("name");
       else el.setAttribute("name", el.dataset.name);
     });
@@ -621,9 +543,184 @@ function clamp(n, lo, hi) {
     lte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("lte"); }});
   }
 
-document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
-
-
+  document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
   document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
 
+    function toggleView(viewId) {
+        const views = ['card-view', 'table-view', 'grid-view'];
+        views.forEach(id => {
+            document.getElementById(id).style.display = id === viewId ? 'block' : 'none';
+        });
+        
+        if (viewId === 'table-view') {
+            dataTable?.columns.adjust();
+        }
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+        // Add event listeners for view toggles
+        document.querySelectorAll('input[name="view"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    toggleView(e.target.value);
+                }
+            });
+        });
+
+  window.setGridColumns = function(columns) {
+    const gridInner = document.querySelector('.grid-inner');
+    if (gridInner) {
+        gridInner.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+        
+        // Get all size bars and cube wrappers
+        const sizeBars = document.querySelectorAll('.compact-size-bar');
+        const icons = document.querySelectorAll('.icon-container');
+        
+        // Show/hide based on column count
+        const display = columns === 5 ? 'none' : '';
+        sizeBars.forEach(bar => bar.style.display = display);
+        icons.forEach(icon => icon.style.display = display);
+    }
+  }
+  // Set initial grid columns
+  setGridColumns(4);
+  });
 </script>
+
+<section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
+  <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
+    <br />
+    <div style="display: flex;">        
+      <div style="padding-top: 0.4em">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 16 16">
+        <rect width="16" height="16" fill="none" />
+        <path fill="currentColor" d="M6 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0M2 4a3 3 0 0 1 3-3h6a3 3 0 1 1 0 6H5a3 3 
+          0 0 1-3-3m3-2a2 2 0 1 0 0 4h6a2 2 0 1 0 0-4zm6 10a1 1 0 1 0 0-2a1 1 0 0 0 0 2m-9-1a3 3 0 0 1 3-3h6a3 
+          3 0 1 1 0 6H5a3 3 0 0 1-3-3m3-2a2 2 0 1 0 0 4h6a2 2 0 1 0 0-4z" />
+        </svg> 
+      </div>
+      <div><h3> Filter by</h3></div>
+    </div>
+    <div>
+      <form id="facets" method="GET" action={searchPageURL} class="vf-form">
+        {Object.entries(facets).map(([id, facet], i) => <>
+        <SearchFacet facet={facet} id={id} />
+        </>
+        )}
+        <input type="hidden" name="query" value={query}  />        
+      </form>
+    </div>
+  </div>
+  <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="min-width:50%">
+    { (hasQueryParam) && (
+        <section class="vf-content">
+          <div class="vf-grid vf-grid__col-3">
+            <div class="vf-grid__col--span-2">{query && (<h2>Search results for <a href={`${searchPageURL}?query=${query}`}><strong>{query}</strong></a></h2>)}</div>
+            <div></div>
+          </div>
+          <section class="vf-content">
+            <div class="vf-grid vf-grid__col-5">
+              <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
+                <span id="paginated-results">
+                    {results.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
+                  </span>
+                </div>
+                <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
+                  <div class="controls-container">
+                    <div class="controls-inner">
+                      <div class="toggle-switch">
+                        <label class="toggle-option">
+                            <input type="radio" name="view" value="card-view" checked>
+                            <span class="toggle-label">Cards</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="radio" name="view" value="table-view">
+                            <span class="toggle-label">Table</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="radio" name="view" value="grid-view">
+                            <span class="toggle-label">Grid</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <label for="pageSize" class="vf-form__label vf-u-type__text-body--4 vf-u-padding--100" style="margin: 0;padding: 0;border: 0;">Page Size:</label>
+                  <select name="pageSize" id="pageSize" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100" style="height: 2.5em;width: auto;min-width: 8rem;">
+                    <option value="12" selected={pageSize === 12} >Default</option>
+                    <option value="30" selected={pageSize === 30} >30</option>
+                    <option value="60" selected={pageSize === 60} >60</option>
+                    <option value="90" selected={pageSize === 90}>90</option>
+                  </select>
+                  
+                </div>
+            </div>
+            <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
+              <SearchSelectedFacet query={query} url={searchPageURL} text="Query" kind="query" />
+              {Object.entries(facets).map(([facetKey, facet]) => (
+                <SearchSelectedFacet
+                  key={facetKey}
+                  selectedList={facet.selectedValue}
+                  url={searchPageURL}
+                  text={facet.title}
+                  query={query}
+                  selectedFacets={selectedFacets}
+                  kind={facet.kind}
+                  minVal={facet?.selectedMin || ""} 
+                  maxVal={facet?.selectedMax || ""}
+                  pageSize={pageSize}
+                />
+              ))}
+            </div>
+            <div id="card-view">
+            <div class="vf-card-container vf-card-container__col-4 vf-u-fullbleed"  style="--vf-card__image--aspect-ratio: 16 / 9; --vf-card-container__inner--grid-gap: 0.5rem;">
+              <div class="vf-card-container__inner">
+              {results.length === 0 ? (
+                <p>No results found.</p>
+              ) : (
+                results.map((item) => (
+                  searchType === "study"? (<StudyCard study={item._source} studyPageRoot="study" />):
+                  (<ImageCard image={item._source} imagePageRoot="image" />)
+                  
+                ))
+              )}
+              </div>
+            </div>
+            </div>
+            <div id="table-view" style="display: none;">
+              <SearchResultsTable results={results} resultType={searchType}/>
+            </div>
+            <div id="grid-view" style="display: none;">
+              <div class="column-toggle-container">
+                <div class="column-toggle">
+                    <label class="column-option">
+                        <input type="radio" name="columns" value="3" onchange="setGridColumns(3)">
+                        <span class="column-label">3 Columns</span>
+                    </label>
+                    <label class="column-option">
+                        <input type="radio" name="columns" value="4" checked onchange="setGridColumns(4)">
+                        <span class="column-label">4 Columns</span>
+                    </label>
+                    <label class="column-option">
+                        <input type="radio" name="columns" value="5" onchange="setGridColumns(5)">
+                        <span class="column-label">5 Columns</span>
+                    </label>
+                </div>
+              </div>
+              <section class="grid-container">
+                  <div class="grid-inner">
+                    {results.length === 0 ? (
+                      <p>No results found.</p>
+                    ) : (
+                      results.map((item) => (
+                        <SearchResultsCompactCards result={item._source} resultType={searchType}/>
+                      ))
+                    )}
+                  </div>
+              </section>
+            </div>
+            {results.length != 0 && (<br/><PaginationControl  paginationData={paginationData}/>)}
+          </section>
+        </section>
+      )
+    }
+  </div>
+</section>

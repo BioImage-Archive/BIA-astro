@@ -83,7 +83,6 @@ function getImageUUIDFromStudyImage(exampleURI, images){
 }
 
 const studyImagePageLink = getImageUUIDFromStudyImage(exampleStudyImage, images);
-console.log(exampleStudyImage)
 
 const headlineStats = {
   "Total Viewable Images":  study?.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0) || 0,
