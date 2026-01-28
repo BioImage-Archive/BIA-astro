@@ -6,7 +6,6 @@ import DatasetInfo  from "../../../../components/spatialomics/DatasetInfo.astro"
 import ViewableImageTable from '../../../../components/ViewableImageTable.astro';
 import StudyFiles from '../../../../components/StudyFiles.astro';
 import SOTables from '../../../../components/spatialomics/SOTables.astro';
-import AnnotationFilesTable from '../../../../components/AnnotationFilesTable.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromApiByAccession} from "../../../../components/SharedJSFunctions.js"
@@ -55,7 +54,7 @@ const checkForTranscripts = async () => {
     }
 };
 
-//await checkForTranscripts();
+await checkForTranscripts();
 
 const tableOfContents = {
   "Curated Study Information": "study",
@@ -73,7 +72,7 @@ const images = study.dataset.flatMap(dataset => dataset.image ?? [])
 const annotationDatasets = study.dataset.filter(dataset => 
   "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0
 );
-const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatasets);
+//const annotationDatasetUUIDsAndFileStats = aggregateDatasetStats(annotationDatasets);
 
 if (annotationDatasets.length > 0) {
   tableOfContents["Annotation Datasets"] = "annotation_datasets";
@@ -173,8 +172,6 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
       </div>
     </section>
     )}
-
     {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
- 
   </body>
 </BaseLayout>
