@@ -3,7 +3,7 @@ import { getTaxons, formatListItem, getStudyImage, getImagingMethodType } from "
 import "../../styles/dataset_card.css"
 const { study, studyPageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
 
-function getImagingType(study) {
+export function getImagingType(study) {
     const imageTypeList = getImagingMethodType(study)
     const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
     if (imgTypeDisplay.length > 50 * imageTypeList.length) {
@@ -14,7 +14,22 @@ function getImagingType(study) {
     }
 }
 
-function renderTaxonList(dataset) {
+export function getAnnotationMethod(study){
+    const annotationMethods = []
+    for (var dataset of study.dataset) {
+        for (var ap of dataset.annotation_process) {
+            for (var methodNames of ap.method_type) {
+                if (!annotationMethods.includes(methodNames)) {
+                    annotationMethods.push(methodNames.replace("_", " "))
+                }
+            }
+        }
+    }
+    return annotationMethods
+
+}
+
+export function renderTaxonList(dataset) {
     const taxonList = getTaxons(dataset)
     return taxonList.reduce(formatListItem, "")
 }
@@ -30,6 +45,7 @@ const isFallback = String(studyCardImage).includes("placeholder");
 const fallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
 const imagingMethod = getImagingType(study);
 const organism = renderTaxonList(study);
+const annotationMethod = annotationType? annotationType: getAnnotationMethod(study) 
 ---
 <article class="vf-card vf-card--brand vf-card--bordered custom-card" data-message={getDataForCardFilter(study)}>
     <div class="image-container">
@@ -60,9 +76,9 @@ const organism = renderTaxonList(study);
             </p>
         )}
 
-        {annotationType && annotationType.length > 0 && (
+        {annotationMethod && annotationMethod.length > 0 && (
             <p class="vf-card__text">
-                <b>Annotation Type:</b> {annotationType.join(", ") || "No information available"}
+                <b>Annotation Method:</b> {annotationMethod.join(", ") || "No information available"}
             </p>
         )}
     </div>

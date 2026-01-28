@@ -1,5 +1,6 @@
 ---
 const { pageTitle } = Astro.props;
+import Footer from '../components/Footer.astro';
 import { PUBLIC_GTAG } from "astro:env/client";
 ---
 
@@ -45,6 +46,7 @@ import { PUBLIC_GTAG } from "astro:env/client";
 	
 	<body class="vf-body">
 		<slot />
+		<Footer />
 	</body>
 
 	<!-- Script required for bottom bar -->

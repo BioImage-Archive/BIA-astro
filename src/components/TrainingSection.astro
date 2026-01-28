@@ -6,10 +6,10 @@
   <div class="vf-grid vf-tabs">
     <ul class="vf-tabs__list" data-vf-js-tabs>
       <li class="vf-tabs__item">
-        <a class="vf-tabs__link" href="#vf-tabs__section--1">Live training</a>
+        <a class="vf-link vf-tabs__link" href="#vf-tabs__section--1">Live training</a>
       </li>
       <li class="vf-tabs__item">
-        <a class="vf-tabs__link" href="#vf-tabs__section--2">On-demand training</a>
+        <a class="vf-link vf-tabs__link" href="#vf-tabs__section--2">On-demand training</a>
       </li>
     </ul>
   </div>
@@ -17,11 +17,11 @@
   <div class="vf-tabs-content" data-vf-js-tabs-content>
     <section class="vf-tabs__section" id="vf-tabs__section--1">
       <div id="live-tutorials"></div>
-      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/live-events">View all live training</a>
+      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/live-events" class="vf-link">View all live training</a>
     </section>
     <section class="vf-tabs__section" id="vf-tabs__section--2">
       <div id="ondemand-tutorials"></div>
-      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/on-demand">View all on-demand training</a>
+      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/on-demand" class="vf-link">View all on-demand training</a>
     </section>
   </div>
 </div>
@@ -52,7 +52,7 @@
             <div class="vf-summary vf-summary--event">
                 <p class="vf-summary__date">${item.fields.type}</p>
                 <h3 class="vf-summary__title">
-                <a href="${item.fields.url[0]}" target="_blank" class="vf-summary__link">
+                <a href="${item.fields.url[0]}" target="_blank" class="vf-link vf-summary__link">
                     ${item.fields.title}
                     ${
                     item.fields.subtitle &&

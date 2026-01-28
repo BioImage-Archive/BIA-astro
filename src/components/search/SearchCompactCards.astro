@@ -1,0 +1,173 @@
+---
+const { result, resultType, cardImageOverride } = Astro.props;
+import { getImage } from "astro:assets";
+import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
+import { getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue } from "../SharedJSFunctions.js";
+import {getImagingType, renderTaxonList, getAnnotationMethod} from "../cards/BrowseStudyCard.astro"
+import {getImageRep} from "./SearchResultsTable.astro"
+
+const thumbnail = resultType === "study"? getStudyImage(result): getThumbnail(result);
+const isFallback = resultType === "study"? String(thumbnail).includes("placeholder"): thumbnail === imageFallback.src;
+const imageFallbackMessage = isFallback ? "Preview not available yet." : "";
+const studyfallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
+const aspectRatio = resultType === "study"? "1/1.75": "1/1";
+const organism = resultType === "study"? renderTaxonList(result): "";
+const imagingMethod = resultType === "study"? getImagingType(result): "";
+
+
+const isNonZeroNumber = (v) => {
+  const n = Number(v);
+  return Number.isFinite(n) && n !== 0;
+};
+
+const hasPhysical =
+  isNonZeroNumber(result?.total_physical_size_x) ||
+  isNonZeroNumber(result?.total_physical_size_y) ||
+  isNonZeroNumber(result?.total_physical_size_z);
+
+const interactiveImageRepresentation = resultType === "study"? [] : getImageRep(result);
+
+const hasPixel =
+  isNonZeroNumber(interactiveImageRepresentation?.size_x) ||
+  isNonZeroNumber(interactiveImageRepresentation?.size_y) ||
+  isNonZeroNumber(interactiveImageRepresentation?.size_z);
+
+
+const showSizeBar = hasPhysical || hasPixel;
+---
+<article class="compact-card custom-card" style={`overflow: hidden;aspect-ratio: ${aspectRatio};`}>
+    <div class="image-container">
+        <a class="vf-link" href={`/bioimage-archive/${resultType}/${resultType === "study"? result.accession_id: result.uuid}`} >
+        <img src={ thumbnail } alt="" loading="lazy" style="aspect-ratio: 1/1;">
+        </a>
+        {isFallback && (
+                <div class="image-overlay" role="note" aria-label={resultType === "study"? studyfallbackMessage : imageFallbackMessage}>
+                    <span>{resultType === "study"? studyfallbackMessage : imageFallbackMessage}</span>
+                </div>
+        )}
+        {resultType === "study" && <div class="icon-container">{result.release_date}</div>}
+        <div class="study-link"><a href={`/bioimage-archive/study/` + result.accession_id}>{ result.accession_id }</a></div>
+        {
+            (resultType === "study" || showSizeBar) && <><div class="compact-size-bar" style={`z-index: ${isFallback? 999: 1};`}>
+            {
+                resultType ==="study"? 
+                    (<>{result.title.length > 100? result.title.substring(0, 100)+ "..." : result.title + "." }</>) : (
+                        showSizeBar && (
+                                <>
+                                {hasPhysical && (<code>{ formatPhysicalDimensions(result)}</code>)}
+                                {hasPixel && (<code>{ formatPixelDimensions(interactiveImageRepresentation)}</code>)}
+                                </>
+                            )
+                    )
+            }
+            </div></>
+        }
+    </div>
+</article>
+
+<style>
+    .custom-card {
+        border: 2px solid #999;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .custom-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+    }
+    .image-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 9999;
+    }
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .compact-size-bar {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 8px 12px;
+        font-size: 0.9em;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        border-radius: 4px;
+        max-width: 90%;
+    }
+    .study-link {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    .study-link a {
+        color: #333;
+        text-decoration: none;
+    }
+    .study-link a:hover {
+        text-decoration: underline;
+    }
+    .icon-container {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        display: flex;
+        gap: 4px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    .view-link, .metadata-link {
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: all 0.2s ease;
+    }
+    .view-link:hover, .metadata-link:hover, .s3-link:hover {
+        background: rgba(243, 243, 243, 1);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .s3-link {
+        background: rgba(243, 243, 243, 0.9);
+        padding: 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 12px;
+        opacity: 1;
+        pointer-events: none;
+        z-index: 1;
+    }
+</style>
+

@@ -4,14 +4,14 @@ const { image } = Astro.props;
 <article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:400px">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading title-container">
-            <div class="title-text">{ image.label }</div>
+            <div class="title-text"><a href={"/bioimage-archive/study/" + image.submitted_in_study_accession} style="text-decoration: none;color: #333;">{ image.label }</a></div>
         </h3>
         <p class="subtitle-text">
             <i>{ image.organism }</i>, { image.imaging_method }
         </p>
     </div>
     <div class="image-container">
-        <img src={ image.static_display_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+        <a href={ image.view_link }><img src={ image.static_display_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;"></a>
         <div class="study-link">
             <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>

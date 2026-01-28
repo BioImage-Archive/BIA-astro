@@ -1,0 +1,62 @@
+---
+import elixirDepoLogo from "../assets/bioimage-archive/ELIXIR service logos_EDD_Full.png"
+import elixirCoreLogo from "../assets/bioimage-archive/ELIXIR service logos_CDR_Full.png"
+---
+<hr />
+<footer>
+  <section class="vf-gird bia-footer-inner">
+    <div class="bia-footer-block" style="flex: 1;justify-content: flex-start;">
+      <div class="elixir-logo-kite" aria-hidden="true">
+        <a href="https://elixir-europe.org/platforms/data/elixir-deposition-databases" class="vf-link"><img src={elixirDepoLogo.src} style="width: 100px; height: 100px" loading="lazy"/></a>
+      </div>
+      <div class="elixir-logo-kite" aria-hidden="true">
+        <a href="https://elixir-europe.org/platforms/data/core-data-resources" class="vf-link"><img src={elixirCoreLogo.src} style="width: 100px; height: 100px" loading="lazy"/> </a>
+      </div>
+      <p class="bia-footer-text">
+        The BioImage Archive is an ELIXIR <a href="https://elixir-europe.org/platforms/data/elixir-deposition-databases" class="vf-link">Deposition Database</a> and <a href="https://elixir-europe.org/platforms/data/core-data-resources" class="vf-link">Core Data Resource</a>.
+      </p>
+    </div>
+    <div class="bia-footer-block" style="flex: 1;justify-content: flex-end;text-align: left;">
+      <div class="bia-footer-text">
+        <div>
+          The BioImage Archive is developed in collaboration with
+          <a href="http://www.eurobioimaging.eu/" class="vf-link">Euro-BioImaging</a>.
+        </div>
+      </div>
+      <a href="http://www.eurobioimaging.eu/" class="vf-link"><div class="eubi-logo-kite" aria-hidden="true"></div></a>
+    </div>
+  </section>
+</footer>
+<style>
+.bia-footer-inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bia-footer-block{
+  display: flex;
+  align-items: center;
+  min-height: 120px;
+  flex: 1 1 auto;
+}
+
+.bia-footer-text{
+  max-width: 75%;
+  margin: 0;
+}
+
+.eubi-logo-kite,
+.elixir-logo-kite{
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  object-fit: contain;
+  background-size: 100px 100px;
+  flex: 0 0 100px;
+}
+
+.eubi-logo-kite{
+  background-image: url("https://www.ebi.ac.uk/bioimage-archive/static/euro_bio_imaging_logo.jpg");
+}
+</style>
