@@ -1,16 +1,14 @@
 ---
-import bannerImage from "../assets/bioimage-archive/banner.png";
 import biaLogo from "../assets/bioimage-archive/BIA_new_logo.png"
+import bannerImage from "../assets/bioimage-archive/banner.webp";
 import SearchBar from "../components/search/SearchBar.astro";
 
-const bannerUri = "https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png";
 ---
 
 <header>
-    <!-- <section class="vf-hero  | vf-u-fullbleed" style={ "--vf-hero--bg-image: " + bannerImage.src + ";"}> -->
   <section 
     class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
-    style={"--vf-hero--bg-image: url(" + bannerUri +");"}>
+    style={`background-image: url('${bannerImage.src}');`}>
         <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
             <section style="display: flex; gap: 10px;">
                 <div>
