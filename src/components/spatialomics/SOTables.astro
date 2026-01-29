@@ -17,24 +17,21 @@ const { datasetUUIDsAndFileStats } = Astro.props;
         <option value="" disabled selected>Select a Dataset</option>
       </select>
       
-      <table id="sotables_file_references_table" class="display"></table>
+      <table id="sotables_file_references_table" class="vf-table display"></table>
     </div>
 
     <script>
-    import { PUBLIC_MONGO_API } from "astro:env/client";
 
       document.addEventListener("DOMContentLoaded", function () {
         const dropdown = document.getElementById("sotables_dataset_selector") as HTMLSelectElement; // Get the dropdown element
         const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); // Ensure datasetUuids is parsed correctly
-
         let dataTable;
 
         // Function to initialize or update the DataTable
         const initializeDataTable = async (datasetUuid, totalFiles) => {
             // set page size parameter of the api url with an upper limit of 1000
             const pageSize = totalFiles < 1000 ? totalFiles : 1000;
-            const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
-
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
             // Destroy the existing DataTable instance if it exists
             if (($.fn.DataTable as any).isDataTable('#sotables_file_references_table')) {
                 $('#sotables_file_references_table').DataTable().destroy();
@@ -49,14 +46,13 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                         const additional_metadata = file.additional_metadata || [];
                         return additional_metadata.some(attr => 
                             attr.name === 'attributes_from_biostudies.File' && (
-                                attr.value?.additional_metadata?.Data_Type === 'transcripts' ||
-                                attr.value?.additional_metadata?.Data_Type === 'Transcript_Coordinates' ||
-                                attr.value?.additional_metadata?.Description?.includes('Feature barcode') ||
-                                attr.value?.additional_metadata?.Description?.includes('feature matrix')
+                                attr.value?.attributes?.Data_Type === 'transcripts' ||
+                                attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+                                attr.value?.attributes?.Description?.includes('Feature barcode') ||
+                                attr.value?.attributes?.Description?.includes('feature matrix')
                             )
                         );
                     });
-
                     // Initialize the DataTable
                     dataTable = $('#sotables_file_references_table').DataTable({
                         data: filteredFiles,
@@ -92,16 +88,16 @@ const { datasetUUIDsAndFileStats } = Astro.props;
         // Function to fetch dataset details including Data_Type
         const fetchDatasetDetails = async (datasetUuid) => {
             const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
-            const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
             const response = await fetch(apiUrl);
             const fileData = await response.json();
             const additional_metadata = fileData.flatMap(file => file.additional_metadata || []);
             const dataTypeAttr = additional_metadata.find(attr => 
                 attr.name === 'attributes_from_biostudies.File' && (
-                    attr.value?.additional_metadata?.Data_Type === 'transcripts' ||
-                    attr.value?.additional_metadata?.Data_Type === 'Transcript_Coordinates' ||
-                    attr.value?.additional_metadata?.Description?.includes('Feature barcode') ||
-                    attr.value?.additional_metadata?.Description?.includes('feature matrix')
+                    attr.value?.attributes?.Data_Type === 'transcripts' ||
+                    attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
+                    attr.value?.attributes?.Description?.includes('Feature barcode') ||
+                    attr.value?.attributes?.Description?.includes('feature matrix')
                 )
             );
             return dataTypeAttr ? true : false;
@@ -119,11 +115,14 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                     dropdown.appendChild(option);
                     filteredDatasets.push([uuid, fileCount, title]);
                 }
+                if (filteredDatasets.length === 1) {
+                    dropdown.value = uuid;
+                    initializeDataTable(uuid, fileCount);
+                }
             }).catch((error) => {
                 console.error(`Error fetching details for dataset ${uuid}:`, error);
             });
         });
-
         // Event listener for dropdown menu selection
         dropdown.addEventListener("change", () => {
             const selectedIndex = dropdown.selectedIndex; // Get the selected index
@@ -132,7 +131,6 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                 initializeDataTable(selectedUuid, totalFiles); // Initialize the table with selected dataset
             }
         });
-
         // Trigger a default load for the first dataset 
         dropdown.addEventListener("datasetLoaded", () => {
             if (filteredDatasets.length > 0) {

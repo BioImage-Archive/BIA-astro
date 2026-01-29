@@ -23,7 +23,6 @@ const { datasetUUIDsAndFileStats } = Astro.props;
     </div>
 
     <script>
-    import { PUBLIC_MONGO_API } from "astro:env/client";
       
       document.addEventListener("DOMContentLoaded", function () {
         const dropdown = document.getElementById("annotation_dataset_selector") as HTMLSelectElement; // Cast to HTMLSelectElement
@@ -44,7 +43,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
         const initializeDataTable = (datasetUuid: string, totalFiles: number) => {
             // set page size parameter of the api url with an upper limit of 1000
             const pageSize = totalFiles < 1000 ? totalFiles : 1000;
-            const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
+            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
 
             // Destroy the existing DataTable instance if it exists
             if (($.fn.DataTable as any).isDataTable('#annotation_file_references_table')) {

@@ -8,6 +8,11 @@ function getDownloadSize(image) {
   return file_size
 }
 
+function insertBreaks(str, every = 40) {
+  if (!str) return "";
+  return str.match(new RegExp(`.{1,${every}}`, "g")) ?? [];
+}
+
 const image_size = formatBytesToHumanSize(getDownloadSize(image))
 const file_path = image?.label || image?.file_path ;
 ---
@@ -16,7 +21,7 @@ const file_path = image?.label || image?.file_path ;
     <a href={imagePageRoot ? `/bioimage-archive/${imagePageRoot}/${image.uuid}` : `/bioimage-archive/image/${image.uuid}`}><img class="vf-figure__image" src={getThumbnail(image)}/></a>
   </td>
   <td>{image.uuid}</td>
-  <td>{file_path}</td>
+  <td class="file-path">{insertBreaks(file_path, 36).map(chunk => (<>{chunk}<wbr /></>))}</td>
   <td>{datasetTitle}</td>
   <td>{image_size}</td>
   <td>
