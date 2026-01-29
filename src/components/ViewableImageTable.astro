@@ -12,7 +12,7 @@ const { study, images, imagePageRoot } = Astro.props;
     </div>
     {Array.isArray(images) && images.length > 0 ? (
       <div>
-      <table id="viewable_images_table" class="display">
+      <table id="viewable_images_table" class="vf-table vf-table--compact display">
         <thead>
           <tr>
             <th>Preview</th>
@@ -44,9 +44,15 @@ const { study, images, imagePageRoot } = Astro.props;
     ): (
       <div>
         <p>
-          We currently have no viewable interactive images for this study. You can read more as to why this might be the case <a href="/bioimage-archive/help/about-the-new-website#why-does-a-submission-not-have-any-interactive-images">here</a>. 
+          We currently have no viewable interactive images for this study. You can read more as to why this might be the case <a href="/bioimage-archive/help/about-the-new-website#why-does-a-submission-not-have-any-interactive-images" class="vf-link">here</a>. 
         </p>
       </div>
     )}
-    
 </section>
+<style>
+ .file-path {
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+</style>

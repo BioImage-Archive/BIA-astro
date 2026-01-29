@@ -89,9 +89,8 @@ const breadcrumbs = [
 ]
 
 
-const omics_links = getSimpleAttributeValue(study, 'see_also_omics')
+const omics_links = getSimpleAttributeValue(study, 'see_also_omics') || study?.dataset?.flatMap(ds => getSimpleAttributeValue(ds, 'visual_omics'))?.filter(vo=> vo)
 const code_links = getSimpleAttributeValue(study, 'see_also_code')
-
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
@@ -126,7 +125,7 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
         <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
         <div><b>Licence: </b> <a href={study.licence}>{study.licence}</a><div>
         {
-          omics_links && (
+          omics_links && omics_links.length > 0 && (
             <div><b>Omics links: </b> <ul>{omics_links.map((link) => (<li class="vf-content">{link.description} <a href={link.link}>{link.link}</a></li>))}</ul></div>
           )
         }

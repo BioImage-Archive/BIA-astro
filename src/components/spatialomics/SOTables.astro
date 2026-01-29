@@ -115,6 +115,10 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                     dropdown.appendChild(option);
                     filteredDatasets.push([uuid, fileCount, title]);
                 }
+                if (filteredDatasets.length === 1) {
+                    dropdown.value = uuid;
+                    initializeDataTable(uuid, fileCount);
+                }
             }).catch((error) => {
                 console.error(`Error fetching details for dataset ${uuid}:`, error);
             });
