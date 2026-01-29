@@ -16,7 +16,7 @@ const getBreadcrumbsFromUrl=(path)=>{
 const breadcrumbs = Array.isArray(pagePath) ? pagePath : getBreadcrumbsFromUrl(pagePath).reverse();
 ---
 
-<div>
+<div style="padding-bottom: 2rem;">
     {
         breadcrumbs && 
         breadcrumbs.map(breadcrumb=>(

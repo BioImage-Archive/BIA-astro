@@ -15,7 +15,7 @@ import githubImage from "../assets/bioimage-archive/github_embl_green.png";
 import blueskyImage from "../assets/bioimage-archive/bluesky_embl_green.png";
 import youtubeImage from "../assets/bioimage-archive/youtube.png";
 
-import newsExampleImage from "../assets/bioimage-archive/news_example.png";
+import newsExampleImage from "../assets/bioimage-archive/news_example.webp";
 
 import ukriImage from "../assets/bioimage-archive/uk_ri_logo.jpg";
 import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png";
@@ -63,14 +63,15 @@ const cards = [
   },
 ];
 
-import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.png";
+import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.webp";
 import MenuCard from "../components/cards/LandingPageMenuCard.astro";
+import bannerImage from "../assets/bioimage-archive/banner.webp";
 ---
 <MinimalLayout pageTitle="The BioImage Archive">
 
   <section
   class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
-  style="--vf-hero--bg-image: url(https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/assets/banner.png);"
+  style={`background-image: url('${bannerImage.src}');`}
   >
     <div
       class="vf-hero__content | vf-box | vf-stack vf-stack--400"

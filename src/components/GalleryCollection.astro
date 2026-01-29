@@ -8,13 +8,15 @@ const { galleryData } = Astro.props;
 
 
 <BaseLayout pageTitle={galleryData.name}>
-    <body>
+    <section class="embl-grid embl-grid--has-centered-content">
+        <div>
+            <slot name="left-menu" />
+        </div>
         <section
             class="vf-news-container vf-news-container--featured | vf-stack "
         >
             <div class="vf-section-header">
                 <h2 class="vf-section-header__heading">
-                    <br />
                     {galleryData.title}
                 </h2>
             </div>
@@ -31,15 +33,15 @@ const { galleryData } = Astro.props;
 
             {
                 galleryData.body_text && (
-                    <div class=" vf-grid | vf-grid__col-3 |">
-                        <p class="vf-grid__col--span-2 | vf-content">
+                    <div class="vf-content"> 
+                        <p>
                             {galleryData.body_text}
                         </p>
                     </div>
                 )
             }
 
-            <div class="vf-news-container__content | vf-grid | vf-grid__col-4 |">
+            <div class="vf-news-container__content | vf-grid | vf-grid__col-3 |">
                 {
                     Object.values(galleryData.collections).map((collection) => (
                         <GalleryCard collection={collection} linkPath={galleryData.gallery_item_basepath} />
