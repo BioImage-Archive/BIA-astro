@@ -5,11 +5,12 @@ import BaseLayout from './BaseLayout.astro';
 
 ---
 <BaseLayout pageTitle={frontmatter.title}>
-  <section class="vf-grid | vf-grid__col-3">
-    <div class="vf-grid__col--span-2">
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div>
+      <slot name="left-menu" />
+    </div>
       <div class="vf-content">
         <slot />
-      </div>
     </div>
   </section>
 </BaseLayout>
