@@ -1,0 +1,26 @@
+---
+const { text = "" } = Astro.props;
+const parts = String(text).split(/(__HIT__|__\/HIT__)/g);
+
+let open = false;
+const segments = [];
+for (const p of parts) {
+  if (p === "__HIT__") { open = true; continue; }
+  if (p === "__/HIT__") { open = false; continue; }
+  if (p.length === 0) continue;
+  segments.push({ text: p, hit: open });
+}
+---
+
+<span>
+  {segments.map((s) =>
+    s.hit ? <mark><Fragment set:html={s.text} /></mark> : <span><Fragment set:html={s.text} /></span>
+  )}
+</span>
+
+<style>
+  mark {
+    padding: 0 .15em;
+    border-radius: .25em;
+  }
+</style>
