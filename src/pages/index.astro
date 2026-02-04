@@ -14,9 +14,7 @@ import emailImage from "../assets/bioimage-archive/email_embl_green.png";
 import githubImage from "../assets/bioimage-archive/github_embl_green.png";
 import blueskyImage from "../assets/bioimage-archive/bluesky_embl_green.png";
 import youtubeImage from "../assets/bioimage-archive/youtube.png";
-
-import newsExampleImage from "../assets/bioimage-archive/news_example.webp";
-
+import NewsSection from "../components/News.astro"
 import ukriImage from "../assets/bioimage-archive/uk_ri_logo.jpg";
 import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png";
 import euImage from "../assets/bioimage-archive/EU_logo.jpg";
@@ -116,7 +114,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
 
   <section
     class="vf-grid vf-grid__col-3 | vf-card-container | vf-u-fullbleed"
-    style="margin-left: 10%; margin-right: 10%;"
+    style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;"
   >
     {
       cards.map((card) => (
@@ -133,7 +131,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   <!-- Image strip -->
   <section
   class="vf-grid"
-  style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
+  style="padding: 1% 1%;margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
   >
     <figure class="vf-figure">
       <img
@@ -146,61 +144,19 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   </section>
 
   <!-- News -->
-  <section
-  class="vf-stack "
-  style="background-color: #D1E3F6; padding: 1% 1%; margin-left: 10%; margin-right: 10%; margin-bottom: 20px;"
-  >
-    <h2>News</h2>
-    <section class="vf-grid vf-grid__col-2">
-      <div>
-        <h3>BioImage Archive democratises access to microscopy data</h3>
-        EMBL-EBI’s BioImage Archive makes it easier to access and analyse biological
-        research data...
-
-        <a
-          href="https://www.ebi.ac.uk/about/news/updates-from-data-resources/bioimage-archive-galleries/"
-          class="vf-link vf-card__link"
-        >
-          Read more
-        </a>
-      </div>
-      <div>
-        <a href="galleries" class="vf-link logo-img">
-          <img
-            class="vf-figure__image"
-            src={newsExampleImage.src}
-            alt="Example news image."
-            loading="lazy"
-          />
-        </a>
-      </div>
-    </section>
-    <section class="embl-grid embl-grid--has-centered-content">
-      <div></div>
-      <div>
-        <a
-          href="https://listserver.ebi.ac.uk/mailman/listinfo/bioimage-archive-announce"
-          class="vf-link logo-img"
-        >
-          <button
-            class="vf-button vf-button--primary"
-            style="border-radius: 10px;">Subscribe to our mailing list</button
-          >
-        </a>
-      </div>
-    </section>
-  </section>
+  <NewsSection />
 
   <!-- Tutorial and get in touch -->
-  <section style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
+  <section style="padding: 1% 1%;margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
    <TrainingSection />
   </section>
   <section
   class="vf-grid vf-grid__col-2"
-  style="margin-left: 10%; margin-right: 10%;"
+  style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;"
   >
     <div>
-      <h2>Stay in touch</h2>
+      <h2 class="vf-section-header vf-section-header__heading">Stay in touch</h2>
+      <br/>
       <section
         class="vf-grid | vf-grid__col-3"
         style="margin-left: 0%; margin-right: 60%;"
@@ -237,8 +193,8 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   </section>
 
   <!-- Funding -->
-  <section style="margin: 16px 10%;">
-    <h2 class="padding-top-large" id="funders">Funders</h2>
+  <section style="padding: 1% 1%;margin: 16px 10%;">
+    <h2 class="vf-section-header vf-section-header__heading padding-top-large" id="funders">Funders</h2>
     <p>
       Ongoing development is enabled by capital investment from the UKRI
       Strategic Priorities Fund and operational costs supported by EMBL member
@@ -252,7 +208,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   }
   </style>
 
-  <section class="vf-content;" style="margin-left: 10%; margin-right: 10%;">
+  <section class="vf-content;" style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;">
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
       <span class="column column-block">
         <a href="https://www.ukri.org/" class="logo-img">

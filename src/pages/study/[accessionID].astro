@@ -6,6 +6,7 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
+import Citation from "../../components/Citation.astro";
 
 import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
@@ -100,6 +101,32 @@ function formatLinkType(link_type) {
   if (!link_type) return "";
   return linkTypeFormatting[link_type.toLowerCase()] ?? link_type;
 }
+export const formatAuthor = (name = "") => {
+  let n = name.trim().replace(/\s+/g, " ").replace(/\b\, PhD\b.*$/i, "").replace(", ", " ");
+  if (!n) return "";
+  if (/\b(lab|labs|laboratory|institute|center|centre|department|university|group|consortium)\b/i.test(n)) return n;
+  return n
+};
+
+
+export const doiToTag = (doi?: string | null) =>
+  doi?.trim() ? `<a class="vf-link" href=${doi}>doi:${doi.trim().replace(/^https?:\/\/doi\.org\//i, "")}</a>` : "";
+
+export const generateHowToCiteText = (study: Study) => {
+  const authors = (study.author ?? [])
+    .map(a => formatAuthor(a.display_name))
+    .filter(Boolean)
+    .join(", ");
+
+  const repo = study.accession_id?.includes("EMPIAR") ? "EMPIAR" : "BioImage Archive";
+  const urlForStudy = repo ==="EMPIAR"? "https://www.ebi.ac.uk/empiar/": "https://www.ebi.ac.uk/biostudies/BioImages/studies/"
+  const doi = doiToTag(study.doi) || `<a class="vf-link" href="${urlForStudy}${study.accession_id}">${urlForStudy}${study.accession_id}</a>`;
+
+  return [authors, `(${study.release_date.split("-")[0]})`, study.title.trim()+".", ` ${repo}, ${study.accession_id}.`, doi]
+    .filter(Boolean)
+    .join(" ") + ".";
+};
+const howToCite = generateHowToCiteText(study);
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/studies",
@@ -123,6 +150,7 @@ const breadcrumbs = [
     <div slot="ftp-link">
       <StudyFiles accessionID={accessionID}/>
     </div>
+    <div slot="how-to-cite" style="word-wrap: break-word;"><Citation howToCite={howToCite}/></div>
   </StudyContentsSummary>
 
   <hr/>

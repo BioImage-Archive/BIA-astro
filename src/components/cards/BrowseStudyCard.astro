@@ -43,7 +43,7 @@ function getDataForCardFilter(study) {
 export function highlightImagingMethod(text, highlight, query){
     const highlightedImagingMethod = [...new Set(highlight)];
     const highlightedText = highlightedImagingMethod.map(highlight => applyHighlight(text, highlight, query))
-    return highlightedImagingMethod.length > 0? highlightedText: text;
+    return query && highlightedImagingMethod.length > 0? highlightedText: text;
 
 }
 
