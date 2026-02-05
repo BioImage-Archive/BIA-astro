@@ -79,7 +79,7 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
     thumbnail_uri ? `<img style="width: 100%; height: 500px" src="${thumbnail_uri}" />` :
     `<img style="height: 500px;" src="${fallbackImage.src}" />`
 
-const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes
+const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes;
 
 
 const breadcrumbs = [
@@ -119,10 +119,17 @@ const breadcrumbs = [
                             {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
                             {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
                             {userProvidedAttribute && ( 
-                                <div>
+                                <div >
                                     <br/>
                                     <h4>Additional user metadata</h4>
-                                    {Object.entries(userProvidedAttribute).map(([key, value]) => (<div><b>{key}:</b> {value}</div>)) }
+                                    <div id="meta-wrap" data-collapsed="false" style="overflow-wrap:anywhere;">
+                                        <div id="meta-content">
+                                            {Object.entries(userProvidedAttribute).map(([k, v]) => (
+                                            <div><b>{k}:</b> {String(v)}</div>
+                                            ))}
+                                        </div>
+                                        <button id="meta-toggle" class="vf-button vf-button--primary vf-button--sm" type="button" aria-expanded="false" style="margin-top:12px;" hidden>See more</button>
+                                        </div>
                                 </div> 
                             )} 
                         </span>
@@ -306,3 +313,42 @@ const breadcrumbs = [
         </section>
     </body>
 </BaseLayout>
+<style>
+  #meta-wrap[data-collapsed="true"] #meta-content { overflow: hidden; }
+</style>
+
+<script is:inline>
+  function initMetaCollapse() {
+    const wrap = document.getElementById("meta-wrap");
+    const content = document.getElementById("meta-content");
+    const btn = document.getElementById("meta-toggle");
+
+    const MAX = 250; // your limit (or 500 to match iframe)
+
+    if (!wrap || !content || !btn) return;
+
+    const overflow = content.scrollHeight > MAX;
+
+    // ✅ remove button entirely if not needed
+    if (!overflow) {
+      btn.remove();
+      return;
+    }
+
+    // collapse initially
+    wrap.dataset.collapsed = "true";
+    content.style.maxHeight = `${MAX}px`;
+    content.style.overflow = "hidden";
+
+    btn.onclick = () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      btn.innerText = open ? "See more" : "See less";
+      wrap.dataset.collapsed = String(open);
+      content.style.maxHeight = open ? `${MAX}px` : "";
+    };
+  }
+
+  document.addEventListener("astro:page-load", initMetaCollapse);
+  document.addEventListener("DOMContentLoaded", initMetaCollapse);
+</script>
