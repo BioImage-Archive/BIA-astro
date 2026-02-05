@@ -1,0 +1,69 @@
+---
+const { howToCite } = Astro.props;
+---
+
+<button type="button" class="vf-button vf-button--primary vf-button--sm" id="open-cite-dialog">Cite this entry</button>
+
+  <dialog id="cite-dialog" class="cite-dialog" aria-labelledby="cite-dialog-title">
+    <form method="dialog" class="cite-dialog__panel">
+      <div class="cite-dialog__header">
+        <h3 id="cite-dialog-title" class="vf-heading vf-heading--h3">Cite this entry</h3>
+        <button aria-label="Close" onclick="this.closest('dialog').close()" style="position: absolute;top: 10px;right: 10px;background: none;border: none;font-size: 20px;font-weight: bold;cursor: pointer;line-height: 1;">×</button>
+      </div>
+      <div class="cite-dialog__body">
+        <div class="vf-content" style="overflow-wrap:anywhere;">
+          <Fragment set:html={howToCite} />
+        </div>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+<script type="module">
+    const dialog = document.getElementById("cite-dialog");
+    const openBtn = document.getElementById("open-cite-dialog");
+    openBtn?.addEventListener("click", () => dialog?.showModal());
+    dialog?.addEventListener("click", (e) => {
+        const r = dialog.getBoundingClientRect();
+        const inDialog =
+        e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        if (!inDialog) dialog.close();
+    });
+
+</script>
+<style>
+.cite-dialog {
+  border: 0;
+  padding: 0;
+  max-width: min(900px, 92vw);
+}
+
+.cite-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.cite-dialog__panel {
+  margin: 0;
+  padding: 0;
+}
+
+.cite-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.1rem 0.75rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.cite-dialog__body {
+  padding: 0.75rem;
+}
+
+.cite-dialog__actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+</style>
+

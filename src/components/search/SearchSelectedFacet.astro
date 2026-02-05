@@ -3,7 +3,7 @@ import { generateParamString, formatBytes } from "../SharedJSFunctions.js";
 import {type SelectedFacets} from "./SearchInterface.astro";
 import { capitalizeFirstLetter } from "./SearchFacet.astro"
 
-const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal, pageSize} = Astro.props;
+const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal, pageSize = 12} = Astro.props;
 
 const page = 1;
 

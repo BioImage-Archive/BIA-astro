@@ -1,7 +1,8 @@
 ---
-import { getTaxons, formatListItem, getStudyImage, getImagingMethodType } from "../SharedJSFunctions.js";
+import { getTaxons, formatListItem, getStudyImage, getImagingMethodType, applyHighlight, highlightLinks } from "../SharedJSFunctions.js";
+import  HighlightedText  from "../HighlightedText.astro";
 import "../../styles/dataset_card.css"
-const { study, studyPageRoot, taglist, annotationType, cardImageOverride} = Astro.props;
+const { study, studyPageRoot, taglist, annotationType, cardImageOverride, highlight, query} = Astro.props;
 
 export function getImagingType(study) {
     const imageTypeList = getImagingMethodType(study)
@@ -15,17 +16,15 @@ export function getImagingType(study) {
 }
 
 export function getAnnotationMethod(study){
-    const annotationMethods = []
+    const annotationMethods = new Set();
     for (var dataset of study.dataset) {
         for (var ap of dataset.annotation_process) {
             for (var methodNames of ap.method_type) {
-                if (!annotationMethods.includes(methodNames)) {
-                    annotationMethods.push(methodNames.replace("_", " "))
-                }
+                annotationMethods.add(methodNames.replace(/_/g, " "))
             }
         }
     }
-    return annotationMethods
+    return [...annotationMethods]
 
 }
 
@@ -40,12 +39,30 @@ function getDataForCardFilter(study) {
     const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
     return dataString
 }
+
+export function highlightImagingMethod(text, highlight, query){
+    const highlightedImagingMethod = [...new Set(highlight)];
+    const highlightedText = highlightedImagingMethod.map(highlight => applyHighlight(text, highlight, query))
+    return query && highlightedImagingMethod.length > 0? highlightedText: text;
+
+}
+
+export function highlightOrganism(text, highlight, query){
+    const highlightOrganism = highlight?.['dataset.biological_entity.organism_classification.common_name']?.[0] || highlight?.['dataset.biological_entity.organism_classification.scientific_name']?.[0];
+    return query && text? applyHighlight(text, highlightOrganism, query): text;
+
+}
+
 const studyCardImage = getStudyImage(study, cardImageOverride);
 const isFallback = String(studyCardImage).includes("placeholder");
 const fallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
-const imagingMethod = getImagingType(study);
-const organism = renderTaxonList(study);
-const annotationMethod = annotationType? annotationType: getAnnotationMethod(study) 
+const imagingMethod = highlightImagingMethod(getImagingType(study), highlight?.["dataset.acquisition_process.imaging_method_name"], query);
+const organism = highlightOrganism(renderTaxonList(study), highlight, query);
+const annotationMethod = annotationType? annotationType: getAnnotationMethod(study);
+const highlightedAnnotationMethod = highlightImagingMethod(annotationMethod.join(", "), highlight?.["dataset.annotation_process.method_type"], query)
+
+const base = `/bioimage-archive/${studyPageRoot}/${study.accession_id}`;
+const highlightedStudyLink = highlightLinks(base, highlight, query);
 ---
 <article class="vf-card vf-card--brand vf-card--bordered custom-card" data-message={getDataForCardFilter(study)}>
     <div class="image-container">
@@ -58,16 +75,16 @@ const annotationMethod = annotationType? annotationType: getAnnotationMethod(stu
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
-            <a class="vf-card__link" href={`/bioimage-archive/${studyPageRoot}/${study.accession_id}`} >
+            <a class="vf-card__link" href={highlight? highlightedStudyLink : base} >
                 { study.accession_id }
                 <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
             </a>
         </h3>
         <p class="vf-card__text">
-        { study.title }<br><br>
+        <HighlightedText text={highlight?.title?.[0] ?? study.title} /> <br />
         <b>Release date: </b>{ study.release_date }<br>
-        {imagingMethod && (<><b>Imaging method: </b>{imagingMethod} <br /></>)}
-        {organism && (<><b>Organism: </b><Fragment set:html={organism}></Fragment></>)}
+        {imagingMethod && (<><b>Imaging method: </b><HighlightedText text={imagingMethod} /><br /></>)}
+        {organism && (<><b>Organism: </b><HighlightedText text={organism} /> </>)}
         </p>
 
         {taglist && taglist.length > 0 && (
@@ -78,7 +95,7 @@ const annotationMethod = annotationType? annotationType: getAnnotationMethod(stu
 
         {annotationMethod && annotationMethod.length > 0 && (
             <p class="vf-card__text">
-                <b>Annotation Method:</b> {annotationMethod.join(", ") || "No information available"}
+                <b>Annotation Method:</b><HighlightedText text={highlightedAnnotationMethod || "No information available"} />
             </p>
         )}
     </div>

@@ -351,3 +351,23 @@ export function getTutorialURLs(urlType){
     const quickTourURL = "https://www.ebi.ac.uk/training/online/courses/bioimage-archive-quick-tour"
     return urlType === "submission"? `${quickTourURL}/submitting-data-to-bioimage-archive-2/submission/` : quickTourURL
 }
+
+export function applyHighlight(text, highlight, query) {
+  let out = text || "";
+  const clean = highlight?.replace(/__HIT__|__\/HIT__/g, "");
+  if (!clean || !clean.toLowerCase().includes(query.toLowerCase()) || !out.toLowerCase().includes(clean.toLowerCase()) ) return out;
+  return out.replace(new RegExp(clean, "gi"), `__HIT__${clean}__/HIT__`);
+}
+
+export function textFragmentLink(baseUrl, highlightStr, query) {
+  const clean = highlightStr.replace(/__HIT__|__\/HIT__/g, "").trim();
+  if (!clean || !clean.toLowerCase().includes(query.toLowerCase()) ) return baseUrl;
+  return `${baseUrl}#:~:text=${encodeURIComponent(clean)}`;
+}
+
+export function highlightLinks(baseUrl, highlightObj, query, limit = 8) {
+  if (!query ){ return baseUrl}
+  const vals = Object.values(highlightObj || {}).flat();
+  const uniq = [...new Set(vals)].slice(0, limit);
+  return uniq.flatMap(h => ({ text: h[0]?.replace(/__HIT__|__\/HIT__/g, "").trim(), url: textFragmentLink(baseUrl, h, query) }))?.[0]?.["url"];
+}

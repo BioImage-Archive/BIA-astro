@@ -1,0 +1,176 @@
+---
+import { getCollection } from "astro:content";
+const items = await getCollection("news_articles");
+
+---
+
+<section class="vf-news-container vf-stack" style="padding: 1% 1%; margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
+    <h2 class="vf-section-header vf-section-header__heading">News</h2>
+    <div class="vf-news-container__content news-slideshow-container">
+            {await Promise.all(items.map(async (news) => {
+            const { Content } = await news.render();
+            return (
+                <article class="vf-summary vf-summary--news news-article fade">
+                  <span class="slider"><button onclick="prevNewsSlide()" type="button" class="slider-left-button"></button></span>
+                <section class="vf-grid" id="newsSlides">
+                    <div>
+                        <h3 class="vf-summary__title">{news.data.title}</h3>
+                        <p class="vf-summary__text">
+                            <Content />
+                        </p>
+                    </div>
+                    <div>
+                        {news.data.cover?.src && (
+                        <a href={news.data.figureLink} class="vf-link logo-img">
+                            <img class="vf-figure__image" src={news.data.cover.src} alt={news.data.imageAlt} loading="lazy" style="max-height: 200px;"/>
+                        </a>
+                        )}
+                    </div>
+                </section>
+                <span class="slider"><button onclick="nextNewsSlide()" type="button" class="slider-right-button"></button></span>
+                </article>
+            );
+            }))}
+    </div>
+    <br/>
+  <section class="embl-grid embl-grid--has-centered-content">
+    <div></div>
+    <div>
+      <a href="https://listserver.ebi.ac.uk/mailman/listinfo/bioimage-archive-announce" class="vf-link logo-img">
+        <button class="vf-button vf-button--primary" style="border-radius:10px;">Subscribe to our mailing list</button>
+      </a>
+    </div>
+  </section>
+</section>
+<script type="module">
+  let slideIndex = 0;
+  let timerId = null;
+  let isPaused = false;
+  const AUTOPLAY_MS = 5000;
+
+  function getSlides() {
+    return Array.from(document.getElementsByClassName("news-article"));
+  }
+
+  function renderSlide(index) {
+    const slides = getSlides();
+    if (!slides.length) return;
+
+    // wrap
+    slideIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((s, i) => {
+      s.style.display = i === slideIndex ? "block" : "none";
+    });
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    if (isPaused) return;
+
+    timerId = window.setInterval(() => {
+      renderSlide(slideIndex + 1);
+    }, AUTOPLAY_MS);
+  }
+
+  function stopAutoplay() {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
+  // Call this when user interacts with arrows
+  function pauseAutoplay() {
+    isPaused = true;
+    stopAutoplay();
+  }
+
+  // Expose to onclick handlers in markup
+  window.nextNewsSlide = function () {
+    pauseAutoplay();
+    renderSlide(slideIndex + 1);
+  };
+
+  window.prevNewsSlide = function () {
+    pauseAutoplay();
+    renderSlide(slideIndex - 1);
+  };
+
+  // init
+  renderSlide(1);
+  startAutoplay();
+</script>
+
+<style>
+.fade {
+  animation-name: fade;
+  animation-duration: 2.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+.slider-right-button{
+    position:absolute; 
+    right:0;
+    margin-right: 1.5%; 
+    top:40%; 
+    z-index:10; 
+    padding: 10px; 
+    border: solid black;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border-width: 0 7px 7px 0;
+    display: inline-block;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(-45deg)
+}
+
+.slider-left-button{
+    position:absolute; 
+    left:0;
+    margin-left: 1.5%; 
+    top:40%; 
+    z-index:10;
+    padding: 10px; 
+    border: solid black;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border-width: 0 7px 7px 0;
+    display: inline-block;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(135deg)
+}
+
+.news-article{
+    background-color: #D1E3F6;
+  }
+
+@media (max-width: 820px) {
+  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+  #newsSlides{
+    margin:4%; 
+    padding: 4%;
+  }
+  
+}
+@media (min-width: 821px) {
+  /* CSS that should be displayed if width is equal to or less than 800px goes here */
+  #newsSlides{
+    margin: 2%; 
+    padding: 3%;
+  }
+
+  .news-article{
+    height: 240px;
+    margin-bottom: -10px;
+    margin-left: -2%;
+    margin-right: -2%;
+    padding-bottom: 2%;
+  }
+}
+
+</style>
