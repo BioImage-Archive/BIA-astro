@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "website.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "website.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        {{- include "website.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "ghcr.io/bioimage-archive/bia-astro:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /bioimage-archive/
+              port: http
+            initialDelaySeconds: 10
+            failureThreshold: 10
+            periodSeconds: 60
+          env:
+            - name: PUBLIC_SEARCH_API
+              value: "{{ .Values.env.publicSearchApi }}"
+            - name: PUBLIC_MONGO_API
+              value: "{{ .Values.env.publicMongoApi }}"
