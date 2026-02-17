@@ -45,7 +45,7 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
 ---
 <section class="vf-content">
   {hasNeuroGlancerURL.length > 0? (
-      <a href={hasNeuroGlancerURL}><button class="vf-button vf-button--primary vf-button--sm">Open overlay in Neuroglancer viewer</button></a>
+      <a target="_blank" href={hasNeuroGlancerURL}><button class="vf-button vf-button--primary vf-button--sm">Open overlay in Neuroglancer viewer</button></a>
     <div class="vf-grid">
       <div class="vf-grid__col--span-2"><iframe src={hasNeuroGlancerURL} style="height: 600px; width: 100%;border: none;"></iframe></div>
     </div>

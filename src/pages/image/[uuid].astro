@@ -113,8 +113,8 @@ const breadcrumbs = [
                     interactiveImageRepresentation && (
                         <span>
                             <h3>Image metadata</h3>
-                            <b>Physical image size: </b> {formatPhysicalDimensions(image) ?? "Not provided" }<br />
-                            <b>Physical voxel size: </b> {formatPhysicalVoxelDimensions(interactiveImageRepresentation) ?? "Not provided" }<br />
+                            <b>Physical image size: </b> {formatPhysicalDimensions(image) }<br />
+                            <b>Physical voxel size: </b> {formatPhysicalVoxelDimensions(interactiveImageRepresentation) }<br />
                             <b>Pixel image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br />
                             {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
                             {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
@@ -157,21 +157,21 @@ const breadcrumbs = [
                 }
                 {
                     vizarrIFrameSource && (
-                        <a href={vizarrIFrameSource}>
+                        <a href={vizarrIFrameSource} target="_blank">
                             <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
                         </a>
                     )
                 }
                 {
                     itkLink && (
-                        <a href={itkLink}>
+                        <a href={itkLink} target="_blank">
                             <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
                         </a>
                     )
                 }
                 {
                     ng_link && (
-                        <a href={ng_link}>
+                        <a href={ng_link} target="_blank">
                             <button class="vf-button vf-button--primary vf-button--sm">Open in neuroglancer</button>
                         </a>
                     )

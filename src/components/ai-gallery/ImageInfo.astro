@@ -10,10 +10,10 @@ const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK"
 
 ---
 <div style="min-width: 48%">
-    <a href={vizarrURL+url} id={vizarrViewer}>
+    <a target="_blank" href={vizarrURL+url} id={vizarrViewer}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in Vizarr viewer</button>
     </a> 
-    <a href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url} id={itkViewer}>
+    <a target="_blank" href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url} id={itkViewer}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
     </a>
     <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={url}>Copy {text} OME-Zarr URI</button><br/>
