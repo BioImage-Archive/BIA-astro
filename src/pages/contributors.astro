@@ -1,0 +1,44 @@
+---
+import AboutusLayout from "../layouts/AboutusLayout.astro"
+const frontmatter = {"title": "Contributors"}
+import { getCollection } from "astro:content";
+const items = await getCollection("contributors");
+
+function compare( a, b ) {
+  if ( a.id < b.id ){
+    return -1;
+  }
+  if ( a.id > b.id ){
+    return 1;
+  }
+  return 0;
+}
+
+---
+<AboutusLayout frontmatter={frontmatter}>
+    <h2 class="vf-text vf-text-heading--2">Contributors</h2>
+    <p>
+        Our technical development is driven by the needs of the bioimaging community. We are grateful to our 
+        contributors, whose feedback and testing help shape the direction of our work. If you’re interested in 
+        becoming a contributor, please get in touch.
+    </p>
+    <br/>
+    <section class="vf-grid vf-grid__col-2">
+        {items.sort(compare).map( (contributor) => {
+            return (
+                    <div>
+                    <article class="vf-profile vf-profile--medium vf-profile--inline">
+                        <a class="vf-profile__image vf-link" href={`/bioimage-archive/study/${contributor.data.accessionID}`}>
+                            <img class="vf-profile__image" src={contributor.data.contributorImage.src} alt={contributor.data.name} loading="lazy" />
+                        </a>
+                        <h3 class="vf-profile__title">
+                            <a class="vf-profile__link" href={contributor.data.profileLink}>{contributor.data.name}</a>
+                        </h3>
+                        <p class="vf-profile__job-title">{contributor.data.jobTitle}</p>
+                        <p class="vf-profile__text">{contributor.data.affiliation}</p>
+                    </article>
+                    </div>
+            );
+        })}
+    </section>
+</AboutusLayout>

@@ -6,7 +6,7 @@ import CaseStudyImageCard from "../components/CaseStudy.astro";
 const allPosts = await getCollection("case_studies");
 ---
 <CasestudiesLayout>
-      <h2 class="vf-intro__subheading">Case Studies</h2>
+      <h2 class="vf-text vf-text-heading--2">Case Studies</h2>
 {
   allPosts.map((post) => (
     <div>
