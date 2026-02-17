@@ -5,6 +5,7 @@ import EMPIARHeader from '../components/EMPIARHeader.astro';
 import Navigation from '../components/Navigation.astro';
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import { PUBLIC_GTAG } from "astro:env/client";
+import Announcement from "../components/Announcement.astro";
 
 const { pageTitle, breadcrumbs } = Astro.props;
 
@@ -46,6 +47,7 @@ const baseUrl = import.meta.env.BASE_URL;
     <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
     <EMPIARHeader />
     <Navigation />
+    <Announcement />
     <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
     <slot />
     <Footer />

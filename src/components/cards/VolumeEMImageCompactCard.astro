@@ -5,13 +5,13 @@ const { image } = Astro.props;
     <div class="image-container">
         <img src={ image.static_display_src } alt="" loading="lazy">
         <div class="icon-container">
-            <a href={ image.view_link } class="view-link" title="View in Neuroglancer">
+            <a target="_blank" href={ image.view_link } class="view-link" title="View in Neuroglancer">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                     <circle cx="12" cy="12" r="3"/>
                 </svg>
             </a>
-            <a href={"/bioimage-archive/image/" + image.uuid} class="metadata-link" title="View Metadata">
+            <a target="_blank" href={"/bioimage-archive/image/" + image.uuid} class="metadata-link" title="View Metadata">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
@@ -25,7 +25,7 @@ const { image } = Astro.props;
             </button>
         </div>
         <div class="study-link">
-            <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+            <a target="_blank" href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
         <div class="size-bar">
             <span class="physical-size">

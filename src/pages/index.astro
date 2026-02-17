@@ -20,6 +20,7 @@ import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png"
 import euImage from "../assets/bioimage-archive/EU_logo.jpg";
 import SearchBar from "../components/search/SearchBar.astro";
 import TrainingSection from "../components/TrainingSection.astro";
+import Announcement from "../components/Announcement.astro";
 
 const cards = [
   {
@@ -63,8 +64,7 @@ const cards = [
 import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.webp";
 import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 import bannerImage from "../assets/bioimage-archive/banner.webp";
-import { getCollection } from "astro:content";
-const items = await getCollection("announcements");
+
 ---
 <MinimalLayout pageTitle="The BioImage Archive">
   <section
@@ -111,18 +111,7 @@ const items = await getCollection("announcements");
       </h3>
     </div>
   </section>
-  <section class="vf-u-fullbleed" style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;">
-    {await Promise.all(items.map(async (announcement) => {
-            const { Content } = await announcement.render();
-            return (
-                <div class={announcement.data.className} style="padding: 1%;">
-                  <h2 class="vf-text vf-text-heading--2">{announcement.data.title}</h2>
-                  <button aria-label="Close" onclick="remove(this)" style="position: absolute;top: 20px;right: 20px;background: none;border: none;font-size: 20px;font-weight: bold;cursor: pointer;line-height: 1;">×</button>
-                  <div class="vf-banner__content"><p class="vf-banner__text"><Content /></p></div>
-                </div>
-            );
-            }))}
-  </section>
+  <Announcement />
   <section
     class="vf-grid vf-grid__col-3 | vf-card-container | vf-u-fullbleed"
     style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;"
@@ -254,9 +243,3 @@ const items = await getCollection("announcements");
     </div>
   </section>
 </MinimalLayout>
-<script is:inline>
-  function remove(el) {
-  var element = el.parentNode;
-  element.remove();
-}
-</script>

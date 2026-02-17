@@ -6,6 +6,7 @@ import DataTable from 'datatables.net-dt';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
+import Announcement from "../components/Announcement.astro";
 import { PUBLIC_GTAG } from "astro:env/client";
 const { pageTitle } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL;
@@ -48,6 +49,7 @@ const baseUrl = import.meta.env.BASE_URL;
   <body class="vf-body">
     <Header />
     <Navigation />
+    <Announcement />
     <slot />
     <Footer />
   </body>
