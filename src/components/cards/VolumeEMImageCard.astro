@@ -11,12 +11,12 @@ const { image } = Astro.props;
         </p>
     </div>
     <div class="image-container">
-        <a href={ image.view_link }><img src={ image.static_display_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;"></a>
+        <a target="_blank" href={ image.view_link }><img src={ image.static_display_src } alt="" class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;"></a>
         <div class="study-link">
-            <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
+            <a target="_blank" href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
         <div class="license-badge">
-            <a href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
+            <a target="_blank" href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
                 <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0 License">
             </a>
         </div>
@@ -51,10 +51,10 @@ const { image } = Astro.props;
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <div class="button-container">
-            <button><a href={ image.view_link }>View</a></button>
-            <button><a href={"/bioimage-archive/image/" + image.uuid}>Experiment metadata</a></button>
+            <button><a target="_blank" href={ image.view_link }>View</a></button>
+            <button><a target="_blank" href={"/bioimage-archive/image/" + image.uuid}>Experiment metadata</a></button>
             <button onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
-            <button><a href={`https://ftp.ebi.ac.uk/empiar/world_availability/${image.submitted_in_study_accession.split('-')[1]}/data/`}>Raw data</a></button>
+            <button><a target="_blank" href={`https://ftp.ebi.ac.uk/empiar/world_availability/${image.submitted_in_study_accession.split('-')[1]}/data/`}>Raw data</a></button>
         </div>
     </div>
 </article>

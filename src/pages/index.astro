@@ -18,9 +18,9 @@ import NewsSection from "../components/News.astro"
 import ukriImage from "../assets/bioimage-archive/uk_ri_logo.jpg";
 import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png";
 import euImage from "../assets/bioimage-archive/EU_logo.jpg";
-
 import SearchBar from "../components/search/SearchBar.astro";
 import TrainingSection from "../components/TrainingSection.astro";
+import Announcement from "../components/Announcement.astro";
 
 const cards = [
   {
@@ -64,9 +64,9 @@ const cards = [
 import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.webp";
 import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 import bannerImage from "../assets/bioimage-archive/banner.webp";
+
 ---
 <MinimalLayout pageTitle="The BioImage Archive">
-
   <section
   class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
   style={`background-image: url('${bannerImage.src}');`}
@@ -111,7 +111,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
       </h3>
     </div>
   </section>
-
+  <Announcement />
   <section
     class="vf-grid vf-grid__col-3 | vf-card-container | vf-u-fullbleed"
     style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;"

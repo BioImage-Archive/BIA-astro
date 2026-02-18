@@ -40,7 +40,7 @@ interface Image {
                     <img src={image.thumbnail_src} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
                 </td>
                 <td>
-                    <a href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>
+                    <a target="_blank" href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>
                         {image.label}
                     </a>
                 </td>
@@ -66,8 +66,8 @@ interface Image {
                     {Math.round(image.voxel_size_z * 1e9)}
                 </td>
                 <td>
-                    <a href={image.view_link}>View</a> |
-                    <a href={"/bioimage-archive/image/" + image.uuid}>Info</a>
+                    <a target="_blank" href={image.view_link}>View</a> |
+                    <a target="_blank" href={"/bioimage-archive/image/" + image.uuid}>Info</a>
                 </td>
             </tr>
         ))}

@@ -170,7 +170,7 @@ export function formatBytes(value, field){
 }
 
 function formatPhysicalDimension(value, text) {
-    if (text === "") {
+    if (text === "" && value !== 1) {
         if (value != null) {
             return Number(value).toPrecision(2)
         } else {
