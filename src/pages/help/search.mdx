@@ -1,0 +1,75 @@
+---
+title: Searching the BioImage Archive.
+layout: ../../layouts/HelpLayout.astro
+
+---
+import search_box from "/src/assets/bioimage-archive/search_box.png";
+import browse_nav_bar from "/src/assets/bioimage-archive/browse_nav_bar.png";
+import study_search_results from "/src/assets/bioimage-archive/study_search_results.png";
+import search_highlight_study from "/src/assets/bioimage-archive/search_highlight_study.png";
+import image_search_results from "/src/assets/bioimage-archive/image_search_results.png";
+import search_highlight_image from "/src/assets/bioimage-archive/search_highlight_image.png";
+
+## Searching the BioImage Archive
+
+You can search via the search box available in the top-right corner of every page. You will be prompted to choose whether you want to search studies or individual images.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={search_box.src} alt="Screenshot of the website searchbox showcasing Image and Study search"/>
+</figure>
+
+You can also use the dropdown menu under Browse in the navigation bar to select whether you want to browse studies or images.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={browse_nav_bar.src} alt="Screenshot of the nav bar displaying how you can select to browse by study or image"/>
+</figure>
+
+### Study search
+
+Enter any words that describe studies you are interested in, click on the “Study” option and then on “Search”. Your queries may include:
+
+* Scientific terms such as an <a href="https://beta.bioimagearchive.org/bioimage-archive/studies?query=Drosophila" target="_blank">organism</a> or <a href="https://beta.bioimagearchive.org/bioimage-archive/studies?query=Confocal+microscopy" target="_blank">imaging method</a>
+* Study information such as <a href="https://beta.bioimagearchive.org/bioimage-archive/studies?query=S-BIAD634" target="_blank">accession ids</a>, <a href="https://beta.bioimagearchive.org/bioimage-archive/studies?query=Zulueta-Coarasa" target="_blank">author names</a>, or <a href="https://beta.bioimagearchive.org/bioimage-archive/studies?query=Canadian+Institutes+of+Health+Research" target="_blank">funding bodies</a> 
+* Associated data such as an <a href="https://beta.bioimagearchive.org/bioimage-archive/studies?query=segmentation+mask" target="_blank">annotation type</a> 
+
+For example entering the words confocal fluorescence microscopy returns all studies containing any or all three words. Each result will be displayed in a card showing an overview of the study and a representative image if available. Within the results any matching search word terms appearing on the cards are highlighted in yellow.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={study_search_results.src} alt="Screenshot of the study search results"/>
+</figure>
+
+You can use the toggle at the top of the page to only see studies that have viewable images that can be explored interactively.
+
+Clicking on the card of a study takes you to a more detailed page about that study. In most cases, the first match to your search term will be highlighted in purple.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={search_highlight_study.src} alt="Screenshot of search terms highlighted in purple for studies"/>
+</figure>
+
+You can adjust the page size at the top of the page. You can also choose to visualise the search results as cards, as a table, or as a grid. If there are many results, they will be split over multiple pages. Links at the bottom of the results allow you to navigate the pages.
+
+Search terms are shown at the top of the page next to “Query”. You can refine your search using filters to the left of the results. For example, to specify organisms, release years, imaging methods, or whether you want to find datasets with annotations such as segmentation masks. You can delete a search term by clicking the corresponding blue pill next to “Query” at the top of the page.
+
+### Image search
+
+You can search over the subset of viewable/interactive OME-Zarr images that were created for each study. Enter any words that describe individual images you are interested in, click on the “Image” option and then on “Search”. Your queries may include:
+
+* Scientific terms such as an <a href="https://beta.bioimagearchive.org/bioimage-archive/images?query=Drosophila" target="_blank">organism</a>, <a href="https://beta.bioimagearchive.org/bioimage-archive/images?query=Confocal+microscopy" target="_blank">imaging method</a>, or <a href="https://beta.bioimagearchive.org/bioimage-archive/images?query=segmentation+mask" target="_blank">annotation types</a>
+* Study information such as <a href="https://beta.bioimagearchive.org/bioimage-archive/images?query=S-BIAD634" target="_blank">accession ids</a>
+* Image-level information such as <a href="https://beta.bioimagearchive.org/bioimage-archive/images?query=png" target="_blank">image formats</a> or <a href="https://beta.bioimagearchive.org/bioimage-archive/images?query=512" target="_blank">the image dimensions in pixels</a> 
+
+For example searching for Caenorhabditis elegans returns all interactive images of that organism. Each result will be displayed in a card showing an overview of the image and a preview.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={image_search_results.src} alt="Screenshot of the image search results"/>
+</figure>
+
+Clicking on the card of an image takes you to a more detailed page about that image. In most cases, the first match to your search term will be highlighted in purple.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={search_highlight_image.src} alt="Screenshot of search terms highlighted in purple for images"/>
+</figure>
+
+You can adjust the page size at the top of the page. You can also choose to visualise the search results as cards, as a table, or as a grid. If there are many results, they will be split over multiple pages. Links at the bottom of the results allow you to navigate the pages.
+
+Search terms are shown at the top of the page next to “Query”. You can refine your search using filters to the left of the results. For example, to specify organisms, image formats, imaging methods, number of channels, number of pixels along the XYZ axes, number of time steps, physical size of the XYZ axes, or voxel size . You can delete a search term by clicking the corresponding blue pill next to “Query” at the top of the page.
