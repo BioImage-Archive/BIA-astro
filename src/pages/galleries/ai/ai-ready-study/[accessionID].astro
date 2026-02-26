@@ -64,7 +64,7 @@ const breadcrumbs = [
   "/bioimage-archive/galleries/ai",
   "/bioimage-archive/galleries/ai/ai-ready-studies",
 ]
-
+console.log(allSourceImages.map(img=> img.uuid))
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={study.accession_id} breadcrumbs={breadcrumbs}>
   <StudyTitleInfo study_info={study} />  
