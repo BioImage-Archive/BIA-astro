@@ -231,11 +231,16 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
       if (v === null || v === undefined) continue;
       const s = String(v).trim();
       if (s === "") continue;
-
       if (facetKey === "size_c.eq" && v === "More than 5" && url.origin !== "http://local"){
         url.searchParams.append("size_c.gt", "5")
       }else{
-        url.searchParams.append(facetKey, v);
+        if (facetKey === "has_converted_image" && url.origin !== "http://local"){
+          url.searchParams.append("has.thumbnail", "true")
+        }
+        else{
+          url.searchParams.append(facetKey, v);
+        }
+        
       }
     }
   }
@@ -353,10 +358,23 @@ export function getTutorialURLs(urlType){
 }
 
 export function applyHighlight(text, highlight, query) {
-  let out = text || "";
-  const clean = highlight?.replace(/__HIT__|__\/HIT__/g, "");
-  if (!clean || !clean.toLowerCase().includes(query.toLowerCase()) || !out.toLowerCase().includes(clean.toLowerCase()) ) return out;
-  return out.replace(new RegExp(clean, "gi"), `__HIT__${clean}__/HIT__`);
+const out = text ?? "";
+  if (!query) return out;
+
+  // If it's already highlighted, keep it (prevents double-highlighting / nesting)
+  if (out.includes("__HIT__")) return out;
+
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(escapedQuery, "gi");
+
+  // Split into ["text", "<tag>", "text", ...] and only replace in text parts
+  return out
+    .split(/(<[^>]*>)/g)
+    .map(part => {
+      if (part.startsWith("<") && part.endsWith(">")) return part; // keep tags untouched
+      return part.replace(re, m => `__HIT__${m}__/HIT__`);
+    })
+    .join("");
 }
 
 export function textFragmentLink(baseUrl, highlightStr, query) {

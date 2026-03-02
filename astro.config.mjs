@@ -57,7 +57,7 @@ export default defineConfig({
         required: true,
         access: "public",
         context: "client",
-        default: "https://alpha.bioimagearchive.org/search"
+        default: "https://alpha.bioimagearchive.org/search/v1"
       }),
       PUBLIC_MONGO_API: envField.string({
         type: "string",

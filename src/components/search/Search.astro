@@ -31,8 +31,8 @@ const selectedFacets: SelectedFacets = {
   "facet.organism": url.searchParams.getAll("facet.organism"),
   "facet.imaging_method": url.searchParams.getAll("facet.imaging_method"),
   "facet.year": url.searchParams.getAll("facet.year"),
-  "facet.annotation_type": url.searchParams.getAll("facet.annotation_type"),
-
+  "facet.annotation_method": url.searchParams.getAll("facet.annotation_method"),
+  "has_converted_image": url.searchParams.getAll("has_converted_image"),
   "facet.image_format": url.searchParams.getAll("facet.image_format"),
   "size_c.eq": url.searchParams.getAll("size_c.eq"),
 
@@ -70,6 +70,29 @@ const selectedFacets: SelectedFacets = {
 
   "voxel_physical_size_z.gte": url.searchParams.getAll("voxel_physical_size_z.gte"),
   "voxel_physical_size_z.lte": url.searchParams.getAll("voxel_physical_size_z.lte"),
+};
+const FACET_CONFIG: Record<
+  string,
+  { title: string; type: "terms" | "range" | "slider" | "boolean"; queryKey?: string; field?: string }
+> = {
+  scientific_name: { title: "Organism", type: "terms", queryKey: "facet.organism" },
+  imaging_method: { title: "Imaging Method", type: "terms", queryKey: "facet.imaging_method" },
+  release_date: { title: "Release Year", type: "terms", queryKey: "facet.year" },
+  annotation_method: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_method" },
+  image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
+  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
+
+  z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "slider", field: "size_y" },
+  time_steps: { title: "Time Steps", type: "slider", field: "size_t" },
+  total_size_in_bytes: { title: "Total Size (bytes)", type: "slider", field: "total_size_in_bytes" },
+  total_physical_size_x: { title: "Total Physical Size X (m)", type: "range", field: "total_physical_size_x" },
+  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
+  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
+  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "range", field: "voxel_physical_size_x" },
+  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "range", field: "voxel_physical_size_y" },
+  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "range", field: "voxel_physical_size_z" },
 };
 
 let hits = {} as SearchHits;
@@ -145,39 +168,12 @@ function hasMinMax(x: any): x is { min: number; max: number; globalMin: number; 
 }
 
 
-const FACET_CONFIG: Record<
-  string,
-  { title: string; type: "terms" | "range" | "slider"; queryKey?: string; field?: string }
-> = {
-  scientific_name: { title: "Organism", type: "terms", queryKey: "facet.organism" },
-  imaging_method: { title: "Imaging Method", type: "terms", queryKey: "facet.imaging_method" },
-  release_date: { title: "Release Year", type: "terms", queryKey: "facet.year" },
-  annotation_type: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_type" },
-
-  image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
-  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
-
-  z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
-  image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
-  image_pixel_y: { title: "Image Pixel Y (px)", type: "slider", field: "size_y" },
-  time_steps: { title: "Time Steps", type: "slider", field: "size_t" },
-  total_size_in_bytes: { title: "Total Size (bytes)", type: "slider", field: "total_size_in_bytes" },
-  total_physical_size_x: { title: "Total Physical Size X (m)", type: "range", field: "total_physical_size_x" },
-  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
-  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
-  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "range", field: "voxel_physical_size_x" },
-  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "range", field: "voxel_physical_size_y" },
-  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "range", field: "voxel_physical_size_z" },
-
-
-};
-
 const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   const cfg = FACET_CONFIG[facetKey];
   if (!cfg) return acc;
 
   // TERMS FACETS (buckets)
-  if (cfg.type === "terms") {
+  if (cfg.type === "terms" || cfg.type === "boolean") {
     if (!hasBuckets(data)) return acc;
 
     const valuesAndCounts = data.buckets
@@ -197,7 +193,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       Object.keys(valuesAndCounts).length + (data.sum_other_doc_count ?? 0);
 
     acc[cfg.queryKey!] = {
-      kind: "terms",
+      kind: cfg.type,
       valuesAndCounts,
       selectedValue: selectedFacets[cfg.queryKey!] ?? [],
       totalFacetCounts,
@@ -232,7 +228,6 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     return acc;
   }
 
-  return acc;
 }, {} as Record<string, any>);
 ---
 <style>
@@ -584,6 +579,33 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   // Set initial grid columns
   setGridColumns(4);
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("convertedImageToggle");
+    const hidden = document.getElementById("has_converted_image_hidden");
+    const form = document.getElementById("facets");
+
+    if (!toggle || !hidden || !form) return;
+
+    // ✅ init from URL
+    const url = new URL(window.location.href);
+    const on = url.searchParams.has("has_converted_image");
+    toggle.checked = on;
+
+    // ✅ ensure hidden input matches initial state
+    hidden.disabled = !on;
+
+    toggle.addEventListener("change", () => {
+      // enable/disable hidden field so it is included/excluded from GET
+      hidden.disabled = !toggle.checked;
+
+      // optional: reset pagination when changing this filter
+      const pageInput = form.querySelector('input[name="pagination.page"]');
+      if (pageInput) pageInput.remove();
+
+      form.requestSubmit?.() ?? form.submit();
+    });
+  });
 </script>
 
 <section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
@@ -606,7 +628,14 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
         <SearchFacet facet={facet} id={id} />
         </>
         )}
-        <input type="hidden" name="query" value={query}  />        
+        <input type="hidden" name="query" value={query}  />
+        <input
+          type="hidden"
+          id="has_converted_image_hidden"
+          name="has_converted_image"
+          value="true"
+          disabled={!url.searchParams.has("has_converted_image")}
+        />        
       </form>
     </div>
   </div>
@@ -625,6 +654,15 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                   </span>
                 </div>
                 <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
+                  { searchType === "study" &&
+                    <div class="converted-study-switch" style="padding: 0.5em 0.5em">
+                      <span> Studies with viewable images:  </span>
+                      <label class="switch">
+                        <input type="checkbox" id="convertedImageToggle">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  }
                   <div class="controls-container">
                     <div class="controls-inner">
                       <div class="toggle-switch">
