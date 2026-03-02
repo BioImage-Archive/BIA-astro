@@ -116,6 +116,7 @@ const isImagesPage = pathname.startsWith("/bioimage-archive/images");
 <script type="module">
   const form = document.getElementById("searchForm");
   const popover = document.getElementById("searchPopUp");
+  const input = document.getElementById("searchitem");
 
   const STUDIES_ACTION = "/bioimage-archive/studies";
   const IMAGES_ACTION = "/bioimage-archive/images";
@@ -123,24 +124,33 @@ const isImagesPage = pathname.startsWith("/bioimage-archive/images");
   const openPopover = () => popover.classList.add("isOpen");
   const closePopover = () => popover.classList.remove("isOpen");
 
-  form.addEventListener("focusin", openPopover);
+  // Open when interacting with the input (or anywhere in the form if you prefer)
+  input.addEventListener("focus", openPopover);
+  input.addEventListener("click", openPopover);
 
-  form.addEventListener("focusout", (e) => {
-    if (!form.contains(e.relatedTarget)) closePopover();
-  });
-
-  document.addEventListener("mousedown", (e) => {
+  // Close only when clicking/tapping outside the form
+  document.addEventListener("pointerdown", (e) => {
     if (!form.contains(e.target)) closePopover();
   });
 
-  form.querySelectorAll("[data-scope]").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const scope = btn.getAttribute("data-scope");
-    form.action = scope === "image" ? IMAGES_ACTION : STUDIES_ACTION;
-    form.querySelectorAll(".searchType").forEach((p) =>
-      p.classList.remove("isActive")
-    );
-    btn.classList.add("isActive");
+  // Optional: close on Escape for keyboard users
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closePopover();
   });
-});
-</script>
+
+  // Your existing scope toggle logic
+  form.querySelectorAll("[data-scope]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const scope = btn.getAttribute("data-scope");
+      form.action = scope === "image" ? IMAGES_ACTION : STUDIES_ACTION;
+
+      form.querySelectorAll(".searchType").forEach((p) =>
+        p.classList.remove("isActive")
+      );
+      btn.classList.add("isActive");
+
+      // Keep it open (optional). Remove if you want it to close after selecting.
+      openPopover();
+    });
+  });
+  </script>
