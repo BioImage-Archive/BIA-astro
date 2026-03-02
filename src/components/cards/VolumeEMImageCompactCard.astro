@@ -1,9 +1,10 @@
 ---
 const { image } = Astro.props;
+const displaySrc = image.static_display_src || image.thumbnail_src;
 ---
 <article class="compact-card custom-card">
     <div class="image-container">
-        <img src={ image.static_display_src } alt="" loading="lazy">
+        <img src={ displaySrc } alt="" loading="lazy">
         <div class="icon-container">
             <a target="_blank" href={ image.view_link } class="view-link" title="View in Neuroglancer">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
@@ -241,4 +242,3 @@ const { image } = Astro.props;
         color: #666;
     }
 </style>
-
