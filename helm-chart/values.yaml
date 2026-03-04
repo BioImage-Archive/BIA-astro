@@ -14,7 +14,7 @@ resources:
     cpu: ".25"
 
 env:
-  publicSearchApi: "http://search:8080"
+  publicSearchApi: "http://search:8080/v1"
   publicMongoApi: "http://api:8080/v2"
   gTag: "" # leave empty for dev
   
