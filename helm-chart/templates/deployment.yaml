@@ -40,3 +40,5 @@ spec:
               value: "{{ .Values.env.publicSearchApi }}"
             - name: PUBLIC_MONGO_API
               value: "{{ .Values.env.publicMongoApi }}"
+            - name: PUBLIC_GTAG
+              value: "{{ .Values.env.publicGtag }}"
