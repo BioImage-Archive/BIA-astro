@@ -7,7 +7,6 @@ COPY ./package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run astro build
 
 EXPOSE 8080
-CMD ["npm", "run", "prod"]
+CMD ["sh", "-c", "npm run build && npm run prod"]
