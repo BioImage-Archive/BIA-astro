@@ -1,0 +1,12 @@
+{
+  "spatialdata_id1": {
+    "label": "human heart Xenium FFPE section",
+    "submitted_in_study_accession": "S-BIAD2146",
+    "imaging_method": "fluorescence microscopy",
+    "organism": "Homo sapiens",
+    "thumbnail_src": "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/S-BIAD2146/S-BIAD2146_sdata_heart_s0_morpho.png",
+    "vitessce_config_src": "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/S-BIAD2146/default_vitessce_config.json",
+    "view_link":"https://vitessce.io/#?edit=false&url=https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/S-BIAD2146/default_vitessce_config.json",
+    "raw_data_link": "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/S-BIAD2146/sdata_heart_s0.zarr"
+  }
+}
