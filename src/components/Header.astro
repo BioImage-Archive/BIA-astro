@@ -2,6 +2,9 @@
 import biaLogo from "../assets/bioimage-archive/BIA_new_logo.png"
 import bannerImage from "../assets/bioimage-archive/banner.webp";
 import SearchBar from "../components/search/SearchBar.astro";
+import { PUBLIC_WEBSITE_STATE } from "astro:env/client";
+
+const state = PUBLIC_WEBSITE_STATE === "DEV"? "Alpha": "Beta";
 
 ---
 
@@ -15,7 +18,7 @@ import SearchBar from "../components/search/SearchBar.astro";
                     <img src={biaLogo.src} style="width:80px">
                 </div>
                 <div>
-                    <h2 class="vf-hero__heading">BioImage Archive</h2>
+                    <h2 class="vf-hero__heading">BioImage Archive {state === "Alpha" && <span class="vf-badge vf-badge--primary vf-badge--phases">{state}</span>}</h2>
                     <p class="vf-hero__subheading">A resource for open, FAIR life science imaging data</p>
                 </div>
             </section>
