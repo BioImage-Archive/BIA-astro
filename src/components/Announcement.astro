@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 const items = await getCollection("announcements");
 ---
+{
+    /*
 <section class="vf-u-fullbleed" style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;">
     {await Promise.all(items.map(async (announcement) => {
         const { Content } = await announcement.render();
@@ -21,3 +23,5 @@ const items = await getCollection("announcements");
   element.remove();
 }
 </script>
+*/
+}

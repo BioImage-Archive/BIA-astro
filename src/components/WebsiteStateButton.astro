@@ -1,6 +1,8 @@
 ---
+import { PUBLIC_WEBSITE_STATE } from "astro:env/client";
+const state = PUBLIC_WEBSITE_STATE === "DEV"? "alpha": "beta";
 ---
 
 <a href="/bioimage-archive/help/about-the-new-website" class="vf-badge vf-badge--primary vf-badge--phases" style="max-height: 16px">
-    beta
+    {state}
 </a >

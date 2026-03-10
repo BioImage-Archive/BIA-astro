@@ -21,6 +21,9 @@ import euImage from "../assets/bioimage-archive/EU_logo.jpg";
 import SearchBar from "../components/search/SearchBar.astro";
 import TrainingSection from "../components/TrainingSection.astro";
 import Announcement from "../components/Announcement.astro";
+import { PUBLIC_WEBSITE_STATE } from "astro:env/client";
+
+const state = PUBLIC_WEBSITE_STATE === "DEV"? "Alpha": "Beta";
 
 const cards = [
   {
@@ -82,7 +85,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
           />
         </div>
         <div>
-          <h2 class="vf-hero__heading">BioImage Archive</h2>
+          <h2 class="vf-hero__heading">BioImage Archive {state === "Alpha" && <span class="vf-badge vf-badge--primary vf-badge--phases">{state}</span>}</h2>
           <p class="vf-hero__subheading">
             A free, publicly available resource for life sciences images from
             any imaging modality, at any scale
@@ -107,7 +110,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
         style="margin: 0px 10%; padding: 24px 0px;"
       >
       <h3 style=" color: #ffffff; margin: 0px;">
-        Welcome to the Beta version of the BIA website.  <a href="/bioimage-archive/help/about-the-new-website" style="color: #ffffff"> Click here to learn more about the beta.</a> 
+        Welcome to the {state} version of the BIA website.  <a href="/bioimage-archive/help/about-the-new-website" style="color: #ffffff"> Click here to learn more about the {state}.</a> 
       </h3>
     </div>
   </section>

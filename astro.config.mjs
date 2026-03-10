@@ -72,6 +72,13 @@ export default defineConfig({
         access: "public",
         context: "client",
         default: ""
+      }),
+      PUBLIC_WEBSITE_STATE: envField.string({
+        type: "string",
+        required: true,
+        access: "public",
+        context: "client",
+        default: "DEV"
       })
     }
   },
