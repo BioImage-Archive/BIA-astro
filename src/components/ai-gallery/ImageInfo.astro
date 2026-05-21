@@ -3,7 +3,7 @@ import ImageMetadata from "./ImageMetadata.astro";
 
 const { url, imageRep, imageAtrributes, text, btnID} = Astro.props;
 
-const vizarrURL = "https://uk1s3.embassy.ebi.ac.uk/bia-zarr-test/vizarr/index.html?source="
+const vizarrURL = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source="
 
 const vizarrViewer = text == "Annotation"? "OpenAnnotationInVizarr": "OpenSourceInVizarr";
 const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK";

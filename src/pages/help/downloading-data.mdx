@@ -21,6 +21,6 @@ The S3 URI of the interactive OME-Zarr images can be found by clicking on the â€
 
 The first part of the S3 URI, starting with https is the S3 endpoint, and the rest is the S3 path of the image. When run from the command line, this command lists the contents of the OME-Zarr image folder:
 ```
-    aws --endpoint-url https://uk1s3.embassy.ebi.ac.uk s3 ls s3://bia-integrator-data/S-BIAD463/00cddbf9-1282-4a49-94d9-481b7a43cc0c/00cddbf9-1282-4a49-94d9-481b7a43cc0c.zarr/ --no-sign-request
+    aws --endpoint-url https://livingobjects.ebi.ac.uk s3 ls s3://bioimaging-integrator-data/S-BIAD463/00cddbf9-1282-4a49-94d9-481b7a43cc0c/00cddbf9-1282-4a49-94d9-481b7a43cc0c.zarr/ --no-sign-request
 ```        
 The AWS client can also copy data from S3 to local storage. Detailed instructions for using this tool can be found in the [AWS user guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
