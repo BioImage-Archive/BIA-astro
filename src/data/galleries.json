@@ -14,13 +14,13 @@
       "name":"volumeem",
       "title":"Volume EM Gallery",
       "subtitle":"A selection of EMPIAR datasets",
-      "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/EMPIAR-10967/IM1/IM1-representative-512-512.png"
+      "summary_image":"https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/EMPIAR-10967/IM1/IM1-representative-512-512.png"
     },
     {
       "name":"spatialomics",
       "title":"Spatial Omics Gallery",
       "subtitle":"A selection of spatial omics datasets",
-      "summary_image":"https://uk1s3.embassy.ebi.ac.uk/bia-integrator-data/S-BIAD570-example.png"
+      "summary_image":"https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD570/S-BIAD570-example.png"
     }
   ]
 }
