@@ -2,10 +2,11 @@
 import { getTaxons, formatListItem, getStudyImage, getImagingMethodType, applyHighlight, highlightLinks } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
 import "../../styles/dataset_card.css"
+import { fade } from "astro:transitions";
 const { study, studyPageRoot, taglist, annotationType, cardImageOverride, highlight, query} = Astro.props;
 
 export function getImagingType(study) {
-    const imageTypeList = getImagingMethodType(study)
+    const imageTypeList = study?.imaging_method || []//getImagingMethodType(study)
     const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
     if (imgTypeDisplay.length > 50 * imageTypeList.length) {
         // Avoid displaying full method text on dataset cards.
@@ -17,11 +18,9 @@ export function getImagingType(study) {
 
 export function getAnnotationMethod(study){
     const annotationMethods = new Set();
-    for (var dataset of study.dataset) {
-        for (var ap of dataset.annotation_process) {
-            for (var methodNames of ap.method_type) {
-                annotationMethods.add(methodNames.replace(/_/g, " "))
-            }
+    if (study.annotation_type != null){
+        for (var methodNames of study.annotation_type) {
+            annotationMethods.add(methodNames.replace(/_/g, " "))
         }
     }
     return [...annotationMethods]
@@ -34,8 +33,7 @@ export function renderTaxonList(dataset) {
 }
 
 function getDataForCardFilter(study) {
-    const datasetWithImage = study.dataset.find((dataset) => dataset.image?.length > 0)
-    var hasImage = datasetWithImage !== undefined
+    var hasImage = study?.image?.length > 0 || false;
     const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
     return dataString
 }

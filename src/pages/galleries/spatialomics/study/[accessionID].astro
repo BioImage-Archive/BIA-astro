@@ -8,7 +8,7 @@ import StudyFiles from '../../../../components/StudyFiles.astro';
 import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromApiByAccession} from "../../../../components/SharedJSFunctions.js"
+import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromApiByAccession, getImagesByAccessionID} from "../../../../components/SharedJSFunctions.js"
 import { PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getStaticPaths() {
@@ -67,7 +67,7 @@ if (hasTranscripts) {
 }
 
 
-const images = study.dataset.flatMap(dataset => dataset.image ?? [])
+const images = await getImagesByAccessionID(study.accession_id)
 
 const annotationDatasets = study.dataset.filter(dataset => 
   "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0

@@ -28,14 +28,16 @@ type Taxon = {
 };
 const taxons: Taxon[] = [
   ...new Map(
-    (image?.creation_process?.subject?.sample_of ?? [])
-      .flatMap(s => s?.organism_classification ?? [])
+    (image?.organism_classification ?? [])
       .filter(Boolean)
       .map((t: Taxon) => [
         t.scientific_name || t.common_name,
-        { scientific_name: t.scientific_name, common_name: t.common_name }
+        {
+          scientific_name: t.scientific_name,
+          common_name: t.common_name,
+        },
       ])
-  ).values()
+  ).values(),
 ];
 const taxonNames = taxons.map(t =>
   t?.common_name ? `${t?.scientific_name} (${t?.common_name})` : t?.scientific_name
@@ -43,8 +45,7 @@ const taxonNames = taxons.map(t =>
 
 const imagingMethod = [
   ...new Set(
-    (image?.creation_process?.acquisition_process ?? [])
-      .flatMap(ap => ap?.imaging_method_name ?? [])
+    (image?.imaging_method ?? [])
       .filter(Boolean).sort()
   )
 ];
@@ -117,8 +118,8 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
     </div>
     <div class="vf-card__content">
         <p class="vf-card__text">
-            <b>Imaging method: </b><HighlightedText text={imagingMethod.flatMap(im=> highlightImagingMethod(im, highlight?.["creation_process.acquisition_process.imaging_method_name"], query)).join(", ")} /><br>
-            <b>Organism: </b><HighlightedText text={taxonNames.map(taxon => highlightOrganism(taxon, highlight, query)).join(", ")} /><br>
+            {imagingMethod.length>0 && (<b>Imaging method: </b><HighlightedText text={imagingMethod.flatMap(im=> highlightImagingMethod(im, highlight?.["creation_process.acquisition_process.imaging_method_name"], query)).join(", ")} /><br>)}
+            {taxonNames.length>0 && (<b>Organism: </b><HighlightedText text={taxonNames.map(taxon => highlightOrganism(taxon, highlight, query)).join(", ")} /><br>)}
             <b>Image format: </b><HighlightedText text={highLightedImageFormat.join(", ")} /><br>
             {interactiveImageRepresentation?.size_c && (<><b>Number of channels:</b> {interactiveImageRepresentation?.size_c}<br /></>)}
             {interactiveImageRepresentation?.size_t && (<><b>Number of timesteps:</b> {interactiveImageRepresentation?.size_t}</>)}

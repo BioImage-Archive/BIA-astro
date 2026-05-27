@@ -20,7 +20,7 @@ const { url, query, searchType} =
     searchType: string;
   };
 
-const searchEndpoint = searchType === "study"? `${PUBLIC_SEARCH_API}/search/fts`: `${PUBLIC_SEARCH_API}/search/fts/image`;
+const searchEndpoint = searchType === "study"? `${PUBLIC_SEARCH_API}/website/browse/study`: `${PUBLIC_SEARCH_API}/website/browse/image`;
 const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bioimage-archive/images";
 const sortBy = url.searchParams.get('sortBy');
 const sortOrder = url.searchParams.get('sortOrder');

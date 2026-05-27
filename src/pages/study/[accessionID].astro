@@ -4,7 +4,6 @@ import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
-import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
 
@@ -29,7 +28,7 @@ const tableOfContents = {
 
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
-const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
+const images = study?.image ?? []
 
 if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
   delete tableOfContents["Linked Information"];
@@ -72,7 +71,6 @@ function getFileTypes(study) {
     return fileTypeList
 }
 
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 const exampleStudyImage = getStudyImage(study);
 
 function getImageUUIDFromStudyImage(exampleURI, images){

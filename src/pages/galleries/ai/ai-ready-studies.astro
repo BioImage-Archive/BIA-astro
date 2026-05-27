@@ -14,6 +14,7 @@ const studiesEntries = await Promise.all(
 );
 
 const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
+
 ---
 <BaseLayout pageTitle={ collection.name }>
   <body>
