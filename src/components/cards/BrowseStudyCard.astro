@@ -1,5 +1,5 @@
 ---
-import { getTaxons, formatListItem, getStudyImage, getImagingMethodType, applyHighlight, highlightLinks } from "../SharedJSFunctions.js";
+import { getTaxons, formatListItem, getStudyImage, getImagingMethodType, applyHighlight, highlightLinks, getLicenceLogo } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
 import "../../styles/dataset_card.css"
 import { fade } from "astro:transitions";
@@ -59,6 +59,10 @@ const organism = highlightOrganism(renderTaxonList(study), highlight, query);
 const annotationMethod = annotationType? annotationType: getAnnotationMethod(study);
 const highlightedAnnotationMethod = highlightImagingMethod(annotationMethod.join(", "), highlight?.["dataset.annotation_process.method_type"], query)
 
+const licenceURL = study?.licence;
+const logoURL = getLicenceLogo(licenceURL);
+
+
 const base = `/bioimage-archive/${studyPageRoot}/${study.accession_id}`;
 const highlightedStudyLink = highlightLinks(base, highlight, query);
 ---
@@ -70,6 +74,11 @@ const highlightedStudyLink = highlightLinks(base, highlight, query);
                     <span>{fallbackMessage}</span>
                 </div>
             )}
+        <div class="license-badge">
+            {licenceURL && logoURL && (
+                <a href={licenceURL} class="vf-link"><img src={logoURL}/></a>
+            )}
+        </div>
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
@@ -119,5 +128,18 @@ const highlightedStudyLink = highlightLinks(base, highlight, query);
         overflow: hidden;
         position: relative;
     }
-
+    .license-badge {
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 0px;
+        border-radius: 4px;
+        z-index: 999;
+    }
+    .license-badge img {
+        display: block;
+        height: var(--license-badge-height, 28px);
+        width: auto;
+    }
 </style>

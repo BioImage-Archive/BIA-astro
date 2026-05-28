@@ -55,7 +55,14 @@ export function getSimpleAttributeValue(obj, attrName) {
       ?.value[attrName] ?? null;
 }
   
-  
+export function getLicenceLogo(licenceURL){
+    const licenceImage = licenceURL.split("/").slice(-3)[0]
+    const isCreativeCommons = licenceURL.includes("creativecommons");
+    var logoURL = isCreativeCommons? "http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/": "";
+    logoURL += licenceImage === "zero"? "cc-zero.svg": `${licenceImage}.svg`;
+    return logoURL
+
+}  
 export function getDatasetStatsByUUID(study) {
     return aggregateDatasetStats(study?.dataset || []);
 }

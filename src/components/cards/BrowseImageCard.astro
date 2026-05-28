@@ -1,5 +1,5 @@
 ---
-import { formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, applyHighlight, highlightLinks } from "../SharedJSFunctions.js";
+import { formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, applyHighlight, highlightLinks, getLicenceLogo } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 import  HighlightedText  from "../HighlightedText.astro";
 import { highlightImagingMethod } from "./BrowseStudyCard.astro"
@@ -80,6 +80,8 @@ const showSizeBar = hasPhysical || hasPixel;
 const thumbnail_uri =  getThumbnail(image);
 const isFallback = thumbnail_uri === imageFallback.src;
 const fallbackMessage = isFallback ? "Preview not available yet." : "";
+const licenceURL = image?.licence;
+const logoURL = getLicenceLogo(licenceURL);
 const base = `/bioimage-archive/${imagePageRoot}/${image.uuid}`;
 const highlightedImageLink = highlightLinks(base, highlight, query);
 ---
@@ -114,6 +116,12 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
         }   
         <div class="study-link">
             { accessionId }
+        </div>
+        <div class="license-badge">
+            {licenceURL && logoURL && (
+                <a href={licenceURL} class="vf-link"><img src={logoURL}/></a>
+            )}
+
         </div>
     </div>
     <div class="vf-card__content">
@@ -221,8 +229,8 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
 
     .study-link {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 7px;
+        right: 7px;
         background: rgba(243, 243, 243, 0.9);
         padding: 4px 8px;
         border-radius: 4px;
@@ -237,14 +245,15 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
     }
     .license-badge {
         position: absolute;
-        top: 45px;
-        right: 10px;
+        top: 7px;
+        left: 7px;
         background: rgba(243, 243, 243, 0.9);
-        padding: 2px;
-        border-radius: 4px;
+        padding: 0px;
+        z-index: 999;
     }
     .license-badge img {
-        height: var(--license-badge-height, 20px);
+        display: block;
+        height: var(--license-badge-height, 28px);
         width: auto;
     }
     .image-overlay {
@@ -259,6 +268,5 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
         padding: 12px;
         opacity: 1;
         pointer-events: none;
-        z-index: 999;
     }
 </style>
