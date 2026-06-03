@@ -21,7 +21,7 @@ const items = await getCollection("news_articles");
                     </div>
                     <div>
                         {news.data.cover?.src && (
-                        <a href={news.data.figureLink} class="vf-link logo-img">
+                        <a href={news.data.figureLink} class="vf-link logo-img" target="_blank">
                             <img class="vf-figure__image" src={news.data.cover.src} alt={news.data.imageAlt} loading="lazy" style="max-height: 200px;"/>
                         </a>
                         )}

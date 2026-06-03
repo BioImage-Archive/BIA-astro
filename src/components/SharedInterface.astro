@@ -14,10 +14,46 @@ export interface Study {
   additional_metadata?: any;
   description?: string;
   licence?: string;
+  licence_details: Licence;
   keyword?: any[]
   image?: any[]
   annotation_type?: any[]
 }
 export interface Studies {
     accession_id: Study;
+}
+
+export interface Licence {
+  uri: string;
+  log_uri: string;
+  label: string;
+}
+
+export interface ImageCreationProcess {
+  input_image_uuid?: string[];
+  subject?: any;
+  acquisition_process?: any[];
+  annotation_method?: any[];
+  protocol?: any[];
+}
+
+export interface Image {
+  representation: any[];
+  uuid: string;
+  additional_metadata?: any[];
+  file_path?: string[];
+  submission_dataset_uuid: string;
+  creation_process?: ImageCreationProcess;
+  licence_details: Licence;
+  accession_id: string;
+}
+
+export interface SpecimenInfo {
+  uuid: string;
+  [key: string]: any;
+}
+
+export interface ImageRep {
+  uuid: string;
+  [key: string]: any;
 }

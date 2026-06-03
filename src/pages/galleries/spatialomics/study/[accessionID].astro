@@ -8,7 +8,7 @@ import StudyFiles from '../../../../components/StudyFiles.astro';
 import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
-import { getStudyImage, getDatasetStatsByUUID, aggregateDatasetStats, getSimpleAttributeValue, getStudyFromApiByAccession, getImagesByAccessionID} from "../../../../components/SharedJSFunctions.js"
+import { getStudyImage, getDatasetStatsByUUID, getSimpleAttributeValue, getStudyFromApiByAccession, getImagesByAccessionID} from "../../../../components/SharedJSFunctions.js"
 import { PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getStaticPaths() {
@@ -26,7 +26,7 @@ const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 
 let hasTranscripts = false;
 
-const fetchDatasetDetails = async (datasetUuid) => {
+const fetchDatasetDetails = async (datasetUuid: string) => {
     const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
     const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
     const response = await fetch(apiUrl);
@@ -45,7 +45,7 @@ const fetchDatasetDetails = async (datasetUuid) => {
 };    
 
 const checkForTranscripts = async () => {
-    for (const [uuid, fileCount, title] of datasetUUIDsAndFileStats) {
+    for (const [uuid] of datasetUUIDsAndFileStats) {
         const dataType = await fetchDatasetDetails(uuid);
         if (dataType) {
             hasTranscripts = true;
@@ -123,7 +123,7 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
 
       <div style="overflow-wrap: anywhere;">
         <!-- <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}></Fragment></div> -->
-        <div><b>Licence: </b> <a href={study.licence}>{study.licence}</a><div>
+        <div><b>Licence: </b> <a href={study.licence_details.uri}>{study.licence_details.label}</a><div>
         {
           omics_links && omics_links.length > 0 && (
             <div><b>Omics links: </b> <ul>{omics_links.map((link) => (<li class="vf-content">{link.description} <a href={link.link}>{link.link}</a></li>))}</ul></div>

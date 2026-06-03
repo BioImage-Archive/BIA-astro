@@ -1,54 +1,24 @@
 ---
-import { formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, applyHighlight, highlightLinks, getLicenceLogo } from "../SharedJSFunctions.js";
+import { highlightOrganism, formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, applyHighlight, highlightLinks, getLicenceLogo, formatHighlightedList } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 import  HighlightedText  from "../HighlightedText.astro";
-import { highlightImagingMethod } from "./BrowseStudyCard.astro"
 import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
 
-const { image, imagePageRoot, taglist, annotationType, highlight, cardImageOverride, query} = Astro.props;
-
-export function highlightOrganism(text, highlight, query){
-    const highlightOrganism = highlight?.['creation_process.subject.sample_of.organism_classification.common_name']?.[0] || highlight?.['creation_process.subject.sample_of.organism_classification.scientific_name']?.[0];
-    return query && text? applyHighlight(text, highlightOrganism, query): text;
-
-}
-
-export function highlightImageFormat(text, highlight, query){
-
-}
+const { image, imagePageRoot, taglist, annotationType, highlight, query} = Astro.props;
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
 ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
 
-type Taxon = {
-  scientific_name?: string;
-  common_name?: string;
-};
-const taxons: Taxon[] = [
-  ...new Map(
-    (image?.organism_classification ?? [])
-      .filter(Boolean)
-      .map((t: Taxon) => [
-        t.scientific_name || t.common_name,
-        {
-          scientific_name: t.scientific_name,
-          common_name: t.common_name,
-        },
-      ])
-  ).values(),
-];
-const taxonNames = taxons.map(t =>
-  t?.common_name ? `${t?.scientific_name} (${t?.common_name})` : t?.scientific_name
-);
+const organism = highlightOrganism(image, query);
 
-const imagingMethod = [
-  ...new Set(
-    (image?.imaging_method ?? [])
-      .filter(Boolean).sort()
-  )
-];
+const imagingMethod = formatHighlightedList(image?.imaging_method, query, {
+  sort: false,
+});
+const annotationMethod = formatHighlightedList(annotationType ?? image?.annotation_type?.map((at: string) => at.replace(/_/g, " ")) ?? [], query, {
+  sort: false,
+})
 
 const imageFormat = [
   ...new Set(
@@ -57,7 +27,7 @@ const imageFormat = [
       .filter(Boolean).sort()
   )
 ];
-const highLightedImageFormat = imageFormat.flatMap(imf=> query && imf? applyHighlight(imf, highlight?.["representation.image_format"]?.[0], query): imf)
+const highLightedImageFormat = imageFormat.flatMap(imf=> query && imf? applyHighlight(imf, query): imf)
 
 const accessionId = image?.accession_id || "";
 
@@ -80,8 +50,9 @@ const showSizeBar = hasPhysical || hasPixel;
 const thumbnail_uri =  getThumbnail(image);
 const isFallback = thumbnail_uri === imageFallback.src;
 const fallbackMessage = isFallback ? "Preview not available yet." : "";
-const licenceURL = image?.licence;
-const logoURL = getLicenceLogo(licenceURL);
+const licenceURL = image?.licence_details?.uri || image?.licence;
+const logoURL = image?.licence_details?.logo_uri || getLicenceLogo(licenceURL);
+const logoAlt = image?.licence_details?.label || "";
 const base = `/bioimage-archive/${imagePageRoot}/${image.uuid}`;
 const highlightedImageLink = highlightLinks(base, highlight, query);
 ---
@@ -119,15 +90,15 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
         </div>
         <div class="license-badge">
             {licenceURL && logoURL && (
-                <a href={licenceURL} class="vf-link"><img src={logoURL}/></a>
+                <a href={licenceURL} class="vf-link"><img src={logoURL} alt={logoAlt}/></a>
             )}
 
         </div>
     </div>
     <div class="vf-card__content">
         <p class="vf-card__text">
-            {imagingMethod.length>0 && (<b>Imaging method: </b><HighlightedText text={imagingMethod.flatMap(im=> highlightImagingMethod(im, highlight?.["creation_process.acquisition_process.imaging_method_name"], query)).join(", ")} /><br>)}
-            {taxonNames.length>0 && (<b>Organism: </b><HighlightedText text={taxonNames.map(taxon => highlightOrganism(taxon, highlight, query)).join(", ")} /><br>)}
+            {imagingMethod.length>0 && (<b>Imaging method: </b><HighlightedText text={imagingMethod} /><br>)}
+            {organism && (<b>Organism: </b><HighlightedText text={organism} /><br>)}
             <b>Image format: </b><HighlightedText text={highLightedImageFormat.join(", ")} /><br>
             {interactiveImageRepresentation?.size_c && (<><b>Number of channels:</b> {interactiveImageRepresentation?.size_c}<br /></>)}
             {interactiveImageRepresentation?.size_t && (<><b>Number of timesteps:</b> {interactiveImageRepresentation?.size_t}</>)}
@@ -139,9 +110,9 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
             </p>
         )}
 
-        {annotationType && annotationType.length > 0 && (
+        {annotationMethod && annotationMethod.length > 0 && (
             <p class="vf-card__text">
-                <b>Annotation Type:</b> {annotationType.join(", ") || "No information available"}
+                <b>Annotation Type:</b> <HighlightedText text={annotationMethod || "No information available"} />
             </p>
         )}
         <h3 class="vf-card__heading"><a class="vf-card__link" href={highlight? highlightedImageLink : base} ></a></h3>

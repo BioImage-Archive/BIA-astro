@@ -8,7 +8,7 @@ import {getStudyFromApiByAccession} from "../../../components/SharedJSFunctions.
 import additionalStudyInfo from '../../../data/ai-dataset-benchmarking/additional-study-metadata.json'
 
 const studiesEntries = await Promise.all(
-  Object.entries(additionalStudyInfo).map(async ([accessionID, studyAIInfo]) => {
+  Object.entries(additionalStudyInfo).map(async ([accessionID]) => {
     const study = await getStudyFromApiByAccession(accessionID);
     return [accessionID, study] as const;
   })

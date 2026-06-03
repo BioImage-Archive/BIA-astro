@@ -2,7 +2,7 @@
 export const prerender = false;
 import BaseLayoutWithBreadcrumbs from '../../../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro';
-import { getTaxons, getAnnotationType, getImageFromAPI, getStudyFromApiByUUID, getAnnotationFromDerivedImages } from "../../../../components/SharedJSFunctions.js";
+import { getTaxons, getAnnotationType, getImageFromAPI, getStudyFromApiByAccession, getAnnotationFromDerivedImages } from "../../../../components/SharedJSFunctions.js";
 import SourceAnnotatedImage from '../../../../components/ai-gallery/SourceAnnotatedImage.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import StudyComponents from "../../../../components/ai-gallery/StudyComponents.astro";
@@ -10,8 +10,8 @@ import "../../../../styles/image_slider.css";
 
 const { uuid } = Astro.params;
 const image = await getImageFromAPI(uuid);
-const datasetUUID = image ? image.submission_dataset_uuid : "";
-const studyInfo = datasetUUID ? await getStudyFromApiByUUID(datasetUUID) as Study : {};
+const accession_id = image ? image.accession_id : "";
+const studyInfo: Study = await getStudyFromApiByAccession(accession_id);
 
 let sourceImage;
 let annotatedImages = [];
@@ -22,7 +22,7 @@ const vizarrURL = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-te
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
 const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
 const annotationDatasets = studyInfo.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
-const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
+const annotatedDatasetContent = annotationDatasets.map((dataset) => ({
   dataset_title: dataset.title,
   organism: organism,
   imaging: imagingMethod,

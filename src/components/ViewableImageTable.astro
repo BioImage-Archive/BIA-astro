@@ -67,8 +67,8 @@ const { study, images, imagePageRoot } = Astro.props;
       return thumbnail_uri;
   }
   function getDownloadSize(image) {
-    const file_size = image?.total_size_in_bytes > 0? image.total_size_in_bytes : "Unkown"
-    return file_size
+    var i = image?.total_size_in_bytes == 0 ? 0 : Math.floor(Math.log(image?.total_size_in_bytes) / Math.log(1000));
+    return `${Number(image?.total_size_in_bytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
   }
   function escapeHtml(value) {
     return String(value ?? "")
@@ -104,12 +104,6 @@ const { study, images, imagePageRoot } = Astro.props;
 
     const visible = paths.slice(0, 2);
     const hidden = paths.slice(2);
-
-    const renderPath = (path, index, arr) => `
-      <div>
-        ${formatFilePath(path)}${index < arr.length - 1 ? "," : ""}
-      </div>
-    `;
 
     const visibleHtml = visible
       .map((path, index) => `

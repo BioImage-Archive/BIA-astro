@@ -56,11 +56,20 @@ export function getSimpleAttributeValue(obj, attrName) {
 }
   
 export function getLicenceLogo(licenceURL){
-    const licenceImage = licenceURL.split("/").slice(-3)[0]
     const isCreativeCommons = licenceURL.includes("creativecommons");
-    var logoURL = isCreativeCommons? "http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/": "";
-    logoURL += licenceImage === "zero"? "cc-zero.svg": `${licenceImage}.svg`;
-    return logoURL
+    if (isCreativeCommons){
+      var logoURL = "http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/";
+      if (licenceURL.includes("publicdomain/zero")){
+        return logoURL+= "cc-zero.svg"
+      }
+      const licenceImage = licenceURL.split("licenses")[1].split("/")[1]
+      logoURL += `${licenceImage}.svg`;
+      return logoURL
+    }
+    else{
+      return ""
+    }
+    
 
 }  
 export function getDatasetStatsByUUID(study) {
@@ -98,6 +107,16 @@ export function getTaxons(study) {
     }
     return taxonHtmlList
 }
+export function renderTaxonList(study) {
+    const taxonList = getTaxons(study)
+    return taxonList.reduce(formatListItem, "")
+}
+
+export function highlightOrganism(study, query){
+    const text = renderTaxonList(study)
+    return query && text? applyHighlight(text, query): text;
+}
+
 
 export function getAnnotationType(datasets) {
   const annotationTypes = new Set();
@@ -264,7 +283,7 @@ export async function getStudyFromApiByUUID(uuid){
 }
 
 export async function getStudyFromApiByAccession(accessionID){
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/study?query=${accessionID}`);
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/study?facet.accession_id=${accessionID}`);
     const study = response?.hits?.hits?.find(
         (hit) => hit._source?.accession_id === accessionID
       )?._source || undefined;
@@ -404,8 +423,31 @@ export function getTutorialURLs(urlType){
     return urlType === "submission"? `${quickTourURL}/submitting-data-to-bioimage-archive-2/submission/` : quickTourURL
 }
 
-export function applyHighlight(text, highlight, query) {
-const out = text ?? "";
+export function highlightText(text, query) {
+  return query && text ? applyHighlight(text, query) : text;
+}
+
+export function formatUniqueList(values = [], { sort = true, transform = value => value } = {}) {
+  if(values == null){
+    return ""
+  }
+  const items = values
+    .filter(Boolean)
+    .map(transform);
+
+  const unique = [...new Set(items)];
+  if (sort) unique.sort();
+
+  return unique.join(", ");
+}
+
+export function formatHighlightedList(values = [], query, options = {}) {
+  return highlightText(formatUniqueList(values, options), query);
+}
+
+
+export function applyHighlight(text, query) {
+  const out = text ?? "";
   if (!query) return out;
 
   // If it's already highlighted, keep it (prevents double-highlighting / nesting)

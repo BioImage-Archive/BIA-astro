@@ -6,4 +6,4 @@ figureLink: "https://www.embl.org/news/science-technology/mifa-bioimaging/"
 ---
 Lack of incentives and low adoption of metadata standards are limiting AI’s potential for bioimage analysis – a community initiative proposes solutions.
 
-<a class="vf-summary__link" href="https://www.embl.org/news/science-technology/mifa-bioimaging/">Read More</a>
+<a target="_blank" class="vf-summary__link" href="https://www.embl.org/news/science-technology/mifa-bioimaging/">Read More</a>

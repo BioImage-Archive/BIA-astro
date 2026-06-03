@@ -7,8 +7,8 @@ import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro'
 import fieldMap from "../../../../data/metadata-field-name-mapping.json";
 
 import fallbackImage from "../../../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByUUID } from "../../../../components/SharedJSFunctions.js"
-import { type Study } from "../../../../components/SharedInterface.astro"
+import {getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByAccession } from "../../../../components/SharedJSFunctions.js"
+import { type Study, type ImageCreationProcess, type ImageRep } from "../../../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
@@ -19,13 +19,13 @@ const protocolMap = fieldMap["protocol"];
 const { uuid } = Astro.params;
 
 const image = await getImageFromAPI(uuid);
-const datasetUUID = image ? image.submission_dataset_uuid : "";
-const imageStudy = datasetUUID ? await getStudyFromApiByUUID(datasetUUID) as Study : {};
+const accession_id = image ? image.accession_id : "";
+const imageStudy: Study = await getStudyFromApiByAccession(accession_id);
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = image.representation.find(
     (rep) => rep.uuid === vizarrRepUuid
 )
-const imageDataset = imageStudy.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
+const imageDataset = imageStudy?.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
 
 const vizarrIFrameSource = interactiveImageRepresentation ? `https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
 
@@ -36,7 +36,7 @@ const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neurogl
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
 const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link")?.[0] : null
 
-const creation_process = image.creation_process
+const creation_process: ImageCreationProcess = image.creation_process || {}
 
 let specimen
 if ("subject" in creation_process && creation_process.subject != null) {
@@ -44,7 +44,7 @@ if ("subject" in creation_process && creation_process.subject != null) {
 }
 
 
-function formatPhysicalDimension(value, text) {
+function formatPhysicalDimension(value: string, text: string) {
     if (text === "") {
         if (value != null) {
             return value + "m"
@@ -60,14 +60,14 @@ function formatPhysicalDimension(value, text) {
     }
 }
 
-function formatPhysicalDimensions(imageRepresentation) {
+function formatPhysicalDimensions(imageRepresentation: ImageRep) {
     const fields = [ "voxel_physical_size_x", "voxel_physical_size_y", "voxel_physical_size_z"]
     const formattedStr =  fields.reduce((text, field) => formatPhysicalDimension(imageRepresentation[field], text), "")
     return formattedStr != "" ? formattedStr : 'Unknown'
 }
 
 
-function formatPixelDimension(value, text) {
+function formatPixelDimension(value: string, text: string) {
     if (text === "") {
         if (value != null) {
             return value
@@ -83,7 +83,7 @@ function formatPixelDimension(value, text) {
     }
 }
 
-function formatPixelDimensions(img_rep) {
+function formatPixelDimensions(img_rep: ImageRep) {
     const fields = [ "size_x", "size_y", "size_z"]
     return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "")
 }
@@ -151,7 +151,7 @@ const breadcrumbs = [
   
               <div>
                   <h3>Access images</h3>
-                  License: <a href={imageStudy.licence}>{imageStudy.licence}</a> <br/>
+                  License: <a href={image.licence_details.uri}>{image.licence_details.label}</a> <br/>
                   <br/>
                   <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a><br/>
                   <br/>
@@ -217,7 +217,7 @@ const breadcrumbs = [
               <div style="overflow-wrap: anywhere;">
                   <b>Title</b>: {imageStudy.title}<br/>
                   <b>Description:</b> {imageStudy.description} <br/>
-                  <b>Licence:</b> <a href={imageStudy.licence}>{imageStudy.licence}</a> <br/>
+                  <b>Licence:</b> <a href={imageStudy.licence_details.uri}>{imageStudy.licence_details.label}</a> <br/>
               </div>
           </section>
   
