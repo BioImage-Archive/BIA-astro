@@ -18,11 +18,11 @@
   <div class="vf-tabs-content" data-vf-js-tabs-content>
     <section class="vf-tabs__section" id="vf-tabs__section--1">
       <div id="live-tutorials"></div>
-      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/live-events" class="vf-link">View all live training</a>
+      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/live-events" class="vf-link" target="_blank">View all live training</a>
     </section>
     <section class="vf-tabs__section" id="vf-tabs__section--2">
       <div id="ondemand-tutorials"></div>
-      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/on-demand" class="vf-link">View all on-demand training</a>
+      <a href="https://www.ebi.ac.uk/training/services/bioimage-archive/on-demand" class="vf-link" target="_blank">View all on-demand training</a>
     </section>
   </div>
 </div>
@@ -40,13 +40,12 @@
         try {
         const res = await fetch(url);
         const data = await res.json();
-
         const container = document.getElementById(containerId);
         container.innerHTML = "";
 
         const tutorials = data.entries || data;
         if(tutorials.length == 0){
-            container.innerHTML = "No courses found";
+            container.innerHTML = "<p>Currently there are no upcoming events - please click the below link for more information</p>";
         }
         tutorials.forEach((item) => {
             const html = `

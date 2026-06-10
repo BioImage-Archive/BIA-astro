@@ -79,7 +79,7 @@ const sectionClass = page && page === "gallery" ? "content": "intro";
                         processing: true,
                         scrollX: true,
                         columnDefs: [{ type: "natural", targets: 0 }],
-                        createdRow: (row, data) => {
+                        createdRow: (row) => {
                             // Attach event listener to the button after row creation
                             $(row).find(".copy-btn").on("click", function () {
                                 const link = $(this).data("uri");

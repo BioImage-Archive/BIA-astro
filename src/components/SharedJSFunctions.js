@@ -9,14 +9,12 @@ export function getPlaceholderHeroImage(accessionID) {
 }
 
 export function getStudyImage(study, cardImageOverride) {
-    const datasetWithImage = study.dataset.filter(ds => ds?.acquisition_process?.length > 0 && ds?.annotation_process?.length == 0).find((dataset) => dataset.example_image_uri.length > 0) ?? study.dataset.filter(ds => ds.example_image_uri.length > 0)[0];
+    const studyImage = study?.example_image_uri?.length > 0? study.example_image_uri: getPlaceholderHeroImage(study.accession_id);
+
     if (cardImageOverride != null) {
       return cardImageOverride
-    } else if (datasetWithImage == undefined || datasetWithImage.example_image_uri[0] === undefined) {
-      return getPlaceholderHeroImage(study.accession_id)
-    } else {
-      return datasetWithImage.example_image_uri[0]
     }
+    return studyImage
 }
 
 export function formatListItem(outputString, item, i, list) {
@@ -57,7 +55,23 @@ export function getSimpleAttributeValue(obj, attrName) {
       ?.value[attrName] ?? null;
 }
   
-  
+export function getLicenceLogo(licenceURL){
+    const isCreativeCommons = licenceURL.includes("creativecommons");
+    if (isCreativeCommons){
+      var logoURL = "http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/";
+      if (licenceURL.includes("publicdomain/zero")){
+        return logoURL+= "cc-zero.svg"
+      }
+      const licenceImage = licenceURL.split("licenses")[1].split("/")[1]
+      logoURL += `${licenceImage}.svg`;
+      return logoURL
+    }
+    else{
+      return ""
+    }
+    
+
+}  
 export function getDatasetStatsByUUID(study) {
     return aggregateDatasetStats(study?.dataset || []);
 }
@@ -72,14 +86,10 @@ export function aggregateDatasetStats(datasets) {
 
 export function getImagingMethodType(study) {
     const imagingTypeList = []
-    for (var dataset of study.dataset) {
-        for (var ia of dataset.acquisition_process) {
-            for (var methodNames of ia.imaging_method_name) {
-                if (!imagingTypeList.includes(methodNames)) {
+    for (var methodNames in study?.imaging_method){
+      if (!imagingTypeList.includes(methodNames)) {
                     imagingTypeList.push(methodNames)
                 }
-            }
-        }
     }
     return imagingTypeList
 }
@@ -87,18 +97,26 @@ export function getImagingMethodType(study) {
 export function getTaxons(study) {
     const taxonHtmlList = []
     const taxonList = []
-    for (var dataset of study.dataset) {
-        for (var biosample of dataset.biological_entity) {
-            for (var taxon of biosample.organism_classification) {
-                if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
-                    taxonList.push(taxon)
-                    taxonHtmlList.push(taxonRender(taxon))
-                }
-            }
-        }
+    if (study?.organism_classification){
+      for (var taxon of study?.organism_classification) {
+          if (!taxonList.some(txnFinal => txnFinal.common_name === taxon.common_name || txnFinal.scientific_name === taxon.scientific_name )) {
+              taxonList.push(taxon)
+              taxonHtmlList.push(taxonRender(taxon))
+          }
+      }
     }
     return taxonHtmlList
 }
+export function renderTaxonList(study) {
+    const taxonList = getTaxons(study)
+    return taxonList.reduce(formatListItem, "")
+}
+
+export function highlightOrganism(study, query){
+    const text = renderTaxonList(study)
+    return query && text? applyHighlight(text, query): text;
+}
+
 
 export function getAnnotationType(datasets) {
   const annotationTypes = new Set();
@@ -156,7 +174,7 @@ export function getAnnotationType(datasets) {
 }
 
 export function getMetadataValue(mdArray, key, field = null) {
-  const md = mdArray.find(md => md.name === key)?.value;
+  const md = mdArray?.find(md => md.name === key)?.value;
   return field && md ? md[field]?.[0] : md;
 }
 
@@ -259,13 +277,13 @@ export async function getFromAPI(url){
 
 export async function getStudyFromApiByUUID(uuid){
     // This can work with dataset uuid or study uuid.
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${uuid}`);
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/study?query=${uuid}`);
     const study = response?.hits?.hits?.[0]?._source; 
     return study
 }
 
 export async function getStudyFromApiByAccession(accessionID){
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts?query=${accessionID}`);
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/study?facet.accession_id=${accessionID}`);
     const study = response?.hits?.hits?.find(
         (hit) => hit._source?.accession_id === accessionID
       )?._source || undefined;
@@ -273,7 +291,7 @@ export async function getStudyFromApiByAccession(accessionID){
 }
 
 export async function getImageFromAPI(uuid){
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}`);
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/image?query=${uuid}`);
     const image = response?.hits?.hits?.[0]?._source || null;
     return image
 }
@@ -286,26 +304,46 @@ export async function getImagesFromAPI(uuid_list){
 }
 
 
-export async function getAllStudiesFromAPI(){
-  const firstPage = await getFromAPI(
-      `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100`
-    );
-    if (!firstPage) return null;
+async function getAllPaginatedHits(urlBuilder, pageSize = 100) {
+  const firstPage = await getFromAPI(urlBuilder(1, pageSize));
 
-    const totalPages = firstPage.pagination.total_pages;
-    const allHits = [...firstPage.hits.hits];
+  if (!firstPage) return [];
 
-    const otherPages = await Promise.all(
-      Array.from({ length: totalPages - 1 }, (_, i) =>
-        getFromAPI(
-          `${PUBLIC_SEARCH_API}/search/fts?query=&pagination.page_size=100&pagination.page=${i + 2}`,
-          { hits: { hits: [] } }
-        )
-      )
-    );
+  const totalPages = firstPage.pagination?.total_pages ?? 1;
+  const allHits = [...(firstPage.hits?.hits ?? [])];
 
-    otherPages.forEach((p) => allHits.push(...p.hits.hits));
-    return allHits.map((hit) => hit._source);
+  const otherPages = await Promise.all(
+    Array.from({ length: totalPages - 1 }, (_, i) =>
+      getFromAPI(urlBuilder(i + 2, pageSize), { hits: { hits: [] } })
+    )
+  );
+
+  otherPages.forEach((page) => {
+    allHits.push(...(page?.hits?.hits ?? []));
+  });
+
+  return allHits;
+}
+
+export async function getImagesByAccessionID(accessionID) {
+  const hits = await getAllPaginatedHits((page, pageSize) =>
+    `${PUBLIC_SEARCH_API}/website/image` +
+    `?facet.accession_id=${encodeURIComponent(accessionID)}` +
+    `&pagination.page_size=${pageSize}` +
+    `&pagination.page=${page}`
+  );
+
+  return hits.map((hit) => hit._source).filter(Boolean);
+}
+
+export async function getAllStudiesFromAPI() {
+  const hits = await getAllPaginatedHits((page, pageSize) =>
+    `${PUBLIC_SEARCH_API}/website/browse/study` +
+    `?pagination.page_size=${pageSize}` +
+    `&pagination.page=${page}`
+  );
+
+  return hits.map((hit) => hit._source).filter(Boolean);
 }
 
 function isImageAnAnnotation(img){
@@ -327,29 +365,57 @@ export async function getAnnotationFromDerivedImages(sourceImageUUID) {
 }
 
 async function getDerivedImagesFromSourceImage(uuid){
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/search/fts/image?query=${uuid}&includeDerivedImages=true`);
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/image?query=${uuid}&includeDerivedImages=true`);
     const derivedImages = response?.hits?.hits.map(img => img._source).filter(img => img.uuid !== uuid);
     return derivedImages
 }
 
-export async function generateSourceAnnotatedImageMap(study){
-    const annotatedImagesMap = new Map();
-    const skipImageUUID = ["2a382f3a-aa6d-4ace-99fb-468335fa3809", "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea", "d0b3f24f-4a9c-499b-99e4-343de48e7c82"]
-    const imagesFromStudies = study?.dataset?.flatMap(ds => ds.image).filter(img => !skipImageUUID.includes(img.uuid)) || [];
-    const images = await Promise.all(imagesFromStudies.map(async (image) => await getImageFromAPI(image.uuid)));
-    for (const img of Object.values(images)) {
-        if (isImageAnAnnotation(img)) {
-            const key = img.creation_process.input_image_uuid[0];
-            if (skipImageUUID.includes(key)) {
-              continue;
-            }
-            if (!annotatedImagesMap.has(key)) {
-                annotatedImagesMap.set(key, []);
-            }
-            annotatedImagesMap.get(key).push(img);
-        }
+export async function generateSourceAnnotatedImageMap(accession_id) {
+  const annotatedImagesMap = new Map();
+
+  const skipImageUUID = [
+    "2a382f3a-aa6d-4ace-99fb-468335fa3809",
+    "8921dcfb-4f5b-4ac1-a390-04b3ef2155ea",
+    "d0b3f24f-4a9c-499b-99e4-343de48e7c82",
+  ];
+
+  const images = await getImagesByAccessionID(accession_id);
+
+  const sourceImagesByUuid = new Map(
+    images
+      .filter(img => img && !isImageAnAnnotation(img))
+      .filter(img => !skipImageUUID.includes(img.uuid))
+      .map(img => [img.uuid, img])
+  );
+
+  for (const img of images) {
+    if (!img || !isImageAnAnnotation(img)) {
+      continue;
     }
-    return annotatedImagesMap
+
+    const sourceImageUuid = img.creation_process?.input_image_uuid?.[0];
+
+    if (!sourceImageUuid || skipImageUUID.includes(sourceImageUuid)) {
+      continue;
+    }
+
+    const sourceImage = sourceImagesByUuid.get(sourceImageUuid);
+
+    if (!sourceImage) {
+      continue;
+    }
+
+    if (!annotatedImagesMap.has(sourceImageUuid)) {
+      annotatedImagesMap.set(sourceImageUuid, {
+        sourceImage,
+        annotationImages: [],
+      });
+    }
+
+    annotatedImagesMap.get(sourceImageUuid).annotationImages.push(img);
+  }
+
+  return annotatedImagesMap;
 }
 
 export function getTutorialURLs(urlType){
@@ -357,8 +423,31 @@ export function getTutorialURLs(urlType){
     return urlType === "submission"? `${quickTourURL}/submitting-data-to-bioimage-archive-2/submission/` : quickTourURL
 }
 
-export function applyHighlight(text, highlight, query) {
-const out = text ?? "";
+export function highlightText(text, query) {
+  return query && text ? applyHighlight(text, query) : text;
+}
+
+export function formatUniqueList(values = [], { sort = true, transform = value => value } = {}) {
+  if(values == null){
+    return ""
+  }
+  const items = values
+    .filter(Boolean)
+    .map(transform);
+
+  const unique = [...new Set(items)];
+  if (sort) unique.sort();
+
+  return unique.join(", ");
+}
+
+export function formatHighlightedList(values = [], query, options = {}) {
+  return highlightText(formatUniqueList(values, options), query);
+}
+
+
+export function applyHighlight(text, query) {
+  const out = text ?? "";
   if (!query) return out;
 
   // If it's already highlighted, keep it (prevents double-highlighting / nesting)

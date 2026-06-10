@@ -1,65 +1,28 @@
 ---
-import { getTaxons, formatListItem, getStudyImage, getImagingMethodType, applyHighlight, highlightLinks } from "../SharedJSFunctions.js";
+import { highlightOrganism, renderTaxonList, formatListItem, getStudyImage, highlightLinks, getLicenceLogo, formatHighlightedList } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
 import "../../styles/dataset_card.css"
 const { study, studyPageRoot, taglist, annotationType, cardImageOverride, highlight, query} = Astro.props;
 
-export function getImagingType(study) {
-    const imageTypeList = getImagingMethodType(study)
-    const imgTypeDisplay = imageTypeList.reduce(formatListItem, "")
-    if (imgTypeDisplay.length > 50 * imageTypeList.length) {
-        // Avoid displaying full method text on dataset cards.
-        return 'See details of study'
-    } else {
-        return imgTypeDisplay
-    }
-}
-
-export function getAnnotationMethod(study){
-    const annotationMethods = new Set();
-    for (var dataset of study.dataset) {
-        for (var ap of dataset.annotation_process) {
-            for (var methodNames of ap.method_type) {
-                annotationMethods.add(methodNames.replace(/_/g, " "))
-            }
-        }
-    }
-    return [...annotationMethods]
-
-}
-
-export function renderTaxonList(dataset) {
-    const taxonList = getTaxons(dataset)
-    return taxonList.reduce(formatListItem, "")
-}
-
 function getDataForCardFilter(study) {
-    const datasetWithImage = study.dataset.find((dataset) => dataset.image?.length > 0)
-    var hasImage = datasetWithImage !== undefined
-    const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${getImagingType(study)}; has_img: ${hasImage}`
+    var hasImage = study?.image?.length > 0 || false;
+    const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${study?.imaging_method?.reduce(formatListItem, "")}; has_img: ${hasImage}`
     return dataString
-}
-
-export function highlightImagingMethod(text, highlight, query){
-    const highlightedImagingMethod = [...new Set(highlight)];
-    const highlightedText = highlightedImagingMethod.map(highlight => applyHighlight(text, highlight, query))
-    return query && highlightedImagingMethod.length > 0?[...new Set(highlightedText)]: text;
-
-}
-
-export function highlightOrganism(text, highlight, query){
-    const highlightOrganism = highlight?.['dataset.biological_entity.organism_classification.common_name']?.[0] || highlight?.['dataset.biological_entity.organism_classification.scientific_name']?.[0];
-    return query && text? applyHighlight(text, highlightOrganism, query): text;
-
 }
 
 const studyCardImage = getStudyImage(study, cardImageOverride);
 const isFallback = String(studyCardImage).includes("placeholder");
 const fallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
-const imagingMethod = highlightImagingMethod(getImagingType(study), highlight?.["dataset.acquisition_process.imaging_method_name"], query);
-const organism = highlightOrganism(renderTaxonList(study), highlight, query);
-const annotationMethod = annotationType? annotationType: getAnnotationMethod(study);
-const highlightedAnnotationMethod = highlightImagingMethod(annotationMethod.join(", "), highlight?.["dataset.annotation_process.method_type"], query)
+const imagingMethod = formatHighlightedList(study?.imaging_method, query, {
+  sort: false,
+});
+const organism = highlightOrganism(study, query);
+const annotationMethod = formatHighlightedList(annotationType ?? study?.annotation_type?.map((at: string) => at.replace(/_/g, " ")) ?? [], query, {
+  sort: false,
+});
+const licenceURL = study?.licence_details?.uri || study?.licence;
+const logoURL = study?.licence_details?.logo_uri || getLicenceLogo(licenceURL);
+const logoAlt = study?.licence_details?.label || "";
 
 const base = `/bioimage-archive/${studyPageRoot}/${study.accession_id}`;
 const highlightedStudyLink = highlightLinks(base, highlight, query);
@@ -72,6 +35,11 @@ const highlightedStudyLink = highlightLinks(base, highlight, query);
                     <span>{fallbackMessage}</span>
                 </div>
             )}
+        <div class="license-badge">
+            {licenceURL && logoURL && (
+                <a href={licenceURL} class="vf-link"><img src={logoURL} alt={logoAlt}/></a>
+            )}
+        </div>
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
@@ -95,7 +63,7 @@ const highlightedStudyLink = highlightLinks(base, highlight, query);
 
         {annotationMethod && annotationMethod.length > 0 && (
             <p class="vf-card__text">
-                <b>Annotation Method:</b><HighlightedText text={highlightedAnnotationMethod || "No information available"} />
+                <b>Annotation Method:</b><HighlightedText text={annotationMethod || "No information available"} />
             </p>
         )}
     </div>
@@ -121,5 +89,18 @@ const highlightedStudyLink = highlightLinks(base, highlight, query);
         overflow: hidden;
         position: relative;
     }
-
+    .license-badge {
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        background: rgba(243, 243, 243, 0.9);
+        padding: 0px;
+        border-radius: 4px;
+        z-index: 999;
+    }
+    .license-badge img {
+        display: block;
+        height: var(--license-badge-height, 28px);
+        width: auto;
+    }
 </style>

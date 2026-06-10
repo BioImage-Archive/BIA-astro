@@ -9,8 +9,8 @@ import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByUUID, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
-import { type Study } from "../../components/SharedInterface.astro"
+import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
+import { type Study, type Image, type ImageCreationProcess, type SpecimenInfo } from "../../components/SharedInterface.astro"
 
 const imageAcquisitionMap = fieldMap["image_acquisition"];
 const annotationMethodMap = fieldMap["annotation_method"];
@@ -18,45 +18,46 @@ const protocolMap = fieldMap["protocol"];
 
 const { uuid } = Astro.params;
 
-const image = await getImageFromAPI(uuid);
+const image = await getImageFromAPI(uuid) as Image;
 
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
 ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
 
-const datasetUUID = image ? image.submission_dataset_uuid : "";
-const imageStudy = datasetUUID ? await getStudyFromApiByUUID(datasetUUID) as Study : {};
+const accession_id = image ? image.accession_id : "";
+const imageStudy: Study = await getStudyFromApiByAccession(accession_id);
 const imageDataset = imageStudy.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
 const vizarrIFrameSource = interactiveImageRepresentation ? `https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source=${interactiveImageRepresentation.file_uri[0]}` : null
 const itkRepUuid = getSimpleAttributeValue(image, "recommended_itk_representation");
 const itkLink = itkRepUuid ? `https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad=${interactiveImageRepresentation.file_uri[0]}` : null
-
+const file_path = image?.file_path;
 
 const pref_ng_image_rep_uuid = getSimpleAttributeValue(image, "preferred_neuroglancer_image_representation_uuid")
 const pref_ng_image_rep = image.representation.find((rep) => rep.uuid === pref_ng_image_rep_uuid)
 const ng_link = pref_ng_image_rep ? getSimpleAttributeValue(pref_ng_image_rep, "neuroglancer_view_link") : null
 
-const creation_process = image?.creation_process || [];
+const creation_process: ImageCreationProcess = image?.creation_process || {};
 
-var input_images = [];
+var input_images: Image[] = [];
 if ("input_image_uuid" in creation_process && creation_process.input_image_uuid.length > 0) {
     input_images = await getImagesFromAPI(creation_process.input_image_uuid)
 }
 
 
-let specimen
+let specimen: SpecimenInfo | null = null;
 if ("subject" in creation_process && creation_process.subject != null) {
     specimen = creation_process.subject
 }
-let inherited_specimens
+let inherited_specimens: SpecimenInfo[] = [];
 if (specimen == null && input_images.length > 0) {
     inherited_specimens = await recursivelyGetSpecimenInfo(input_images, new Map())
 }
 
-async function recursivelyGetSpecimenInfo(image_list, collected) {
+async function recursivelyGetSpecimenInfo(image_list: Image[],
+  collected: Map<string, SpecimenInfo>): Promise<SpecimenInfo[]> {
   for (const image of image_list) {
-    const specimen = image?.creation_process?.subject || null;
+    const specimen = image?.creation_process?.subject as SpecimenInfo | null;
 
     if (specimen != null) {
       collected.set(specimen.uuid, specimen);
@@ -79,9 +80,7 @@ const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; heigh
     thumbnail_uri ? `<img style="width: 100%; height: 500px" src="${thumbnail_uri}" />` :
     `<img style="height: 500px;" src="${fallbackImage.src}" />`
 
-const userProvidedAttribute = image.additional_metadata?.find(attribute => attribute.name.includes("attributes_from_file_reference_"))?.value.attributes;
-
-
+const userProvidedAttribute = image?.file_list_attributes?.[0]?.value.attributes || [];
 const breadcrumbs = [
   "/bioimage-archive",
   "/bioimage-archive/studies",
@@ -118,6 +117,34 @@ const breadcrumbs = [
                             <b>Pixel image size: </b> {formatPixelDimensions(interactiveImageRepresentation)}<br />
                             {interactiveImageRepresentation.size_c && (<div><b>Number of channels:</b> {interactiveImageRepresentation.size_c}</div>)}
                             {interactiveImageRepresentation.size_t && (<div><b>Number of timesteps:</b> {interactiveImageRepresentation.size_t}</div>)}
+                            {file_path && (
+                                <div id="file-path-wrap">
+                                    <b>File Path:</b>
+                                    <span id="file-path-visible">
+                                    {file_path.slice(0, 2).join(", ")}
+                                    </span>
+
+                                    {file_path.length > 2 && (
+                                    <>
+                                        <span id="file-path-extra" hidden>
+                                        {", " + file_path.slice(2).join(", ")}
+                                        </span>
+
+                                        <br />
+
+                                        <button
+                                        id="file-path-toggle"
+                                        class="vf-button vf-button--primary vf-button--sm"
+                                        type="button"
+                                        aria-expanded="false"
+                                        style="margin-top:12px;"
+                                        >
+                                        See more
+                                        </button>
+                                    </>
+                                    )}
+                                </div>
+                            )}
                             {userProvidedAttribute && ( 
                                 <div >
                                     <br/>
@@ -141,7 +168,7 @@ const breadcrumbs = [
 
             <div>
                 <h3>Access images</h3>
-                License: <a href={imageStudy.licence}>{imageStudy.licence}</a> <br/>
+                License: <a href={image.licence_details.uri}>{image.licence_details.label}</a> <br/>
                 <br/>
                 <a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download this image</a><br/>
                 <br/>
@@ -184,7 +211,7 @@ const breadcrumbs = [
                         await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
                     };
 
-                    async function copyUrl(url, button, originalText) {
+                    async function copyUrl(url: string, button: HTMLElement, originalText: string) {
                         await navigator.clipboard.writeText(url);
                         button.innerText = "URI Copied";
                         setTimeout(() => {
@@ -205,7 +232,7 @@ const breadcrumbs = [
             <div style="overflow-wrap: anywhere;">
                 <b>Title</b>: {imageStudy.title}<br/>
                 <b>Description:</b> {imageStudy.description} <br/>
-                <b>Licence:</b> <a href={imageStudy.licence}>{imageStudy.licence}</a> <br/>
+                <b>Licence:</b> <a href={imageStudy.licence_details.uri}>{imageStudy.licence_details.label}</a> <br/>
             </div>
         </section>
 
@@ -237,7 +264,7 @@ const breadcrumbs = [
                 specimen == null && inherited_specimens && inherited_specimens.length > 0 && (
                     <b>Source Specimen Information</b>
                     <ul> 
-                        {inherited_specimens.map((specimen) => (
+                        {inherited_specimens.map((specimen: SpecimenInfo) => (
                             <Specimen specimen={specimen}/>
                         ))}
                     </ul>
@@ -351,4 +378,60 @@ const breadcrumbs = [
 
   document.addEventListener("astro:page-load", initMetaCollapse);
   document.addEventListener("DOMContentLoaded", initMetaCollapse);
+</script>
+
+<script is:inline>
+  function initMetaCollapse() {
+    const wrap = document.getElementById("meta-wrap");
+    const content = document.getElementById("meta-content");
+    const btn = document.getElementById("meta-toggle");
+
+    const MAX = 250;
+
+    if (!wrap || !content || !btn) return;
+
+    const overflow = content.scrollHeight > MAX;
+
+    if (!overflow) {
+      btn.remove();
+      return;
+    }
+
+    wrap.dataset.collapsed = "true";
+    content.style.maxHeight = `${MAX}px`;
+    content.style.overflow = "hidden";
+
+    btn.onclick = () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      btn.innerText = open ? "See more" : "See less";
+      wrap.dataset.collapsed = String(open);
+      content.style.maxHeight = open ? `${MAX}px` : "";
+    };
+  }
+
+  function initFilePathCollapse() {
+    const extra = document.getElementById("file-path-extra");
+    const btn = document.getElementById("file-path-toggle");
+
+    if (!extra || !btn) return;
+
+    btn.onclick = () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+
+      btn.setAttribute("aria-expanded", String(!open));
+      btn.innerText = open ? "See more" : "See less";
+      extra.hidden = open;
+    };
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initMetaCollapse();
+    initFilePathCollapse();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initMetaCollapse();
+    initFilePathCollapse();
+  });
 </script>

@@ -4,11 +4,10 @@ import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
-import DatasetFilesTable from "../../components/DatasetFilesTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
 
-import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getStudyImage, getDatasetStatsByUUID, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -29,7 +28,7 @@ const tableOfContents = {
 
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
-const images = study?.dataset.flatMap(dataset => dataset.image ?? [])
+const images = study?.image ?? []
 
 if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
   delete tableOfContents["Linked Information"];
@@ -60,22 +59,10 @@ if (study?.grant && Array.isArray(study.grant)) {
   }
 }
 // End grant pre-processing
-function getFileTypes(study) {
-    const fileTypeList = []
-    for (var dataset of study.dataset) {
-        for (const file_type of dataset.file_type_aggregation) {
-            if (!fileTypeList.includes(file_type)) {
-              fileTypeList.push(file_type)
-            }
-        }
-    }
-    return fileTypeList
-}
 
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 const exampleStudyImage = getStudyImage(study);
 
-function getImageUUIDFromStudyImage(exampleURI, images){
+function getImageUUIDFromStudyImage(exampleURI: string, images: any[]){
   const thumbnailImage = images.find(img => {
     const meta = getMetadataValue(img.additional_metadata, "image_static_display_uri");
     return meta?.slice?.uri === exampleURI;
@@ -97,7 +84,7 @@ const linkTypeFormatting = {
   "arrayexpress": "ArrayExpress",
   "empiar": "EMPIAR"
 }
-function formatLinkType(link_type) {
+function formatLinkType(link_type: string) {
   if (!link_type) return "";
   return linkTypeFormatting[link_type.toLowerCase()] ?? link_type;
 }
@@ -171,13 +158,13 @@ const breadcrumbs = [
       </div>      
     )}
     <div class="study-info-item">
-      <b>Licence: </b> <a href={study.licence}>{study.licence}</a>
+      <b>Licence: </b> <a href={study.licence_details.uri}>{study.licence_details.label}</a>
     </div>
     {Array.isArray(study.related_publication) && study.related_publication.length > 0 && (
       <div class="study-info-item">
         <b>Publication:</b>
         <ul>
-          {study.related_publication.map((pub, i) => {
+          {study.related_publication.map((pub) => {
             const { authors_name, publication_year, title, pubmed_id, doi } = pub;
             const titleLink = pubmed_id ? `https://pubmed.ncbi.nlm.nih.gov/${pubmed_id}` : null;
             const doiLink = doi ? doi : null;
@@ -263,7 +250,7 @@ const breadcrumbs = [
       <div>
         <ul>
           {
-            study.see_also.map((linkedInfo, i) => {
+            study.see_also.map((linkedInfo) => {
               const { link, link_type, description } = linkedInfo;
               return (
                 <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>

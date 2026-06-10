@@ -1,7 +1,7 @@
 ---
 import BaseLayoutWithBreadcrumbs from "../../../../layouts/BaseLayoutWithBreadcrumbs.astro";
 import StudyTitleInfo from "../../../../components/study-page/StudyTitleInfo.astro";
-import { getThumbnail, getTaxons, getSimpleAttributeValue, getDatasetStatsByUUID, formatBytesToHumanSize, getAnnotationType, getStudyFromApiByAccession, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
+import { getThumbnail, getTaxons, getSimpleAttributeValue, formatBytesToHumanSize, getAnnotationType, getStudyFromApiByAccession, generateSourceAnnotatedImageMap } from "../../../../components/SharedJSFunctions"
 import { type Study } from "../../../../components/SharedInterface.astro"
 import collection from '../../../../data/collections/ai-ready-datasets.json';
 import StudyContentsSummary from "../../../../components/study-page/StudyContentsSummary.astro"
@@ -16,20 +16,38 @@ export function getStaticPaths() {
 const { accessionID } = Astro.params;
 
 const study = await getStudyFromApiByAccession(accessionID) as Study;
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study)
-const annotatedImagesMap = await generateSourceAnnotatedImageMap(study);
-const organism = getTaxons(study).join(", ");
-// Need a better logic to identify source dataset and annotation dataset
-const sourceDataset = study.dataset.filter(ds => ds.acquisition_process.length > 0 && ds.annotation_process.length == 0);
-const allSourceImages = sourceDataset.flatMap(ds => ds.image || []);
-const imaging_method = Array.from(
-  new Set(sourceDataset.flatMap(ds => ds?.acquisition_process?.[0]?.imaging_method_name || []))
-).join(', ');
-const sourceExampleImageURI = sourceDataset.flatMap(ds => ds?.example_image_uri || []).filter(Boolean)[0];
-// Need a better logic to identify source dataset and annotation dataset
-const annotationDatasets = study.dataset.filter(ds => ds.acquisition_process.length == 0 && ds.annotation_process.length > 0);
-const annotationExampleImageURI = annotationDatasets.find(ad => ad.example_image_uri.length > 0)?.example_image_uri[0];
+const annotatedImagesMap = await generateSourceAnnotatedImageMap(study.accession_id);
 
+const allSourceImages = Array.from(annotatedImagesMap.values())
+  .filter(({ annotationImages }) => annotationImages.length > 0);
+
+  const organism = getTaxons(study).join(", ");
+
+const sourceDataset = study.dataset.filter(
+ds =>
+  (ds.acquisition_process?.length ?? 0) > 0 &&
+  (ds.annotation_process?.length ?? 0) === 0
+);
+
+const annotationDatasets = study.dataset.filter(
+  ds =>
+    (ds.acquisition_process?.length ?? 0) === 0 &&
+    (ds.annotation_process?.length ?? 0) > 0
+);
+
+const imaging_method = Array.from(
+  new Set(
+    sourceDataset.flatMap(ds =>
+      ds?.acquisition_process?.flatMap(ap => ap?.imaging_method_name || []) || []
+    )
+  )
+).join(", ");
+
+const sourceExampleImageURI =
+  sourceDataset.flatMap(ds => ds?.example_image_uri || []).filter(Boolean)[0] || "";
+
+const annotationExampleImageURI =
+  annotationDatasets.flatMap(ds => ds?.example_image_uri || []).filter(Boolean)[0] || "";
 const headlineStats = {
   "Total Viewable Images":  study.dataset.reduce((accumulator, dataset) => accumulator + dataset.image_count, 0),
   "Total files": study.dataset.reduce((accumulator, dataset) => accumulator + dataset.file_reference_count, 0),
@@ -45,7 +63,7 @@ const modelContent = {
   "Model description": modelInformation?.description,
   "Model link": modelInformation?.link
 }
-const annotatedDatasetContent = annotationDatasets.map((dataset, index) => ({
+const annotatedDatasetContent = annotationDatasets.map((dataset) => ({
   dataset_title: dataset.title,
   organism: organism,
   imaging: imaging_method,
@@ -119,54 +137,65 @@ const breadcrumbs = [
           </tr>
         </thead>
         <tbody class="vf_table__body">
-        {allSourceImages.filter(img=> annotatedImagesMap.has(img.uuid)).map((sourceImage, rowIndex) => {
-          const annotatedImgs = annotatedImagesMap.get(sourceImage.uuid) || [];
-          return (
-            <tr>
-              <td>
-                <a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}>
-                <img src={getThumbnail(sourceImage)} alt="Preview" width="80" /></td>
+          {allSourceImages.map(({ sourceImage, annotationImages: annotatedImgs }, rowIndex) => (
+          <tr>
+            <td>
+                <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>
+                  <img src={getThumbnail(sourceImage)} alt="Preview" width="80" />
                 </a>
-              <td>
+            </td>
+            <td>
                 <div class="slideshow-container" data-row={rowIndex}>
-                {annotatedImgs.length > 1 ? annotatedImgs.map((annImg, i) => (
-                  <div class="slides fade" style={`display: ${i === 0 ? "block" : "none"}`}>
-                  <a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>
-                  </div>
-                )) : annotatedImgs.map((annImg) => (<a href={`/bioimage-archive/galleries/ai/image/${sourceImage?.uuid}` || "#"}><img src={getThumbnail(annImg)} alt="Annotation Preview" width="80"/></a>))
-                }
-                </div>
-              </td>
-              <td>{sourceImage.uuid}</td>
-              <td>{sourceDataset.find(dataset => dataset.image.some(image => image.uuid === sourceImage.uuid))?.title || ""}</td>
-              <td>
-                <div class="uuid-container">
                   {annotatedImgs.map((annImg, i) => (
-                    <span class="uuid" style={`display: ${i === 0 ? "inline" : "none"}`}>{annImg.uuid}</span>
+                    <div
+                      class="slides fade"
+                      style={`display: ${i === 0 ? "block" : "none"}`}
+                    >
+                      <a href={`/bioimage-archive/galleries/ai/image/${annImg.uuid}`}>
+                        <img
+                          src={getThumbnail(annImg)}
+                          alt="Annotation Preview"
+                          width="80"
+                        />
+                      </a>
+                    </div>
                   ))}
                 </div>
               </td>
-              <td>
-                <div class="dataset-title-container">
-                  {annotatedImgs.map((annImg, i) => {
-                    const dataset = study.dataset.find(ds =>
-                      ds.image?.some(image => image.uuid === annImg.uuid)
-                    );
-                    return (
-                      <span class="dataset-title" style={`display: ${i === 0 ? "inline" : "none"}`}>
-                        {dataset?.title || "P"}
-                      </span>
-                    );
-                  })}
-                </div>
-              </td>
-              <td>
-                <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>View</a>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
+            <td>{sourceImage.uuid}</td>
+            <td>{sourceImage.dataset_title}</td>
+            <td>
+              <div class="uuid-container">
+                {annotatedImgs.map((annImg, i) => (
+                  <span
+                    class="uuid"
+                    style={`display: ${i === 0 ? "inline" : "none"}`}
+                  >
+                    {annImg.uuid}
+                  </span>
+                ))}
+              </div>
+            </td>
+            <td>
+              <div class="dataset-title-container">
+                {annotatedImgs.map((annImg, i) => (
+                  <span
+                    class="dataset-title"
+                    style={`display: ${i === 0 ? "inline" : "none"}`}
+                  >
+                    {annImg.dataset_title || ""}
+                  </span>
+                ))}
+              </div>
+            </td>
+            <td>
+              <a href={`/bioimage-archive/galleries/ai/image/${sourceImage.uuid}`}>
+                View
+              </a>
+            </td>
+          </tr>
+))}
+</tbody>
       </table>
     </div>
   </section>

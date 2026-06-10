@@ -20,10 +20,10 @@ const { url, query, searchType} =
     searchType: string;
   };
 
-const searchEndpoint = searchType === "study"? `${PUBLIC_SEARCH_API}/search/fts`: `${PUBLIC_SEARCH_API}/search/fts/image`;
+const searchEndpoint = searchType === "study"? `${PUBLIC_SEARCH_API}/website/browse/study`: `${PUBLIC_SEARCH_API}/website/browse/image`;
 const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bioimage-archive/images";
-const sortBy = url.searchParams.get('sortBy');
-const sortOrder = url.searchParams.get('sortOrder');
+//const sortBy = url.searchParams.get('sortBy');
+//const sortOrder = url.searchParams.get('sortOrder');
 const page = Number(url.searchParams.get('pagination.page')) || 1;
 const pageSize = Number(url.searchParams.get('pagination.page_size')) || 12;
 
@@ -34,6 +34,7 @@ const selectedFacets: SelectedFacets = {
   "facet.annotation_method": url.searchParams.getAll("facet.annotation_method"),
   "has_converted_image": url.searchParams.getAll("has_converted_image"),
   "facet.image_format": url.searchParams.getAll("facet.image_format"),
+  "facet.licence": url.searchParams.getAll("facet.licence"),
   "size_c.eq": url.searchParams.getAll("size_c.eq"),
 
   // NEW: range filters (store as single-value arrays for compatibility)
@@ -81,6 +82,7 @@ const FACET_CONFIG: Record<
   annotation_method: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_method" },
   image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
   number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
+  licence: {title: "Licence", type:"terms", queryKey: "facet.licence"},
 
   z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
   image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
@@ -120,10 +122,12 @@ if (hasQueryParam) {
 
 
 const totalResults = hits?.total?.value ?? 0;
-let results;
+let results = hits.hits;
 
 // Sorting on Server side till the API can sort results.
 
+/*
+Commenting it out as Sort is not ready on the API and we dont use it on FE for now
 function parseAccession(id) {
     const match = id.match(/^([A-Z\-]+)(\d+)$/i);
     if (!match) return [id, 0];
@@ -158,6 +162,7 @@ switch(sortBy) {
     results = hits.hits;
     break;
 }
+*/
 
 function hasBuckets(x: any): x is FacetData {
   return !!x && Array.isArray(x.buckets);
@@ -624,7 +629,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     </div>
     <div>
       <form id="facets" method="GET" action={searchPageURL} class="vf-form">
-        {Object.entries(facets).map(([id, facet], i) => <>
+        {Object.entries(facets).map(([id, facet]) => <>
         <SearchFacet facet={facet} id={id} />
         </>
         )}

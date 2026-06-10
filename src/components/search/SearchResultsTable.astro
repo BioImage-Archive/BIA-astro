@@ -1,7 +1,6 @@
 ---
 const { results, resultType, query, cardImageOverride } = Astro.props;
-import { getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue, highlightLinks, applyHighlight } from "../SharedJSFunctions.js";
-import {getImagingType, renderTaxonList, getAnnotationMethod, highlightImagingMethod, highlightOrganism} from "../cards/BrowseStudyCard.astro"
+import { highlightOrganism,  getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue, highlightLinks, applyHighlight, formatHighlightedList } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
 
 export function getImageRep(image){
@@ -12,33 +11,7 @@ export function getImageRep(image){
     return interactiveImageRepresentation
 }
 
-function highlightImagingMethodForImage(image, highlight, query){
-    const text =  [...new Set((image?.creation_process?.acquisition_process ?? []).flatMap(ap => ap?.imaging_method_name ?? []).filter(Boolean).sort())]
-    return text.flatMap(im=> highlightImagingMethod(im, highlight?.["creation_process.acquisition_process.imaging_method_name"], query)).join(", ")
-}
-
-function highlightOrganismForImage(image, highlight, query){
-    type Taxon = {
-        scientific_name?: string;
-        common_name?: string;
-    };
-    const taxons: Taxon[] = [
-    ...new Map(
-        (image?.creation_process?.subject?.sample_of ?? [])
-        .flatMap(s => s?.organism_classification ?? [])
-        .filter(Boolean)
-        .map((t: Taxon) => [
-            t.scientific_name || t.common_name,
-            { scientific_name: t.scientific_name, common_name: t.common_name }
-        ])
-    ).values()
-    ];
-    const taxonNames = taxons.map(t =>
-    t?.common_name ? `${t?.scientific_name} (${t?.common_name})` : t?.scientific_name
-    );
-    return taxonNames.map(taxon => query && taxon? applyHighlight(taxon, highlight?.['creation_process.subject.sample_of.organism_classification.common_name']?.[0] || highlight?.['creation_process.subject.sample_of.organism_classification.scientific_name']?.[0], query): taxon).join(", ")
-}
-function highlightImageFormat(image, highlight, query){
+function highlightImageFormat(image, query){
     const imageFormat = [
     ...new Set(
         (image?.representation ?? [])
@@ -46,7 +19,7 @@ function highlightImageFormat(image, highlight, query){
         .filter(Boolean).sort()
     )
     ];
-    const highLightedImageFormat = imageFormat.flatMap(imf=> query && imf? applyHighlight(imf, highlight?.["representation.image_format"]?.[0], query): imf)
+    const highLightedImageFormat = imageFormat.flatMap(imf=> query && imf? applyHighlight(imf, query): imf)
     return highLightedImageFormat
 }
 ---
@@ -64,7 +37,7 @@ function highlightImageFormat(image, highlight, query){
             ) : (
                 <th>Image</th>
                 <th>Organism</th>
-                <th>Imaging Method</th>
+                <th>Imaging Method/Annotation type</th>
                 <th>Image Formats</th>
                 <th>Physical Size</th>
                 <th>Pixels</th>
@@ -88,9 +61,9 @@ function highlightImageFormat(image, highlight, query){
                         <td><a class="vf-card__link" href={item?.highlight? highlightLinks(`/bioimage-archive/study/${item._source.accession_id}`, item.highlight, query): `/bioimage-archive/study/${item._source.accession_id}`} >{ item._source.accession_id }</a></td>
                         <td>{item._source.release_date}</td>
                         <td><HighlightedText text={item.highlight?.title?.[0] ?? item._source.title}/></td>
-                        <td><HighlightedText text={highlightImagingMethod(getImagingType(item._source), item.highlight?.["dataset.acquisition_process.imaging_method_name"], query)} /></td>
-                        <td><HighlightedText text={highlightOrganism(renderTaxonList(item._source), item.highlight, query)} /></td>
-                        <td><HighlightedText text={highlightImagingMethod(getAnnotationMethod(item._source).join(", "), item.highlight?.["dataset.annotation_process.method_type"], query)} /></td>
+                        <td><HighlightedText text={formatHighlightedList(item._source?.imaging_method, query, {sort: false})} /></td>
+                        <td><HighlightedText text={highlightOrganism(item._source, query)} /></td>
+                        <td><HighlightedText text={formatHighlightedList(item._source?.annotation_type?.map((at: string) => at.replace("_", " ")), query, {sort: false})} /></td>
                     </tr>
                 ): (
                     <tr>
@@ -99,9 +72,9 @@ function highlightImageFormat(image, highlight, query){
                                 <img src={getThumbnail(item._source)} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
                             </a>
                         </td>
-                        <td><HighlightedText text={highlightOrganismForImage(item?._source, item?.highlight, query)} /></td>
-                        <td><HighlightedText text={highlightImagingMethodForImage(item?._source, item?.highlight, query)} />{}</td>
-                        <td><HighlightedText text={highlightImageFormat(item?._source, item?.highlight, query).join(", ")} /></td>
+                        <td><HighlightedText text={highlightOrganism(item._source, query)} /></td>
+                        <td><HighlightedText text={formatHighlightedList(item?._source?.imaging_method || item?._source?.annotation_type?.map((at: string) => at.replace(/_/g, " ")), query, {sort: false})} />{}</td>
+                        <td><HighlightedText text={highlightImageFormat(item?._source, query).join(", ")} /></td>
                         <td>{formatPhysicalDimensions(item._source)}</td>
                         <td>{getImageRep(item._source) && formatPixelDimensions(getImageRep(item._source))}</td>
                         <td>{getImageRep(item._source)?.size_c || ""}</td>

@@ -1,9 +1,7 @@
 ---
-const { result, resultType, cardImageOverride } = Astro.props;
-import { getImage } from "astro:assets";
+const { result, resultType } = Astro.props;
 import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
-import { getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue } from "../SharedJSFunctions.js";
-import {getImagingType, renderTaxonList, getAnnotationMethod} from "../cards/BrowseStudyCard.astro"
+import { getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
 import {getImageRep} from "./SearchResultsTable.astro"
 
 const thumbnail = resultType === "study"? getStudyImage(result): getThumbnail(result);
@@ -11,8 +9,6 @@ const isFallback = resultType === "study"? String(thumbnail).includes("placehold
 const imageFallbackMessage = isFallback ? "Preview not available yet." : "";
 const studyfallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
 const aspectRatio = resultType === "study"? "1/1.75": "1/1";
-const organism = resultType === "study"? renderTaxonList(result): "";
-const imagingMethod = resultType === "study"? getImagingType(result): "";
 
 
 const isNonZeroNumber = (v) => {
