@@ -1,0 +1,49 @@
+---
+import { getMetadataValue } from "./SharedJSFunctions.js"
+const { study } = Astro.props;
+const file_list_urls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
+var table_view, tree_view;
+if (file_list_urls) {
+  table_view = file_list_urls.table_view;
+  tree_view = file_list_urls.tree_view;
+} 
+---
+{table_view && tree_view && (
+    <hr />
+    <section class=" embl-grid embl-grid--has-centered-content | section-spacing">
+        <div class="vf-section-header">
+        <h2 class="vf-section-header__heading" id="file_list">
+            Browse All Files
+        </h2>
+        </div>
+        <div>
+            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" aria-pressed="true">Table View</button>
+            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" aria-pressed="false">Tree View</button>
+        </div>
+    </section>
+    <br />
+    <div style="height:810px">
+    <iframe id="file-list-table-viewer" class="file-list-viewer" src={table_view} loading="lazy" width="100%" height="800px"></iframe>
+    <iframe id="file-list-tree-viewer" class="file-list-viewer" src={tree_view} loading="lazy" width="100%" height="800px" hidden></iframe>
+    </div>
+)
+}
+<script>
+  document.addEventListener("click", function (event) {
+    if (!(event.target instanceof HTMLElement)) return;
+
+    const button = event.target.closest(".file-list-view-button");
+    if (!(button instanceof HTMLElement)) return;
+
+    const selectedView = button.dataset.view;
+    const selectedIframe = document.getElementById(`file-list-${selectedView}-viewer`);
+    if (!(selectedIframe instanceof HTMLIFrameElement)) return;
+
+    document.querySelectorAll(".file-list-viewer").forEach((iframe) => {
+      if (iframe instanceof HTMLIFrameElement) {
+        iframe.hidden = iframe !== selectedIframe;
+      }
+    });
+
+  });
+</script>

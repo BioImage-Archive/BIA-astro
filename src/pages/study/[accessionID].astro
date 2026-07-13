@@ -4,6 +4,7 @@ import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
+import FileListTable from "../../components/FileListTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
 
@@ -283,7 +284,7 @@ const breadcrumbs = [
       </div>
     </section>
   )}
-
+  <FileListTable study={study}/>
 </BaseLayout>
 
 <style>
