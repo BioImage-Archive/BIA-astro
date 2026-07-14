@@ -17,14 +17,14 @@ if (file_list_urls) {
         </h2>
         </div>
         <div>
-            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" data-view-url={table_view} aria-pressed="true">Table View</button>
-            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" data-view-url={tree_view} aria-pressed="false">Tree View</button>
+            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" aria-pressed="true">Table View</button>
+            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" aria-pressed="false">Tree View</button>
         </div>
     </section>
     <br />
     <div class="file-list-viewer-frame">
-      <iframe id="file-list-table-viewer" class="file-list-viewer is-active" src={table_view} loading="lazy" title="File list table view"></iframe>
-      <iframe id="file-list-tree-viewer" class="file-list-viewer" src={tree_view} loading="lazy" title="File list tree view"></iframe>
+      <iframe id="file-list-table-viewer" class="file-list-viewer is-active" data-src={table_view} loading="lazy" title="File list table view"></iframe>
+      <iframe id="file-list-tree-viewer" class="file-list-viewer" data-src={tree_view} loading="lazy" title="File list tree view"></iframe>
     </div>
 )
 }
@@ -32,6 +32,7 @@ if (file_list_urls) {
 <style>
   .file-list-viewer-frame {
     height: 810px;
+    overflow-anchor: none;
     position: relative;
     width: 100%;
   }
@@ -53,25 +54,35 @@ if (file_list_urls) {
 </style>
 
 <script>
-  function reloadUrl(url: string) {
-    const [baseUrl, hash = ""] = url.split("#");
-    const nextUrl = new URL(baseUrl);
+  function loadFileListIframe(iframe: Element) {
+    if (!(iframe instanceof HTMLIFrameElement)) return;
+    if (iframe.src || !iframe.dataset.src) return;
 
-    nextUrl.searchParams.set("fileListReload", String(Date.now()));
-
-    return `${nextUrl.toString()}${hash ? `#${hash}` : ""}`;
+    iframe.src = iframe.dataset.src;
   }
 
-  function restoreFramePosition(frame: HTMLElement, previousTop: number) {
-    const restore = () => {
-      const currentTop = frame.getBoundingClientRect().top;
-      window.scrollBy(0, currentTop - previousTop);
-    };
+  function loadFileListIframes() {
+    document.querySelectorAll(".file-list-viewer").forEach(loadFileListIframe);
+  }
 
-    restore();
-    requestAnimationFrame(restore);
-    setTimeout(restore, 50);
-    setTimeout(restore, 150);
+  const fileListViewerFrame = document.querySelector(".file-list-viewer-frame");
+
+  if (fileListViewerFrame instanceof HTMLElement) {
+    if (typeof IntersectionObserver !== "undefined") {
+      const fileListObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+
+          loadFileListIframes();
+          fileListObserver.disconnect();
+        },
+        { rootMargin: "1200px 0px" }
+      );
+
+      fileListObserver.observe(fileListViewerFrame);
+    } else {
+      window.addEventListener("load", loadFileListIframes, { once: true });
+    }
   }
 
   document.addEventListener("click", function (event) {
@@ -82,17 +93,11 @@ if (file_list_urls) {
     event.preventDefault();
 
     const selectedView = button.dataset.view;
-    const selectedViewUrl = button.dataset.viewUrl;
     const selectedIframe = document.getElementById(`file-list-${selectedView}-viewer`);
     if (!(selectedIframe instanceof HTMLIFrameElement)) return;
-    if (!selectedViewUrl) return;
 
-    const viewerFrame = document.querySelector(".file-list-viewer-frame");
-    if (!(viewerFrame instanceof HTMLElement)) return;
-
-    const previousFrameTop = viewerFrame.getBoundingClientRect().top;
-    const shouldReloadSelectedView = selectedIframe.classList.contains("is-active");
     button.blur();
+    loadFileListIframes();
 
     document.querySelectorAll(".file-list-viewer").forEach((iframe) => {
       if (iframe instanceof HTMLIFrameElement) {
@@ -105,16 +110,5 @@ if (file_list_urls) {
         viewButton.setAttribute("aria-pressed", String(viewButton === button));
       }
     });
-
-    if (shouldReloadSelectedView) {
-      selectedIframe.addEventListener(
-        "load",
-        () => restoreFramePosition(viewerFrame, previousFrameTop),
-        { once: true }
-      );
-      selectedIframe.src = reloadUrl(selectedViewUrl);
-    }
-
-    restoreFramePosition(viewerFrame, previousFrameTop);
   });
 </script>
