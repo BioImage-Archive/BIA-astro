@@ -2,14 +2,14 @@
 import { getMetadataValue } from "./SharedJSFunctions.js"
 const { study } = Astro.props;
 const file_list_urls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
-var table_view, tree_view;
+let table_view: string | undefined;
+let tree_view: string | undefined;
 if (file_list_urls) {
   table_view = file_list_urls.table_view;
   tree_view = file_list_urls.tree_view;
 } 
 ---
 {table_view && tree_view && (
-    <hr />
     <section class=" embl-grid embl-grid--has-centered-content | section-spacing">
         <div class="vf-section-header">
         <h2 class="vf-section-header__heading" id="file_list">
@@ -17,33 +17,104 @@ if (file_list_urls) {
         </h2>
         </div>
         <div>
-            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" aria-pressed="true">Table View</button>
-            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" aria-pressed="false">Tree View</button>
+            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" data-view-url={table_view} aria-pressed="true">Table View</button>
+            <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" data-view-url={tree_view} aria-pressed="false">Tree View</button>
         </div>
     </section>
     <br />
-    <div style="height:810px">
-    <iframe id="file-list-table-viewer" class="file-list-viewer" src={table_view} loading="lazy" width="100%" height="800px"></iframe>
-    <iframe id="file-list-tree-viewer" class="file-list-viewer" src={tree_view} loading="lazy" width="100%" height="800px" hidden></iframe>
+    <div class="file-list-viewer-frame">
+      <iframe id="file-list-table-viewer" class="file-list-viewer is-active" src={table_view} loading="lazy" title="File list table view"></iframe>
+      <iframe id="file-list-tree-viewer" class="file-list-viewer" src={tree_view} loading="lazy" title="File list tree view"></iframe>
     </div>
 )
 }
+
+<style>
+  .file-list-viewer-frame {
+    height: 810px;
+    position: relative;
+    width: 100%;
+  }
+
+  .file-list-viewer {
+    border: 0;
+    height: 800px;
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+    width: 100%;
+  }
+
+  .file-list-viewer.is-active {
+    pointer-events: auto;
+    visibility: visible;
+  }
+</style>
+
 <script>
+  function reloadUrl(url: string) {
+    const [baseUrl, hash = ""] = url.split("#");
+    const nextUrl = new URL(baseUrl);
+
+    nextUrl.searchParams.set("fileListReload", String(Date.now()));
+
+    return `${nextUrl.toString()}${hash ? `#${hash}` : ""}`;
+  }
+
+  function restoreFramePosition(frame: HTMLElement, previousTop: number) {
+    const restore = () => {
+      const currentTop = frame.getBoundingClientRect().top;
+      window.scrollBy(0, currentTop - previousTop);
+    };
+
+    restore();
+    requestAnimationFrame(restore);
+    setTimeout(restore, 50);
+    setTimeout(restore, 150);
+  }
+
   document.addEventListener("click", function (event) {
     if (!(event.target instanceof HTMLElement)) return;
 
     const button = event.target.closest(".file-list-view-button");
     if (!(button instanceof HTMLElement)) return;
+    event.preventDefault();
 
     const selectedView = button.dataset.view;
+    const selectedViewUrl = button.dataset.viewUrl;
     const selectedIframe = document.getElementById(`file-list-${selectedView}-viewer`);
     if (!(selectedIframe instanceof HTMLIFrameElement)) return;
+    if (!selectedViewUrl) return;
+
+    const viewerFrame = document.querySelector(".file-list-viewer-frame");
+    if (!(viewerFrame instanceof HTMLElement)) return;
+
+    const previousFrameTop = viewerFrame.getBoundingClientRect().top;
+    const shouldReloadSelectedView = selectedIframe.classList.contains("is-active");
+    button.blur();
 
     document.querySelectorAll(".file-list-viewer").forEach((iframe) => {
       if (iframe instanceof HTMLIFrameElement) {
-        iframe.hidden = iframe !== selectedIframe;
+        iframe.classList.toggle("is-active", iframe === selectedIframe);
       }
     });
 
+    document.querySelectorAll(".file-list-view-button").forEach((viewButton) => {
+      if (viewButton instanceof HTMLElement) {
+        viewButton.setAttribute("aria-pressed", String(viewButton === button));
+      }
+    });
+
+    if (shouldReloadSelectedView) {
+      selectedIframe.addEventListener(
+        "load",
+        () => restoreFramePosition(viewerFrame, previousFrameTop),
+        { once: true }
+      );
+      selectedIframe.src = reloadUrl(selectedViewUrl);
+    }
+
+    restoreFramePosition(viewerFrame, previousFrameTop);
   });
 </script>
