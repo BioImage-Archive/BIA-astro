@@ -32,7 +32,7 @@ export function capitalizeFirstLetter(str: string): string {
     <div class="facet-title-and-warning">
       <legend
         class="facet-legend | vf-form__helper" 
-        onclick={`toggleFacet('${id}')`}
+        data-facet-toggle={id}
         tabindex="0" 
         role="button"
       >
@@ -59,7 +59,6 @@ export function capitalizeFirstLetter(str: string): string {
               value={key}
               id={`${id}-${index}`}
               checked={selectedValue ? Object.values(selectedValue).includes(key) : false}
-              onchange={`document.getElementById('facets')?.submit()`}
             />
           <label for={`${id}-${index}`} class="facet-label">
               <div class="facet-label-inner">
@@ -151,32 +150,6 @@ export function capitalizeFirstLetter(str: string): string {
   </div>
 </div>
 
-<script is:inline>
-  function toggleFacet(id) {
-    const section = document.getElementById(`facet-section-${id}`);
-    const options = document.getElementById(`facet-option-${id}`);
-    if (section && options) {
-      const isCollapsed = section.classList.toggle('collapsed');
-      options.style.display = isCollapsed ? 'none' : 'block';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.facet-section').forEach((section) => {
-      const secClass = isMobile()? "collapsed": "open";
-      const styleDisplay = isMobile()? "none": "block";
-      section.classList.add(secClass);
-      const options = section.querySelector('.facet-options');
-      if (options) options.style.display = styleDisplay;
-    });
-  });
-
-  function isMobile() {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return regex.test(navigator.userAgent);
-  }
-
-</script>
 <style>
   .slider-facet .slider-value{
     font-weight: 700;
