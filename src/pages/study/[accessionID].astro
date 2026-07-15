@@ -38,7 +38,7 @@ const globusLink = ftpLink?.globusLink || "";
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
 
 if (fileListUrls) {
-  tableOfContents["Browse all files"] = "file_list";
+  tableOfContents["Browse All Files"] = "file_list";
 }
 
 if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
