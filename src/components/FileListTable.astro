@@ -1,0 +1,118 @@
+---
+const { file_list_urls, ftp_path, globus_link } = Astro.props;
+let table_view: string | undefined;
+let tree_view: string | undefined;
+if (file_list_urls) {
+  table_view = file_list_urls.table_view;
+  tree_view = file_list_urls.tree_view;
+} 
+---
+{table_view && tree_view && (
+    <section class=" embl-grid embl-grid--has-centered-content | section-spacing" id="file_list">
+        <div class="vf-section-header">
+        <h2 class="vf-section-header__heading" id="file_list">
+            Browse All Files
+        </h2>
+        </div>
+        <div class="vf-grid__col--span-2" style="display:flex;">
+            <div style="display:flex; flex: 1 1 auto;justify-content: flex-start;align-items: center;">
+                <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" aria-pressed="true">Table View</button>
+                <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" aria-pressed="false">Tree View</button>
+            </div>
+            <div style="display:flex">
+                <a class="vf-link" href={ftp_path} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">BrowseFTP</button></a>
+                <a class="vf-link" href={globus_link} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">Browse Globus</button></a>
+            </div>
+        </div>
+    </section>
+    <br />
+    <div class="file-list-viewer-frame">
+      <iframe id="file-list-table-viewer" class="file-list-viewer is-active" data-src={table_view} loading="lazy" title="File list table view"></iframe>
+      <iframe id="file-list-tree-viewer" class="file-list-viewer" data-src={tree_view} loading="lazy" title="File list tree view"></iframe>
+    </div>
+)
+}
+
+<style>
+  .file-list-viewer-frame {
+    height: 810px;
+    overflow-anchor: none;
+    position: relative;
+    width: 100%;
+  }
+
+  .file-list-viewer {
+    border: 0;
+    height: 800px;
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    visibility: hidden;
+    width: 100%;
+  }
+
+  .file-list-viewer.is-active {
+    pointer-events: auto;
+    visibility: visible;
+  }
+</style>
+
+<script>
+  function loadFileListIframe(iframe: Element) {
+    if (!(iframe instanceof HTMLIFrameElement)) return;
+    if (iframe.src || !iframe.dataset.src) return;
+
+    iframe.src = iframe.dataset.src;
+  }
+
+  function loadFileListIframes() {
+    document.querySelectorAll(".file-list-viewer").forEach(loadFileListIframe);
+  }
+
+  const fileListViewerFrame = document.querySelector(".file-list-viewer-frame");
+
+  if (fileListViewerFrame instanceof HTMLElement) {
+    if (typeof IntersectionObserver !== "undefined") {
+      const fileListObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+
+          loadFileListIframes();
+          fileListObserver.disconnect();
+        },
+        { rootMargin: "1200px 0px" }
+      );
+
+      fileListObserver.observe(fileListViewerFrame);
+    } else {
+      window.addEventListener("load", loadFileListIframes, { once: true });
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    if (!(event.target instanceof HTMLElement)) return;
+
+    const button = event.target.closest(".file-list-view-button");
+    if (!(button instanceof HTMLElement)) return;
+    event.preventDefault();
+
+    const selectedView = button.dataset.view;
+    const selectedIframe = document.getElementById(`file-list-${selectedView}-viewer`);
+    if (!(selectedIframe instanceof HTMLIFrameElement)) return;
+
+    button.blur();
+    loadFileListIframes();
+
+    document.querySelectorAll(".file-list-viewer").forEach((iframe) => {
+      if (iframe instanceof HTMLIFrameElement) {
+        iframe.classList.toggle("is-active", iframe === selectedIframe);
+      }
+    });
+
+    document.querySelectorAll(".file-list-view-button").forEach((viewButton) => {
+      if (viewButton instanceof HTMLElement) {
+        viewButton.setAttribute("aria-pressed", String(viewButton === button));
+      }
+    });
+  });
+</script>

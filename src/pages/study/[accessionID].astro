@@ -4,10 +4,10 @@ import StudyTitleInfo from "../../components/study-page/StudyTitleInfo.astro";
 import StudyContentsSummary from "../../components/study-page/StudyContentsSummary.astro";
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
+import FileListTable from "../../components/FileListTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
-
-import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -23,12 +23,23 @@ const tableOfContents = {
   "Viewable Images": "viewable_images",
   "Study Information": "study",
   "Linked Information": "linked_information", 
-  "Datasets": "study_components",
+  "Datasets": "study_components"
 };
 
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.image ?? []
+const dirNumber = accessionID.replace("S-BIAD", "").replace("EMPIAR-", "");
+const ftpLink = await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
+const ftpHttpsLink = accessionID.includes("EMPIAR")
+  ? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`
+  : ftpLink?.httpLink;
+const globusLink = ftpLink?.globusLink || "";
+const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
+
+if (fileListUrls) {
+  tableOfContents["Browse All Files"] = "file_list";
+}
 
 if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
   delete tableOfContents["Linked Information"];
@@ -135,7 +146,7 @@ const breadcrumbs = [
       </figure>
     </div>
     <div slot="ftp-link">
-      <StudyFiles accessionID={accessionID}/>
+      {!fileListUrls && (<StudyFiles accessionID={accessionID}/>)}
     </div>
     <div slot="how-to-cite" style="word-wrap: break-word;"><Citation howToCite={howToCite}/></div>
   </StudyContentsSummary>
@@ -282,8 +293,11 @@ const breadcrumbs = [
         }
       </div>
     </section>
+    <hr />
   )}
-
+  {fileListUrls && (
+    <FileListTable file_list_urls={fileListUrls} ftp_path={ftpHttpsLink} globus_link={globusLink}/>
+  )}
 </BaseLayout>
 
 <style>

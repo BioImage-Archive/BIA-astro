@@ -27,14 +27,3 @@ let pageTitle = query.length === 0? "Browse Studies": "Search Studies";
   <SearchResults query={query} url={url} searchType="study"/>
   </body>
 </BaseLayoutWithBreadcrumbs>
-
-<script type="module">
-  var toggle = document.getElementById('image_toggle');
-
-  toggle.addEventListener('change', (event) => {
-    //const sortBy = event.target.value;
-    const url = new URL(window.location.href);
-    url.searchParams.set('hasImages', toggle.checked);
-    window.location.href = url.toString();
-  });
-</script>

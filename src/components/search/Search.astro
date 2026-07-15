@@ -327,22 +327,85 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     max-width: var(--vf-content-max-width, 1200px);
     margin: 0 auto;
 }
+#search-results-shell {
+    transition: opacity 0.15s ease;
+}
+#search-results-shell.is-loading {
+    opacity: 0.55;
+    pointer-events: none;
+}
 </style>
 
 <script type="module">
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
-      // Reload the page to reset all state
-      window.location.reload();
+  const SHELL_ID = "search-results-shell";
+  let activeSearchNavigation = 0;
+
+  async function navigateSearch(url, { push = true } = {}) {
+    const navigationId = ++activeSearchNavigation;
+    const currentShell = document.getElementById(SHELL_ID);
+    if (!currentShell) {
+      window.location.href = url.toString();
+      return;
     }
-  });
-  const pagination = document.getElementById('pageSize');
-   pagination.addEventListener('change', (event) => {
-     const pageSize = event.target.value;
-     const url = new URL(window.location.href);
-     url.searchParams.set('pagination.page_size', pageSize);
-     window.location.href = url.toString();
-   });
+
+    currentShell.classList.add("is-loading");
+
+    try {
+      const response = await fetch(url.toString(), {
+        headers: { "X-Requested-With": "fetch" },
+      });
+
+      if (!response.ok) throw new Error(`Search navigation failed: ${response.status}`);
+
+      const html = await response.text();
+      const nextDocument = new DOMParser().parseFromString(html, "text/html");
+      const nextShell = nextDocument.getElementById(SHELL_ID);
+
+      if (!nextShell) throw new Error(`Could not find #${SHELL_ID} in fetched page`);
+      if (navigationId !== activeSearchNavigation) return;
+
+      currentShell.replaceWith(nextShell);
+      document.title = nextDocument.title;
+
+      if (push) {
+        history.pushState({}, "", url.toString());
+      }
+
+      initSearchResultsShell(nextShell);
+    } catch (error) {
+      console.error(error);
+      window.location.href = url.toString();
+    } finally {
+      if (navigationId === activeSearchNavigation) {
+        document.getElementById(SHELL_ID)?.classList.remove("is-loading");
+      }
+    }
+  }
+
+  function getSearchURLFromForm(form) {
+    const url = new URL(form.action, window.location.origin);
+    const formData = new FormData(form);
+
+    url.search = "";
+    for (const [key, value] of formData.entries()) {
+      if (value === "") continue;
+      url.searchParams.append(key, value.toString());
+    }
+
+    return url;
+  }
+
+  function submitFacetsForm() {
+    const form = document.getElementById("facets");
+    if (!form) return;
+    form.querySelector('[name="pagination.page"]')?.remove();
+    if (typeof form.requestSubmit === "function") {
+      form.requestSubmit();
+    } else {
+      form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    }
+  }
+
   function formatBytesToHumanSize(sizeBytes) {
     var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
     return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
@@ -420,8 +483,8 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     }
   }
 
-
-  document.querySelectorAll(".slider-slider").forEach((container) => {
+  function initSliders(root) {
+  root.querySelectorAll(".slider-slider").forEach((container) => {
     // if URL already had values, hidden inputs will already be non-empty
     // we still need to draw progress bar
     syncSlider(container, "init");
@@ -431,40 +494,14 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     minEl?.addEventListener("input", () => syncSlider(container, "min"));
     maxEl?.addEventListener("input", () => syncSlider(container, "max"));
 
-    const form = document.getElementById("facets");
-    minEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
-    maxEl?.addEventListener("change", () => form?.requestSubmit?.() ?? form?.submit());
+    minEl?.addEventListener("change", submitFacetsForm);
+    maxEl?.addEventListener("change", submitFacetsForm);
   });
+  }
 
   function clamp(n, lo, hi) {
     if (!Number.isFinite(n)) return NaN;
     return Math.min(hi, Math.max(lo, n));
-  }
-
-  function getForm() {
-    return document.getElementById("facets");
-  }
-
-  function syncNames() {
-      const gHas = gte.value.trim() !== "";
-      const lHas = lte.value.trim() !== "";
-
-      if (gHas) gte.setAttribute("name", gte.dataset.name);
-      else gte.removeAttribute("name");
-
-      if (lHas) lte.setAttribute("name", lte.dataset.name);
-      else lte.removeAttribute("name");
-    }
-
-  function submitFacets() {
-    const form = getForm();
-    if (!form) return;
-    // Ensure empty fields have no name before submission
-    form.querySelectorAll("input[data-name]").forEach((el) => {
-      if (el.value.trim() === "") el.removeAttribute("name");
-      else el.setAttribute("name", el.dataset.name);
-    });
-    form.requestSubmit?.() ?? form.submit();
   }
 
   function initRangeFacet(fieldset) {
@@ -525,7 +562,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
         lteHidden.disabled = true;
       }
 
-      submitFacets();
+      submitFacetsForm();
     }
 
     function debounceCommit(from) {
@@ -543,25 +580,34 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     lte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("lte"); }});
   }
 
-  document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
-  document.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
+  function initRangeFacets(root) {
+    root.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
+  }
 
     function toggleView(viewId) {
         const views = ['card-view', 'table-view', 'grid-view'];
         views.forEach(id => {
-            document.getElementById(id).style.display = id === viewId ? 'block' : 'none';
+            const view = document.getElementById(id);
+            if (view) view.style.display = id === viewId ? 'block' : 'none';
         });
         
         if (viewId === 'table-view') {
-            dataTable?.columns.adjust();
+            window.dataTable?.columns?.adjust?.();
         }
   }
-  document.addEventListener('DOMContentLoaded', () => {
+  function initViewControls(root) {
         // Add event listeners for view toggles
-        document.querySelectorAll('input[name="view"]').forEach(radio => {
+        root.querySelectorAll('input[name="view"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if (e.target.checked) {
                     toggleView(e.target.value);
+                }
+            });
+        });
+        root.querySelectorAll('input[name="columns"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    window.setGridColumns(Number(e.target.value));
                 }
             });
         });
@@ -582,13 +628,13 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     }
   }
   // Set initial grid columns
-  setGridColumns(4);
-  });
+  window.setGridColumns(4);
+  }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const toggle = document.getElementById("convertedImageToggle");
-    const hidden = document.getElementById("has_converted_image_hidden");
-    const form = document.getElementById("facets");
+  function initConvertedImageToggle(root) {
+    const toggle = root.querySelector("#convertedImageToggle");
+    const hidden = root.querySelector("#has_converted_image_hidden");
+    const form = root.querySelector("#facets");
 
     if (!toggle || !hidden || !form) return;
 
@@ -608,12 +654,104 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       const pageInput = form.querySelector('input[name="pagination.page"]');
       if (pageInput) pageInput.remove();
 
-      form.requestSubmit?.() ?? form.submit();
+      submitFacetsForm();
     });
+  }
+
+  function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
+  }
+
+  function initFacetSections(root) {
+    root.querySelectorAll(".facet-section").forEach((section) => {
+      const secClass = isMobile() ? "collapsed" : "open";
+      const styleDisplay = isMobile() ? "none" : "block";
+      section.classList.remove("collapsed", "open");
+      section.classList.add(secClass);
+      const options = section.querySelector(".facet-options");
+      if (options) options.style.display = styleDisplay;
+    });
+  }
+
+  function initPageSize(root) {
+    root.querySelector("#pageSize")?.addEventListener("change", (event) => {
+      const url = new URL(window.location.href);
+      url.searchParams.set("pagination.page_size", event.target.value);
+      url.searchParams.delete("pagination.page");
+      navigateSearch(url);
+    });
+  }
+
+  function initSearchResultsShell(root = document) {
+    initSliders(root);
+    initRangeFacets(root);
+    initViewControls(root);
+    initConvertedImageToggle(root);
+    initFacetSections(root);
+    initPageSize(root);
+  }
+
+  document.addEventListener("submit", (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || form.id !== "facets") return;
+
+    event.preventDefault();
+    navigateSearch(getSearchURLFromForm(form));
   });
+
+  document.addEventListener("change", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) return;
+    if (!target.matches('#facets input[type="checkbox"]')) return;
+
+    submitFacetsForm();
+  });
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const facetToggle = target.closest("[data-facet-toggle]");
+    if (facetToggle) {
+      const id = facetToggle.getAttribute("data-facet-toggle");
+      const section = document.getElementById(`facet-section-${id}`);
+      const options = document.getElementById(`facet-option-${id}`);
+      if (section && options) {
+        const isCollapsed = section.classList.toggle("collapsed");
+        options.style.display = isCollapsed ? "none" : "block";
+      }
+      return;
+    }
+
+    const link = target.closest(".facet-remove-btn, .vf-pagination a");
+    if (!(link instanceof HTMLAnchorElement)) return;
+
+    const url = new URL(link.href, window.location.origin);
+    if (url.origin !== window.location.origin) return;
+
+    event.preventDefault();
+    navigateSearch(url);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const facetToggle = target.closest("[data-facet-toggle]");
+    if (!facetToggle || (event.key !== "Enter" && event.key !== " ")) return;
+
+    event.preventDefault();
+    facetToggle.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+
+  window.addEventListener("popstate", () => {
+    navigateSearch(new URL(window.location.href), { push: false });
+  });
+
+  initSearchResultsShell(document);
 </script>
 
-<section class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
+<section id="search-results-shell" class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
   <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
     <br />
     <div style="display: flex;">        
@@ -634,6 +772,9 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
         </>
         )}
         <input type="hidden" name="query" value={query}  />
+        {url.searchParams.has("pagination.page_size") && (
+          <input type="hidden" name="pagination.page_size" value={String(pageSize)} />
+        )}
         <input
           type="hidden"
           id="has_converted_image_hidden"
@@ -738,15 +879,15 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
               <div class="column-toggle-container">
                 <div class="column-toggle">
                     <label class="column-option">
-                        <input type="radio" name="columns" value="3" onchange="setGridColumns(3)">
+                        <input type="radio" name="columns" value="3">
                         <span class="column-label">3 Columns</span>
                     </label>
                     <label class="column-option">
-                        <input type="radio" name="columns" value="4" checked onchange="setGridColumns(4)">
+                        <input type="radio" name="columns" value="4" checked>
                         <span class="column-label">4 Columns</span>
                     </label>
                     <label class="column-option">
-                        <input type="radio" name="columns" value="5" onchange="setGridColumns(5)">
+                        <input type="radio" name="columns" value="5">
                         <span class="column-label">5 Columns</span>
                     </label>
                 </div>
