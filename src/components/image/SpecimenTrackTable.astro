@@ -1,0 +1,76 @@
+---
+import { formatBytesToHumanSize } from "../SharedJSFunctions";
+
+const { images } = Astro.props;
+
+const sortedImages = [...images].sort((a, b) =>
+  a.is_initial_image === b.is_initial_image ? 0 : a.is_initial_image ? 1 : -1
+);
+
+const roleLabels: Record<string, string> = {
+  intermediate: "Intermediate",
+  terminal_display: "Terminal display",
+  terminal_segmentation: "Terminal segmentation",
+};
+
+function combinedRoleLabel(image): string {
+  const base = roleLabels[image.image_role] ?? image.image_role;
+  return image.is_initial_image ? `Initial · ${base}` : base;
+}
+---
+<div class="specimen-track-table">
+  <table class="vf-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Label</th>
+        <th>UUID</th>
+        <th>File size</th>
+        <th>Download</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        sortedImages.map((image) => (
+          <tr>
+            <td>
+              <span class={image.image_role}>
+                {combinedRoleLabel(image)}
+              </span>
+            </td>
+            <td>
+              {image.label ?? image.uuid}
+            </td>
+            <td>
+                <a href={`/bioimage-archive/image/${image.uuid}`}>{image.uuid}</a>
+            </td>
+            <td>
+                {image.total_size_in_bytes != null 
+                    ? formatBytesToHumanSize(image.total_size_in_bytes) 
+                    : "N/A"}  
+            </td>
+            <td>
+                {image.file_uri?.[0] && (
+                    <a href={image.file_uri[0]} download>Download</a>
+                )}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .specimen-track-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .specimen-track-table th,
+  .specimen-track-table td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid #d2d2d2;
+    font-size: 14px;
+  }
+</style>

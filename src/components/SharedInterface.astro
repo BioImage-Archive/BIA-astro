@@ -42,11 +42,17 @@ export interface Image {
   uuid: string;
   additional_metadata?: any[];
   file_path?: string[];
+  file_uri?: string[];
+  total_size_in_bytes?: number;
   submission_dataset_uuid: string;
   creation_process?: ImageCreationProcess;
   licence_details: Licence;
   accession_id: string;
   file_list_attributes: any[];
+  image_role?: "intermediate" | "terminal_display" | "terminal_segmentation";
+  is_initial_image?: boolean;
+  upstream_image_uuids?: string[];
+  terminal_display_image_uuids?: string[];
 }
 
 export interface SpecimenInfo {

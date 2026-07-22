@@ -5,6 +5,7 @@ import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.a
 import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 import Specimen from '../../components/image/Specimen.astro';
+import SpecimenTrackTable from '../../components/image/SpecimenTrackTable.astro';
 import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
@@ -44,36 +45,22 @@ if ("input_image_uuid" in creation_process && creation_process.input_image_uuid.
     input_images = await getImagesFromAPI(creation_process.input_image_uuid)
 }
 
+let upstream_images: Image[] = [];
+if (image.upstream_image_uuids?.length > 0) {
+    upstream_images = await getImagesFromAPI(image.upstream_image_uuids);
+}
 
 let specimen: SpecimenInfo | null = null;
 if ("subject" in creation_process && creation_process.subject != null) {
     specimen = creation_process.subject
 }
 let inherited_specimens: SpecimenInfo[] = [];
-if (specimen == null && input_images.length > 0) {
-    inherited_specimens = await recursivelyGetSpecimenInfo(input_images, new Map())
-}
-
-async function recursivelyGetSpecimenInfo(image_list: Image[],
-  collected: Map<string, SpecimenInfo>): Promise<SpecimenInfo[]> {
-  for (const image of image_list) {
-    const specimen = image?.creation_process?.subject as SpecimenInfo | null;
-
-    if (specimen != null) {
-      collected.set(specimen.uuid, specimen);
-      continue;
+if (specimen == null) {
+    const initialImage = upstream_images.find(img => img?.is_initial_image);
+    if (initialImage?.creation_process?.subject) {
+        inherited_specimens = [initialImage.creation_process.subject];
     }
-    const next_image_uuids = image?.creation_process?.input_image_uuid || [];
-
-    if (collected.size == 0 && next_image_uuids.length > 0) {
-      const next_images = await getImagesFromAPI(next_image_uuids);
-      await recursivelyGetSpecimenInfo(next_images, collected);
-    }
-  }
-  const specimens = Array.from(collected.values());
-  return specimens
 }
-
 
 const thumbnail_uri = getSimpleAttributeValue(image, "thumbnail_uri")?.[0];
 const displayImageHTML = vizarrIFrameSource ? `<iframe style="width: 100%; height: 500px" name="vizarr" src="${vizarrIFrameSource}"></iframe>` :
@@ -334,6 +321,24 @@ const breadcrumbs = [
                             <b>Input Images:</b>
                         </div>
                         <ImageTable images={input_images}/>
+                    )
+                }
+            </div>
+        </section>
+
+        <hr/>
+
+        <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+            <div class="vf-section-header">
+                <h2 class="vf-section-header__heading" >Specimen track</h2>
+            </div>
+            <div>
+                {
+                    image.image_role === "terminal_display" && upstream_images.length > 0 && (
+                        <div>
+                            <b>Upstream Images:</b>
+                        </div>
+                        <SpecimenTrackTable images={upstream_images}/>
                     )
                 }
             </div>
