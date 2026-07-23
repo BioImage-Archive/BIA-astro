@@ -1,25 +1,14 @@
 ---
-import { formatBytesToHumanSize } from "../SharedJSFunctions";
+import SpecimenTrackTableRow from "./SpecimenTrackTableRow.astro";
 
 const { images } = Astro.props;
 
 const sortedImages = [...images].sort((a, b) =>
   a.is_initial_image === b.is_initial_image ? 0 : a.is_initial_image ? 1 : -1
 );
-
-const roleLabels: Record<string, string> = {
-  intermediate: "Intermediate",
-  terminal_display: "Terminal display",
-  terminal_segmentation: "Terminal segmentation",
-};
-
-function combinedRoleLabel(image): string {
-  const base = roleLabels[image.image_role] ?? image.image_role;
-  return image.is_initial_image ? `Initial · ${base}` : base;
-}
 ---
 <div class="specimen-track-table">
-  <table class="vf-table">
+  <table id="specimen_track_table" class="vf-table">
     <thead>
       <tr>
         <th>Role</th>
@@ -28,35 +17,13 @@ function combinedRoleLabel(image): string {
         <th>File size</th>
         <th>Download</th>
       </tr>
+      <tr>
+        <th id="role_filter_cell"></th>
+        <th></th><th></th><th></th><th></th>
+      </tr>
     </thead>
     <tbody>
-      {
-        sortedImages.map((image) => (
-          <tr>
-            <td>
-              <span class={image.image_role}>
-                {combinedRoleLabel(image)}
-              </span>
-            </td>
-            <td>
-              {image.label ?? image.uuid}
-            </td>
-            <td>
-                <a href={`/bioimage-archive/image/${image.uuid}`}>{image.uuid}</a>
-            </td>
-            <td>
-                {image.total_size_in_bytes != null 
-                    ? formatBytesToHumanSize(image.total_size_in_bytes) 
-                    : "N/A"}  
-            </td>
-            <td>
-                {image.file_uri?.[0] && (
-                    <a href={image.file_uri[0]} download>Download</a>
-                )}
-            </td>
-          </tr>
-        ))
-      }
+      {sortedImages.map((image) => <SpecimenTrackTableRow image={image} />)}
     </tbody>
   </table>
 </div>
@@ -74,3 +41,37 @@ function combinedRoleLabel(image): string {
     font-size: 14px;
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $("#specimen_track_table").DataTable({
+      order: [],
+      orderCellsTop: false,
+      columnDefs: [
+        { type: "natural", targets: 0 },
+        { orderable: false, targets: [1, 2, 4] },
+      ],
+      initComplete: function () {
+        this.api()
+          .columns(0)
+          .every(function (this: any) {
+            const column = this;
+            const select = $('<select><option value="">All roles</option></select>')
+              .appendTo($("#role_filter_cell"))
+              .on("change", function (this: HTMLSelectElement) {
+                const value = $.fn.dataTable.util.escapeRegex(String($(this).val() ?? ""));
+                column.search(value ? `^${value}$` : "", true, false).draw();
+              });
+
+            column
+              .data()
+              .unique()
+              .sort()
+              .each(function (roleText: string) {
+                select.append(`<option value="${roleText}">${roleText}</option>`);
+              });
+          });
+      },
+    });
+  });
+</script>

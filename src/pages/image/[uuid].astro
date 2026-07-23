@@ -6,11 +6,12 @@ import DatasetDetail from '../../components/DatasetDetail.astro';
 import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
 import Specimen from '../../components/image/Specimen.astro';
 import SpecimenTrackTable from '../../components/image/SpecimenTrackTable.astro';
+import DisplayImageTable from '../../components/image/DisplayImageTable.astro';
 import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
+import {getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getDownstreamDisplayImages, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
 import { type Study, type Image, type ImageCreationProcess, type SpecimenInfo } from "../../components/SharedInterface.astro"
 
 const imageAcquisitionMap = fieldMap["image_acquisition"];
@@ -49,6 +50,21 @@ let upstream_images: Image[] = [];
 if (image.upstream_image_uuids?.length > 0) {
     upstream_images = await getImagesFromAPI(image.upstream_image_uuids);
 }
+
+let display_images: Image[] = [];
+if (image.image_role === "terminal_segmentation" && image.terminal_display_image_uuids?.length > 0) {
+    display_images = await getImagesFromAPI(image.terminal_display_image_uuids);
+}
+
+let downstream_display_images: Image[] = [];
+if (image.image_role === "intermediate") {
+    downstream_display_images = await getDownstreamDisplayImages(image.uuid);
+}
+
+const hasSpecimenTrackContent =
+    (image.image_role === "terminal_display" && upstream_images.length > 0) ||
+    (image.image_role === "terminal_segmentation" && display_images.length > 0) ||
+    (image.image_role === "intermediate" && downstream_display_images.length > 0);
 
 let specimen: SpecimenInfo | null = null;
 if ("subject" in creation_process && creation_process.subject != null) {
@@ -326,23 +342,40 @@ const breadcrumbs = [
             </div>
         </section>
 
-        <hr/>
-
-        <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
-            <div class="vf-section-header">
-                <h2 class="vf-section-header__heading" >Specimen track</h2>
-            </div>
-            <div>
-                {
-                    image.image_role === "terminal_display" && upstream_images.length > 0 && (
-                        <div>
-                            <b>Upstream Images:</b>
+        {
+            hasSpecimenTrackContent && (
+                <>
+                    <hr/>
+                    <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+                        <div class="vf-section-header">
+                            <h2 class="vf-section-header__heading" >Specimen track</h2>
                         </div>
-                        <SpecimenTrackTable images={upstream_images}/>
-                    )
-                }
-            </div>
-        </section>
+                        <div>
+                            {
+                                image.image_role === "terminal_display" && upstream_images.length > 0 && (
+                                    <div>
+                                        <b>Upstream Images:</b>
+                                    </div>
+                                    <SpecimenTrackTable images={upstream_images}/>
+                                )
+                            }
+                            {
+                                image.image_role === "terminal_segmentation" && display_images.length > 0 && (
+                                    <div><b>Terminal Images:</b></div>
+                                    <DisplayImageTable images={display_images}/>
+                                )
+                            }
+                            {
+                                image.image_role === "intermediate" && downstream_display_images.length > 0 && (
+                                    <div><b>Terminal Images:</b></div>
+                                    <DisplayImageTable images={downstream_display_images}/>
+                                )
+                            }
+                        </div>
+                    </section>
+                </>
+            )
+        }
     </body>
 </BaseLayout>
 <style>
