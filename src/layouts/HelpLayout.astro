@@ -1,6 +1,7 @@
 ---
 const { frontmatter } = Astro.props;
 import HelpNavigation from '../components/HelpNavigation.astro';
+import HelpSearchMenu from '../components/HelpSearchMenu.astro';
 import BaseLayout from './BaseLayout.astro';
 ---
 <BaseLayout pageTitle={frontmatter.title}>
@@ -11,5 +12,10 @@ import BaseLayout from './BaseLayout.astro';
     <div class="vf-content">
       <slot />
     </div>
+    {frontmatter.showSearchRightMenu && (
+      <div>
+        <HelpSearchMenu />
+      </div>
+    )}
   </section>
 </BaseLayout>
