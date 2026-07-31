@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../../../layouts/BaseLayoutWithBreadcrumbs.astro';
+import datasets from '../../../data/collections/spora-mock-datasets.json';
+const cancers = [...new Set(datasets.map((d) => d.cancer))].sort();
+const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
+
+---
+<BaseLayout pageTitle="SPORA Dataset">
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing browser" data-datasets={JSON.stringify(datasets)} >
+  <aside class="filters" aria-label="Dataset filters">
+    <div class="filters-panel">
+      <div class="filter-group">
+        <label for="dataset-search">Search</label>
+        <input id="dataset-search" type="search" placeholder="Dataset or citation" class="vf-form__input" style="font-size: 0.9rem;"/>
+      </div>
+      <details class="filter-group filter-group--collapsible" open>
+        <summary>Primary Cancer Type</summary>
+        <fieldset>{cancers.map((value) => <label><input type="checkbox" name="cancer" value={value} /> <span>{value}</span></label>)}</fieldset>
+      </details>
+      <details class="filter-group filter-group--collapsible" open>
+        <summary>Modalities</summary>
+        <fieldset>{modalities.map((value) => <label><input type="checkbox" name="modality" value={value} /> <span>{value}</span></label>)}</fieldset>
+      </details>
+      <details class="filter-group filter-group--collapsible" open>
+        <summary>Image Type</summary>
+        <fieldset><label><input type="checkbox" name="type" value="TC" /> <span>Tumor Core (TC)</span></label><label><input type="checkbox" name="type" value="WSI" /> <span>Whole Slide (WSI)</span></label></fieldset>
+      </details>
+      <button class="clear" type="button">Clear filters</button>
+    </div>
+  </aside>
+  <div class="results">
+    <div class="results-bar"><strong><span class="count">{datasets.length}</span> datasets</strong></div>
+    <div class="results-table" role="region" aria-label="SPORA datasets" tabindex="0">
+      <table class="vf-table vf-table--compact" >
+        <thead class="vf-table__header">
+            <tr class="vf-table__row">
+                <th class="vf-table__heading">Accession</th>
+                <th class="vf-table__heading">Dataset</th>
+                <th class="vf-table__heading">Patients</th>
+                <th class="vf-table__heading">MX Images</th>
+                <th class="vf-table__heading">Type</th>
+                <th class="vf-table__heading">Modalities</th>
+                <th class="vf-table__heading">Primary Cancer</th>
+                <th class="vf-table__heading">Download/Cite</th>
+            </tr>
+        </thead>
+        <tbody class="vf-table__body">
+          {datasets.map((d) => (
+            <tr class="vf-table__row">
+              <td class="vf-table__cell">{d.accession_id}</td>
+              <td class="vf-table__cell">
+                <strong>{d.name}</strong><br />
+                <a class="vf-link" href={d.publicationUrl} target="_blank"><small>{d.citation}</small></a>
+              </td>
+              <td class="vf-table__cell">{d.patients.toLocaleString()}</td>
+              <td class="vf-table__cell">{d.images.toLocaleString()}</td>
+              <td class="vf-table__cell"><span class="pill">{d.type}</span></td>
+              <td class="vf-table__cell">
+                {d.modalities.map((m) => <span class="pill pill--green">{m}</span>)}
+              </td>
+              <td class="vf-table__cell">{d.cancer}</td>
+              <td class="vf-table__cell">
+                <button class="vf-button vf-button--link row-button cite" data-name={d.name}>Cite</button>
+                <a class="vf-link" href={d.globus_link} target="_blank"><button class="vf-button vf-button--link row-button globus" data-name={d.globus_link}>Globus</button></a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="empty" hidden>No datasets match the selected filters.</p>
+  </div>
+</section>
+<dialog class="globus-dialog"><form method="dialog"><button class="dialog-close" value="cancel" aria-label="Close">×</button><h2>Download selected datasets</h2><p>Requires rclone v1.67 and SPORA object-store credentials.</p><pre><code></code></pre><div class="dialog-actions"><button class="spora-button copy-commands" type="button">Copy all</button><button class="spora-button spora-button--ghost" value="cancel">Close</button></div></form></dialog>
+<dialog class="cite-dialog"><form method="dialog"><button class="dialog-close" value="cancel" aria-label="Close">×</button><h2>Dataset citation</h2><pre><code></code></pre><div class="dialog-actions"><button class="spora-button copy-citation" type="button">Copy BibTeX</button><button class="spora-button spora-button--ghost" value="cancel">Close</button></div></form></dialog>
+<script is:inline>
+  const root = document.querySelector('.browser');
+  if (root) {
+    const datasets = JSON.parse(root.dataset.datasets || '[]');
+    const body = root.querySelector('tbody');
+    const count = root.querySelector('.count');
+    const empty = root.querySelector('.empty');
+    const search = root.querySelector('#dataset-search');
+    const checks = [...root.querySelectorAll('input[type="checkbox"]')];
+    const citeDialog = document.querySelector('.cite-dialog');
+    const globusDialog = document.querySelector('.globus-dialog');
+    let visible = datasets;
+
+    const selected = (name) => checks.filter((x) => x.name === name && x.checked).map((x) => x.value);
+    const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+    function render() {
+      const term = search.value.trim().toLowerCase();
+      const cancer = selected('cancer');
+      const modality = selected('modality');
+      const type = selected('type');
+      visible = datasets.filter((d) => {
+        const text = `${d.name} ${d.citation} ${d.cancer}`.toLowerCase();
+        return (!term || text.includes(term)) && (!cancer.length || cancer.includes(d.cancer)) && (!modality.length || d.modalities.some((m) => modality.includes(m))) && (!type.length || type.includes(d.type));
+      });
+      body.innerHTML = visible.map((d) => `<tr class="vf-table__row"><td class="vf-table__cell">${d.accession_id}</td><td class="vf-table__cell"><strong>${escapeHtml(d.name)}</strong><br /><a class="vf-link" href="${escapeHtml(d.publicationUrl)}" target="_blank"><small>${escapeHtml(d.citation)}</small></a></td><td class="vf-table__cell">${d.patients.toLocaleString()}</td><td class="vf-table__cell">${d.images.toLocaleString()}</td><td class="vf-table__cell"><span class="pill">${d.type}</span></td><td class="vf-table__cell">${d.modalities.map((m) => `<span class="pill pill--green">${m}</span>`).join(' ')}</td><td class="vf-table__cell">${escapeHtml(d.cancer)}</td><td class="vf-table__cell"><button class="vf-button vf-button--link row-button cite" data-name="${escapeHtml(d.name)}">Cite</button><a class="vf-link" href="${escapeHtml(d.globus_link)}" target="_blank"><button class="vf-button vf-button--link row-button globus" data-name="${escapeHtml(d.globus_link)}">Globus</button></a></td></tr>`).join('');
+      count.textContent = visible.length;
+      empty.hidden = visible.length !== 0;
+    }
+    search.addEventListener('input', render);
+    checks.forEach((check) => check.addEventListener('change', render));
+    root.querySelector('.clear').addEventListener('click', () => { search.value = ''; checks.forEach((x) => x.checked = false); render(); });
+    body.addEventListener('click', (event) => {
+      const button = event.target.closest('.cite');
+      if (!button) return;
+      const dataset = datasets.find((d) => d.name === button.dataset.name);
+      citeDialog.querySelector('code').textContent = dataset?.bibtex || '';
+      citeDialog.showModal();
+    });
+    document.querySelector('.copy-citation').addEventListener('click', async () => navigator.clipboard.writeText(citeDialog.querySelector('code').textContent));
+    render();
+  }
+</script>
+<style>
+  .browser { display: grid; grid-template-columns: minmax(130px, 180px) minmax(0, 1fr); gap: 24px; align-items: start; width: 100%; }
+  .browser > .filters,
+  .browser > .results { grid-column: auto; }
+  .filters { position: sticky; top: 94px; min-width: 0; align-self: start; width: 100%; }
+  .filters-panel { display: block; }
+  .results { min-width: 0; width: 100%; }
+  .results-table { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .results-table .vf-table { width: 100%; min-width: 960px; margin-bottom: 0; }
+  .filter-group { margin: 0 0 8px; padding: 0; border: 0; }
+  .filter-group > label:first-child, .filter-group summary { display: block; font-weight: 800; }
+  .filter-group summary { list-style: none; cursor: pointer; padding: 12px 0; border-bottom: 1px solid #d0d0ce; }
+  .filter-group summary::-webkit-details-marker { display: none; }
+  .filter-group--collapsible summary::before { content: ">"; display: inline-block; margin-right: 8px; transition: transform .2s ease; }
+  .filter-group--collapsible[open] summary::before { transform: rotate(90deg); }
+  .filter-group fieldset { margin: 0; padding: 8px 0 0; border: 0; }
+  .filter-group label:not(:first-child), .filter-group fieldset label { display: flex; align-items: center; gap: 9px; margin: 9px 0; font-size: .9rem; cursor: pointer; }
+  .filter-group input[type='search'] { width: 100%; min-height: 30px; border: 1px solid black; padding: 0 12px; background: #fff; margin-bottom: 9px; margin-top: 3px; }
+  .clear { border: 0; background: transparent; padding: 0; font-weight: 800; text-decoration: underline; cursor: pointer; }
+  
+  .results-bar { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 18px; }
+  .pill { display: inline-flex; margin: 2px; border-radius: 999px; padding: 4px 8px; background: #ece8f7; font: 700 .72rem var(--spora-mono); }
+  dialog { width: min(760px, calc(100% - 28px)); border: 0; border-radius: 22px; padding: 0; box-shadow: 0 40px 120px rgba(0,0,0,.35); }
+  dialog::backdrop { background: rgba(10,11,9,.66); backdrop-filter: blur(4px); }
+  dialog form { position: relative; padding: 28px; }
+  dialog pre { max-height: 45vh; overflow: auto; border-radius: 14px; padding: 18px; background: #11130f; color: white; white-space: pre-wrap; }
+  .dialog-close { position: absolute; right: 18px; top: 14px; border: 0; background: transparent; font-size: 2rem; cursor: pointer; }
+  .dialog-actions { display: flex; gap: 10px; }
+  .empty { padding: 40px; text-align: center; }
+  :global(.results-table .vf-table .vf-table__heading),
+  :global(.results-table .vf-table .vf-table__cell),
+  :global(.results-table .vf-table .vf-table__cell small),
+  :global(.results-table .vf-table .vf-button) {
+    font-size: 1rem !important;
+  }
+  @media (max-width: 850px) {
+    .browser {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
+    }
+    .browser > .filters {
+      grid-column: 1;
+      grid-row: 1;
+      position: static;
+      width: 100%;
+      max-width: 100%;
+    }
+    .browser > .results {
+      grid-column: 1;
+      grid-row: 2;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+  }
+  @media (max-width: 600px) {
+    .browser {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+    .browser > .filters,
+    .browser > .results {
+      grid-column: 1;
+    }
+    .filters, .results { width: 100%; max-width: 100%; }
+    .filters-panel { padding: 0; }
+    .filter-group--collapsible { border-bottom: 1px solid #d0d0ce; }
+    .filter-group--collapsible[open] { padding-bottom: 8px; }
+    .filter-group label:not(:first-child), .filter-group fieldset label { font-size: .95rem; }
+    .results { padding: 12px; clear: both; }
+    .results-bar { margin-bottom: 12px; }
+    .results-table { margin: 0 -12px; padding: 0 12px 4px; }
+    .results-table .vf-table { min-width: 720px; }
+    .pill { white-space: nowrap; }
+    dialog form { padding: 20px; }
+    .dialog-actions { flex-direction: column; }
+    .dialog-actions > * { width: 100%; }
+  }
+</style>
+
+</BaseLayout>

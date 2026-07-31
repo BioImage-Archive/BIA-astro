@@ -14,8 +14,12 @@ const { label, description, icon, target } = Astro.props;
             </h3>
             <p class="vf-card__text">{ description }</p>
         </div>
-        <div>
-            <img src={icon} alt="Browse" style="width: 70px">
-        </div>
+        {
+            icon && (
+                <div>
+                    <img src={icon} alt={label} style="width: 70px">
+                </div>
+            )
+        }
     </div>
 </article>

@@ -1,0 +1,978 @@
+[
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "atlas2026breast",
+    "patients": 428,
+    "images": 1842,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Breast",
+    "citation": "Adams et al. 2026 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/atlas2026breast",
+    "bibtex": "@article{atlas2026breast,\n  author = {Adams, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of breast tissue},\n  journal = {Spatial Biology},\n  year = {2026},\n  url = {https://example.org/spora/mock-publications/atlas2026breast},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST1",
+		"globus_link": "",
+		"name": "prism2025colorectal",
+    "patients": 112,
+    "images": 634,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Colorectal",
+    "citation": "Bennett et al. 2025 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/prism2025colorectal",
+    "bibtex": "@article{prism2025colorectal,\n  author = {Bennett, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of colorectal tissue},\n  journal = {Imaging Methods},\n  year = {2025},\n  url = {https://example.org/spora/mock-publications/prism2025colorectal},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST2",
+		"globus_link": "",
+		"name": "mosaic2024lung",
+    "patients": 286,
+    "images": 1280,
+    "type": "TC",
+    "modalities": [
+      "IMC",
+      "CODEX"
+    ],
+    "cancer": "Lung",
+    "citation": "Chen et al. 2024 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2024lung",
+    "bibtex": "@article{mosaic2024lung,\n  author = {Chen, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and CODEX spatial profiling of lung tissue},\n  journal = {Spatial Biology},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/mosaic2024lung},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST3",
+		"globus_link": "",
+		"name": "spatialdemo2026melanoma",
+    "patients": 74,
+    "images": 396,
+    "type": "WSI",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Skin (melanoma)",
+    "citation": "Diaz et al. 2026 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/spatialdemo2026melanoma",
+    "bibtex": "@article{spatialdemo2026melanoma,\n  author = {Diaz, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of skin (melanoma) tissue},\n  journal = {Imaging Methods},\n  year = {2026},\n  url = {https://example.org/spora/mock-publications/spatialdemo2026melanoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST4",
+		"globus_link": "",
+		"name": "tissuegrid2025pancreatic",
+    "patients": 96,
+    "images": 512,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Evans et al. 2025 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/tissuegrid2025pancreatic",
+    "bibtex": "@article{tissuegrid2025pancreatic,\n  author = {Evans, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of pancreatic tissue},\n  journal = {Spatial Biology},\n  year = {2025},\n  url = {https://example.org/spora/mock-publications/tissuegrid2025pancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST5",
+		"globus_link": "",
+		"name": "nexus2026cellularliver",
+    "patients": 279,
+    "images": 1006,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Liver",
+    "citation": "Fischer et al. 2026 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/nexus2026cellularliver",
+    "bibtex": "@article{nexus2026cellularliver,\n  author = {Fischer, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of liver tissue},\n  journal = {Imaging Methods},\n  year = {2026},\n  url = {https://example.org/spora/mock-publications/nexus2026cellularliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST6",
+		"globus_link": "",
+		"name": "cohort2026stromalliver",
+    "patients": 366,
+    "images": 672,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Liver",
+    "citation": "Gupta et al. 2026 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2026stromalliver",
+    "bibtex": "@article{cohort2026stromalliver,\n  author = {Gupta, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of liver tissue},\n  journal = {Spatial Biology},\n  year = {2026},\n  url = {https://example.org/spora/mock-publications/cohort2026stromalliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST4",
+		"globus_link": "",
+		"name": "microenv2018phenotypeheadneck",
+    "patients": 409,
+    "images": 1350,
+    "type": "WSI",
+    "modalities": [
+      "CODEX",
+      "IMC"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Hassan et al. 2018 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2018phenotypeheadneck",
+    "bibtex": "@article{microenv2018phenotypeheadneck,\n  author = {Hassan, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX and IMC spatial profiling of head & neck tissue},\n  journal = {Imaging Methods},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/microenv2018phenotypeheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST5",
+		"globus_link": "",
+		"name": "prism2023atlasbreast",
+    "patients": 113,
+    "images": 399,
+    "type": "TC",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Breast",
+    "citation": "Ito et al. 2023 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/prism2023atlasbreast",
+    "bibtex": "@article{prism2023atlasbreast,\n  author = {Ito, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of breast tissue},\n  journal = {Spatial Biology},\n  year = {2023},\n  url = {https://example.org/spora/mock-publications/prism2023atlasbreast},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cellscape2020cellularlymphoma",
+    "patients": 538,
+    "images": 3732,
+    "type": "TC",
+    "modalities": [
+      "CODEX",
+      "IMC"
+    ],
+    "cancer": "Lymphoma",
+    "citation": "Jones et al. 2020 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/cellscape2020cellularlymphoma",
+    "bibtex": "@article{cellscape2020cellularlymphoma,\n  author = {Jones, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX and IMC spatial profiling of lymphoma tissue},\n  journal = {Imaging Methods},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/cellscape2020cellularlymphoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "nexus2022architectureovarian",
+    "patients": 74,
+    "images": 206,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Ovarian",
+    "citation": "Kaur et al. 2022 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/nexus2022architectureovarian",
+    "bibtex": "@article{nexus2022architectureovarian,\n  author = {Kaur, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of ovarian tissue},\n  journal = {Spatial Biology},\n  year = {2022},\n  url = {https://example.org/spora/mock-publications/nexus2022architectureovarian},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "microenv2023stromalotherdisea",
+    "patients": 447,
+    "images": 3134,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Other disease",
+    "citation": "Lopez et al. 2023 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2023stromalotherdisea",
+    "bibtex": "@article{microenv2023stromalotherdisea,\n  author = {Lopez, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of other disease tissue},\n  journal = {Imaging Methods},\n  year = {2023},\n  url = {https://example.org/spora/mock-publications/microenv2023stromalotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "spatial2024atlasheadneck",
+    "patients": 508,
+    "images": 2110,
+    "type": "TC",
+    "modalities": [
+      "Orion",
+      "CODEX"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Meyer et al. 2024 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/spatial2024atlasheadneck",
+    "bibtex": "@article{spatial2024atlasheadneck,\n  author = {Meyer, A. and Example, B. and Demo, C.},\n  title = {Mock Orion and CODEX spatial profiling of head & neck tissue},\n  journal = {Spatial Biology},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/spatial2024atlasheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tumormap2021atlaskidney",
+    "patients": 545,
+    "images": 1567,
+    "type": "WSI",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Kidney",
+    "citation": "Nolan et al. 2021 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tumormap2021atlaskidney",
+    "bibtex": "@article{tumormap2021atlaskidney,\n  author = {Nolan, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of kidney tissue},\n  journal = {Imaging Methods},\n  year = {2021},\n  url = {https://example.org/spora/mock-publications/tumormap2021atlaskidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cohort2018neighborhoodpancreatic",
+    "patients": 388,
+    "images": 2672,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Okafor et al. 2018 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2018neighborhoodpancreatic",
+    "bibtex": "@article{cohort2018neighborhoodpancreatic,\n  author = {Okafor, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of pancreatic tissue},\n  journal = {Spatial Biology},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/cohort2018neighborhoodpancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tissue2024cellularkidney",
+    "patients": 126,
+    "images": 384,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Kidney",
+    "citation": "Patel et al. 2024 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tissue2024cellularkidney",
+    "bibtex": "@article{tissue2024cellularkidney,\n  author = {Patel, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of kidney tissue},\n  journal = {Imaging Methods},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/tissue2024cellularkidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "nexus2025responsepancreatic",
+    "patients": 65,
+    "images": 489,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Quinn et al. 2025 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/nexus2025responsepancreatic",
+    "bibtex": "@article{nexus2025responsepancreatic,\n  author = {Quinn, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of pancreatic tissue},\n  journal = {Spatial Biology},\n  year = {2025},\n  url = {https://example.org/spora/mock-publications/nexus2025responsepancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "microenv2023cellularlymphoma",
+    "patients": 473,
+    "images": 2556,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Lymphoma",
+    "citation": "Rossi et al. 2023 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2023cellularlymphoma",
+    "bibtex": "@article{microenv2023cellularlymphoma,\n  author = {Rossi, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of lymphoma tissue},\n  journal = {Imaging Methods},\n  year = {2023},\n  url = {https://example.org/spora/mock-publications/microenv2023cellularlymphoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "prism2024cellularskin",
+    "patients": 762,
+    "images": 6093,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Skin (melanoma)",
+    "citation": "Singh et al. 2024 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/prism2024cellularskin",
+    "bibtex": "@article{prism2024cellularskin,\n  author = {Singh, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of skin (melanoma) tissue},\n  journal = {Spatial Biology},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/prism2024cellularskin},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "nexus2024proteomickidney",
+    "patients": 772,
+    "images": 2029,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Kidney",
+    "citation": "Taylor et al. 2024 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/nexus2024proteomickidney",
+    "bibtex": "@article{nexus2024proteomickidney,\n  author = {Taylor, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of kidney tissue},\n  journal = {Imaging Methods},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/nexus2024proteomickidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "microenv2020cellularpancreatic",
+    "patients": 693,
+    "images": 1466,
+    "type": "WSI",
+    "modalities": [
+      "IMC",
+      "Orion"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Usman et al. 2020 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2020cellularpancreatic",
+    "bibtex": "@article{microenv2020cellularpancreatic,\n  author = {Usman, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and Orion spatial profiling of pancreatic tissue},\n  journal = {Spatial Biology},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/microenv2020cellularpancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cohort2019architecturenodisease",
+    "patients": 696,
+    "images": 3105,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "No disease",
+    "citation": "Vega et al. 2019 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2019architecturenodisease",
+    "bibtex": "@article{cohort2019architecturenodisease,\n  author = {Vega, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of no disease tissue},\n  journal = {Imaging Methods},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/cohort2019architecturenodisease},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "nexus2022responsecolorectal",
+    "patients": 311,
+    "images": 1524,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Colorectal",
+    "citation": "Wang et al. 2022 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/nexus2022responsecolorectal",
+    "bibtex": "@article{nexus2022responsecolorectal,\n  author = {Wang, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of colorectal tissue},\n  journal = {Spatial Biology},\n  year = {2022},\n  url = {https://example.org/spora/mock-publications/nexus2022responsecolorectal},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "immune2024stromallymphoma",
+    "patients": 106,
+    "images": 120,
+    "type": "WSI",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Lymphoma",
+    "citation": "Xu et al. 2024 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/immune2024stromallymphoma",
+    "bibtex": "@article{immune2024stromallymphoma,\n  author = {Xu, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of lymphoma tissue},\n  journal = {Imaging Methods},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/immune2024stromallymphoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cohort2020phenotypelymphoma",
+    "patients": 94,
+    "images": 267,
+    "type": "TC",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Lymphoma",
+    "citation": "Young et al. 2020 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2020phenotypelymphoma",
+    "bibtex": "@article{cohort2020phenotypelymphoma,\n  author = {Young, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of lymphoma tissue},\n  journal = {Spatial Biology},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/cohort2020phenotypelymphoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "spatial2020atlasheadneck",
+    "patients": 62,
+    "images": 121,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Zhang et al. 2020 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/spatial2020atlasheadneck",
+    "bibtex": "@article{spatial2020atlasheadneck,\n  author = {Zhang, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of head & neck tissue},\n  journal = {Imaging Methods},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/spatial2020atlasheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cohort2024proteomickidney",
+    "patients": 66,
+    "images": 424,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Kidney",
+    "citation": "Adams et al. 2024 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2024proteomickidney",
+    "bibtex": "@article{cohort2024proteomickidney,\n  author = {Adams, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of kidney tissue},\n  journal = {Spatial Biology},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/cohort2024proteomickidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "mosaic2026phenotypeliver",
+    "patients": 174,
+    "images": 1772,
+    "type": "TC",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Liver",
+    "citation": "Bennett et al. 2026 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2026phenotypeliver",
+    "bibtex": "@article{mosaic2026phenotypeliver,\n  author = {Bennett, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of liver tissue},\n  journal = {Imaging Methods},\n  year = {2026},\n  url = {https://example.org/spora/mock-publications/mosaic2026phenotypeliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tissue2020phenotypepancreatic",
+    "patients": 261,
+    "images": 636,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Chen et al. 2020 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/tissue2020phenotypepancreatic",
+    "bibtex": "@article{tissue2020phenotypepancreatic,\n  author = {Chen, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of pancreatic tissue},\n  journal = {Spatial Biology},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/tissue2020phenotypepancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tumormap2019atlaskidney",
+    "patients": 185,
+    "images": 587,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Kidney",
+    "citation": "Diaz et al. 2019 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tumormap2019atlaskidney",
+    "bibtex": "@article{tumormap2019atlaskidney,\n  author = {Diaz, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of kidney tissue},\n  journal = {Imaging Methods},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/tumormap2019atlaskidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cellscape2024cellularotherdisea",
+    "patients": 777,
+    "images": 1478,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Other disease",
+    "citation": "Evans et al. 2024 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cellscape2024cellularotherdisea",
+    "bibtex": "@article{cellscape2024cellularotherdisea,\n  author = {Evans, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/cellscape2024cellularotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tissue2019atlasheadneck",
+    "patients": 241,
+    "images": 591,
+    "type": "WSI",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Fischer et al. 2019 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tissue2019atlasheadneck",
+    "bibtex": "@article{tissue2019atlasheadneck,\n  author = {Fischer, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of head & neck tissue},\n  journal = {Imaging Methods},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/tissue2019atlasheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "spatial2018neighborhoodheadneck",
+    "patients": 295,
+    "images": 2158,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Gupta et al. 2018 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/spatial2018neighborhoodheadneck",
+    "bibtex": "@article{spatial2018neighborhoodheadneck,\n  author = {Gupta, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of head & neck tissue},\n  journal = {Spatial Biology},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/spatial2018neighborhoodheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tissue2025cellularskin",
+    "patients": 447,
+    "images": 2000,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Skin (melanoma)",
+    "citation": "Hassan et al. 2025 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tissue2025cellularskin",
+    "bibtex": "@article{tissue2025cellularskin,\n  author = {Hassan, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of skin (melanoma) tissue},\n  journal = {Imaging Methods},\n  year = {2025},\n  url = {https://example.org/spora/mock-publications/tissue2025cellularskin},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cellscape2020stromalpancreatic",
+    "patients": 362,
+    "images": 1426,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Ito et al. 2020 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cellscape2020stromalpancreatic",
+    "bibtex": "@article{cellscape2020stromalpancreatic,\n  author = {Ito, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of pancreatic tissue},\n  journal = {Spatial Biology},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/cellscape2020stromalpancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "prism2024immunekidney",
+    "patients": 352,
+    "images": 2441,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Kidney",
+    "citation": "Jones et al. 2024 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/prism2024immunekidney",
+    "bibtex": "@article{prism2024immunekidney,\n  author = {Jones, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of kidney tissue},\n  journal = {Imaging Methods},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/prism2024immunekidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "multiplex2021cellularcolorectal",
+    "patients": 638,
+    "images": 3759,
+    "type": "TC",
+    "modalities": [
+      "CODEX",
+      "IMC"
+    ],
+    "cancer": "Colorectal",
+    "citation": "Kaur et al. 2021 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/multiplex2021cellularcolorectal",
+    "bibtex": "@article{multiplex2021cellularcolorectal,\n  author = {Kaur, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX and IMC spatial profiling of colorectal tissue},\n  journal = {Spatial Biology},\n  year = {2021},\n  url = {https://example.org/spora/mock-publications/multiplex2021cellularcolorectal},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tissue2021phenotypeovarian",
+    "patients": 552,
+    "images": 5382,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Ovarian",
+    "citation": "Lopez et al. 2021 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tissue2021phenotypeovarian",
+    "bibtex": "@article{tissue2021phenotypeovarian,\n  author = {Lopez, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of ovarian tissue},\n  journal = {Imaging Methods},\n  year = {2021},\n  url = {https://example.org/spora/mock-publications/tissue2021phenotypeovarian},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cohort2019landscapeotherdisea",
+    "patients": 460,
+    "images": 1293,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Other disease",
+    "citation": "Meyer et al. 2019 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2019landscapeotherdisea",
+    "bibtex": "@article{cohort2019landscapeotherdisea,\n  author = {Meyer, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/cohort2019landscapeotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "microenv2020proteomicliver",
+    "patients": 60,
+    "images": 1392,
+    "type": "TC",
+    "modalities": [
+      "IMC",
+      "MIBI"
+    ],
+    "cancer": "Liver",
+    "citation": "Nolan et al. 2020 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2020proteomicliver",
+    "bibtex": "@article{microenv2020proteomicliver,\n  author = {Nolan, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and MIBI spatial profiling of liver tissue},\n  journal = {Imaging Methods},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/microenv2020proteomicliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "immune2026landscapeheadneck",
+    "patients": 120,
+    "images": 196,
+    "type": "WSI",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Okafor et al. 2026 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/immune2026landscapeheadneck",
+    "bibtex": "@article{immune2026landscapeheadneck,\n  author = {Okafor, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of head & neck tissue},\n  journal = {Spatial Biology},\n  year = {2026},\n  url = {https://example.org/spora/mock-publications/immune2026landscapeheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "mosaic2018neighborhoodovarian",
+    "patients": 234,
+    "images": 1490,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Ovarian",
+    "citation": "Patel et al. 2018 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2018neighborhoodovarian",
+    "bibtex": "@article{mosaic2018neighborhoodovarian,\n  author = {Patel, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of ovarian tissue},\n  journal = {Imaging Methods},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/mosaic2018neighborhoodovarian},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "immune2018phenotypeotherdisea",
+    "patients": 672,
+    "images": 1189,
+    "type": "TC",
+    "modalities": [
+      "Orion",
+      "IMC"
+    ],
+    "cancer": "Other disease",
+    "citation": "Quinn et al. 2018 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/immune2018phenotypeotherdisea",
+    "bibtex": "@article{immune2018phenotypeotherdisea,\n  author = {Quinn, A. and Example, B. and Demo, C.},\n  title = {Mock Orion and IMC spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/immune2018phenotypeotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "tumormap2025architecturepancreatic",
+    "patients": 346,
+    "images": 1262,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Rossi et al. 2025 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/tumormap2025architecturepancreatic",
+    "bibtex": "@article{tumormap2025architecturepancreatic,\n  author = {Rossi, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of pancreatic tissue},\n  journal = {Imaging Methods},\n  year = {2025},\n  url = {https://example.org/spora/mock-publications/tumormap2025architecturepancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "microenv2020landscapeotherdisea",
+    "patients": 464,
+    "images": 1468,
+    "type": "WSI",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Other disease",
+    "citation": "Singh et al. 2020 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2020landscapeotherdisea",
+    "bibtex": "@article{microenv2020landscapeotherdisea,\n  author = {Singh, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/microenv2020landscapeotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "immune2020proteomicpancreatic",
+    "patients": 223,
+    "images": 1455,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Pancreatic",
+    "citation": "Taylor et al. 2020 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/immune2020proteomicpancreatic",
+    "bibtex": "@article{immune2020proteomicpancreatic,\n  author = {Taylor, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of pancreatic tissue},\n  journal = {Imaging Methods},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/immune2020proteomicpancreatic},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "multiplex2018immuneliver",
+    "patients": 35,
+    "images": 79,
+    "type": "TC",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Liver",
+    "citation": "Usman et al. 2018 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/multiplex2018immuneliver",
+    "bibtex": "@article{multiplex2018immuneliver,\n  author = {Usman, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of liver tissue},\n  journal = {Spatial Biology},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/multiplex2018immuneliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "atlas2023architectureheadneck",
+    "patients": 632,
+    "images": 4717,
+    "type": "TC",
+    "modalities": [
+      "Orion",
+      "CODEX"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Vega et al. 2023 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/atlas2023architectureheadneck",
+    "bibtex": "@article{atlas2023architectureheadneck,\n  author = {Vega, A. and Example, B. and Demo, C.},\n  title = {Mock Orion and CODEX spatial profiling of head & neck tissue},\n  journal = {Imaging Methods},\n  year = {2023},\n  url = {https://example.org/spora/mock-publications/atlas2023architectureheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cellscape2019phenotypeotherdisea",
+    "patients": 545,
+    "images": 2607,
+    "type": "TC",
+    "modalities": [
+      "IMC",
+      "CODEX"
+    ],
+    "cancer": "Other disease",
+    "citation": "Wang et al. 2019 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cellscape2019phenotypeotherdisea",
+    "bibtex": "@article{cellscape2019phenotypeotherdisea,\n  author = {Wang, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and CODEX spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/cellscape2019phenotypeotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "spatial2022responsekidney",
+    "patients": 275,
+    "images": 845,
+    "type": "TC",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Kidney",
+    "citation": "Xu et al. 2022 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/spatial2022responsekidney",
+    "bibtex": "@article{spatial2022responsekidney,\n  author = {Xu, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of kidney tissue},\n  journal = {Imaging Methods},\n  year = {2022},\n  url = {https://example.org/spora/mock-publications/spatial2022responsekidney},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "mosaic2019landscapeliver",
+    "patients": 240,
+    "images": 1288,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Liver",
+    "citation": "Young et al. 2019 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2019landscapeliver",
+    "bibtex": "@article{mosaic2019landscapeliver,\n  author = {Young, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of liver tissue},\n  journal = {Spatial Biology},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/mosaic2019landscapeliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "microenv2023proteomiclung",
+    "patients": 768,
+    "images": 1802,
+    "type": "TC",
+    "modalities": [
+      "MIBI",
+      "IMC"
+    ],
+    "cancer": "Lung",
+    "citation": "Zhang et al. 2023 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/microenv2023proteomiclung",
+    "bibtex": "@article{microenv2023proteomiclung,\n  author = {Zhang, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI and IMC spatial profiling of lung tissue},\n  journal = {Imaging Methods},\n  year = {2023},\n  url = {https://example.org/spora/mock-publications/microenv2023proteomiclung},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "atlas2022cellularskin",
+    "patients": 223,
+    "images": 574,
+    "type": "TC",
+    "modalities": [
+      "MIBI",
+      "Orion"
+    ],
+    "cancer": "Skin (melanoma)",
+    "citation": "Adams et al. 2022 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/atlas2022cellularskin",
+    "bibtex": "@article{atlas2022cellularskin,\n  author = {Adams, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI and Orion spatial profiling of skin (melanoma) tissue},\n  journal = {Spatial Biology},\n  year = {2022},\n  url = {https://example.org/spora/mock-publications/atlas2022cellularskin},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "mosaic2023immunelymphoma",
+    "patients": 648,
+    "images": 4556,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Lymphoma",
+    "citation": "Bennett et al. 2023 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2023immunelymphoma",
+    "bibtex": "@article{mosaic2023immunelymphoma,\n  author = {Bennett, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of lymphoma tissue},\n  journal = {Imaging Methods},\n  year = {2023},\n  url = {https://example.org/spora/mock-publications/mosaic2023immunelymphoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "prism2019immuneliver",
+    "patients": 13,
+    "images": 47,
+    "type": "TC",
+    "modalities": [
+      "IMC",
+      "MIBI"
+    ],
+    "cancer": "Liver",
+    "citation": "Chen et al. 2019 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/prism2019immuneliver",
+    "bibtex": "@article{prism2019immuneliver,\n  author = {Chen, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and MIBI spatial profiling of liver tissue},\n  journal = {Spatial Biology},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/prism2019immuneliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "immune2020cellularheadneck",
+    "patients": 772,
+    "images": 23816,
+    "type": "TC",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Diaz et al. 2020 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/immune2020cellularheadneck",
+    "bibtex": "@article{immune2020cellularheadneck,\n  author = {Diaz, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI spatial profiling of head & neck tissue},\n  journal = {Imaging Methods},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/immune2020cellularheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "atlas2024stromalcolorectal",
+    "patients": 71,
+    "images": 210,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Colorectal",
+    "citation": "Evans et al. 2024 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/atlas2024stromalcolorectal",
+    "bibtex": "@article{atlas2024stromalcolorectal,\n  author = {Evans, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of colorectal tissue},\n  journal = {Spatial Biology},\n  year = {2024},\n  url = {https://example.org/spora/mock-publications/atlas2024stromalcolorectal},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "mosaic2025cellularskin",
+    "patients": 17,
+    "images": 60,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Skin (melanoma)",
+    "citation": "Fischer et al. 2025 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2025cellularskin",
+    "bibtex": "@article{mosaic2025cellularskin,\n  author = {Fischer, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of skin (melanoma) tissue},\n  journal = {Imaging Methods},\n  year = {2025},\n  url = {https://example.org/spora/mock-publications/mosaic2025cellularskin},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "spatial2019stromalotherdisea",
+    "patients": 621,
+    "images": 2027,
+    "type": "WSI",
+    "modalities": [
+      "MIBI",
+      "Orion"
+    ],
+    "cancer": "Other disease",
+    "citation": "Gupta et al. 2019 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/spatial2019stromalotherdisea",
+    "bibtex": "@article{spatial2019stromalotherdisea,\n  author = {Gupta, A. and Example, B. and Demo, C.},\n  title = {Mock MIBI and Orion spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/spatial2019stromalotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "immune2019stromalliver",
+    "patients": 283,
+    "images": 405,
+    "type": "WSI",
+    "modalities": [
+      "Orion"
+    ],
+    "cancer": "Liver",
+    "citation": "Hassan et al. 2019 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/immune2019stromalliver",
+    "bibtex": "@article{immune2019stromalliver,\n  author = {Hassan, A. and Example, B. and Demo, C.},\n  title = {Mock Orion spatial profiling of liver tissue},\n  journal = {Imaging Methods},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/immune2019stromalliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "cohort2021landscapeheadneck",
+    "patients": 38,
+    "images": 302,
+    "type": "TC",
+    "modalities": [
+      "IMC",
+      "MIBI"
+    ],
+    "cancer": "Head & neck",
+    "citation": "Ito et al. 2021 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/cohort2021landscapeheadneck",
+    "bibtex": "@article{cohort2021landscapeheadneck,\n  author = {Ito, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and MIBI spatial profiling of head & neck tissue},\n  journal = {Spatial Biology},\n  year = {2021},\n  url = {https://example.org/spora/mock-publications/cohort2021landscapeheadneck},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "atlas2019stromalliver",
+    "patients": 444,
+    "images": 3074,
+    "type": "TC",
+    "modalities": [
+      "IMC",
+      "MIBI"
+    ],
+    "cancer": "Liver",
+    "citation": "Jones et al. 2019 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/atlas2019stromalliver",
+    "bibtex": "@article{atlas2019stromalliver,\n  author = {Jones, A. and Example, B. and Demo, C.},\n  title = {Mock IMC and MIBI spatial profiling of liver tissue},\n  journal = {Imaging Methods},\n  year = {2019},\n  url = {https://example.org/spora/mock-publications/atlas2019stromalliver},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "mosaic2018cellularotherdisea",
+    "patients": 325,
+    "images": 943,
+    "type": "TC",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": "Other disease",
+    "citation": "Kaur et al. 2018 \u00b7 Spatial Biology",
+    "publicationUrl": "https://example.org/spora/mock-publications/mosaic2018cellularotherdisea",
+    "bibtex": "@article{mosaic2018cellularotherdisea,\n  author = {Kaur, A. and Example, B. and Demo, C.},\n  title = {Mock CODEX spatial profiling of other disease tissue},\n  journal = {Spatial Biology},\n  year = {2018},\n  url = {https://example.org/spora/mock-publications/mosaic2018cellularotherdisea},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  },
+  {
+    "accession_id": "BIA-TEST",
+		"globus_link": "",
+		"name": "multiplex2020proteomiclymphoma",
+    "patients": 241,
+    "images": 482,
+    "type": "TC",
+    "modalities": [
+      "IMC"
+    ],
+    "cancer": "Lymphoma",
+    "citation": "Lopez et al. 2020 \u00b7 Imaging Methods",
+    "publicationUrl": "https://example.org/spora/mock-publications/multiplex2020proteomiclymphoma",
+    "bibtex": "@article{multiplex2020proteomiclymphoma,\n  author = {Lopez, A. and Example, B. and Demo, C.},\n  title = {Mock IMC spatial profiling of lymphoma tissue},\n  journal = {Imaging Methods},\n  year = {2020},\n  url = {https://example.org/spora/mock-publications/multiplex2020proteomiclymphoma},\n  note = {Synthetic mock record for UI development; not a real publication}\n}"
+  }
+]

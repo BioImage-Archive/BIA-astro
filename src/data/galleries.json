@@ -21,6 +21,12 @@
       "title":"Spatial Omics Gallery",
       "subtitle":"A selection of spatial omics datasets",
       "summary_image":"https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD570/S-BIAD570-example.png"
+    },
+    {
+      "name":"spora",
+      "title":"SPORA",
+      "subtitle":"Curated AI-ready spatial proteomics datasets",
+      "summary_image":"/src/assets/bioimage-archive/spora_landing_page.jpg"
     }
   ]
 }
