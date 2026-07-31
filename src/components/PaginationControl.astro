@@ -1,40 +1,139 @@
 ---
-const { paginationData } = Astro.props;
-const currentPage = paginationData.page;
-const totalPages = paginationData.total_pages 
+const { paginationData, displayPage: displayPageProp } = Astro.props;
+const current_page = paginationData.page;
+const total_pages = paginationData.total_pages;
+const page_size = paginationData.page_size;
+const next_cursor = paginationData.next_cursor;
+const url = new URL(Astro.request.url);
+const current_cursor = url.searchParams.get("cursor");
+const max_result_window = 10000;
+const max_window_page = Math.max(1, Math.floor(max_result_window / page_size));
+const capped_page = Math.min(total_pages, max_window_page);
+const has_cursor_pagination = total_pages > capped_page;
+const display_page = Number(displayPageProp) || (current_cursor ? capped_page + 1 : (current_page || capped_page));
 
-function buildPageURL(targetPage) {
-  const url = new URL( Astro.request.url);
-  url.searchParams.set("pagination.page", targetPage);
-  return url.toString();
+function buildPageURL(targetPage: number, cursor?: string | null) {
+  const nextURL = new URL(Astro.request.url);
+  if (cursor) {
+    nextURL.searchParams.set("cursor", cursor);
+    nextURL.searchParams.set("pagination.page", String(targetPage));
+  } else {
+    nextURL.searchParams.set("pagination.page", String(targetPage));
+    nextURL.searchParams.delete("cursor");
+  }
+  return nextURL.toString();
 }
 
-let startPage = Math.max(1, currentPage - 2);
-let endPage = Math.min(totalPages, startPage + 7);
-
-if (endPage - startPage < 4) {
-  startPage = Math.max(1, endPage - 7);
+function buildDisplayURL() {
+  const nextURL = new URL(Astro.request.url);
+  nextURL.searchParams.delete("pagination.page");
+  nextURL.searchParams.delete("cursor");
+  return nextURL.toString();
 }
+
+function addRange(target: number[], start: number, end: number) {
+  for (let page = start; page <= end; page += 1) {
+    target.push(page);
+  }
+}
+
+const pageItems = [];
+addRange(pageItems, 1, Math.min(5, capped_page));
+
+const tailStart = Math.max(6, capped_page - 2);
+const middleStart = Math.max(6, display_page - 1);
+const middleEnd = Math.min(capped_page - 3, display_page + 1);
+
+if (middleStart <= middleEnd) {
+  addRange(pageItems, middleStart, middleEnd);
+}
+
+if (tailStart <= capped_page) {
+  addRange(pageItems, tailStart, capped_page);
+}
+
+const uniquePages = [...new Set(pageItems)].sort((a, b) => a - b);
+const renderedItems: Array<number | "ellipsis"> = [];
+
+for (const page of uniquePages) {
+  const previous = renderedItems.at(-1);
+  if (typeof previous === "number" && page - previous > 1) {
+    renderedItems.push("ellipsis");
+  }
+  renderedItems.push(page);
+}
+
+if (has_cursor_pagination && capped_page < total_pages) {
+  renderedItems.push("ellipsis");
+  if (display_page > capped_page && display_page - 2 > capped_page) {
+    renderedItems.push(display_page - 2);
+  }
+  if (display_page > capped_page && display_page - 1 > capped_page) {
+    renderedItems.push(display_page - 1);
+  }
+  if (display_page > capped_page) {
+    renderedItems.push(display_page);
+  }
+  renderedItems.push(total_pages);
+}
+
+const nextPageHref =
+  display_page < capped_page
+    ? buildPageURL(display_page + 1)
+    : next_cursor
+      ? buildPageURL(display_page + 1, next_cursor)
+      : null;
+
+const previousHref =
+  current_cursor
+    ? display_page - 1 <= capped_page
+      ? buildPageURL(display_page - 1)
+      : null
+    : display_page > 1
+      ? buildPageURL(display_page - 1)
+      : null;
 
 ---
-<nav class="vf-pagination" aria-label="Pagination">
-    <ul class="vf-pagination__list | vf-list vf-list--inline">
+<nav
+  class="vf-pagination"
+  aria-label="Pagination"
+  data-total-pages={String(total_pages)}
+  data-page-size={String(page_size)}
+  data-capped-page={String(capped_page)}
+  data-current-page={String(current_page)}
+  data-display-page={String(display_page)}
+  data-has-cursor={current_cursor ? "true" : "false"}
+  data-current-cursor={current_cursor ?? ""}
+  data-next-href={nextPageHref ?? ""}
+  data-next-cursor-page={String(display_page + 1)}
+>
+    <ul class="vf-pagination__list | vf-list vf-list--inline" style="display: flex; flex-wrap: wrap; gap: 0.25rem;">
     <li class="vf-pagination__item vf-pagination__item--previous-page">
-      {currentPage > 1
-        ? <a href={buildPageURL(1)}>First</a>
-        : <span>First</span>}
+      {previousHref
+        ? <a href={buildDisplayURL()} data-fetch-url={previousHref} data-nav-state={JSON.stringify({ page: display_page - 1 })}>Previous</a>
+        : <span>Previous</span>}
     </li>
-    {Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(p => (
-      <li class={`vf-pagination__item ${p === currentPage ? "vf-pagination__item--is-active" : ""}`}>
-        {p === currentPage
-          ? <span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">{p}</span>
-          : <a href={buildPageURL(p)}>{p}</a>}
+    {renderedItems.map((item) => (
+      <li class={`vf-pagination__item ${item === display_page ? "vf-pagination__item--is-active" : ""}`}>
+        {item === "ellipsis" ? (
+          <span aria-hidden="true">...</span>
+        ) : item === display_page ? (
+          <span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">{item}</span>
+        ) : item === total_pages ? (
+          `out of ${item} pages`
+        ) : current_cursor && Number(item) === capped_page ? (
+          <a href={buildDisplayURL()} data-fetch-url={buildPageURL(capped_page)} data-nav-state={JSON.stringify({ page: capped_page })}>{item}</a>
+        ) : current_cursor && Number(item) < display_page && Number(item) > capped_page ? (
+          ""
+        ) : (
+          <a href={buildDisplayURL()} data-fetch-url={buildPageURL(Number(item))} data-nav-state={JSON.stringify({ page: Number(item) })}>{item}</a>
+        )}
       </li>
     ))}
     <li class="vf-pagination__item vf-pagination__item--next-page">
-      {currentPage < totalPages
-        ? <a href={buildPageURL(totalPages)}>Last</a>
-        : <span>Last</span>}
+      {nextPageHref
+        ? <a href={buildDisplayURL()} data-fetch-url={nextPageHref} data-cursor-page={String(display_page + 1)} data-nav-state={JSON.stringify({ cursorPage: display_page + 1, cursorTrail: current_cursor ? [current_cursor] : [] })}>Next</a>
+        : <span>Next</span>}
     </li>
     </ul>
 </nav>

@@ -26,7 +26,10 @@ const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bio
 //const sortOrder = url.searchParams.get('sortOrder');
 const page = Number(url.searchParams.get('pagination.page')) || 1;
 const pageSize = Number(url.searchParams.get('pagination.page_size')) || 12;
-
+const cursor = url.searchParams.get('cursor');
+const maxResultWindow = 10000;
+const cappedPage = Math.max(1, Math.floor(maxResultWindow / pageSize));
+const displayPage = cursor ? cappedPage + 1 : page;
 const selectedFacets: SelectedFacets = {
   "facet.organism": url.searchParams.getAll("facet.organism"),
   "facet.imaging_method": url.searchParams.getAll("facet.imaging_method"),
@@ -111,7 +114,13 @@ if (hasQueryParam) {
     pageSize
   );
 
-  const res = await fetch(searchURL);
+  const requestURL = new URL(searchURL, "http://local");
+  if (cursor) {
+    requestURL.searchParams.set("cursor", cursor);
+    requestURL.searchParams.delete("pagination.page");
+  }
+
+  const res = await fetch(requestURL.toString());
   if (res.ok) {
     const data = await res.json();
     hits = data.hits;
@@ -340,7 +349,122 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   const SHELL_ID = "search-results-shell";
   let activeSearchNavigation = 0;
 
-  async function navigateSearch(url, { push = true } = {}) {
+  function buildCleanHistoryURL(url) {
+    const nextURL = new URL(url.toString(), window.location.origin);
+    nextURL.searchParams.delete("pagination.page");
+    nextURL.searchParams.delete("cursor");
+    nextURL.searchParams.delete("page");
+    nextURL.searchParams.delete("prev_cursor_1");
+    nextURL.searchParams.delete("prev_cursor_2");
+    return nextURL;
+  }
+
+  function buildNumberedPageURL(targetPage) {
+    const nextURL = buildCleanHistoryURL(new URL(window.location.href));
+    nextURL.searchParams.set("pagination.page", String(targetPage));
+    return nextURL.toString();
+  }
+
+  function buildCursorFetchURL(cursor) {
+    const nextURL = new URL(window.location.href);
+    nextURL.searchParams.set("cursor", cursor);
+    nextURL.searchParams.delete("pagination.page");
+    return nextURL.toString();
+  }
+
+  function buildVisiblePaginationURL() {
+    return buildCleanHistoryURL(new URL(window.location.href)).toString();
+  }
+
+  function renderCursorPagination(root = document, state = history.state || {}) {
+    const nav = root.querySelector(".vf-pagination");
+    if (!(nav instanceof HTMLElement)) return;
+
+    const totalPages = Number(nav.dataset.totalPages || "1");
+    const cappedPage = Number(nav.dataset.cappedPage || "1");
+    const currentPage = Number(nav.dataset.currentPage || "1");
+    const hasCursor = nav.dataset.hasCursor === "true";
+    const nextHref = nav.dataset.nextHref || "";
+    const currentCursor = nav.dataset.currentCursor || "";
+    const stateCursorPage = Number(state?.cursorPage || 0);
+    const cursorTrail = Array.isArray(state?.cursorTrail) ? state.cursorTrail : [];
+    const displayPage = hasCursor ? Math.max(cappedPage + 1, stateCursorPage || cappedPage + 1) : currentPage;
+    
+    const list = nav.querySelector(".vf-pagination__list");
+    if (!(list instanceof HTMLElement)) return;
+
+    if (!hasCursor) return;
+
+    const prevCursor1 = cursorTrail[0] || "";
+    const prevCursor2 = cursorTrail[1] || "";
+    const nextState = JSON.stringify({
+      cursorPage: displayPage + 1,
+      cursorTrail: [currentCursor, ...cursorTrail].filter(Boolean).slice(0, 7),
+    });
+    const prevState1 = JSON.stringify({
+      cursorPage: displayPage - 1,
+      cursorTrail: cursorTrail.slice(1, 7),
+    });
+    const prevState2 = JSON.stringify({
+      cursorPage: displayPage - 2,
+      cursorTrail: cursorTrail.slice(2, 7),
+    });
+
+    const previousItem = prevCursor1
+      ? `<li class="vf-pagination__item vf-pagination__item--previous-page"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor1)}" data-nav-state='${prevState1}'>Previous</a></li>`
+      : displayPage - 1 <= cappedPage
+        ? `<li class="vf-pagination__item vf-pagination__item--previous-page"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(displayPage - 1)}" data-nav-state='${JSON.stringify({ page: displayPage - 1 })}'>Previous</a></li>`
+        : `<li class="vf-pagination__item vf-pagination__item--previous-page"><span>Previous</span></li>`;
+
+    const items = [
+      previousItem,
+      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(1)}" data-nav-state='${JSON.stringify({ page: 1 })}'>1</a></li>`,
+      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(2)}" data-nav-state='${JSON.stringify({ page: 2 })}'>2</a></li>`,
+      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(3)}" data-nav-state='${JSON.stringify({ page: 3 })}'>3</a></li>`,
+      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(4)}" data-nav-state='${JSON.stringify({ page: 4 })}'>4</a></li>`,
+      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(5)}" data-nav-state='${JSON.stringify({ page: 5 })}'>5</a></li>`,
+      `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>`,
+      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(cappedPage)}" data-nav-state='${JSON.stringify({ page: cappedPage })}'>${cappedPage}</a></li>`,
+      displayPage - 2 > cappedPage + 1 ? `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>` : ``,
+      prevCursor2
+        ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor2)}" data-nav-state='${prevState2}'>${displayPage - 2}</a></li>`
+        : displayPage - 2 <= cappedPage
+          ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(displayPage - 2)}" data-nav-state='${JSON.stringify({ page: displayPage - 2 })}'>${displayPage - 2}</a></li>`
+        : ``,
+      prevCursor1
+        ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor1)}" data-nav-state='${prevState1}'>${displayPage - 1}</a></li>`
+        : displayPage - 1 <= cappedPage
+          ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(displayPage - 1)}" data-nav-state='${JSON.stringify({ page: displayPage - 1 })}'>${displayPage - 1}</a></li>`
+        : ``,
+      `<li class="vf-pagination__item vf-pagination__item--is-active"><span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">${displayPage}</span></li>`,
+      `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>`,
+      `<li class="vf-pagination__item"><span>${totalPages} pages</span></li>`,
+      `<li class="vf-pagination__item vf-pagination__item--next-page">${nextHref ? `<a href="${buildVisiblePaginationURL()}" data-fetch-url="${nextHref}" data-cursor-page="${displayPage + 1}" data-nav-state='${nextState}'>Next</a>` : "<span>Next</span>"}</li>`
+    ];
+
+    list.innerHTML = items.join("");
+  }
+
+  function syncPaginatedResults(root = document, state = history.state || {}) {
+    const shell = root.querySelector("#search-results-shell");
+    const label = root.querySelector("#paginated-results");
+    if (!(shell instanceof HTMLElement) || !(label instanceof HTMLElement)) return;
+    const totalResults = Number(shell.dataset.totalResults || "0");
+    const pageSize = Number(shell.dataset.pageSize || "12");
+    const resultsCount = Number(shell.dataset.resultsCount || "0");
+    const cappedPage = Number(shell.dataset.cappedPage || "1");
+    const hasCursor = shell.dataset.hasCursor === "true";
+    const currentPage = Number(shell.dataset.currentPage || "1");
+    const displayPage = hasCursor
+      ? Math.max(cappedPage + 1, Number(state?.cursorPage || cappedPage + 1))
+      : Number(state?.page || currentPage);
+    if (resultsCount === 0) return;
+    const start = ((displayPage - 1) * pageSize) + 1;
+    const end = Math.min(start + resultsCount - 1, totalResults);
+    label.textContent = `${start} - ${end} of ${totalResults} results`;
+  }
+
+  async function navigateSearch(url, { push = true, state = {} } = {}) {
     const navigationId = ++activeSearchNavigation;
     const currentShell = document.getElementById(SHELL_ID);
     if (!currentShell) {
@@ -368,10 +492,12 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       document.title = nextDocument.title;
 
       if (push) {
-        history.pushState({}, "", url.toString());
+        history.pushState(state, "", buildCleanHistoryURL(url).toString());
       }
 
       initSearchResultsShell(nextShell);
+      renderCursorPagination(nextShell, state);
+      syncPaginatedResults(nextShell, state);
     } catch (error) {
       console.error(error);
       window.location.href = url.toString();
@@ -679,6 +805,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       const url = new URL(window.location.href);
       url.searchParams.set("pagination.page_size", event.target.value);
       url.searchParams.delete("pagination.page");
+      url.searchParams.delete("cursor");
       navigateSearch(url);
     });
   }
@@ -690,6 +817,8 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     initConvertedImageToggle(root);
     initFacetSections(root);
     initPageSize(root);
+    renderCursorPagination(root, history.state || {});
+    syncPaginatedResults(root, history.state || {});
   }
 
   document.addEventListener("submit", (event) => {
@@ -727,11 +856,18 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     const link = target.closest(".facet-remove-btn, .vf-pagination a");
     if (!(link instanceof HTMLAnchorElement)) return;
 
-    const url = new URL(link.href, window.location.origin);
+    const fetchURL = link.dataset.fetchUrl || link.href;
+    const url = new URL(fetchURL, window.location.origin);
     if (url.origin !== window.location.origin) return;
 
     event.preventDefault();
-    navigateSearch(url);
+    navigateSearch(url, {
+      state: link.dataset.navState
+        ? JSON.parse(link.dataset.navState)
+        : link.dataset.cursorPage
+          ? { cursorPage: Number(link.dataset.cursorPage) }
+          : {},
+    });
   });
 
   document.addEventListener("keydown", (event) => {
@@ -744,14 +880,23 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     facetToggle.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
 
-  window.addEventListener("popstate", () => {
-    navigateSearch(new URL(window.location.href), { push: false });
+  window.addEventListener("popstate", (event) => {
+    navigateSearch(new URL(window.location.href), { push: false, state: event.state || {} });
   });
 
   initSearchResultsShell(document);
 </script>
 
-<section id="search-results-shell" class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
+<section
+  id="search-results-shell"
+  class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5"
+  data-total-results={String(totalResults)}
+  data-page-size={String(pageSize)}
+  data-results-count={String(results?.length ?? 0)}
+  data-capped-page={String(cappedPage)}
+  data-current-page={String(page)}
+  data-has-cursor={cursor ? "true" : "false"}
+>
   <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
     <br />
     <div style="display: flex;">        
@@ -796,7 +941,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
             <div class="vf-grid vf-grid__col-5">
               <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
                 <span id="paginated-results">
-                    {results !== undefined && results?.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
+                    {results !== undefined && results?.length != 0 && totalResults > 0 && `${(Math.max(1, page) - 1) * paginationData.page_size + 1} - ${Math.min(((Math.max(1, page) - 1) * paginationData.page_size) + results.length, totalResults)} of ${totalResults} results`}
                   </span>
                 </div>
                 <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
@@ -904,7 +1049,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                   </div>
               </section>
             </div>
-            {results === undefined || results?.length != 0 && (<br/><PaginationControl  paginationData={paginationData}/>)}
+            {results === undefined || results?.length != 0 && (<br/><PaginationControl  paginationData={paginationData} displayPage={displayPage}/>)}
           </section>
         </section>
       )
