@@ -249,16 +249,26 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
       if (v === null || v === undefined) continue;
       const s = String(v).trim();
       if (s === "") continue;
-      if (facetKey === "size_c.eq" && v === "More than 5" && url.origin !== "http://local"){
-        url.searchParams.append("size_c.gt", "5")
-      }else{
-        if (facetKey === "has_converted_image" && url.origin !== "http://local"){
-          url.searchParams.append("has.thumbnail", "true")
-        }
-        else{
-          url.searchParams.append(facetKey, v);
-        }
-        
+      // const key = facetKey.replace("facet.", "");
+      if (v.includes("-")) {
+        const [start, end] = v.split("-");
+        url.searchParams.append(`${facetKey}.gte`, start);
+        url.searchParams.append(`${facetKey}.lte`, end);
+      }
+      else if(v[0] === ">"){
+        url.searchParams.append(`${facetKey}.gt`, v.slice(1));
+      }
+      else if(v[0] === "<"){
+        url.searchParams.append(`${facetKey}.lt`, v.slice(1));
+      }
+      else if(v[0] === "≤"){
+        url.searchParams.append(`${facetKey}.lte`, v.slice(1));
+      }
+      else if(v[0] === "≥"){
+        url.searchParams.append(`${facetKey}.gte`, v.slice(1));
+      }
+      else{
+        url.searchParams.append(`${facetKey}.eq`, v);
       }
     }
   }
