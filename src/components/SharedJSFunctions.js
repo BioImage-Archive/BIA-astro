@@ -267,6 +267,9 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
       else if(v[0] === "≥"){
         url.searchParams.append(`${facetKey}.gte`, v.slice(1));
       }
+      else if (facetKey === "has_converted_image" && url.origin !== "http://local"){
+        url.searchParams.append("has.thumbnail", "true")
+      }
       else{
         url.searchParams.append(`${facetKey}.eq`, v);
       }

@@ -48,42 +48,6 @@ const selectedFacets: SelectedFacets = {
   "voxel_physical_size_z":url.searchParams.getAll("voxel_physical_size_z"),
   "voxel_physical_size_y":url.searchParams.getAll("voxel_physical_size_y"),
   "voxel_physical_size_x":url.searchParams.getAll("voxel_physical_size_x"),
-
-
-  // NEW: range filters (store as single-value arrays for compatibility)
-  // "size_x.gte": url.searchParams.getAll("size_x.gte"),
-  // "size_x.lte": url.searchParams.getAll("size_x.lte"),
-
-  // "size_y.gte": url.searchParams.getAll("size_y.gte"),
-  // "size_y.lte": url.searchParams.getAll("size_y.lte"),
-
-  // "size_z.gte": url.searchParams.getAll("size_z.gte"),
-  // "size_z.lte": url.searchParams.getAll("size_z.lte"),
-
-
-  // "size_t.gte": url.searchParams.getAll("size_t.gte"),
-  // "size_t.lte": url.searchParams.getAll("size_t.lte"),
-
-  // "total_size_in_bytes.gte": url.searchParams.getAll("total_size_in_bytes.gte"),
-  // "total_size_in_bytes.lte": url.searchParams.getAll("total_size_in_bytes.lte"),
-
-  // "total_physical_size_x.gte": url.searchParams.getAll("total_physical_size_x.gte"),
-  // "total_physical_size_x.lte": url.searchParams.getAll("total_physical_size_x.lte"),
-
-  // "total_physical_size_y.gte": url.searchParams.getAll("total_physical_size_y.gte"),
-  // "total_physical_size_y.lte": url.searchParams.getAll("total_physical_size_y.lte"),
-
-  // "total_physical_size_z.gte": url.searchParams.getAll("total_physical_size_z.gte"),
-  // "total_physical_size_z.lte": url.searchParams.getAll("total_physical_size_z.lte"),
-
-  // "voxel_physical_size_x.gte": url.searchParams.getAll("voxel_physical_size_x.gte"),
-  // "voxel_physical_size_x.lte": url.searchParams.getAll("voxel_physical_size_x.lte"),
-
-  // "voxel_physical_size_y.gte": url.searchParams.getAll("voxel_physical_size_y.gte"),
-  // "voxel_physical_size_y.lte": url.searchParams.getAll("voxel_physical_size_y.lte"),
-
-  // "voxel_physical_size_z.gte": url.searchParams.getAll("voxel_physical_size_z.gte"),
-  // "voxel_physical_size_z.lte": url.searchParams.getAll("voxel_physical_size_z.lte"),
 };
 const FACET_CONFIG: Record<
   string,
@@ -97,17 +61,17 @@ const FACET_CONFIG: Record<
   number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c" },
   licence: {title: "Licence", type:"terms", queryKey: "facet.licence"},
 
-  image_pixel_z: { title: "Z-Planes", type: "terms", field: "image_pixel_z", queryKey: "size_z" },
-  image_pixel_x: { title: "Image Pixel X (px)", type: "terms", field: "image_pixel_x", queryKey: "size_x" },
-  image_pixel_y: { title: "Image Pixel Y (px)", type: "terms", field: "image_pixel_y", queryKey: "size_y" },
-  time_steps: { title: "Time Steps", type: "terms", field: "time_steps", queryKey: "size_t" },
-  total_size_in_bytes: { title: "Total Size", type: "terms", field: "total_size_in_bytes", queryKey: "total_size_in_bytes" },
-  total_physical_size_x: { title: "Total Physical Size X", type: "terms", field: "total_physical_size_x", queryKey: "total_physical_size_x" },
-  total_physical_size_y: { title: "Total Physical Size Y", type: "terms", field: "total_physical_size_y", queryKey: "total_physical_size_y" },
-  total_physical_size_z: { title: "Total Physical Size Z", type: "terms", field: "total_physical_size_z", queryKey: "total_physical_size_z" },
-  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "terms", field: "voxel_physical_size_x", queryKey: "voxel_physical_size_x" },
-  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "terms", field: "voxel_physical_size_y", queryKey: "voxel_physical_size_y" },
-  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "terms", field: "voxel_physical_size_z", queryKey: "voxel_physical_size_z" },
+  image_pixel_z: { title: "Z-Planes", type: "terms", queryKey: "size_z" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "terms", queryKey: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "terms", queryKey: "size_y" },
+  time_steps: { title: "Time Steps", type: "terms", queryKey: "size_t" },
+  total_size_in_bytes: { title: "Total Size", type: "terms", queryKey: "total_size_in_bytes" },
+  total_physical_size_x: { title: "Total Physical Size X", type: "terms", queryKey: "total_physical_size_x" },
+  total_physical_size_y: { title: "Total Physical Size Y", type: "terms", queryKey: "total_physical_size_y" },
+  total_physical_size_z: { title: "Total Physical Size Z", type: "terms", queryKey: "total_physical_size_z" },
+  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "terms", queryKey: "voxel_physical_size_x" },
+  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "terms", queryKey: "voxel_physical_size_y" },
+  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "terms", queryKey: "voxel_physical_size_z" },
 };
 
 let hits = {} as SearchHits;
