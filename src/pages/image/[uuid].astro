@@ -20,7 +20,9 @@ const { uuid } = Astro.params;
 
 const image = await getImageFromAPI(uuid) as Image;
 
-const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
+const vizarrRep = image?.additional_metadata?.find(attr => attr.name === "recommended_vizarr_representation" && attr.provenance==="bia_curation")
+      ?.value["attribute_key"] ?? null
+const vizarrRepUuid = vizarrRep ?? getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
 ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
