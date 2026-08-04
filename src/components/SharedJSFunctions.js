@@ -242,6 +242,7 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
   query !== "" && url.searchParams.set("query", query ?? "");
   url.origin !== "http://local" | pageSize > 12 && url.searchParams.set("pagination.page_size", String(pageSize));
   url.origin !== "http://local" && url.searchParams.set("pagination.page", String(page));
+  console.log()
   for (const [facetKey, values] of Object.entries(selectedFacets)) {
     if (!values?.length) continue;
     url.searchParams.delete(facetKey);
@@ -253,7 +254,7 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
         url.searchParams.append("size_c.gt", "5")
       }else{
         if (facetKey === "has_converted_image" && url.origin !== "http://local"){
-          url.searchParams.append("has.thumbnail", "true")
+          url.searchParams.append(url.pathname.endsWith("image")? "has.converted_image" : "has.thumbnail", "true")
         }
         else{
           url.searchParams.append(facetKey, v);

@@ -38,6 +38,7 @@ const selectedFacets: SelectedFacets = {
   "has_converted_image": url.searchParams.getAll("has_converted_image"),
   "facet.image_format": url.searchParams.getAll("facet.image_format"),
   "facet.licence": url.searchParams.getAll("facet.licence"),
+  "facet.file_type": url.searchParams.getAll("facet.file_type"),
   "size_c.eq": url.searchParams.getAll("size_c.eq"),
 
   // NEW: range filters (store as single-value arrays for compatibility)
@@ -86,6 +87,7 @@ const FACET_CONFIG: Record<
   image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
   number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
   licence: {title: "Licence", type:"terms", queryKey: "facet.licence"},
+  file_type: { title: "File Type", type: "terms", queryKey: "facet.file_type" },
 
   z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
   image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
@@ -342,6 +344,22 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
 #search-results-shell.is-loading {
     opacity: 0.55;
     pointer-events: none;
+}
+
+#pageSizeDiv{
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  #pageSizeDiv{
+    flex-wrap: wrap;
+    white-space: normal;
+  }
 }
 </style>
 
@@ -944,15 +962,29 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                     {results !== undefined && results?.length != 0 && totalResults > 0 && `${(Math.max(1, page) - 1) * paginationData.page_size + 1} - ${Math.min(((Math.max(1, page) - 1) * paginationData.page_size) + results.length, totalResults)} of ${totalResults} results`}
                   </span>
                 </div>
-                <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
-                  { searchType === "study" &&
-                    <div class="converted-study-switch" style="padding: 0.5em 0.5em">
-                      <span> Studies with viewable images:  </span>
-                      <label class="switch">
-                        <input type="checkbox" id="convertedImageToggle">
-                        <span class="slider round"></span>
-                      </label>
-                    </div>
+                <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" id="pageSizeDiv">
+                  { searchType === "study"? (
+                    <>
+                      <div class="converted-study-switch" style="padding: 0.5em 0.5em;">
+                        <span> Studies with viewable images:  </span>
+                        <label class="switch">
+                          <input type="checkbox" id="convertedImageToggle">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                    </>
+                    ) : (
+                      <>
+                      <div class="converted-image-switch" style="padding: 0.5em 0.5em">
+                        <span> Converted Images:  </span>
+                        <label class="switch">
+                          <input type="checkbox" id="convertedImageToggle">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                      </>
+
+                    )
                   }
                   <div class="controls-container">
                     <div class="controls-inner">
