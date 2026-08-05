@@ -29,7 +29,7 @@ const pageSize = Number(url.searchParams.get('pagination.page_size')) || 12;
 const cursor = url.searchParams.get('cursor');
 const maxResultWindow = 10000;
 const cappedPage = Math.max(1, Math.floor(maxResultWindow / pageSize));
-const displayPage = cursor ? cappedPage + 1 : page;
+const displayPage = cursor ? Math.max(cappedPage + 1, page) : page;
 const selectedFacets: SelectedFacets = {
   "facet.organism": url.searchParams.getAll("facet.organism"),
   "facet.imaging_method": url.searchParams.getAll("facet.imaging_method"),
@@ -39,42 +39,18 @@ const selectedFacets: SelectedFacets = {
   "facet.image_format": url.searchParams.getAll("facet.image_format"),
   "facet.licence": url.searchParams.getAll("facet.licence"),
   "facet.file_type": url.searchParams.getAll("facet.file_type"),
-  "size_c.eq": url.searchParams.getAll("size_c.eq"),
-
-  // NEW: range filters (store as single-value arrays for compatibility)
-  "size_x.gte": url.searchParams.getAll("size_x.gte"),
-  "size_x.lte": url.searchParams.getAll("size_x.lte"),
-
-  "size_y.gte": url.searchParams.getAll("size_y.gte"),
-  "size_y.lte": url.searchParams.getAll("size_y.lte"),
-
-  "size_z.gte": url.searchParams.getAll("size_z.gte"),
-  "size_z.lte": url.searchParams.getAll("size_z.lte"),
-
-
-  "size_t.gte": url.searchParams.getAll("size_t.gte"),
-  "size_t.lte": url.searchParams.getAll("size_t.lte"),
-
-  "total_size_in_bytes.gte": url.searchParams.getAll("total_size_in_bytes.gte"),
-  "total_size_in_bytes.lte": url.searchParams.getAll("total_size_in_bytes.lte"),
-
-  "total_physical_size_x.gte": url.searchParams.getAll("total_physical_size_x.gte"),
-  "total_physical_size_x.lte": url.searchParams.getAll("total_physical_size_x.lte"),
-
-  "total_physical_size_y.gte": url.searchParams.getAll("total_physical_size_y.gte"),
-  "total_physical_size_y.lte": url.searchParams.getAll("total_physical_size_y.lte"),
-
-  "total_physical_size_z.gte": url.searchParams.getAll("total_physical_size_z.gte"),
-  "total_physical_size_z.lte": url.searchParams.getAll("total_physical_size_z.lte"),
-
-  "voxel_physical_size_x.gte": url.searchParams.getAll("voxel_physical_size_x.gte"),
-  "voxel_physical_size_x.lte": url.searchParams.getAll("voxel_physical_size_x.lte"),
-
-  "voxel_physical_size_y.gte": url.searchParams.getAll("voxel_physical_size_y.gte"),
-  "voxel_physical_size_y.lte": url.searchParams.getAll("voxel_physical_size_y.lte"),
-
-  "voxel_physical_size_z.gte": url.searchParams.getAll("voxel_physical_size_z.gte"),
-  "voxel_physical_size_z.lte": url.searchParams.getAll("voxel_physical_size_z.lte"),
+  "size_c": url.searchParams.getAll("size_c"),
+  "total_size_in_bytes":url.searchParams.getAll("total_size_in_bytes"),
+  "size_x":url.searchParams.getAll("size_x"),
+  "size_y":url.searchParams.getAll("size_y"),
+  "size_z":url.searchParams.getAll("size_z"),
+  "size_t":url.searchParams.getAll("size_t"),
+  "total_physical_size_x":url.searchParams.getAll("total_physical_size_x"),
+  "total_physical_size_y":url.searchParams.getAll("total_physical_size_y"),
+  "image_pixel_z":url.searchParams.getAll("image_pixel_z"),
+  "voxel_physical_size_z":url.searchParams.getAll("voxel_physical_size_z"),
+  "voxel_physical_size_y":url.searchParams.getAll("voxel_physical_size_y"),
+  "voxel_physical_size_x":url.searchParams.getAll("voxel_physical_size_x"),
 };
 const FACET_CONFIG: Record<
   string,
@@ -85,21 +61,21 @@ const FACET_CONFIG: Record<
   release_date: { title: "Release Year", type: "terms", queryKey: "facet.year" },
   annotation_method: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_method" },
   image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
-  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
+  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c" },
   licence: {title: "Licence", type:"terms", queryKey: "facet.licence"},
   file_type: { title: "File Type", type: "terms", queryKey: "facet.file_type" },
 
-  z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
-  image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
-  image_pixel_y: { title: "Image Pixel Y (px)", type: "slider", field: "size_y" },
-  time_steps: { title: "Time Steps", type: "slider", field: "size_t" },
-  total_size_in_bytes: { title: "Total Size (bytes)", type: "slider", field: "total_size_in_bytes" },
-  total_physical_size_x: { title: "Total Physical Size X (m)", type: "range", field: "total_physical_size_x" },
-  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
-  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
-  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "range", field: "voxel_physical_size_x" },
-  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "range", field: "voxel_physical_size_y" },
-  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "range", field: "voxel_physical_size_z" },
+  image_pixel_z: { title: "Z-Planes", type: "terms", queryKey: "size_z" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "terms", queryKey: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "terms", queryKey: "size_y" },
+  time_steps: { title: "Time Steps", type: "terms", queryKey: "size_t" },
+  total_size_in_bytes: { title: "Total Size", type: "terms", queryKey: "total_size_in_bytes" },
+  total_physical_size_x: { title: "Total Physical Size X", type: "terms", queryKey: "total_physical_size_x" },
+  total_physical_size_y: { title: "Total Physical Size Y", type: "terms", queryKey: "total_physical_size_y" },
+  total_physical_size_z: { title: "Total Physical Size Z", type: "terms", queryKey: "total_physical_size_z" },
+  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "terms", queryKey: "voxel_physical_size_x" },
+  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "terms", queryKey: "voxel_physical_size_y" },
+  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "terms", queryKey: "voxel_physical_size_z" },
 };
 
 let hits = {} as SearchHits;
@@ -383,10 +359,14 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     return nextURL.toString();
   }
 
-  function buildCursorFetchURL(cursor) {
+  function buildCursorFetchURL(cursor, targetPage) {
     const nextURL = new URL(window.location.href);
     nextURL.searchParams.set("cursor", cursor);
-    nextURL.searchParams.delete("pagination.page");
+    if (typeof targetPage === "number") {
+      nextURL.searchParams.set("pagination.page", String(targetPage));
+    } else {
+      nextURL.searchParams.delete("pagination.page");
+    }
     return nextURL.toString();
   }
 
@@ -428,35 +408,76 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
       cursorTrail: cursorTrail.slice(2, 7),
     });
 
+    function buildPageLink(page, fetchUrl, navState, cursorPage) {
+      const cursorPageAttr = typeof cursorPage === "number"
+        ? ` data-cursor-page="${cursorPage}"`
+        : "";
+      return `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${fetchUrl}" data-nav-state='${navState}'${cursorPageAttr}>${page}</a></li>`;
+    }
+
+    const renderedItems = [];
+
+    function appendRenderedPage(page, fetchUrl, navState, cursorPage) {
+      const previous = renderedItems.at(-1);
+      if (previous?.type === "page" && page - previous.page > 1) {
+        renderedItems.push({ type: "ellipsis" });
+      }
+      if (previous?.type === "page" && previous.page === page) return;
+      renderedItems.push({ type: "page", page, fetchUrl, navState, cursorPage });
+    }
+
+    for (let pageNumber = 1; pageNumber <= Math.min(5, cappedPage); pageNumber += 1) {
+      appendRenderedPage(
+        pageNumber,
+        buildNumberedPageURL(pageNumber),
+        JSON.stringify({ page: pageNumber }),
+      );
+    }
+
+    for (let pageNumber = cappedPage; pageNumber <= cappedPage; pageNumber += 1) {
+      appendRenderedPage(
+        pageNumber,
+        buildNumberedPageURL(pageNumber),
+        JSON.stringify({ page: pageNumber }),
+      );
+    }
+
+    if (prevCursor2 && displayPage - 2 > cappedPage) {
+      appendRenderedPage(displayPage - 2, buildCursorFetchURL(prevCursor2, displayPage - 2), prevState2, displayPage - 2);
+    }
+
+    if (prevCursor1 && displayPage - 1 > cappedPage) {
+      appendRenderedPage(displayPage - 1, buildCursorFetchURL(prevCursor1, displayPage - 1), prevState1, displayPage - 1);
+    }
+
+    appendRenderedPage(displayPage, "", "");
+
+    if (nextHref && displayPage + 1 <= totalPages) {
+      appendRenderedPage(displayPage + 1, nextHref, nextState, displayPage + 1);
+    }
+
+    const lastRenderedPage = [...renderedItems].reverse().find((item) => item.type === "page")?.page || 0;
+    const showTailEllipsis = totalPages - lastRenderedPage > 1;
+
     const previousItem = prevCursor1
-      ? `<li class="vf-pagination__item vf-pagination__item--previous-page"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor1)}" data-nav-state='${prevState1}'>Previous</a></li>`
+      ? `<li class="vf-pagination__item vf-pagination__item--previous-page"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor1, displayPage - 1)}" data-nav-state='${prevState1}'>Previous</a></li>`
       : displayPage - 1 <= cappedPage
         ? `<li class="vf-pagination__item vf-pagination__item--previous-page"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(displayPage - 1)}" data-nav-state='${JSON.stringify({ page: displayPage - 1 })}'>Previous</a></li>`
         : `<li class="vf-pagination__item vf-pagination__item--previous-page"><span>Previous</span></li>`;
 
     const items = [
       previousItem,
-      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(1)}" data-nav-state='${JSON.stringify({ page: 1 })}'>1</a></li>`,
-      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(2)}" data-nav-state='${JSON.stringify({ page: 2 })}'>2</a></li>`,
-      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(3)}" data-nav-state='${JSON.stringify({ page: 3 })}'>3</a></li>`,
-      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(4)}" data-nav-state='${JSON.stringify({ page: 4 })}'>4</a></li>`,
-      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(5)}" data-nav-state='${JSON.stringify({ page: 5 })}'>5</a></li>`,
-      `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>`,
-      `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(cappedPage)}" data-nav-state='${JSON.stringify({ page: cappedPage })}'>${cappedPage}</a></li>`,
-      displayPage - 2 > cappedPage + 1 ? `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>` : ``,
-      prevCursor2
-        ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor2)}" data-nav-state='${prevState2}'>${displayPage - 2}</a></li>`
-        : displayPage - 2 <= cappedPage
-          ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(displayPage - 2)}" data-nav-state='${JSON.stringify({ page: displayPage - 2 })}'>${displayPage - 2}</a></li>`
-        : ``,
-      prevCursor1
-        ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildCursorFetchURL(prevCursor1)}" data-nav-state='${prevState1}'>${displayPage - 1}</a></li>`
-        : displayPage - 1 <= cappedPage
-          ? `<li class="vf-pagination__item"><a href="${buildVisiblePaginationURL()}" data-fetch-url="${buildNumberedPageURL(displayPage - 1)}" data-nav-state='${JSON.stringify({ page: displayPage - 1 })}'>${displayPage - 1}</a></li>`
-        : ``,
-      `<li class="vf-pagination__item vf-pagination__item--is-active"><span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">${displayPage}</span></li>`,
-      `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>`,
-      `<li class="vf-pagination__item"><span>${totalPages} pages</span></li>`,
+      ...renderedItems.map((item) => {
+        if (item.type === "ellipsis") {
+          return `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>`;
+        }
+        if (item.page === displayPage) {
+          return `<li class="vf-pagination__item vf-pagination__item--is-active"><span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">${displayPage}</span></li>`;
+        }
+        return buildPageLink(item.page, item.fetchUrl, item.navState, item.cursorPage);
+      }),
+      showTailEllipsis ? `<li class="vf-pagination__item"><span aria-hidden="true">...</span></li>` : ``,
+      `<li class="vf-pagination__item"><span>out of ${totalPages} pages</span></li>`,
       `<li class="vf-pagination__item vf-pagination__item--next-page">${nextHref ? `<a href="${buildVisiblePaginationURL()}" data-fetch-url="${nextHref}" data-cursor-page="${displayPage + 1}" data-nav-state='${nextState}'>Next</a>` : "<span>Next</span>"}</li>`
     ];
 
@@ -473,8 +494,9 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
     const cappedPage = Number(shell.dataset.cappedPage || "1");
     const hasCursor = shell.dataset.hasCursor === "true";
     const currentPage = Number(shell.dataset.currentPage || "1");
+    const shellDisplayPage = Number(shell.dataset.displayPage || currentPage || cappedPage + 1);
     const displayPage = hasCursor
-      ? Math.max(cappedPage + 1, Number(state?.cursorPage || cappedPage + 1))
+      ? Number(state?.cursorPage || shellDisplayPage)
       : Number(state?.page || currentPage);
     if (resultsCount === 0) return;
     const start = ((displayPage - 1) * pageSize) + 1;
@@ -912,7 +934,8 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   data-page-size={String(pageSize)}
   data-results-count={String(results?.length ?? 0)}
   data-capped-page={String(cappedPage)}
-  data-current-page={String(page)}
+  data-current-page={String(displayPage)}
+  data-display-page={String(displayPage)}
   data-has-cursor={cursor ? "true" : "false"}
 >
   <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
@@ -959,7 +982,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
             <div class="vf-grid vf-grid__col-5">
               <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
                 <span id="paginated-results">
-                    {results !== undefined && results?.length != 0 && totalResults > 0 && `${(Math.max(1, page) - 1) * paginationData.page_size + 1} - ${Math.min(((Math.max(1, page) - 1) * paginationData.page_size) + results.length, totalResults)} of ${totalResults} results`}
+                    {results !== undefined && results?.length != 0 && totalResults > 0 && `${(Math.max(1, displayPage) - 1) * paginationData.page_size + 1} - ${Math.min(((Math.max(1, displayPage) - 1) * paginationData.page_size) + results.length, totalResults)} of ${totalResults} results`}
                   </span>
                 </div>
                 <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" id="pageSizeDiv">

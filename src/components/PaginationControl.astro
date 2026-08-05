@@ -40,7 +40,10 @@ function addRange(target: number[], start: number, end: number) {
 const pageItems = [];
 addRange(pageItems, 1, Math.min(5, capped_page));
 
-const tailStart = Math.max(6, capped_page - 2);
+const tailStart =
+  display_page <= capped_page && display_page >= capped_page - 2
+    ? Math.max(6, capped_page - 2)
+    : capped_page;
 const middleStart = Math.max(6, display_page - 1);
 const middleEnd = Math.min(capped_page - 3, display_page + 1);
 
@@ -55,26 +58,14 @@ if (tailStart <= capped_page) {
 const uniquePages = [...new Set(pageItems)].sort((a, b) => a - b);
 const renderedItems: Array<number | "ellipsis"> = [];
 
-for (const page of uniquePages) {
+function appendRenderedPage(page: number) {
   const previous = renderedItems.at(-1);
   if (typeof previous === "number" && page - previous > 1) {
     renderedItems.push("ellipsis");
   }
-  renderedItems.push(page);
-}
-
-if (has_cursor_pagination && capped_page < total_pages) {
-  renderedItems.push("ellipsis");
-  if (display_page > capped_page && display_page - 2 > capped_page) {
-    renderedItems.push(display_page - 2);
+  if (previous !== page) {
+    renderedItems.push(page);
   }
-  if (display_page > capped_page && display_page - 1 > capped_page) {
-    renderedItems.push(display_page - 1);
-  }
-  if (display_page > capped_page) {
-    renderedItems.push(display_page);
-  }
-  renderedItems.push(total_pages);
 }
 
 const nextPageHref =
@@ -84,6 +75,19 @@ const nextPageHref =
       ? buildPageURL(display_page + 1, next_cursor)
       : null;
 
+for (const page of uniquePages) {
+  appendRenderedPage(page);
+}
+
+if (has_cursor_pagination && display_page >= capped_page) {
+  if (display_page > capped_page) {
+    appendRenderedPage(display_page);
+  }
+  if (nextPageHref && display_page + 1 <= total_pages) {
+    appendRenderedPage(display_page + 1);
+  }
+}
+
 const previousHref =
   current_cursor
     ? display_page - 1 <= capped_page
@@ -92,6 +96,13 @@ const previousHref =
     : display_page > 1
       ? buildPageURL(display_page - 1)
       : null;
+
+const lastRenderedPage = [...renderedItems].reverse().find((item) => typeof item === "number");
+const showCursorSummary = has_cursor_pagination && total_pages > 0;
+const showCursorTailEllipsis =
+  showCursorSummary &&
+  typeof lastRenderedPage === "number" &&
+  total_pages - lastRenderedPage > 1;
 
 ---
 <nav
@@ -119,8 +130,8 @@ const previousHref =
           <span aria-hidden="true">...</span>
         ) : item === display_page ? (
           <span style="padding: 0.25rem 0.5rem; background-color: #3b6fb6; color: white;">{item}</span>
-        ) : item === total_pages ? (
-          `out of ${item} pages`
+        ) : nextPageHref && Number(item) === display_page + 1 && Number(item) > capped_page ? (
+          <a href={buildDisplayURL()} data-fetch-url={nextPageHref} data-cursor-page={String(display_page + 1)} data-nav-state={JSON.stringify({ cursorPage: display_page + 1, cursorTrail: current_cursor ? [current_cursor] : [] })}>{item}</a>
         ) : current_cursor && Number(item) === capped_page ? (
           <a href={buildDisplayURL()} data-fetch-url={buildPageURL(capped_page)} data-nav-state={JSON.stringify({ page: capped_page })}>{item}</a>
         ) : current_cursor && Number(item) < display_page && Number(item) > capped_page ? (
@@ -130,6 +141,16 @@ const previousHref =
         )}
       </li>
     ))}
+    {showCursorTailEllipsis && (
+      <li class="vf-pagination__item">
+        <span aria-hidden="true">...</span>
+      </li>
+    )}
+    {showCursorSummary && (
+      <li class="vf-pagination__item">
+        <span>out of {total_pages} pages</span>
+      </li>
+    )}
     <li class="vf-pagination__item vf-pagination__item--next-page">
       {nextPageHref
         ? <a href={buildDisplayURL()} data-fetch-url={nextPageHref} data-cursor-page={String(display_page + 1)} data-nav-state={JSON.stringify({ cursorPage: display_page + 1, cursorTrail: current_cursor ? [current_cursor] : [] })}>Next</a>
