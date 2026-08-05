@@ -1,8 +1,8 @@
 ---
 import ImageInfo from "./ImageInfo.astro";
-import { getSimpleAttributeValue } from "../../components/SharedJSFunctions"
+import { buildITKViewerURL, buildVizarrViewerURL, getPublicVisualisationURI, getSimpleAttributeValue } from "../../components/SharedJSFunctions"
 
-const { annotatedImages, sourceImage, vizarrURL} = Astro.props;
+const { annotatedImages, sourceImage } = Astro.props;
 
 function getAttributes(image) {
   return image?.additional_metadata.find(meta =>
@@ -31,7 +31,7 @@ function parseNeuroglancerUrl(url: string) {
 
 const sourceImageAtrributes = getAttributes(sourceImage)
 const sourceImageRep = sourceImage.representation.find((r) => r.image_format === ".ome.zarr");
-const sourceImgS3Url = sourceImageRep?.file_uri[0].replace(vizarrURL,'') || "";
+const sourceImgS3Url = getPublicVisualisationURI(sourceImageRep?.file_uri?.[0]) || "";
 const hasNeuroGlancerURL = getSimpleAttributeValue(sourceImage, "neuroglancer_view_link") || "";
 const ngLayers = parseNeuroglancerUrl(hasNeuroGlancerURL); 
 const sortedAnnotatedImages = annotatedImages
@@ -41,7 +41,7 @@ const sortedAnnotatedImages = annotatedImages
 let annotatedImage = sortedAnnotatedImages[0] ?? annotatedImages[0];
 const annotatedImageAttributes = getAttributes(annotatedImage);
 const annotatedImageRep = annotatedImage?.representation.find((r) => r.image_format === ".ome.zarr");
-const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'') || "";
+const annotatedImgS3Url = getPublicVisualisationURI(annotatedImageRep?.file_uri?.[0]) || "";
 ---
 <section class="vf-content">
   {hasNeuroGlancerURL.length > 0? (
@@ -56,8 +56,9 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
       <div style="min-width: 48%;">
         {sortedAnnotatedImages.map((img, index)=> {
           const imageRep = img.representation.find((r) => r.image_format === ".ome.zarr")
+          const imageUrl = getPublicVisualisationURI(imageRep?.file_uri?.[0]) || "";
             return (
-              <ImageInfo text={`Annotation ${index+1}`} url={imageRep?.file_uri?.[0].replace(vizarrURL,'') || ""} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
+              <ImageInfo text={`Annotation ${index+1}`} url={imageUrl} imageRep={imageRep} imageAtrributes={getAttributes(img)} btnID={`CopyAnnotationButton${index+1}`}/><br>
             )
         }
     )}  
@@ -69,7 +70,7 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
     <>
       <div class="vf-grid" style="display: flex; gap: 1rem;">
         <div style="min-width: 48%"><h3><span>Source Image</span></h3><div>
-            <iframe src={vizarrURL+sourceImgS3Url} style="border: none;flex:1;height: 500px;width:100%;min-width:48%"></iframe>
+            <iframe src={buildVizarrViewerURL(sourceImgS3Url) ?? ""} style="border: none;flex:1;height: 500px;width:100%;min-width:48%" title="Vizarr viewer for source image"></iframe>
           </div>
           <ImageInfo text="Source Image" url={sourceImgS3Url} imageRep={sourceImageRep} imageAtrributes={sourceImageAtrributes} btnID="CopyURLButton"/>
         </div>
@@ -81,11 +82,13 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
               {annotatedImages.map((img) => {
                 const rep = img.representation.find((r) => r.image_format === ".ome.zarr");
                 if (!rep || !rep.file_uri?.[0]) return null;
+                const sourceUrl = getPublicVisualisationURI(rep.file_uri[0]);
                 return (
                   <iframe
-                    src={vizarrURL+rep.file_uri[0]}
+                    src={buildVizarrViewerURL(sourceUrl) ?? ""}
                     style="height: 500px; border: none;min-width:100%"
                     id={img.uuid}
+                    title={`Vizarr viewer for annotation ${img.uuid}`}
                   ></iframe>
                 );
               })}
@@ -103,13 +106,49 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
   ) : (
     <>
       <h3><span>Source Image</span></h3>
-      <iframe src={vizarrURL+sourceImgS3Url} style="height: 500px; width: 100%;border: none;"></iframe>
+      <iframe src={buildVizarrViewerURL(sourceImgS3Url) ?? ""} style="height: 500px; width: 100%;border: none;" title="Vizarr viewer for source image"></iframe>
     </>
   )}
   
 </section>
 <script type="application/json" id="images-json" set:html={JSON.stringify(annotatedImages)} />
 <script type="module">
+    const getPublicVisualisationURI = (uri) => {
+      if (!uri) {
+        return null;
+      }
+
+      try {
+        const url = new URL(uri);
+        if (url.hostname === "livingobjects-int.ebi.ac.uk") {
+          url.hostname = "livingobjects.ebi.ac.uk";
+        }
+        return url.toString();
+      } catch {
+        return uri;
+      }
+    };
+
+    const buildVizarrViewerURL = (uri) => {
+      if (!uri) {
+        return "";
+      }
+
+      const url = new URL("https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html");
+      url.searchParams.set("source", uri);
+      return url.toString();
+    };
+
+    const buildITKViewerURL = (uri) => {
+      if (!uri) {
+        return "";
+      }
+
+      const url = new URL("https://kitware.github.io/itk-vtk-viewer/app/");
+      url.searchParams.set("fileToLoad", uri);
+      return url.toString();
+    };
+
     const numberOfAnnotatedImages = JSON.parse(document.getElementById("images-length").textContent);
     if(numberOfAnnotatedImages <= 1){
       document.getElementsByClassName("imageslider")[0].style.display = "none";
@@ -137,13 +176,13 @@ const annotatedImgS3Url = annotatedImageRep?.file_uri?.[0].replace(vizarrURL,'')
               line.innerHTML = `<b>${key}:</b> ${value}<br />`;
               metaContainer.appendChild(line);
           });
-          const s3url = rep.file_uri[0].replace('https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source=', '');
+          const s3url = getPublicVisualisationURI(rep.file_uri[0]);
           const copyBtn = document.getElementById("CopyAnnotationButton");
 
           copyBtn.dataset.url = s3url;
 
-          document.getElementById("OpenAnnotationInVizarr").href = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source="+rep.file_uri[0];
-          document.getElementById("OpenAnnotationInITK").href = "https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+s3url;
+          document.getElementById("OpenAnnotationInVizarr").href = buildVizarrViewerURL(s3url);
+          document.getElementById("OpenAnnotationInITK").href = buildITKViewerURL(s3url);
           const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
           const annotationTypeMethod = studyInfo.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
           document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria

@@ -1,22 +1,24 @@
 ---
 import ImageMetadata from "./ImageMetadata.astro";
+import { buildITKViewerURL, buildVizarrViewerURL, getPublicVisualisationURI } from "../SharedJSFunctions.js";
 
 const { url, imageRep, imageAtrributes, text, btnID} = Astro.props;
-
-const vizarrURL = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source="
+const publicUrl = getPublicVisualisationURI(url);
+const vizarrHref = buildVizarrViewerURL(publicUrl);
+const itkHref = buildITKViewerURL(publicUrl);
 
 const vizarrViewer = text == "Annotation"? "OpenAnnotationInVizarr": "OpenSourceInVizarr";
 const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK";
 
 ---
 <div style="min-width: 48%">
-    <a target="_blank" href={vizarrURL+url} id={vizarrViewer}>
+    <a target="_blank" href={vizarrHref ?? "#"} id={vizarrViewer}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in Vizarr viewer</button>
     </a> 
-    <a target="_blank" href={"https://kitware.github.io/itk-vtk-viewer/app/?fileToLoad="+url} id={itkViewer}>
+    <a target="_blank" href={itkHref ?? "#"} id={itkViewer}>
         <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
     </a>
-    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={url}>Copy {text} OME-Zarr URI</button><br/>
+    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={publicUrl ?? url}>Copy {text} OME-Zarr URI</button><br/>
     <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} />
     </div>
 </div>
