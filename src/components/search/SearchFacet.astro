@@ -1,5 +1,5 @@
 ---
-import { formatBytes } from "../SharedJSFunctions.js"
+import { formatBytes, formatFieldName } from "../SharedJSFunctions.js"
 
 const { facet, id} = Astro.props;
 const title = facet['title'];
@@ -62,7 +62,7 @@ export function capitalizeFirstLetter(str: string): string {
             />
           <label for={`${id}-${index}`} class="facet-label">
               <div class="facet-label-inner">
-                <div>{title !=="Image Format"? capitalizeFirstLetter(key.replaceAll("_", " ")) : key}</div>
+                <div>{title !=="Image Format"? formatFieldName(facet.title, capitalizeFirstLetter(key.replaceAll("_", " "))) : key}</div>
                 <div class="facet-count">{count}</div>
               </div>
             </label>

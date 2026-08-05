@@ -44,8 +44,50 @@ export function multilineTextRender(value) {
 
 
 export function formatBytesToHumanSize(sizeBytes) {
-    var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
-    return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+  var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
+  return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+}
+
+export function formatMetresToHumanSize(metres) {
+  var i = metres == 0 ? 0 : Math.floor(Math.log(metres) / Math.log(1000)) * -1;
+  var formatted = `${Number(metres / Math.pow(1000, i*-1)).toFixed(0)} ${['mm', 'µm', 'nm', "pm"][i-1]}`
+  return formatted;
+}
+
+function formatValueHumanReadable(fieldName, value) {
+  const nValue = Number(value);
+  if(Number.isNaN(nValue)) {
+    return value;
+  }
+  if (fieldName.endsWith("(m/px)") || fieldName.endsWith("(m)")) {
+    return formatMetresToHumanSize(nValue);
+  }
+  else if (fieldName.endsWith("(bytes)")) {
+    return formatBytesToHumanSize(nValue);
+  }
+  else {
+    return nValue;
+  }
+}
+
+export function formatFieldName(fieldName, fieldValue) {
+  const bIsCompared = fieldValue.startsWith(">") || fieldValue.startsWith("<") || fieldValue.startsWith("≤") || fieldValue.startsWith("≥");
+  const bIsRange = fieldValue.includes("-");
+  if(Number.isFinite(fieldValue)) {
+    return formatValueHumanReadable(fieldName, fieldValue);
+  }
+  else if (bIsCompared) {
+    const fieldValueNumeric = fieldValue.slice(1);
+    return `${fieldValue[0]} ${formatValueHumanReadable(fieldName, fieldValueNumeric)}`;
+  }
+  else if (bIsRange) {
+    const [start, end] = fieldValue.split("-");
+    return `${formatValueHumanReadable(fieldName, start)} - ${formatValueHumanReadable(fieldName, end)}`;
+  }
+  else {
+    return fieldValue;
+  }
+    
 }
 
 export function getSimpleAttributeValue(obj, attrName) {
