@@ -151,11 +151,93 @@ const { study, images, imagePageRoot } = Astro.props;
   });
 
   document.addEventListener("DOMContentLoaded", function () {
+    const maxResultWindow = 10000;
+    const cursorHistoryLimit = 7;
+    let lastSearch = "";
+    let lastPageSize = 10;
+    let displayPage = 1;
+    let totalPages = 1;
+    let pendingDisplayPage = null;
+    let currentHasNextCursor = false;
+    const pageCursorMap = new Map();
+
+    function cappedPageFor(pageSize) {
+      return Math.max(1, Math.floor(maxResultWindow / pageSize));
+    }
+
+    function resetCursorState(search, pageSize) {
+      lastSearch = search;
+      lastPageSize = pageSize;
+      displayPage = 1;
+      totalPages = 1;
+      pendingDisplayPage = null;
+      currentHasNextCursor = false;
+      pageCursorMap.clear();
+    }
+
+    function pruneCursorHistory(currentPage) {
+      for (const page of [...pageCursorMap.keys()]) {
+        if (page < currentPage - cursorHistoryLimit) {
+          pageCursorMap.delete(page);
+        }
+      }
+    }
+
+    function renderPagination(api) {
+      const paginate = $("#viewable_images_table_wrapper .dataTables_paginate");
+      if (!paginate.length) return;
+
+      const cappedPage = cappedPageFor(api.page.len());
+      const prevPage = displayPage - 1;
+      const nextPage = displayPage + 1;
+      const canPrev =
+        displayPage > 1 &&
+        (prevPage <= cappedPage || pageCursorMap.has(prevPage));
+      const canNext =
+        nextPage <= cappedPage || currentHasNextCursor;
+
+      paginate.html(`
+        <a href="#" class="paginate_button previous${canPrev ? "" : " disabled"}" data-action="prev" aria-disabled="${canPrev ? "false" : "true"}">Previous</a>
+        <span class="paginate_button current">${displayPage}</span>
+        <span class="paginate_button disabled">of ${totalPages} pages</span>
+        <a href="#" class="paginate_button next${canNext ? "" : " disabled"}" data-action="next" aria-disabled="${canNext ? "false" : "true"}">Next</a>
+      `);
+
+      paginate.off("click.hybrid").on("click.hybrid", "a[data-action]", function (event) {
+        event.preventDefault();
+        const link = event.currentTarget;
+        if (link.classList.contains("disabled")) return;
+
+        const action = link.getAttribute("data-action");
+        if (action === "prev") {
+          const targetPage = displayPage - 1;
+          if (targetPage < 1) return;
+          pendingDisplayPage = targetPage;
+          if (targetPage <= cappedPage) {
+            api.page(targetPage - 1).draw("page");
+          } else {
+            api.draw(false);
+          }
+          return;
+        }
+
+        if (action === "next") {
+          const targetPage = displayPage + 1;
+          pendingDisplayPage = targetPage;
+          if (targetPage <= cappedPage) {
+            api.page(targetPage - 1).draw("page");
+          } else {
+            api.draw(false);
+          }
+        }
+      });
+    }
+
     if ($.fn.DataTable.isDataTable("#viewable_images_table")) {
       $("#viewable_images_table").DataTable().destroy();
     }
 
-    $("#viewable_images_table").DataTable({
+    const table = $("#viewable_images_table").DataTable({
       processing: true,
       serverSide: true,
       searching: true,
@@ -163,17 +245,43 @@ const { study, images, imagePageRoot } = Astro.props;
       scrollX: true,
       searchDelay: 800,
       pageLength: 10,
+      pagingType: "simple",
 
       ajax: async function (dtParams, callback) {
         const search = dtParams.search.value;
         const pageSize = dtParams.length;
-        const page = Math.floor(dtParams.start / pageSize) + 1;
-        const url =
+        const cappedPage = cappedPageFor(pageSize);
+        const requestedPage = pendingDisplayPage ?? (Math.floor(dtParams.start / pageSize) + 1);
+        const isReset = search !== lastSearch || pageSize !== lastPageSize;
+
+        if (isReset) {
+          resetCursorState(search, pageSize);
+        }
+
+        let url =
           `${api_path}/website/browse/image` +
           `?facet.accession_id=${encodeURIComponent(studyAccessionID)}` +
           `&query=${encodeURIComponent(search)}` +
-          `&pagination.page_size=${pageSize}` +
-          `&pagination.page=${page}`;
+          `&pagination.page_size=${pageSize}`;
+
+        let fetchCursor = null;
+        if (requestedPage <= cappedPage) {
+          url += `&pagination.page=${requestedPage}`;
+        } else {
+          fetchCursor = pageCursorMap.get(requestedPage);
+          if (!fetchCursor) {
+            callback({
+              draw: dtParams.draw,
+              recordsTotal: totalPages * pageSize,
+              recordsFiltered: totalPages * pageSize,
+              data: [],
+            });
+            pendingDisplayPage = null;
+            return;
+          }
+          url += `&cursor=${encodeURIComponent(fetchCursor)}`;
+        }
+
         const res = await fetch(url);
         const json = await res.json();
 
@@ -183,6 +291,19 @@ const { study, images, imagePageRoot } = Astro.props;
           json.hits?.total?.value ||
           json.pagination?.total_results ||
           images.length;
+
+        displayPage = requestedPage;
+        totalPages = Math.max(1, Math.ceil(total / pageSize));
+        currentHasNextCursor = Boolean(json.pagination?.next_cursor);
+
+        if (fetchCursor) {
+          pageCursorMap.set(requestedPage, fetchCursor);
+        }
+        if (json.pagination?.next_cursor) {
+          pageCursorMap.set(requestedPage + 1, json.pagination.next_cursor);
+        }
+        pruneCursorHistory(displayPage);
+        pendingDisplayPage = null;
 
         callback({
           draw: dtParams.draw,
@@ -221,6 +342,13 @@ const { study, images, imagePageRoot } = Astro.props;
             `<a class="vf-link" href="${imageUrl(image)}">View</a>`,
         },
       ],
+      drawCallback: function () {
+        renderPagination(this.api());
+      },
+    });
+
+    table.on("search.dt length.dt", function () {
+      resetCursorState(table.search(), table.page.len());
     });
   });
 </script>

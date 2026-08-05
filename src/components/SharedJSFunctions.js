@@ -9,7 +9,7 @@ export function getPlaceholderHeroImage(accessionID) {
 }
 
 export function getStudyImage(study, cardImageOverride) {
-    const studyImage = study?.example_image_uri?.length > 0? study.example_image_uri: getPlaceholderHeroImage(study.accession_id);
+    const studyImage = study?.example_image_uri?.length > 0? study.example_image_uri?.[0]: getPlaceholderHeroImage(study.accession_id);
 
     if (cardImageOverride != null) {
       return cardImageOverride
@@ -95,6 +95,42 @@ export function getSimpleAttributeValue(obj, attrName) {
     return obj?.additional_metadata
       ?.find(attr => attr.name === attrName)
       ?.value[attrName] ?? null;
+}
+
+export function getPublicVisualisationURI(uri) {
+    if (!uri) {
+        return null;
+    }
+
+    try {
+        const url = new URL(uri);
+        if (url.hostname === "livingobjects-int.ebi.ac.uk") {
+            url.hostname = "livingobjects.ebi.ac.uk";
+        }
+        return url.toString();
+    } catch {
+        return uri;
+    }
+}
+
+export function buildVizarrViewerURL(uri) {
+    if (!uri) {
+        return null;
+    }
+
+    const url = new URL("https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html");
+    url.searchParams.set("source", uri);
+    return url.toString();
+}
+
+export function buildITKViewerURL(uri) {
+    if (!uri) {
+        return null;
+    }
+
+    const url = new URL("https://kitware.github.io/itk-vtk-viewer/app/");
+    url.searchParams.set("fileToLoad", uri);
+    return url.toString();
 }
   
 export function getLicenceLogo(licenceURL){
@@ -281,43 +317,65 @@ export function formatPixelDimensions(img_rep) {
 
 export function generateParamString(baseURL, query, page, selectedFacets, pageSize){
   const url = new URL(baseURL, "http://local");
-  query !== "" && url.searchParams.set("query", query ?? "");
-  url.origin !== "http://local" | pageSize > 12 && url.searchParams.set("pagination.page_size", String(pageSize));
-  url.origin !== "http://local" && url.searchParams.set("pagination.page", String(page));
-  for (const [facetKey, values] of Object.entries(selectedFacets)) {
-    if (!values?.length) continue;
+  const isPageURL = url.origin === "http://local";
+
+  if (query !== "") {
+    url.searchParams.set("query", query ?? "");
+  }
+
+  if (!isPageURL || pageSize > 12) {
+    url.searchParams.set("pagination.page_size", String(pageSize));
+  }
+
+  if (!isPageURL) {
+    url.searchParams.set("pagination.page", String(page));
+  }
+
+  for (const [facetKey, values] of Object.entries(selectedFacets ?? {})) {
     url.searchParams.delete(facetKey);
-    for (const v of values) {
-      if (v === null || v === undefined) continue;
-      const s = String(v).trim();
-      if (s === "") continue;
-      // const key = facetKey.replace("facet.", "");
-      if (v.includes("-")) {
-        const [start, end] = v.split("-");
+    url.searchParams.delete(`${facetKey}.eq`);
+    url.searchParams.delete(`${facetKey}.gt`);
+    url.searchParams.delete(`${facetKey}.gte`);
+    url.searchParams.delete(`${facetKey}.lt`);
+    url.searchParams.delete(`${facetKey}.lte`);
+
+    if (!values?.length) continue;
+
+    for (const value of values) {
+      if (value === null || value === undefined) continue;
+      const stringValue = String(value).trim();
+      if (stringValue === "") continue;
+
+      if (isPageURL) {
+        url.searchParams.append(facetKey, stringValue);
+      }
+      else if (stringValue.includes("-")) {
+        const [start, end] = stringValue.split("-");
         url.searchParams.append(`${facetKey}.gte`, start);
         url.searchParams.append(`${facetKey}.lte`, end);
       }
-      else if(v[0] === ">"){
-        url.searchParams.append(`${facetKey}.gt`, v.slice(1));
+      else if (stringValue[0] === ">") {
+        url.searchParams.append(`${facetKey}.gt`, stringValue.slice(1));
       }
-      else if(v[0] === "<"){
-        url.searchParams.append(`${facetKey}.lt`, v.slice(1));
+      else if (stringValue[0] === "<") {
+        url.searchParams.append(`${facetKey}.lt`, stringValue.slice(1));
       }
-      else if(v[0] === "≤"){
-        url.searchParams.append(`${facetKey}.lte`, v.slice(1));
+      else if (stringValue[0] === "≤") {
+        url.searchParams.append(`${facetKey}.lte`, stringValue.slice(1));
       }
-      else if(v[0] === "≥"){
-        url.searchParams.append(`${facetKey}.gte`, v.slice(1));
+      else if (stringValue[0] === "≥") {
+        url.searchParams.append(`${facetKey}.gte`, stringValue.slice(1));
       }
-      else if (facetKey === "has_converted_image" && url.origin !== "http://local"){
-        url.searchParams.append("has.thumbnail", "true")
+      else if (facetKey === "has_converted_image" && !isPageURL) {
+        url.searchParams.append(url.pathname.endsWith("image") ? "has.converted_image" : "has.thumbnail", "true");
       }
-      else{
-        url.searchParams.append(`${facetKey}.eq`, v);
+      else {
+        url.searchParams.append(`${facetKey}.eq`, stringValue);
       }
     }
   }
-  return url.origin === "http://local" ? `${url.pathname}${url.search}` : url.toString()
+
+  return isPageURL ? `${url.pathname}${url.search}` : url.toString()
 }
 
 export async function getFromAPI(url){

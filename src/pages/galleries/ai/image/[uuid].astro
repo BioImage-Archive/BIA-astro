@@ -18,7 +18,6 @@ let annotatedImages = [];
 sourceImage = image;
 annotatedImages = await getAnnotationFromDerivedImages(sourceImage.uuid)
 const organism = getTaxons(studyInfo).join(", ");
-const vizarrURL = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html?source="
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
 const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
 const annotationDatasets = studyInfo.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
@@ -53,7 +52,7 @@ const breadcrumbs = [
         </div>
         </section>
         <section class="vf-content "><a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download these images</a><br/></section>    
-        <SourceAnnotatedImage annotatedImages={annotatedImages} sourceImage={sourceImage} vizarrURL={vizarrURL} btnID="CopyURLButton"/>
+        <SourceAnnotatedImage annotatedImages={annotatedImages} sourceImage={sourceImage} btnID="CopyURLButton"/>
         <hr />
         <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
         <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />

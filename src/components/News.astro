@@ -15,6 +15,7 @@ const items = await getCollection("news_articles");
                 <section class="vf-grid" id="newsSlides">
                     <div>
                         <h3 class="vf-summary__title">{news.data.title}</h3>
+                        <p class="vf-summary__date">{news.data.articleDate}</p>
                         <p class="vf-summary__text">
                             <Content />
                         </p>

@@ -68,7 +68,7 @@ const label = `${minVal && minVal !== "" ? formatBytes(minVal, key) : "â€¦" } â€
     <>
     {text}:
     <a
-      href={generateParamString(removeQueryParam(Astro.url), "", page, [], pageSize)}
+      href={generateParamString(removeQueryParam(Astro.url), "", page, {}, pageSize)}
       class="facet-remove-btn"
       aria-label={`Remove ${text}: ${query}`}
     >
