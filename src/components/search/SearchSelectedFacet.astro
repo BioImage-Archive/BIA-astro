@@ -1,5 +1,5 @@
 ---
-import { generateParamString, formatBytes } from "../SharedJSFunctions.js";
+import { generateParamString, formatBytes, formatFieldName } from "../SharedJSFunctions.js";
 import {type SelectedFacets} from "./SearchInterface.astro";
 import { capitalizeFirstLetter } from "./SearchFacet.astro"
 
@@ -43,7 +43,7 @@ const label = `${minVal && minVal !== "" ? formatBytes(minVal, key) : "…" } �
     <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected), pageSize)} 
         class="facet-remove-btn" aria-label={`Remove ${text}: ${selected}`}
       >
-        <span class="facet-value">{capitalizeFirstLetter(selected.replaceAll("_", " "))}</span>
+        <span class="facet-value">{formatFieldName(text, capitalizeFirstLetter(selected.replaceAll("_", " ")))}</span>
         <span class="facet-x" aria-hidden="true">×</span></a>
     )
     }
