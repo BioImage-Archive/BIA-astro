@@ -179,7 +179,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   if (cfg.type === "terms" || cfg.type === "boolean") {
     if (!hasBuckets(data)) return acc;
 
-    const valuesAndCounts = data.buckets
+    let valuesAndCounts = data.buckets
       .slice()
       .sort((a, b) => {
         const aKey = (a.key_as_string ?? a.key ?? "").toString().toLowerCase();
@@ -191,6 +191,29 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
         obj[k] = bucket.doc_count;
         return obj;
       }, {} as Record<string, number>);
+    
+    // restore backend order
+    //   reduce above also causes 2048 to be misplaced so re-apply order
+    if([
+      "total_size_in_bytes",
+      "time_steps",
+      "total_physical_size_x",
+      "total_physical_size_y",
+      "total_physical_size_z",
+      "voxel_physical_size_x",
+      "voxel_physical_size_y",
+      "voxel_physical_size_z",
+      "image_pixel_z",
+      "image_pixel_x",
+      "image_pixel_y",
+    ].includes(facetKey)) {
+      const preservedOrderValuesAndCounts = {};
+      data.buckets.map((bucket) => {
+        // space needed so 2048 isn't a numeric key, which would cause it to be the first key in the dictionary, independent of insertion order
+        preservedOrderValuesAndCounts[" " + bucket.key] = bucket.doc_count;
+      });
+      valuesAndCounts = preservedOrderValuesAndCounts;
+    };
 
     const totalFacetCounts =
       Object.keys(valuesAndCounts).length + (data.sum_other_doc_count ?? 0);
