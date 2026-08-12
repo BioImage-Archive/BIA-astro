@@ -1,9 +1,10 @@
 ---
 import Layout from '../../../layouts/ProjectsLayout.astro';
 import datasets from '../../../data/collections/spora-mock-datasets.json';
+import bannerImage from "../../../assets/bioimage-archive/spora_banner_logo.png";
+
 const cancers = [...new Set(datasets.map((d) => d.cancer))].sort();
 const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
-const bannerImage = "/src/assets/bioimage-archive/spora_banner_logo.png";
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
 

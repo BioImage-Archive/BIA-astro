@@ -1,9 +1,21 @@
 ---
 import Layout from '../../layouts/ProjectsLayout.astro';
 import MenuCard from "../../components/cards/LandingPageMenuCard.astro";
+import sporaImage from "../../assets/bioimage-archive/spora_landing_page.jpg";
+import bannerImage from "../../assets/bioimage-archive/spora_banner_logo.png";
+import aimmLogo from "../../assets/bioimage-archive/AIPM_PNG.png";
+import epflLogo from "../../assets/bioimage-archive/logo-epfl.png";
+import tissueOne from "../../assets/bioimage-archive/tissue-1.jpg";
+import tissueTwo from "../../assets/bioimage-archive/tissue-2.jpg";
+import tissueThree from "../../assets/bioimage-archive/tissue-3.jpg";
+import fileIcon1 from "../../assets/bioimage-archive/file-icons/1.png";
+import fileIcon2 from "../../assets/bioimage-archive/file-icons/2.png";
+import fileIcon3 from "../../assets/bioimage-archive/file-icons/3.png";
+import fileIcon4 from "../../assets/bioimage-archive/file-icons/4.png";
+import fileIcon5 from "../../assets/bioimage-archive/file-icons/5.png";
+import fileIcon6 from "../../assets/bioimage-archive/file-icons/6.png";
+import fileIcon7 from "../../assets/bioimage-archive/file-icons/7.png";
 
-const sporaImage = "/src/assets/bioimage-archive/spora_landing_page.jpg";
-const bannerImage = "/src/assets/bioimage-archive/spora_banner_logo.png";
 const cards = [
   {
     label: "Dataset Browser",
@@ -22,13 +34,15 @@ const cards = [
   }
 ];
 
+const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIcon6, fileIcon7];
+
 ---
 <Layout pageTitle="SPORA" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora">
   <section class="vf-content vf-u-fullbleed spora-shell">
     <section class="vf-grid vf-grid__col-3">
       <div class="spora-media-panel" aria-hidden="true">
         <div class="spora-media">
-          <img src={sporaImage} alt="" style="padding-top:5%"/>
+          <img src={sporaImage.src} alt="" style="padding-top:5%"/>
         </div>
       </div>
       <div class="vf-stack vf-stack--400 spora-copy vf-grid__col--span-2">
@@ -59,8 +73,8 @@ const cards = [
         <div><p class="spora-attribution__label">A project by:</p></div>
         <div class="spora-attribution" aria-label="Project attribution">
           <div class="spora-attribution__partners">
-            <span class="spora-attribution__partner"><a href="https://aimm.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black; height:3.5em;padding:0.25em;" src="/src/assets/bioimage-archive/AIPM_PNG.png" alt="AIMM Logo"/></a></span>
-            <span class="spora-attribution__partner"><a href="https://www.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black;height:3.5em;padding:0.25em;" src="/src/assets/bioimage-archive/logo-epfl.png" alt="EPFL Logo"/></a></span>
+            <span class="spora-attribution__partner"><a href="https://aimm.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black; height:3.5em;padding:0.25em;" src={aimmLogo.src} alt="AIMM Logo"/></a></span>
+            <span class="spora-attribution__partner"><a href="https://www.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black;height:3.5em;padding:0.25em;" src={epflLogo.src} alt="EPFL Logo"/></a></span>
           </div>
         </div>
       </div>
@@ -74,13 +88,13 @@ const cards = [
             </p>
           </div>
       <div class="vf-grid__col--span-3">
-        <div class="mosaic"><img src="/src/assets/bioimage-archive/tissue-1.jpg" alt="Fluorescent tissue" /><img src="/src/assets/bioimage-archive/tissue-2.jpg" alt="Lung tissue microarray core" /><img src="/src/assets/bioimage-archive/tissue-3.jpg" alt="Organoid tissue" /></div>
+        <div class="mosaic"><img src={tissueOne.src} alt="Fluorescent tissue" /><img src={tissueTwo.src} alt="Lung tissue microarray core" /><img src={tissueThree.src} alt="Organoid tissue" /></div>
       </div>
     </section>
     <section class="vf-grid" style="padding:0.5em 0;">
       <div style="text-align: center;">
         <h3 >Standardized file types and annotations for each sample:</h3>
-        <div class="file-grid">{['Multiplex Images','Paired H&E Images','Tissue Masks','Cell Masks','Cell Types','Patient Data','Meta Data'].map((label, index) => <article><img src={`/src/assets/bioimage-archive/file-icons/${index + 1}.png`} alt="" /><strong>{label}</strong></article>)}</div>
+        <div class="file-grid">{['Multiplex Images','Paired H&E Images','Tissue Masks','Cell Masks','Cell Types','Patient Data','Meta Data'].map((label, index) => <article><img src={fileIcons[index].src} alt="" /><strong>{label}</strong></article>)}</div>
       </div>
     </section>
     <hr class="vf-divider | vf-u-fullbleed" />
