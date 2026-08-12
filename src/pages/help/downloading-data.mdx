@@ -4,16 +4,29 @@ layout: ../../layouts/HelpLayout.astro
 
 ---
 import s3_image_uri from "/src/assets/bioimage-archive/accessing_s3_image_uri.png" ;
-
+import fl_save from "/src/assets/bioimage-archive/fl_save.png";
+import fl_copy from "/src/assets/bioimage-archive/fl_copy.png";
+import fl_panel_download from "/src/assets/bioimage-archive/fl_panel_download.png";
+import fl_download from "/src/assets/bioimage-archive/fl_download.png";
 
 ## Downloading data
 
-The interactive images on this website can be downloaded using the AWS client as detailed below. All other data publicly available at the BioImage Archive can be downloaded via web browser, ftp, Aspera, or Globus. All these methods are described in detail [here](https://www.ebi.ac.uk/bioimage-archive/help-download/).
+All data publicly available at the BioImage Archive beta website can be downloaded via Globus, HTTP, the AWS client or BioFile Finder. 
+We recommend direct downloads via HTTP or BioFile Finder only for a small number of small files. Use Globus for large files or bulk downloads.
 
-<h3 id="aws_client_download">Downloading data with the AWS client </h3>
+<h3 id="aws_client_download">Downloading data using Globus </h3>
+
+The BioImage Archive supports file downloads through Globus. You can click on the **Browse Globus** button of each individual study page to open up the [EMBL-EBI Public Data collection](https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=%2Fbiostudies%2F) in the Globus File Manager app. 
+You may want to install [Globus Connect Personal](https://www.globus.org/globus-connect-personal) which creates a personal collection on your machine for [transferring multiple files](https://docs.globus.org/how-to/get-started/).
+
+<h3 id="aws_client_download">Downloading data using HTTP</h3>
+
+You can also browse and download individual files from a submission via HTTP. Click the **Browse HTTP** button on the study page. You can then navigate the study’s directory structure and download individual files by clicking on them.
+
+<h3 id="aws_client_download">Downloading interactive images with the AWS client </h3>
 
 It is possible to access the converted OME-Zarr images through any tool that can read from S3. We recommend using the AWS command line interface.
-The S3 URI of the interactive OME-Zarr images can be found by clicking on the “Copy OME-Zarr URI” button on the image webpage.
+The S3 URI of the interactive OME-Zarr images can be found by clicking on the **Copy OME-Zarr URI** button on the image webpage.
 
 <figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
   <img src={s3_image_uri.src} alt="Screenshot of an image page on the BIA website, highlighting the 'Copy OME-Zarr URI' button to the left of the image"/>
@@ -24,3 +37,53 @@ The first part of the S3 URI, starting with https is the S3 endpoint, and the re
     aws --endpoint-url https://livingobjects.ebi.ac.uk s3 ls s3://bioimaging-integrator-data/S-BIAD463/00cddbf9-1282-4a49-94d9-481b7a43cc0c/00cddbf9-1282-4a49-94d9-481b7a43cc0c.zarr/ --no-sign-request
 ```        
 The AWS client can also copy data from S3 to local storage. Detailed instructions for using this tool can be found in the [AWS user guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html).
+
+<h3 id="aws_client_download">Downloading metadata and files using BioFile Finder</h3>
+
+BioFile Finder is used to display the file-level metadata in the **Browse All Files** section of each study page. 
+
+To save the file list table, including file and metadata information, go to the **Query Panel** and click **Save query result as…** 
+(represented by a floppy disk icon). You can save the file list as a CSV, JSON, or Parquet file. 
+Note that if you have used the **Group by** or **Filter** features, these will affect the contents of the saved file list.
+
+<figure style="width: 400px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_save.src}
+    alt="Screenshot of bff save"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+You can also copy specific metadata values by right-clicking the desired value in the right-hand panel and selecting **Copy**.
+
+<figure style="width: 700px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_copy.src}
+    alt="Screenshot of bff copy"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+To download a file, select it and click the download arrow in the right-hand panel.
+
+<figure style="width: 700px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_panel_download.src}
+    alt="Screenshot of bff panel download"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+You can also download one or more files by selecting them, right-clicking the selection, and choosing **Download**.
+
+<figure style="width: 700px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_download.src}
+    alt="Screenshot of bff download"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+
+
+

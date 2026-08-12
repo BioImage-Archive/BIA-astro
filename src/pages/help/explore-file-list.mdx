@@ -1,0 +1,113 @@
+---
+title: Exploring file-level metadata
+layout: ../../layouts/HelpLayout.astro
+
+
+---
+import fl_table from "/src/assets/bioimage-archive/fl_table_view.png";
+import fl_tree from "/src/assets/bioimage-archive/fl_tree_view.png";
+import fl_query_panel from "/src/assets/bioimage-archive/fl_query_panel.png";
+import fl_group from "/src/assets/bioimage-archive/fl_group.png";
+import fl_filter from "/src/assets/bioimage-archive/filter.png";
+import fl_sort from "/src/assets/bioimage-archive/fl_sort.png";
+import fl_save from "/src/assets/bioimage-archive/fl_save.png";
+import fl_copy from "/src/assets/bioimage-archive/fl_copy.png";
+import fl_panel_download from "/src/assets/bioimage-archive/fl_panel_download.png";
+import fl_download from "/src/assets/bioimage-archive/fl_download.png";
+
+## Exploring file-level metadata
+
+You can explore file-level metadata provided by submission authors in the **Browse All Files** section of a study page. 
+We have adapted [BioFile Finder](https://bff.allencell.org/), developed by the Allen Institute for Cell Science, 
+to provide two ways to explore the metadata and associated files: **table view** and **tree view**. You can switch between these views by clicking the corresponding button.
+
+**Table view** displays file-level metadata in a tabular format. The first column contains the individual files, while subsequent columns contain additional metadata provided by the authors. If the authors have provided multiple file lists, they are combined and displayed in a single table.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={fl_table.src} alt="Screenshot of bff in table view"/>
+</figure>
+
+**Tree view** displays files and their metadata using the original directory structure provided by the authors. This view provides additional context about how the files and datasets are organised.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={fl_tree.src} alt="Screenshot of bff in tree view"/>
+</figure>
+
+### Grouping, filtering, and sorting metadata
+
+To group, filter, and sort files by their metadata, click the **Query Panel** on the left-hand side of the BioFileFinder window.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={fl_query_panel.src} alt="Screenshot of bff Query Panel"/>
+</figure>
+
+**Group by** allows you to group files based on the values in one or more file list columns. 
+Each metadata value within a column is organised into a separate directory. 
+If you group by more than one column, the first column you select will form the top-level directory, with subsequent columns appearing lower in the hierarchy. 
+Below, you can see an example where files have been grouped by organism and tissue location.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={fl_group.src} alt="Screenshot of bff group by"/>
+</figure>
+
+**Filter** allows you to display only files that match a specific value within a file list column. 
+You can filter by more than one column. Below, you can see an example where only files with the organ system set to *nervous system* are displayed.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={fl_filter.src} alt="Screenshot of bff filter"/>
+</figure>
+
+**Sort** allows you to sort the file list by the values in a selected column, in either ascending or descending order. Descending order is the default. 
+To switch to ascending order, click the arrow shown in the Sort panel. Below, you can see an example where files have been sorted by cell type in descending order.
+
+<figure class="center margin-bottom-large margin-right-large" style="width: 700px; margin-bottom: 2rem;">
+  <img src={fl_sort.src} alt="Screenshot of bff sort"/>
+</figure>
+
+### Downloading metadata and files
+
+To save the file list table, including file and metadata information, go to the **Query Panel** and click **Save query result as…** 
+(represented by a floppy disk icon). You can save the file list as a CSV, JSON, or Parquet file. 
+Note that if you have used the **Group by** or **Filter** features, these will affect the contents of the saved file list.
+
+<figure style="width: 400px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_save.src}
+    alt="Screenshot of bff save"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+You can also copy specific metadata values by right-clicking the desired value in the right-hand panel and selecting **Copy**.
+
+<figure style="width: 700px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_copy.src}
+    alt="Screenshot of bff copy"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+To download a file, select it and click the download arrow in the right-hand panel.
+
+<figure style="width: 700px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_panel_download.src}
+    alt="Screenshot of bff panel download"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+You can also download one or more files by selecting them, right-clicking the selection, and choosing **Download**.
+
+<figure style="width: 700px; max-width: 100%; margin: 0 auto 2rem;">
+  <img
+    src={fl_download.src}
+    alt="Screenshot of bff download"
+    style="display: block; width: 100%; height: auto;"
+  />
+</figure>
+
+We recommend direct downloads only for a small number of small files. If you want to download many files, or files larger than a few GB, see our [help page on file downloads](https://beta.bioimagearchive.org/bioimage-archive/help/downloading-data) for alternative download methods.
+
+
