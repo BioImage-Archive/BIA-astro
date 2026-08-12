@@ -49,7 +49,7 @@ export default defineConfig({
     '/submit-annotations': '/bioimage-archive/help/submit-annotations',
     '/help-tools': '/bioimage-archive/help/supporting-tools',
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
-    '/spora': '/bioimage-archive/galleries/spora',
+    '/spora': '/bioimage-archive/projects/spora',
 
   },
   env: {
