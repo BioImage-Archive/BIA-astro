@@ -10,7 +10,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Lung",
+    "cancer": [
+      "Lung"
+    ],
     "citation": "Spatially variant immune infiltration scoring in human cancer tissues",
     "publicationUrl": "https://www.nature.com/articles/s41698-022-00305-4",
     "dataUrl": "https://zenodo.org/records/6784253",
@@ -28,7 +30,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Other disease",
+    "cancer": [
+      "Other disease"
+    ],
     "citation": "The human body at cellular resolution: the NIH Human Biomolecular Atlas Program",
     "publicationUrl": "https://www.nature.com/articles/s41586-019-1629-x",
     "dataUrl": "https://portal.hubmapconsortium.org/search/datasets",
@@ -46,7 +50,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Pancreatic",
+    "cancer": [
+      "Pancreatic"
+    ],
     "citation": "Modeling cellular influence delineates functionally relevant cellular neighborhoods in primary and metastatic pancreatic ductal adenocarcinoma",
     "publicationUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12262348/",
     "dataUrl": "https://zenodo.org/records/15601931",
@@ -64,7 +70,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "Cancer-associated fibroblast classification in single-cell and spatial proteomics data",
     "publicationUrl": "https://www.nature.com/articles/s41467-023-39762-1",
     "dataUrl": "https://zenodo.org/records/7540604",
@@ -82,7 +90,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Lung",
+    "cancer": [
+      "Lung"
+    ],
     "citation": "Cancer-associated fibroblast phenotypes are associated with patient outcome in non-small cell lung cancer",
     "publicationUrl": "https://www.cell.com/cancer-cell/fulltext/S1535-6108(23)00449-X",
     "dataUrl": "https://zenodo.org/records/7961844",
@@ -100,7 +110,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Other disease",
+    "cancer": [
+      "Other disease"
+    ],
     "citation": "A map of human type 1 diabetes progression by imaging mass cytometry",
     "publicationUrl": "https://www.cell.com/cell-metabolism/fulltext/S1550-4131(18)30691-0",
     "dataUrl": "https://data.mendeley.com/datasets/cydmwsfztj/1",
@@ -118,7 +130,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "Breast tumor microenvironment structures are associated with genomic features and clinical outcome",
     "publicationUrl": "https://www.nature.com/articles/s41588-022-01041-y",
     "dataUrl": "https://zenodo.org/records/5850952",
@@ -136,7 +150,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Colorectal",
+    "cancer": [
+      "Colorectal"
+    ],
     "citation": "Shaking organoid co-cultures: human-relevant models of epithelial, stromal and immune interactions for cancer research and immunotherapy development",
     "publicationUrl": "https://zenodo.org/records/15198804",
     "dataUrl": "https://zenodo.org/records/15198804",
@@ -154,7 +170,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "Multiplex imaging of breast cancer lymph node metastases identifies prognostic single-cell populations independent of clinical classifiers",
     "publicationUrl": "https://www.sciencedirect.com/science/article/pii/S2666379123000836",
     "dataUrl": "https://doi.org/10.5281/zenodo.7494727",
@@ -172,7 +190,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "No disease",
+    "cancer": [
+      "No disease"
+    ],
     "citation": "Single-cell spatial atlas of the aging human breast",
     "publicationUrl": "https://www.nature.com/articles/s43587-026-01104-3",
     "dataUrl": "https://zenodo.org/records/18418221",
@@ -190,7 +210,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Other disease",
+    "cancer": [
+      "Other disease"
+    ],
     "citation": "Organization of the human intestine at single-cell resolution",
     "publicationUrl": "https://www.nature.com/articles/s41586-023-05915-x",
     "dataUrl": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
@@ -208,7 +230,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Skin (melanoma)",
+    "cancer": [
+      "Skin (melanoma)"
+    ],
     "citation": "Multiplexed imaging mass cytometry of the chemokine milieus in melanoma characterizes features of the response to immunotherapy",
     "publicationUrl": "https://www.science.org/doi/full/10.1126/sciimmunol.abk1692",
     "dataUrl": "https://zenodo.org/records/6004986",
@@ -226,7 +250,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Lung",
+    "cancer": [
+      "Lung"
+    ],
     "citation": "Single-cell spatial metabolomics with cell-type specific protein profiling for tissue systems biology",
     "publicationUrl": "https://www.nature.com/articles/s41467-023-43917-5",
     "dataUrl": "https://zenodo.org/records/6784251",
@@ -244,7 +270,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "The single-cell pathology landscape of breast cancer",
     "publicationUrl": "https://www.nature.com/articles/s41586-019-1876-x",
     "dataUrl": "https://zenodo.org/records/3518284",
@@ -262,7 +290,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Colorectal",
+    "cancer": [
+      "Colorectal"
+    ],
     "citation": "Multiplexed 3D atlas of state transitions and immune interaction in colorectal cancer",
     "publicationUrl": "https://www.sciencedirect.com/science/article/pii/S0092867422015719",
     "dataUrl": "https://humantumoratlas.org/explore",
@@ -280,7 +310,9 @@
     "modalities": [
       "Orion"
     ],
-    "cancer": "Colorectal",
+    "cancer": [
+      "Colorectal"
+    ],
     "citation": "High-plex immunofluorescence imaging and traditional histology of the same tissue section for discovering image-based biomarkers",
     "publicationUrl": "https://www.nature.com/articles/s43018-023-00576-1",
     "dataUrl": "https://www.tissue-atlas.org/atlas-datasets/lin-chen-campton-2023/",
@@ -298,7 +330,10 @@
     "modalities": [
       "MIBI"
     ],
-    "cancer": "Breast, Colorectal",
+    "cancer": [
+      "Breast",
+      "Colorectal"
+    ],
     "citation": "Reproducible, high-dimensional imaging in archival human tissue by multiplexed ion beam imaging by time-of-flight (MIBI-TOF)",
     "publicationUrl": "https://www.sciencedirect.com/science/article/pii/S0023683722002112",
     "dataUrl": "https://zenodo.org/records/5945388",
@@ -316,7 +351,10 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Pancreatic, Other disease",
+    "cancer": [
+      "Pancreatic",
+      "Other disease"
+    ],
     "citation": "Periductal fibroblast density defines lymphocyte exclusion via a CD44-dependent stromal checkpoint in pancreatic cancer",
     "publicationUrl": "https://www.biorxiv.org/content/10.1101/2024.05.23.593868v3",
     "dataUrl": "https://zenodo.org/records/10582038",
@@ -334,7 +372,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "A stratification system for breast cancer based on basoluminal tumor cells and spatial tumor architecture",
     "publicationUrl": "https://www.sciencedirect.com/science/article/pii/S1535610825002697",
     "dataUrl": "https://zenodo.org/records/10942609",
@@ -352,7 +392,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Skin (melanoma)",
+    "cancer": [
+      "Skin (melanoma)"
+    ],
     "citation": "Spatially mapping the immune landscape of melanoma using imaging mass cytometry",
     "publicationUrl": "https://www.science.org/doi/10.1126/sciimmunol.abi5072",
     "dataUrl": "https://zenodo.org/records/5903190",
@@ -370,7 +412,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Lung",
+    "cancer": [
+      "Lung"
+    ],
     "citation": "Spatial insights into immunotherapy response in non-small cell lung cancer (NSCLC) by multiplexed tissue imaging",
     "publicationUrl": "https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-024-05035-8",
     "dataUrl": "https://zenodo.org/records/10258578",
@@ -388,7 +432,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Lymphoma",
+    "cancer": [
+      "Lymphoma"
+    ],
     "citation": "Immune cell topography predicts response to PD-1 blockade in cutaneous T cell lymphoma",
     "publicationUrl": "https://www.nature.com/articles/s41467-021-26974-6",
     "dataUrl": "https://immunoatlas.org/NOLN/210920-1",
@@ -406,7 +452,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Lung",
+    "cancer": [
+      "Lung"
+    ],
     "citation": "Integrating AI-powered digital pathology and imaging mass cytometry identifies key classifiers of tumor cells, stroma, and immune cells in non-small cell lung cancer",
     "publicationUrl": "https://aacrjournals.org/cancerres/article/84/7/1165/742042/",
     "dataUrl": "",
@@ -424,7 +472,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Liver",
+    "cancer": [
+      "Liver"
+    ],
     "citation": "Tumor-associated macrophages trigger MAIT cell dysfunction at the HCC invasive margin",
     "publicationUrl": "https://www.sciencedirect.com/science/article/pii/S0092867423008048?via%3Dihub",
     "dataUrl": "https://www.cancerimagingarchive.net/collection/codex-imaging-of-hcc/",
@@ -442,7 +492,9 @@
     "modalities": [
       "MIBI"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "Automated classification of cellular expression in multiplexed imaging data with Nimbus",
     "publicationUrl": "https://www.nature.com/articles/s41592-025-02826-9",
     "dataUrl": "https://huggingface.co/datasets/JLrumberger/Pan-Multiplex/tree/main",
@@ -460,7 +512,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Liver",
+    "cancer": [
+      "Liver"
+    ],
     "citation": "Spatial single-cell profiling and neighbourhood analysis reveal the determinants of immune architecture connected to checkpoint inhibitor therapy outcome in hepatocellular carcinoma",
     "publicationUrl": "https://gut.bmj.com/content/74/3/451",
     "dataUrl": "https://zenodo.org/records/10793609",
@@ -478,7 +532,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Breast",
+    "cancer": [
+      "Breast"
+    ],
     "citation": "Simultaneous multiplexed imaging of mRNA and proteins with subcellular resolution in breast cancer tissue samples by mass cytometry",
     "publicationUrl": "https://www.cell.com/fulltext/S2405-4712(17)30543-4",
     "dataUrl": "https://data.mendeley.com/datasets/m4b97v7myb/1",
@@ -496,7 +552,12 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Colorectal, Lung, Head & neck, Breast",
+    "cancer": [
+      "Colorectal",
+      "Lung",
+      "Head & neck",
+      "Breast"
+    ],
     "citation": "Multi-modal image analysis for large-scale cancer tissue studies within IMMUcan",
     "publicationUrl": "https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(25)00206-1",
     "dataUrl": "https://zenodo.org/records/12912567",
@@ -514,7 +575,9 @@
     "modalities": [
       "CODEX"
     ],
-    "cancer": "Colorectal",
+    "cancer": [
+      "Colorectal"
+    ],
     "citation": "Coordinated cellular neighborhoods orchestrate antitumoral immunity at the colorectal cancer invasive front",
     "publicationUrl": "https://www.sciencedirect.com/science/article/pii/S0092867420308709?via%3Dihub",
     "dataUrl": "https://www.cancerimagingarchive.net/collection/crc_ffpe-codex_cellneighs/",
@@ -532,7 +595,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Skin (melanoma)",
+    "cancer": [
+      "Skin (melanoma)"
+    ],
     "citation": "Multiplexed imaging mass cytometry reveals distinct tumor-immune microenvironments linked to immunotherapy responses in melanoma",
     "publicationUrl": "https://www.nature.com/articles/s43856-022-00197-2",
     "dataUrl": "https://zenodo.org/records/6838169",
@@ -550,7 +615,9 @@
     "modalities": [
       "IMC"
     ],
-    "cancer": "Lung",
+    "cancer": [
+      "Lung"
+    ],
     "citation": "Spatial and multiomics analysis of human and mouse lung adenocarcinoma precursors reveals TIM-3 as a putative target for precancer interception",
     "publicationUrl": "https://www.cell.com/cancer-cell/fulltext/S1535-6108(25)00162-X",
     "dataUrl": "https://www.synapse.org/Synapse:syn54951674/wiki/626860",

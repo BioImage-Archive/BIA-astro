@@ -1,57 +1,93 @@
 ---
 import Layout from '../../layouts/ProjectsLayout.astro';
 import MenuCard from "../../components/cards/LandingPageMenuCard.astro";
-import sporaImage from "../../assets/bioimage-archive/spora_landing_page.jpg";
-import bannerImage from "../../assets/bioimage-archive/spora_banner_logo.png";
-import aimmLogo from "../../assets/bioimage-archive/AIPM_PNG.png";
-import epflLogo from "../../assets/bioimage-archive/logo-epfl.png";
-import tissueOne from "../../assets/bioimage-archive/tissue-1.jpg";
-import tissueTwo from "../../assets/bioimage-archive/tissue-2.jpg";
-import tissueThree from "../../assets/bioimage-archive/tissue-3.jpg";
-import fileIcon1 from "../../assets/bioimage-archive/file-icons/1.png";
-import fileIcon2 from "../../assets/bioimage-archive/file-icons/2.png";
-import fileIcon3 from "../../assets/bioimage-archive/file-icons/3.png";
-import fileIcon4 from "../../assets/bioimage-archive/file-icons/4.png";
-import fileIcon5 from "../../assets/bioimage-archive/file-icons/5.png";
-import fileIcon6 from "../../assets/bioimage-archive/file-icons/6.png";
-import fileIcon7 from "../../assets/bioimage-archive/file-icons/7.png";
+import sporaImage from "../../assets/bioimage-archive/projects/spora/spora_landing_page.jpg";
+import bannerImage from "../../assets/bioimage-archive/projects/spora/spora_banner_logo.png";
+import aimmLogo from "../../assets/bioimage-archive/projects/spora/AIPM_PNG.png";
+import epflLogo from "../../assets/bioimage-archive/projects/spora/logo-epfl.png";
+import tissueOne from "../../assets/bioimage-archive/projects/spora/tissue-1.jpg";
+import tissueTwo from "../../assets/bioimage-archive/projects/spora/tissue-2.jpg";
+import tissueThree from "../../assets/bioimage-archive/projects/spora/tissue-3.jpg";
+import fileIcon1 from "../../assets/bioimage-archive/projects/spora/file-icons/1.png";
+import fileIcon2 from "../../assets/bioimage-archive/projects/spora/file-icons/2.png";
+import fileIcon3 from "../../assets/bioimage-archive/projects/spora/file-icons/3.png";
+import fileIcon4 from "../../assets/bioimage-archive/projects/spora/file-icons/4.png";
+import fileIcon5 from "../../assets/bioimage-archive/projects/spora/file-icons/5.png";
+import fileIcon6 from "../../assets/bioimage-archive/projects/spora/file-icons/6.png";
+import fileIcon7 from "../../assets/bioimage-archive/projects/spora/file-icons/7.png";
+import visualizerImage from "../../assets/bioimage-archive/projects/spora/visualizer_overview.png";
+import sporaBenchImage from "../../assets/bioimage-archive/projects/spora/spora_bench.png";
+import sporaIoImage from "../../assets/bioimage-archive/projects/spora/spora-io.png";
+import datasetBrowser from "../../assets/bioimage-archive/projects/spora/dataset-browser.png";
 
 const cards = [
   {
     label: "Dataset Browser",
     description: "Browse, filter, and download all 31 cohorts by cancer type, technology, and more.",
     target: "/bioimage-archive/projects/spora/dataset",
+    window: false
   },
   {
     label: "Explore Tissue Data",
     description: "Explore every cohort in spora through an interactive multiplex visualizer with multi-channel overlays, right in your browser.",
     target: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html",
+    window: true
   },
   {
     label: "spora [io]",
-    description: "Load any single or combination of datasets in two lines of Python. The spora-io library provides a unified interface to browse, tile, and load spatial proteomics data with matched H&E and diverse intensity standardizations.",
+    description: "The spora-io library provides a unified interface to browse, tile, and load spatial proteomics data with matched H&E and diverse intensity standardizations.",
     target: "https://spora.epfl.ch/spora-io/index.html",
+    window: true
   }
 ];
 
+const sections = [
+  { name: "Dataset Browser", 
+    link: "/bioimage-archive/projects/spora/dataset", 
+    linkText: "View all cohorts ›",
+    images: [datasetBrowser],
+    description: "Browse and filter all 31 cohorts by cancer type, technology, and more. Download any cohort directly from the command line or through the spora-io Python library."
+  },
+  {
+    name: "spora [io]", 
+    link: "https://spora.epfl.ch/spora-io/index.html", 
+    linkText: "Read the docs ›", 
+    images: [sporaIoImage],
+    description: "Load any single or combination of datasets in two lines of Python. The spora-io library provides a unified interface to browse, tile, and load spatial proteomics data with matched H&E and diverse intensity standardizations."
+  },
+  {
+    name: "spora [bench]", 
+    link: "https://spora.epfl.ch/docs.html", 
+    linkText: "View benchmarks ›", 
+    images: [sporaBenchImage],
+    description: "Benchmark multiplex foundation models across cell-level and patient-level tasks with standardized evaluation protocols."
+  },
+  {
+    name: "Explore Tissue Data", 
+    link: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html", 
+    linkText: "Launch Tissue Visualizer ›", 
+    images: [visualizerImage],
+    description: "Explore every cohort in spora through an interactive multiplex visualizer with multi-channel overlays, right in your browser."
+  },
+];
 const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIcon6, fileIcon7];
 
 ---
 <Layout pageTitle="SPORA" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora">
   <section class="vf-content vf-u-fullbleed spora-shell">
-    <section class="vf-grid vf-grid__col-3">
+    <section class="vf-grid vf-grid__col-3" style="background-color: black;">
       <div class="spora-media-panel" aria-hidden="true">
         <div class="spora-media">
           <img src={sporaImage.src} alt="" style="padding-top:5%"/>
         </div>
       </div>
-      <div class="vf-stack vf-stack--400 spora-copy vf-grid__col--span-2">
-        <h1 class="vf-text vf-text-heading--1">AI ready spatial proteomics dataset</h1>
-        <p class="vf-text-body vf-text-body--2 spora-description">
+      <div class="vf-stack vf-stack--400 spora-copy vf-grid__col--span-2" >
+        <h1 class="vf-text vf-text-heading--1" style="color:white">AI ready spatial proteomics dataset</h1>
+        <p class="vf-text-body vf-text-body--2 spora-description" style="color:white">
           Download and explore standardized multiplexed imaging data to understand tissue architecture
           across cancer types and organs with SPORA.
         </p>
-        <dl class="vf-grid spora-stats" aria-label="SPORA dataset summary">
+        <dl class="vf-grid spora-stats" aria-label="SPORA dataset summary" style="color:white">
           <div class="spora-stat">
             <dt>MX Images</dt>
             <dd>12,596</dd>
@@ -70,7 +106,7 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
           </div>
         </dl>
         <br />
-        <div><p class="spora-attribution__label">A project by:</p></div>
+        <div><p class="spora-attribution__label" style="color:white">A project by:</p></div>
         <div class="spora-attribution" aria-label="Project attribution">
           <div class="spora-attribution__partners">
             <span class="spora-attribution__partner"><a href="https://aimm.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black; height:3.5em;padding:0.25em;" src={aimmLogo.src} alt="AIMM Logo"/></a></span>
@@ -79,28 +115,8 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
         </div>
       </div>
     </section>
-    <hr class="vf-divider | vf-u-fullbleed" />
-    <section class="vf-grid vf-grid__col-4" style="padding:0.5em 0;">
-      <div class="vf-stack vf-stack--400 spora-copy">
-            <h2>Diverse Data Collection</h2>
-            <p class="vf-text-body vf-text-body--2">
-              SPORA spans 31 cohorts across CRC, TNBC, NSCLC, Lymphoma, Melanoma, PDAC, and more, captured across IMC, CODEX, Orion, and MIBI platforms.
-            </p>
-          </div>
-      <div class="vf-grid__col--span-3">
-        <div class="mosaic"><img src={tissueOne.src} alt="Fluorescent tissue" /><img src={tissueTwo.src} alt="Lung tissue microarray core" /><img src={tissueThree.src} alt="Organoid tissue" /></div>
-      </div>
-    </section>
-    <section class="vf-grid" style="padding:0.5em 0;">
-      <div style="text-align: center;">
-        <h3 >Standardized file types and annotations for each sample:</h3>
-        <div class="file-grid">{['Multiplex Images','Paired H&E Images','Tissue Masks','Cell Masks','Cell Types','Patient Data','Meta Data'].map((label, index) => <article><img src={fileIcons[index].src} alt="" /><strong>{label}</strong></article>)}</div>
-      </div>
-    </section>
-    <hr class="vf-divider | vf-u-fullbleed" />
-  </section>
-  <section
-    class="vf-grid vf-grid__col-3 | vf-card-container | vf-u-fullbleed"
+    <section
+    class="vf-content vf-u-fullbleed vf-grid vf-grid__col-3 | vf-card-container"
   >
     {
       cards.map((card) => (
@@ -108,10 +124,64 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
           label={card.label}
           description={card.description}
           target={card.target}
+          window={card.window}
         />
       ))
     }
   </section>
+    <hr class="vf-divider | vf-u-fullbleed" />
+    <section class="vf-grid vf-grid__col-4" style="padding:0.5em 0;">
+      <div class="spora-feature__copy vf-stack vf-stack--400 spora-copy" style="">
+            <h2>Diverse Data Collection</h2>
+            <p class="vf-text-body vf-text-body--2">
+              SPORA spans 31 cohorts across CRC, TNBC, NSCLC, Lymphoma, Melanoma, PDAC, and more, captured across IMC, CODEX, Orion, and MIBI platforms.
+            </p>
+            <a href="/bioimage-archive/projects/spora/dataset" class="vf-link">Explore included cohorts ›</a>
+          </div>
+      <div class="vf-grid__col--span-3 mosaic-shell">
+        <div class="mosaic"><img src={tissueOne.src} alt="Fluorescent tissue" /><img src={tissueTwo.src} alt="Lung tissue microarray core" /><img src={tissueThree.src} alt="Organoid tissue" /></div>
+      </div>
+    </section>
+    <br />
+    <section class="vf-grid" style="padding:1em 0;">
+      <div style="text-align: center;">
+        <h3 >Standardized file types and annotations for each sample:</h3>
+        <div class="file-grid">{['Multiplex Images','Paired H&E Images','Tissue Masks','Cell Masks','Cell Types','Patient Data','Meta Data'].map((label, index) => <article><img src={fileIcons[index].src} alt="" /><strong>{label}</strong></article>)}</div>
+      </div>
+    </section>
+  </section>
+  {
+    sections.map((section, index) => (
+      <>
+        <hr class="vf-divider | vf-u-fullbleed" />
+        <section class="vf-content vf-u-fullbleed spora-shell vf-grid vf-grid__col-3 spora-feature">
+          {index % 2 === 0 ? (
+            <>
+              <div class="spora-feature__media vf-grid__col--span-2" aria-hidden="true" style="display: flex; justify-content: center; align-items: center;">
+                <img src={section.images[0].src} alt="" />
+              </div>
+              <div class="spora-feature__copy vf-stack vf-stack--400">
+                <h2>{section.name}</h2>
+                <p>{section.description}</p>
+                <a href={section.link} class="vf-link">{section.linkText}</a>
+              </div>
+            </>
+          ) : (
+            <>
+              <div class="spora-feature__copy vf-stack vf-stack--400">
+                <h2>{section.name}</h2>
+                <p>{section.description}</p>
+                <a href={section.link} class="vf-link">{section.linkText}</a>
+              </div>
+              <div class="spora-feature__media vf-grid__col--span-2" aria-hidden="true" style="display: flex; justify-content: center; align-items: center;">
+                <img src={section.images[0].src} alt="" />
+              </div>
+            </>
+          )}
+        </section>
+      </>
+    ))
+  }
 </Layout>
 <style>
   .spora-shell {
@@ -137,6 +207,7 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
   .spora-media-panel,
   .spora-copy {
     min-width: 0;
+    color: white
   }
 
   .spora-media {
@@ -146,6 +217,34 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
 
   .spora-copy {
     padding-block: 1rem;
+  }
+
+  .spora-feature {
+    align-items: center;
+
+  }
+
+  .spora-feature__copy,
+  .spora-feature__media {
+    min-width: 0;
+  }
+
+  .spora-feature__copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding-block: 1rem;
+  }
+
+  .spora-feature__media img {
+    display: flex;
+    width: 60%;
+    aspect-ratio: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    background: var(--spora-paper);
   }
 
   .spora-brand {
@@ -167,7 +266,7 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
 
   .spora-stat dt {
     margin: 0 0 0.45rem;
-    color: var(--spora-muted);
+    color: white;
     letter-spacing: 0.11em;
     text-transform: uppercase;
   }
@@ -177,6 +276,7 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
     color: var(--spora-strong);
     line-height: 1;
     letter-spacing: -0.04em;
+    font-size: 1.75rem;
   }
 
   .spora-attribution {
@@ -193,7 +293,41 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
     line-height: 1;
   }
 
-  .mosaic { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 14px; margin: 30px 0; }.mosaic img { width: 100%; height: 360px; object-fit: cover; border-radius: 22px; background: #000; }.mosaic img:nth-child(2){transform:translateY(34px)}
-  .file-grid {width:80%;margin-left:10%;display:grid; grid-template-columns: repeat(7,1fr); gap: 10px;border:1px solid var(--spora-line);border-radius:18px;background:var(--spora-paper);}.file-grid article { min-width: 0; padding:10px;text-align:center}.file-grid img{display:block;margin:auto;width:50%;aspect-ratio:.72;object-fit:contain}.file-grid strong{font-size:.9rem}
+  .mosaic { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 14px; margin: 30px 0; }
+  .mosaic img { width: 100%; height: 360px; object-fit: cover; border-radius: 22px; background: #000; }
+  .mosaic img:nth-child(2){transform:translateY(34px)}
+  .file-grid {width:80%;margin-left:10%;display:grid; grid-template-columns: repeat(7,1fr); gap: 12px;border:1px solid var(--spora-line);border-radius:18px;background:var(--spora-paper);padding:14px;}
+  .file-grid article { min-width: 0; padding:7px;text-align:center}
+  .file-grid img{display:block;margin:auto;width:50%;aspect-ratio:.72;object-fit:contain;padding-bottom:0.75em}
+  .file-grid strong{font-size:.9rem;}
+
+
+  @media (max-width: 700px) {
+    .spora-feature__copy,
+    .spora-feature__media {
+      grid-column: 1 / -1;
+    }
+
+    .spora-feature {
+      gap: 1rem;
+    }
+
+    .file-grid {
+      width: 100%;
+      margin-left: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .file-grid article {
+      padding: 12px 8px;
+    }
+
+    .file-grid img {
+      width: 68%;
+      padding-bottom: 0.5rem;
+    }
+
+  }
   
 </style>

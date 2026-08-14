@@ -1,12 +1,13 @@
 ---
 import Layout from '../../../layouts/ProjectsLayout.astro';
 import datasets from '../../../data/collections/spora-mock-datasets.json';
-import bannerImage from "../../../assets/bioimage-archive/spora_banner_logo.png";
+import bannerImage from "../../../assets/bioimage-archive/projects/spora/spora_banner_logo.png";
 
-const cancers = [...new Set(datasets.map((d) => d.cancer))].sort();
+const cancers = [...new Set(datasets.flatMap((d) => d.cancer))].sort();
 const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
+const formatCancers = (cancers) => cancers.join(', ');
 
 ---
 <Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset">
@@ -61,7 +62,7 @@ const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCa
                 {d.modalities.map((m) => <span class={modalityPillClass(m)}>{m}</span>)}
                 {d.hasHE && <span class="pill pill--he">H&amp;E</span>}
               </td>
-              <td class="vf-table__cell">{d.cancer}</td>
+              <td class="vf-table__cell">{formatCancers(d.cancer)}</td>
               <td class="vf-table__cell">
                 <button class="vf-button vf-button--link row-button cite" data-name={d.name}>Cite</button>
                 <button class="vf-button vf-button--link row-button download" data-name={d.name}>Download</button>
@@ -102,6 +103,7 @@ const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCa
     };
     const pillClass = (value) => pillClassMap[String(value).toLowerCase()] || 'pill';
     const renderPill = (value) => `<span class="${escapeHtml(pillClass(value))}">${escapeHtml(value)}</span>`;
+    const renderCancers = (cancers) => cancers.map(escapeHtml).join(', ');
     const renderModalities = (dataset) => `${dataset.modalities.map(renderPill).join(' ')}${dataset.hasHE ? ` ${renderPill('H&E')}` : ''}`;
     const buildRcloneCommand = (name) => `rclone copy ":s3,endpoint='https://livingobjects.ebi.ac.uk',secret_access_key=:bioimaging-01-pub/spora-submissions/${name} ./${name} -P`;
     const buildDownloadCommandBlock = (selectedName) => selectedName ? buildRcloneCommand(selectedName) : '';
@@ -111,10 +113,10 @@ const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCa
       const modality = selected('modality');
       const type = selected('type');
       visible = datasets.filter((d) => {
-        const text = `${d.name} ${d.citation} ${d.cancer}`.toLowerCase();
-        return (!term || text.includes(term)) && (!cancer.length || cancer.includes(d.cancer)) && (!modality.length || d.modalities.some((m) => modality.includes(m))) && (!type.length || type.includes(d.type));
+        const text = `${d.name} ${d.citation} ${d.cancer.join(' ')}`.toLowerCase();
+        return (!term || text.includes(term)) && (!cancer.length || d.cancer.some((value) => cancer.includes(value))) && (!modality.length || d.modalities.some((m) => modality.includes(m))) && (!type.length || type.includes(d.type));
       });
-      body.innerHTML = visible.map((d) => `<tr class="vf-table__row"><td class="vf-table__cell"><strong>${escapeHtml(d.name)}</strong><br /><a class="vf-link" href="${escapeHtml(d.publicationUrl)}" target="_blank"><small>${escapeHtml(d.citation)}</small></a></td><td class="vf-table__cell">${d.patients.toLocaleString()}</td><td class="vf-table__cell">${d.images.toLocaleString()}</td><td class="vf-table__cell">${renderPill(d.type)}</td><td class="vf-table__cell">${renderModalities(d)}</td><td class="vf-table__cell">${escapeHtml(d.cancer)}</td><td class="vf-table__cell"><button class="vf-button vf-button--link row-button cite" data-name="${escapeHtml(d.name)}">Cite</button><button class="vf-button vf-button--link row-button download" data-name="${escapeHtml(d.name)}">Download</button></td></tr>`).join('');
+      body.innerHTML = visible.map((d) => `<tr class="vf-table__row"><td class="vf-table__cell"><strong>${escapeHtml(d.name)}</strong><br /><a class="vf-link" href="${escapeHtml(d.publicationUrl)}" target="_blank"><small>${escapeHtml(d.citation)}</small></a></td><td class="vf-table__cell">${d.patients.toLocaleString()}</td><td class="vf-table__cell">${d.images.toLocaleString()}</td><td class="vf-table__cell">${renderPill(d.type)}</td><td class="vf-table__cell">${renderModalities(d)}</td><td class="vf-table__cell">${renderCancers(d.cancer)}</td><td class="vf-table__cell"><button class="vf-button vf-button--link row-button cite" data-name="${escapeHtml(d.name)}">Cite</button><button class="vf-button vf-button--link row-button download" data-name="${escapeHtml(d.name)}">Download</button></td></tr>`).join('');
       count.textContent = visible.length;
       empty.hidden = visible.length !== 0;
     }
