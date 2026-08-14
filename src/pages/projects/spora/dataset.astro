@@ -105,7 +105,7 @@ const formatCancers = (cancers) => cancers.join(', ');
     const renderPill = (value) => `<span class="${escapeHtml(pillClass(value))}">${escapeHtml(value)}</span>`;
     const renderCancers = (cancers) => cancers.map(escapeHtml).join(', ');
     const renderModalities = (dataset) => `${dataset.modalities.map(renderPill).join(' ')}${dataset.hasHE ? ` ${renderPill('H&E')}` : ''}`;
-    const buildRcloneCommand = (name) => `rclone copy ":s3,endpoint='https://livingobjects.ebi.ac.uk',secret_access_key=:bioimaging-01-pub/spora-submissions/${name} ./${name} -P`;
+    const buildRcloneCommand = (name) => `rclone copy ":s3,endpoint='https://livingobjects.ebi.ac.uk',secret_access_key=:bioimaging-01-pub/spora-submissions/${name}" ./${name} -P`;
     const buildDownloadCommandBlock = (selectedName) => selectedName ? buildRcloneCommand(selectedName) : '';
     function render() {
       const term = search.value.trim().toLowerCase();
