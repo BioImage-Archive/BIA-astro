@@ -3,7 +3,7 @@ export const prerender = false;
 
 import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.astro';
 import DatasetDetail from '../../components/DatasetDetail.astro';
-import WebsiteStateButton from '../../components/WebsiteStateButton.astro';
+import empiarLogo from "../../assets/bioimage-archive/EMPIAR_logo.png";
 import Specimen from '../../components/image/Specimen.astro';
 import ImageTable from '../../components/image/ImageTable.astro';
 
@@ -28,6 +28,7 @@ const interactiveImageRepresentation = (image.representation.find(
 ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
 
 const accession_id = image ? image.accession_id : "";
+const isEMPIAR = accession_id.startsWith("EMPIAR");
 const imageStudy: Study = await getStudyFromApiByAccession(accession_id);
 const imageDataset = imageStudy.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
 const viewerSourceURI = getPublicVisualisationURI(interactiveImageRepresentation?.file_uri?.[0]);
@@ -97,7 +98,7 @@ const breadcrumbs = [
             <div>
                 <h1 class="vf-intro__heading vf-intro__heading--has-tag">
                     { imageStudy.accession_id }
-                    <WebsiteStateButton/>
+                    {isEMPIAR && (<img src={empiarLogo.src} alt="EMPIAR"  class="vf-badge vf-badge--secondary vf-badge--phases" style="border: 0px solid #ccc;"/>)}
                 </h1>
                 <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
                 <p class="studytitle">{imageDataset.title}</p>

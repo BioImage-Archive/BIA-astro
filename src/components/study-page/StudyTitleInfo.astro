@@ -1,6 +1,6 @@
 ---
-import WebsiteStateButton from "../WebsiteStateButton.astro";
 import orcidImage from "../../assets/bioimage-archive/orcid.svg";
+import empiarLogo from "../../assets/bioimage-archive/EMPIAR_logo.png";
 
 const { study_info: studyInfo } = Astro.props;
 
@@ -61,7 +61,8 @@ function authorFormat(author) {
 }
 let pdbLinks = null;
 let emdbLinks = null;
-if (studyInfo?.accession_id?.startsWith("EMPIAR")) {
+const isEMPIAR = studyInfo?.accession_id?.startsWith("EMPIAR");
+if (isEMPIAR) {
     pdbLinks = studyInfo?.pdb_accession ? studyInfo.pdb_accession.map(pdb => `<a href="https://www.rcsb.org/structure/${pdb}" target="_blank" rel="noopener noreferrer">${pdb}</a>`).join(', ') : "TEST";
     emdbLinks = studyInfo?.emdb_accession ? studyInfo.emdb_accession.map(emdb => `<a href="https://www.ebi.ac.uk/emdb/EMD-${emdb}" target="_blank" rel="noopener noreferrer">EMD-${emdb}</a>`).join(', ') : "TEST";
 }
@@ -72,8 +73,9 @@ if (studyInfo?.accession_id?.startsWith("EMPIAR")) {
     </div>
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+            {isEMPIAR && (<img src={empiarLogo.src} alt="EMPIAR"  class="vf-badge vf-badge--secondary vf-badge--phases" style="border: 0px solid #ccc;"/>
+            )}
             {studyInfo.accession_id}
-            <WebsiteStateButton/>
         </h1>
         <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
         {doiURI && <p>DOI: <a href={doiURI}>{doiText}</a></p> }
