@@ -2,7 +2,7 @@
 import fieldMap from "../data/metadata-field-name-mapping.json";
 import DatasetDetail from "./DatasetDetail.astro";
 
-const { dataset } = Astro.props;
+const { dataset, isEMPIAR = false } = Astro.props;
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
 const sgpMap = fieldMap["specimen_growth_protocol"];
@@ -12,6 +12,21 @@ const annotationMethodMap = fieldMap["annotation_method"];
 const correlationMethodMap = fieldMap["correlation_method"];
 
 const detail_section_style= "margin-bottom: 1rem;"
+if (isEMPIAR) {
+    dataset.physical_voxel_size = "0 x 0 x 0";
+}
+function formatFileTypeCounts(fileTypeCounts) {
+    if (!fileTypeCounts || typeof fileTypeCounts !== "object") {
+        return "";
+    }
+
+    return Object.entries(fileTypeCounts)
+        .filter(([extension]) => typeof extension === "string" && extension.length > 0)
+        .map(([extension]) => extension)
+        .join(", ");
+}
+
+const formattedFileTypeCounts = formatFileTypeCounts(dataset?.file_type_counts);
 
 ---
 <style>
@@ -30,6 +45,23 @@ const detail_section_style= "margin-bottom: 1rem;"
         <div style={detail_section_style}>
             <b>Description:</b>&nbsp;{dataset.description}
         </div>
+        {
+            dataset.physical_voxel_size && (
+                <div style={detail_section_style}>
+                    <b>Physical Voxel Size:</b>&nbsp;{dataset.physical_voxel_size}
+                </div>
+            )
+        }
+        <div style={detail_section_style}>
+            <b>Number of images:</b>&nbsp;{dataset.image_count}
+        </div>
+        {
+            formattedFileTypeCounts && (
+                <div style={detail_section_style}>
+                    <b>Top 5 file formats:</b>&nbsp;{formattedFileTypeCounts}
+                </div>
+            )
+        }
         {
             "biological_entity" in dataset &&
                 dataset.biological_entity &&

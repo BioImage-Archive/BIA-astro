@@ -59,6 +59,12 @@ function authorFormat(author) {
     }
     return authorString;
 }
+let pdbLinks = null;
+let emdbLinks = null;
+if (studyInfo?.accession_id?.startsWith("EMPIAR")) {
+    pdbLinks = studyInfo?.pdb_accession ? studyInfo.pdb_accession.map(pdb => `<a href="https://www.rcsb.org/structure/${pdb}" target="_blank" rel="noopener noreferrer">${pdb}</a>`).join(', ') : "TEST";
+    emdbLinks = studyInfo?.emdb_accession ? studyInfo.emdb_accession.map(emdb => `<a href="https://www.ebi.ac.uk/emdb/EMD-${emdb}" target="_blank" rel="noopener noreferrer">EMD-${emdb}</a>`).join(', ') : "TEST";
+}
 ---
 
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -71,7 +77,7 @@ function authorFormat(author) {
         </h1>
         <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
         {doiURI && <p>DOI: <a href={doiURI}>{doiText}</a></p> }
-        <p>Released: {studyInfo.release_date}</p>
+        <p>Released: {studyInfo.release_date} &#x2022 Last modified: {studyInfo?.last_modified_date || studyInfo?.release_date}</p>
         <div class="authors-list">
             {
                 authors.map((author, i) => {
@@ -132,6 +138,12 @@ function authorFormat(author) {
                 ))
             }
         </div>
+        {
+            pdbLinks && <p>Related PDB entries: {pdbLinks}</p>
+        }
+        {
+            emdbLinks && <p>Related EMDB entries: {emdbLinks}</p>
+        }
         </div>
 </section>
 

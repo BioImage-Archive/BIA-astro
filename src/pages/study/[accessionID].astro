@@ -40,8 +40,15 @@ const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_vis
 if (fileListUrls) {
   tableOfContents["Browse All Files"] = "file_list";
 }
+const isEMPIAR = accessionID.includes("EMPIAR");
+let pdbLinks = null;
+let emdbLinks = null;
+if (isEMPIAR) {
+  pdbLinks = study?.pdb_accession ? study.pdb_accession.map(pdb => `<a href="https://www.rcsb.org/structure/${pdb}" target="_blank" rel="noopener noreferrer">${pdb}</a>`).join(', ') : "test";
+  emdbLinks = study?.emdb_accession ? study.emdb_accession.map(emdb => `<a href="https://www.ebi.ac.uk/emdb/EMD-${emdb}" target="_blank" rel="noopener noreferrer">EMD-${emdb}</a>`).join(', ') : "test";
 
-if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
+}
+if (!Array.isArray(study.see_also) || study.see_also.length === 0  && (pdbLinks===null || emdbLinks===null)) {
   delete tableOfContents["Linked Information"];
 }
 
@@ -149,6 +156,15 @@ const breadcrumbs = [
       {!fileListUrls && (<StudyFiles accessionID={accessionID}/>)}
     </div>
     <div slot="how-to-cite" style="word-wrap: break-word;"><Citation howToCite={howToCite}/></div>
+    {
+      isEMPIAR && (
+        <div slot="download-metadata">
+          <a target="_blank" href={`https://ftp.ebi.ac.uk/pub/databases/emtest/empiar/headers/${accessionID.replace("EMPIAR-", "")}.xml`}>
+            <button class="vf-button vf-button--primary vf-button--sm">Download Metadata</button>
+          </a>
+        </div>
+      )
+    }
   </StudyContentsSummary>
 
   <hr/>
@@ -253,7 +269,7 @@ const breadcrumbs = [
 </section>
 
   <hr/>
-  {Array.isArray(study.see_also) && study.see_also.length > 0 && (
+  {(Array.isArray(study.see_also) && study.see_also.length > 0 ) || (pdbLinks || emdbLinks) && (
     <section id="linked_information" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
         <h2 class="vf-section-header__heading">Linked Information</h2>
@@ -261,7 +277,7 @@ const breadcrumbs = [
       <div>
         <ul>
           {
-            study.see_also.map((linkedInfo) => {
+            study?.see_also.map((linkedInfo) => {
               const { link, link_type, description } = linkedInfo;
               return (
                 <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>
@@ -271,7 +287,10 @@ const breadcrumbs = [
                 </li>
               )
             })
+            
           }
+          {pdbLinks && <li>Related PDB entries: {pdbLinks}</li>}
+          {emdbLinks && <li>Related EMDB entries: {emdbLinks}</li>}
         </ul>
       </div>
 
@@ -288,7 +307,7 @@ const breadcrumbs = [
       <div>
         {
           study.dataset.map((dataset) => (
-            <DatasetInfo dataset={dataset} />
+            <DatasetInfo dataset={dataset} isEMPIAR={isEMPIAR} />
           ))
         }
       </div>
