@@ -1,0 +1,223 @@
+---
+import Layout from '../../../layouts/ProjectsLayout.astro';
+import CodeDialog from '../../../components/CodeDialog.astro';
+import datasets from '../../../data/collections/spora-mock-datasets.json';
+import bannerImage from "../../../assets/bioimage-archive/projects/spora/spora_banner_logo.png";
+
+const cancers = [...new Set(datasets.flatMap((d) => d.cancer))].sort();
+const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
+const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
+const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
+const formatCancers = (cancers) => cancers.join(', ');
+
+---
+<Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset">
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing browser" data-datasets={JSON.stringify(datasets)} >
+  <aside class="filters" aria-label="Dataset filters">
+    <div class="filters-panel">
+      <div class="filter-group">
+        <label for="dataset-search">Search</label>
+        <input id="dataset-search" type="search" placeholder="Dataset or citation" class="vf-form__input" style="font-size: 0.9rem;"/>
+      </div>
+      <details class="filter-group filter-group--collapsible" open>
+        <summary>Primary Cancer Type</summary>
+        <fieldset>{cancers.map((value) => <label><input type="checkbox" name="cancer" value={value} /> <span>{value}</span></label>)}</fieldset>
+      </details>
+      <details class="filter-group filter-group--collapsible" open>
+        <summary>Modalities</summary>
+        <fieldset>{modalities.map((value) => <label><input type="checkbox" name="modality" value={value} /> <span>{value}</span></label>)}</fieldset>
+      </details>
+      <details class="filter-group filter-group--collapsible" open>
+        <summary>Image Type</summary>
+        <fieldset><label><input type="checkbox" name="type" value="TC" /> <span>Tumor Core (TC)</span></label><label><input type="checkbox" name="type" value="WSI" /> <span>Whole Slide (WSI)</span></label></fieldset>
+      </details>
+      <button class="clear" type="button">Clear filters</button>
+    </div>
+  </aside>
+  <div class="results">
+    <div class="results-bar">Showing <strong><span class="count">{datasets.length}</span></strong> out of <strong><span class="total">{datasets.length}</span></strong> datasets</div>
+    <div class="results-table" role="region" aria-label="SPORA datasets" tabindex="0">
+      <table class="vf-table vf-table--compact" >
+        <thead class="vf-table__header">
+            <tr class="vf-table__row">
+                <th class="vf-table__heading">Dataset</th>
+                <th class="vf-table__heading">Patients</th>
+                <th class="vf-table__heading">MX Images</th>
+                <th class="vf-table__heading">Type</th>
+                <th class="vf-table__heading">Modalities</th>
+                <th class="vf-table__heading">Primary Cancer</th>
+                <th class="vf-table__heading">Download/Cite</th>
+            </tr>
+        </thead>
+        <tbody class="vf-table__body">
+          {datasets.map((d) => (
+            <tr class="vf-table__row">
+              <td class="vf-table__cell">
+                <strong>{d.name}</strong><br />
+                <a class="vf-link" href={d.publicationUrl} target="_blank"><small>{d.citation}</small></a>
+              </td>
+              <td class="vf-table__cell">{d.patients.toLocaleString()}</td>
+              <td class="vf-table__cell">{d.images.toLocaleString()}</td>
+              <td class="vf-table__cell"><span class={typePillClass(d.type)}>{d.type}</span></td>
+              <td class="vf-table__cell">
+                {d.modalities.map((m) => <span class={modalityPillClass(m)}>{m}</span>)}
+                {d.hasHE && <span class="pill pill--he">H&amp;E</span>}
+              </td>
+              <td class="vf-table__cell">{formatCancers(d.cancer)}</td>
+              <td class="vf-table__cell">
+                <button class="vf-button vf-button--link row-button cite" data-name={d.name}>Cite</button>
+                <button class="vf-button vf-button--link row-button download" data-name={d.name}>Download</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="empty" hidden>No datasets match the selected filters.</p>
+  </div>
+</section>
+<CodeDialog dialogClass="globus-dialog" title="Dataset download commands" copyButtonClass="spora-button copy-commands" />
+<CodeDialog dialogClass="cite-dialog" title="Dataset citation" copyButtonClass="spora-button copy-citation" copyLabel="Copy BibTeX" />
+<script is:inline>
+  const root = document.querySelector('.browser');
+  if (root) {
+    const datasets = JSON.parse(root.dataset.datasets || '[]');
+    const body = root.querySelector('tbody');
+    const count = root.querySelector('.count');
+    const empty = root.querySelector('.empty');
+    const search = root.querySelector('#dataset-search');
+    const checks = [...root.querySelectorAll('input[type="checkbox"]')];
+    const citeDialog = document.querySelector('.cite-dialog');
+    const globusDialog = document.querySelector('.globus-dialog');
+    let visible = datasets;
+
+    const selected = (name) => checks.filter((x) => x.name === name && x.checked).map((x) => x.value);
+    const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+    const pillClassMap = {
+      tc: 'pill pill--tc',
+      wsi: 'pill pill--wsi',
+      codex: 'pill pill--codex',
+      imc: 'pill pill--imc',
+      orion: 'pill pill--orion',
+      mibi: 'pill pill--mibi',
+      'h&e': 'pill pill--he',
+    };
+    const pillClass = (value) => pillClassMap[String(value).toLowerCase()] || 'pill';
+    const renderPill = (value) => `<span class="${escapeHtml(pillClass(value))}">${escapeHtml(value)}</span>`;
+    const renderCancers = (cancers) => cancers.map(escapeHtml).join(', ');
+    const renderModalities = (dataset) => `${dataset.modalities.map(renderPill).join(' ')}${dataset.hasHE ? ` ${renderPill('H&E')}` : ''}`;
+    const buildRcloneCommand = (name) => `rclone copy ":s3,endpoint='https://livingobjects.ebi.ac.uk',secret_access_key=:bioimaging-01-pub/spora-submissions/${name}" ./${name} -P`;
+    const buildDownloadCommandBlock = (selectedName) => selectedName ? buildRcloneCommand(selectedName) : '';
+    function render() {
+      const term = search.value.trim().toLowerCase();
+      const cancer = selected('cancer');
+      const modality = selected('modality');
+      const type = selected('type');
+      visible = datasets.filter((d) => {
+        const text = `${d.name} ${d.citation} ${d.cancer.join(' ')}`.toLowerCase();
+        return (!term || text.includes(term)) && (!cancer.length || d.cancer.some((value) => cancer.includes(value))) && (!modality.length || d.modalities.some((m) => modality.includes(m))) && (!type.length || type.includes(d.type));
+      });
+      body.innerHTML = visible.map((d) => `<tr class="vf-table__row"><td class="vf-table__cell"><strong>${escapeHtml(d.name)}</strong><br /><a class="vf-link" href="${escapeHtml(d.publicationUrl)}" target="_blank"><small>${escapeHtml(d.citation)}</small></a></td><td class="vf-table__cell">${d.patients.toLocaleString()}</td><td class="vf-table__cell">${d.images.toLocaleString()}</td><td class="vf-table__cell">${renderPill(d.type)}</td><td class="vf-table__cell">${renderModalities(d)}</td><td class="vf-table__cell">${renderCancers(d.cancer)}</td><td class="vf-table__cell"><button class="vf-button vf-button--link row-button cite" data-name="${escapeHtml(d.name)}">Cite</button><button class="vf-button vf-button--link row-button download" data-name="${escapeHtml(d.name)}">Download</button></td></tr>`).join('');
+      count.textContent = visible.length;
+      empty.hidden = visible.length !== 0;
+    }
+    search.addEventListener('input', render);
+    checks.forEach((check) => check.addEventListener('change', render));
+    root.querySelector('.clear').addEventListener('click', () => { search.value = ''; checks.forEach((x) => x.checked = false); render(); });
+    body.addEventListener('click', (event) => {
+      const button = event.target.closest('.cite');
+      if (!button) return;
+      const dataset = datasets.find((d) => d.name === button.dataset.name);
+      citeDialog.querySelector('code').textContent = dataset?.bibtex || '';
+      citeDialog.showModal();
+    });
+    body.addEventListener('click', (event) => {
+      const button = event.target.closest('.download');
+      if (!button) return;
+      globusDialog.querySelector('code').textContent = buildDownloadCommandBlock(button.dataset.name);
+      globusDialog.showModal();
+    });
+    document.querySelector('.copy-commands').addEventListener('click', async () => navigator.clipboard.writeText(globusDialog.querySelector('code').textContent));
+    document.querySelector('.copy-citation').addEventListener('click', async () => navigator.clipboard.writeText(citeDialog.querySelector('code').textContent));
+    render();
+  }
+</script>
+<style>
+  .browser { display: grid; grid-template-columns: minmax(130px, 180px) minmax(0, 1fr); gap: 24px; align-items: start; width: 100%; }
+  .browser > .filters,
+  .browser > .results { grid-column: auto; }
+  .filters { position: sticky; top: 94px; min-width: 0; align-self: start; width: 100%; }
+  .filters-panel { display: block; }
+  .results { min-width: 0; width: 100%; }
+  .results-table { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .results-table .vf-table { width: 100%; min-width: 960px; margin-bottom: 0; }
+  .filter-group { margin: 0 0 8px; padding: 0; border: 0; }
+  .filter-group > label:first-child, .filter-group summary { display: block; font-weight: 800; }
+  .filter-group summary { list-style: none; cursor: pointer; padding: 12px 0; border-bottom: 1px solid #d0d0ce; }
+  .filter-group summary::-webkit-details-marker { display: none; }
+  .filter-group--collapsible summary::before { content: ">"; display: inline-block; margin-right: 8px; transition: transform .2s ease; }
+  .filter-group--collapsible[open] summary::before { transform: rotate(90deg); }
+  .filter-group fieldset { margin: 0; padding: 8px 0 0; border: 0; }
+  .filter-group label:not(:first-child), .filter-group fieldset label { display: flex; align-items: center; gap: 9px; margin: 9px 0; font-size: .9rem; cursor: pointer; }
+  .filter-group input[type='search'] { width: 100%; min-height: 30px; border: 1px solid black; padding: 0 12px; background: #fff; margin-bottom: 9px; margin-top: 3px; }
+  .clear { border: 0; background: transparent; padding: 0; font-weight: 800; text-decoration: underline; cursor: pointer; }
+  
+  .results-bar { display: flex; align-items: center; gap: 5px; margin-bottom: 18px; }
+  :global(.browser .pill) { display: inline-flex; margin: 2px; border-radius: 6px; padding: 4px 10px; font: 700 .72rem var(--spora-mono); white-space: nowrap; }
+  :global(.browser .pill--tc) { background: #5f9f8d; color: #ffffff; }
+  :global(.browser .pill--wsi) { background: #a9cbbf; color: #23584a; }
+  :global(.browser .pill--codex) { background: #dbe1fb; color: #3640aa; }
+  :global(.browser .pill--imc) { background: #d9e8fb; color: #2b65c8; }
+  :global(.browser .pill--orion) { background: #cfeff7; color: #1c6f85; }
+  :global(.browser .pill--mibi) { background: #b7dcf7; color: #145f97; }
+  :global(.browser .pill--he) { background: #efb4b8; color: #7f3038; }
+  .empty { padding: 40px; text-align: center; }
+  :global(.results-table .vf-table .vf-table__heading),
+  :global(.results-table .vf-table .vf-table__cell),
+  :global(.results-table .vf-table .vf-table__cell small),
+  :global(.results-table .vf-table .vf-button) {
+    font-size: 1rem !important;
+  }
+  @media (max-width: 850px) {
+    .browser {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
+    }
+    .browser > .filters {
+      grid-column: 1;
+      grid-row: 1;
+      position: static;
+      width: 100%;
+      max-width: 100%;
+    }
+    .browser > .results {
+      grid-column: 1;
+      grid-row: 2;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+  }
+  @media (max-width: 600px) {
+    .browser {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+    .browser > .filters,
+    .browser > .results {
+      grid-column: 1;
+    }
+    .filters, .results { width: 100%; max-width: 100%; }
+    .filters-panel { padding: 0; }
+    .filter-group--collapsible { border-bottom: 1px solid #d0d0ce; }
+    .filter-group--collapsible[open] { padding-bottom: 8px; }
+    .filter-group label:not(:first-child), .filter-group fieldset label { font-size: .95rem; }
+    .results { padding: 12px; clear: both; }
+    .results-bar { margin-bottom: 12px; }
+    .results-table { margin: 0 -12px; padding: 0 12px 4px; }
+    .results-table .vf-table { min-width: 720px; }
+    :global(.browser .pill) { white-space: nowrap; }
+  }
+</style>
+</Layout>
