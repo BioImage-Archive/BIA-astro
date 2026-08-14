@@ -1,5 +1,6 @@
 ---
 import Layout from '../../../layouts/ProjectsLayout.astro';
+import CodeDialog from '../../../components/CodeDialog.astro';
 import datasets from '../../../data/collections/spora-mock-datasets.json';
 import bannerImage from "../../../assets/bioimage-archive/projects/spora/spora_banner_logo.png";
 
@@ -75,8 +76,8 @@ const formatCancers = (cancers) => cancers.join(', ');
     <p class="empty" hidden>No datasets match the selected filters.</p>
   </div>
 </section>
-<dialog class="globus-dialog"><form method="dialog"><button class="dialog-close" value="cancel" aria-label="Close">×</button><h2>Dataset download commands</h2><pre><code></code></pre><div class="dialog-actions"><button class="spora-button copy-commands" type="button">Copy</button><button class="spora-button spora-button--ghost" value="cancel">Close</button></div></form></dialog>
-<dialog class="cite-dialog"><form method="dialog"><button class="dialog-close" value="cancel" aria-label="Close">×</button><h2>Dataset citation</h2><pre><code></code></pre><div class="dialog-actions"><button class="spora-button copy-citation" type="button">Copy BibTeX</button><button class="spora-button spora-button--ghost" value="cancel">Close</button></div></form></dialog>
+<CodeDialog dialogClass="globus-dialog" title="Dataset download commands" copyButtonClass="spora-button copy-commands" />
+<CodeDialog dialogClass="cite-dialog" title="Dataset citation" copyButtonClass="spora-button copy-citation" copyLabel="Copy BibTeX" />
 <script is:inline>
   const root = document.querySelector('.browser');
   if (root) {
@@ -170,12 +171,6 @@ const formatCancers = (cancers) => cancers.join(', ');
   :global(.browser .pill--orion) { background: #cfeff7; color: #1c6f85; }
   :global(.browser .pill--mibi) { background: #b7dcf7; color: #145f97; }
   :global(.browser .pill--he) { background: #efb4b8; color: #7f3038; }
-  dialog { width: min(760px, calc(100% - 28px)); border: 0; border-radius: 22px; padding: 0; box-shadow: 0 40px 120px rgba(0,0,0,.35); }
-  dialog::backdrop { background: rgba(10,11,9,.66); backdrop-filter: blur(4px); }
-  dialog form { position: relative; padding: 28px; }
-  dialog pre { max-height: 45vh; overflow: auto; border-radius: 14px; padding: 18px; background: #11130f; color: white; white-space: pre-wrap; }
-  .dialog-close { position: absolute; right: 18px; top: 14px; border: 0; background: transparent; font-size: 2rem; cursor: pointer; }
-  .dialog-actions { display: flex; gap: 10px; }
   .empty { padding: 40px; text-align: center; }
   :global(.results-table .vf-table .vf-table__heading),
   :global(.results-table .vf-table .vf-table__cell),
@@ -223,9 +218,6 @@ const formatCancers = (cancers) => cancers.join(', ');
     .results-table { margin: 0 -12px; padding: 0 12px 4px; }
     .results-table .vf-table { min-width: 720px; }
     :global(.browser .pill) { white-space: nowrap; }
-    dialog form { padding: 20px; }
-    .dialog-actions { flex-direction: column; }
-    .dialog-actions > * { width: 100%; }
   }
 </style>
 </Layout>

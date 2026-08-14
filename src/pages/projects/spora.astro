@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/ProjectsLayout.astro';
 import MenuCard from "../../components/cards/LandingPageMenuCard.astro";
+import CodeDialog from "../../components/CodeDialog.astro";
 import sporaImage from "../../assets/bioimage-archive/projects/spora/spora_landing_page.jpg";
 import bannerImage from "../../assets/bioimage-archive/projects/spora/spora_banner_logo.png";
 import aimmLogo from "../../assets/bioimage-archive/projects/spora/AIPM_PNG.png";
@@ -83,7 +84,8 @@ const gettingStartedSteps = [
     number: "2",
     title: "Download a small cohort directly",
     description: "Try spora immediately by downloading allam2022spatially, a small lung cancer IMC cohort (~500MB).",
-    link: "https://zenodo.org/records/6784253",
+    code: `rclone copy ":s3,endpoint='https://livingobjects.ebi.ac.uk',secret_access_key=:bioimaging-01-pub/spora-submissions/allam2022spatially" ./allam2022spatially -P`,
+    link: null,
     linkText: "Download allam2022spatially ›",
   },
 ];
@@ -216,11 +218,16 @@ const sporaCitation = `@article{spora2026,
         <article class="spora-step-card">
           <h3>{step.title}</h3>
           <p>{step.description}</p>
-          <a href={step.link} class="vf-link" target={step.link.startsWith("http") ? "_blank" : undefined}>{step.linkText}</a>
+          {step.link ? (
+            <a href={step.link} class="vf-link" target={step.link.startsWith("http") ? "_blank" : undefined}>{step.linkText}</a>
+          ) : (
+            <button class="vf-link spora-step-trigger" type="button" data-command={step.code}>{step.linkText}</button>
+          )}
         </article>
       ))}
     </div>
   </section>
+  <CodeDialog dialogClass="spora-command-dialog" title="Download command" copyButtonClass="spora-button spora-command-copy" />
   <hr class="vf-divider | vf-u-fullbleed" />
   <section class="vf-content vf-u-fullbleed spora-shell">
     <div class="spora-section-heading">
@@ -233,7 +240,27 @@ const sporaCitation = `@article{spora2026,
     </div>
   </section>
   <script is:inline>
-    const copyButton = document.querySelector('.spora-citation-copy');
+    const commandDialog = document.querySelector('.spora-command-dialog');
+    const commandCode = commandDialog?.querySelector('code');
+    const commandCopyButton = document.querySelector('.spora-command-copy');
+    document.querySelectorAll('.spora-step-trigger').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!commandDialog || !commandCode) return;
+        commandCode.textContent = button.dataset.command || '';
+        commandDialog.showModal();
+      });
+    });
+    if (commandCopyButton && commandCode) {
+      commandCopyButton.addEventListener('click', async () => {
+        const originalLabel = commandCopyButton.textContent;
+        await navigator.clipboard.writeText(commandCode.textContent || '');
+        commandCopyButton.textContent = 'Copied';
+        setTimeout(() => {
+          commandCopyButton.textContent = originalLabel;
+        }, 1500);
+      });
+    }
+    const copyButton = document.querySelector('.spora-citation-box .spora-citation-copy');
     if (copyButton) {
       copyButton.addEventListener('click', async () => {
         const originalLabel = copyButton.textContent;
@@ -347,6 +374,11 @@ const sporaCitation = `@article{spora2026,
   .spora-step-card .vf-link {
     margin-top: auto;
     font-weight: 700;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
   }
 
   .spora-citation-section {
