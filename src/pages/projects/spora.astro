@@ -35,11 +35,24 @@ const cards = [
     window: true
   },
   {
+    label: "spora [data]",
+    description: "Data format specification and download instructions for the spora spatial proteomics dataset.",
+    target: "https://spora.epfl.ch/docs-data.html",
+    window: true
+  },
+  {
     label: "spora [io]",
     description: "The spora-io library provides a unified interface to browse, tile, and load spatial proteomics data with matched H&E and diverse intensity standardizations.",
     target: "https://spora.epfl.ch/spora-io/index.html",
     window: true
-  }
+  },
+  {
+    label: "spora [bench]",
+    description: "Benchmark multiplex foundation models across cell-level and patient-level tasks with standardized evaluation protocols.",
+    target: "https://spora.epfl.ch/docs.html",
+    window: true
+  },
+
 ];
 
 const sections = [
@@ -96,23 +109,31 @@ const sporaCitation = `@article{spora2026,
   year    = {},
   doi     = {}
 }`;
+const projectNavItems = [
+  { key: "", label: "Home", href: "/bioimage-archive/" },
+  { key: "sporaHome", label: "spora", href: "/bioimage-archive/projects/spora" },
+  { key: "sporaDataset", label: "Dataset Browser", href: "/bioimage-archive/projects/spora/dataset"},
+  { key: "tissueVisualizer", label: "Tissue Visualizer", href: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html"},
+  { key: "sporaDataset", label: "spora [io]", href: "https://spora.epfl.ch/spora-io/index.html"},
+  { key: "sporaDataset", label: "spora [bench]", href: "https://spora.epfl.ch/docs.html"},
+];
 
 ---
-<Layout pageTitle="SPORA" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora">
+<Layout pageTitle="spora" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora" projectNavItems={projectNavItems}>
   <section class="vf-content vf-u-fullbleed spora-shell">
-    <section class="vf-grid vf-grid__col-3" style="background-color: black;">
+    <section class="vf-grid vf-grid__col-3 spora-hero">
       <div class="spora-media-panel" aria-hidden="true">
         <div class="spora-media">
-          <img src={sporaImage.src} alt="" style="padding-top:5%"/>
+          <img src={sporaImage.src} alt=""/>
         </div>
       </div>
-      <div class="vf-stack vf-stack--400 spora-copy vf-grid__col--span-2" >
-        <h1 class="vf-text vf-text-heading--1" style="color:white">AI ready spatial proteomics dataset</h1>
-        <p class="vf-text-body vf-text-body--2 spora-description" style="color:white">
+      <div class="vf-stack vf-stack--400 spora-copy vf-grid__col--span-2" style="padding-left: 1%;">
+        <h1 class="vf-text vf-text-heading--1">AI ready spatial proteomics dataset</h1>
+        <p class="vf-text-body vf-text-body--2 spora-description">
           Download and explore standardized multiplexed imaging data to understand tissue architecture
-          across cancer types and organs with SPORA.
+          across cancer types and organs with spora.
         </p>
-        <dl class="vf-grid spora-stats" aria-label="SPORA dataset summary" style="color:white">
+        <dl class="vf-grid spora-stats" aria-label="spora dataset summary">
           <div class="spora-stat">
             <dt>MX Images</dt>
             <dd>12,596</dd>
@@ -131,17 +152,17 @@ const sporaCitation = `@article{spora2026,
           </div>
         </dl>
         <br />
-        <div><p class="spora-attribution__label" style="color:white">A project by:</p></div>
+        <div><p class="spora-attribution__label">A project by:</p></div>
         <div class="spora-attribution" aria-label="Project attribution">
           <div class="spora-attribution__partners">
-            <span class="spora-attribution__partner"><a href="https://aimm.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black; height:3.5em;padding:0.25em;" src={aimmLogo.src} alt="AIMM Logo"/></a></span>
-            <span class="spora-attribution__partner"><a href="https://www.epfl.ch/" target="_blank" class="vf-link"><img style="background-color: black;height:3.5em;padding:0.25em;" src={epflLogo.src} alt="EPFL Logo"/></a></span>
+            <span class="spora-attribution__partner"><a href="https://aimm.epfl.ch/" target="_blank" class="vf-link"><img style="height:3.5em;padding:0.25em;" src={aimmLogo.src} alt="AIMM Logo"/></a></span>
+            <span class="spora-attribution__partner"><a href="https://www.epfl.ch/" target="_blank" class="vf-link"><img style="height:3.5em;padding:0.25em;" src={epflLogo.src} alt="EPFL Logo"/></a></span>
           </div>
         </div>
       </div>
     </section>
     <section
-    class="vf-content vf-u-fullbleed vf-grid vf-grid__col-3 | vf-card-container"
+    class="vf-content vf-u-fullbleed spora-card-menu | vf-card-container"
   >
     {
       cards.map((card) => (
@@ -292,6 +313,8 @@ const sporaCitation = `@article{spora2026,
   .spora-hero {
     align-items: center;
     gap: 0.5rem;
+    overflow: hidden;
+    position: relative;
   }
 
   .spora-media-panel,
@@ -312,6 +335,24 @@ const sporaCitation = `@article{spora2026,
   .spora-feature {
     align-items: center;
 
+  }
+
+  .spora-card-menu {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .spora-card-menu :global(.vf-card) {
+    grid-column: span 2;
+  }
+
+  .spora-card-menu :global(.vf-card:nth-child(1)) {
+    grid-column: 2 / span 2;
+  }
+
+  .spora-card-menu :global(.vf-card:nth-child(2)) {
+    grid-column: 4 / span 2;
   }
 
   .spora-feature__copy,
@@ -435,7 +476,7 @@ const sporaCitation = `@article{spora2026,
 
   .spora-stat dt {
     margin: 0 0 0.45rem;
-    color: white;
+    color: black;
     letter-spacing: 0.11em;
     text-transform: uppercase;
   }
@@ -472,6 +513,68 @@ const sporaCitation = `@article{spora2026,
 
 
   @media (max-width: 700px) {
+    .spora-hero {
+      display: block;
+      min-height: 520px;
+    }
+
+    .spora-hero .spora-media-panel {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .spora-hero .spora-media {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .spora-hero .spora-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.35;
+      padding-top: 0 !important;
+    }
+
+    .spora-hero .spora-copy {
+      position: relative;
+      z-index: 1;
+      padding: 48px 24px 56px;
+    }
+
+    .spora-hero .spora-copy h1 {
+      font-size: 30px;
+      line-height: 1.15;
+    }
+
+    .spora-hero .spora-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 0;
+    }
+
+    .spora-hero .spora-stat {
+      padding-right: 12px;
+    }
+
+    .spora-hero .spora-stat dd {
+      font-size: 1.65rem;
+    }
+
+    .spora-card-menu {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .spora-card-menu :global(.vf-card),
+    .spora-card-menu :global(.vf-card:nth-child(1)),
+    .spora-card-menu :global(.vf-card:nth-child(2)) {
+      grid-column: 1;
+    }
+
     .spora-feature__copy,
     .spora-feature__media {
       grid-column: 1 / -1;

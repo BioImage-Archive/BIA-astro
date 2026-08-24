@@ -1,5 +1,6 @@
 ---
-const nav = [
+const {projectNavItems} = Astro.props;
+const nav = projectNavItems ?? [
   { key: "", label: "Home", href: "/bioimage-archive/" },
   {
     key: "studies",
@@ -69,13 +70,39 @@ const nav = [
 
 const pathname = Astro.url.pathname;
 const basePath = pathname.split("/")[2] ?? "";
+const isExternalHref = (href) => /^https?:\/\//.test(href);
 const isCurrent = (href) =>
   href.replace(/\/+$/, "") === pathname;
 
 const hasActiveChild = (item) =>
   item.children?.some((child) => isCurrent(child.href));
+
+const hasProjectNav = Array.isArray(projectNavItems) && projectNavItems.length > 0;
+const homeItem = hasProjectNav ? (nav.find((item) => item.key === "sporaHome") ?? nav[0]) : nav[0];
+const brandLabel = hasProjectNav ? (homeItem?.label ?? "Project") : "BioImage Archive";
+const brandHref = homeItem?.href ?? "/bioimage-archive/";
 ---
 <style>
+  .nav-brand {
+    display: none;
+    color: inherit;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-toggle {
+    display: none;
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.4rem;
+    line-height: 1;
+    padding: 8px;
+  }
+
   .nav-item.is-active {
     border-bottom: 2px solid #3b6fb6;
   }
@@ -141,9 +168,86 @@ const hasActiveChild = (item) =>
     display: block;
   }
 
+  @media (max-width: 768px) {
+    .navbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #373a36;
+      color: white;
+      border-bottom: 0;
+      margin: 0;
+      padding: 0 0px;
+      min-height: 56px;
+    }
+
+    .nav-brand,
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-list {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      background: #373a36;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      gap: 0;
+      padding: 12px 16px 16px;
+      z-index: 20;
+    }
+
+    .navbar.is-open .nav-list {
+      display: flex;
+    }
+
+    .nav-item {
+      padding: 0;
+      border-bottom: 0 !important;
+    }
+
+    .vf-navigation__link,
+    .nav-dropdown__link {
+      display: block;
+      color: rgba(255,255,255,0.78);
+      padding: 10px 8px;
+      border-radius: 4px;
+      text-decoration: none;
+      white-space: normal;
+    }
+
+    .vf-navigation__link:hover,
+    .vf-navigation__link:focus,
+    .nav-dropdown__link:hover,
+    .nav-dropdown__link:focus,
+    .vf-navigation__link.is-current,
+    .nav-dropdown__link.is-current {
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+
+    .nav-dropdown {
+      display: block;
+      position: static;
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+      padding: 0 0 6px 14px;
+    }
+  }
+
 </style>
 
 <nav class="vf-navigation vf-navigation--main navbar vf-u-fullbleed">
+  <a class="nav-brand" href={brandHref}>{brandLabel}</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Toggle navigation">
+    <span aria-hidden="true">&#9776;</span>
+  </button>
   <ul class="vf-navigation__list vf-list nav-list">
     {nav.map((item) => {
       const sectionActive = basePath === item.key;
@@ -160,6 +264,8 @@ const hasActiveChild = (item) =>
             class={`vf-navigation__link ${
               sectionActive || childActive ? "is-current" : ""
             }`}
+            target={isExternalHref(item.href) ? "_blank" : undefined}
+            rel={isExternalHref(item.href) ? "noopener noreferrer" : undefined}
           >
             {item.label}
           </a>
@@ -173,6 +279,8 @@ const hasActiveChild = (item) =>
                     class={`nav-dropdown__link ${
                       isCurrent(child.href) ? "is-current" : ""
                     }`}
+                    target={isExternalHref(child.href) ? "_blank" : undefined}
+                    rel={isExternalHref(child.href) ? "noopener noreferrer" : undefined}
                   >
                     {child.label}
                   </a>
@@ -185,3 +293,32 @@ const hasActiveChild = (item) =>
     })}
   </ul>
 </nav>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.navbar').forEach((nav) => {
+      const toggle = nav.querySelector('.nav-toggle');
+      const menu = nav.querySelector('.nav-list');
+      if (!toggle || !menu) return;
+
+      const closeMenu = () => {
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      };
+
+      toggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!nav.contains(event.target)) closeMenu();
+      });
+    });
+  });
+</script>
