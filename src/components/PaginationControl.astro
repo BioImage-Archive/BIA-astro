@@ -21,14 +21,14 @@ function buildPageURL(targetPage: number, cursor?: string | null) {
     nextURL.searchParams.set("pagination.page", String(targetPage));
     nextURL.searchParams.delete("cursor");
   }
-  return nextURL.toString();
+  return `${nextURL.pathname}${nextURL.search}${nextURL.hash}`;
 }
 
 function buildDisplayURL() {
   const nextURL = new URL(Astro.request.url);
   nextURL.searchParams.delete("pagination.page");
   nextURL.searchParams.delete("cursor");
-  return nextURL.toString();
+  return `${nextURL.pathname}${nextURL.search}${nextURL.hash}`;
 }
 
 function addRange(target: number[], start: number, end: number) {
