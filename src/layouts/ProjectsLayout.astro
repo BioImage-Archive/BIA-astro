@@ -7,7 +7,7 @@ import Breadcrumbs from "../components/Breadcrumbs.astro";
 import Announcement from "../components/Announcement.astro";
 import { Image } from 'astro:assets';
 
-const { projectLogo, projectTitle, projectSubTitle, projectBannerImage, pageTitle, breadcrumbs } = Astro.props;
+const { projectLogo, projectTitle, projectSubTitle, projectBannerImage, pageTitle, breadcrumbs, projectNavItems } = Astro.props;
 
 const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
 const baseUrl = import.meta.env.BASE_URL;
@@ -68,7 +68,7 @@ const projectBannerImageSrc = typeof projectBannerImage === "string" ? projectBa
             </div>
         </section>
 </header>
-    <Navigation />
+    <Navigation projectNavItems={projectNavItems}/>
     <Announcement />
     <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
     <slot />

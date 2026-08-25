@@ -9,9 +9,17 @@ const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
 const formatCancers = (cancers) => cancers.join(', ');
+const projectNavItems = [
+  { key: "", label: "Home", href: "/bioimage-archive/" },
+  { key: "sporaHome", label: "spora", href: "/bioimage-archive/projects/spora" },
+  { key: "sporaDataset", label: "Dataset Browser", href: "/bioimage-archive/projects/spora/dataset"},
+  { key: "tissueVisualizer", label: "Tissue Visualizer", href: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html"},
+  { key: "sporaDataset", label: "spora [io]", href: "https://spora.epfl.ch/spora-io/index.html"},
+  { key: "sporaDataset", label: "spora [bench]", href: "https://spora.epfl.ch/docs.html"},
+];
 
 ---
-<Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset">
+<Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset" projectNavItems={projectNavItems}>
 <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing browser" data-datasets={JSON.stringify(datasets)} >
   <aside class="filters" aria-label="Dataset filters">
     <div class="filters-panel">
@@ -36,7 +44,7 @@ const formatCancers = (cancers) => cancers.join(', ');
   </aside>
   <div class="results">
     <div class="results-bar">Showing <strong><span class="count">{datasets.length}</span></strong> out of <strong><span class="total">{datasets.length}</span></strong> datasets</div>
-    <div class="results-table" role="region" aria-label="SPORA datasets" tabindex="0">
+    <div class="results-table" role="region" aria-label="spora datasets" tabindex="0">
       <table class="vf-table vf-table--compact" >
         <thead class="vf-table__header">
             <tr class="vf-table__row">
