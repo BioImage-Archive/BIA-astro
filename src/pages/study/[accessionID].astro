@@ -7,7 +7,7 @@ import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
-import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -40,14 +40,8 @@ if (fileListUrls) {
   tableOfContents["Browse All Files"] = "file_list";
 }
 
-let pdbLinks = null;
-let emdbLinks = null;
-if (isEMPIAR) {
-  pdbLinks = study?.pdb_accession ? study.pdb_accession.map(pdb => `<a href="https://www.rcsb.org/structure/${pdb}" target="_blank" rel="noopener noreferrer">${pdb}</a>`).join(', ') : "test";
-  emdbLinks = study?.emdb_accession ? study.emdb_accession.map(emdb => `<a href="https://www.ebi.ac.uk/emdb/EMD-${emdb}" target="_blank" rel="noopener noreferrer">EMD-${emdb}</a>`).join(', ') : "test";
-
-}
-if (!Array.isArray(study.see_also) || study.see_also.length === 0  && (pdbLinks===null || emdbLinks===null)) {
+const [pdbLinks, emdbLinks] = await buildPDBandEMDBLinks(study);
+if ((!Array.isArray(study.see_also) || study.see_also.length === 0) && !pdbLinks && !emdbLinks) {
   delete tableOfContents["Linked Information"];
 }
 
@@ -139,7 +133,7 @@ const breadcrumbs = [
 
 <BaseLayoutWithBreadcrumbs pageTitle={`${study.accession_id}: ${study.title}`} breadcrumbs={breadcrumbs}>
   <body>
-    <StudyTitleInfo study_info={study}/>
+    <StudyTitleInfo study_info={study} emdbLinks={emdbLinks} pdbLinks={pdbLinks}/>
 
   <StudyContentsSummary 
     tableOfContents={tableOfContents} 
@@ -268,7 +262,7 @@ const breadcrumbs = [
 </section>
 
   <hr/>
-  {(Array.isArray(study.see_also) && study.see_also.length > 0 ) || (pdbLinks || emdbLinks) && (
+  {((Array.isArray(study.see_also) && study.see_also.length > 0) || pdbLinks || emdbLinks) && (
     <section id="linked_information" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
         <h2 class="vf-section-header__heading">Linked Information</h2>
@@ -288,8 +282,8 @@ const breadcrumbs = [
             })
             
           }
-          {pdbLinks && <li>Related PDB entries: {pdbLinks}</li>}
-          {emdbLinks && <li>Related EMDB entries: {emdbLinks}</li>}
+          {pdbLinks && <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>Related PDB entries: <Fragment set:html={pdbLinks} /></li>}
+          {emdbLinks && <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>Related EMDB entries: <Fragment set:html={emdbLinks} /></li>}
         </ul>
       </div>
 

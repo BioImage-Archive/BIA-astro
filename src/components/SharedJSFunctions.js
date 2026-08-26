@@ -591,3 +591,126 @@ export function highlightLinks(baseUrl, highlightObj, query, limit = 8) {
   const uniq = [...new Set(vals)].slice(0, limit);
   return uniq.flatMap(h => ({ text: h[0]?.replace(/__HIT__|__\/HIT__/g, "").trim(), url: textFragmentLink(baseUrl, h, query) }))?.[0]?.["url"];
 }
+
+
+function asArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalisePDBAccession(accession) {
+  return String(accession ?? "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function normaliseEMDBAccession(accession) {
+  const digits = String(accession ?? "").match(/\d+/)?.[0];
+  return digits || "";
+}
+
+function buildEMDBThumbnailURL(emdbNumber) {
+  const subDirectory = emdbNumber.length > 4
+    ? `${emdbNumber.slice(0, 2)}/${emdbNumber.slice(2, 3)}`
+    : emdbNumber.slice(0, 2);
+  return `https://www.ebi.ac.uk/emdb/static/em/${subDirectory}/${emdbNumber}/images/400_${emdbNumber}.gif`;
+}
+
+function formatEMDBUnits(units) {
+  if (!units || units === "Å" || units === "Å") {
+    return "&#x212B;";
+  }
+  return escapeHtml(units);
+}
+
+function getEMDBResolution(emdbEntry) {
+  const structureDeterminations = asArray(emdbEntry?.structure_determination_list?.structure_determination);
+
+  for (const structureDetermination of structureDeterminations) {
+    const imageProcessing = asArray(structureDetermination?.image_processing);
+    for (const processing of imageProcessing) {
+      const resolution = processing?.final_reconstruction?.resolution;
+      if (resolution?.valueOf_) {
+        return {
+          value: resolution.valueOf_,
+          units: formatEMDBUnits(resolution.units),
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+function buildRelatedEntryPreviewLink({ accession, href, thumbnailURL, type, measurement }) {
+  const safeAccession = escapeHtml(accession);
+  const safeType = escapeHtml(type);
+  const measurementHtml = measurement
+    ? `<span class="bia-related-entry-preview__measurement">${escapeHtml(measurement.label)}: ${escapeHtml(measurement.value)} ${measurement.units}</span>`
+    : "";
+
+  return `
+    <span class="bia-related-entry">
+      <a class="vf-link bia-related-entry__link" href="${href}" target="_blank" rel="noopener noreferrer">${safeAccession}</a>${measurement?.value ? ` (${measurement.value} ${measurement.units})`: ""}
+      <span class="bia-related-entry-preview" role="tooltip">
+        <img src="${thumbnailURL}" alt="Preview image for ${safeAccession}" loading="lazy" />
+        <span class="bia-related-entry-preview__body">
+          <span class="bia-related-entry-preview__title">${safeType} ${safeAccession}</span>
+          ${measurementHtml}
+        </span>
+      </span>
+    </span>
+  `;
+}
+
+export async function buildPDBandEMDBLinks(study){
+  //|| ["8ay4", "8ay5"]
+  const studyPDBLinks = asArray(study?.pdb_accession)
+    .map(normalisePDBAccession)
+    .filter(Boolean);
+  //|| ["15710", "15711"]
+  const studyEMDBLinks = asArray(study?.emdb_accession)
+    .map(normaliseEMDBAccession)
+    .filter(Boolean);
+
+  const pdbLinks = studyPDBLinks.length > 0
+    ? studyPDBLinks.map((pdb) => buildRelatedEntryPreviewLink({
+      accession: pdb,
+      href: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdb}`,
+      thumbnailURL: `https://www.ebi.ac.uk/pdbe/static/entry/${pdb}_deposited_chain_front_image-200x200.png`,
+      type: "PDB",
+    })).join(", ")
+    : null;
+
+  const emdbEntries = await Promise.all(studyEMDBLinks.map(async (emdb) => ({
+    accession: emdb,
+    metadata: await getFromAPI(`https://www.ebi.ac.uk/emdb/api/entry/EMD-${emdb}`),
+  })));
+
+  const emdbLinks = emdbEntries.length > 0
+    ? emdbEntries.map(({ accession, metadata }) => {
+      const displayAccession = `EMD-${accession}`;
+      const resolution = getEMDBResolution(metadata);
+      return buildRelatedEntryPreviewLink({
+        accession: displayAccession,
+        href: `https://www.ebi.ac.uk/emdb/EMD-${accession}`,
+        thumbnailURL: buildEMDBThumbnailURL(accession),
+        type: "EMDB",
+        measurement: resolution ? {
+          label: "Resolution",
+          value: resolution.value,
+          units: resolution.units,
+        } : null,
+      });
+    }).join(", ")
+    : null;
+
+  return [pdbLinks, emdbLinks]
+}
