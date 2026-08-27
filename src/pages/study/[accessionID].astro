@@ -73,10 +73,11 @@ if (study?.grant && Array.isArray(study.grant)) {
 
 const exampleStudyImage = getStudyImage(study);
 
-function getImageUUIDFromStudyImage(exampleURI: string, images: any[]){
+function getImageUUIDFromStudyImage(exampleURI: string | string[], images: any[]){
+  const selectedURI = Array.isArray(exampleURI) ? exampleURI[0] : exampleURI;
   const thumbnailImage = images.find(img => {
     const meta = getMetadataValue(img.additional_metadata, "image_static_display_uri");
-    return meta?.slice?.uri === exampleURI;
+    return meta?.slice?.uri === selectedURI;
   });
   return thumbnailImage?.uuid || ""
 }
