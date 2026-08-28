@@ -20,6 +20,7 @@
     "datatables.net": "^2.1.0",
     "datatables.net-dt": "^2.1.0",
     "jquery": "^3.7.1",
+    "parquet-wasm": "^0.7.2",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
