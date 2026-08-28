@@ -7,7 +7,7 @@ import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
-import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { buildDatasetFileSummary, buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -35,6 +35,9 @@ const ftpLink = await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studie
 const ftpHttpsLink = isEMPIAR? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`: ftpLink?.httpLink;
 const globusLink = isEMPIAR? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
+
+// Read file list parquet file to get dataset summary
+const datasetFileSummaryString = isEMPIAR && fileListUrls ? null : null; //await buildDatasetFileSummary(accessionID) : null;
 
 if (fileListUrls) {
   tableOfContents["Browse All Files"] = "file_list";
@@ -300,7 +303,7 @@ const breadcrumbs = [
       <div>
         {
           study.dataset.map((dataset) => (
-            <DatasetInfo dataset={dataset} isEMPIAR={isEMPIAR} />
+            <DatasetInfo dataset={dataset} isEMPIAR={isEMPIAR} datasetFileSummaryString={datasetFileSummaryString}/>
           ))
         }
       </div>

@@ -2,7 +2,7 @@
 import fieldMap from "../data/metadata-field-name-mapping.json";
 import DatasetDetail from "./DatasetDetail.astro";
 
-const { dataset, isEMPIAR = false } = Astro.props;
+const { dataset, isEMPIAR = false, datasetFileSummaryString = null } = Astro.props;
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
 const sgpMap = fieldMap["specimen_growth_protocol"];
@@ -27,7 +27,9 @@ function formatFileTypeCounts(fileTypeCounts) {
 }
 
 const formattedFileTypeCounts = formatFileTypeCounts(dataset?.file_type_counts);
-
+const dsFromFileList = datasetFileSummaryString ? datasetFileSummaryString?.datasets.find( ds=> ds.dataset == dataset.title) : null;
+const fileCountsFromFileList = dsFromFileList ? dsFromFileList?.file_count : null;
+const formatsFromFileList = dsFromFileList ? Object.entries(dsFromFileList?.formats).map( k => `${k[1]} ${k[0]} file(s)`).join(", "): null;
 ---
 <style>
     .details > div{
@@ -53,12 +55,19 @@ const formattedFileTypeCounts = formatFileTypeCounts(dataset?.file_type_counts);
             )
         }
         <div style={detail_section_style}>
-            <b>Number of images:</b>&nbsp;{dataset.image_count}
+            <b>Number of images/files:</b>&nbsp;{fileCountsFromFileList? fileCountsFromFileList : dataset.image_count}
         </div>
         {
             formattedFileTypeCounts && (
                 <div style={detail_section_style}>
-                    <b>Top 5 file formats:</b>&nbsp;{formattedFileTypeCounts}
+                    {
+                        formatsFromFileList ? (
+                            <><b>File formats:</b>&nbsp;{formatsFromFileList}</>
+                        ): (
+                            <><b>Top 5 file formats:</b>&nbsp;{formattedFileTypeCounts}</>
+                        )
+                    }
+                    
                 </div>
             )
         }
