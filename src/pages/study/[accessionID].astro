@@ -34,7 +34,7 @@ const ftpLink = await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studie
 const ftpHttpsLink = accessionID.includes("EMPIAR")
   ? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`
   : ftpLink?.httpLink;
-const globusLink = ftpLink?.globusLink || "";
+const globusLink = accessionID.includes("EMPIAR")? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
 
 if (fileListUrls) {

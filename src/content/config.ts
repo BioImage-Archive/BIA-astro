@@ -17,6 +17,7 @@ const newsCollection = defineCollection({
         cover: image(),
         imageAlt: z.string(),
         figureLink: z.string(),
+        articleDate: z.string(),
       }),
     });
 

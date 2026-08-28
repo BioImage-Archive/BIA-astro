@@ -36,7 +36,7 @@ export interface PaginationData {
   page: number;
   page_size: number;
   total_pages: number;
+  next_cursor?: string | null;
 }
 
 export type SelectedFacets = Record<string, string[]>;
-

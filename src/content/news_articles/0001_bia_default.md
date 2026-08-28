@@ -3,6 +3,7 @@ title: BioImage Archive democratises access to microscopy data
 cover: ../../assets/bioimage-archive/news_example.webp
 imageAlt: "Example news image"
 figureLink: "galleries"
+articleDate: "2 November 2023"
 ---
 EMBL-EBI’s BioImage Archive makes it easier to access and analyse biological research data.
 

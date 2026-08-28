@@ -2,8 +2,9 @@
 import BaseLayout from "../layouts/BaseLayoutWithBreadcrumbs.astro";
 import GalleryCard from "./cards/GalleryRoundImageCard.astro";
 
-const { galleryData } = Astro.props;
-
+const { galleryData, justify = true } = Astro.props;
+const gridSize = galleryData.collections.length;
+const style = justify ? "text-align: justify;" : "text-align: center;";
 ---
 
 
@@ -12,42 +13,33 @@ const { galleryData } = Astro.props;
         <div>
             <slot name="left-menu" />
         </div>
-        <section
-            class="vf-news-container vf-news-container--featured | vf-stack "
-        >
-            <div class="vf-section-header">
-                <h2 class="vf-section-header__heading">
-                    {galleryData.title}
-                </h2>
+        <section class="vf-news-container vf-news-container--featured | vf-stack">
+        <div class="vf-section-header" style="text-align: center;">
+            <h2 class="vf-section-header__heading">{galleryData.title}</h2>
+        </div>
+
+        {galleryData.subtitle && (
+            <div style={style}>
+            <h3 class="vf-section-subheader__heading">{galleryData.subtitle}</h3>
             </div>
+        )}
 
-            {
-                galleryData.subtitle && (
-                    <div>
-                        <h3 class="vf-section-subheader__heading">
-                            {galleryData.subtitle}
-                        </h3>
-                    </div>
-                )
-            }
-
-            {
-                galleryData.body_text && (
-                    <div class="vf-content"> 
-                        <p>
-                            {galleryData.body_text}
-                        </p>
-                    </div>
-                )
-            }
-
-            <div class="vf-news-container__content | vf-grid | vf-grid__col-3 |">
-                {
-                    Object.values(galleryData.collections).map((collection) => (
-                        <GalleryCard collection={collection} linkPath={galleryData.gallery_item_basepath} />
-                    ))
-                }
+        {galleryData.body_text && (
+            <div class="vf-content">
+            <p>{galleryData.body_text}</p>
             </div>
+        )}
         </section>
-    </body>
+    </section>
+    <br />
+    <section class=" vf-news-container vf-news-container--featured | vf-stack vf-u-fullbleed" style="padding: 0 3rem;">
+        <div class=`vf-news-container__content | vf-grid | vf-grid__col-${gridSize} |`>
+            {
+                Object.values(galleryData.collections).map((collection) => (
+                    <GalleryCard collection={collection} linkPath={galleryData.gallery_item_basepath} />
+                ))
+            }
+        </div>
+    </section>
+</body> 
 </BaseLayout>

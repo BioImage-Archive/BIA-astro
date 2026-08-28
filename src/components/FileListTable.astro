@@ -18,17 +18,18 @@ if (file_list_urls) {
             <div style="display:flex; flex: 1 1 auto;justify-content: flex-start;align-items: center;">
                 <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" aria-pressed="true">Table View</button>
                 <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" aria-pressed="false">Tree View</button>
+                <a class="vf-button vf-button--primary vf-button--sm" href="/bioimage-archive/help/explore-file-list">Help</a>
             </div>
             <div style="display:flex">
-                <a class="vf-link" href={ftp_path} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">BrowseFTP</button></a>
+                <a class="vf-link" href={ftp_path} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">Browse HTTP</button></a>
                 <a class="vf-link" href={globus_link} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">Browse Globus</button></a>
             </div>
         </div>
     </section>
     <br />
     <div class="file-list-viewer-frame">
-      <iframe id="file-list-table-viewer" class="file-list-viewer is-active" data-src={table_view} loading="lazy" title="File list table view"></iframe>
-      <iframe id="file-list-tree-viewer" class="file-list-viewer" data-src={tree_view} loading="lazy" title="File list tree view"></iframe>
+      <iframe id="file-list-table-viewer" class="file-list-viewer is-active" data-src={table_view} loading="lazy" title="File list table view" allow="clipboard-write"></iframe>
+      <iframe id="file-list-tree-viewer" class="file-list-viewer" data-src={tree_view} loading="lazy" title="File list tree view" allow="clipboard-write"></iframe>
     </div>
 )
 }

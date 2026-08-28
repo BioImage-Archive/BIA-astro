@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayoutWithBreadcrumbs.astro";
+import GalleryCard from "../components/cards/GalleryRoundImageCard.astro";
+import sporaImage from "../assets/bioimage-archive/projects/spora/spora_landing_page.jpg";
+const style = "text-align: justify;";
+
+const projects = [{},
+    {
+      "name":"spora",
+      "title":"SPORA",
+      "subtitle":"AI-ready spatial proteomics datasets",
+      "summary_image":sporaImage.src
+    },
+    {}
+]
+
+---
+<BaseLayout pageTitle="Projects">
+    <section class="embl-grid embl-grid--has-centered-content">
+        <div>
+            <slot name="left-menu" />
+        </div>
+        <section class="vf-news-container vf-news-container--featured | vf-stack">
+            <div class="vf-section-header" style="text-align: center;">
+                <h2 class="vf-section-header__heading">The BioImage Archive Projects</h2>
+            </div>
+            <div style={style} class="vf-content">
+            <p>The BioImage Archive hosts several projects focused on making biological image data accessible and useful for the research community.</p>
+            </div>
+        </section>
+    </section>
+    <br />
+    <section class=" vf-news-container vf-news-container--featured | vf-stack vf-u-fullbleed" style="padding: 0 3rem;">
+        <div class=`vf-news-container__content | vf-grid | vf-grid__col-3 |`>
+            {
+                Object.values(projects).map((collection) => (
+                    <GalleryCard collection={collection} linkPath="/bioimage-archive/projects/"/>
+                ))
+            }
+        </div>
+    </section>
+
+</BaseLayout>
