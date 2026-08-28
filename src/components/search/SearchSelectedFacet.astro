@@ -3,7 +3,7 @@ import { generateParamString, formatBytes, formatFieldName } from "../SharedJSFu
 import {type SelectedFacets} from "./SearchInterface.astro";
 import { capitalizeFirstLetter } from "./SearchFacet.astro"
 
-const { selectedList, key, url, text, query, selectedFacets, kind, minVal, maxVal, pageSize = 12} = Astro.props;
+const { selectedList, key, url, text, query, selectedFacets = {}, kind, minVal, maxVal, pageSize = 12, sortBy = "", sortOrder = "", sortSource = ""} = Astro.props;
 
 const page = 1;
 
@@ -21,7 +21,7 @@ function removeFacetValue(
 function removeQueryParam(url) {
   const next = new URL(url);
   next.searchParams.delete("query");
-  return next.toString();
+  return `${next.pathname}${next.search}${next.hash}`;
 }
 
 function removeRange(facets: SelectedFacets, gteKey: string, lteKey: string): SelectedFacets {
@@ -40,7 +40,7 @@ const label = `${minVal && minVal !== "" ? formatBytes(minVal, key) : "â€¦" } â€
     <>
     {text}: 
     {selectedList.map( selected => 
-    <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected), pageSize)} 
+    <a href={generateParamString(url, query, page, removeFacetValue(selectedFacets, key, selected), pageSize, sortBy, sortOrder, sortSource)}
         class="facet-remove-btn" aria-label={`Remove ${text}: ${selected}`}
       >
         <span class="facet-value">{formatFieldName(text, capitalizeFirstLetter(selected.replaceAll("_", " ")))}</span>
@@ -54,7 +54,7 @@ const label = `${minVal && minVal !== "" ? formatBytes(minVal, key) : "â€¦" } â€
   <>
     {text}:
     <a
-      href={generateParamString(url, query, page, removeRange(selectedFacets, gteKey, lteKey), pageSize)}
+      href={generateParamString(url, query, page, removeRange(selectedFacets, gteKey, lteKey), pageSize, sortBy, sortOrder, sortSource)}
       class="facet-remove-btn"
       aria-label={`Remove ${text}: ${label}`}
       >
@@ -68,7 +68,7 @@ const label = `${minVal && minVal !== "" ? formatBytes(minVal, key) : "â€¦" } â€
     <>
     {text}:
     <a
-      href={generateParamString(removeQueryParam(Astro.url), "", page, {}, pageSize)}
+      href={generateParamString(removeQueryParam(Astro.url), "", page, selectedFacets, pageSize, sortBy, sortOrder, sortSource)}
       class="facet-remove-btn"
       aria-label={`Remove ${text}: ${query}`}
     >

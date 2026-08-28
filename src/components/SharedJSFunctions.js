@@ -315,11 +315,14 @@ export function formatPixelDimensions(img_rep) {
     return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "") + " px" 
 }
 
-export function generateParamString(baseURL, query, page, selectedFacets, pageSize){
+export function generateParamString(baseURL, query, page, selectedFacets, pageSize, sortBy = "", sortOrder = "", sortSource = ""){
   const url = new URL(baseURL, "http://local");
   const isPageURL = url.origin === "http://local";
+  const hasQuery = query !== undefined && query !== null && query !== "";
+  const hasFacetValues = Object.values(selectedFacets ?? {}).some((values) => values?.length > 0);
+  const shouldKeepSort = sortBy && (sortBy !== "relevance" || sortSource === "user" || hasQuery || hasFacetValues);
 
-  if (query !== "") {
+  if (hasQuery) {
     url.searchParams.set("query", query ?? "");
   }
 
@@ -329,6 +332,20 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
 
   if (!isPageURL) {
     url.searchParams.set("pagination.page", String(page));
+  }
+
+  url.searchParams.delete("sortBy");
+  url.searchParams.delete("sortOrder");
+  url.searchParams.delete("sort_by");
+  url.searchParams.delete("sort_order");
+  url.searchParams.delete("sort_source");
+
+  if (shouldKeepSort) {
+    url.searchParams.set("sort_by", sortBy);
+    url.searchParams.set("sort_order", sortOrder || "desc");
+    if (isPageURL && sortSource) {
+      url.searchParams.set("sort_source", sortSource);
+    }
   }
 
   for (const [facetKey, values] of Object.entries(selectedFacets ?? {})) {
