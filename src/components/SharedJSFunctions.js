@@ -304,7 +304,7 @@ export async function getImagesFromAPI(uuid_list){
 }
 
 export async function getDownstreamDisplayImages(uuid){
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/image?facet.downstream_of=${uuid}&facet.image_role=terminal_display`);
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/image?facet.downstream_of=${uuid}&facet.specimen_track_position=terminal`);
     const displayImages = response?.hits?.hits?.map(img => img._source) ?? [];
     return displayImages
 }

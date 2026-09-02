@@ -4,14 +4,16 @@ import { formatBytesToHumanSize } from "../SharedJSFunctions";
 const { image } = Astro.props;
 
 const roleLabels: Record<string, string> = {
-  intermediate: "Intermediate",
-  terminal_display: "Terminal display",
-  terminal_segmentation: "Terminal segmentation",
+  internal: "Internal",
+  terminal: "Terminal",
+  segmentation: "Segmentation",
 };
 
 function combinedRoleLabel(image): string {
-  const base = roleLabels[image.image_role] ?? image.image_role;
-  return image.is_initial_image ? `Initial · ${base}` : base;
+  const base = roleLabels[image.specimen_track_position] ?? image.specimen_track_position;
+  const isRoot = image.upstream_image_uuids?.length === 0;
+  const label = isRoot ? `Root · ${base}` : base;
+  return image.segmentation_image_uuids?.length > 0 ? `${label} · Segmented` : label;
 }
 ---
 <tr>
@@ -22,10 +24,5 @@ function combinedRoleLabel(image): string {
     {image.total_size_in_bytes != null
       ? formatBytesToHumanSize(image.total_size_in_bytes)
       : "N/A"}
-  </td>
-  <td>
-    {image.file_uri?.[0] && (
-      <a href={image.file_uri[0]} download>Download</a>
-    )}
   </td>
 </tr>

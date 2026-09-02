@@ -51,20 +51,21 @@ if (image.upstream_image_uuids?.length > 0) {
     upstream_images = await getImagesFromAPI(image.upstream_image_uuids);
 }
 
-let display_images: Image[] = [];
-if (image.image_role === "terminal_segmentation" && image.terminal_display_image_uuids?.length > 0) {
-    display_images = await getImagesFromAPI(image.terminal_display_image_uuids);
-}
-
 let downstream_display_images: Image[] = [];
-if (image.image_role === "intermediate") {
+if (image.specimen_track_position === "internal") {
     downstream_display_images = await getDownstreamDisplayImages(image.uuid);
 }
 
+let own_segmentation_images: Image[] = [];
+if (image.segmentation_image_uuids?.length > 0) {
+    own_segmentation_images = await getImagesFromAPI(image.segmentation_image_uuids);
+}
+
 const hasSpecimenTrackContent =
-    (image.image_role === "terminal_display" && upstream_images.length > 0) ||
-    (image.image_role === "terminal_segmentation" && display_images.length > 0) ||
-    (image.image_role === "intermediate" && downstream_display_images.length > 0);
+    (image.specimen_track_position === "terminal" && upstream_images.length > 0) ||
+    (image.specimen_track_position === "segmentation" && input_images.length > 0) ||
+    (image.specimen_track_position === "internal" && downstream_display_images.length > 0) ||
+    own_segmentation_images.length > 0;
 
 let specimen: SpecimenInfo | null = null;
 if ("subject" in creation_process && creation_process.subject != null) {
@@ -72,7 +73,7 @@ if ("subject" in creation_process && creation_process.subject != null) {
 }
 let inherited_specimens: SpecimenInfo[] = [];
 if (specimen == null) {
-    const initialImage = upstream_images.find(img => img?.is_initial_image);
+    const initialImage = upstream_images.find(img => img?.upstream_image_uuids?.length === 0);
     if (initialImage?.creation_process?.subject) {
         inherited_specimens = [initialImage.creation_process.subject];
     }
@@ -352,7 +353,7 @@ const breadcrumbs = [
                         </div>
                         <div>
                             {
-                                image.image_role === "terminal_display" && upstream_images.length > 0 && (
+                                image.specimen_track_position === "terminal" && upstream_images.length > 0 && (
                                     <div>
                                         <b>Upstream Images:</b>
                                     </div>
@@ -360,15 +361,21 @@ const breadcrumbs = [
                                 )
                             }
                             {
-                                image.image_role === "terminal_segmentation" && display_images.length > 0 && (
-                                    <div><b>Terminal Images:</b></div>
-                                    <DisplayImageTable images={display_images}/>
+                                image.specimen_track_position === "segmentation" && input_images.length > 0 && (
+                                    <div><b>Image segmented:</b></div>
+                                    <DisplayImageTable images={input_images}/>
                                 )
                             }
                             {
-                                image.image_role === "intermediate" && downstream_display_images.length > 0 && (
+                                image.specimen_track_position === "internal" && downstream_display_images.length > 0 && (
                                     <div><b>Terminal Images:</b></div>
                                     <DisplayImageTable images={downstream_display_images}/>
+                                )
+                            }
+                            {
+                                own_segmentation_images.length > 0 && (
+                                    <div><b>Segmentation(s) on this image:</b></div>
+                                    <DisplayImageTable images={own_segmentation_images}/>
                                 )
                             }
                         </div>

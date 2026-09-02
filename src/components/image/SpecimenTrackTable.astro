@@ -3,8 +3,9 @@ import SpecimenTrackTableRow from "./SpecimenTrackTableRow.astro";
 
 const { images } = Astro.props;
 
+const isRoot = (image) => image.upstream_image_uuids?.length === 0;
 const sortedImages = [...images].sort((a, b) =>
-  a.is_initial_image === b.is_initial_image ? 0 : a.is_initial_image ? 1 : -1
+  isRoot(a) === isRoot(b) ? 0 : isRoot(a) ? 1 : -1
 );
 ---
 <div class="specimen-track-table">
@@ -15,11 +16,10 @@ const sortedImages = [...images].sort((a, b) =>
         <th>Label</th>
         <th>UUID</th>
         <th>File size</th>
-        <th>Download</th>
       </tr>
       <tr>
         <th id="role_filter_cell"></th>
-        <th></th><th></th><th></th><th></th>
+        <th></th><th></th><th></th>
       </tr>
     </thead>
     <tbody>
@@ -49,7 +49,7 @@ const sortedImages = [...images].sort((a, b) =>
       orderCellsTop: false,
       columnDefs: [
         { type: "natural", targets: 0 },
-        { orderable: false, targets: [1, 2, 4] },
+        { orderable: false, targets: [1, 2] },
       ],
       initComplete: function () {
         this.api()
