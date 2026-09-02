@@ -28,8 +28,13 @@ function formatFileTypeCounts(fileTypeCounts) {
 
 const formattedFileTypeCounts = formatFileTypeCounts(dataset?.file_type_counts);
 const dsFromFileList = datasetFileSummaryString ? datasetFileSummaryString?.datasets.find( ds=> ds.dataset == dataset.title) : null;
-const fileCountsFromFileList = dsFromFileList ? dsFromFileList?.file_count : null;
-const formatsFromFileList = dsFromFileList ? Object.entries(dsFromFileList?.formats).map( k => `${k[1]} ${k[0]} file(s)`).join(", "): null;
+const fileCountsFromFileList = dsFromFileList?.file_count ?? null;
+const formatsFromFileList = dsFromFileList
+    ? [
+        dsFromFileList.data_format ? `${dsFromFileList.data_format}` : "",
+    ].filter(Boolean).join(", ") || Object.entries(dsFromFileList?.formats || {}).map( k => `${k[1]} ${k[0]} file(s)`).join(", ")
+    : null;
+const fileFormatsLabel = formatsFromFileList ? "File formats" : "Top 5 file formats";
 ---
 <style>
     .details > div{
@@ -55,19 +60,12 @@ const formatsFromFileList = dsFromFileList ? Object.entries(dsFromFileList?.form
             )
         }
         <div style={detail_section_style}>
-            <b>Number of images/files:</b>&nbsp;{fileCountsFromFileList? fileCountsFromFileList : dataset.image_count}
+            <b>Number of images/files:</b>&nbsp;{fileCountsFromFileList !== null? fileCountsFromFileList : dataset.image_count}
         </div>
         {
-            formattedFileTypeCounts && (
+            (formattedFileTypeCounts || formatsFromFileList) && (
                 <div style={detail_section_style}>
-                    {
-                        formatsFromFileList ? (
-                            <><b>File formats:</b>&nbsp;{formatsFromFileList}</>
-                        ): (
-                            <><b>Top 5 file formats:</b>&nbsp;{formattedFileTypeCounts}</>
-                        )
-                    }
-                    
+                    <b>{fileFormatsLabel}:</b>&nbsp;{formatsFromFileList? formatsFromFileList : formattedFileTypeCounts}
                 </div>
             )
         }

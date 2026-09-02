@@ -36,8 +36,8 @@ const ftpHttpsLink = isEMPIAR? `https://ftp.ebi.ac.uk/empiar/world_availability/
 const globusLink = isEMPIAR? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
 
-// Read file list parquet file to get dataset summary
-const datasetFileSummaryString = isEMPIAR && fileListUrls ? null : null; //await buildDatasetFileSummary(accessionID) : null;
+// Read EMPIAR XML header to get dataset summary
+const datasetFileSummaryString = isEMPIAR ? await buildDatasetFileSummary(accessionID, study?.dataset) : null;
 
 if (fileListUrls) {
   tableOfContents["Browse All Files"] = "file_list";
