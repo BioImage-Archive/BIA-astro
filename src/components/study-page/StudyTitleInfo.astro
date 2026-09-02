@@ -1,8 +1,8 @@
 ---
-import WebsiteStateButton from "../WebsiteStateButton.astro";
 import orcidImage from "../../assets/bioimage-archive/orcid.svg";
+import empiarLogo from "../../assets/bioimage-archive/EMPIAR_logo.png";
 
-const { study_info: studyInfo } = Astro.props;
+const { study_info: studyInfo, pdbLinks, emdbLinks } = Astro.props;
 
 const doiURI = studyInfo?.doi || "";
 const doiText = doiURI.replace("https://doi.org/", "").toUpperCase()
@@ -59,6 +59,7 @@ function authorFormat(author) {
     }
     return authorString;
 }
+const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
 ---
 
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -66,12 +67,19 @@ function authorFormat(author) {
     </div>
     <div>
         <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+            {isEMPIAR && (<img src={empiarLogo.src} alt="EMPIAR"  class="vf-badge vf-badge--secondary vf-badge--phases" style="border: 0px solid #ccc;"/>
+            )}
             {studyInfo.accession_id}
-            <WebsiteStateButton/>
         </h1>
         <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
         {doiURI && <p>DOI: <a href={doiURI}>{doiText}</a></p> }
-        <p>Released: {studyInfo.release_date}</p>
+        <p>Released: {studyInfo.release_date}
+            {
+                studyInfo?.last_modified_date && (
+                    <>&#x2022 Last modified: {studyInfo?.last_modified_date} </>
+                )
+            }
+        </p>
         <div class="authors-list">
             {
                 authors.map((author, i) => {
@@ -132,6 +140,14 @@ function authorFormat(author) {
                 ))
             }
         </div>
+        <div class="bia-related-entries"><p>
+            {
+                pdbLinks && <p>Related PDB entries: <Fragment set:html={pdbLinks} /> </p>
+            }
+            {
+                emdbLinks && <p>Related EMDB entries: <Fragment set:html={emdbLinks} /> </p>
+            }
+        </p></div>
         </div>
 </section>
 
@@ -197,6 +213,74 @@ function authorFormat(author) {
 .highlight {
   background-color: #B0F8CD;
   transition: background-color 0.3s ease-in-out;
+}
+
+:global(.bia-related-entry) {
+    display: inline-block;
+    position: relative;
+}
+
+:global(.bia-related-entry__link) {
+    position: relative;
+}
+
+:global(.bia-related-entry-preview) {
+    background: #ffffff;
+    border: 1px solid #d0d5d8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    color: #1f1f1f;
+    display: none;
+    left: 50%;
+    padding: 8px;
+    position: absolute;
+    top: calc(100% + 8px);
+    transform: translateX(-50%);
+    width: 156px;
+    z-index: 20;
+}
+
+:global(.bia-related-entry-preview::before) {
+    content: "";
+    height: 8px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -8px;
+}
+
+:global(.bia-related-entry:hover .bia-related-entry-preview),
+:global(.bia-related-entry:focus-within .bia-related-entry-preview) {
+    display: block;
+}
+
+:global(.bia-related-entry-preview img) {
+    aspect-ratio: 1 / 1;
+    display: block;
+    object-fit: contain;
+    width: 100%;
+}
+
+:global(.bia-related-entry-preview__body) {
+    display: block;
+    margin-top: 6px;
+}
+
+:global(.bia-related-entry-preview__title),
+:global(.bia-related-entry-preview__measurement) {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.2;
+}
+
+:global(.bia-related-entry-preview__title) {
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    :global(.bia-related-entry-preview) {
+        left: 0;
+        transform: none;
+    }
 }
 
 .affiliation-container {

@@ -29,7 +29,7 @@ export default defineConfig({
   base: "/bioimage-archive",
 
   redirects: {
-    '/ai': '/bioimage-archive//galleries/ai',
+    '/ai': '/bioimage-archive/galleries/ai',
     '/cryoet': '/bioimage-archive/galleries/cryoet',
     '/vem': '/bioimage-archive/galleries/vem',
     '/vis': '/bioimage-archive/galleries/vis',
@@ -49,6 +49,8 @@ export default defineConfig({
     '/submit-annotations': '/bioimage-archive/help/submit-annotations',
     '/help-tools': '/bioimage-archive/help/supporting-tools',
     '/helpimagesatebi': '/bioimage-archive/policies/imagesatebi',
+    '/spora': '/bioimage-archive/projects/spora',
+
   },
   env: {
     schema: {

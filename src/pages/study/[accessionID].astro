@@ -7,7 +7,7 @@ import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
 import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
-import { getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { buildDatasetFileSummary, buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -30,18 +30,21 @@ const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.image ?? []
 const dirNumber = accessionID.replace("S-BIAD", "").replace("EMPIAR-", "");
+const isEMPIAR = accessionID.includes("EMPIAR");
 const ftpLink = await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
-const ftpHttpsLink = accessionID.includes("EMPIAR")
-  ? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`
-  : ftpLink?.httpLink;
-const globusLink = ftpLink?.globusLink || "";
+const ftpHttpsLink = isEMPIAR? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`: ftpLink?.httpLink;
+const globusLink = isEMPIAR? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
+
+// Read file list parquet file to get dataset summary
+const datasetFileSummaryString = isEMPIAR && fileListUrls ? null : null; //await buildDatasetFileSummary(accessionID) : null;
 
 if (fileListUrls) {
   tableOfContents["Browse All Files"] = "file_list";
 }
 
-if (!Array.isArray(study.see_also) || study.see_also.length === 0) {
+const [pdbLinks, emdbLinks] = await buildPDBandEMDBLinks(study);
+if ((!Array.isArray(study.see_also) || study.see_also.length === 0) && !pdbLinks && !emdbLinks) {
   delete tableOfContents["Linked Information"];
 }
 
@@ -73,10 +76,11 @@ if (study?.grant && Array.isArray(study.grant)) {
 
 const exampleStudyImage = getStudyImage(study);
 
-function getImageUUIDFromStudyImage(exampleURI: string, images: any[]){
+function getImageUUIDFromStudyImage(exampleURI: string | string[], images: any[]){
+  const selectedURI = Array.isArray(exampleURI) ? exampleURI[0] : exampleURI;
   const thumbnailImage = images.find(img => {
     const meta = getMetadataValue(img.additional_metadata, "image_static_display_uri");
-    return meta?.slice?.uri === exampleURI;
+    return meta?.slice?.uri === selectedURI;
   });
   return thumbnailImage?.uuid || ""
 }
@@ -133,7 +137,7 @@ const breadcrumbs = [
 
 <BaseLayoutWithBreadcrumbs pageTitle={`${study.accession_id}: ${study.title}`} breadcrumbs={breadcrumbs}>
   <body>
-    <StudyTitleInfo study_info={study}/>
+    <StudyTitleInfo study_info={study} emdbLinks={emdbLinks} pdbLinks={pdbLinks}/>
 
   <StudyContentsSummary 
     tableOfContents={tableOfContents} 
@@ -149,6 +153,15 @@ const breadcrumbs = [
       {!fileListUrls && (<StudyFiles accessionID={accessionID}/>)}
     </div>
     <div slot="how-to-cite" style="word-wrap: break-word;"><Citation howToCite={howToCite}/></div>
+    {
+      isEMPIAR && (
+        <div slot="download-metadata">
+          <a target="_blank" href={`https://ftp.ebi.ac.uk/pub/databases/emtest/empiar/headers/${accessionID.replace("EMPIAR-", "")}.xml`}>
+            <button class="vf-button vf-button--primary vf-button--sm">Download Metadata</button>
+          </a>
+        </div>
+      )
+    }
   </StudyContentsSummary>
 
   <hr/>
@@ -253,7 +266,7 @@ const breadcrumbs = [
 </section>
 
   <hr/>
-  {Array.isArray(study.see_also) && study.see_also.length > 0 && (
+  {((Array.isArray(study.see_also) && study.see_also.length > 0) || pdbLinks || emdbLinks) && (
     <section id="linked_information" class="vf-content | embl-grid embl-grid--has-centered-content">
       <div>
         <h2 class="vf-section-header__heading">Linked Information</h2>
@@ -261,7 +274,7 @@ const breadcrumbs = [
       <div>
         <ul>
           {
-            study.see_also.map((linkedInfo) => {
+            study?.see_also.map((linkedInfo) => {
               const { link, link_type, description } = linkedInfo;
               return (
                 <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>
@@ -271,7 +284,10 @@ const breadcrumbs = [
                 </li>
               )
             })
+            
           }
+          {pdbLinks && <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>Related PDB entries: <Fragment set:html={pdbLinks} /></li>}
+          {emdbLinks && <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>Related EMDB entries: <Fragment set:html={emdbLinks} /></li>}
         </ul>
       </div>
 
@@ -288,7 +304,7 @@ const breadcrumbs = [
       <div>
         {
           study.dataset.map((dataset) => (
-            <DatasetInfo dataset={dataset} />
+            <DatasetInfo dataset={dataset} isEMPIAR={isEMPIAR} datasetFileSummaryString={datasetFileSummaryString}/>
           ))
         }
       </div>

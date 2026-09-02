@@ -32,6 +32,21 @@ To test:
 You can also run this on the files genated by the build by running `npm run build` and then `linkchecker dist/bioimage-archive/ ...`
 
 
+## Verify local OME-Zarr display
+
+When the frontend is configured for a local search API whose image records
+refer to loopback MinIO, verify both parts of the local viewer path:
+
+1. Open the Study page and confirm its selected hero image links to the
+   corresponding Image page when the URI matches `image_static_display_uri`.
+2. Open that Image page and confirm the embedded Vizarr viewer can read the
+   local OME-Zarr source.
+
+The standard Image page delegates the browser's loopback/private-network
+permissions to the Vizarr iframe. Gallery-specific viewers are separate entry
+points and are not covered by this check.
+
+
 ## Style guide
 
 We follow: https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide/Code_style_guide/JavaScript 

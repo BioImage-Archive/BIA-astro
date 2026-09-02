@@ -9,7 +9,7 @@ export function getPlaceholderHeroImage(accessionID) {
 }
 
 export function getStudyImage(study, cardImageOverride) {
-    const studyImage = study?.example_image_uri?.length > 0? study.example_image_uri: getPlaceholderHeroImage(study.accession_id);
+    const studyImage = study?.example_image_uri?.length > 0? study.example_image_uri?.[0]: getPlaceholderHeroImage(study.accession_id);
 
     if (cardImageOverride != null) {
       return cardImageOverride
@@ -44,8 +44,50 @@ export function multilineTextRender(value) {
 
 
 export function formatBytesToHumanSize(sizeBytes) {
-    var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
-    return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+  var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
+  return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
+}
+
+export function formatMetresToHumanSize(metres) {
+  var i = metres == 0 ? 0 : Math.floor(Math.log(metres) / Math.log(1000)) * -1;
+  var formatted = `${Number(metres / Math.pow(1000, i*-1)).toFixed(0)} ${['mm', 'µm', 'nm', "pm"][i-1]}`
+  return formatted;
+}
+
+function formatValueHumanReadable(fieldName, value) {
+  const nValue = Number(value);
+  if(Number.isNaN(nValue)) {
+    return value;
+  }
+  if (fieldName.endsWith("(m/px)") || fieldName.endsWith("(m)")) {
+    return formatMetresToHumanSize(nValue);
+  }
+  else if (fieldName.endsWith("(bytes)")) {
+    return formatBytesToHumanSize(nValue);
+  }
+  else {
+    return nValue;
+  }
+}
+
+export function formatFieldName(fieldName, fieldValue) {
+  const bIsCompared = fieldValue.startsWith(">") || fieldValue.startsWith("<") || fieldValue.startsWith("≤") || fieldValue.startsWith("≥");
+  const bIsRange = fieldValue.includes("-");
+  if(Number.isFinite(fieldValue)) {
+    return formatValueHumanReadable(fieldName, fieldValue);
+  }
+  else if (bIsCompared) {
+    const fieldValueNumeric = fieldValue.slice(1);
+    return `${fieldValue[0]} ${formatValueHumanReadable(fieldName, fieldValueNumeric)}`;
+  }
+  else if (bIsRange) {
+    const [start, end] = fieldValue.split("-");
+    return `${formatValueHumanReadable(fieldName, start)} - ${formatValueHumanReadable(fieldName, end)}`;
+  }
+  else {
+    return fieldValue;
+  }
+    
 }
 
 export function getSimpleAttributeValue(obj, attrName) {
@@ -53,6 +95,42 @@ export function getSimpleAttributeValue(obj, attrName) {
     return obj?.additional_metadata
       ?.find(attr => attr.name === attrName)
       ?.value[attrName] ?? null;
+}
+
+export function getPublicVisualisationURI(uri) {
+    if (!uri) {
+        return null;
+    }
+
+    try {
+        const url = new URL(uri);
+        if (url.hostname === "livingobjects-int.ebi.ac.uk") {
+            url.hostname = "livingobjects.ebi.ac.uk";
+        }
+        return url.toString();
+    } catch {
+        return uri;
+    }
+}
+
+export function buildVizarrViewerURL(uri) {
+    if (!uri) {
+        return null;
+    }
+
+    const url = new URL("https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html");
+    url.searchParams.set("source", uri);
+    return url.toString();
+}
+
+export function buildITKViewerURL(uri) {
+    if (!uri) {
+        return null;
+    }
+
+    const url = new URL("https://kitware.github.io/itk-vtk-viewer/app/");
+    url.searchParams.set("fileToLoad", uri);
+    return url.toString();
 }
   
 export function getLicenceLogo(licenceURL){
@@ -237,32 +315,84 @@ export function formatPixelDimensions(img_rep) {
     return fields.reduce((text, field) => formatPixelDimension(img_rep[field], text), "") + " px" 
 }
 
-export function generateParamString(baseURL, query, page, selectedFacets, pageSize){
+export function generateParamString(baseURL, query, page, selectedFacets, pageSize, sortBy = "", sortOrder = "", sortSource = ""){
   const url = new URL(baseURL, "http://local");
-  query !== "" && url.searchParams.set("query", query ?? "");
-  url.origin !== "http://local" | pageSize > 12 && url.searchParams.set("pagination.page_size", String(pageSize));
-  url.origin !== "http://local" && url.searchParams.set("pagination.page", String(page));
-  for (const [facetKey, values] of Object.entries(selectedFacets)) {
-    if (!values?.length) continue;
+  const isPageURL = url.origin === "http://local";
+  const hasQuery = query !== undefined && query !== null && query !== "";
+  const hasFacetValues = Object.values(selectedFacets ?? {}).some((values) => values?.length > 0);
+  const shouldKeepSort = sortBy && (sortBy !== "relevance" || sortSource === "user" || hasQuery || hasFacetValues);
+
+  if (hasQuery) {
+    url.searchParams.set("query", query ?? "");
+  }
+
+  if (!isPageURL || pageSize > 12) {
+    url.searchParams.set("pagination.page_size", String(pageSize));
+  }
+
+  if (!isPageURL) {
+    url.searchParams.set("pagination.page", String(page));
+  }
+
+  url.searchParams.delete("sortBy");
+  url.searchParams.delete("sortOrder");
+  url.searchParams.delete("sort_by");
+  url.searchParams.delete("sort_order");
+  url.searchParams.delete("sort_source");
+
+  if (shouldKeepSort) {
+    url.searchParams.set("sort_by", sortBy);
+    url.searchParams.set("sort_order", sortOrder || "desc");
+    if (isPageURL && sortSource) {
+      url.searchParams.set("sort_source", sortSource);
+    }
+  }
+
+  for (const [facetKey, values] of Object.entries(selectedFacets ?? {})) {
     url.searchParams.delete(facetKey);
-    for (const v of values) {
-      if (v === null || v === undefined) continue;
-      const s = String(v).trim();
-      if (s === "") continue;
-      if (facetKey === "size_c.eq" && v === "More than 5" && url.origin !== "http://local"){
-        url.searchParams.append("size_c.gt", "5")
-      }else{
-        if (facetKey === "has_converted_image" && url.origin !== "http://local"){
-          url.searchParams.append("has.thumbnail", "true")
-        }
-        else{
-          url.searchParams.append(facetKey, v);
-        }
-        
+    url.searchParams.delete(`${facetKey}.eq`);
+    url.searchParams.delete(`${facetKey}.gt`);
+    url.searchParams.delete(`${facetKey}.gte`);
+    url.searchParams.delete(`${facetKey}.lt`);
+    url.searchParams.delete(`${facetKey}.lte`);
+
+    if (!values?.length) continue;
+
+    for (const value of values) {
+      if (value === null || value === undefined) continue;
+      const stringValue = String(value).trim();
+      if (stringValue === "") continue;
+
+      if (isPageURL) {
+        url.searchParams.append(facetKey, stringValue);
+      }
+      else if (stringValue.includes("-")) {
+        const [start, end] = stringValue.split("-");
+        url.searchParams.append(`${facetKey}.gte`, start);
+        url.searchParams.append(`${facetKey}.lte`, end);
+      }
+      else if (stringValue[0] === ">") {
+        url.searchParams.append(`${facetKey}.gt`, stringValue.slice(1));
+      }
+      else if (stringValue[0] === "<") {
+        url.searchParams.append(`${facetKey}.lt`, stringValue.slice(1));
+      }
+      else if (stringValue[0] === "≤") {
+        url.searchParams.append(`${facetKey}.lte`, stringValue.slice(1));
+      }
+      else if (stringValue[0] === "≥") {
+        url.searchParams.append(`${facetKey}.gte`, stringValue.slice(1));
+      }
+      else if (facetKey === "has_converted_image" && !isPageURL) {
+        url.searchParams.append(url.pathname.endsWith("image") ? "has.converted_image" : "has.thumbnail", "true");
+      }
+      else {
+        url.searchParams.append(`${facetKey}.eq`, stringValue);
       }
     }
   }
-  return url.origin === "http://local" ? `${url.pathname}${url.search}` : url.toString()
+
+  return isPageURL ? `${url.pathname}${url.search}` : url.toString()
 }
 
 export async function getFromAPI(url){
@@ -483,4 +613,399 @@ export function highlightLinks(baseUrl, highlightObj, query, limit = 8) {
   const vals = Object.values(highlightObj || {}).flat();
   const uniq = [...new Set(vals)].slice(0, limit);
   return uniq.flatMap(h => ({ text: h[0]?.replace(/__HIT__|__\/HIT__/g, "").trim(), url: textFragmentLink(baseUrl, h, query) }))?.[0]?.["url"];
+}
+
+const FILE_LIST_BASE_URL = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-filelist";
+const ARROW_POINTER_SIZE = 4;
+const ARROW_ARRAY_BUFFERS_OFFSET = 40;
+const ARROW_ARRAY_CHILDREN_OFFSET = 44;
+const ARROW_SCHEMA_NAME_OFFSET = 4;
+const ARROW_SCHEMA_FORMAT_OFFSET = 0;
+const ARROW_SCHEMA_CHILDREN_OFFSET = 32;
+const textDecoder = new TextDecoder();
+
+function readPointer(view, offset) {
+  return view.getUint32(offset, true);
+}
+
+function readInt64AsNumber(view, offset) {
+  return Number(view.getBigInt64(offset, true));
+}
+
+function readCString(memory, ptr) {
+  if (!ptr) return "";
+
+  let end = ptr;
+  while (memory[end] !== 0) {
+    end += 1;
+  }
+
+  return textDecoder.decode(memory.subarray(ptr, end));
+}
+
+function getArrowArrayHeader(view, arrayAddr) {
+  return {
+    length: readInt64AsNumber(view, arrayAddr),
+    nullCount: readInt64AsNumber(view, arrayAddr + 8),
+    offset: readInt64AsNumber(view, arrayAddr + 16),
+    nBuffers: readInt64AsNumber(view, arrayAddr + 24),
+    nChildren: readInt64AsNumber(view, arrayAddr + 32),
+    buffersPtr: readPointer(view, arrayAddr + ARROW_ARRAY_BUFFERS_OFFSET),
+    childrenPtr: readPointer(view, arrayAddr + ARROW_ARRAY_CHILDREN_OFFSET),
+  };
+}
+
+function getArrowSchemaHeader(view, memory, schemaAddr) {
+  return {
+    format: readCString(memory, readPointer(view, schemaAddr + ARROW_SCHEMA_FORMAT_OFFSET)),
+    name: readCString(memory, readPointer(view, schemaAddr + ARROW_SCHEMA_NAME_OFFSET)),
+    nChildren: readInt64AsNumber(view, schemaAddr + 24),
+    childrenPtr: readPointer(view, schemaAddr + ARROW_SCHEMA_CHILDREN_OFFSET),
+  };
+}
+
+function getArrowBufferPointer(view, buffersPtr, index) {
+  return readPointer(view, buffersPtr + (index * ARROW_POINTER_SIZE));
+}
+
+function isArrowValueValid(view, array, rowIndex) {
+  if (array.nullCount <= 0) return true;
+
+  const validityPtr = getArrowBufferPointer(view, array.buffersPtr, 0);
+  if (!validityPtr) return true;
+
+  const bitIndex = array.offset + rowIndex;
+  const byte = view.getUint8(validityPtr + Math.floor(bitIndex / 8));
+  return (byte & (1 << (bitIndex % 8))) !== 0;
+}
+
+function makeArrowStringAccessor(view, memory, arrayAddr, schemaAddr) {
+  const array = getArrowArrayHeader(view, arrayAddr);
+  const schema = getArrowSchemaHeader(view, memory, schemaAddr);
+  const offsetByteWidth = schema.format === "U" ? 8 : 4;
+  const offsetsPtr = getArrowBufferPointer(view, array.buffersPtr, 1);
+  const valuesPtr = getArrowBufferPointer(view, array.buffersPtr, 2);
+
+  return {
+    name: schema.name,
+    get(rowIndex) {
+      if (!isArrowValueValid(view, array, rowIndex) || !offsetsPtr || !valuesPtr) {
+        return null;
+      }
+
+      const offsetIndex = array.offset + rowIndex;
+      const start = offsetByteWidth === 8
+        ? readInt64AsNumber(view, offsetsPtr + (offsetIndex * offsetByteWidth))
+        : view.getInt32(offsetsPtr + (offsetIndex * offsetByteWidth), true);
+      const end = offsetByteWidth === 8
+        ? readInt64AsNumber(view, offsetsPtr + ((offsetIndex + 1) * offsetByteWidth))
+        : view.getInt32(offsetsPtr + ((offsetIndex + 1) * offsetByteWidth), true);
+
+      return textDecoder.decode(memory.subarray(valuesPtr + start, valuesPtr + end));
+    },
+  };
+}
+
+function getArrowStringColumnsFromRecordBatch(recordBatch, wasmMemory, wasmRecordBatch) {
+  const memory = new Uint8Array(wasmMemory.buffer);
+  const view = new DataView(wasmMemory.buffer);
+  const rootArray = getArrowArrayHeader(view, wasmRecordBatch.arrayAddr());
+  const rootSchema = getArrowSchemaHeader(view, memory, wasmRecordBatch.schemaAddr());
+  const columns = new Map();
+
+  for (let i = 0; i < rootArray.nChildren && i < rootSchema.nChildren; i += 1) {
+    const childArrayAddr = readPointer(view, rootArray.childrenPtr + (i * ARROW_POINTER_SIZE));
+    const childSchemaAddr = readPointer(view, rootSchema.childrenPtr + (i * ARROW_POINTER_SIZE));
+    const column = makeArrowStringAccessor(view, memory, childArrayAddr, childSchemaAddr);
+    columns.set(column.name, column);
+  }
+
+  return {
+    rowCount: recordBatch.numRows,
+    columns,
+  };
+}
+
+async function* getReadableStreamItems(stream) {
+  if (stream?.[Symbol.asyncIterator]) {
+    yield* stream;
+    return;
+  }
+
+  const reader = stream.getReader();
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) return;
+      yield value;
+    }
+  } finally {
+    reader.releaseLock();
+  }
+}
+
+function getFirstExistingSchemaColumn(schema, candidateColumns) {
+  for (const column of candidateColumns) {
+    try {
+      if (schema.indexOf(column) >= 0) {
+        return column;
+      }
+    } catch {
+      // Keep trying candidates. Parquet schemas differ between generated file lists.
+    }
+  }
+
+  return null;
+}
+
+function addFormatToDatasetSummary(datasetSummaries, datasetName, format) {
+  if (!datasetSummaries.has(datasetName)) {
+    datasetSummaries.set(datasetName, {
+      dataset: datasetName,
+      file_count: 0,
+      formats: new Map(),
+    });
+  }
+
+  const summary = datasetSummaries.get(datasetName);
+  summary.file_count += 1;
+  summary.formats.set(format, (summary.formats.get(format) || 0) + 1);
+}
+
+function inferFileFormat({ type, fileName, path, filePath }) {
+  const source = String(fileName || path || filePath || "").split(/[?#]/)[0].toLowerCase();
+  const multiPartExtensions = [
+    ".ome.zarr",
+    ".ome.tiff",
+    ".ome.tif",
+    ".tar.gz",
+    ".mrc.gz",
+    ".map.gz",
+    ".nii.gz",
+  ];
+  const multiPartExtension = multiPartExtensions.find((extension) => source.endsWith(extension));
+  if (multiPartExtension) return multiPartExtension;
+
+  const lastPathPart = source.split("/").pop() || "";
+  const extensionIndex = lastPathPart.lastIndexOf(".");
+  if (extensionIndex > -1 && extensionIndex < lastPathPart.length - 1) {
+    return lastPathPart.slice(extensionIndex);
+  }
+
+  const fallbackType = String(type || "").trim();
+  return fallbackType || "unknown";
+}
+
+function formatDatasetFileSummary(accessionID, parquetUrl, datasetSummaries) {
+  const datasets = [...datasetSummaries.values()]
+    .map((summary) => ({
+      dataset: summary.dataset,
+      file_count: summary.file_count,
+      formats: Object.fromEntries([...summary.formats.entries()].sort(([a], [b]) => a.localeCompare(b))),
+    }))
+    .sort((a, b) => a.dataset.localeCompare(b.dataset));
+
+  return {
+    accession_id: accessionID,
+    source: parquetUrl,
+    datasets,
+  };
+}
+
+export async function buildDatasetFileSummary(accessionID) {
+
+  const parquetUrl = `${FILE_LIST_BASE_URL}/${accessionID}_file_list.parquet`;
+  const parquet = await import("parquet-wasm/node");
+  const ParquetFile = parquet.ParquetFile || parquet.default?.ParquetFile;
+  const wasmMemory = parquet.wasmMemory || parquet.default?.wasmMemory;
+
+  if (!ParquetFile || !wasmMemory) {
+    console.warn("parquet-wasm/node did not expose ParquetFile or wasmMemory.");
+    return "";
+  }
+
+  let parquetFile = null;
+  let schema = null;
+
+  try {
+    parquetFile = await ParquetFile.fromUrl(parquetUrl);
+    schema = parquetFile.schema();
+
+    const datasetColumn = getFirstExistingSchemaColumn(schema, ["dataset", "dataset_title", "study_component", "study_component_title"]);
+    const typeColumn = getFirstExistingSchemaColumn(schema, ["format", "file_format", "type"]);
+    const fileNameColumn = getFirstExistingSchemaColumn(schema, ["file_name", "filename", "name"]);
+    const pathColumn = getFirstExistingSchemaColumn(schema, ["path", "relative_path"]);
+    const filePathColumn = getFirstExistingSchemaColumn(schema, ["file_path", "uri", "url"]);
+    const columns = [...new Set([datasetColumn, typeColumn, fileNameColumn, pathColumn, filePathColumn].filter(Boolean))];
+
+    if (!datasetColumn || (!fileNameColumn && !pathColumn && !filePathColumn)) {
+      console.warn(`Could not find required columns in ${parquetUrl}`);
+      return "";
+    }
+
+    const datasetSummaries = new Map();
+    const stream = await parquetFile.stream({
+      columns,
+      batchSize: 8192,
+      concurrency: 4,
+    });
+
+    for await (const recordBatch of getReadableStreamItems(stream)) {
+      const wasmRecordBatch = recordBatch.toFFI();
+      try {
+        const batch = getArrowStringColumnsFromRecordBatch(recordBatch, wasmMemory(), wasmRecordBatch);
+        const datasetAccessor = batch.columns.get(datasetColumn);
+        const typeAccessor = typeColumn ? batch.columns.get(typeColumn) : null;
+        const fileNameAccessor = fileNameColumn ? batch.columns.get(fileNameColumn) : null;
+        const pathAccessor = pathColumn ? batch.columns.get(pathColumn) : null;
+        const filePathAccessor = filePathColumn ? batch.columns.get(filePathColumn) : null;
+
+        for (let rowIndex = 0; rowIndex < batch.rowCount; rowIndex += 1) {
+          const datasetName = datasetAccessor?.get(rowIndex) || "Unknown dataset";
+          const format = inferFileFormat({
+            type: typeAccessor?.get(rowIndex),
+            fileName: fileNameAccessor?.get(rowIndex),
+            path: pathAccessor?.get(rowIndex),
+            filePath: filePathAccessor?.get(rowIndex),
+          });
+
+          addFormatToDatasetSummary(datasetSummaries, datasetName, format);
+        }
+      } finally {
+        wasmRecordBatch.free();
+        recordBatch.free();
+      }
+    }
+
+    return formatDatasetFileSummary(accessionID, parquetUrl, datasetSummaries);
+  } catch (error) {
+    console.warn(`Failed to summarize EMPIAR parquet file list for ${accessionID}`, error);
+    return "";
+  } finally {
+    schema?.free();
+    parquetFile?.free();
+  }
+}
+
+
+function asArray(value) {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalisePDBAccession(accession) {
+  return String(accession ?? "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function normaliseEMDBAccession(accession) {
+  const digits = String(accession ?? "").match(/\d+/)?.[0];
+  return digits || "";
+}
+
+function buildEMDBThumbnailURL(emdbNumber) {
+  const subDirectory = emdbNumber.length > 4
+    ? `${emdbNumber.slice(0, 2)}/${emdbNumber.slice(2, 3)}`
+    : emdbNumber.slice(0, 2);
+  return `https://www.ebi.ac.uk/emdb/static/em/${subDirectory}/${emdbNumber}/images/400_${emdbNumber}.gif`;
+}
+
+function formatEMDBUnits(units) {
+  if (!units || units === "Å" || units === "Å") {
+    return "&#x212B;";
+  }
+  return escapeHtml(units);
+}
+
+function getEMDBResolution(emdbEntry) {
+  const structureDeterminations = asArray(emdbEntry?.structure_determination_list?.structure_determination);
+
+  for (const structureDetermination of structureDeterminations) {
+    const imageProcessing = asArray(structureDetermination?.image_processing);
+    for (const processing of imageProcessing) {
+      const resolution = processing?.final_reconstruction?.resolution;
+      if (resolution?.valueOf_) {
+        return {
+          value: resolution.valueOf_,
+          units: formatEMDBUnits(resolution.units),
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+function buildRelatedEntryPreviewLink({ accession, href, thumbnailURL, type, measurement }) {
+  const safeAccession = escapeHtml(accession);
+  const safeType = escapeHtml(type);
+  const measurementHtml = measurement
+    ? `<span class="bia-related-entry-preview__measurement">${escapeHtml(measurement.label)}: ${escapeHtml(measurement.value)} ${measurement.units}</span>`
+    : "";
+
+  return `
+    <span class="bia-related-entry">
+      <a class="vf-link bia-related-entry__link" href="${href}" target="_blank" rel="noopener noreferrer">${safeAccession}</a>${measurement?.value ? ` (${measurement.value} ${measurement.units})`: ""}
+      <span class="bia-related-entry-preview" role="tooltip">
+        <img src="${thumbnailURL}" alt="Preview image for ${safeAccession}" loading="lazy" />
+        <span class="bia-related-entry-preview__body">
+          <span class="bia-related-entry-preview__title">${safeType} ${safeAccession}</span>
+          ${measurementHtml}
+        </span>
+      </span>
+    </span>
+  `;
+}
+
+export async function buildPDBandEMDBLinks(study){
+  //|| ["8ay4", "8ay5"]
+  const studyPDBLinks = asArray(study?.pdb_accession)
+    .map(normalisePDBAccession)
+    .filter(Boolean);
+  //|| ["15710", "15711"]
+  const studyEMDBLinks = asArray(study?.emdb_accession)
+    .map(normaliseEMDBAccession)
+    .filter(Boolean);
+
+  const pdbLinks = studyPDBLinks.length > 0
+    ? studyPDBLinks.map((pdb) => buildRelatedEntryPreviewLink({
+      accession: pdb,
+      href: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdb}`,
+      thumbnailURL: `https://www.ebi.ac.uk/pdbe/static/entry/${pdb}_deposited_chain_front_image-200x200.png`,
+      type: "PDB",
+    })).join(", ")
+    : null;
+
+  const emdbEntries = await Promise.all(studyEMDBLinks.map(async (emdb) => ({
+    accession: emdb,
+    metadata: await getFromAPI(`https://www.ebi.ac.uk/emdb/api/entry/EMD-${emdb}`),
+  })));
+
+  const emdbLinks = emdbEntries.length > 0
+    ? emdbEntries.map(({ accession, metadata }) => {
+      const displayAccession = `EMD-${accession}`;
+      const resolution = getEMDBResolution(metadata);
+      return buildRelatedEntryPreviewLink({
+        accession: displayAccession,
+        href: `https://www.ebi.ac.uk/emdb/EMD-${accession}`,
+        thumbnailURL: buildEMDBThumbnailURL(accession),
+        type: "EMDB",
+        measurement: resolution ? {
+          label: "Resolution",
+          value: resolution.value,
+          units: resolution.units,
+        } : null,
+      });
+    }).join(", ")
+    : null;
+
+  return [pdbLinks, emdbLinks]
 }

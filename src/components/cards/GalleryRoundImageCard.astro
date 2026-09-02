@@ -2,12 +2,12 @@
 const { collection , linkPath} = Astro.props;
 ---
 <article class="vf-summary vf-summary--news">
-    <span class="vf-summary__date">
+    <span class="vf-summary__date" style="text-align: center;">
         { collection.subtitle }
     </span>
     <a class="vf-link" href={ linkPath + collection.name } style="display: inline-block;"><img src={ collection.summary_image } alt="" class="vf-summary__image" loading="lazy" style="max-width: 100%; height: auto;border-radius: 50%; display: block;"></a>
     <br />
-    <h3 class="vf-summary__title text-center" >
+    <h3 class="vf-summary__title text-center" style="text-align: center;">
         <a class="vf-summary__link" href={ linkPath + collection.name } >
                 { collection.title }
                 </path></svg>

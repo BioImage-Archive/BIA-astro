@@ -3,6 +3,7 @@ import "/src/styles/active_left_menu.css"
 
 const pageData = {   
   "search": "Searching Data",
+  "explore-file-list": "Exploring the File List",
   "downloading-data":"Downloading Data",
   "submitting-data":"Submitting Data",
   "supporting-tools": "Supporting Tools",
@@ -24,7 +25,7 @@ const pageName = pathName.split('/').at(-2);
     <a href={`/bioimage-archive/help`} class="vf-navigation__link">Help Overview</a>
   </li>
   <li class={pageName === "about-the-new-website" ? "vf-list__item | active" : "vf-list__item"}>
-    <a href=`/bioimage-archive/help/about-the-new-website` class="vf-navigation__link">About the new website</a>
+    <a href=`/bioimage-archive/help/about-the-new-website` class="vf-navigation__link">About the New Website</a>
   </li>
 </ul>
 <ul class="vf-list vf-list--l">

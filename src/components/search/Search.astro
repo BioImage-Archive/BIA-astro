@@ -1,4 +1,5 @@
 ---
+import "../../styles/search.css";
 import StudyCard from '../../components/cards/BrowseStudyCard.astro';
 import ImageCard from '../../components/cards/BrowseImageCard.astro';
 import SearchFacet from './SearchFacet.astro';
@@ -22,56 +23,68 @@ const { url, query, searchType} =
 
 const searchEndpoint = searchType === "study"? `${PUBLIC_SEARCH_API}/website/browse/study`: `${PUBLIC_SEARCH_API}/website/browse/image`;
 const searchPageURL = searchType === "study"? "/bioimage-archive/studies": "/bioimage-archive/images";
-//const sortBy = url.searchParams.get('sortBy');
-//const sortOrder = url.searchParams.get('sortOrder');
+const hasSortParam = url.searchParams.has("sort_by") || url.searchParams.has("sort_order") || url.searchParams.has("sortBy") || url.searchParams.has("sortOrder");
+const hasPageSizeParam = url.searchParams.has("pagination.page_size");
+const hasSearchQuery = query !== undefined && query !== null && query !== "";
+const releaseDateSortField = searchType === "image" ? "study_release_date" : "release_date";
+const requestedSortBy = url.searchParams.get("sort_by") || url.searchParams.get("sortBy") || "relevance";
+const requestedSortOrder = url.searchParams.get("sort_order") || url.searchParams.get("sortOrder") || "desc";
+const requestedSortSource = url.searchParams.get("sort_source") || "";
+const normalizedSortBy =
+  requestedSortBy === "accession"
+    ? "accession_id"
+    : requestedSortBy === "release_date" || requestedSortBy === "study_release_date"
+      ? releaseDateSortField
+      : requestedSortBy;
+const sortBy = ["relevance", "accession_id", releaseDateSortField].includes(normalizedSortBy) ? normalizedSortBy : "relevance";
+const normalizedSortOrder = requestedSortOrder === "ascending" ? "asc" : requestedSortOrder === "descending" ? "desc" : requestedSortOrder;
+const sortOrder = ["asc", "desc"].includes(normalizedSortOrder) ? normalizedSortOrder : "desc";
 const page = Number(url.searchParams.get('pagination.page')) || 1;
 const pageSize = Number(url.searchParams.get('pagination.page_size')) || 12;
+const cursor = url.searchParams.get('cursor');
+const maxResultWindow = 10000;
+const cappedPage = Math.max(1, Math.floor(maxResultWindow / pageSize));
+const displayPage = cursor ? Math.max(cappedPage + 1, page) : page;
+
+function getFacetQueryValues(paramName: string) {
+  const directValues = url.searchParams.getAll(paramName);
+  if (directValues.length > 0) {
+    return directValues;
+  }
+
+  return url.searchParams.getAll(`${paramName}.eq`);
+}
 
 const selectedFacets: SelectedFacets = {
-  "facet.organism": url.searchParams.getAll("facet.organism"),
-  "facet.imaging_method": url.searchParams.getAll("facet.imaging_method"),
-  "facet.year": url.searchParams.getAll("facet.year"),
-  "facet.annotation_method": url.searchParams.getAll("facet.annotation_method"),
-  "has_converted_image": url.searchParams.getAll("has_converted_image"),
-  "facet.image_format": url.searchParams.getAll("facet.image_format"),
-  "facet.licence": url.searchParams.getAll("facet.licence"),
-  "size_c.eq": url.searchParams.getAll("size_c.eq"),
-
-  // NEW: range filters (store as single-value arrays for compatibility)
-  "size_x.gte": url.searchParams.getAll("size_x.gte"),
-  "size_x.lte": url.searchParams.getAll("size_x.lte"),
-
-  "size_y.gte": url.searchParams.getAll("size_y.gte"),
-  "size_y.lte": url.searchParams.getAll("size_y.lte"),
-
-  "size_z.gte": url.searchParams.getAll("size_z.gte"),
-  "size_z.lte": url.searchParams.getAll("size_z.lte"),
-
-
-  "size_t.gte": url.searchParams.getAll("size_t.gte"),
-  "size_t.lte": url.searchParams.getAll("size_t.lte"),
-
-  "total_size_in_bytes.gte": url.searchParams.getAll("total_size_in_bytes.gte"),
-  "total_size_in_bytes.lte": url.searchParams.getAll("total_size_in_bytes.lte"),
-
-  "total_physical_size_x.gte": url.searchParams.getAll("total_physical_size_x.gte"),
-  "total_physical_size_x.lte": url.searchParams.getAll("total_physical_size_x.lte"),
-
-  "total_physical_size_y.gte": url.searchParams.getAll("total_physical_size_y.gte"),
-  "total_physical_size_y.lte": url.searchParams.getAll("total_physical_size_y.lte"),
-
-  "total_physical_size_z.gte": url.searchParams.getAll("total_physical_size_z.gte"),
-  "total_physical_size_z.lte": url.searchParams.getAll("total_physical_size_z.lte"),
-
-  "voxel_physical_size_x.gte": url.searchParams.getAll("voxel_physical_size_x.gte"),
-  "voxel_physical_size_x.lte": url.searchParams.getAll("voxel_physical_size_x.lte"),
-
-  "voxel_physical_size_y.gte": url.searchParams.getAll("voxel_physical_size_y.gte"),
-  "voxel_physical_size_y.lte": url.searchParams.getAll("voxel_physical_size_y.lte"),
-
-  "voxel_physical_size_z.gte": url.searchParams.getAll("voxel_physical_size_z.gte"),
-  "voxel_physical_size_z.lte": url.searchParams.getAll("voxel_physical_size_z.lte"),
+  "facet.organism": getFacetQueryValues("facet.organism"),
+  "facet.imaging_method": getFacetQueryValues("facet.imaging_method"),
+  "facet.year": getFacetQueryValues("facet.year"),
+  "facet.annotation_method": getFacetQueryValues("facet.annotation_method"),
+  "has_converted_image": getFacetQueryValues("has_converted_image"),
+  "facet.image_format": getFacetQueryValues("facet.image_format"),
+  "facet.licence": getFacetQueryValues("facet.licence"),
+  "facet.file_type": getFacetQueryValues("facet.file_type"),
+  "size_c": getFacetQueryValues("size_c"),
+  "total_size_in_bytes": getFacetQueryValues("total_size_in_bytes"),
+  "size_x": getFacetQueryValues("size_x"),
+  "size_y": getFacetQueryValues("size_y"),
+  "size_z": getFacetQueryValues("size_z"),
+  "size_t": getFacetQueryValues("size_t"),
+  "total_physical_size_x": getFacetQueryValues("total_physical_size_x"),
+  "total_physical_size_y": getFacetQueryValues("total_physical_size_y"),
+  "total_physical_size_z": getFacetQueryValues("total_physical_size_z"),
+  "image_pixel_z": getFacetQueryValues("image_pixel_z"),
+  "voxel_physical_size_z": getFacetQueryValues("voxel_physical_size_z"),
+  "voxel_physical_size_y": getFacetQueryValues("voxel_physical_size_y"),
+  "voxel_physical_size_x": getFacetQueryValues("voxel_physical_size_x"),
 };
+
+const hasSelectedFilters = Object.values(selectedFacets).some((values) => values?.length > 0);
+const isUserSelectedSort = requestedSortSource === "user" || (hasSortParam && sortBy !== "relevance");
+const shouldApplySort = hasSortParam || hasSearchQuery;
+const shouldKeepSort = shouldApplySort && (isUserSelectedSort || hasSearchQuery || hasSelectedFilters);
+const sortSource = isUserSelectedSort ? "user" : "query";
+
 const FACET_CONFIG: Record<
   string,
   { title: string; type: "terms" | "range" | "slider" | "boolean"; queryKey?: string; field?: string }
@@ -81,20 +94,21 @@ const FACET_CONFIG: Record<
   release_date: { title: "Release Year", type: "terms", queryKey: "facet.year" },
   annotation_method: { title: "Annotation Method", type: "terms", queryKey: "facet.annotation_method" },
   image_format: { title: "Image Format", type: "terms", queryKey: "facet.image_format" },
-  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c.eq" },
+  number_of_channels: { title: "Channels", type: "terms", queryKey: "size_c" },
   licence: {title: "Licence", type:"terms", queryKey: "facet.licence"},
+  file_type: { title: "File Type", type: "terms", queryKey: "facet.file_type" },
 
-  z_planes: { title: "Z-Planes", type: "slider", field: "size_z" },
-  image_pixel_x: { title: "Image Pixel X (px)", type: "slider", field: "size_x" },
-  image_pixel_y: { title: "Image Pixel Y (px)", type: "slider", field: "size_y" },
-  time_steps: { title: "Time Steps", type: "slider", field: "size_t" },
-  total_size_in_bytes: { title: "Total Size (bytes)", type: "slider", field: "total_size_in_bytes" },
-  total_physical_size_x: { title: "Total Physical Size X (m)", type: "range", field: "total_physical_size_x" },
-  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "range", field: "total_physical_size_y" },
-  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "range", field: "total_physical_size_z" },
-  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "range", field: "voxel_physical_size_x" },
-  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "range", field: "voxel_physical_size_y" },
-  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "range", field: "voxel_physical_size_z" },
+  image_pixel_z: { title: "Z-Planes", type: "terms", queryKey: "size_z" },
+  image_pixel_x: { title: "Image Pixel X (px)", type: "terms", queryKey: "size_x" },
+  image_pixel_y: { title: "Image Pixel Y (px)", type: "terms", queryKey: "size_y" },
+  time_steps: { title: "Time Steps", type: "terms", queryKey: "size_t" },
+  total_size_in_bytes: { title: "Total Size (bytes)", type: "terms", queryKey: "total_size_in_bytes" },
+  total_physical_size_x: { title: "Total Physical Size X (m)", type: "terms", queryKey: "total_physical_size_x" },
+  total_physical_size_y: { title: "Total Physical Size Y (m)", type: "terms", queryKey: "total_physical_size_y" },
+  total_physical_size_z: { title: "Total Physical Size Z (m)", type: "terms", queryKey: "total_physical_size_z" },
+  voxel_physical_size_x: { title: "Voxel Physical Size X (m/px)", type: "terms", queryKey: "voxel_physical_size_x" },
+  voxel_physical_size_y: { title: "Voxel Physical Size Y (m/px)", type: "terms", queryKey: "voxel_physical_size_y" },
+  voxel_physical_size_z: { title: "Voxel Physical Size Z (m/px)", type: "terms", queryKey: "voxel_physical_size_z" },
 };
 
 let hits = {} as SearchHits;
@@ -108,10 +122,19 @@ if (hasQueryParam) {
     query,
     page,
     selectedFacets,
-    pageSize
+    pageSize,
+    shouldKeepSort ? sortBy : "",
+    shouldKeepSort ? sortOrder : "",
+    sortSource
   );
 
-  const res = await fetch(searchURL);
+  const requestURL = new URL(searchURL, "http://local");
+  if (cursor) {
+    requestURL.searchParams.set("cursor", cursor);
+    requestURL.searchParams.delete("pagination.page");
+  }
+
+  const res = await fetch(requestURL.toString());
   if (res.ok) {
     const data = await res.json();
     hits = data.hits;
@@ -124,45 +147,40 @@ if (hasQueryParam) {
 const totalResults = hits?.total?.value ?? 0;
 let results = hits.hits;
 
-// Sorting on Server side till the API can sort results.
+function parseAccession(id: unknown): [string, number] {
+  const match = String(id ?? "").match(/^([A-Z\-]+)(\d+)$/i);
+  if (!match) return [String(id ?? ""), 0];
+  return [match[1], parseInt(match[2], 10)];
+}
 
-/*
-Commenting it out as Sort is not ready on the API and we dont use it on FE for now
-function parseAccession(id) {
-    const match = id.match(/^([A-Z\-]+)(\d+)$/i);
-    if (!match) return [id, 0];
-    return [match[1], parseInt(match[2], 10)];
-  }
-
-function sortAcession(aId, bId, sortOrder){
+function sortAccession(aId: unknown, bId: unknown, sortOrder: string) {
   const [aPrefix, aNum] = parseAccession(aId);
-      const [bPrefix, bNum] = parseAccession(bId);
-      const prefixCompare = aPrefix.localeCompare(bPrefix);
-      if (prefixCompare !== 0) return sortOrder === 'descending' ? -prefixCompare : prefixCompare;
-      return sortOrder === 'descending' ? bNum - aNum : aNum - bNum;
+  const [bPrefix, bNum] = parseAccession(bId);
+  const prefixCompare = aPrefix.localeCompare(bPrefix);
+  if (prefixCompare !== 0) return sortOrder === "desc" ? -prefixCompare : prefixCompare;
+  return sortOrder === "desc" ? bNum - aNum : aNum - bNum;
 }
 
-function sortReleaseDate(aReleaseDate, bReleaseDate, sortOrder){
-  const aTime = new Date(aReleaseDate).getTime();
-  const bTime = new Date(bReleaseDate).getTime();
-  return sortOrder === 'descending' ? bTime - aTime : aTime - bTime
+function sortReleaseDate(aReleaseDate: unknown, bReleaseDate: unknown, sortOrder: string) {
+  const aTime = new Date(String(aReleaseDate ?? "")).getTime() || 0;
+  const bTime = new Date(String(bReleaseDate ?? "")).getTime() || 0;
+  return sortOrder === "desc" ? bTime - aTime : aTime - bTime;
 }
 
-switch(sortBy) {
-  // case "relevance":
-  //   results = sortOrder === "descending"? hits.hits.reverse() : hits.hits;
-  //   break;
-  // case "accession":
-  //   results = hits.hits.sort((a, b) => {return sortAcession(a?._source?.accession_id, b?._source?.accession_id, sortOrder)});
-  //   break;
-  // case "release_date":
-  //   results = hits.hits.sort(function(a,b){ return sortReleaseDate(a?._source?.release_date, b?._source?.release_date, sortOrder)});
-  //   break;
-  default:
-    results = hits.hits;
-    break;
+if (Array.isArray(results)) {
+  switch(sortBy) {
+    case "accession_id":
+      results = results.slice().sort((a, b) => sortAccession(a?._source?.accession_id, b?._source?.accession_id, sortOrder));
+      break;
+    case "release_date":
+    case "study_release_date":
+      results = results.slice().sort((a, b) => sortReleaseDate(a?._source?.[releaseDateSortField], b?._source?.[releaseDateSortField], sortOrder));
+      break;
+    default:
+      results = results.slice();
+      break;
+  }
 }
-*/
 
 function hasBuckets(x: any): x is FacetData {
   return !!x && Array.isArray(x.buckets);
@@ -181,7 +199,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   if (cfg.type === "terms" || cfg.type === "boolean") {
     if (!hasBuckets(data)) return acc;
 
-    const valuesAndCounts = data.buckets
+    let valuesAndCounts = data.buckets
       .slice()
       .sort((a, b) => {
         const aKey = (a.key_as_string ?? a.key ?? "").toString().toLowerCase();
@@ -193,6 +211,29 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
         obj[k] = bucket.doc_count;
         return obj;
       }, {} as Record<string, number>);
+    
+    // restore backend order
+    //   reduce above also causes 2048 to be misplaced so re-apply order
+    if([
+      "total_size_in_bytes",
+      "time_steps",
+      "total_physical_size_x",
+      "total_physical_size_y",
+      "total_physical_size_z",
+      "voxel_physical_size_x",
+      "voxel_physical_size_y",
+      "voxel_physical_size_z",
+      "image_pixel_z",
+      "image_pixel_x",
+      "image_pixel_y",
+    ].includes(facetKey)) {
+      const preservedOrderValuesAndCounts = {};
+      data.buckets.map((bucket) => {
+        // space needed so 2048 isn't a numeric key, which would cause it to be the first key in the dictionary, independent of insertion order
+        preservedOrderValuesAndCounts[" " + bucket.key] = bucket.doc_count;
+      });
+      valuesAndCounts = preservedOrderValuesAndCounts;
+    };
 
     const totalFacetCounts =
       Object.keys(valuesAndCounts).length + (data.sum_other_doc_count ?? 0);
@@ -235,523 +276,18 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
 
 }, {} as Record<string, any>);
 ---
-<style>
-.toggle-switch {
-    display: inline-flex;
-    background: #f0f0f0;
-    padding: 4px;
-    border-radius: 20px;
-}
-.toggle-option {
-    position: relative;
-    cursor: pointer;
-}
-.toggle-option input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-.toggle-label {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 16px;
-    transition: all 0.3s ease;
-}
-.toggle-option input:checked + .toggle-label {
-    background: #3b6fb6;
-    color: white;
-}
-.toggle-option:hover input:not(:checked) + .toggle-label {
-    background: #e0e0e0;
-}
-.controls-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5em;
-    margin: 0 auto;
-}
- .controls-container {
-  position: sticky;
-  top: 0;
-  background: white;
-  padding: 1em;
-  box-shadow: 0 0px 0px;
-}
-
-.column-toggle-container {
-    text-align: center;
-    padding: 0.5em;
-}
-.column-toggle {
-    display: inline-flex;
-    background: #f0f0f0;
-    padding: 4px;
-    border-radius: 20px;
-    gap: 4px;
-    margin-bottom: 1em;
-}
-.column-option {
-    position: relative;
-    cursor: pointer;
-}
-.column-option input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-.column-label {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 16px;
-    transition: all 0.3s ease;
-    font-size: 0.9em;
-}
-.column-option input:checked + .column-label {
-    background: #3b6fb6;
-    color: white;
-}
-.column-option:hover input:not(:checked) + .column-label {
-    background: #e0e0e0;
-}
-
-.grid-container {
-    background-color: var(--vf-u-background-color-ui--white);
-    width: 100%;
-    padding: 0 1rem;
-}
-.grid-inner {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.25rem;
-    max-width: var(--vf-content-max-width, 1200px);
-    margin: 0 auto;
-}
-#search-results-shell {
-    transition: opacity 0.15s ease;
-}
-#search-results-shell.is-loading {
-    opacity: 0.55;
-    pointer-events: none;
-}
-</style>
-
-<script type="module">
-  const SHELL_ID = "search-results-shell";
-  let activeSearchNavigation = 0;
-
-  async function navigateSearch(url, { push = true } = {}) {
-    const navigationId = ++activeSearchNavigation;
-    const currentShell = document.getElementById(SHELL_ID);
-    if (!currentShell) {
-      window.location.href = url.toString();
-      return;
-    }
-
-    currentShell.classList.add("is-loading");
-
-    try {
-      const response = await fetch(url.toString(), {
-        headers: { "X-Requested-With": "fetch" },
-      });
-
-      if (!response.ok) throw new Error(`Search navigation failed: ${response.status}`);
-
-      const html = await response.text();
-      const nextDocument = new DOMParser().parseFromString(html, "text/html");
-      const nextShell = nextDocument.getElementById(SHELL_ID);
-
-      if (!nextShell) throw new Error(`Could not find #${SHELL_ID} in fetched page`);
-      if (navigationId !== activeSearchNavigation) return;
-
-      currentShell.replaceWith(nextShell);
-      document.title = nextDocument.title;
-
-      if (push) {
-        history.pushState({}, "", url.toString());
-      }
-
-      initSearchResultsShell(nextShell);
-    } catch (error) {
-      console.error(error);
-      window.location.href = url.toString();
-    } finally {
-      if (navigationId === activeSearchNavigation) {
-        document.getElementById(SHELL_ID)?.classList.remove("is-loading");
-      }
-    }
-  }
-
-  function getSearchURLFromForm(form) {
-    const url = new URL(form.action, window.location.origin);
-    const formData = new FormData(form);
-
-    url.search = "";
-    for (const [key, value] of formData.entries()) {
-      if (value === "") continue;
-      url.searchParams.append(key, value.toString());
-    }
-
-    return url;
-  }
-
-  function submitFacetsForm() {
-    const form = document.getElementById("facets");
-    if (!form) return;
-    form.querySelector('[name="pagination.page"]')?.remove();
-    if (typeof form.requestSubmit === "function") {
-      form.requestSubmit();
-    } else {
-      form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-    }
-  }
-
-  function formatBytesToHumanSize(sizeBytes) {
-    var i = sizeBytes == 0 ? 0 : Math.floor(Math.log(sizeBytes) / Math.log(1000));
-    return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
-}
-
-  function pct(v, min, max) {
-    return ((v - min) / (max - min)) * 100;
-  }
-
-  function syncSlider(container, from) {
-    const minEl = container.querySelector(".slider-min");
-    const maxEl = container.querySelector(".slider-max");
-    const progress = container.querySelector(".slider-progress");
-    const label = container.closest(".slider-facet")?.querySelector(".slider-label");
-    const gte = container.closest(".slider-facet")?.querySelector(".slider-gte");
-    const lte = container.closest(".slider-facet")?.querySelector(".slider-lte");
-    
-    if (!minEl || !maxEl || !progress || !gte || !lte) return;
-
-    const minBound = Number(container.dataset.min);
-    const maxBound = Number(container.dataset.max);
-
-    let a = Number(minEl.value);
-    let b = Number(maxEl.value);
-
-    // prevent crossing
-    if (a > b) {
-      if (from === "min") {
-        a = b;
-        minEl.value = String(a);
-      } else {
-        b = a;
-        maxEl.value = String(b);
-      }
-    }
-
-    const left = pct(a, minBound, maxBound);
-    const right = pct(b, minBound, maxBound);
-    progress.style.left = left + "%";
-    progress.style.width = (right - left) + "%";
-
-    if (label.classList.contains("total_size_in_bytes")) {
-      label.textContent = `${formatBytesToHumanSize(a)} – ${formatBytesToHumanSize(b)}`;
-    }else{
-      label.textContent = `${Math.floor(a)} – ${Math.ceil(b)}`;
-    }
-
-    container.dataset.dirty = "1";
-
-
-    const hadInitial = gte.dataset.initial === "1" || lte.dataset.initial === "1";
-
-    if (from !== "init" || hadInitial) {
-      gte.value = String(a);
-      lte.value = String(b);
-    }
-
-
-    gte.disabled = gte.value === "";
-    lte.disabled = lte.value === "";
-
-
-    if (a === minBound && b === maxBound) {
-      gte.value = "";
-      lte.value = "";
-      gte.disabled = true;
-      lte.disabled = true;
-      container.dataset.dirty = "0";
-      if (label.classList.contains("total_size_in_bytes")) {
-        label.textContent = label.dataset.default ?? `${formatBytesToHumanSize(a)} – ${formatBytesToHumanSize(b)}`;
-      }else{
-        label.textContent = label.dataset.default ?? `${Math.floor(minBound)} – ${Math.ceil(maxBound)}`;
-      }
-      
-    }
-  }
-
-  function initSliders(root) {
-  root.querySelectorAll(".slider-slider").forEach((container) => {
-    // if URL already had values, hidden inputs will already be non-empty
-    // we still need to draw progress bar
-    syncSlider(container, "init");
-
-    const minEl = container.querySelector(".slider-min");
-    const maxEl = container.querySelector(".slider-max");
-    minEl?.addEventListener("input", () => syncSlider(container, "min"));
-    maxEl?.addEventListener("input", () => syncSlider(container, "max"));
-
-    minEl?.addEventListener("change", submitFacetsForm);
-    maxEl?.addEventListener("change", submitFacetsForm);
-  });
-  }
-
-  function clamp(n, lo, hi) {
-    if (!Number.isFinite(n)) return NaN;
-    return Math.min(hi, Math.max(lo, n));
-  }
-
-  function initRangeFacet(fieldset) {
-    const gte = fieldset.querySelector('input.range-gte[type="number"]');
-    const lte = fieldset.querySelector('input.range-lte[type="number"]');
-    const gteHidden = fieldset.querySelector('input.range-gte-hidden[type="hidden"]');
-    const lteHidden = fieldset.querySelector('input.range-lte-hidden[type="hidden"]');
-    if (!gte || !lte || !gteHidden || !lteHidden) return;
-
-    const minBound = Number(gte.min);
-    const maxBound = Number(gte.max);
-
-    let debounceTimer = null;
-    const DEBOUNCE_MS = 1500;
-
-    function commit(from) {
-      const rawA = gte.value === "" ? NaN : Number(gte.value);
-      const rawB = lte.value === "" ? NaN : Number(lte.value);
-
-      let a = clamp(rawA, minBound, maxBound);
-      let b = clamp(rawB, minBound, maxBound);
-
-      // auto-fill other side (optional)
-      if (from === "gte" && Number.isFinite(a) && !Number.isFinite(b)) {
-        b = maxBound;
-        lte.value = String(b);
-      }
-      if (from === "lte" && Number.isFinite(b) && !Number.isFinite(a)) {
-        a = minBound;
-        gte.value = String(a);
-      }
-
-      // prevent crossing
-      if (Number.isFinite(a) && Number.isFinite(b) && a > b) {
-        if (from === "gte") {
-          a = b;
-          gte.value = String(a);
-        } else {
-          b = a;
-          lte.value = String(b);
-        }
-      }
-
-      // ✅ Only submit via hidden inputs; disable if empty
-      if (Number.isFinite(a)) {
-        gteHidden.value = String(a);
-        gteHidden.disabled = false;
-      } else {
-        gteHidden.value = "";
-        gteHidden.disabled = true;
-      }
-
-      if (Number.isFinite(b)) {
-        lteHidden.value = String(b);
-        lteHidden.disabled = false;
-      } else {
-        lteHidden.value = "";
-        lteHidden.disabled = true;
-      }
-
-      submitFacetsForm();
-    }
-
-    function debounceCommit(from) {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => commit(from), DEBOUNCE_MS);
-    }
-
-    gte.addEventListener("input", () => debounceCommit("gte"));
-    lte.addEventListener("input", () => debounceCommit("lte"));
-    gte.addEventListener("blur", () => commit("gte"));
-    lte.addEventListener("blur", () => commit("lte"));
-
-    // Enter = apply immediately
-    gte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("gte"); }});
-    lte.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); commit("lte"); }});
-  }
-
-  function initRangeFacets(root) {
-    root.querySelectorAll("fieldset.range-facet").forEach(initRangeFacet);
-  }
-
-    function toggleView(viewId) {
-        const views = ['card-view', 'table-view', 'grid-view'];
-        views.forEach(id => {
-            const view = document.getElementById(id);
-            if (view) view.style.display = id === viewId ? 'block' : 'none';
-        });
-        
-        if (viewId === 'table-view') {
-            window.dataTable?.columns?.adjust?.();
-        }
-  }
-  function initViewControls(root) {
-        // Add event listeners for view toggles
-        root.querySelectorAll('input[name="view"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    toggleView(e.target.value);
-                }
-            });
-        });
-        root.querySelectorAll('input[name="columns"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    window.setGridColumns(Number(e.target.value));
-                }
-            });
-        });
-
-  window.setGridColumns = function(columns) {
-    const gridInner = document.querySelector('.grid-inner');
-    if (gridInner) {
-        gridInner.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-        
-        // Get all size bars and cube wrappers
-        const sizeBars = document.querySelectorAll('.compact-size-bar');
-        const icons = document.querySelectorAll('.icon-container');
-        
-        // Show/hide based on column count
-        const display = columns === 5 ? 'none' : '';
-        sizeBars.forEach(bar => bar.style.display = display);
-        icons.forEach(icon => icon.style.display = display);
-    }
-  }
-  // Set initial grid columns
-  window.setGridColumns(4);
-  }
-
-  function initConvertedImageToggle(root) {
-    const toggle = root.querySelector("#convertedImageToggle");
-    const hidden = root.querySelector("#has_converted_image_hidden");
-    const form = root.querySelector("#facets");
-
-    if (!toggle || !hidden || !form) return;
-
-    // ✅ init from URL
-    const url = new URL(window.location.href);
-    const on = url.searchParams.has("has_converted_image");
-    toggle.checked = on;
-
-    // ✅ ensure hidden input matches initial state
-    hidden.disabled = !on;
-
-    toggle.addEventListener("change", () => {
-      // enable/disable hidden field so it is included/excluded from GET
-      hidden.disabled = !toggle.checked;
-
-      // optional: reset pagination when changing this filter
-      const pageInput = form.querySelector('input[name="pagination.page"]');
-      if (pageInput) pageInput.remove();
-
-      submitFacetsForm();
-    });
-  }
-
-  function isMobile() {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return regex.test(navigator.userAgent);
-  }
-
-  function initFacetSections(root) {
-    root.querySelectorAll(".facet-section").forEach((section) => {
-      const secClass = isMobile() ? "collapsed" : "open";
-      const styleDisplay = isMobile() ? "none" : "block";
-      section.classList.remove("collapsed", "open");
-      section.classList.add(secClass);
-      const options = section.querySelector(".facet-options");
-      if (options) options.style.display = styleDisplay;
-    });
-  }
-
-  function initPageSize(root) {
-    root.querySelector("#pageSize")?.addEventListener("change", (event) => {
-      const url = new URL(window.location.href);
-      url.searchParams.set("pagination.page_size", event.target.value);
-      url.searchParams.delete("pagination.page");
-      navigateSearch(url);
-    });
-  }
-
-  function initSearchResultsShell(root = document) {
-    initSliders(root);
-    initRangeFacets(root);
-    initViewControls(root);
-    initConvertedImageToggle(root);
-    initFacetSections(root);
-    initPageSize(root);
-  }
-
-  document.addEventListener("submit", (event) => {
-    const form = event.target;
-    if (!(form instanceof HTMLFormElement) || form.id !== "facets") return;
-
-    event.preventDefault();
-    navigateSearch(getSearchURLFromForm(form));
-  });
-
-  document.addEventListener("change", (event) => {
-    const target = event.target;
-    if (!(target instanceof HTMLInputElement)) return;
-    if (!target.matches('#facets input[type="checkbox"]')) return;
-
-    submitFacetsForm();
-  });
-
-  document.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-
-    const facetToggle = target.closest("[data-facet-toggle]");
-    if (facetToggle) {
-      const id = facetToggle.getAttribute("data-facet-toggle");
-      const section = document.getElementById(`facet-section-${id}`);
-      const options = document.getElementById(`facet-option-${id}`);
-      if (section && options) {
-        const isCollapsed = section.classList.toggle("collapsed");
-        options.style.display = isCollapsed ? "none" : "block";
-      }
-      return;
-    }
-
-    const link = target.closest(".facet-remove-btn, .vf-pagination a");
-    if (!(link instanceof HTMLAnchorElement)) return;
-
-    const url = new URL(link.href, window.location.origin);
-    if (url.origin !== window.location.origin) return;
-
-    event.preventDefault();
-    navigateSearch(url);
-  });
-
-  document.addEventListener("keydown", (event) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    const facetToggle = target.closest("[data-facet-toggle]");
-    if (!facetToggle || (event.key !== "Enter" && event.key !== " ")) return;
-
-    event.preventDefault();
-    facetToggle.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-  });
-
-  window.addEventListener("popstate", () => {
-    navigateSearch(new URL(window.location.href), { push: false });
-  });
-
-  initSearchResultsShell(document);
-</script>
-
-<section id="search-results-shell" class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5">
+<script src="./search-results.js"></script>
+<section
+  id="search-results-shell"
+  class="vf-content | vf-u-grid-example | vf-grid vf-grid__col-5"
+  data-total-results={String(totalResults)}
+  data-page-size={String(pageSize)}
+  data-results-count={String(results?.length ?? 0)}
+  data-capped-page={String(cappedPage)}
+  data-current-page={String(displayPage)}
+  data-display-page={String(displayPage)}
+  data-has-cursor={cursor ? "true" : "false"}
+>
   <div class="vf-u-grid__col--span-3--sm vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl">
     <br />
     <div style="display: flex;">        
@@ -775,6 +311,13 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
         {url.searchParams.has("pagination.page_size") && (
           <input type="hidden" name="pagination.page_size" value={String(pageSize)} />
         )}
+        {shouldKeepSort && (
+          <>
+            <input type="hidden" name="sort_by" value={sortBy} />
+            <input type="hidden" name="sort_order" value={sortOrder} />
+            <input type="hidden" name="sort_source" value={sortSource} />
+          </>
+        )}
         <input
           type="hidden"
           id="has_converted_image_hidden"
@@ -793,21 +336,31 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
             <div></div>
           </div>
           <section class="vf-content">
-            <div class="vf-grid vf-grid__col-5">
-              <div class="vf-u-grid__col--span-1--sm  vf-u-grid__col--span-2--md vf-u-grid__col--span-4--lg vf-u-grid__col--span-4--xl" style="display: flex; align-items: center;">
+            <div class="results-header">
+              <div class="results-count">
                 <span id="paginated-results">
-                    {results !== undefined && results?.length != 0 &&  `${(paginationData.page - 1) * paginationData.page_size + 1} - ${Math.min(paginationData.page * paginationData.page_size, totalResults)} of ${totalResults} results`}
+                    {results !== undefined && results?.length != 0 && totalResults > 0 && `${(Math.max(1, displayPage) - 1) * paginationData.page_size + 1} - ${Math.min(((Math.max(1, displayPage) - 1) * paginationData.page_size) + results.length, totalResults)} of ${totalResults} results`}
                   </span>
                 </div>
-                <div class="vf-form vf-u-grid__col--span-1--sm  vf-u-grid__col--span-1--md vf-u-grid__col--span-1--lg vf-u-grid__col--span-1--xl" style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;white-space: nowrap;" id="pageSizeDiv">
-                  { searchType === "study" &&
-                    <div class="converted-study-switch" style="padding: 0.5em 0.5em">
-                      <span> Studies with viewable images:  </span>
-                      <label class="switch">
-                        <input type="checkbox" id="convertedImageToggle">
-                        <span class="slider round"></span>
-                      </label>
-                    </div>
+                <div class="vf-form" id="resultsToolbar">
+                  { searchType === "study"? (
+                      <div class="converted-study-switch">
+                        <span> Studies with viewable images:  </span>
+                        <label class="switch">
+                          <input type="checkbox" id="convertedImageToggle">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+                    ) : (
+                      <div class="converted-image-switch">
+                        <span> Viewable Images:  </span>
+                        <label class="switch">
+                          <input type="checkbox" id="convertedImageToggle">
+                          <span class="slider round"></span>
+                        </label>
+                      </div>
+
+                    )
                   }
                   <div class="controls-container">
                     <div class="controls-inner">
@@ -827,18 +380,29 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                       </div>
                     </div>
                   </div>
-                  <label for="pageSize" class="vf-form__label vf-u-type__text-body--4 vf-u-padding--100" style="margin: 0;padding: 0;border: 0;">Page Size:</label>
-                  <select name="pageSize" id="pageSize" class="vf-form__select vf-u-type__text-body--5 vf-u-padding--100" style="height: 2.5em;width: auto;min-width: 8rem;">
-                    <option value="12" selected={pageSize === 12} >Default</option>
-                    <option value="30" selected={pageSize === 30} >30</option>
-                    <option value="60" selected={pageSize === 60} >60</option>
-                    <option value="90" selected={pageSize === 90}>90</option>
-                  </select>
-                  
+                  <div class="toolbar-selects">
+                    <select name="pageSize" id="pageSize" class="toolbar-select vf-u-type__text-body--5" aria-label="Page size">
+                      <option value="12" selected={!hasPageSizeParam || pageSize === 12}>Page size</option>
+                      <option value="30" selected={pageSize === 30}>30 per page</option>
+                      <option value="60" selected={pageSize === 60}>60 per page</option>
+                      <option value="90" selected={pageSize === 90}>90 per page</option>
+                    </select>
+                    <select name="sort_by" id="sortBy" class="toolbar-select vf-u-type__text-body--5" aria-label="Sort by">
+                      <option value="" selected={!shouldKeepSort}>Sort by</option>
+                      <option value="relevance" selected={shouldKeepSort && sortBy === "relevance"}>Relevance</option>
+                      <option value={releaseDateSortField} selected={shouldKeepSort && sortBy === releaseDateSortField}>Release date</option>
+                      <option value="accession_id" selected={shouldKeepSort && sortBy === "accession_id"}>Accession</option>
+                    </select>
+                    <select name="sort_order" id="sortOrder" class="toolbar-select vf-u-type__text-body--5" aria-label="Sort order">
+                      <option value="" selected={!shouldKeepSort}>Sort order</option>
+                      <option value="desc" selected={shouldKeepSort && sortOrder === "desc"}>Descending</option>
+                      <option value="asc" selected={shouldKeepSort && sortOrder === "asc"}>Ascending</option>
+                    </select>
+                  </div>
                 </div>
             </div>
             <div id="selected-facets" style="margin-top: 0.5rem; align-items: center;">
-              <SearchSelectedFacet query={query} url={searchPageURL} text="Query" kind="query" />
+              <SearchSelectedFacet query={query} url={searchPageURL} text="Query" kind="query" pageSize={pageSize} selectedFacets={selectedFacets} sortBy={shouldKeepSort ? sortBy : ""} sortOrder={shouldKeepSort ? sortOrder : ""} sortSource={sortSource} />
               {Object.entries(facets).map(([facetKey, facet]) => (
                 <SearchSelectedFacet
                   key={facetKey}
@@ -851,6 +415,9 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                   minVal={facet?.selectedMin || ""} 
                   maxVal={facet?.selectedMax || ""}
                   pageSize={pageSize}
+                  sortBy={shouldKeepSort ? sortBy : ""}
+                  sortOrder={shouldKeepSort ? sortOrder : ""}
+                  sortSource={sortSource}
                 />
               ))}
             </div>
@@ -904,7 +471,7 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
                   </div>
               </section>
             </div>
-            {results === undefined || results?.length != 0 && (<br/><PaginationControl  paginationData={paginationData}/>)}
+            {results === undefined || results?.length != 0 && (<br/><PaginationControl  paginationData={paginationData} displayPage={displayPage}/>)}
           </section>
         </section>
       )

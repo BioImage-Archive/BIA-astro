@@ -1,0 +1,98 @@
+---
+const {
+  dialogClass = "",
+  title,
+  copyButtonClass = "",
+  copyLabel = "Copy",
+} = Astro.props;
+---
+
+<dialog class={dialogClass}>
+  <form method="dialog">
+    <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+    <h2>{title}</h2>
+    <pre><code></code></pre>
+    <div class="dialog-actions">
+      <button class={copyButtonClass} type="button">{copyLabel}</button>
+      <button class="spora-button spora-button--ghost" value="cancel">Close</button>
+    </div>
+  </form>
+</dialog>
+
+<style>
+  dialog {
+    width: min(760px, calc(100% - 28px));
+    border: 0;
+    border-radius: 22px;
+    padding: 0;
+    box-shadow: 0 40px 120px rgba(0,0,0,.35);
+  }
+
+  dialog::backdrop {
+    background: rgba(10,11,9,.66);
+    backdrop-filter: blur(4px);
+  }
+
+  dialog form {
+    position: relative;
+    padding: 28px;
+  }
+
+  dialog pre {
+    max-height: 45vh;
+    overflow: auto;
+    border-radius: 14px;
+    padding: 18px;
+    background: #11130f;
+    color: white;
+    white-space: pre-wrap;
+  }
+
+  .dialog-close {
+    position: absolute;
+    right: 18px;
+    top: 14px;
+    border: 0;
+    background: transparent;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .dialog-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .spora-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    border: 1px solid #11130f;
+    border-radius: 999px;
+    background: #11130f;
+    color: white;
+    padding: 0.65rem 1.1rem;
+    cursor: pointer;
+    font: 700 0.9rem/1 var(--spora-mono, "IBM Plex Mono", "Courier New", monospace);
+  }
+
+  .spora-button--ghost {
+    background: transparent;
+    color: #11130f;
+  }
+
+  @media (max-width: 600px) {
+    dialog form {
+      padding: 20px;
+    }
+
+    .dialog-actions {
+      flex-direction: column;
+    }
+
+    .dialog-actions > * {
+      width: 100%;
+    }
+  }
+</style>

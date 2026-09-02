@@ -1,0 +1,81 @@
+---
+import "/src/styles/bars_and_sections.css"
+import Footer from '../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import { PUBLIC_GTAG } from "astro:env/client";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import Announcement from "../components/Announcement.astro";
+import { Image } from 'astro:assets';
+
+const { projectLogo, projectTitle, projectSubTitle, projectBannerImage, pageTitle, breadcrumbs, projectNavItems } = Astro.props;
+
+const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
+const baseUrl = import.meta.env.BASE_URL;
+const projectBannerImageSrc = typeof projectBannerImage === "string" ? projectBannerImage : projectBannerImage?.src;
+---
+<html lang="en" class="vf-js">
+  <head>
+    <!-- Google tag (gtag.js) -->
+		<script is:inline async src={"https://www.googletagmanager.com/gtag/js?id=" + PUBLIC_GTAG}></script>
+		<script
+			set:html={`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '${PUBLIC_GTAG}');
+			`}
+		/>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/BIA-logo.svg`} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" />
+
+    <!-- JS -->     
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title>{pageTitle}</title>
+  </head>
+  <body class="vf-body">
+    <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
+    <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
+    <header>
+    <section class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
+        style={{
+            backgroundImage: projectBannerImageSrc ? `url(${projectBannerImageSrc})` : undefined,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+        }}>
+            <div class="vf-hero__content | vf-box | vf-stack vf-stack--400" 
+                style="background-color: rgba(0, 0, 0, 0.8); opacity: 0.9;">
+                <section style="display: flex; gap: 10px;">
+                    <div>
+                        {
+                            projectLogo && (<Image src={projectLogo} alt="Project banner image" />)
+                        }
+                    </div>
+                    <div>
+                        <h2 class="vf-hero__heading" style="color: white;">{projectTitle}</h2>
+                        <p class="vf-hero__subheading" style="color: white;">{projectSubTitle}</p>
+                    </div>
+            </div>
+        </section>
+</header>
+    <Navigation projectNavItems={projectNavItems}/>
+    <Announcement />
+    <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
+    <slot />
+    <Footer />
+  </body>
+  
+  <!-- Script required for bottom bar -->
+  <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
+  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
+</html>
