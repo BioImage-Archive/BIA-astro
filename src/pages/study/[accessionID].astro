@@ -37,7 +37,7 @@ const globusLink = isEMPIAR? `https://app.globus.org/file-manager?origin_id=4777
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
 
 // Read EMPIAR XML header to get dataset summary
-const datasetFileSummaryString = isEMPIAR ? await buildDatasetFileSummary(accessionID, study?.dataset) : null;
+const datasetFileSummaryString = isEMPIAR ? null: null; //await buildDatasetFileSummary(accessionID, study?.dataset) : null;
 
 if (fileListUrls) {
   tableOfContents["Browse All Files"] = "file_list";

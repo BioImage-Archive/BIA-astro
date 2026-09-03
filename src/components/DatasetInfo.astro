@@ -21,7 +21,7 @@ function formatFileTypeCounts(fileTypeCounts) {
     }
 
     return Object.entries(fileTypeCounts)
-        .filter(([extension]) => typeof extension === "string" && extension.length > 0 && extension !== "file")
+        .filter(([extension]) => typeof extension === "string" && extension.length > 0 && extension !== "file" && extension !== "directory")
         .map(([extension]) => extension)
         .join(", ");
 }
@@ -34,7 +34,6 @@ const formatsFromFileList = dsFromFileList
         dsFromFileList.data_format ? `${dsFromFileList.data_format}` : "",
     ].filter(Boolean).join(", ") || Object.entries(dsFromFileList?.formats || {}).map( k => `${k[1]} ${k[0]} file(s)`).join(", ")
     : null;
-console.log(formattedFileTypeCounts)
 const fileFormatsLabel = formatsFromFileList ? "File formats" : "Top 5 file formats";
 ---
 <style>
