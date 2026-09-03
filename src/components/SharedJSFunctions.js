@@ -634,9 +634,11 @@ function getImageSetXmlBlocks(xml) {
 function buildXmlImageSetSummary(imageSetXml, fallbackDatasetName = "Unknown dataset") {
   const dataset = getXmlTagText(imageSetXml, "name") || fallbackDatasetName;
   const dataFormat = getXmlTagText(imageSetXml, "dataFormat");
+  const numImagesOrTiltSeries = Number(getXmlTagText(imageSetXml, "numImagesOrTiltSeries")) || null;
   return {
     dataset,
     data_format: dataFormat,
+    file_count: numImagesOrTiltSeries,
   };
 }
 
@@ -665,7 +667,7 @@ function formatDatasetFileSummary(accessionID, xmlUrl, imageSetSummaries, studyD
     accession_id: accessionID,
     source: xmlUrl,
     data_format: firstSummary.data_format || "",
-    num_images_or_tilt_series: firstSummary.num_images_or_tilt_series ?? null,
+    file_count: firstSummary.file_count ?? null,
     datasets,
   };
 }
@@ -815,8 +817,8 @@ export async function buildPDBandEMDBLinks(study){
 
 export function getHighlightTextString(highlights) {
   if (!highlights) return "";
-  const highlightFields = ["title", "organism_classification.common_name", "organism_classification.scientific_name", "imaging_method","annotation_type.keyword"];
+  const skiphighlightFields = ["title", "organism_classification.common_name", "organism_classification.scientific_name", "imaging_method","imaging_method.keyword","annotation_type.keyword", "accession_id"];
   const highlightValues = Object.entries(highlights).map(([key, value]) => 
-    !highlightFields.includes(key) && `<span class="highlight">${`${key.replace(/.*\./g, "").replace(/_/g, " ")}: `}${value}</span>`).filter(Boolean).flat();
-  return highlightValues.join(", ");
+    !skiphighlightFields.includes(key) && `<span class="highlight"><b>${`${key.replace(/.*\./g, "").replace(/_/g, " ")}: `}</b><i>${value}</i></span>`).filter(Boolean).flat();
+  return highlightValues.join("<br>");
 }

@@ -36,6 +36,7 @@ const showSizeBar = hasPhysical || hasPixel;
         {highlightedTextString && (
             <div class="tooltip">
                 <span class="tooltiptext">
+                    <button type="button" class="tooltip-close" data-tooltip-close aria-label="Close match tooltip">&times;</button>
                     <HighlightedText text={highlightedTextString} />
                 </span>
             </div>
@@ -173,4 +174,3 @@ const showSizeBar = hasPhysical || hasPixel;
         z-index: 1;
     }
 </style>
-

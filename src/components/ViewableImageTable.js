@@ -106,7 +106,7 @@ const api_path = tableEl.dataset.apiPath;
 
   document.addEventListener("DOMContentLoaded", function () {
     const maxResultWindow = 10000;
-    const cursorHistoryLimit = 25;
+    const cursorHistoryLimit = 40;
     const tableStateKey = `bia:viewable-images-table:${studyAccessionID}:${imagePageRoot || "default"}`;
     const tableStateMaxAgeMs = 30 * 60 * 1000;
 
@@ -274,9 +274,11 @@ const api_path = tableEl.dataset.apiPath;
       ajax: async function (dtParams, callback) {
         const search = dtParams.search.value;
         const pageSize = dtParams.length;
-        const cappedPage = cappedPageFor(pageSize);
-        const requestedPage = pendingDisplayPage ?? (Math.floor(dtParams.start / pageSize) + 1);
         const isReset = search !== lastSearch || pageSize !== lastPageSize;
+        const cappedPage = cappedPageFor(pageSize);
+        let requestedPage = isReset
+          ? 1
+          : pendingDisplayPage ?? (Math.floor(dtParams.start / pageSize) + 1);
 
         if (isReset) {
           resetCursorState(search, pageSize);
@@ -375,9 +377,15 @@ const api_path = tableEl.dataset.apiPath;
       },
     });
 
-    table.on("search.dt length.dt", function () {
+    table.on("search.dt length.dt", function (event, _settings, len) {
       if (isRestoringTableState) return;
-      resetCursorState(table.search(), table.page.len());
+      const pageSize = event.type === "length"
+        ? getPositiveInteger(len, table.page.len())
+        : table.page.len();
+      resetCursorState(table.search(), pageSize);
+      if (event.type === "length") {
+        table.page("first");
+      }
       saveTableState(table);
     });
 

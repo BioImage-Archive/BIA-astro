@@ -97,7 +97,8 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
     </div>
     {highlightedTextString && (
             <div class="tooltip">
-                <span class="tooltiptext">
+                <span class="tooltiptext" style="margin-top: -0.25em;">
+                    <button type="button" class="tooltip-close" data-tooltip-close aria-label="Close match tooltip">&times;</button>
                     <HighlightedText text={highlightedTextString} />
                 </span>
             </div>
