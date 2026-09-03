@@ -9,13 +9,15 @@ const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
 const formatCancers = (cancers) => cancers.join(', ');
+const sporaIO = "https://go.epfl.ch/spora-io";
+const sporaBench = "https://go.epfl.ch/spora-bench";
 const projectNavItems = [
   { key: "", label: "Home", href: "/bioimage-archive/" },
   { key: "sporaHome", label: "spora", href: "/bioimage-archive/projects/spora" },
   { key: "sporaDataset", label: "Dataset Browser", href: "/bioimage-archive/projects/spora/dataset"},
   { key: "tissueVisualizer", label: "Tissue Visualizer", href: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html"},
-  { key: "sporaDataset", label: "spora [io]", href: "https://spora.epfl.ch/spora-io/index.html"},
-  { key: "sporaDataset", label: "spora [bench]", href: "https://spora.epfl.ch/docs.html"},
+  { key: "sporaIO", label: "spora [io]", href: sporaIO},
+  { key: "sporaBench", label: "spora [bench]", href: sporaBench},
 ];
 
 ---

@@ -557,6 +557,14 @@ document.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
 
+    const tooltipClose = target.closest("[data-tooltip-close]");
+    if (tooltipClose) {
+      event.preventDefault();
+      event.stopPropagation();
+      tooltipClose.closest(".tooltip")?.classList.add("is-dismissed");
+      return;
+    }
+
     const facetToggle = target.closest("[data-facet-toggle]");
     if (facetToggle) {
       const id = facetToggle.getAttribute("data-facet-toggle");

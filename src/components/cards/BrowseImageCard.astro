@@ -1,11 +1,11 @@
 ---
-import { highlightOrganism, formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, applyHighlight, highlightLinks, getLicenceLogo, formatHighlightedList } from "../SharedJSFunctions.js";
+import { getHighlightTextString, highlightOrganism, formatListItem, getThumbnail, getSimpleAttributeValue, formatPhysicalDimensions, formatPixelDimensions, applyHighlight, highlightLinks, getLicenceLogo, formatHighlightedList } from "../SharedJSFunctions.js";
 import "../../styles/dataset_card.css"
 import  HighlightedText  from "../HighlightedText.astro";
 import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
 
 const { image, imagePageRoot, taglist, annotationType, highlight, query} = Astro.props;
-
+const highlightedTextString = getHighlightTextString(highlight);
 const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
 const interactiveImageRepresentation = (image.representation.find(
     (rep) => rep.uuid == vizarrRepUuid
@@ -95,6 +95,14 @@ const highlightedImageLink = highlightLinks(base, highlight, query);
 
         </div>
     </div>
+    {highlightedTextString && (
+            <div class="tooltip">
+                <span class="tooltiptext" style="margin-top: -0.25em;">
+                    <button type="button" class="tooltip-close" data-tooltip-close aria-label="Close match tooltip">&times;</button>
+                    <HighlightedText text={highlightedTextString} />
+                </span>
+            </div>
+        )}
     <div class="vf-card__content">
         <p class="vf-card__text">
             {imagingMethod.length>0 && (<b>Imaging method: </b><HighlightedText text={imagingMethod} /><br>)}

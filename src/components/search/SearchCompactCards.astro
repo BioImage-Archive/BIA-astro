@@ -1,15 +1,15 @@
 ---
-const { result, resultType } = Astro.props;
+const { result, resultType, highlight } = Astro.props;
 import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
-import { getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
+import { getHighlightTextString, getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
 import {getImageRep} from "./SearchResultsTable.astro"
+import  HighlightedText  from "../HighlightedText.astro";
 
 const thumbnail = resultType === "study"? getStudyImage(result): getThumbnail(result);
 const isFallback = resultType === "study"? String(thumbnail).includes("placeholder"): thumbnail === imageFallback.src;
 const imageFallbackMessage = isFallback ? "Preview not available yet." : "";
 const studyfallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
 const aspectRatio = resultType === "study"? "1/1.75": "1/1";
-
 
 const isNonZeroNumber = (v) => {
   const n = Number(v);
@@ -28,11 +28,19 @@ const hasPixel =
   isNonZeroNumber(interactiveImageRepresentation?.size_y) ||
   isNonZeroNumber(interactiveImageRepresentation?.size_z);
 
-
+const highlightedTextString = getHighlightTextString(highlight);
 const showSizeBar = hasPhysical || hasPixel;
 ---
 <article class="compact-card custom-card" style={`overflow: hidden;aspect-ratio: ${aspectRatio};`}>
     <div class="image-container">
+        {highlightedTextString && (
+            <div class="tooltip">
+                <span class="tooltiptext">
+                    <button type="button" class="tooltip-close" data-tooltip-close aria-label="Close match tooltip">&times;</button>
+                    <HighlightedText text={highlightedTextString} />
+                </span>
+            </div>
+        )}
         <a class="vf-link" href={`/bioimage-archive/${resultType}/${resultType === "study"? result.accession_id: result.uuid}`} >
         <img src={ thumbnail } alt="" loading="lazy" style="aspect-ratio: 1/1;">
         </a>
@@ -166,4 +174,3 @@ const showSizeBar = hasPhysical || hasPixel;
         z-index: 1;
     }
 </style>
-

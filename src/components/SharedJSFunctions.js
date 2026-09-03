@@ -609,275 +609,85 @@ export function highlightLinks(baseUrl, highlightObj, query, limit = 8) {
   return uniq.flatMap(h => ({ text: h[0]?.replace(/__HIT__|__\/HIT__/g, "").trim(), url: textFragmentLink(baseUrl, h, query) }))?.[0]?.["url"];
 }
 
-const FILE_LIST_BASE_URL = "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-filelist";
-const ARROW_POINTER_SIZE = 4;
-const ARROW_ARRAY_BUFFERS_OFFSET = 40;
-const ARROW_ARRAY_CHILDREN_OFFSET = 44;
-const ARROW_SCHEMA_NAME_OFFSET = 4;
-const ARROW_SCHEMA_FORMAT_OFFSET = 0;
-const ARROW_SCHEMA_CHILDREN_OFFSET = 32;
-const textDecoder = new TextDecoder();
+const EMPIAR_HEADERS_BASE_URL = "https://ftp.ebi.ac.uk/pub/databases/emtest/empiar/headers";
 
-function readPointer(view, offset) {
-  return view.getUint32(offset, true);
+function decodeXmlText(value) {
+  return String(value ?? "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, "\"")
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)));
 }
 
-function readInt64AsNumber(view, offset) {
-  return Number(view.getBigInt64(offset, true));
+function getXmlTagText(xml, tagName) {
+  const match = String(xml ?? "").match(new RegExp(`<${tagName}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tagName}>`, "i"));
+  return match ? decodeXmlText(match[1]).trim() : "";
 }
 
-function readCString(memory, ptr) {
-  if (!ptr) return "";
-
-  let end = ptr;
-  while (memory[end] !== 0) {
-    end += 1;
-  }
-
-  return textDecoder.decode(memory.subarray(ptr, end));
+function getImageSetXmlBlocks(xml) {
+  return [...String(xml ?? "").matchAll(/<imageSet(?:\s[^>]*)?>[\s\S]*?<\/imageSet>/gi)].map((match) => match[0]);
 }
 
-function getArrowArrayHeader(view, arrayAddr) {
+function buildXmlImageSetSummary(imageSetXml, fallbackDatasetName = "Unknown dataset") {
+  const dataset = getXmlTagText(imageSetXml, "name") || fallbackDatasetName;
+  const dataFormat = getXmlTagText(imageSetXml, "dataFormat");
+  const numImagesOrTiltSeries = Number(getXmlTagText(imageSetXml, "numImagesOrTiltSeries")) || null;
   return {
-    length: readInt64AsNumber(view, arrayAddr),
-    nullCount: readInt64AsNumber(view, arrayAddr + 8),
-    offset: readInt64AsNumber(view, arrayAddr + 16),
-    nBuffers: readInt64AsNumber(view, arrayAddr + 24),
-    nChildren: readInt64AsNumber(view, arrayAddr + 32),
-    buffersPtr: readPointer(view, arrayAddr + ARROW_ARRAY_BUFFERS_OFFSET),
-    childrenPtr: readPointer(view, arrayAddr + ARROW_ARRAY_CHILDREN_OFFSET),
+    dataset,
+    data_format: dataFormat,
+    file_count: numImagesOrTiltSeries,
   };
 }
 
-function getArrowSchemaHeader(view, memory, schemaAddr) {
-  return {
-    format: readCString(memory, readPointer(view, schemaAddr + ARROW_SCHEMA_FORMAT_OFFSET)),
-    name: readCString(memory, readPointer(view, schemaAddr + ARROW_SCHEMA_NAME_OFFSET)),
-    nChildren: readInt64AsNumber(view, schemaAddr + 24),
-    childrenPtr: readPointer(view, schemaAddr + ARROW_SCHEMA_CHILDREN_OFFSET),
-  };
+function getDatasetTitle(dataset, fallbackDatasetName) {
+  return typeof dataset === "string" ? dataset : dataset?.title || fallbackDatasetName;
 }
 
-function getArrowBufferPointer(view, buffersPtr, index) {
-  return readPointer(view, buffersPtr + (index * ARROW_POINTER_SIZE));
-}
+function formatDatasetFileSummary(accessionID, xmlUrl, imageSetSummaries, studyDatasets = []) {
+  const sourceSummaries = imageSetSummaries.length > 0
+    ? imageSetSummaries
+    : [buildXmlImageSetSummary("", "Unknown dataset")];
+  const summariesByDataset = new Map(sourceSummaries.map((summary) => [summary.dataset, summary]));
+  const datasets = studyDatasets.length > 0
+    ? studyDatasets.map((dataset, index) => {
+        const datasetName = getDatasetTitle(dataset, `Dataset ${index + 1}`);
+        const sourceSummary = summariesByDataset.get(datasetName) || sourceSummaries[index] || sourceSummaries[0];
+        return {
+          ...sourceSummary,
+          dataset: datasetName,
+        };
+      })
+    : sourceSummaries;
 
-function isArrowValueValid(view, array, rowIndex) {
-  if (array.nullCount <= 0) return true;
-
-  const validityPtr = getArrowBufferPointer(view, array.buffersPtr, 0);
-  if (!validityPtr) return true;
-
-  const bitIndex = array.offset + rowIndex;
-  const byte = view.getUint8(validityPtr + Math.floor(bitIndex / 8));
-  return (byte & (1 << (bitIndex % 8))) !== 0;
-}
-
-function makeArrowStringAccessor(view, memory, arrayAddr, schemaAddr) {
-  const array = getArrowArrayHeader(view, arrayAddr);
-  const schema = getArrowSchemaHeader(view, memory, schemaAddr);
-  const offsetByteWidth = schema.format === "U" ? 8 : 4;
-  const offsetsPtr = getArrowBufferPointer(view, array.buffersPtr, 1);
-  const valuesPtr = getArrowBufferPointer(view, array.buffersPtr, 2);
-
-  return {
-    name: schema.name,
-    get(rowIndex) {
-      if (!isArrowValueValid(view, array, rowIndex) || !offsetsPtr || !valuesPtr) {
-        return null;
-      }
-
-      const offsetIndex = array.offset + rowIndex;
-      const start = offsetByteWidth === 8
-        ? readInt64AsNumber(view, offsetsPtr + (offsetIndex * offsetByteWidth))
-        : view.getInt32(offsetsPtr + (offsetIndex * offsetByteWidth), true);
-      const end = offsetByteWidth === 8
-        ? readInt64AsNumber(view, offsetsPtr + ((offsetIndex + 1) * offsetByteWidth))
-        : view.getInt32(offsetsPtr + ((offsetIndex + 1) * offsetByteWidth), true);
-
-      return textDecoder.decode(memory.subarray(valuesPtr + start, valuesPtr + end));
-    },
-  };
-}
-
-function getArrowStringColumnsFromRecordBatch(recordBatch, wasmMemory, wasmRecordBatch) {
-  const memory = new Uint8Array(wasmMemory.buffer);
-  const view = new DataView(wasmMemory.buffer);
-  const rootArray = getArrowArrayHeader(view, wasmRecordBatch.arrayAddr());
-  const rootSchema = getArrowSchemaHeader(view, memory, wasmRecordBatch.schemaAddr());
-  const columns = new Map();
-
-  for (let i = 0; i < rootArray.nChildren && i < rootSchema.nChildren; i += 1) {
-    const childArrayAddr = readPointer(view, rootArray.childrenPtr + (i * ARROW_POINTER_SIZE));
-    const childSchemaAddr = readPointer(view, rootSchema.childrenPtr + (i * ARROW_POINTER_SIZE));
-    const column = makeArrowStringAccessor(view, memory, childArrayAddr, childSchemaAddr);
-    columns.set(column.name, column);
-  }
-
-  return {
-    rowCount: recordBatch.numRows,
-    columns,
-  };
-}
-
-async function* getReadableStreamItems(stream) {
-  if (stream?.[Symbol.asyncIterator]) {
-    yield* stream;
-    return;
-  }
-
-  const reader = stream.getReader();
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) return;
-      yield value;
-    }
-  } finally {
-    reader.releaseLock();
-  }
-}
-
-function getFirstExistingSchemaColumn(schema, candidateColumns) {
-  for (const column of candidateColumns) {
-    try {
-      if (schema.indexOf(column) >= 0) {
-        return column;
-      }
-    } catch {
-      // Keep trying candidates. Parquet schemas differ between generated file lists.
-    }
-  }
-
-  return null;
-}
-
-function addFormatToDatasetSummary(datasetSummaries, datasetName, format) {
-  if (!datasetSummaries.has(datasetName)) {
-    datasetSummaries.set(datasetName, {
-      dataset: datasetName,
-      file_count: 0,
-      formats: new Map(),
-    });
-  }
-
-  const summary = datasetSummaries.get(datasetName);
-  summary.file_count += 1;
-  summary.formats.set(format, (summary.formats.get(format) || 0) + 1);
-}
-
-function inferFileFormat({ type, fileName, path, filePath }) {
-  const source = String(fileName || path || filePath || "").split(/[?#]/)[0].toLowerCase();
-  const multiPartExtensions = [
-    ".ome.zarr",
-    ".ome.tiff",
-    ".ome.tif",
-    ".tar.gz",
-    ".mrc.gz",
-    ".map.gz",
-    ".nii.gz",
-  ];
-  const multiPartExtension = multiPartExtensions.find((extension) => source.endsWith(extension));
-  if (multiPartExtension) return multiPartExtension;
-
-  const lastPathPart = source.split("/").pop() || "";
-  const extensionIndex = lastPathPart.lastIndexOf(".");
-  if (extensionIndex > -1 && extensionIndex < lastPathPart.length - 1) {
-    return lastPathPart.slice(extensionIndex);
-  }
-
-  const fallbackType = String(type || "").trim();
-  return fallbackType || "unknown";
-}
-
-function formatDatasetFileSummary(accessionID, parquetUrl, datasetSummaries) {
-  const datasets = [...datasetSummaries.values()]
-    .map((summary) => ({
-      dataset: summary.dataset,
-      file_count: summary.file_count,
-      formats: Object.fromEntries([...summary.formats.entries()].sort(([a], [b]) => a.localeCompare(b))),
-    }))
-    .sort((a, b) => a.dataset.localeCompare(b.dataset));
-
+  const firstSummary = datasets[0] || {};
   return {
     accession_id: accessionID,
-    source: parquetUrl,
+    source: xmlUrl,
+    data_format: firstSummary.data_format || "",
+    file_count: firstSummary.file_count ?? null,
     datasets,
   };
 }
 
-export async function buildDatasetFileSummary(accessionID) {
-
-  const parquetUrl = `${FILE_LIST_BASE_URL}/${accessionID}_file_list.parquet`;
-  const parquet = await import("parquet-wasm/node");
-  const ParquetFile = parquet.ParquetFile || parquet.default?.ParquetFile;
-  const wasmMemory = parquet.wasmMemory || parquet.default?.wasmMemory;
-
-  if (!ParquetFile || !wasmMemory) {
-    console.warn("parquet-wasm/node did not expose ParquetFile or wasmMemory.");
-    return "";
-  }
-
-  let parquetFile = null;
-  let schema = null;
-
+export async function buildDatasetFileSummary(accessionID, studyDatasets = []) {
+  const empiarEntryId = accessionID.replace("EMPIAR-", "");
+  const xmlUrl = `${EMPIAR_HEADERS_BASE_URL}/${empiarEntryId}.xml`;
   try {
-    parquetFile = await ParquetFile.fromUrl(parquetUrl);
-    schema = parquetFile.schema();
-
-    const datasetColumn = getFirstExistingSchemaColumn(schema, ["dataset", "dataset_title", "study_component", "study_component_title"]);
-    const typeColumn = getFirstExistingSchemaColumn(schema, ["format", "file_format", "type"]);
-    const fileNameColumn = getFirstExistingSchemaColumn(schema, ["file_name", "filename", "name"]);
-    const pathColumn = getFirstExistingSchemaColumn(schema, ["path", "relative_path"]);
-    const filePathColumn = getFirstExistingSchemaColumn(schema, ["file_path", "uri", "url"]);
-    const columns = [...new Set([datasetColumn, typeColumn, fileNameColumn, pathColumn, filePathColumn].filter(Boolean))];
-
-    if (!datasetColumn || (!fileNameColumn && !pathColumn && !filePathColumn)) {
-      console.warn(`Could not find required columns in ${parquetUrl}`);
+    const response = await fetch(xmlUrl);
+    if (!response.ok) {
+      console.warn(`Failed to fetch EMPIAR XML header for ${accessionID}: ${response.status} ${response.statusText}`);
       return "";
     }
 
-    const datasetSummaries = new Map();
-    const stream = await parquetFile.stream({
-      columns,
-      batchSize: 8192,
-      concurrency: 4,
-    });
-
-    for await (const recordBatch of getReadableStreamItems(stream)) {
-      const wasmRecordBatch = recordBatch.toFFI();
-      try {
-        const batch = getArrowStringColumnsFromRecordBatch(recordBatch, wasmMemory(), wasmRecordBatch);
-        const datasetAccessor = batch.columns.get(datasetColumn);
-        const typeAccessor = typeColumn ? batch.columns.get(typeColumn) : null;
-        const fileNameAccessor = fileNameColumn ? batch.columns.get(fileNameColumn) : null;
-        const pathAccessor = pathColumn ? batch.columns.get(pathColumn) : null;
-        const filePathAccessor = filePathColumn ? batch.columns.get(filePathColumn) : null;
-
-        for (let rowIndex = 0; rowIndex < batch.rowCount; rowIndex += 1) {
-          const datasetName = datasetAccessor?.get(rowIndex) || "Unknown dataset";
-          const format = inferFileFormat({
-            type: typeAccessor?.get(rowIndex),
-            fileName: fileNameAccessor?.get(rowIndex),
-            path: pathAccessor?.get(rowIndex),
-            filePath: filePathAccessor?.get(rowIndex),
-          });
-
-          addFormatToDatasetSummary(datasetSummaries, datasetName, format);
-        }
-      } finally {
-        wasmRecordBatch.free();
-        recordBatch.free();
-      }
-    }
-
-    return formatDatasetFileSummary(accessionID, parquetUrl, datasetSummaries);
+    const xml = await response.text();
+    const imageSetSummaries = getImageSetXmlBlocks(xml).map((imageSetXml) => buildXmlImageSetSummary(imageSetXml));
+    return formatDatasetFileSummary(accessionID, xmlUrl, imageSetSummaries, studyDatasets);
   } catch (error) {
-    console.warn(`Failed to summarize EMPIAR parquet file list for ${accessionID}`, error);
+    console.warn(`Failed to summarize EMPIAR XML header for ${accessionID}`, error);
     return "";
-  } finally {
-    schema?.free();
-    parquetFile?.free();
   }
 }
 
@@ -1002,4 +812,13 @@ export async function buildPDBandEMDBLinks(study){
     : null;
 
   return [pdbLinks, emdbLinks]
+}
+
+
+export function getHighlightTextString(highlights) {
+  if (!highlights) return "";
+  const skiphighlightFields = ["title", "organism_classification.common_name", "organism_classification.scientific_name", "imaging_method","imaging_method.keyword","annotation_type.keyword", "accession_id"];
+  const highlightValues = Object.entries(highlights).map(([key, value]) => 
+    !skiphighlightFields.includes(key) && `<span class="highlight"><b>${`${key.replace(/.*\./g, "").replace(/_/g, " ")}: `}</b><i>${value}</i></span>`).filter(Boolean).flat();
+  return highlightValues.join("<br>");
 }

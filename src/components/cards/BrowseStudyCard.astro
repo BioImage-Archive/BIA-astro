@@ -1,5 +1,5 @@
 ---
-import { highlightOrganism, renderTaxonList, formatListItem, getStudyImage, highlightLinks, getLicenceLogo, formatHighlightedList } from "../SharedJSFunctions.js";
+import { getHighlightTextString, highlightOrganism, renderTaxonList, formatListItem, getStudyImage, highlightLinks, getLicenceLogo, formatHighlightedList } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
 import "../../styles/dataset_card.css"
 const { study, studyPageRoot, taglist, annotationType, cardImageOverride, highlight, query} = Astro.props;
@@ -9,7 +9,7 @@ function getDataForCardFilter(study) {
     const dataString = `${study.accession_id}; ${study.release_date}; ${study.title}; ${renderTaxonList(study)}; ${study?.imaging_method?.reduce(formatListItem, "")}; has_img: ${hasImage}`
     return dataString
 }
-
+const highlightedTextString = getHighlightTextString(highlight);
 const studyCardImage = getStudyImage(study, cardImageOverride);
 const isFallback = String(studyCardImage).includes("placeholder");
 const fallbackMessage = isFallback ? "We cannot display images for this study yet." : "";
@@ -41,6 +41,14 @@ const highlightedStudyLink = highlightLinks(base, highlight, query);
             )}
         </div>
     </div>
+    {highlightedTextString && (
+            <div class="tooltip">
+                <span class="tooltiptext">
+                    <button type="button" class="tooltip-close" data-tooltip-close aria-label="Close match tooltip">&times;</button>
+                    <HighlightedText text={highlightedTextString} />
+                </span>
+            </div>
+        )}
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
             <a class="vf-card__link" href={highlight? highlightedStudyLink : base} >
