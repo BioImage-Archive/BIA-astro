@@ -119,8 +119,13 @@
 }
 
 #resultsToolbar .controls-container {
+  background: transparent;
+  box-shadow: none;
+  height: auto;
   padding: 0;
   position: static;
+  top: auto;
+  z-index: auto;
 }
 
 .converted-study-switch,
