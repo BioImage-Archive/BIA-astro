@@ -1,0 +1,34 @@
+---
+import SpecimenTrackTableRow from "./SpecimenTrackTableRow.astro";
+
+const { images } = Astro.props;
+---
+<div class="specimen-track-table">
+  <table class="vf-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Label</th>
+        <th>UUID</th>
+        <th>File size</th>
+      </tr>
+    </thead>
+    <tbody>
+      {images.map((image) => <SpecimenTrackTableRow image={image} />)}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .specimen-track-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .specimen-track-table th,
+  .specimen-track-table td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid #d2d2d2;
+    font-size: 14px;
+  }
+</style>

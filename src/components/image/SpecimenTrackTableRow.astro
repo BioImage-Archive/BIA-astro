@@ -1,0 +1,28 @@
+---
+import { formatBytesToHumanSize } from "../SharedJSFunctions";
+
+const { image } = Astro.props;
+
+const roleLabels: Record<string, string> = {
+  internal: "Internal",
+  terminal: "Terminal",
+  segmentation: "Segmentation",
+};
+
+function combinedRoleLabel(image): string {
+  const base = roleLabels[image.specimen_track_position] ?? image.specimen_track_position;
+  const isRoot = image.upstream_image_uuids?.length === 0;
+  const label = isRoot ? `Root · ${base}` : base;
+  return image.segmentation_image_uuids?.length > 0 ? `${label} · Segmented` : label;
+}
+---
+<tr>
+  <td>{combinedRoleLabel(image)}</td>
+  <td>{image.label ?? image.uuid}</td>
+  <td><a href={`/bioimage-archive/image/${image.uuid}`}>{image.uuid}</a></td>
+  <td>
+    {image.total_size_in_bytes != null
+      ? formatBytesToHumanSize(image.total_size_in_bytes)
+      : "N/A"}
+  </td>
+</tr>

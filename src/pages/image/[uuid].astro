@@ -5,11 +5,13 @@ import BaseLayoutWithBreadcrumbs from '../../layouts/BaseLayoutWithBreadcrumbs.a
 import DatasetDetail from '../../components/DatasetDetail.astro';
 import empiarLogo from "../../assets/bioimage-archive/EMPIAR_logo.png";
 import Specimen from '../../components/image/Specimen.astro';
+import SpecimenTrackTable from '../../components/image/SpecimenTrackTable.astro';
+import DisplayImageTable from '../../components/image/DisplayImageTable.astro';
 import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {buildITKViewerURL, buildVizarrViewerURL, getPublicVisualisationURI, getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
+import {buildITKViewerURL, buildVizarrViewerURL, getPublicVisualisationURI, getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getDownstreamDisplayImages, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
 import { type Study, type Image, type ImageCreationProcess, type SpecimenInfo } from "../../components/SharedInterface.astro"
 
 const imageAcquisitionMap = fieldMap["image_acquisition"];
@@ -48,36 +50,38 @@ if ("input_image_uuid" in creation_process && creation_process.input_image_uuid.
     input_images = await getImagesFromAPI(creation_process.input_image_uuid)
 }
 
+let upstream_images: Image[] = [];
+if (image.upstream_image_uuids?.length > 0) {
+    upstream_images = await getImagesFromAPI(image.upstream_image_uuids);
+}
+
+let downstream_display_images: Image[] = [];
+if (image.specimen_track_position === "internal") {
+    downstream_display_images = await getDownstreamDisplayImages(image.uuid);
+}
+
+let own_segmentation_images: Image[] = [];
+if (image.segmentation_image_uuids?.length > 0) {
+    own_segmentation_images = await getImagesFromAPI(image.segmentation_image_uuids);
+}
+
+const hasSpecimenTrackContent =
+    (image.specimen_track_position === "terminal" && upstream_images.length > 0) ||
+    (image.specimen_track_position === "segmentation" && input_images.length > 0) ||
+    (image.specimen_track_position === "internal" && downstream_display_images.length > 0) ||
+    own_segmentation_images.length > 0;
 
 let specimen: SpecimenInfo | null = null;
 if ("subject" in creation_process && creation_process.subject != null) {
     specimen = creation_process.subject
 }
 let inherited_specimens: SpecimenInfo[] = [];
-if (specimen == null && input_images.length > 0) {
-    inherited_specimens = await recursivelyGetSpecimenInfo(input_images, new Map())
-}
-
-async function recursivelyGetSpecimenInfo(image_list: Image[],
-  collected: Map<string, SpecimenInfo>): Promise<SpecimenInfo[]> {
-  for (const image of image_list) {
-    const specimen = image?.creation_process?.subject as SpecimenInfo | null;
-
-    if (specimen != null) {
-      collected.set(specimen.uuid, specimen);
-      continue;
+if (specimen == null) {
+    const initialImage = upstream_images.find(img => img?.upstream_image_uuids?.length === 0);
+    if (initialImage?.creation_process?.subject) {
+        inherited_specimens = [initialImage.creation_process.subject];
     }
-    const next_image_uuids = image?.creation_process?.input_image_uuid || [];
-
-    if (collected.size == 0 && next_image_uuids.length > 0) {
-      const next_images = await getImagesFromAPI(next_image_uuids);
-      await recursivelyGetSpecimenInfo(next_images, collected);
-    }
-  }
-  const specimens = Array.from(collected.values());
-  return specimens
 }
-
 
 const thumbnail_uri = getSimpleAttributeValue(image, "thumbnail_uri")?.[0];
 
@@ -353,6 +357,47 @@ const breadcrumbs = [
                 }
             </div>
         </section>
+
+        {
+            hasSpecimenTrackContent && (
+                <>
+                    <hr/>
+                    <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+                        <div class="vf-section-header">
+                            <h2 class="vf-section-header__heading" >Specimen track</h2>
+                        </div>
+                        <div>
+                            {
+                                image.specimen_track_position === "terminal" && upstream_images.length > 0 && (
+                                    <div>
+                                        <b>Upstream Images:</b>
+                                    </div>
+                                    <SpecimenTrackTable images={upstream_images}/>
+                                )
+                            }
+                            {
+                                image.specimen_track_position === "segmentation" && input_images.length > 0 && (
+                                    <div><b>Image segmented:</b></div>
+                                    <DisplayImageTable images={input_images}/>
+                                )
+                            }
+                            {
+                                image.specimen_track_position === "internal" && downstream_display_images.length > 0 && (
+                                    <div><b>Terminal Images:</b></div>
+                                    <DisplayImageTable images={downstream_display_images}/>
+                                )
+                            }
+                            {
+                                own_segmentation_images.length > 0 && (
+                                    <div><b>Segmentation(s) on this image:</b></div>
+                                    <DisplayImageTable images={own_segmentation_images}/>
+                                )
+                            }
+                        </div>
+                    </section>
+                </>
+            )
+        }
     </body>
 </BaseLayout>
 <style>

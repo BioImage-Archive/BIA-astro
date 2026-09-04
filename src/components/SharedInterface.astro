@@ -44,11 +44,15 @@ export interface Image {
   uuid: string;
   additional_metadata?: any[];
   file_path?: string[];
+  total_size_in_bytes?: number;
   submission_dataset_uuid: string;
   creation_process?: ImageCreationProcess;
   licence_details: Licence;
   accession_id: string;
   file_list_attributes: any[];
+  specimen_track_position?: "internal" | "terminal" | "segmentation";
+  upstream_image_uuids?: string[];
+  segmentation_image_uuids?: string[];
 }
 
 export interface SpecimenInfo {

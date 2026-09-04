@@ -1,0 +1,77 @@
+---
+import SpecimenTrackTableRow from "./SpecimenTrackTableRow.astro";
+
+const { images } = Astro.props;
+
+const isRoot = (image) => image.upstream_image_uuids?.length === 0;
+const sortedImages = [...images].sort((a, b) =>
+  isRoot(a) === isRoot(b) ? 0 : isRoot(a) ? 1 : -1
+);
+---
+<div class="specimen-track-table">
+  <table id="specimen_track_table" class="vf-table">
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Label</th>
+        <th>UUID</th>
+        <th>File size</th>
+      </tr>
+      <tr>
+        <th id="role_filter_cell"></th>
+        <th></th><th></th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {sortedImages.map((image) => <SpecimenTrackTableRow image={image} />)}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .specimen-track-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .specimen-track-table th,
+  .specimen-track-table td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid #d2d2d2;
+    font-size: 14px;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    $("#specimen_track_table").DataTable({
+      order: [],
+      orderCellsTop: false,
+      columnDefs: [
+        { type: "natural", targets: 0 },
+        { orderable: false, targets: [1, 2] },
+      ],
+      initComplete: function () {
+        this.api()
+          .columns(0)
+          .every(function (this: any) {
+            const column = this;
+            const select = $('<select><option value="">All roles</option></select>')
+              .appendTo($("#role_filter_cell"))
+              .on("change", function (this: HTMLSelectElement) {
+                const value = $.fn.dataTable.util.escapeRegex(String($(this).val() ?? ""));
+                column.search(value ? `^${value}$` : "", true, false).draw();
+              });
+
+            column
+              .data()
+              .unique()
+              .sort()
+              .each(function (roleText: string) {
+                select.append(`<option value="${roleText}">${roleText}</option>`);
+              });
+          });
+      },
+    });
+  });
+</script>
