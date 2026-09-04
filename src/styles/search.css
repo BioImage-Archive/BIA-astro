@@ -36,7 +36,7 @@
  .controls-container {
   position: sticky;
   top: 0;
-  background: white;
+  background: transparent;
   padding: 1em;
   box-shadow: 0 0px 0px;
 }
@@ -119,8 +119,13 @@
 }
 
 #resultsToolbar .controls-container {
+  background: transparent;
+  box-shadow: none;
+  height: auto;
   padding: 0;
   position: static;
+  top: auto;
+  z-index: auto;
 }
 
 .converted-study-switch,
@@ -136,12 +141,14 @@
   align-items: center;
   gap: 0.5rem;
   flex-wrap: nowrap;
+  background: transparent;
 }
 
 .toolbar-select {
   border: 0;
   text-align: center;
   cursor: pointer;
+  background: transparent;
 }
 
 @media (max-width: 767px) {
