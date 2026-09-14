@@ -2,5 +2,8 @@
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
     "allowJs": true
-  }
+  },
+  "exclude": [
+    "public/biological-visions-viewer"
+  ]
 }

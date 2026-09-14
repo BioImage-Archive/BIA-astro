@@ -1,0 +1,131 @@
+---
+import Layout from '../../../layouts/BiologicalVisionsLayout.astro';
+import artworks from '../../../data/collections/biological-visions.json';
+export function getStaticPaths() {
+  return artworks.map((artwork, index) => ({ params: { slug: artwork.slug }, props: { artwork, index } }));
+}
+const { artwork, index } = Astro.props;
+const gallery = '/bioimage-archive/galleries/biological-visions';
+const viewerParams = new URLSearchParams({ source: artwork.zarrUri, width: String(artwork.width), height: String(artwork.height) });
+const viewerSource = `/bioimage-archive/biological-visions-viewer/gallery.html?${viewerParams}`;
+const previous = artworks[(index + artworks.length - 1) % artworks.length];
+const next = artworks[(index + 1) % artworks.length];
+---
+<Layout title={artwork.title} immersive>
+  <div class="exhibition">
+    <header>
+      <a id="close" class="close" href={`${gallery}#${artwork.slug}`}><span aria-hidden="true">←</span> Biological Visions</a>
+      <span class="position">{String(index + 1).padStart(2, '0')} / {String(artworks.length).padStart(2, '0')} - {artwork.accession}</span>
+      <button id="info" aria-haspopup="dialog">About this image <span aria-hidden="true">↗</span></button>
+    </header>
+    <main id="main" aria-label={artwork.title}>
+      <img class="fallback" src={artwork.preview} width={artwork.width} height={artwork.height} alt={artwork.alt} />
+      <p id="unavailable-description" class="unavailable-description" hidden>{artwork.alt}</p>
+      <iframe id="artwork-viewer" title={`Interactive view of ${artwork.title}`} data-src={viewerSource} allow="fullscreen" hidden></iframe>
+      <div class="notice" id="notice" role="status"><span id="status">Loading interactive image…</span><button id="retry" hidden>Try again</button></div>
+      <noscript><p class="no-script">Preview shown. Enable JavaScript to pan and zoom.</p></noscript>
+    </main>
+    <footer>
+      <div class="caption"><h1>{artwork.title}</h1><p>{artwork.creator}</p></div>
+      <div class="tools" role="group" aria-label="Image controls">
+        <button id="zoom-out" aria-label="Zoom out" disabled>−</button><button id="zoom-in" aria-label="Zoom in" disabled>+</button><button id="fit" disabled>Fit</button><span class="divider"></span><button id="fullscreen">Fullscreen</button>
+      </div>
+      {artworks.length > 1 && <nav aria-label="Artwork navigation"><a href={`${gallery}/${previous.slug}`} aria-label={`Previous: ${previous.title}`}>←</a><a href={`${gallery}/${next.slug}`} aria-label={`Next: ${next.title}`}>→</a></nav>}
+    </footer>
+  </div>
+  <dialog id="details" aria-labelledby="details-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close image information">×</button></form>
+    <p class="eyebrow">Biological Visions</p><h2 id="details-title">{artwork.title}</h2>
+    <p class="creator">{artwork.creator}<br /><span>{artwork.affiliation}</span></p>
+    <p class="description">{artwork.description}</p>
+    <p class="recognition">{artwork.recognition}</p>
+    <dl><dt>Collection record</dt><dd><a href={`/bioimage-archive/study/${artwork.accession}`}>{artwork.accession} ↗</a></dd><dt>Licence</dt><dd><a href={artwork.licence}>{artwork.licenceLabel} ↗</a></dd></dl>
+    <p class="original"><a href={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${artwork.accession}`}>Original submission ↗</a></p>
+  </dialog>
+</Layout>
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>('#artwork-viewer')!;
+  const status = document.querySelector<HTMLElement>('#status')!;
+  const notice = document.querySelector<HTMLElement>('#notice')!;
+  const retry = document.querySelector<HTMLButtonElement>('#retry')!;
+  const details = document.querySelector<HTMLDialogElement>('#details')!;
+  const controls = ['zoom-in', 'zoom-out', 'fit'].map(id => document.getElementById(id) as HTMLButtonElement);
+  const preview = document.querySelector<HTMLImageElement>('.fallback')!;
+  const unavailableDescription = document.querySelector<HTMLElement>('#unavailable-description')!;
+  let interactiveReady = false;
+  let interactiveFailed = false;
+  let timeout: ReturnType<typeof setTimeout>;
+  function updateFallback() {
+    const missing = preview.complete && preview.naturalWidth === 0;
+    preview.hidden = missing;
+    unavailableDescription.hidden = !missing || interactiveReady;
+    if (interactiveFailed) status.textContent = missing
+      ? 'The artwork and preview are unavailable. Please try again.'
+      : 'Interactive view unavailable. The artwork preview is shown.';
+  }
+  preview.addEventListener('error', updateFallback);
+  preview.addEventListener('load', updateFallback);
+  const send = (type: string, direction?: number) => frame.contentWindow?.postMessage({ type, direction }, location.origin);
+  function failed() {
+    clearTimeout(timeout);frame.hidden = true;notice.hidden = false;
+    interactiveReady = false;interactiveFailed = true;updateFallback();
+    retry.hidden = false;controls.forEach(button => button.disabled = true);
+    frame.removeAttribute('src');
+  }
+  function load() {
+    clearTimeout(timeout);interactiveReady = false;interactiveFailed = false;
+    if (preview.complete && preview.naturalWidth === 0) preview.src = preview.src;
+    updateFallback();
+    status.textContent = 'Loading interactive image…';notice.hidden = false;retry.hidden = true;
+    controls.forEach(button => button.disabled = true);
+    const probe = document.createElement('canvas');
+    const context = probe.getContext('webgl2');
+    if (!context) { failed();return; }
+    context.getExtension('WEBGL_lose_context')?.loseContext();
+    // Keep dimensions available to the viewer while it loads, but retain the
+    // still image above it until the source metadata has been accepted.
+    frame.hidden = false;frame.style.opacity = '0';
+    frame.src = frame.dataset.src!;
+    timeout = setTimeout(failed, 20000);
+  }
+  window.addEventListener('message', event => {
+    if (event.origin !== location.origin || event.source !== frame.contentWindow) return;
+    if (event.data?.type === 'artwork-loaded') {
+      clearTimeout(timeout);interactiveReady = true;interactiveFailed = false;updateFallback();frame.style.opacity = '1';notice.hidden = true;
+      controls.forEach(button => button.disabled = false);
+    }
+    if (event.data?.type === 'artwork-error') failed();
+    if (event.data?.type === 'artwork-close' && !document.fullscreenElement) document.querySelector<HTMLAnchorElement>('#close')!.click();
+  });
+  document.querySelector('#zoom-in')!.addEventListener('click', () => send('artwork-zoom', 1));
+  document.querySelector('#zoom-out')!.addEventListener('click', () => send('artwork-zoom', -1));
+  document.querySelector('#fit')!.addEventListener('click', () => send('artwork-fit'));
+  document.querySelector('#info')!.addEventListener('click', () => details.showModal());
+  document.querySelector('#fullscreen')!.addEventListener('click', async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else await document.documentElement.requestFullscreen();
+    } catch { notice.hidden = false;status.textContent = 'Fullscreen is unavailable in this browser.'; }
+  });
+  if (!document.fullscreenEnabled) document.querySelector<HTMLButtonElement>('#fullscreen')!.hidden = true;
+  document.addEventListener('fullscreenchange', () => {
+    document.querySelector('#fullscreen')!.textContent = document.fullscreenElement ? 'Exit fullscreen' : 'Fullscreen';
+  });
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !details.open && !document.fullscreenElement) document.querySelector<HTMLAnchorElement>('#close')!.click();
+  });
+  retry.addEventListener('click', load);
+  load();
+</script>
+<style>
+  .exhibition { height:100vh;height:100dvh;display:grid;grid-template-rows:72px minmax(0,1fr) 88px;background:#080a0a; }
+  header,footer { display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 32px;background:var(--bg); }header { border-bottom:1px solid var(--line); }footer { border-top:1px solid var(--line); }
+  .close { text-decoration:none;font-size:13px;display:flex;gap:18px;align-items:center; }.close span { font-size:20px; }.position { font-size:10px;letter-spacing:2px;color:var(--muted); }
+  button { background:none;border:1px solid transparent;border-radius:3px;padding:10px 12px;min-height:44px; }button:hover:not(:disabled) { background:#ffffff0d;border-color:var(--line); }#info { font-size:12px;color:var(--muted); }#info span { margin-left:16px; }
+  main { position:relative;min-height:0;overflow:hidden; }.fallback { width:100%;height:100%;object-fit:contain;padding:1.8vh; }iframe { position:absolute;inset:0;width:100%;height:100%;border:0; }
+  .unavailable-description { position:absolute;inset:35% 10% auto;text-align:center;color:var(--muted);line-height:1.6; }.unavailable-description[hidden],.fallback[hidden] { display:none; }
+  .notice { position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:#101313e8;border:1px solid var(--line);border-radius:4px;padding:10px 16px;font-size:12px;max-width:90%;text-align:center; }.notice[hidden] { display:none; }#retry { text-decoration:underline;margin-left:8px; }.no-script { position:absolute;bottom:12px;left:20px; }
+  h1 { font-size:20px;font-weight:400;font-family:Georgia,'Times New Roman',serif;margin:0 0 7px; }.caption p { color:var(--muted);font-size:11px;margin:0; }.tools { display:flex;gap:5px;align-items:center; }.tools button { font-size:12px; }#zoom-in,#zoom-out { font-size:22px;width:44px; }.divider { height:20px;width:1px;background:var(--line);margin:0 6px; }nav { display:flex;gap:8px; }nav a { padding:12px;text-decoration:none;font-size:22px; }
+  dialog { color:var(--ink);background:#171d1b;border:1px solid #46514b;padding:44px;max-width:620px;width:calc(100% - 32px);max-height:85dvh;line-height:1.8; }dialog::backdrop { background:#000a;backdrop-filter:blur(5px); }.dialog-close { position:absolute;right:12px;top:8px;font-size:28px; }.eyebrow { font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--accent); }h2 { font:400 38px/1.2 Georgia,serif;margin:16px 0; }.creator { font-size:14px; }.creator span { color:var(--muted); }.description { white-space:pre-line;font-size:14px;color:var(--muted); }.recognition { font-size:12px;border-top:1px solid var(--line);padding-top:20px;color:var(--accent); }dl { font-size:12px;display:grid;grid-template-columns:130px 1fr;gap:8px; }dt { color:var(--muted); }dd { margin:0; }.original { font-size:12px; }
+  @media(max-width:700px) { .exhibition { grid-template-rows:auto minmax(0,1fr) auto; }header,footer { padding:0 16px;gap:10px;min-width:0; }footer { display:grid;grid-template-columns:minmax(0,1fr) auto;padding:12px 16px;gap:4px 8px; }.caption { grid-column:1 / -1;min-width:0; }.caption h1 { line-height:1.25;margin-bottom:4px; }.tools { min-width:0; }nav a { padding:8px;min-width:36px;text-align:center; }header { flex-wrap:wrap;padding-top:10px;padding-bottom:10px;gap:4px 10px; }.position { display:block;order:3;flex-basis:100%;font-size:9px;letter-spacing:1px; }.close { font-size:11px;gap:8px; }#info { font-size:11px;padding-right:0; }#info span { display:none; }h1 { font-size:17px; }.tools { gap:0; }.tools button { padding:6px; }#fullscreen { font-size:10px; }.divider { margin:0 3px; }dialog { padding:32px 24px; }.notice { width:max-content; } }
+</style>
