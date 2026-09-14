@@ -4,6 +4,7 @@
     "allowJs": true
   },
   "exclude": [
+    "dist",
     "public/biological-visions-viewer"
   ]
 }
