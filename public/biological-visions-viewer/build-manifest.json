@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/BioImage-Archive/vizarr",
+  "merged_revision": "a2d11a1532c195a816a6c8637c69a1d8885536b3",
+  "built_revision": "7e330e70e7b1edabf9f580f77ed5311f44898c19",
+  "run": "https://github.com/BioImage-Archive/vizarr/actions/runs/34779722828",
+  "files": {
+    "LICENSE": "60a65ca121e6796fe0f7d844dc05b99f89bcbe44b94fc158d49c46c27215a06f",
+    "assets/blosc-E49GQuAK.js": "5ae510f924b38f5d76412bbb4238c3d944e1c3bc688aa3a4fac0d67c55e3de65",
+    "assets/chunk-INHXZS53-D3tQiqtZ.js": "e7b1dbec4d04bd93e0e0f29b42b2418f23a2230cf6e8fa47b932e7f477abd43b",
+    "assets/deflate-DMNicBmt.js": "98d68c3e5553290f95bc3cb12b49f8e5ed2515df84bef1e0636e9b4241a6160e",
+    "assets/gallery-D6VonCGS.js": "033836eb96fdb26a167b778d8bd08ef5d829787b08695ac80a1a89fc0f287cce",
+    "assets/index-D0Z0Pqrk.js": "ed2d33d3a2be811ad13662b3ed70e06bda4c52df5f98f397326bcd7431ec3ff9",
+    "assets/jpeg-DVvrlfRu.js": "aaa53a23327e08d90f0a6365085f0934ed37f811a4f05c18d653f375586b7665",
+    "assets/jpeg2k-HwDsNbN8.js": "c5888ef9d236e64a8bd12df83bf93dad65568d2ce185cf88e1273fd08c9dc734",
+    "assets/lerc-BIQV4QSW.js": "5399ea4870ce32f70cace2d0f31fab2b74bb9f7a65ce8a6284b1bf9d5f9544fd",
+    "assets/lz4-BIGKWw27.js": "c1a5cd748a2616425f65a3f25c830656ce32662a455c280da0fc12d66013bd59",
+    "assets/lzw-DoAu_ntT.js": "bd4ba01d5f26379363ba56614f924ae6a85130a3582ae5e1048aad85ab4db9f4",
+    "assets/packbits-3ayLZDfr.js": "2cbcc55c48af343404cc3c0ccfc6b68e65f8c1692c34d3da72d1f848cc2658e0",
+    "assets/pako.esm-Cram60i4.js": "6e747ee8172cfffe92f375a1129301b0577fa0000f17e85bc0c4439a88024c94",
+    "assets/raw-Dp8qflig.js": "c654e056abcc52d815554e922f232202d7a10d6070a3d527c5158b4cb65c60cb",
+    "assets/ref-CQRurAhp.js": "829fae38138772c47480556a4189adb7c1f26351bbbcb7e7e3bb6b11a7d48e9d",
+    "assets/register-D78ravL0.js": "dad53ff4f791800e2bb94c090aa6539d344cc1090b943f4955759bac104c1028",
+    "assets/webimage-BC03FAxD.js": "728bdf0b8c9398f785d11c9f6adfe2eae15d24e982a8cae370220ab466fb6a29",
+    "assets/zstd-IvP746pw.js": "29534e08ce05ce6046fce9dfc3ccb434bb2ca2a1b80e21e131aa27baa38429f6",
+    "gallery.html": "81d6f00bfedfc1d9840f419adfbedd4b67f854b3a53ee3d05a9336deb7860919",
+    "index.html": "d9a1dd15bec768cf0e42fe4e573ef436941496f528afb5652dabcf2d501e39b6"
+  }
+}

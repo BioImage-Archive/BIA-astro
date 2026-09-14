@@ -1,0 +1,304 @@
+[
+  {
+    "slug": "lung-architecture",
+    "accession": "S-BIAD3785",
+    "imageUuid": "71d44e81-1f8f-407f-b795-6ad072e4b3b0",
+    "representationUuid": "1d468653-1928-4ecc-a9de-e764d69e3571",
+    "title": "Lung architecture",
+    "creator": "Isabel Uwagboe",
+    "affiliation": "King’s College London",
+    "caption": "The intricate cellular architecture of the deep lung, revealed through immunofluorescence microscopy.",
+    "alt": "Branching orange and gold structures surround dark air spaces in human lung tissue, with blue cell nuclei and scattered bright green cells.",
+    "recognition": "Winner · KCL Nikon Imaging Centre competition, 2024",
+    "description": "The image shows a snapshot of the cellular dynamics of the epithelium occurring with the human lung, using human precision cut lung slice (hPCLS) samples. The control tissue sample was cultured for 5 days before fixing, used to observe and analyse the differences between normal vs disease human lung. The final image is the result of optimising numerous immunofluorescence protocols, largely accounting for the thicker (400um) sample size.\n\nThe image was captured at the Nikon Imaging Centre (NIC, King’s College London), on the Nikon W1 Spinning Disk Confocal microscope (SoRA super-resolution disk). \n\nThis image was the winner of the KCL NIC competition 2024.",
+    "licence": "https://creativecommons.org/licenses/by/4.0/",
+    "licenceLabel": "Creative Commons Attribution 4.0",
+    "zarrUri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3785/71d44e81-1f8f-407f-b795-6ad072e4b3b0/1d468653-1928-4ecc-a9de-e764d69e3571.ome.zarr/0",
+    "width": 1024,
+    "height": 1024,
+    "preview": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3785/71d44e81-1f8f-407f-b795-6ad072e4b3b0/1d468653-1928-4ecc-a9de-e764d69e3571/artwork_rgb_v1_1024_1024.png",
+    "previews": [
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3785/71d44e81-1f8f-407f-b795-6ad072e4b3b0/1d468653-1928-4ecc-a9de-e764d69e3571/artwork_rgb_v1_256_256.png",
+        "size": 256,
+        "width": 256,
+        "height": 256,
+        "sha256": "f8c5b975ef2e917a75fcdfa7649ce01b7ec4786a398f218d8a2edcc4e80ee278",
+        "representation_uuid": "1d468653-1928-4ecc-a9de-e764d69e3571"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3785/71d44e81-1f8f-407f-b795-6ad072e4b3b0/1d468653-1928-4ecc-a9de-e764d69e3571/artwork_rgb_v1_640_640.png",
+        "size": 640,
+        "width": 640,
+        "height": 640,
+        "sha256": "f50173bf7f47c1a3184400b8a359fefeed0860cffcf07ceba64902ff1a54301e",
+        "representation_uuid": "1d468653-1928-4ecc-a9de-e764d69e3571"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3785/71d44e81-1f8f-407f-b795-6ad072e4b3b0/1d468653-1928-4ecc-a9de-e764d69e3571/artwork_rgb_v1_1024_1024.png",
+        "size": 1024,
+        "width": 1024,
+        "height": 1024,
+        "sha256": "8641e0b3e98ae5c1ef637d3561cbceec8aa37cdd076e5604cbfea4ea332fa6af",
+        "representation_uuid": "1d468653-1928-4ecc-a9de-e764d69e3571"
+      }
+    ]
+  },
+  {
+    "accession": "S-BIAD3554",
+    "slug": "geometry-of-mitosis",
+    "title": "The geometry of mitosis",
+    "creator": "Bhagya Lakshmi Ravindranath",
+    "affiliation": "Danish Cancer Institute",
+    "caption": "A floral arrangement of dividing cells reveals the geometry of mitosis.",
+    "alt": "A red and green microscopic flower sits between two silvery butterfly-like chromosome arrangements on black.",
+    "recognition": "Joint winner · 3rd Danish BioImaging Microscopy Image Contest, 2026",
+    "imageUuid": "2f44c91f-e9ff-425f-8325-249d930ee79b",
+    "representationUuid": "42e39c80-3e41-4cdf-876f-907247b6710e",
+    "description": "This image shows the intricate geometry of mitosis. The primary image in the middle shows a floral pattern constructed from a metaphase cell. The \"petals\" are composed of kinetochore region dual-stained for proteins Astrin (green) and CENP-C (red), arranged into a symmetrical flower motif. The images at the corners show mitotic cell showing unaligned chromosomes (grey) with kinetochores (green/red) forming a whimsical butterfly-like shape. These images are obtained from the Zeiss LSM800 confocal microscope in the DCI core facility.\n\nThis image was a joint winner of the 3rd Danish BioImaging Microscopy Image Contest 2026",
+    "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "licenceLabel": "CC0 1.0 Universal — Public Domain Dedication",
+    "zarrUri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3554/2f44c91f-e9ff-425f-8325-249d930ee79b/42e39c80-3e41-4cdf-876f-907247b6710e.ome.zarr/0",
+    "width": 2513,
+    "height": 3508,
+    "preview": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3554/2f44c91f-e9ff-425f-8325-249d930ee79b/42e39c80-3e41-4cdf-876f-907247b6710e/artwork_rgb_v1_1467_2048.png",
+    "previews": [
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3554/2f44c91f-e9ff-425f-8325-249d930ee79b/42e39c80-3e41-4cdf-876f-907247b6710e/artwork_rgb_v1_183_256.png",
+        "size": 256,
+        "width": 183,
+        "height": 256,
+        "sha256": "44c6a1166166430a42517f4ddb9d1ca4dd69d52cd4c75d5b4ad358d658dc18cb",
+        "representation_uuid": "42e39c80-3e41-4cdf-876f-907247b6710e"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3554/2f44c91f-e9ff-425f-8325-249d930ee79b/42e39c80-3e41-4cdf-876f-907247b6710e/artwork_rgb_v1_458_640.png",
+        "size": 640,
+        "width": 458,
+        "height": 640,
+        "sha256": "8cf8698db30ac9d8cbe693f898f5f940f39db090df81a28ed91f2b7791858750",
+        "representation_uuid": "42e39c80-3e41-4cdf-876f-907247b6710e"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3554/2f44c91f-e9ff-425f-8325-249d930ee79b/42e39c80-3e41-4cdf-876f-907247b6710e/artwork_rgb_v1_917_1280.png",
+        "size": 1280,
+        "width": 917,
+        "height": 1280,
+        "sha256": "550c366ea1f9266ed061fb38fc942e084ded90949c939e16eba2eb13199740a0",
+        "representation_uuid": "42e39c80-3e41-4cdf-876f-907247b6710e"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3554/2f44c91f-e9ff-425f-8325-249d930ee79b/42e39c80-3e41-4cdf-876f-907247b6710e/artwork_rgb_v1_1467_2048.png",
+        "size": 2048,
+        "width": 1467,
+        "height": 2048,
+        "sha256": "c33cdbf5a32c3ee55924f8eb8f7d9401f45d8f11d64dc362ac3a2208a8f5d029",
+        "representation_uuid": "42e39c80-3e41-4cdf-876f-907247b6710e"
+      }
+    ]
+  },
+  {
+    "accession": "S-BIAD3555",
+    "slug": "ethereal-onion-skin",
+    "title": "Ethereal onion skin",
+    "creator": "Ria Rodriguez",
+    "affiliation": "University of Copenhagen",
+    "caption": "Folded onion epidermis becomes an ethereal landscape in blue and violet fluorescence.",
+    "alt": "Translucent folds of onion skin glow violet, blue and turquoise against a deep blue background.",
+    "recognition": "Joint winner · 3rd Danish BioImaging Microscopy Image Contest, 2026",
+    "imageUuid": "2b7f36c5-6ba8-4d57-9e75-c457bdc86349",
+    "representationUuid": "67479b07-601d-4614-9301-786b35b5378f",
+    "description": "The image depicts what happens when the preparation of onion epidermis fails. The sample, stained with calcofluor, was not rinsed well enough and was bunched up during mounting on a glass slide. Despite failing at proper sample preparation, this was captured to showcase that sometimes mistakes can lead to a colorful and ethereal images.\n\nThe image was taken during the PhD Course (Advanced Methods in Light Microscopy) offered at the Center for Advanced Bioimaging (Frederiksberg Campus).\n\nThis image was a joint winner of the 3rd Danish BioImaging Microscopy Image Contest 2026",
+    "licence": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "licenceLabel": "CC0 1.0 Universal — Public Domain Dedication",
+    "zarrUri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3555/2b7f36c5-6ba8-4d57-9e75-c457bdc86349/67479b07-601d-4614-9301-786b35b5378f.ome.zarr/0",
+    "width": 5184,
+    "height": 3456,
+    "preview": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3555/2b7f36c5-6ba8-4d57-9e75-c457bdc86349/67479b07-601d-4614-9301-786b35b5378f/artwork_rgb_v1_2048_1365.png",
+    "previews": [
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3555/2b7f36c5-6ba8-4d57-9e75-c457bdc86349/67479b07-601d-4614-9301-786b35b5378f/artwork_rgb_v1_256_171.png",
+        "size": 256,
+        "width": 256,
+        "height": 171,
+        "sha256": "638b4baa2f620fda00d4d3deac08cecf9f198d9af92ae48c0b4eaae0a8e9802b",
+        "representation_uuid": "67479b07-601d-4614-9301-786b35b5378f"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3555/2b7f36c5-6ba8-4d57-9e75-c457bdc86349/67479b07-601d-4614-9301-786b35b5378f/artwork_rgb_v1_640_427.png",
+        "size": 640,
+        "width": 640,
+        "height": 427,
+        "sha256": "72843313e60cb79b9cb9b438306443363a755eab5767ceeb140dcd75e740ca0c",
+        "representation_uuid": "67479b07-601d-4614-9301-786b35b5378f"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3555/2b7f36c5-6ba8-4d57-9e75-c457bdc86349/67479b07-601d-4614-9301-786b35b5378f/artwork_rgb_v1_1280_853.png",
+        "size": 1280,
+        "width": 1280,
+        "height": 853,
+        "sha256": "021642025796badf81fa4de2d36eadb796496c6cf3fa06bd2e12815be2591a57",
+        "representation_uuid": "67479b07-601d-4614-9301-786b35b5378f"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3555/2b7f36c5-6ba8-4d57-9e75-c457bdc86349/67479b07-601d-4614-9301-786b35b5378f/artwork_rgb_v1_2048_1365.png",
+        "size": 2048,
+        "width": 2048,
+        "height": 1365,
+        "sha256": "3b4c56b409c68836d9cc1c33abf197316523b77a3b4a957421d8e53835ca324f",
+        "representation_uuid": "67479b07-601d-4614-9301-786b35b5378f"
+      }
+    ]
+  },
+  {
+    "accession": "S-BIAD3971",
+    "slug": "winters-anatomy",
+    "title": "Winter’s Anatomy — When Lungs Become Trees",
+    "creator": "Claudia Victoria Benke",
+    "affiliation": "Phase Contrast Imaging Flagship Node Trieste",
+    "caption": "The branching airways of a human lung echo a leafless winter tree.",
+    "alt": "A finely branching grey lung airway structure casts a tree-like shadow across a pale background.",
+    "recognition": "Winner · Euro-BioImaging Four Seasons of the Invisible — Winter",
+    "imageUuid": "d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b",
+    "representationUuid": "26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0",
+    "description": "This image reveals the branching airway system of a human lung, resembling a leafless tree in winter. Captured after death, the once dynamic network of bronchi and bronchioles appears suspended in stillness its structure intact, but its function gone.\nLike winter trees stripped of foliage, the lung’s hidden architecture is fully exposed. Synchrotron phase-contrast CT uncovers fine peripheral airways that remain invisible to conventional imaging. In this frozen state, the lung becomes a quiet reflection of winter itself: a moment where life pauses, revealing the elegance of its underlying design.\n\nWinning Image of Euro-BioImaging's Contest: Four Seasons of the Invisible - Winter.",
+    "licence": "https://creativecommons.org/licenses/by/4.0/",
+    "licenceLabel": "Creative Commons Attribution 4.0",
+    "zarrUri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3971/d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b/26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0.ome.zarr/0",
+    "width": 1500,
+    "height": 945,
+    "preview": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3971/d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b/26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0/artwork_rgb_v1_1500_945.png",
+    "previews": [
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3971/d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b/26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0/artwork_rgb_v1_256_161.png",
+        "size": 256,
+        "width": 256,
+        "height": 161,
+        "sha256": "dfe9246bae0a68299f84112530ef1936ad73a6f534b8df5c4afd1833ded8b4d3",
+        "representation_uuid": "26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3971/d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b/26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0/artwork_rgb_v1_640_403.png",
+        "size": 640,
+        "width": 640,
+        "height": 403,
+        "sha256": "148cd1dc598931608defe32b6a03db18c6d274172d4542134ba7a43560e48d67",
+        "representation_uuid": "26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3971/d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b/26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0/artwork_rgb_v1_1280_806.png",
+        "size": 1280,
+        "width": 1280,
+        "height": 806,
+        "sha256": "af8852afbe34d4d349eaf337b02028629c3d4d1b8b61c9ccad892465c9deb693",
+        "representation_uuid": "26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3971/d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b/26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0/artwork_rgb_v1_1500_945.png",
+        "size": 1500,
+        "width": 1500,
+        "height": 945,
+        "sha256": "685bbc792a13de2766e5258d35ca1d1a26618250095140f7979f64175c0f389d",
+        "representation_uuid": "26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0"
+      }
+    ]
+  },
+  {
+    "accession": "S-BIAD3974",
+    "slug": "nano-ice-skaters",
+    "title": "Nano Ice skaters",
+    "creator": "Hélène Roberge",
+    "affiliation": "VIB-BIC Leuven",
+    "caption": "Frozen dust particles resemble tiny skaters in a chance microscopic winter scene.",
+    "alt": "Small grey clusters resemble figures skating over a diagonally ridged, snowy-looking surface.",
+    "recognition": "Runner-up · Euro-BioImaging Four Seasons of the Invisible — Winter",
+    "imageUuid": "7a77d052-2387-4eed-aa5d-a2a1e8fcf267",
+    "representationUuid": "a17fa325-2508-4f72-9f5e-934a8142d142",
+    "description": "We used cryo 3D FIB/SEM to develop a new approach for characterizing fouling induced by biomolecule filtration through polymeric membranes. During observation, some dust particles were found frozen onto the side of the sample and on the sample holder. Those particles resemble tiny figures in motion, perhaps ice skating or engaged in a playful snowball fight. What might otherwise go unnoticed becomes a lively winter scene, where chance and imagination bring character to the microscopic world.\n\nRunner-up image of Euro-BioImaging's Contest: Four Seasons of the Invisible - Winter.",
+    "licence": "https://creativecommons.org/licenses/by/4.0/",
+    "licenceLabel": "Creative Commons Attribution 4.0",
+    "zarrUri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3974/7a77d052-2387-4eed-aa5d-a2a1e8fcf267/a17fa325-2508-4f72-9f5e-934a8142d142.ome.zarr/0",
+    "width": 1024,
+    "height": 700,
+    "preview": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3974/7a77d052-2387-4eed-aa5d-a2a1e8fcf267/a17fa325-2508-4f72-9f5e-934a8142d142/artwork_rgb_v1_1024_700.png",
+    "previews": [
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3974/7a77d052-2387-4eed-aa5d-a2a1e8fcf267/a17fa325-2508-4f72-9f5e-934a8142d142/artwork_rgb_v1_256_175.png",
+        "size": 256,
+        "width": 256,
+        "height": 175,
+        "sha256": "3b85bbc59e221550855336b3fa2eb7763f666a1d1f5ffd1228c56fab6b189833",
+        "representation_uuid": "a17fa325-2508-4f72-9f5e-934a8142d142"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3974/7a77d052-2387-4eed-aa5d-a2a1e8fcf267/a17fa325-2508-4f72-9f5e-934a8142d142/artwork_rgb_v1_640_438.png",
+        "size": 640,
+        "width": 640,
+        "height": 438,
+        "sha256": "2405defab6d04bf2cc0a30ef2706fdfe8bcba78906d315768d43961dd82ca619",
+        "representation_uuid": "a17fa325-2508-4f72-9f5e-934a8142d142"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3974/7a77d052-2387-4eed-aa5d-a2a1e8fcf267/a17fa325-2508-4f72-9f5e-934a8142d142/artwork_rgb_v1_1024_700.png",
+        "size": 1024,
+        "width": 1024,
+        "height": 700,
+        "sha256": "ad01749a87259d61d5601be9ddd2c6e3f312348946eb1ad4d4fe65131a9e109b",
+        "representation_uuid": "a17fa325-2508-4f72-9f5e-934a8142d142"
+      }
+    ]
+  },
+  {
+    "accession": "S-BIAD4013",
+    "slug": "first-of-spring",
+    "title": "Primula veris — First of spring",
+    "creator": "Sebastian Wasserstrom",
+    "affiliation": "Lund University Bioimaging Centre",
+    "caption": "A pollen grain rests on the textured petal of a cowslip, one of spring’s first flowers.",
+    "alt": "A round green pollen grain rests on a deeply textured golden petal against a blue background.",
+    "recognition": "Runner-up · Euro-BioImaging Four Seasons of the Invisible — Spring",
+    "imageUuid": "968d9a8b-00be-45a7-8bcd-718b82497040",
+    "representationUuid": "8e58bc57-5e4d-4318-9c30-526de65e82e0",
+    "description": "A pollen grain resting on the petal of a Cowslip (Primula veris), one of the first wildflowers to bloom in spring.\n\nRunner-up image of Euro-BioImaging's Contest: Four Seasons of the Invisible - Spring.",
+    "licence": "https://creativecommons.org/licenses/by/4.0/",
+    "licenceLabel": "Creative Commons Attribution 4.0",
+    "zarrUri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD4013/968d9a8b-00be-45a7-8bcd-718b82497040/8e58bc57-5e4d-4318-9c30-526de65e82e0.ome.zarr/0",
+    "width": 1500,
+    "height": 1105,
+    "preview": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD4013/968d9a8b-00be-45a7-8bcd-718b82497040/8e58bc57-5e4d-4318-9c30-526de65e82e0/artwork_rgb_v1_1500_1105.png",
+    "previews": [
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD4013/968d9a8b-00be-45a7-8bcd-718b82497040/8e58bc57-5e4d-4318-9c30-526de65e82e0/artwork_rgb_v1_256_189.png",
+        "size": 256,
+        "width": 256,
+        "height": 189,
+        "sha256": "a15a420ae475c654c222c08ae7e3cf535406e7c3d5682edceaa35182f9dc9dd2",
+        "representation_uuid": "8e58bc57-5e4d-4318-9c30-526de65e82e0"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD4013/968d9a8b-00be-45a7-8bcd-718b82497040/8e58bc57-5e4d-4318-9c30-526de65e82e0/artwork_rgb_v1_640_471.png",
+        "size": 640,
+        "width": 640,
+        "height": 471,
+        "sha256": "4f39999aeb6db0e313080bba204bd7cf9da4f9e2f17e3b1fe8c8abf6022c06a4",
+        "representation_uuid": "8e58bc57-5e4d-4318-9c30-526de65e82e0"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD4013/968d9a8b-00be-45a7-8bcd-718b82497040/8e58bc57-5e4d-4318-9c30-526de65e82e0/artwork_rgb_v1_1280_943.png",
+        "size": 1280,
+        "width": 1280,
+        "height": 943,
+        "sha256": "c0f27cd4a1d52d9f76acabb06ecaebef1ec44af965f60da5c05590df6ee5359f",
+        "representation_uuid": "8e58bc57-5e4d-4318-9c30-526de65e82e0"
+      },
+      {
+        "uri": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD4013/968d9a8b-00be-45a7-8bcd-718b82497040/8e58bc57-5e4d-4318-9c30-526de65e82e0/artwork_rgb_v1_1500_1105.png",
+        "size": 1500,
+        "width": 1500,
+        "height": 1105,
+        "sha256": "aa67496cc7886e83623b6a43831827be030d7d5f225595610565f9ebaf6eeb65",
+        "representation_uuid": "8e58bc57-5e4d-4318-9c30-526de65e82e0"
+      }
+    ]
+  }
+]
