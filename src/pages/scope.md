@@ -1,8 +1,8 @@
 ---
 title: Submission scope
-layout: ../layouts/MarkdownLayout.astro
+layout: ../layouts/PoliciesLayout.astro
 ---
-## BIA scope and submission to related resources
+# BIA scope and submission to related resources
 
 The BIA's scope is bioimaging data at scales from molecules to organisms. It accepts data from any imaging modality including light microscopy, optical projection tomography, magnetic resonance imaging, ultrasound imaging, super-resolution microscopy, photoacoustic imaging, light-field microscopy, Brillouin microscopy, atomic force microscopy, and others. Many types of electron microscopy (EM) data should be submitted to EMPIAR - see below for further details.
 
@@ -18,7 +18,7 @@ As part of its remit, the BioImage Archive works with added-value bioimaging dat
 
 Electron cryo-microscopy (EM)\*,  Electron cryo-tomography\*, Scanning <abbr title="Electron cryo-microscopy">EM</abbr> (FIB SEM, SBF SEM, array tomography), Soft X-ray tomography, X-ray microscopy 
 
-_* For processed <abbr title="Electron cryo-microscopy">EM</abbr> or cryo-tomography data, please go to [EMDB](http://www.ebi.ac.uk/emdb/)._{:.small}
+\* For processed <abbr title="Electron cryo-microscopy">EM</abbr> or cryo-tomography data, please go to [EMDB](http://www.ebi.ac.uk/emdb/).
 
 ### IDR
 
