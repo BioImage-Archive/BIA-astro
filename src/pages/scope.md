@@ -18,7 +18,7 @@ As part of its remit, the BioImage Archive works with added-value bioimaging dat
 
 Electron cryo-microscopy (EM)\*,  Electron cryo-tomography\*, Scanning <abbr title="Electron cryo-microscopy">EM</abbr> (FIB SEM, SBF SEM, array tomography), Soft X-ray tomography, X-ray microscopy 
 
-_* For processed <abbr title="Electron cryo-microscopy">EM</abbr> or cryo-tomography data, please go to [EMDB](http://www.ebi.ac.uk/emdb/)._{:.small}
+\* For processed <abbr title="Electron cryo-microscopy">EM</abbr> or cryo-tomography data, please go to [EMDB](http://www.ebi.ac.uk/emdb/).
 
 ### IDR
 
