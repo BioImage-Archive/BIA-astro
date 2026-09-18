@@ -1,8 +1,8 @@
 ---
 title: Submission scope
-layout: ../layouts/MarkdownLayout.astro
+layout: ../layouts/PoliciesLayout.astro
 ---
-## BIA scope and submission to related resources
+# BIA scope and submission to related resources
 
 The BIA's scope is bioimaging data at scales from molecules to organisms. It accepts data from any imaging modality including light microscopy, optical projection tomography, magnetic resonance imaging, ultrasound imaging, super-resolution microscopy, photoacoustic imaging, light-field microscopy, Brillouin microscopy, atomic force microscopy, and others. Many types of electron microscopy (EM) data should be submitted to EMPIAR - see below for further details.
 
