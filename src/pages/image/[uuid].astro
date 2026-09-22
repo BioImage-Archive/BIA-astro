@@ -370,26 +370,26 @@ const breadcrumbs = [
                             {
                                 image.specimen_track_position === "terminal" && upstream_images.length > 0 && (
                                     <div>
-                                        <b>Upstream Images:</b>
+                                        <b>This image is derived from these images:</b>
                                     </div>
                                     <SpecimenTrackTable images={upstream_images}/>
                                 )
                             }
                             {
                                 image.specimen_track_position === "segmentation" && input_images.length > 0 && (
-                                    <div><b>Image segmented:</b></div>
+                                    <div><b>This segmentation is derived from these images:</b></div>
                                     <DisplayImageTable images={input_images}/>
                                 )
                             }
                             {
                                 image.specimen_track_position === "internal" && downstream_display_images.length > 0 && (
-                                    <div><b>Terminal Images:</b></div>
+                                    <div><b>Images derived from this image:</b></div>
                                     <DisplayImageTable images={downstream_display_images}/>
                                 )
                             }
                             {
                                 own_segmentation_images.length > 0 && (
-                                    <div><b>Segmentation(s) on this image:</b></div>
+                                    <div><b>Segmentation(s) derived from this image:</b></div>
                                     <DisplayImageTable images={own_segmentation_images}/>
                                 )
                             }

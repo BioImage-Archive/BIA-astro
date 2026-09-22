@@ -12,13 +12,13 @@ const sortedImages = [...images].sort((a, b) =>
   <table id="specimen_track_table" class="vf-table">
     <thead>
       <tr>
-        <th>Role</th>
+        <th>Position</th>
         <th>Label</th>
         <th>UUID</th>
         <th>File size</th>
       </tr>
       <tr>
-        <th id="role_filter_cell"></th>
+        <th id="position_filter_cell"></th>
         <th></th><th></th><th></th>
       </tr>
     </thead>
@@ -46,7 +46,7 @@ const sortedImages = [...images].sort((a, b) =>
   document.addEventListener("DOMContentLoaded", function () {
     $("#specimen_track_table").DataTable({
       order: [],
-      orderCellsTop: false,
+      orderCellsTop: true,
       columnDefs: [
         { type: "natural", targets: 0 },
         { orderable: false, targets: [1, 2] },
@@ -56,8 +56,8 @@ const sortedImages = [...images].sort((a, b) =>
           .columns(0)
           .every(function (this: any) {
             const column = this;
-            const select = $('<select><option value="">All roles</option></select>')
-              .appendTo($("#role_filter_cell"))
+            const select = $('<select><option value="">All positions</option></select>')
+              .appendTo($("#position_filter_cell"))
               .on("change", function (this: HTMLSelectElement) {
                 const value = $.fn.dataTable.util.escapeRegex(String($(this).val() ?? ""));
                 column.search(value ? `^${value}$` : "", true, false).draw();
@@ -67,8 +67,8 @@ const sortedImages = [...images].sort((a, b) =>
               .data()
               .unique()
               .sort()
-              .each(function (roleText: string) {
-                select.append(`<option value="${roleText}">${roleText}</option>`);
+              .each(function (positionText: string) {
+                select.append(`<option value="${positionText}">${positionText}</option>`);
               });
           });
       },
