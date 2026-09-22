@@ -2,6 +2,7 @@
 import SpecimenTrackTableRow from "./SpecimenTrackTableRow.astro";
 
 const { images } = Astro.props;
+const validImages = images.filter((image) => image != null);
 ---
 <div class="specimen-track-table">
   <table class="vf-table">
@@ -14,7 +15,7 @@ const { images } = Astro.props;
       </tr>
     </thead>
     <tbody>
-      {images.map((image) => <SpecimenTrackTableRow image={image} />)}
+      {validImages.map((image) => <SpecimenTrackTableRow image={image} />)}
     </tbody>
   </table>
 </div>

@@ -9,7 +9,7 @@ const positionLabels: Record<string, string> = {
   segmentation: "Segmentation",
 };
 
-function combinedRoleLabel(image): string {
+function combinedPositionLabel(image): string {
   const base = positionLabels[image.specimen_track_position] ?? image.specimen_track_position;
   const isRoot = image.upstream_image_uuids?.length === 0;
   const label = isRoot ? `Root` : base;
@@ -17,7 +17,7 @@ function combinedRoleLabel(image): string {
 }
 ---
 <tr>
-  <td>{combinedRoleLabel(image)}</td>
+  <td>{combinedPositionLabel(image)}</td>
   <td>{image.label ?? image.uuid}</td>
   <td><a href={`/bioimage-archive/image/${image.uuid}`}>{image.uuid}</a></td>
   <td>

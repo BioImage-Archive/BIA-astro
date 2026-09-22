@@ -4,9 +4,9 @@ import SpecimenTrackTableRow from "./SpecimenTrackTableRow.astro";
 const { images } = Astro.props;
 
 const isRoot = (image) => image.upstream_image_uuids?.length === 0;
-const sortedImages = [...images].sort((a, b) =>
-  isRoot(a) === isRoot(b) ? 0 : isRoot(a) ? 1 : -1
-);
+const sortedImages = images
+  .filter((image) => image != null)
+  .sort((a, b) => (isRoot(a) === isRoot(b) ? 0 : isRoot(a) ? 1 : -1));
 ---
 <div class="specimen-track-table">
   <table id="specimen_track_table" class="vf-table">
