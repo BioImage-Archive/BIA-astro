@@ -433,6 +433,12 @@ export async function getImagesFromAPI(uuid_list){
   return image_list;
 }
 
+export async function getDownstreamDisplayImages(uuid){
+    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/image?facet.downstream_of=${uuid}&facet.specimen_track_position=terminal`);
+    const displayImages = response?.hits?.hits?.map(img => img._source) ?? [];
+    return displayImages
+}
+
 
 async function getAllPaginatedHits(urlBuilder, pageSize = 100) {
   const firstPage = await getFromAPI(urlBuilder(1, pageSize));
