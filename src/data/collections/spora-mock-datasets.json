@@ -6,7 +6,7 @@
     "paperTitle": "Spatially variant immune infiltration scoring in human cancer tissues",
     "patients": 26,
     "images": 26,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -22,22 +22,22 @@
   {
     "accession_id": "BIA-SPORA-002",
     "globus_link": "https://portal.hubmapconsortium.org/search/datasets",
-    "name": "borner2025collection",
-    "paperTitle": "The human body at cellular resolution: the NIH Human Biomolecular Atlas Program",
-    "patients": 15,
-    "images": 80,
-    "type": "WSI",
+    "name": "bowen2023naproxen",
+    "paperTitle": "Naproxen chemoprevention induces proliferation of cytotoxic lymphocytes in Lynch Syndrome colorectal mucosa",
+    "patients": 18,
+    "images": 58,
+    "type": "ROI",
     "modalities": [
-      "CODEX"
+      "IMC"
     ],
     "cancer": [
       "Other disease"
     ],
-    "citation": "The human body at cellular resolution: the NIH Human Biomolecular Atlas Program",
-    "publicationUrl": "https://www.nature.com/articles/s41586-019-1629-x",
+    "citation": "Naproxen chemoprevention induces proliferation of cytotoxic lymphocytes in Lynch Syndrome colorectal mucosa",
+    "publicationUrl": "https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2023.1162669/full",
     "dataUrl": "https://portal.hubmapconsortium.org/search/datasets",
     "hasHE": false,
-    "bibtex": "@article{borner2025collection,\n  title={The human body at cellular resolution: the NIH Human Biomolecular Atlas Program},\n  author={HuBMAP-Consortium},\n  journal={Nature},\n  volume={574},\n  number={7777},\n  pages={187--192},\n  year={2019},\n  publisher={Nature Publishing Group UK London}\n}"
+    "bibtex": "@article{bowen2023naproxen,\n  title = {Naproxen chemoprevention induces proliferation of cytotoxic lymphocytes in Lynch Syndrome colorectal mucosa},\n  author = {Bowen,  Charles M. and Deng,  Nan and Reyes-Uribe,  Laura and Parra,  Edwin Roger and Rocha,  Pedro and Solis,  Luisa M. and Wistuba,  Ignacio I. and Sepeda,  Valerie O. and Vornik,  Lana and Perloff,  Marjorie and Szabo,  Eva and Umar,  Asad and Sinha,  Krishna M. and Brown,  Powel H. and Vilar,  Eduardo},\n  volume = {14},\n  ISSN = {1664-3224},\n  journal = {Frontiers in Immunology},\n  year = {2023},\n  publisher = {Frontiers Media SA}\n}"
   },
   {
     "accession_id": "BIA-SPORA-003",
@@ -45,8 +45,8 @@
     "name": "cho2025modeling",
     "paperTitle": "Modeling cellular influence delineates functionally relevant cellular neighborhoods in primary and metastatic pancreatic ductal adenocarcinoma",
     "patients": 12,
-    "images": 61,
-    "type": "TC",
+    "images": 58,
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -66,7 +66,7 @@
     "paperTitle": "Cancer-associated fibroblast classification in single-cell and spatial proteomics data",
     "patients": 12,
     "images": 109,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -86,7 +86,7 @@
     "paperTitle": "Cancer-associated fibroblast phenotypes are associated with patient outcome in non-small cell lung cancer",
     "patients": 1361,
     "images": 2040,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -106,7 +106,7 @@
     "paperTitle": "A map of human type 1 diabetes progression by imaging mass cytometry",
     "patients": 12,
     "images": 845,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -125,8 +125,8 @@
     "name": "danenberg2022breast",
     "paperTitle": "Breast tumor microenvironment structures are associated with genomic features and clinical outcome",
     "patients": 718,
-    "images": 718,
-    "type": "TC",
+    "images": 794,
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -146,7 +146,7 @@
     "paperTitle": "Shaking organoid co-cultures: human-relevant models of epithelial, stromal and immune interactions for cancer research and immunotherapy development",
     "patients": 55,
     "images": 108,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -166,7 +166,7 @@
     "paperTitle": "Multiplex imaging of breast cancer lymph node metastases identifies prognostic single-cell populations independent of clinical classifiers",
     "patients": 892,
     "images": 1252,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -180,13 +180,33 @@
     "bibtex": "@article{fischer2023multiplex,\n  title={Multiplex imaging of breast cancer lymph node metastases identifies prognostic single-cell populations independent of clinical classifiers},\n  author={Fischer, Jana Raja and Jackson, Hartland Warren and De Souza, Natalie and Varga, Zsuzsanna and Schraml, Peter and Moch, Holger and Bodenmiller, Bernd},\n  journal={Cell Reports Medicine},\n  volume={4},\n  number={3},\n  year={2023},\n  publisher={Elsevier}\n}"
   },
   {
+    "accession_id": "BIA-SPORA-032",
+    "globus_link": "https://zenodo.org/records/18418221",
+    "name": "greenwald2026temporal",
+    "paperTitle": "Temporal and spatial composition of the tumor microenvironment predicts response to immune checkpoint inhibition in metastatic TNBC",
+    "patients": 113,
+    "images": 1258,
+    "type": "ROI",
+    "modalities": [
+      "MIBI"
+    ],
+    "cancer": [
+      "Breast"
+    ],
+    "citation": "Temporal and spatial composition of the tumor microenvironment predicts response to immune checkpoint inhibition in metastatic TNBC",
+    "publicationUrl": "https://www.nature.com/articles/s43018-026-01114-5",
+    "dataUrl": "https://zenodo.org/records/18418221",
+    "hasHE": false,
+    "bibtex": "@article{greenwald2026temporal,\n  title={Temporal and spatial composition of the tumor microenvironment predicts response to immune checkpoint inhibition in metastatic TNBC},\n  author={Greenwald, Noah F and Nederlof, Iris and Sowers, Cameron and Ding, Daisy Yi and Park, Seongyeol and Kong, Alex and Houlahan, Kathleen E and Varra, Sricharan Reddy and de Graaf, Manon and Geurts, Veerle and others},\n  journal={Nature cancer},\n  volume={7},\n  number={3},\n  pages={435--450},\n  year={2026},\n  publisher={Nature Publishing Group US New York}\n}"
+  },
+  {
     "accession_id": "BIA-SPORA-010",
     "globus_link": "https://zenodo.org/records/18418221",
     "name": "gupta2026single",
     "paperTitle": "Single-cell spatial atlas of the aging human breast",
     "patients": 527,
     "images": 1492,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -198,6 +218,26 @@
     "dataUrl": "https://zenodo.org/records/18418221",
     "hasHE": false,
     "bibtex": "@article{gupta2026single,\n  title={Single-cell spatial atlas of the aging human breast},\n  author={Gupta, Pulkit and Lee, Eric and Masqu{\\'e} Soler, Neus and Schrader, Ellen and Wang, Xiao Qian and Mayer, Shimrit and Flores, Cristina and Beatty, Sean and Roth, Andrew and Aparicio, Samuel and others},\n  journal={Nature Aging},\n  pages={1--16},\n  year={2026},\n  publisher={Nature Publishing Group US New York}\n}"
+  },
+   {
+    "accession_id": "BIA-SPORA-033",
+    "globus_link": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "name": "haist2026lymph",
+    "paperTitle": "Lymph node colonization induces tissue remodeling via immunosuppressive fibroblast-myeloid cell niches supporting metastatic tolerance",
+    "patients": 79,
+    "images": 389,
+    "type": "ROI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": [
+      "Head & neck"
+    ],
+    "citation": "Lymph node colonization induces tissue remodeling via immunosuppressive fibroblast-myeloid cell niches supporting metastatic tolerance",
+    "publicationUrl": "https://www.cell.com/cancer-cell/fulltext/S1535-6108%2826%2900042-5",
+    "dataUrl": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "hasHE": true,
+    "bibtex": "@article{haist2026lymph,\n  title={Lymph node colonization induces tissue remodeling via immunosuppressive fibroblast-myeloid cell niches supporting metastatic tolerance},\n  author={Haist, Maximilian and Baertsch, Marc-A and Reticker-Flynn, Nathan E and Lu, Guolan and Kempchen, Tim N and Chu, Pauline and Vazquez, Gustavo and Chen, Han and Sunwoo, John B and Zhang, Weiruo and others},\n  journal={Cancer Cell},\n  volume={44},\n  number={3},\n  pages={604--623},\n  year={2026},\n  publisher={Elsevier}\n}"
   },
   {
     "accession_id": "BIA-SPORA-011",
@@ -220,13 +260,33 @@
     "bibtex": "@article{hickey2023organization,\n  title={Organization of the human intestine at single-cell resolution},\n  author={Hickey, John W and Becker, Winston R and Nevins, Stephanie A and Horning, Aaron and Perez, Almudena Espin and Zhu, Chenchen and Zhu, Bokai and Wei, Bei and Chiu, Roxanne and Chen, Derek C and others},\n  journal={Nature},\n  volume={619},\n  number={7970},\n  pages={572--584},\n  year={2023},\n  publisher={Nature Publishing Group UK London}\n}"
   },
   {
+    "accession_id": "BIA-SPORA-034",
+    "globus_link": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "name": "hoefflin2026spatial",
+    "paperTitle": "Spatial analysis reveals the evolving organization of low-grade and high-grade IDH-mutant glioma",
+    "patients": 25,
+    "images": 30,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": [
+      "Brain"
+    ],
+    "citation": "Spatial analysis reveals the evolving organization of low-grade and high-grade IDH-mutant glioma",
+    "publicationUrl": "https://www.biorxiv.org/content/10.64898/2026.03.12.709536v1.full.pdf",
+    "dataUrl": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "hasHE": true,
+    "bibtex": "@article{hoefflin2026spatial,\n  title={Spatial analysis reveals the evolving organization of low-grade and high-grade IDH-mutant glioma},\n  author={Hoefflin, Rouven and Greenwald, Alissa C and Darnell, Noam Galili and Mount, Christopher W and Tiomkin, Yali and Simkin, Dor and Patterson, Angelica B and Castro, L Nicolas Gonzalez and Goliand, Inna and Golani, Ofra and others},\n  journal={bioRxiv},\n  pages={2026--03},\n  year={2026},\n  publisher={Cold Spring Harbor Laboratory}\n}"
+  },
+  {
     "accession_id": "BIA-SPORA-012",
     "globus_link": "https://zenodo.org/records/6004986",
     "name": "hoch2022multiplexed",
     "paperTitle": "Multiplexed imaging mass cytometry of the chemokine milieus in melanoma characterizes features of the response to immunotherapy",
     "patients": 35,
     "images": 50,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -246,7 +306,7 @@
     "paperTitle": "Single-cell spatial metabolomics with cell-type specific protein profiling for tissue systems biology",
     "patients": 12,
     "images": 51,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -260,13 +320,33 @@
     "bibtex": "@article{hu2023single,\n  title={Single-cell spatial metabolomics with cell-type specific protein profiling for tissue systems biology},\n  author={Hu, Thomas and Allam, Mayar and Cai, Shuangyi and Henderson, Walter and Yueh, Brian and Garipcan, Aybuke and Ievlev, Anton V and Afkarian, Maryam and Beyaz, Semir and Coskun, Ahmet F},\n  journal={Nature Communications},\n  volume={14},\n  number={1},\n  pages={8260},\n  year={2023},\n  publisher={Nature Publishing Group UK London}\n}"
   },
   {
+    "accession_id": "BIA-SPORA-035",
+    "globus_link": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "name": "hubmap2019human",
+    "paperTitle": "Human BioMolecular Atlas Program (HuBMAP): 3D human reference atlas construction and usage",
+    "patients": 15,
+    "images": 80,
+    "type": "WSI",
+    "modalities": [
+      "CODEX"
+    ],
+    "cancer": [
+      "Other disease"
+    ],
+    "citation": "Human BioMolecular Atlas Program (HuBMAP): 3D human reference atlas construction and usage",
+    "publicationUrl": "https://www.nature.com/articles/s41586-019-1629-x",
+    "dataUrl": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "hasHE": false,
+    "bibtex": "@article{borner2025collection,\n  title={Human BioMolecular Atlas Program (HuBMAP): 3D human reference atlas construction and usage},\n  author={B{\"o}rner, Katy and Blood, Philip D and Silverstein, Jonathan C and Ruffalo, Matthew and Satija, Rahul and Teichmann, Sarah A and Pryhuber, Gloria J and Misra, Ravi S and Purkerson, Jeffrey M and Fan, Jean and others},\n  journal={Nature methods},\n  volume={22},\n  number={4},\n  pages={845--860},\n  year={2025},\n  publisher={Nature Publishing Group US New York}\n}"
+  },
+  {
     "accession_id": "BIA-SPORA-014",
     "globus_link": "https://zenodo.org/records/3518284",
     "name": "jackson2020single",
     "paperTitle": "The single-cell pathology landscape of breast cancer",
     "patients": 285,
     "images": 723,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -278,6 +358,26 @@
     "dataUrl": "https://zenodo.org/records/3518284",
     "hasHE": false,
     "bibtex": "@article{jackson2020single,\n  title={The single-cell pathology landscape of breast cancer},\n  author={Jackson, Hartland W and Fischer, Jana R and Zanotelli, Vito RT and Ali, H Raza and Mechera, Robert and Soysal, Savas D and Moch, Holger and Muenst, Simone and Varga, Zsuzsanna and Weber, Walter P and others},\n  journal={Nature},\n  volume={578},\n  number={7796},\n  pages={615--620},\n  year={2020},\n  publisher={Nature Publishing Group UK London}\n}"
+  },
+    {
+    "accession_id": "BIA-SPORA-036",
+    "globus_link": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "name": "klein2026explainable",
+    "paperTitle": "Explainable AI-based analysis of human pancreas sections identifies traits of type 2 diabetes",
+    "patients": 100,
+    "images": 400,
+    "type": "WSI",
+    "modalities": [
+      "IF"
+    ],
+    "cancer": [
+      "Other disease"
+    ],
+    "citation": "Explainable AI-based analysis of human pancreas sections identifies traits of type 2 diabetes",
+    "publicationUrl": "https://www.nature.com/articles/s41467-026-69295-2",
+    "dataUrl": "https://datadryad.org/stash/dataset/doi:10.5061/dryad.gmsbcc2sq",
+    "hasHE": false,
+    "bibtex": "@article{klein2026explainable,\n  title={Explainable AI-based analysis of human pancreas sections identifies traits of type 2 diabetes},\n  author={Klein, Lukas and Ziegler, Sebastian and Gerst, Felicia and Morgenroth, Yanni and Gotkowski, Karol and Sch{\"o}niger, Eyke and Heni, Martin and Kipke, Nicole and Friedland, Daniela and Seiler, Annika and others},\n  journal={Nature Communications},\n  volume={17},\n  number={1},\n  pages={1558},\n  year={2026},\n  publisher={Nature Publishing Group UK London}\n}"
   },
   {
     "accession_id": "BIA-SPORA-015",
@@ -326,7 +426,7 @@
     "paperTitle": "Reproducible, high-dimensional imaging in archival human tissue by multiplexed ion beam imaging by time-of-flight (MIBI-TOF)",
     "patients": 28,
     "images": 164,
-    "type": "WSI",
+    "type": "ROI",
     "modalities": [
       "MIBI"
     ],
@@ -344,10 +444,10 @@
     "accession_id": "BIA-SPORA-018",
     "globus_link": "https://zenodo.org/records/10582038",
     "name": "malchiodi2024natural",
-    "paperTitle": "Periductal fibroblast density defines lymphocyte exclusion via a CD44-dependent stromal checkpoint in pancreatic cancer",
+    "paperTitle": "Natural killer cells associate with epithelial cells in the pancreatic ductal adenocarcinoma tumor microenvironment.",
     "patients": 63,
     "images": 164,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -355,11 +455,11 @@
       "Pancreatic",
       "Other disease"
     ],
-    "citation": "Periductal fibroblast density defines lymphocyte exclusion via a CD44-dependent stromal checkpoint in pancreatic cancer",
+    "citation": "Natural killer cells associate with epithelial cells in the pancreatic ductal adenocarcinoma tumor microenvironment.",
     "publicationUrl": "https://www.biorxiv.org/content/10.1101/2024.05.23.593868v3",
     "dataUrl": "https://zenodo.org/records/10582038",
     "hasHE": false,
-    "bibtex": "@article{malchiodi2024natural,\n  title={Periductal Fibroblast Density Defines Lymphocyte Exclusion via a CD44-Dependent Stromal Checkpoint in Pancreatic Cancer},\n  author={Malchiodi, Zoe X and Lekan, Alexander A and Suter, Robert K and Deshpande, Atul and Peran, Ivana and Harris, Brent T and Duttargi, Anju and Chien, Min-Ju and Hariharan, Samika and Wetherill, Lucia and others},\n  journal={bioRxiv},\n  pages={2024--05},\n  year={2024},\n  publisher={Cold Spring Harbor Laboratory}\n}"
+    "bibtex": "@article{malchiodi2024natural,\n  title={Natural killer cells associate with epithelial cells in the pancreatic ductal adenocarcinoma tumor microenvironment.},\n  author={Malchiodi, Zoe X and Suter, Robert K and Deshpande, Atul and Peran, Ivana and Harris, Brent T and Duttargi, Anju and Chien, Min-Ju and Hariharan, Samika and Wetherill, Lucia and Jablonski, Sandra A and others},\n  journal={Biorxiv: the Preprint Server for Biology},\n  year={2024}\n}"
   },
   {
     "accession_id": "BIA-SPORA-019",
@@ -368,7 +468,7 @@
     "paperTitle": "A stratification system for breast cancer based on basoluminal tumor cells and spatial tumor architecture",
     "patients": 215,
     "images": 450,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -388,7 +488,7 @@
     "paperTitle": "Spatially mapping the immune landscape of melanoma using imaging mass cytometry",
     "patients": 90,
     "images": 90,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -408,7 +508,7 @@
     "paperTitle": "Spatial insights into immunotherapy response in non-small cell lung cancer (NSCLC) by multiplexed tissue imaging",
     "patients": 42,
     "images": 42,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "CODEX"
     ],
@@ -418,7 +518,7 @@
     "citation": "Spatial insights into immunotherapy response in non-small cell lung cancer (NSCLC) by multiplexed tissue imaging",
     "publicationUrl": "https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-024-05035-8",
     "dataUrl": "https://zenodo.org/records/10258578",
-    "hasHE": true,
+    "hasHE": false,
     "bibtex": "@article{monkman2024spatial,\n  title={Spatial insights into immunotherapy response in non-small cell lung cancer (NSCLC) by multiplexed tissue imaging},\n  author={Monkman, James and Moradi, Afshin and Yunis, Joseph and Ivison, Geoff and Mayer, Aaron and Ladwa, Rahul and O\u2019Byrne, Ken and Kulasinghe, Arutha},\n  journal={Journal of Translational Medicine},\n  volume={22},\n  number={1},\n  pages={1--12},\n  year={2024},\n  publisher={Springer}\n}"
   },
   {
@@ -428,7 +528,7 @@
     "paperTitle": "Immune cell topography predicts response to PD-1 blockade in cutaneous T cell lymphoma",
     "patients": 14,
     "images": 70,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "CODEX"
     ],
@@ -438,7 +538,7 @@
     "citation": "Immune cell topography predicts response to PD-1 blockade in cutaneous T cell lymphoma",
     "publicationUrl": "https://www.nature.com/articles/s41467-021-26974-6",
     "dataUrl": "https://immunoatlas.org/NOLN/210920-1",
-    "hasHE": false,
+    "hasHE": true,
     "bibtex": "@article{phillips2021immune,\n  title={Immune cell topography predicts response to PD-1 blockade in cutaneous T cell lymphoma},\n  author={Phillips, Darci and Matusiak, Magdalena and Gutierrez, Bel{\\'e}n Rivero and Bhate, Salil S and Barlow, Graham L and Jiang, Sizun and Demeter, Janos and Smythe, Kimberly S and Pierce, Robert H and Fling, Steven P and others},\n  journal={Nature communications},\n  volume={12},\n  number={1},\n  pages={6726},\n  year={2021},\n  publisher={Nature Publishing Group UK London}\n}"
   },
   {
@@ -448,7 +548,7 @@
     "paperTitle": "Integrating AI-powered digital pathology and imaging mass cytometry identifies key classifiers of tumor cells, stroma, and immune cells in non-small cell lung cancer",
     "patients": 108,
     "images": 158,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -482,33 +582,13 @@
     "bibtex": "@article{ruf2023tumor,\n  title={Tumor-associated macrophages trigger MAIT cell dysfunction at the HCC invasive margin},\n  author={Ruf, Benjamin and Bruhns, Matthias and Babaei, Sepideh and Kedei, Noemi and Ma, Lichun and Revsine, Mahler and Benmebarek, Mohamed-Reda and Ma, Chi and Heinrich, Bernd and Subramanyam, Varun and others},\n  journal={Cell},\n  volume={186},\n  number={17},\n  pages={3686--3705},\n  year={2023},\n  publisher={Elsevier}\n}"
   },
   {
-    "accession_id": "BIA-SPORA-025",
-    "globus_link": "https://huggingface.co/datasets/JLrumberger/Pan-Multiplex/tree/main",
-    "name": "rumberger2025automated",
-    "paperTitle": "Automated classification of cellular expression in multiplexed imaging data with Nimbus",
-    "patients": 117,
-    "images": 1258,
-    "type": "TC",
-    "modalities": [
-      "MIBI"
-    ],
-    "cancer": [
-      "Breast"
-    ],
-    "citation": "Automated classification of cellular expression in multiplexed imaging data with Nimbus",
-    "publicationUrl": "https://www.nature.com/articles/s41592-025-02826-9",
-    "dataUrl": "https://huggingface.co/datasets/JLrumberger/Pan-Multiplex/tree/main",
-    "hasHE": false,
-    "bibtex": "@article{rumberger2025automated,\n  title={Automated classification of cellular expression in multiplexed imaging data with Nimbus},\n  author={Rumberger, Josef Lorenz and Greenwald, Noah F and Ranek, Jolene S and Boonrat, Potchara and Walker, Cameron and Franzen, Jannik and Varra, Sricharan Reddy and Kong, Alex and Sowers, Cameron and Liu, Candace C and others},\n  journal={Nature Methods},\n  volume={22},\n  number={10},\n  pages={2161--2170},\n  year={2025},\n  publisher={Nature Publishing Group US New York}\n}"
-  },
-  {
     "accession_id": "BIA-SPORA-026",
     "globus_link": "https://zenodo.org/records/10793609",
     "name": "salie2025spatial",
     "paperTitle": "Spatial single-cell profiling and neighbourhood analysis reveal the determinants of immune architecture connected to checkpoint inhibitor therapy outcome in hepatocellular carcinoma",
     "patients": 96,
     "images": 194,
-    "type": "WSI",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -528,7 +608,7 @@
     "paperTitle": "Simultaneous multiplexed imaging of mRNA and proteins with subcellular resolution in breast cancer tissue samples by mass cytometry",
     "patients": 79,
     "images": 79,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -548,7 +628,7 @@
     "paperTitle": "Multi-modal image analysis for large-scale cancer tissue studies within IMMUcan",
     "patients": 179,
     "images": 179,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],
@@ -569,9 +649,9 @@
     "globus_link": "https://www.cancerimagingarchive.net/collection/crc_ffpe-codex_cellneighs/",
     "name": "schurch2020coordinated",
     "paperTitle": "Coordinated cellular neighborhoods orchestrate antitumoral immunity at the colorectal cancer invasive front",
-    "patients": 102,
+    "patients": 35,
     "images": 251,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "CODEX"
     ],
@@ -611,7 +691,7 @@
     "paperTitle": "Spatial and multiomics analysis of human and mouse lung adenocarcinoma precursors reveals TIM-3 as a putative target for precancer interception",
     "patients": 62,
     "images": 1649,
-    "type": "TC",
+    "type": "ROI",
     "modalities": [
       "IMC"
     ],

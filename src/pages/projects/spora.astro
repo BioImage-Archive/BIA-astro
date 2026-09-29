@@ -120,6 +120,7 @@ const projectNavItems = [
   { key: "tissueVisualizer", label: "Tissue Visualizer", href: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html"},
   { key: "sporaIO", label: "spora [io]", href: sporaIO},
   { key: "sporaBench", label: "spora [bench]", href: sporaBench},
+  { key: "sporaData", label: "spora [data]", href: sporaData},
 ];
 
 ---
@@ -279,10 +280,10 @@ const projectNavItems = [
       commandCopyButton.addEventListener('click', async () => {
         const originalLabel = commandCopyButton.textContent;
         await navigator.clipboard.writeText(commandCode.textContent || '');
-        commandCopyButton.textContent = 'Copied';
+        commandCopyButton.textContent = 'Copied!';
         setTimeout(() => {
           commandCopyButton.textContent = originalLabel;
-        }, 1500);
+        }, 1000);
       });
     }
     const copyButton = document.querySelector('.spora-citation-box .spora-citation-copy');
@@ -290,10 +291,10 @@ const projectNavItems = [
       copyButton.addEventListener('click', async () => {
         const originalLabel = copyButton.textContent;
         await navigator.clipboard.writeText(copyButton.dataset.copyText || '');
-        copyButton.textContent = 'Copied';
+        copyButton.textContent = 'Copied!';
         setTimeout(() => {
           copyButton.textContent = originalLabel;
-        }, 1500);
+        }, 1000);
       });
     }
   </script>
@@ -452,9 +453,9 @@ const projectNavItems = [
     position: absolute;
     top: 0.9rem;
     right: 0.9rem;
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(9, 0, 0, 0.928);
     border-radius: 10px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(0, 0, 0, 0.84);
     color: white;
     padding: 0.35rem 0.8rem;
     cursor: pointer;

@@ -4,13 +4,34 @@ import CodeDialog from '../../../components/CodeDialog.astro';
 import datasets from '../../../data/collections/spora-mock-datasets.json';
 import bannerImage from "../../../assets/bioimage-archive/projects/spora/spora_banner_logo.png";
 
-const cancers = [...new Set(datasets.flatMap((d) => d.cancer))].sort();
-const modalities = [...new Set(datasets.flatMap((d) => d.modalities))].sort();
+function getCategoryCounts(datasets, key) {
+  const counts = datasets
+    .flatMap((d) => d[key])
+    .reduce((acc, value) => {
+      acc[value] = (acc[value] || 0) + 1;
+      return acc;
+    }, {});
+
+  return Object.entries(counts)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([category, count]) => ({ category, count }));
+}
+
+const cancers = getCategoryCounts(datasets, "cancer");
+const modalities = getCategoryCounts(datasets, "modalities");
+const imageTypes = getCategoryCounts(datasets, "type");
+const imageTypeTitles = {
+  "ROI": "Region of Interest (ROI)",
+  "WSI": "Whole Slide (WSI)",
+  "TC": "Tissue Core (TC)"
+};
+
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
 const formatCancers = (cancers) => cancers.join(', ');
 const sporaIO = "https://go.epfl.ch/spora-io";
 const sporaBench = "https://go.epfl.ch/spora-bench";
+const sporaData = "https://go.epfl.ch/spora-data";
 const projectNavItems = [
   { key: "", label: "Home", href: "/bioimage-archive/" },
   { key: "sporaHome", label: "spora", href: "/bioimage-archive/projects/spora" },
@@ -18,8 +39,8 @@ const projectNavItems = [
   { key: "tissueVisualizer", label: "Tissue Visualizer", href: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html"},
   { key: "sporaIO", label: "spora [io]", href: sporaIO},
   { key: "sporaBench", label: "spora [bench]", href: sporaBench},
+  { key: "sporaData", label: "spora [data]", href: sporaData},
 ];
-
 ---
 <Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset" projectNavItems={projectNavItems}>
 <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing browser" data-datasets={JSON.stringify(datasets)} >
@@ -31,15 +52,25 @@ const projectNavItems = [
       </div>
       <details class="filter-group filter-group--collapsible" open>
         <summary>Primary Cancer Type</summary>
-        <fieldset>{cancers.map((value) => <label><input type="checkbox" name="cancer" value={value} /> <span>{value}</span></label>)}</fieldset>
+        <fieldset>
+          {cancers.map(({ category, count }) => (
+            <label class="filter-option"><input type="checkbox" name="cancer" value={category} /><span>{category}</span><span class="facet-count">{count}</span></label>
+          ))}
+</fieldset>
       </details>
       <details class="filter-group filter-group--collapsible" open>
         <summary>Modalities</summary>
-        <fieldset>{modalities.map((value) => <label><input type="checkbox" name="modality" value={value} /> <span>{value}</span></label>)}</fieldset>
+        <fieldset>
+          {modalities.map(({ category, count }) => (
+            <label class="filter-option"><input type="checkbox" name="modality" value={category} /><span>{category}</span><span class="facet-count">{count}</span></label>
+          ))}
+        </fieldset>
       </details>
       <details class="filter-group filter-group--collapsible" open>
         <summary>Image Type</summary>
-        <fieldset><label><input type="checkbox" name="type" value="TC" /> <span>Tumor Core (TC)</span></label><label><input type="checkbox" name="type" value="WSI" /> <span>Whole Slide (WSI)</span></label></fieldset>
+        {imageTypes.map(({ category, count }) => (
+            <label class="filter-option"><input type="checkbox" name="type" value={category} /><span>{imageTypeTitles[category] || category}</span><span class="facet-count">{count}</span></label>
+          ))}
       </details>
       <button class="clear" type="button">Clear filters</button>
     </div>
@@ -64,7 +95,7 @@ const projectNavItems = [
             <tr class="vf-table__row">
               <td class="vf-table__cell">
                 <strong>{d.name}</strong><br />
-                <a class="vf-link" href={d.publicationUrl} target="_blank"><small>{d.citation}</small></a>
+                <p><a class="vf-link" href={d.publicationUrl} target="_blank"><small>{d.citation}</small></a></p>
               </td>
               <td class="vf-table__cell">{d.patients.toLocaleString()}</td>
               <td class="vf-table__cell">{d.images.toLocaleString()}</td>
@@ -105,7 +136,9 @@ const projectNavItems = [
     const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
     const pillClassMap = {
       tc: 'pill pill--tc',
+      roi: 'pill pill--roi',
       wsi: 'pill pill--wsi',
+      if: 'pill pill--if',
       codex: 'pill pill--codex',
       imc: 'pill pill--imc',
       orion: 'pill pill--orion',
@@ -127,7 +160,7 @@ const projectNavItems = [
         const text = `${d.name} ${d.citation} ${d.cancer.join(' ')}`.toLowerCase();
         return (!term || text.includes(term)) && (!cancer.length || d.cancer.some((value) => cancer.includes(value))) && (!modality.length || d.modalities.some((m) => modality.includes(m))) && (!type.length || type.includes(d.type));
       });
-      body.innerHTML = visible.map((d) => `<tr class="vf-table__row"><td class="vf-table__cell"><strong>${escapeHtml(d.name)}</strong><br /><a class="vf-link" href="${escapeHtml(d.publicationUrl)}" target="_blank"><small>${escapeHtml(d.citation)}</small></a></td><td class="vf-table__cell">${d.patients.toLocaleString()}</td><td class="vf-table__cell">${d.images.toLocaleString()}</td><td class="vf-table__cell">${renderPill(d.type)}</td><td class="vf-table__cell">${renderModalities(d)}</td><td class="vf-table__cell">${renderCancers(d.cancer)}</td><td class="vf-table__cell"><button class="vf-button vf-button--link row-button cite" data-name="${escapeHtml(d.name)}">Cite</button><button class="vf-button vf-button--link row-button download" data-name="${escapeHtml(d.name)}">Download</button></td></tr>`).join('');
+      body.innerHTML = visible.map((d) => `<tr class="vf-table__row"><td class="vf-table__cell"><strong>${escapeHtml(d.name)}</strong><p><a class="vf-link" href="${escapeHtml(d.publicationUrl)}" target="_blank"><small>${escapeHtml(d.citation)}</small></a></p></td><td class="vf-table__cell">${d.patients.toLocaleString()}</td><td class="vf-table__cell">${d.images.toLocaleString()}</td><td class="vf-table__cell">${renderPill(d.type)}</td><td class="vf-table__cell">${renderModalities(d)}</td><td class="vf-table__cell">${renderCancers(d.cancer)}</td><td class="vf-table__cell"><button class="vf-button vf-button--link row-button cite" data-name="${escapeHtml(d.name)}">Cite</button><button class="vf-button vf-button--link row-button download" data-name="${escapeHtml(d.name)}">Download</button></td></tr>`).join('');
       count.textContent = visible.length;
       empty.hidden = visible.length !== 0;
     }
@@ -175,6 +208,8 @@ const projectNavItems = [
   .results-bar { display: flex; align-items: center; gap: 5px; margin-bottom: 18px; }
   :global(.browser .pill) { display: inline-flex; margin: 2px; border-radius: 6px; padding: 4px 10px; font: 700 .72rem var(--spora-mono); white-space: nowrap; }
   :global(.browser .pill--tc) { background: #5f9f8d; color: #ffffff; }
+  :global(.browser .pill--roi) { background: #5f9f8d; color: #ffffff; }
+  :global(.browser .pill--if) { background: #d9e8fb; color: #1892de; }
   :global(.browser .pill--wsi) { background: #a9cbbf; color: #23584a; }
   :global(.browser .pill--codex) { background: #dbe1fb; color: #3640aa; }
   :global(.browser .pill--imc) { background: #d9e8fb; color: #2b65c8; }
@@ -188,6 +223,17 @@ const projectNavItems = [
   :global(.results-table .vf-table .vf-button) {
     font-size: 1rem !important;
   }
+  .filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-option .facet-count {
+  margin-left: auto;
+  color: grey;
+  padding: 0 0.35rem;
+}
   @media (max-width: 850px) {
     .browser {
       display: grid;
