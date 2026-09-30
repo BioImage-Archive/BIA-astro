@@ -775,37 +775,107 @@ function buildRelatedEntryPreviewLink({ accession, href, thumbnailURL, type, mea
   `;
 }
 
+function getHrefFromLinkValue(link) {
+  const value = String(link ?? "").trim();
+  const markdownLink = value.match(/^\[[^\]]+\]\(([^)]+)\)$/);
+  return markdownLink?.[1] ?? value;
+}
+
+function getPDBAccessionFromLink(link) {
+  const href = getHrefFromLinkValue(link);
+  const pdbPathMatch = href.match(/\/pdb\/([a-z0-9]{4})(?:[/?#]|$)/i);
+  if (pdbPathMatch) return normalisePDBAccession(pdbPathMatch[1]);
+
+  try {
+    const lastPathPart = new URL(href).pathname.split("/").filter(Boolean).pop();
+    const accession = normalisePDBAccession(lastPathPart);
+    return accession.length === 4 ? accession : "";
+  } catch {
+    const accession = normalisePDBAccession(href);
+    return accession.length === 4 ? accession : "";
+  }
+}
+
+function getEMDBAccessionFromLink(link) {
+  const href = getHrefFromLinkValue(link);
+  const emdbMatch = href.match(/EMD[-_]?(\d+)/i);
+  return emdbMatch?.[1] ?? normaliseEMDBAccession(href);
+}
+
+function uniqueRelatedEntries(entries) {
+  const uniqueEntries = new Map();
+  for (const entry of entries) {
+    if (entry?.accession && !uniqueEntries.has(entry.accession)) {
+      uniqueEntries.set(entry.accession, entry);
+    }
+  }
+  return Array.from(uniqueEntries.values());
+}
+
+function getRelatedEntries(study, linkType) {
+  const lowerLinkType = String(linkType ?? "").toLowerCase();
+  const normaliseAccession = lowerLinkType === "pdb"
+    ? normalisePDBAccession
+    : normaliseEMDBAccession;
+  const getAccessionFromLink = lowerLinkType === "pdb"
+    ? getPDBAccessionFromLink
+    : getEMDBAccessionFromLink;
+  const legacyField = lowerLinkType === "pdb" ? "pdb_accession" : "emdb_accession";
+
+  const apiEntries = asArray(study?.see_also)
+    .filter((entry) => String(entry?.link_type ?? "").toLowerCase() === lowerLinkType)
+    .map((entry) => {
+      const link = entry?.link;
+      const href = getHrefFromLinkValue(link);
+      return {
+        accession: getAccessionFromLink(link),
+        href,
+      };
+    });
+
+  const legacyEntries = asArray(study?.[legacyField])
+    .map(normaliseAccession)
+    .filter(Boolean)
+    .map((accession) => ({
+      accession,
+      href: lowerLinkType === "pdb"
+        ? `https://www.ebi.ac.uk/pdbe/entry/pdb/${accession}`
+        : `https://www.ebi.ac.uk/emdb/EMD-${accession}`,
+    }));
+
+  return uniqueRelatedEntries([...apiEntries, ...legacyEntries]);
+}
+
+export function getRelatedEntryLinks(study, linkType) {
+  return getRelatedEntries(study, linkType).map(({ accession }) => accession);
+}
+
 export async function buildPDBandEMDBLinks(study){
-  //|| ["8ay4", "8ay5"]
-  const studyPDBLinks = asArray(study?.pdb_accession)
-    .map(normalisePDBAccession)
-    .filter(Boolean);
-  //|| ["15710", "15711"]
-  const studyEMDBLinks = asArray(study?.emdb_accession)
-    .map(normaliseEMDBAccession)
-    .filter(Boolean);
+  const studyPDBLinks = getRelatedEntries(study, "pdb");
+  const studyEMDBLinks = getRelatedEntries(study, "emdb");
 
   const pdbLinks = studyPDBLinks.length > 0
-    ? studyPDBLinks.map((pdb) => buildRelatedEntryPreviewLink({
-      accession: pdb,
-      href: `https://www.ebi.ac.uk/pdbe/entry/pdb/${pdb}`,
-      thumbnailURL: `https://www.ebi.ac.uk/pdbe/static/entry/${pdb}_deposited_chain_front_image-200x200.png`,
+    ? studyPDBLinks.map(({ accession, href }) => buildRelatedEntryPreviewLink({
+      accession,
+      href,
+      thumbnailURL: `https://www.ebi.ac.uk/pdbe/static/entry/${accession}_deposited_chain_front_image-200x200.png`,
       type: "PDB",
     })).join(", ")
     : null;
 
-  const emdbEntries = await Promise.all(studyEMDBLinks.map(async (emdb) => ({
-    accession: emdb,
-    metadata: await getFromAPI(`https://www.ebi.ac.uk/emdb/api/entry/EMD-${emdb}`),
+  const emdbEntries = await Promise.all(studyEMDBLinks.map(async ({ accession, href }) => ({
+    accession,
+    href,
+    metadata: await getFromAPI(`https://www.ebi.ac.uk/emdb/api/entry/EMD-${accession}`),
   })));
 
   const emdbLinks = emdbEntries.length > 0
-    ? emdbEntries.map(({ accession, metadata }) => {
+    ? emdbEntries.map(({ accession, href, metadata }) => {
       const displayAccession = `EMD-${accession}`;
       const resolution = getEMDBResolution(metadata);
       return buildRelatedEntryPreviewLink({
         accession: displayAccession,
-        href: `https://www.ebi.ac.uk/emdb/EMD-${accession}`,
+        href,
         thumbnailURL: buildEMDBThumbnailURL(accession),
         type: "EMDB",
         measurement: resolution ? {
