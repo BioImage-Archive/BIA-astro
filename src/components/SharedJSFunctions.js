@@ -368,8 +368,16 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
       }
       else if (stringValue.includes("-")) {
         const [start, end] = stringValue.split("-");
-        url.searchParams.append(`${facetKey}.gte`, start);
-        url.searchParams.append(`${facetKey}.lte`, end);
+        
+        if(
+          start !== "" && !Number.isNaN(Number(start)) &&
+          end !== "" && !Number.isNaN(Number(end))) {
+            url.searchParams.append(`${facetKey}.gte`, start);
+            url.searchParams.append(`${facetKey}.lte`, end);
+          }
+        else {
+          url.searchParams.append(`${facetKey}.eq`, stringValue);
+        }
       }
       else if (stringValue[0] === ">") {
         url.searchParams.append(`${facetKey}.gt`, stringValue.slice(1));
