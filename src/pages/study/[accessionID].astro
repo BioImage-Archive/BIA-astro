@@ -158,7 +158,7 @@ const breadcrumbs = [
           href={browseFilesLink}
           target={hasFileList ? undefined : "_blank"}
           rel={hasFileList ? undefined : "noopener noreferrer"}
-        >Browse all files</a>
+        >{hasFileList ? "Browse all files" : "Browse HTTP"}</a>
       )}
       {!hasFileList && globusLink && (
         <a
