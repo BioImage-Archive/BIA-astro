@@ -1,13 +1,13 @@
 function formatPhysicalDimension(value, text) {
     if (text === "" && value !== 1) {
         if (value != null) {
-            return Number(value).toPrecision(2)
+            return Number(value).toExponential(1)
         } else {
             return text
         }
     } else {
         if (value != null && value !== 1) {
-            return text + " x " + Number(value).toPrecision(2)
+            return text + " x " + Number(value).toExponential(1)
         } else {
             return text
         }
