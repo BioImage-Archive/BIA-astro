@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "prod": "NODE_ENV=production PORT=8080 HOST=0.0.0.0 node dist/bioimage-archive/server/entry.mjs",
-    "local": "astro check && astro build && astro preview"
+    "local": "astro check && astro build && astro preview",
+    "test:fbbi": "node --test tests/ontology/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
