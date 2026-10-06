@@ -17,6 +17,7 @@ before(async () => {
     for (const relative of [
         "src/components/DatasetDetail.astro", "src/components/DatasetInfo.astro",
         "src/components/SharedJSFunctions.js", "src/components/formatting/fbbi-terms.mjs",
+        "src/components/formatting/physical-dimensions.js",
         "src/assets/bioimage-archive/external-link-svgrepo-com.png",
         "src/assets/bioimage-archive/image_fallback.png", "src/data/metadata-field-name-mapping.json",
     ]) {
