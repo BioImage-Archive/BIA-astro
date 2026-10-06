@@ -10,6 +10,7 @@
     "astro": "astro",
     "prod": "NODE_ENV=production PORT=8080 HOST=0.0.0.0 node dist/bioimage-archive/server/entry.mjs",
     "local": "astro check && astro build && astro preview",
+    "test": "node --test tests/formatting/*.test.mjs",
     "test:news": "node --test tests/news/*.test.mjs"
   },
   "dependencies": {

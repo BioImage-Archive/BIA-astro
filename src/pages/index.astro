@@ -11,6 +11,7 @@ import biaLogo from "../assets/bioimage-archive/BIA_new_logo.png"
 import emailImage from "../assets/bioimage-archive/email_embl_green.png";
 import githubImage from "../assets/bioimage-archive/github_embl_green.png";
 import blueskyImage from "../assets/bioimage-archive/bluesky_embl_green.png";
+import linkedinImage from "../assets/bioimage-archive/linkedin_embl_green.png";
 import NewsSection from "../components/News.astro"
 import ukriImage from "../assets/bioimage-archive/uk_ri_logo.jpg";
 import emblImage from "../assets/bioimage-archive/EMBL_logo_colour_wordmark.png";
@@ -159,8 +160,7 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
       <h2 class="vf-section-header vf-section-header__heading">Stay in touch</h2>
       <br/>
       <section
-        class="vf-grid | vf-grid__col-3"
-        style="margin-left: 0%; margin-right: 60%;"
+        class="vf-grid | stay-in-touch-links"
       >
         <div class="column column-block">
           <a href="mailto:bioimage-archive@ebi.ac.uk" class="vf-link logo-img">
@@ -189,6 +189,15 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
             /></a
           >
         </div>
+        <div class="column column-block">
+          <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/embl-ebi-bioimaging/" class="vf-link logo-img">
+            <img
+              class="vf-figure__image"
+              src={linkedinImage.src}
+              alt="EMBL-EBI Bioimaging on LinkedIn"
+            /></a
+          >
+        </div>
       </section>
     </div>
   </section>
@@ -206,6 +215,11 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   <style>
   .logo-img {
     border-width: 0px;
+  }
+
+  .stay-in-touch-links {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 240px;
   }
   </style>
 

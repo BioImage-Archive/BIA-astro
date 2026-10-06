@@ -1,0 +1,33 @@
+/* Focus retains keyboard access without retaining the pressed geometry.
+ * Resting and hover shadows match the Visual Framework 2.5.12 button styles.
+ * The namespace also reaches actions rendered through the summary's slots.
+ */
+.study-page-actions .vf-button--primary:not(:active) {
+  transform: translate(0, 0);
+  box-shadow:
+    8px 8px 0 var(--vf-button-shadow-background-color, var(--vf-button__color__background--default-dark)),
+    -5px -5px rgba(0, 0, 0, 0);
+}
+
+/* Touch-generated hover must not leave an action looking depressed. */
+@media (hover: hover) and (pointer: fine) {
+  .study-page-actions .vf-button--primary:hover:not(:active) {
+    transform: translate(4px, 4px);
+    box-shadow:
+      4px 4px 0 var(--vf-button-shadow-background-color, var(--vf-button__color__background--default-dark)),
+      2px 2px 4px rgba(0, 0, 0, 0.25),
+      -5px -5px rgba(0, 0, 0, 0);
+  }
+}
+
+/* Place keyboard focus beyond the raised shadow; keep a :focus fallback. */
+.study-page-actions .vf-button--primary:focus {
+  outline: 2px solid var(--vf-color--black, #000);
+  outline-offset: 10px;
+}
+
+@supports selector(:focus-visible) {
+  .study-page-actions .vf-button--primary:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
