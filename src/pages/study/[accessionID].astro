@@ -5,7 +5,6 @@ import StudyContentsSummary from "../../components/study-page/StudyContentsSumma
 import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
-import StudyFiles from "../../components/StudyFiles.astro";
 import Citation from "../../components/Citation.astro";
 import { buildDatasetFileSummary, buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
@@ -35,11 +34,13 @@ const ftpLink = await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studie
 const ftpHttpsLink = isEMPIAR? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`: ftpLink?.httpLink;
 const globusLink = isEMPIAR? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
+const hasFileList = Boolean(fileListUrls?.table_view && fileListUrls?.tree_view);
+const browseFilesLink = hasFileList ? "#file_list" : ftpHttpsLink;
 
 // Read EMPIAR XML header to get dataset summary
 const datasetFileSummaryString = isEMPIAR ? null: null; //await buildDatasetFileSummary(accessionID, study?.dataset) : null;
 
-if (fileListUrls) {
+if (hasFileList) {
   tableOfContents["Browse All Files"] = "file_list";
 }
 
@@ -149,10 +150,25 @@ const breadcrumbs = [
         <a href={studyImagePageLink? `/bioimage-archive/image/${studyImagePageLink}`: ""}><img class="vf-figure__image" src={exampleStudyImage} /></a>
       </figure>
     </div>
-    <div slot="ftp-link">
-      {!fileListUrls && (<StudyFiles accessionID={accessionID}/>)}
-    </div>
     <div slot="how-to-cite" style="word-wrap: break-word;"><Citation howToCite={howToCite}/></div>
+    <div slot="browse-files">
+      {browseFilesLink && (
+        <a
+          class="vf-button vf-button--primary vf-button--sm"
+          href={browseFilesLink}
+          target={hasFileList ? undefined : "_blank"}
+          rel={hasFileList ? undefined : "noopener noreferrer"}
+        >{hasFileList ? "Browse all files" : "Browse HTTP"}</a>
+      )}
+      {!hasFileList && globusLink && (
+        <a
+          class="vf-button vf-button--primary vf-button--sm"
+          href={globusLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >Browse files on Globus</a>
+      )}
+    </div>
     {
       isEMPIAR && (
         <div slot="download-metadata">
@@ -311,7 +327,7 @@ const breadcrumbs = [
     </section>
     <hr />
   )}
-  {fileListUrls && (
+  {hasFileList && (
     <FileListTable file_list_urls={fileListUrls} ftp_path={ftpHttpsLink} globus_link={globusLink}/>
   )}
 </BaseLayout>
