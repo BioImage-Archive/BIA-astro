@@ -13,7 +13,7 @@ export function getFbbiSearchLink(value) {
     const id = `FBbi:${match[1]}`;
     return {
         id,
-        href: `https://www.ebi.ac.uk/ols4/search?q=${encodeURIComponent(id)}&ontology=fbbi`,
+        href: `https://www.ebi.ac.uk/ols4/search?q=${encodeURIComponent(id)}&ontology=fbbi&isDefiningOntology=true`,
     };
 }
 

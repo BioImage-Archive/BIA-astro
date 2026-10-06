@@ -68,13 +68,13 @@ const unsupported = { title: 'Unsupported identifiers', fbbi_id: ['<img src=x on
 test("the reference study offers an FBBI search without claiming that its term exists", () => {
     assert.match(sections.study, /Imaging method:<\/b>&nbsp; Optical Projection Tomography \(OPT\)/);
     assert.match(sections.study, /Imaging method ontology:<\/b>/);
-    assert.match(sections.study, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000639&amp;ontology=fbbi">FBbi:00000639 \(search OLS\)<\/a>/);
+    assert.match(sections.study, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000639&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000639 \(search OLS\)<\/a>/);
     assert.doesNotMatch(sections.study, /\/entities\/|\/classes\/|href="https:\/\/purl\.obolibrary\.org/);
 });
 
 test("image acquisition metadata accepts the observed obo namespace alias", () => {
     assert.match(sections.image, /Imaging method:<\/b>&nbsp; Cryo-electron tomography/);
-    assert.match(sections.image, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000256&amp;ontology=fbbi">FBbi:00000256 \(search OLS\)<\/a>/);
+    assert.match(sections.image, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000256&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000256 \(search OLS\)<\/a>/);
     assert.doesNotMatch(sections.image, /target=|onclick=|obo:FBbi_/);
 });
 

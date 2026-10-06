@@ -11,7 +11,7 @@ for (const accession of [
     test(`normalize supported accession ${JSON.stringify(accession)}`, () => {
         assert.deepEqual(getFbbiSearchLink(accession), {
             id: "FBbi:00000256",
-            href: "https://www.ebi.ac.uk/ols4/search?q=FBbi%3A00000256&ontology=fbbi",
+            href: "https://www.ebi.ac.uk/ols4/search?q=FBbi%3A00000256&ontology=fbbi&isDefiningOntology=true",
         });
     });
 }
@@ -36,7 +36,7 @@ for (const accession of [
 
 test("render an explicitly labelled search with canonical spelling and escaped query parameters", () => {
     assert.equal(renderFbbiTermsHtml("obo:FBbi_00000256"),
-        '<a class="vf-link" href="https://www.ebi.ac.uk/ols4/search?q=FBbi%3A00000256&amp;ontology=fbbi">FBbi:00000256 (search OLS)</a>');
+        '<a class="vf-link" href="https://www.ebi.ac.uk/ols4/search?q=FBbi%3A00000256&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000256 (search OLS)</a>');
 });
 
 test("preserve identifier order, duplicate occurrences, and input values", () => {
@@ -70,6 +70,7 @@ for (const id of ["FBbi:00000639", "FBbi:99999999", "FBbi:00000032"]) {
         assert.equal(destination.pathname, "/ols4/search");
         assert.equal(destination.searchParams.get("q"), id);
         assert.equal(destination.searchParams.get("ontology"), "fbbi");
+        assert.equal(destination.searchParams.get("isDefiningOntology"), "true");
         assert.match(renderFbbiTermsHtml(id), /\(search OLS\)<\/a>/);
         assert.doesNotMatch(link.href, /\/entities\/|\/classes\//);
     });
