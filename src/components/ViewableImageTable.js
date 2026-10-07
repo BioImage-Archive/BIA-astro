@@ -4,6 +4,7 @@ const studyAccessionID = tableEl.dataset.studyAccessionId;
 const imagePageRoot = tableEl.dataset.imagePageRoot;
 const imageFallbackSrc = tableEl.dataset.imageFallbackSrc;
 const api_path = tableEl.dataset.apiPath;
+const hasSpecimenTracks = tableEl.dataset.hasSpecimenTracks === "true";
 
   function imageUrl(image) {
     return imagePageRoot
@@ -128,6 +129,9 @@ const api_path = tableEl.dataset.apiPath;
     }
 
     const restoredTableState = loadTableState();
+    const toggleEl = document.querySelector("#showDisplayImagesToggle");
+    let showDisplayImages = hasSpecimenTracks && Boolean(restoredTableState?.showDisplayImages);
+    if (toggleEl) toggleEl.checked = showDisplayImages;
     const initialPageSize = getPositiveInteger(restoredTableState?.pageSize, 10);
     const initialDisplayPage = getPositiveInteger(restoredTableState?.displayPage, 1);
     let lastSearch = restoredTableState?.search || "";
@@ -168,6 +172,7 @@ const api_path = tableEl.dataset.apiPath;
           displayPage,
           totalPages,
           currentHasNextCursor,
+          showDisplayImages,
           pageCursorEntries: [...pageCursorMap.entries()],
           scrollY: shouldRestoreScroll && Number.isFinite(restoredTableState?.scrollY)
             ? restoredTableState.scrollY
@@ -290,6 +295,10 @@ const api_path = tableEl.dataset.apiPath;
           `&query=${encodeURIComponent(search)}` +
           `&pagination.page_size=${pageSize}`;
 
+        if (hasSpecimenTracks && showDisplayImages) {
+          url += "&has.display_image=true";
+        }
+
         let fetchCursor = null;
         if (requestedPage <= cappedPage) {
           url += `&pagination.page=${requestedPage}`;
@@ -387,6 +396,12 @@ const api_path = tableEl.dataset.apiPath;
         table.page("first");
       }
       saveTableState(table);
+    });
+
+    toggleEl?.addEventListener("change", () => {
+      showDisplayImages = toggleEl.checked;
+      resetCursorState(table.search(), table.page.len()); // cursors belong to the old result set
+      table.ajax.reload(); // resets paging to page 1
     });
 
     $("#viewable_images_table").on("click", "a", function () {
