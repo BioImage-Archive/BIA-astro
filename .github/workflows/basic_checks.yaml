@@ -10,12 +10,14 @@ env:
 jobs:
   wait-for-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 22
     steps:
       - name: Waiting for 200 from the Netlify Preview
         uses: jakepartusch/wait-for-netlify-action@v1.4
         with:
           site_name: ${{ env.site_name }}
-          max_timeout: 180
+          max_timeout: 1200
+          base_path: /bioimage-archive/
 
   link-check:
     needs: wait-for-deploy
