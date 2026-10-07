@@ -3,7 +3,7 @@
 // Knip/Astro may evaluate project configuration; optional astro check can generate .astro/ files.
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { eslintFindings, knipFindings, renderFindings, reportExitCode, sortFindings } from './report.mjs';
@@ -49,20 +49,63 @@ function read(file) {
   try { return readFileSync(target, 'utf8'); } catch { return null; }
 }
 function digest(file) {
-  const text = read(file);
-  return text == null ? null : createHash('sha256').update(text).digest('hex');
+  const target = path.resolve(root, file);
+  if (!target.startsWith(root + path.sep)) throw new Error(`Input outside repository: ${file}`);
+  return createHash('sha256').update(readFileSync(target)).digest('hex');
 }
 function packageInfo(name) {
   // Resolve local packages, never execute npx or fetch anything.
   const file = require.resolve(`${name}/package.json`);
   return { folder: path.dirname(file), data: JSON.parse(readFileSync(file, 'utf8')) };
 }
-function inputSnapshot() {
-  const files = execute('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z']);
-  if (files.exitCode !== 0) return null;
-  return Object.fromEntries(files.stdout.split('\0').filter(file =>
-    file && (file === 'Makefile' || /\.(?:astro|mdx|[cm]?[jt]sx?|json|ya?ml|mk)$/.test(file)) &&
-    !file.startsWith('artifacts/')).sort().map(file => [file, digest(file)]));
+const requiredInputs = [
+  'package-lock.json', 'configs/quality/eslint.config.mjs', 'configs/quality/knip.json',
+  'configs/quality/tsconfig.dead-code.json',
+];
+function captureProvenance(name) {
+  const begin = Date.now();
+  const stage = { name, state: 'FAILED', exitCode: null, error: null, commands: [] };
+  const snapshot = { gitHead: null, trackedStatus: null, inputHashes: null, hashes: null };
+  stages.push(stage);
+  function git(label, parameters) {
+    const result = execute('git', parameters);
+    stage.commands.push({ label, command: result.command, exitCode: result.exitCode,
+      signal: result.signal, error: result.error });
+    writeFileSync(path.join(out, `${name}.${label}.stdout.log`), result.stdout);
+    writeFileSync(path.join(out, `${name}.${label}.stderr.log`), result.stderr);
+    if (result.error || result.signal || result.exitCode !== 0) {
+      throw new Error(`Git ${label} failed: ${result.error ?? `exit=${result.exitCode}, signal=${result.signal}`}`);
+    }
+    return result.stdout;
+  }
+  try {
+    const gitRoot = git('root', ['rev-parse', '--show-toplevel']).trim();
+    if (realpathSync(gitRoot) !== realpathSync(root)) {
+      throw new Error('Working directory is not the Git repository root');
+    }
+    snapshot.gitHead = git('head', ['rev-parse', 'HEAD']).trim();
+    if (!/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(snapshot.gitHead)) {
+      throw new Error('Git HEAD is not a complete commit hash');
+    }
+    snapshot.trackedStatus = git('status', ['status', '--porcelain=v1', '--untracked-files=no']);
+    const files = git('inputs', ['ls-files', '--cached', '--others', '--exclude-standard', '-z']);
+    const inputs = [...new Set(files.split('\0').filter(file =>
+      file && (file === 'Makefile' || /\.(?:astro|mdx|[cm]?[jt]sx?|json|ya?ml|mk)$/.test(file)) &&
+      !file.startsWith('artifacts/')))].sort();
+    if (inputs.length === 0) throw new Error('Git enumerated zero audit inputs');
+    // Unreadable inputs cannot establish stability; retain their read error as a failed stage.
+    snapshot.inputHashes = Object.fromEntries(inputs.map(file => [file, digest(file)]));
+    snapshot.hashes = Object.fromEntries(requiredInputs.map(file => [file, digest(file)]));
+    stage.state = 'COMPLETED';
+    stage.exitCode = 0;
+  } catch (error) {
+    stage.error = error.message;
+    stage.exitCode = 2;
+    writeFileSync(path.join(out, `${name}.failure.log`), `${error.stack ?? error}\n`);
+  } finally {
+    stage.durationMs = Date.now() - begin;
+  }
+  return snapshot;
 }
 function runTool(name, parameters, parse = null) {
   const begin = Date.now();
@@ -114,16 +157,11 @@ function runTool(name, parameters, parse = null) {
   }
 }
 
-const before = execute('git', ['status', '--porcelain=v1', '--untracked-files=no']);
-const head = execute('git', ['rev-parse', 'HEAD']);
-const inputHashesBefore = inputSnapshot();
+const before = captureProvenance('provenance-before');
 const versions = {};
-for (const name of ['eslint', 'eslint-plugin-astro', 'typescript-eslint', 'knip', 'astro', '@astrojs/check', 'typescript']) {
+for (const name of ['eslint', 'eslint-plugin-astro', 'typescript-eslint', 'knip', 'astro', '@astrojs/compiler', '@astrojs/check', 'typescript']) {
   try { versions[name] = packageInfo(name).data.version; } catch { versions[name] = 'NOT INSTALLED / NOT RESOLVED'; }
 }
-const hashes = Object.fromEntries([
-  'package-lock.json', 'configs/quality/eslint.config.mjs', 'configs/quality/knip.json', 'configs/quality/tsconfig.dead-code.json',
-].map(file => [file, digest(file)]));
 
 runTool('astro-probe', []);
 runTool('eslint', ['--config', 'configs/quality/eslint.config.mjs', '--format', 'json', '.'], eslintFindings);
@@ -147,20 +185,20 @@ notes.push(
   'No browser coverage, page build, runtime smoke tests, API availability checks or source deletion is performed.',
   'ESLint rule directives that turn a rule off can prevent diagnostics entirely; review source suppressions separately.',
 );
-if (head.exitCode !== 0) notes.push('Git HEAD unavailable: this report is not tied to a confirmed commit.');
-if (before.stdout.trim()) notes.push('Tracked working tree changes were present before this scan; HEAD alone does not describe the input.');
-const after = execute('git', ['status', '--porcelain=v1', '--untracked-files=no']);
-const inputHashesAfter = inputSnapshot();
-const inputsChanged = before.stdout !== after.stdout ||
-  JSON.stringify(inputHashesBefore) !== JSON.stringify(inputHashesAfter);
-if (inputsChanged) notes.push('Audited inputs changed during the scan; rerun on stable inputs before trusting this report.');
-if (inputHashesBefore == null) notes.push('Input file hashes unavailable; inspect the working tree manually.');
+if (before.trackedStatus?.trim()) {
+  notes.push('Tracked working tree changes were present before this scan; HEAD alone does not describe the input.');
+}
+const after = captureProvenance('provenance-after');
+const inputsChanged = before.gitHead !== after.gitHead || before.trackedStatus !== after.trackedStatus ||
+  JSON.stringify(before.inputHashes) !== JSON.stringify(after.inputHashes) ||
+  JSON.stringify(before.hashes) !== JSON.stringify(after.hashes);
+if (inputsChanged) notes.push('Audited inputs or HEAD changed during the scan; rerun on stable inputs before trusting this report.');
 const exitCode = inputsChanged ? 2 : reportExitCode(findings, stages, args.has('--report-only'));
 const report = {
-  started, finished: new Date().toISOString(), root, evidencePath, gitHead: head.stdout.trim() || null,
-  trackedStatusBefore: before.stdout, trackedStatusAfter: after.stdout,
-  inputHashesBefore, inputHashesAfter,
-  node: process.version, versions, hashes, stages, notes, findings: sortFindings(findings), exitCode,
+  started, finished: new Date().toISOString(), root, evidencePath, gitHead: before.gitHead, gitHeadAfter: after.gitHead,
+  trackedStatusBefore: before.trackedStatus, trackedStatusAfter: after.trackedStatus,
+  inputHashesBefore: before.inputHashes, inputHashesAfter: after.inputHashes,
+  node: process.version, versions, hashes: before.hashes, hashesAfter: after.hashes, stages, notes, findings: sortFindings(findings), exitCode,
   completeness: exitCode === 2 ? 'INCOMPLETE' : 'CONFIGURED_STATIC_SCAN_COMPLETED_NOT_PROOF_OF_ALL_DEAD_CODE',
 };
 writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2) + '\n');
@@ -173,7 +211,7 @@ const text = [
   `HEAD: ${report.gitHead ?? 'unknown'}`, `Node: ${process.version}`,
   `Status: ${report.completeness}`,
   `Candidates: ${candidates}; analysis diagnostics: ${diagnostics}; suppressed findings: ${suppressed}`,
-  `Versions: ${JSON.stringify(versions)}`, `Input hashes: ${JSON.stringify(hashes)}`,
+  `Versions: ${JSON.stringify(versions)}`, `Input hashes: ${JSON.stringify(report.hashes)}`,
   '', 'TOOL EXECUTION',
   ...stages.map(stage => `${stage.name}: ${stage.state}; exit=${stage.exitCode}; ${stage.error ?? 'no execution error'}`),
   '', 'SCOPE / LIMITATIONS', ...notes.map(note => `- ${note}`),

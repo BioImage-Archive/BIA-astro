@@ -10,7 +10,7 @@
   "entry": [
     "scripts/dead-code/audit.mjs",
     "scripts/dead-code/verify-tools.mjs",
-    "scripts/dead-code/report.test.mjs",
+    "scripts/dead-code/*.test.mjs",
     "src/components/ViewableImageTable.js",
     "src/components/search/search-results.js",
     "src/layouts/HelpLayout.astro",

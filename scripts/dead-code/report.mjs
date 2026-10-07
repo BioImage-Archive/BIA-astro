@@ -7,8 +7,41 @@ const KNIP_CANDIDATES = new Set([
 ]);
 const KNIP_DIAGNOSTICS = new Set(['unlisted', 'binaries', 'unresolved', 'duplicates']);
 
+function record(value, label) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`Unexpected ${label}: expected an object`);
+  }
+}
+
+function nonemptyString(value, label) {
+  if (typeof value !== 'string' || !value.trim()) throw new Error(`Missing or invalid ${label}`);
+}
+
+function position(value, label, minimum = 1) {
+  if (value !== undefined && (!Number.isSafeInteger(value) || value < minimum)) {
+    throw new Error(`Invalid ${label}: expected an integer >= ${minimum}`);
+  }
+}
+
+function knipItem(item, kind) {
+  record(item, `Knip ${kind} issue`);
+  nonemptyString(item.name, `Knip ${kind} issue name`);
+  for (const key of Object.keys(item)) {
+    if (!['name', 'line', 'col', 'pos'].includes(key)) throw new Error(`Unrecognized Knip issue field: ${key}`);
+  }
+  position(item.line, 'Knip line');
+  position(item.col, 'Knip column');
+  position(item.pos, 'Knip offset', 0);
+  return item;
+}
+
+function knipItems(value, kind) {
+  if (!Array.isArray(value)) throw new Error(`Unexpected Knip category data: ${kind}`);
+  return value.map(item => knipItem(item, kind));
+}
+
 function relativePath(file, root) {
-  if (typeof file !== 'string' || !file) throw new Error('Missing finding file path');
+  nonemptyString(file, 'finding file path');
   return path.relative(root, path.resolve(root, file)).split(path.sep).join('/');
 }
 
@@ -16,15 +49,30 @@ export function eslintFindings(data, root) {
   if (!Array.isArray(data)) throw new Error('Unexpected ESLint JSON: expected an array');
   const findings = [];
   for (const file of data) {
+    record(file, 'ESLint file result');
+    const filePath = relativePath(file.filePath, root);
     if (!Array.isArray(file.messages)) throw new Error('ESLint result has no messages array');
+    if (file.suppressedMessages !== undefined && !Array.isArray(file.suppressedMessages)) {
+      throw new Error('ESLint result has invalid suppressed messages');
+    }
     for (const [items, suppressed] of [[file.messages, false], [file.suppressedMessages ?? [], true]]) {
       for (const message of items) {
+        record(message, 'ESLint diagnostic');
         if (typeof message.message !== 'string') throw new Error('ESLint diagnostic has no message');
+        if (message.ruleId != null) nonemptyString(message.ruleId, 'ESLint rule ID');
+        for (const key of ['line', 'endLine']) position(message[key], `ESLint ${key}`);
+        // The pinned Astro parser returns column 0 for some fatal diagnostics; preserve its location.
+        for (const key of ['column', 'endColumn']) {
+          position(message[key], `ESLint ${key}`, message.fatal === true ? 0 : 1);
+        }
+        if (message.fatal !== undefined && typeof message.fatal !== 'boolean') {
+          throw new Error('ESLint diagnostic has invalid fatal status');
+        }
         const rule = message.ruleId ?? 'parse-or-configuration';
         const configurationFailure = /^Definition for rule .+ was not found\./.test(message.message);
         const diagnostic = Boolean(message.fatal || message.ruleId == null || configurationFailure);
         findings.push({
-          tool: 'eslint', file: relativePath(file.filePath, root),
+          tool: 'eslint', file: filePath,
           line: message.line ?? null, column: message.column ?? null,
           endLine: message.endLine ?? message.line ?? null,
           kind: rule,
@@ -40,8 +88,12 @@ export function eslintFindings(data, root) {
 }
 
 export function knipFindings(data, root) {
+  record(data, 'Knip report');
   if (!data || !Array.isArray(data.files) || !Array.isArray(data.issues)) {
     throw new Error('Unexpected Knip JSON: expected files[] and issues[]');
+  }
+  for (const key of Object.keys(data)) {
+    if (!['files', 'issues'].includes(key)) throw new Error(`Unrecognized Knip report field: ${key}`);
   }
   const findings = data.files.map(file => ({
     tool: 'knip', file: relativePath(file, root), line: null, column: null, endLine: null,
@@ -49,7 +101,15 @@ export function knipFindings(data, root) {
     message: 'File not reachable from configured entry points; verify routes, URL use and dynamic loading.',
   }));
   for (const row of data.issues) {
+    record(row, 'Knip file result');
     const file = relativePath(row.file, root);
+    if (row.owners !== undefined) {
+      if (!Array.isArray(row.owners)) throw new Error('Unexpected Knip owners: expected an array');
+      for (const owner of row.owners) {
+        record(owner, 'Knip owner');
+        nonemptyString(owner.name, 'Knip owner name');
+      }
+    }
     for (const [kind, value] of Object.entries(row)) {
       if (kind === 'file' || kind === 'owners') continue;
       if (!KNIP_CANDIDATES.has(kind) && !KNIP_DIAGNOSTICS.has(kind)) {
@@ -57,21 +117,23 @@ export function knipFindings(data, root) {
       }
       let items;
       if (kind === 'enumMembers' || kind === 'classMembers') {
-        items = Object.entries(value).flatMap(([parent, children]) => children.map(item => ({
-          ...item, name: `${parent}.${item.name}`,
-        })));
+        record(value, `Knip ${kind} members`);
+        items = Object.entries(value).flatMap(([parent, children]) => {
+          nonemptyString(parent, `Knip ${kind} parent`);
+          return knipItems(children, kind).map(item => ({ ...item, name: `${parent}.${item.name}` }));
+        });
       } else if (kind === 'duplicates') {
-        items = value.flat();
+        if (!Array.isArray(value)) throw new Error('Unexpected Knip duplicate groups');
+        items = value.flatMap(group => knipItems(group, kind));
       } else {
-        items = value;
+        items = knipItems(value, kind);
       }
-      if (!Array.isArray(items)) throw new Error(`Unexpected Knip category data: ${kind}`);
       for (const item of items) {
         findings.push({
           tool: 'knip', file, line: item.line ?? null, column: item.col ?? null,
           endLine: item.line ?? null, kind,
           status: KNIP_CANDIDATES.has(kind) ? 'REVIEW_CANDIDATE' : 'ANALYSIS_DIAGNOSTIC',
-          message: `${kind}: ${item.name ?? '(unnamed)'}`,
+          message: `${kind}: ${item.name}`,
         });
       }
     }

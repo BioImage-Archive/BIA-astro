@@ -48,7 +48,7 @@ The audit writes `artifacts/dead-codes.log` even when findings or analyzer failu
 | --- | --- |
 | 0 | Configured analysis completed with no active findings, or completed in report-only mode. |
 | 1 | Review candidates or active analysis diagnostics were found. |
-| 2 | Incomplete analysis: unavailable tools, malformed output, parser/configuration failure, timeout, unresolved imports, changed inputs, or failed optional type check. |
+| 2 | Incomplete analysis: unavailable tools or provenance, unreadable required inputs, malformed output, parser/configuration failure, timeout, unresolved imports, changed inputs/HEAD, or failed optional type check. |
 
 `--report-only` makes findings nonblocking; it does not suppress failures. Unknown arguments, including `--fix`, are rejected. The runner invokes installed package executables and never downloads tools or runs automatic fixes.
 
@@ -64,6 +64,8 @@ The locked compatibility profile is ESLint 9.39.5, eslint-plugin-astro 1.3.1, ty
 
 The test command runs report/failure-path regression tests and a real, in-memory Astro integration probe. The probe checks unused imports, frontmatter variables, processed and inline browser scripts, template-only references, local CSS, style variables and malformed source. Every audit repeats the probe before scanning.
 
+Wrapper integration tests use isolated Git repositories and controlled analyzer output to verify successful scans, candidate exit codes, Git failures before/after scanning, unreadable inputs, changed HEAD/source and malformed nested reports in both ordinary and report-only modes. These controlled tests verify the wrapper contract; the Astro probe and live Knip test verify actual analyzer integration. Browser entry assertions parse Astro attributes using the explicitly declared `@astrojs/compiler` 2.12.2 development dependency, preserving equivalent valid quotation/spacing while rejecting commented-out references. The version matches the compiler already locked for Astro; no runtime package version changes are required.
+
 Optional type diagnostics:
 
 ```sh
@@ -77,7 +79,11 @@ The installed CLI must support `--tsconfig`. This stage can evaluate application
 
 Each run preserves raw JSON and stdout/stderr/failure logs under `artifacts/dead-code/<timestamp>-<pid>/`, plus `report.json`. The latest human-readable report points to that specific evidence directory. Generated output is ignored by Git; run directories accumulate without automatic deletion.
 
-Reports record commit, tracked dirty state, Node/package versions, lockfile/config hashes, source/config/test input hashes before and after the scan, stage status and timing. Untracked audit inputs are included in the hashes. Review the working tree as well as HEAD when auditing uncommitted changes. Changed input hashes make the run incomplete.
+Reports record commit, tracked dirty state, Node/package versions, lockfile/config hashes, source/config/test input hashes before and after the scan, stage status and timing. Untracked audit inputs are included in the hashes. Review the working tree as well as HEAD when auditing uncommitted changes. Changed input hashes or HEAD make the run incomplete.
+
+Provenance collection is an explicit stage before and after analysis. It requires the actual Git repository root, a committed HEAD, successful status/file enumeration and readable audit inputs/configuration/lockfile. Source snapshots hash file bytes, including untracked files; a missing tracked input or dangling input symlink fails the stage. Git subprocess stdout/stderr, command statuses and failure details are retained alongside analyzer evidence. Failed provenance cannot become a successful report-only scan. Git-free source archives and repositories with no commits therefore return incomplete status.
+
+Nested analyzer report structures and supplied locations are validated before normalization. Knip validation follows the [pinned JSON reporter](https://github.com/webpro-nl/knip/blob/5.70.1/packages/knip/src/reporters/json.ts)'s object, array and member-group shapes; unsupported fields or malformed elements fail the stage. Locations remain optional rather than receiving invented defaults. The pinned Astro parser supplies column 0 for some fatal diagnostics; those positions are preserved. Malformed raw output is retained in the stage's stdout log even when it cannot be normalized.
 
 Findings retain analyzer-provided file, line and column, category and message. Whole-file findings have no fabricated line number. Knip locations in preprocessed Astro/MDX must be checked against the original file before acting. Source excerpts and raw configuration failures can contain sensitive content; inspect evidence before sharing it.
 

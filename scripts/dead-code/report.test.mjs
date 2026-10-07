@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { parse } from '@astrojs/compiler';
+import { is, walk } from '@astrojs/compiler/utils';
 import { eslintFindings, knipFindings, renderFindings, reportExitCode } from './report.mjs';
 
 const root = '/work/BIA-astro';
@@ -15,13 +16,37 @@ const eslintData = [{
 }];
 const noStagesFailed = [{ state: 'COMPLETED', exitCode: 0 }];
 
-test('Knip preserves scripts loaded by live study and search components', () => {
+async function scriptSources(source) {
+  const { ast } = await parse(source);
+  const sources = [];
+  walk(ast, node => {
+    if (is.element(node) && node.name === 'script') {
+      const attribute = node.attributes.find(item => item.name === 'src' && item.kind === 'quoted');
+      if (attribute) sources.push(attribute.value);
+    }
+  });
+  return sources;
+}
+
+test('Script entry contracts use parsed attributes rather than tag formatting', async () => {
+  for (const source of [
+    '<script src="./entry.js"></script>',
+    "<script src='./entry.js'></script>",
+    '<script\n type="module"\n src = "./entry.js"\n></script>',
+  ]) {
+    assert.deepEqual(await scriptSources(source), ['./entry.js']);
+  }
+  assert.deepEqual(await scriptSources('<!-- <script src="./entry.js"></script> -->'), []);
+  assert.deepEqual(await scriptSources('<script src="./other.js"></script>'), ['./other.js']);
+});
+
+test('Knip preserves scripts loaded by live study and search components', async () => {
   const browserScripts = [
     ['src/components/ViewableImageTable.astro', './ViewableImageTable.js', 'src/components/ViewableImageTable.js'],
     ['src/components/search/Search.astro', './search-results.js', 'src/components/search/search-results.js'],
   ];
   for (const [component, source] of browserScripts) {
-    assert(readFileSync(component, 'utf8').includes(`<script src="${source}">`), `${component}: script contract changed`);
+    assert((await scriptSources(readFileSync(component, 'utf8'))).includes(source), `${component}: script contract changed`);
   }
   const require = createRequire(import.meta.url);
   const packageFile = require.resolve('knip/package.json');
@@ -52,6 +77,15 @@ test('Fatal parse errors are diagnostics, not dead-code candidates', () => {
   ] }], root);
   assert.equal(items[0].status, 'ANALYSIS_DIAGNOSTIC');
   assert.equal(reportExitCode(items, noStagesFailed), 2);
+});
+
+test('Astro fatal diagnostics preserve the parser-provided zero column', () => {
+  const [item] = eslintFindings([{ filePath: `${root}/src/bad.astro`, messages: [
+    { fatal: true, ruleId: null, message: 'Parsing error: Unknown token', line: 25, column: 0 },
+  ] }], root);
+  assert.equal(item.column, 0);
+  assert.equal(item.status, 'ANALYSIS_DIAGNOSTIC');
+  assert.equal(reportExitCode([item], noStagesFailed, true), 2);
 });
 
 test('Missing rule definitions cannot become successful report-only scans', () => {
@@ -116,6 +150,53 @@ test('Malformed data and changed schemas fail loudly', () => {
   assert.throws(() => knipFindings({ files: [], issues: [{ file: 'a', newCategory: [] }] }, root));
 });
 
+test('Malformed nested Knip issue shapes are rejected', () => {
+  const invalid = [
+    { exports: ['not-an-issue-object'] },
+    { exports: [null] },
+    { exports: [{}] },
+    { exports: [{ name: 12 }] },
+    { exports: [{ name: ' ' }] },
+    { exports: [{ name: 'unused', line: '2' }] },
+    { exports: [{ name: 'unused', line: 0 }] },
+    { exports: [{ name: 'unused', col: -1 }] },
+    { exports: [{ name: 'unused', pos: 0.5 }] },
+    { exports: [{ name: 'unused', line: null }] },
+    { exports: [{ name: 'unused', unexpected: true }] },
+    { enumMembers: [] },
+    { enumMembers: { Mode: 'invalid' } },
+    { classMembers: { Service: [null] } },
+    { duplicates: [{ name: 'unused' }] },
+    { duplicates: [['invalid']] },
+    { owners: [null] },
+  ];
+  for (const fields of invalid) {
+    assert.throws(() => knipFindings({ files: [], issues: [{ file: 'src/a.ts', ...fields }] }, root),
+      undefined, JSON.stringify(fields));
+  }
+  assert.throws(() => knipFindings({ files: [], issues: [null] }, root));
+  assert.throws(() => knipFindings({ files: [], issues: [], unexpected: [] }, root));
+});
+
+test('Knip accepts optional locations, zero-based offsets and ownership data', () => {
+  const items = knipFindings({ files: [], issues: [{ file: 'src/a.ts',
+    owners: [{ name: '@maintainer' }], binaries: [{ name: 'build-tool' }],
+    exports: [{ name: 'unused', line: 1, col: 1, pos: 0 }],
+  }] }, root);
+  assert.equal(items[0].line, null);
+  assert.equal(items[1].line, 1);
+});
+
+test('Malformed nested ESLint diagnostics and empty invalid file results are rejected', () => {
+  for (const data of [
+    [{ messages: [] }], [null],
+    [{ filePath: 'src/a.ts', messages: [null] }],
+    [{ filePath: 'src/a.ts', messages: [{ message: 'unused', line: '1' }] }],
+    [{ filePath: 'src/a.ts', messages: [{ message: 'unused', fatal: 'false' }] }],
+    [{ filePath: 'src/a.ts', messages: [], suppressedMessages: {} }],
+  ]) assert.throws(() => eslintFindings(data, root));
+});
+
 test('Rendering adds actual source excerpts', () => {
   const items = eslintFindings(eslintData, root);
   const text = renderFindings(items, () => "---\n// one\n// two\nimport DataTable from 'datatables.net-dt';\n---");
@@ -130,63 +211,4 @@ test('Exit codes distinguish findings from a failed audit, even in report-only m
   assert.equal(reportExitCode(items, noStagesFailed, true), 0);
   assert.equal(reportExitCode([], [{ state: 'FAILED' }], true), 2);
   assert.equal(reportExitCode([{ kind: 'unresolved', status: 'ANALYSIS_DIAGNOSTIC' }], noStagesFailed, true), 2);
-});
-
-test('Unknown command flags are configuration failures', () => {
-  const executable = path.join(path.dirname(fileURLToPath(import.meta.url)), 'audit.mjs');
-  const run = spawnSync(process.execPath, [executable, '--fix'], { encoding: 'utf8', timeout: 20_000 });
-  assert.equal(run.status, 2);
-  assert.match(run.stderr, /Unknown argument: --fix/);
-});
-
-test('Failed/missing tools still produce the requested log and a failure status', () => {
-  // Shadow parent packages so this fixture cannot borrow the repository's analyzers.
-  const fixtureRoot = path.resolve('artifacts/dead-code-tests');
-  mkdirSync(fixtureRoot, { recursive: true });
-  const temp = mkdtempSync(path.join(fixtureRoot, 'unavailable-tools-'));
-  for (const name of ['eslint', 'knip']) {
-    const folder = path.join(temp, 'node_modules', name);
-    mkdirSync(folder, { recursive: true });
-    writeFileSync(path.join(folder, 'package.json'), JSON.stringify({ name, exports: {} }));
-  }
-  mkdirSync(path.join(temp, 'src'));
-  writeFileSync(path.join(temp, 'package.json'), '{"name":"audit-fixture","private":true}');
-  const sourcePath = path.join(temp, 'src', 'untouched.astro');
-  const content = '---\nconst keepThis = 1;\n---\n<p>{keepThis}</p>\n';
-  writeFileSync(sourcePath, content);
-  const executable = path.join(path.dirname(fileURLToPath(import.meta.url)), 'audit.mjs');
-  const run = spawnSync(process.execPath, [executable], { cwd: temp, encoding: 'utf8', timeout: 20_000 });
-  assert.equal(run.status, 2, run.stderr);
-  const log = readFileSync(path.join(temp, 'artifacts', 'dead-codes.log'), 'utf8');
-  assert.match(log, /Status: INCOMPLETE/);
-  assert.match(log, /eslint: FAILED/);
-  assert.match(log, /knip: FAILED/);
-  assert.equal(readFileSync(sourcePath, 'utf8'), content);
-});
-
-test('An analyzer failure without JSON findings is not a clean report', () => {
-  const fixtureRoot = path.resolve('artifacts/dead-code-tests');
-  mkdirSync(fixtureRoot, { recursive: true });
-  const fixture = mkdtempSync(path.join(fixtureRoot, 'empty-analyzer-failure-'));
-  mkdirSync(path.join(fixture, 'src'));
-  mkdirSync(path.join(fixture, 'scripts/dead-code'), { recursive: true });
-  writeFileSync(path.join(fixture, 'package.json'), '{"private":true}');
-  writeFileSync(path.join(fixture, 'scripts/dead-code/verify-tools.mjs'), 'console.log("simulated probe");');
-  for (const name of ['eslint', 'knip']) {
-    const folder = path.join(fixture, 'node_modules', name);
-    mkdirSync(folder, { recursive: true });
-    writeFileSync(path.join(folder, 'package.json'), JSON.stringify({ name, version: '0.0.0', bin: 'cli.cjs' }));
-    const data = name === 'eslint' ? [{ filePath: path.join(fixture, 'src/a.ts'), messages: [] }] :
-      { files: [], issues: [] };
-    writeFileSync(path.join(folder, 'cli.cjs'),
-      `console.log(${JSON.stringify(JSON.stringify(data))}); process.exitCode = ${name === 'knip' ? 1 : 0};`);
-  }
-  const executable = path.join(path.dirname(fileURLToPath(import.meta.url)), 'audit.mjs');
-  const run = spawnSync(process.execPath, [executable, '--report-only'], {
-    cwd: fixture, encoding: 'utf8', timeout: 20_000,
-  });
-  assert.equal(run.status, 2, run.stderr);
-  const log = readFileSync(path.join(fixture, 'artifacts/dead-codes.log'), 'utf8');
-  assert.match(log, /knip: FAILED/);
-  assert.match(log, /without active normalized findings/);
 });
