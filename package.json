@@ -13,7 +13,8 @@
     "test": "node --test tests/formatting/*.test.mjs",
     "audit:dead-code": "node scripts/dead-code/audit.mjs",
     "audit:dead-code:knip": "knip --config configs/quality/knip.json --reporter json",
-    "test:dead-code": "node --test scripts/dead-code/*.test.mjs && node scripts/dead-code/verify-tools.mjs"
+    "test:dead-code": "node --test scripts/dead-code/*.test.mjs && node scripts/dead-code/verify-tools.mjs",
+    "quality:check": "astro check --tsconfig configs/quality/tsconfig.check.json"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
