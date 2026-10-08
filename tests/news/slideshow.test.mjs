@@ -51,37 +51,32 @@ test("initializes the newest, zero-indexed slide before autoplay", () => {
   assert.deepEqual(createHarness(4).visible(), [0]);
 });
 
-test("next traverses older items and wraps from oldest to newest", () => {
+test("next and previous traverse the collection and wrap in both directions", () => {
   const app = createHarness(4);
   for (const index of [1, 2, 3, 0]) {
     app.window.nextNewsSlide();
     assert.deepEqual(app.visible(), [index]);
   }
-});
-
-test("previous wraps from newest to oldest and moves toward newer items", () => {
-  const app = createHarness(4);
   for (const index of [3, 2, 1, 0]) {
     app.window.prevNewsSlide();
     assert.deepEqual(app.visible(), [index]);
   }
 });
 
-test("autoplay keeps its interval and moves from newest to second newest", () => {
-  const app = createHarness(4);
-  assert.equal(app.intervals.size, 1);
-  assert.equal([...app.intervals.values()][0].delay, 5000);
-  app.tick();
-  assert.deepEqual(app.visible(), [1]);
-});
-
-test("manual navigation pauses autoplay as before", () => {
-  const app = createHarness(4);
-  app.window.nextNewsSlide();
-  assert.equal(app.intervals.size, 0);
-  const selected = app.visible();
-  app.tick();
-  assert.deepEqual(app.visible(), selected);
+test("five-second autoplay advances, and either arrow pauses it", () => {
+  for (const navigate of ["nextNewsSlide", "prevNewsSlide"]) {
+    const app = createHarness(4);
+    assert.equal(app.intervals.size, 1);
+    assert.equal([...app.intervals.values()][0].delay, 5000);
+    app.tick();
+    assert.deepEqual(app.visible(), [1]);
+    app.window[navigate]();
+    assert.deepEqual(app.visible(), navigate === "nextNewsSlide" ? [2] : [0]);
+    assert.equal(app.intervals.size, 0);
+    const selected = app.visible();
+    app.tick();
+    assert.deepEqual(app.visible(), selected);
+  }
 });
 
 test("a one-item collection remains usable without changing selection", () => {
