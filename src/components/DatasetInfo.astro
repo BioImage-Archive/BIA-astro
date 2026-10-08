@@ -2,7 +2,7 @@
 import fieldMap from "../data/metadata-field-name-mapping.json";
 import DatasetDetail from "./DatasetDetail.astro";
 
-const { dataset, isEMPIAR = false, datasetFileSummaryString = null } = Astro.props;
+const { dataset, datasetFileSummaryString = null } = Astro.props;
 const biosampleMap = fieldMap["biosample"];
 const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
 const sgpMap = fieldMap["specimen_growth_protocol"];
@@ -12,29 +12,84 @@ const annotationMethodMap = fieldMap["annotation_method"];
 const correlationMethodMap = fieldMap["correlation_method"];
 
 const detail_section_style= "margin-bottom: 1rem;"
-if (isEMPIAR) {
-    dataset.physical_voxel_size = "0 x 0 x 0";
+
+function getAdditionalMetadataValue(name) {
+    const metadata = dataset?.additional_metadata?.find((item) => item?.name === name);
+    return metadata?.value?.[name] ?? null;
 }
-function formatFileTypeCounts(fileTypeCounts) {
+
+function getFileTypeCountEntries(fileTypeCounts) {
     if (!fileTypeCounts || typeof fileTypeCounts !== "object") {
-        return "";
+        return [];
     }
 
-    return Object.entries(fileTypeCounts)
-        .filter(([extension]) => typeof extension === "string" && extension.length > 0 && extension !== "file" && extension !== "directory")
-        .map(([extension]) => extension)
-        .join(", ");
+    const entries = Array.isArray(fileTypeCounts)
+        ? fileTypeCounts.map((item) => [item?.file_type, item?.count])
+        : Object.entries(fileTypeCounts);
+
+    return entries
+        .filter(([extension, count]) =>
+            typeof extension === "string" &&
+            extension.length > 0 &&
+            extension !== "file" &&
+            extension !== "directory" &&
+            count != null &&
+            Number.isFinite(Number(count))
+        )
+        .map(([extension, count]) => ({
+            extension: extension.replace(/^\./, ""),
+            count: Number(count),
+        }));
 }
 
-const formattedFileTypeCounts = formatFileTypeCounts(dataset?.file_type_counts);
-const dsFromFileList = datasetFileSummaryString ? datasetFileSummaryString?.datasets.find( ds=> ds.dataset == dataset.title) : null;
+function formatVoxelSizes(voxelSizes) {
+    const voxelSize = Array.isArray(voxelSizes) ? voxelSizes[0] : voxelSizes;
+    if (!voxelSize || typeof voxelSize !== "object") return null;
+
+    const dimensions = ["x", "y", "z"].flatMap((axis) => {
+        const value = voxelSize[`voxel_size_${axis}`];
+        return value == null || value === "" ? [] : [{ axis, value: String(value) }];
+    });
+    if (dimensions.length === 0) return null;
+
+    return {
+        label: `Voxel size (${dimensions.map(({ axis }) => axis.toUpperCase()).join(" × ")})`,
+        value: dimensions.map(({ value }) => value).join(" × "),
+    };
+}
+
+const metadataFileTypeCounts = getAdditionalMetadataValue("file_type_counts");
+const metadataFileTypeCountEntries = getFileTypeCountEntries(metadataFileTypeCounts);
+const fileTypeCountEntries = metadataFileTypeCountEntries.length > 0
+    ? metadataFileTypeCountEntries
+    : getFileTypeCountEntries(dataset?.file_type_counts);
+const formattedFileTypeCounts = fileTypeCountEntries
+    .map(({ extension, count }) => `${extension} (${count})`)
+    .join(", ");
+const hasMetadataFileTypeCounts = metadataFileTypeCountEntries.length > 0;
+const metadataVoxelSize = formatVoxelSizes(getAdditionalMetadataValue("voxel_sizes"));
+const voxelSize = metadataVoxelSize ?? (dataset?.physical_voxel_size
+    ? { label: "Physical Voxel Size", value: dataset.physical_voxel_size }
+    : null);
+const totalFileTypeCount = fileTypeCountEntries.length > 0
+    ? fileTypeCountEntries.reduce((total, { count }) => total + count, 0)
+    : null;
+const dsFromFileList = datasetFileSummaryString?.datasets?.find((ds) => ds.dataset == dataset.title) ?? null;
 const fileCountsFromFileList = dsFromFileList?.file_count ?? null;
+const fileCount = totalFileTypeCount ?? fileCountsFromFileList ?? dataset?.image_count ?? null;
 const formatsFromFileList = dsFromFileList
     ? [
         dsFromFileList.data_format ? `${dsFromFileList.data_format}` : "",
     ].filter(Boolean).join(", ") || Object.entries(dsFromFileList?.formats || {}).map( k => `${k[1]} ${k[0]} file(s)`).join(", ")
     : null;
-const fileFormatsLabel = formatsFromFileList ? "File formats" : "Top 5 file formats";
+const fileFormatsLabel = hasMetadataFileTypeCounts
+    ? "File types and counts"
+    : formatsFromFileList
+      ? "File formats"
+      : "Top 5 file formats";
+const fileFormats = hasMetadataFileTypeCounts
+    ? formattedFileTypeCounts
+    : formatsFromFileList || formattedFileTypeCounts;
 ---
 <style>
     .details > div{
@@ -53,19 +108,19 @@ const fileFormatsLabel = formatsFromFileList ? "File formats" : "Top 5 file form
             <b>Description:</b>&nbsp;{dataset.description}
         </div>
         {
-            dataset.physical_voxel_size && (
+            voxelSize && (
                 <div style={detail_section_style}>
-                    <b>Physical Voxel Size:</b>&nbsp;{dataset.physical_voxel_size}
+                    <b>{voxelSize.label}:</b>&nbsp;{voxelSize.value}
                 </div>
             )
         }
         <div style={detail_section_style}>
-            <b>Number of images/files:</b>&nbsp;{fileCountsFromFileList !== null? fileCountsFromFileList : dataset.image_count}
+            <b>Number of images/files:</b>&nbsp;{fileCount ?? "Not reported"}
         </div>
         {
             (formattedFileTypeCounts || formatsFromFileList) && (
                 <div style={detail_section_style}>
-                    <b>{fileFormatsLabel}:</b>&nbsp;{formatsFromFileList? formatsFromFileList : formattedFileTypeCounts}
+                    <b>{fileFormatsLabel}:</b>&nbsp;{fileFormats}
                 </div>
             )
         }
