@@ -421,6 +421,15 @@ export async function getDownstreamDisplayImages(uuid){
     return displayImages
 }
 
+export async function studyHasSpecimenTracks(accessionID){
+    const response = await getFromAPI(
+        `${PUBLIC_SEARCH_API}/website/browse/image` +
+        `?facet.accession_id=${encodeURIComponent(accessionID)}` +
+        `&has.display_image=false` +
+        `&pagination.page_size=1`
+    );
+    return (response?.hits?.total?.value ?? 0) > 0;
+}
 
 async function getAllPaginatedHits(urlBuilder, pageSize = 100) {
   const firstPage = await getFromAPI(urlBuilder(1, pageSize));
