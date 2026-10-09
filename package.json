@@ -10,7 +10,11 @@
     "astro": "astro",
     "prod": "NODE_ENV=production PORT=8080 HOST=0.0.0.0 node dist/bioimage-archive/server/entry.mjs",
     "local": "astro check && astro build && astro preview",
-    "test": "node --test tests/formatting/*.test.mjs"
+    "test": "node --test tests/formatting/*.test.mjs",
+    "audit:dead-code": "node scripts/dead-code/audit.mjs",
+    "audit:dead-code:knip": "knip --config configs/quality/knip.json --reporter json",
+    "test:dead-code": "node --test scripts/dead-code/*.test.mjs && node scripts/dead-code/verify-tools.mjs",
+    "quality:check": "astro check --tsconfig configs/quality/tsconfig.check.json"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
@@ -24,9 +28,14 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@astrojs/compiler": "2.12.2",
     "@rollup/plugin-yaml": "^4.1.2",
     "@types/datatables.net": "^1.10.28",
     "@types/jquery": "^3.5.29",
-    "@types/node": "^20.11.24"
+    "@types/node": "^20.11.24",
+    "eslint": "9.39.5",
+    "eslint-plugin-astro": "1.3.1",
+    "knip": "5.70.1",
+    "typescript-eslint": "8.48.1"
   }
 }

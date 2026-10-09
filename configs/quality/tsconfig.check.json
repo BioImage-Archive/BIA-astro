@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "../../src/**/*",
+    "../../scripts/dead-code/**/*",
+    "../../tests/**/*",
+    "./eslint.config.mjs",
+    "../../.astro/types.d.ts"
+  ],
+  "exclude": [
+    "../../node_modules",
+    "../../dist",
+    "../../.netlify",
+    "../../coverage",
+    "../../artifacts"
+  ]
+}

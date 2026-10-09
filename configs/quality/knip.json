@@ -1,0 +1,34 @@
+{
+  "$schema": "https://unpkg.com/knip@5.70.1/schema.json",
+  "project": [
+    "src/**/*.{astro,mdx,js,jsx,mjs,cjs,ts,tsx,mts,cts}",
+    "*.{js,mjs,cjs,ts,mts,cts}",
+    "scripts/**/*.{js,mjs,cjs,ts,mts,cts}",
+    "tests/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
+    "configs/**/*.{js,mjs,cjs,ts,mts,cts}"
+  ],
+  "entry": [
+    "scripts/dead-code/audit.mjs",
+    "scripts/dead-code/verify-tools.mjs",
+    "scripts/dead-code/*.test.mjs",
+    "src/components/ViewableImageTable.js",
+    "src/components/search/search-results.js",
+    "src/layouts/HelpLayout.astro",
+    "src/layouts/PoliciesLayout.astro",
+    "src/layouts/MarkdownLayoutLeftAlign.astro"
+  ],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.astro/**",
+    "**/dist/**",
+    "**/.netlify/**",
+    "**/coverage/**",
+    "**/artifacts/**"
+  ],
+  "eslint": {
+    "config": [
+      "configs/quality/eslint.config.mjs",
+      "eslint.config.{js,mjs,cjs,ts}"
+    ]
+  }
+}
