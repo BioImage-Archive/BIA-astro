@@ -6,7 +6,7 @@ status: maintained
 owner: Bijan Mousavi
 author: Bijan Mousavi
 created: 2026-10-05
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-09
 repository: BioImage-Archive/BIA-astro
 scope: FBBI identifiers and OLS search links in study/image acquisition metadata
 related_issue: BIOIM-82
@@ -49,11 +49,15 @@ source data owners.
 
 ## Fixture provenance and checks
 
-`tests/ontology/fixtures/acquisition-metadata.json` is a projection of selected
-API fields, rather than a complete API response. Each example records its
-endpoint, capture date and extraction path. Long protocol text and unrelated
-ingest fields are omitted; synthetic edge cases live separately in the rendering
-test. Assertions use captured data without querying the live API or OLS.
+Shared fixtures in `tests/fixtures/api/` preserve complete, unchanged API
+responses, including `hits`, `facets` and `pagination`. Separate study/image
+responses retain their respective record shapes. The adjacent `provenance.json`
+records each endpoint, capture date and SHA-256 hash.
+
+Rendering tests select studies by accession and the image by UUID, pass the
+captured datasets to `DatasetInfo`, and obtain image acquisition metadata from
+`_source.creation_process.acquisition_process[0]`. Small synthetic cases remain
+for missing/malformed inputs and escaping. Tests do not query the live API or OLS.
 
 Run `npm test` for all versioned suites or `npm run test:fbbi` for focused
 formatter and compiled-component checks. The existing `fbbi-tests` PR job runs

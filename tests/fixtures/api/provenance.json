@@ -1,0 +1,23 @@
+{
+  "description": "Complete saved public search API responses. Each response file is unchanged from its recorded capture; metadata is kept here rather than inserted into the response.",
+  "responses": [
+    {
+      "file": "study-s-biad3335-response.json",
+      "url": "https://alpha.bioimagearchive.org/search/v1/website/study?facet.accession_id=S-BIAD3335",
+      "capturedAt": "2026-10-05T17:31:50.636879+00:00",
+      "sha256": "773c30adf319d05c0748fedc77afff36e9981369521bdf9bcdad50b6142aecae"
+    },
+    {
+      "file": "image-001b8ef2-7a5e-4b94-b91c-d93f5095ee39-response.json",
+      "url": "https://alpha.bioimagearchive.org/search/v1/website/image?query=001b8ef2-7a5e-4b94-b91c-d93f5095ee39",
+      "capturedAt": "2026-10-05T17:34:00.355624+00:00",
+      "sha256": "9d4ed398a53e0e2bb6e99536ad3a1c84f21ba93a4c6827e16710fe02a04e6624"
+    },
+    {
+      "file": "study-s-biad3397-response.json",
+      "url": "https://alpha.bioimagearchive.org/search/v1/website/study?facet.accession_id=S-BIAD3397",
+      "capturedAt": "2026-10-05",
+      "sha256": "635987ee122eab2bbcfa04218bfb8d7470eeb3fbd854991618dc750e240dbf23"
+    }
+  ]
+}

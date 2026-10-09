@@ -18,7 +18,6 @@ after(async () => {
 });
 
 before(async () => {
-    const fixture = JSON.parse(await readFile(new URL("./fixtures/acquisition-metadata.json", import.meta.url), "utf8"));
     await mkdir(output, { recursive: true });
     root = await mkdtemp(path.join(output, "application-"));
     await mkdir(path.join(root, "src/pages"), { recursive: true });
@@ -42,22 +41,32 @@ export default defineConfig({
     env: { schema: { PUBLIC_SEARCH_API: envField.string({ access: 'public', context: 'client', default: 'https://alpha.bioimagearchive.org/search/v1' }) } }
 });
 `);
-    await writeFile(path.join(root, "src/data/fixture.json"), JSON.stringify(fixture));
+    await mkdir(path.join(root, "src/data/api"), { recursive: true });
+    for (const name of [
+        "study-s-biad3335-response.json",
+        "image-001b8ef2-7a5e-4b94-b91c-d93f5095ee39-response.json",
+        "study-s-biad3397-response.json",
+    ]) {
+        await cp(path.join(repository, "tests/fixtures/api", name), path.join(root, "src/data/api", name));
+    }
     await writeFile(path.join(root, "src/pages/index.astro"), `---
 import DatasetInfo from '../components/DatasetInfo.astro';
 import DatasetDetail from '../components/DatasetDetail.astro';
 import fieldMap from '../data/metadata-field-name-mapping.json';
-import fixture from '../data/fixture.json';
-const dataset = { title: fixture.study.accession, description: '', image_count: 0,
-    acquisition_process: [fixture.study.acquisition], biological_entity: [fixture.study.biosample] };
-const acquisition = fixture.image.acquisition;
+import studyResponse from '../data/api/study-s-biad3335-response.json';
+import imageResponse from '../data/api/image-001b8ef2-7a5e-4b94-b91c-d93f5095ee39-response.json';
+import missingResponse from '../data/api/study-s-biad3397-response.json';
+const study = studyResponse.hits.hits.find(hit => hit._source.accession_id === 'S-BIAD3335')._source;
+const image = imageResponse.hits.hits.find(hit => hit._source.uuid === '001b8ef2-7a5e-4b94-b91c-d93f5095ee39')._source;
+const missingStudy = missingResponse.hits.hits.find(hit => hit._source.accession_id === 'S-BIAD3397')._source;
+const acquisition = image.creation_process.acquisition_process[0];
 // Synthetic inputs exercise rendering boundaries independently of API snapshots.
 const mismatched = { title: 'Independent arrays', imaging_method_name: ['Method A', 'Method B'], fbbi_id: ['FBbi:00000256'] };
 const unsupported = { title: 'Unsupported identifiers', fbbi_id: ['<img src=x onerror="alert(1)">', 'NCBITaxon:9606', 'FBbi:00000256'] };
 ---
-<section id="study"><DatasetInfo dataset={dataset} /></section>
+<section id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
 <section id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="missing"><DatasetDetail data={fixture.missingIdentifiers.acquisition} fieldMap={fieldMap.image_acquisition} /></section>
+<section id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
 <section id="absent"><DatasetDetail data={{ title: 'No identifiers', imaging_method_name: ['Unspecified'] }} fieldMap={fieldMap.image_acquisition} /></section>
 <section id="null"><DatasetDetail data={{ title: 'Null identifiers', imaging_method_name: ['Unspecified'], fbbi_id: null }} fieldMap={fieldMap.image_acquisition} /></section>
 <section id="mismatched"><DatasetDetail data={mismatched} fieldMap={fieldMap.image_acquisition} /></section>
@@ -76,6 +85,7 @@ test("the reference study offers an FBBI search without claiming that its term e
     assert.match(sections.study, /Imaging method:<\/b>&nbsp; Optical Projection Tomography \(OPT\)/);
     assert.match(sections.study, /Imaging method ontology:<\/b>/);
     assert.match(sections.study, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000639&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000639 \(search OLS\)<\/a>/);
+    assert.equal((sections.study.match(/>FBbi:00000639 \(search OLS\)<\/a>/g) ?? []).length, 2);
     assert.doesNotMatch(sections.study, /\/entities\/|\/classes\/|href="https:\/\/purl\.obolibrary\.org/);
     assert.match(sections.study, /<i>Mus musculus<\/i> \(Mouse\)/);
     assert.match(sections.study, /href="https:\/\/www\.ncbi\.nlm\.nih\.gov\/Taxonomy\/Browser\/wwwtax\.cgi\?id=NCBI:txid10090"/);
