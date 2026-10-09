@@ -1,0 +1,120 @@
+import assert from "node:assert/strict";
+import { execFile } from "node:child_process";
+import { cp, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { promisify } from "node:util";
+import { fileURLToPath } from "node:url";
+import { after, before, test } from "node:test";
+
+const repository = fileURLToPath(new URL("../../", import.meta.url));
+const output = path.join(repository, "artifacts/ontology-rendering");
+let sections;
+let root;
+
+// Register suite cleanup before setup, including setup failures. Each run owns
+// only its unique fixture directory; the linked dependencies remain shared.
+after(async () => {
+    if (root) await rm(root, { recursive: true, force: true });
+});
+
+before(async () => {
+    await mkdir(output, { recursive: true });
+    root = await mkdtemp(path.join(output, "application-"));
+    await mkdir(path.join(root, "src/pages"), { recursive: true });
+    for (const relative of [
+        "src/components/DatasetDetail.astro", "src/components/DatasetInfo.astro",
+        "src/components/SharedJSFunctions.js", "src/components/formatting/fbbi-terms.mjs",
+        "src/components/formatting/physical-dimensions.js",
+        "src/assets/bioimage-archive/external-link-svgrepo-com.png",
+        "src/assets/bioimage-archive/image_fallback.png", "src/data/metadata-field-name-mapping.json",
+    ]) {
+        await mkdir(path.dirname(path.join(root, relative)), { recursive: true });
+        await cp(path.join(repository, relative), path.join(root, relative));
+    }
+    await writeFile(path.join(root, "package.json"), '{"type":"module"}\n');
+    await symlink(path.join(repository, "node_modules"), path.join(root, "node_modules"), "dir");
+    await writeFile(path.join(root, "astro.config.mjs"), `
+import { defineConfig, envField } from 'astro/config';
+export default defineConfig({
+    cacheDir: ${JSON.stringify(path.join(root, ".astro-cache"))},
+    vite: { cacheDir: ${JSON.stringify(path.join(root, ".vite"))} },
+    env: { schema: { PUBLIC_SEARCH_API: envField.string({ access: 'public', context: 'client', default: 'https://alpha.bioimagearchive.org/search/v1' }) } }
+});
+`);
+    await mkdir(path.join(root, "src/data/api"), { recursive: true });
+    for (const name of [
+        "study-s-biad3335-response.json",
+        "image-001b8ef2-7a5e-4b94-b91c-d93f5095ee39-response.json",
+        "study-s-biad3397-response.json",
+    ]) {
+        await cp(path.join(repository, "tests/fixtures/api", name), path.join(root, "src/data/api", name));
+    }
+    await writeFile(path.join(root, "src/pages/index.astro"), `---
+import DatasetInfo from '../components/DatasetInfo.astro';
+import DatasetDetail from '../components/DatasetDetail.astro';
+import fieldMap from '../data/metadata-field-name-mapping.json';
+import studyResponse from '../data/api/study-s-biad3335-response.json';
+import imageResponse from '../data/api/image-001b8ef2-7a5e-4b94-b91c-d93f5095ee39-response.json';
+import missingResponse from '../data/api/study-s-biad3397-response.json';
+const study = studyResponse.hits.hits.find(hit => hit._source.accession_id === 'S-BIAD3335')._source;
+const image = imageResponse.hits.hits.find(hit => hit._source.uuid === '001b8ef2-7a5e-4b94-b91c-d93f5095ee39')._source;
+const missingStudy = missingResponse.hits.hits.find(hit => hit._source.accession_id === 'S-BIAD3397')._source;
+const acquisition = image.creation_process.acquisition_process[0];
+// Synthetic inputs exercise rendering boundaries independently of API snapshots.
+const mismatched = { title: 'Independent arrays', imaging_method_name: ['Method A', 'Method B'], fbbi_id: ['FBbi:00000256'] };
+const unsupported = { title: 'Unsupported identifiers', fbbi_id: ['<img src=x onerror="alert(1)">', 'NCBITaxon:9606', 'FBbi:00000256'] };
+---
+<section id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
+<section id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></section>
+<section id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
+<section id="absent"><DatasetDetail data={{ title: 'No identifiers', imaging_method_name: ['Unspecified'] }} fieldMap={fieldMap.image_acquisition} /></section>
+<section id="null"><DatasetDetail data={{ title: 'Null identifiers', imaging_method_name: ['Unspecified'], fbbi_id: null }} fieldMap={fieldMap.image_acquisition} /></section>
+<section id="mismatched"><DatasetDetail data={mismatched} fieldMap={fieldMap.image_acquisition} /></section>
+<section id="unsupported"><DatasetDetail data={unsupported} fieldMap={fieldMap.image_acquisition} /></section>
+<section id="identifier-only"><DatasetDetail data={{ title: 'Identifier only', fbbi_id: ['FBbi:00000256'] }} fieldMap={fieldMap.image_acquisition} /></section>
+`);
+    await promisify(execFile)(process.execPath,
+        [path.join(repository, "node_modules/astro/astro.js"), "build", "--root", root],
+        { cwd: repository, timeout: 120000, maxBuffer: 2 * 1024 * 1024 });
+    const html = await readFile(path.join(root, "dist/index.html"), "utf8");
+    sections = Object.fromEntries([...html.matchAll(/<section id="([^"]+)">([\s\S]*?)<\/section>/g)]
+        .map((match) => [match[1], match[2]]));
+});
+
+test("the reference study offers an FBBI search without claiming that its term exists", () => {
+    assert.match(sections.study, /Imaging method:<\/b>&nbsp; Optical Projection Tomography \(OPT\)/);
+    assert.match(sections.study, /Imaging method ontology:<\/b>/);
+    assert.match(sections.study, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000639&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000639 \(search OLS\)<\/a>/);
+    assert.equal((sections.study.match(/>FBbi:00000639 \(search OLS\)<\/a>/g) ?? []).length, 2);
+    assert.doesNotMatch(sections.study, /\/entities\/|\/classes\/|href="https:\/\/purl\.obolibrary\.org/);
+    assert.match(sections.study, /<i>Mus musculus<\/i> \(Mouse\)/);
+    assert.match(sections.study, /href="https:\/\/www\.ncbi\.nlm\.nih\.gov\/Taxonomy\/Browser\/wwwtax\.cgi\?id=NCBI:txid10090"/);
+});
+
+test("image acquisition metadata accepts the observed obo namespace alias", () => {
+    assert.match(sections.image, /Imaging method:<\/b>&nbsp; Cryo-electron tomography/);
+    assert.match(sections.image, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000256&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000256 \(search OLS\)<\/a>/);
+    assert.doesNotMatch(sections.image, /target=|onclick=|obo:FBbi_/);
+});
+
+test("missing, null and empty identifiers preserve the method without an ontology row", () => {
+    for (const section of [sections.missing, sections.absent, sections.null]) {
+        assert.match(section, /Imaging method:<\/b>/);
+        assert.doesNotMatch(section, /Imaging method ontology|\/ols4\/search/);
+    }
+});
+
+test("independent name and identifier arrays do not require a positional pairing", () => {
+    assert.match(sections.mismatched, /Imaging method:<\/b>&nbsp; Method A,Method B/);
+    assert.equal((sections.mismatched.match(/<a /g) ?? []).length, 1);
+    assert.match(sections.mismatched, /Imaging method ontology:<\/b>/);
+    assert.match(sections["identifier-only"], /Imaging method ontology:<\/b>/);
+    assert.match(sections["identifier-only"], />FBbi:00000256 \(search OLS\)<\/a>/);
+    assert.doesNotMatch(sections["identifier-only"], /Imaging method:<\/b>/);
+});
+
+test("unsupported values remain readable and cannot inject markup", () => {
+    assert.match(sections.unsupported, /&lt;img src=x onerror=&quot;alert\(1\)&quot;&gt;, NCBITaxon:9606/);
+    assert.doesNotMatch(sections.unsupported, /<img|<script/);
+    assert.equal((sections.unsupported.match(/<a /g) ?? []).length, 1);
+});
