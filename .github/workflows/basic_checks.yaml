@@ -8,6 +8,21 @@ env:
   site_name: bia-beta-website # remainder added by netlify
 
 jobs:
+  news-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:news
+
   wait-for-deploy:
     runs-on: ubuntu-latest
     steps:
