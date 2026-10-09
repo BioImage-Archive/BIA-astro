@@ -62,6 +62,33 @@ const cards = [
   },
 ];
 
+const contactLinks = [
+  {
+    label: "Email us",
+    description: "Questions and support",
+    img: emailImage.src,
+    target: "mailto:bioimage-archive@ebi.ac.uk",
+  },
+  {
+    label: "LinkedIn",
+    description: "Follow EMBL-EBI Bioimaging",
+    img: linkedinImage.src,
+    target: "https://www.linkedin.com/company/embl-ebi-bioimaging/",
+  },
+  {
+    label: "Bluesky",
+    description: "Follow BIA updates",
+    img: blueskyImage.src,
+    target: "https://bsky.app/profile/bioimagearchive.bsky.social",
+  },
+  {
+    label: "GitHub",
+    description: "Explore our code",
+    img: githubImage.src,
+    target: "https://github.com/BioImage-Archive",
+  },
+];
+
 import multiImageStrip from "../assets/bioimage-archive/multi_image_strip.webp";
 import MenuCard from "../components/cards/LandingPageMenuCard.astro";
 import bannerImage from "../assets/bioimage-archive/banner.webp";
@@ -153,53 +180,27 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   </section>
   <hr class="vf-divider | vf-u-fullbleed" style="margin-left: 5%; margin-right: 5%;width: 90%">
   <section
-  class="vf-grid vf-grid__col-2"
   style="padding: 1% 1%;margin-left: 10%; margin-right: 10%;"
   >
-    <div>
-      <h2 class="vf-section-header vf-section-header__heading">Stay in touch</h2>
-      <br/>
-      <section
-        class="vf-grid | stay-in-touch-links"
-      >
-        <div class="column column-block">
-          <a href="mailto:bioimage-archive@ebi.ac.uk" class="vf-link logo-img">
-            <img
-              class="vf-figure__image"
-              src={emailImage.src}
-              alt="Email us"
-            /></a
+    <h2 class="vf-section-header vf-section-header__heading">Stay in touch</h2>
+    <ul class="stay-in-touch-links" role="list">
+      {contactLinks.map((contact) => (
+        <li>
+          <a
+            class="vf-link stay-in-touch-link"
+            href={contact.target}
+            target={contact.target.startsWith("https:") ? "_blank" : undefined}
+            rel={contact.target.startsWith("https:") ? "noopener noreferrer" : undefined}
           >
-        </div>
-        <div class="column column-block">
-          <a target="_blank" href="https://github.com/BioImage-Archive" class="vf-link logo-img">
-            <img
-              class="vf-figure__image"
-              src={githubImage.src}
-              alt="BIA github repo"
-            /></a
-          >
-        </div>
-        <div class="column column-block">
-          <a target="_blank" href="https://bsky.app/profile/bioimagearchive.bsky.social" class="vf-link logo-img">
-            <img
-              class="vf-figure__image"
-              src={blueskyImage.src}
-              alt="BIA Bluesky"
-            /></a
-          >
-        </div>
-        <div class="column column-block">
-          <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/embl-ebi-bioimaging/" class="vf-link logo-img">
-            <img
-              class="vf-figure__image"
-              src={linkedinImage.src}
-              alt="EMBL-EBI Bioimaging on LinkedIn"
-            /></a
-          >
-        </div>
-      </section>
-    </div>
+            <img src={contact.img} alt="" width="44" height="44" />
+            <span>
+              <span class="stay-in-touch-title">{contact.label}</span>
+              <span class="stay-in-touch-description">{contact.description}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <!-- Funding -->
@@ -218,8 +219,70 @@ import bannerImage from "../assets/bioimage-archive/banner.webp";
   }
 
   .stay-in-touch-links {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    max-width: 240px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px 32px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .stay-in-touch-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 44px;
+    padding: 8px 0;
+    border: 0;
+    text-decoration: none;
+  }
+
+  .stay-in-touch-link img {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+  }
+
+  .stay-in-touch-link > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .stay-in-touch-title {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .stay-in-touch-description {
+    display: block;
+    margin-top: 4px;
+    color: #373a36;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .stay-in-touch-link:hover .stay-in-touch-title {
+    text-decoration: underline;
+  }
+
+  .stay-in-touch-link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  @media (min-width: 600px) {
+    .stay-in-touch-links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .stay-in-touch-links {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
   </style>
 
