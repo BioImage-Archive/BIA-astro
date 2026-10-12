@@ -425,7 +425,7 @@ export async function studyHasSpecimenTracks(accessionID){
     const response = await getFromAPI(
         `${PUBLIC_SEARCH_API}/website/browse/image` +
         `?facet.accession_id=${encodeURIComponent(accessionID)}` +
-        `&has.display_image=false` +
+        `&has.specimen_track_display_image=false` +
         `&pagination.page_size=1`
     );
     return (response?.hits?.total?.value ?? 0) > 0;

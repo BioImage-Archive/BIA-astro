@@ -296,7 +296,7 @@ const hasSpecimenTracks = tableEl.dataset.hasSpecimenTracks === "true";
           `&pagination.page_size=${pageSize}`;
 
         if (hasSpecimenTracks && showDisplayImages) {
-          url += "&has.display_image=true";
+          url += "&has.specimen_track_display_image=true";
         }
 
         let fetchCursor = null;
