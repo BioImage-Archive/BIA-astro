@@ -29,17 +29,17 @@ const imageTypeTitles = {
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
 const formatCancers = (cancers) => cancers.join(', ');
-const sporaIO = "https://go.epfl.ch/spora-io";
-const sporaBench = "https://go.epfl.ch/spora-bench";
-const sporaData = "https://go.epfl.ch/spora-data";
+const sporaIO = "https://spora.epfl.ch/docs/io/index.html";
+const sporaBench = "https://spora.epfl.ch/docs/bench/index.html";
+const sporaData = "https://spora.epfl.ch/docs/";
+const sporaDocs = "https://spora.epfl.ch/docs/";
+
 const projectNavItems = [
   { key: "", label: "Home", href: "/bioimage-archive/" },
   { key: "sporaHome", label: "spora", href: "/bioimage-archive/projects/spora" },
   { key: "sporaDataset", label: "Dataset Browser", href: "/bioimage-archive/projects/spora/dataset"},
   { key: "tissueVisualizer", label: "Tissue Visualizer", href: "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/spora/visualizer/visualizer.html"},
-  { key: "sporaIO", label: "spora [io]", href: sporaIO},
-  { key: "sporaBench", label: "spora [bench]", href: sporaBench},
-  { key: "sporaData", label: "spora [data]", href: sporaData},
+  { key: "spora", label: "Documentation", href: sporaDocs},
 ];
 ---
 <Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset" projectNavItems={projectNavItems}>
