@@ -290,7 +290,7 @@ const breadcrumbs = [
       <div>
         <ul>
           {
-            study?.see_also.map((linkedInfo) => {
+            study?.see_also.filter((linkedInfo) => linkedInfo.link_type != "emdb" && linkedInfo.link_type != "pdb").map((linkedInfo) => {
               const { link, link_type, description } = linkedInfo;
               return (
                 <li style={{ fontSize: "inherit", lineHeight: "inherit" }}>
