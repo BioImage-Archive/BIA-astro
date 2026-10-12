@@ -24,7 +24,7 @@ before(async () => {
     for (const relative of [
         "src/components/DatasetDetail.astro", "src/components/DatasetInfo.astro",
         "src/components/SharedJSFunctions.js", "src/components/formatting/fbbi-terms.mjs",
-        "src/components/formatting/physical-dimensions.js",
+        "src/components/formatting/physical-dimensions.js", "src/styles/dataset-metadata.css",
         "src/assets/bioimage-archive/external-link-svgrepo-com.png",
         "src/assets/bioimage-archive/image_fallback.png", "src/data/metadata-field-name-mapping.json",
     ]) {
@@ -64,25 +64,25 @@ const acquisition = image.creation_process.acquisition_process[0];
 const mismatched = { title: 'Independent arrays', imaging_method_name: ['Method A', 'Method B'], fbbi_id: ['FBbi:00000256'] };
 const unsupported = { title: 'Unsupported identifiers', fbbi_id: ['<img src=x onerror="alert(1)">', 'NCBITaxon:9606', 'FBbi:00000256'] };
 ---
-<section id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
-<section id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
-<section id="absent"><DatasetDetail data={{ title: 'No identifiers', imaging_method_name: ['Unspecified'] }} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="null"><DatasetDetail data={{ title: 'Null identifiers', imaging_method_name: ['Unspecified'], fbbi_id: null }} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="mismatched"><DatasetDetail data={mismatched} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="unsupported"><DatasetDetail data={unsupported} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="identifier-only"><DatasetDetail data={{ title: 'Identifier only', fbbi_id: ['FBbi:00000256'] }} fieldMap={fieldMap.image_acquisition} /></section>
+<article id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</article>
+<article id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</article>
+<article id="absent"><DatasetDetail data={{ title: 'No identifiers', imaging_method_name: ['Unspecified'] }} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="null"><DatasetDetail data={{ title: 'Null identifiers', imaging_method_name: ['Unspecified'], fbbi_id: null }} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="mismatched"><DatasetDetail data={mismatched} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="unsupported"><DatasetDetail data={unsupported} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="identifier-only"><DatasetDetail data={{ title: 'Identifier only', fbbi_id: ['FBbi:00000256'] }} fieldMap={fieldMap.image_acquisition} /></article>
 `);
     await promisify(execFile)(process.execPath,
         [path.join(repository, "node_modules/astro/astro.js"), "build", "--root", root],
         { cwd: repository, timeout: 120000, maxBuffer: 2 * 1024 * 1024 });
     const html = await readFile(path.join(root, "dist/index.html"), "utf8");
-    sections = Object.fromEntries([...html.matchAll(/<section id="([^"]+)">([\s\S]*?)<\/section>/g)]
+    sections = Object.fromEntries([...html.matchAll(/<article id="([^"]+)">([\s\S]*?)<\/article>/g)]
         .map((match) => [match[1], match[2]]));
 });
 
 test("the reference study offers an FBBI search without claiming that its term exists", () => {
-    assert.match(sections.study, /Imaging method:<\/b>&nbsp; Optical Projection Tomography \(OPT\)/);
+    assert.match(sections.study, /Imaging method:<\/b><\/dt>\s*<dd>Optical Projection Tomography \(OPT\)/);
     assert.match(sections.study, /Imaging method ontology:<\/b>/);
     assert.match(sections.study, /href="https:\/\/www\.ebi\.ac\.uk\/ols4\/search\?q=FBbi%3A00000639&amp;ontology=fbbi&amp;isDefiningOntology=true">FBbi:00000639 \(search OLS\)<\/a>/);
     assert.equal((sections.study.match(/>FBbi:00000639 \(search OLS\)<\/a>/g) ?? []).length, 2);

@@ -4,17 +4,27 @@ import { multilineTextRender} from "./SharedJSFunctions.js"
 import { renderFbbiTermsHtml } from "./formatting/fbbi-terms.mjs";
 
 
-var { data, fieldMap } = Astro.props;
+const { data, fieldMap, presentation } = Astro.props;
+const isDataset = presentation === "dataset";
+
+// Dataset text is literal metadata, not authored HTML. Other callers use the
+// established multiline formatting contract.
+function metadataText(value) {
+    const text = String(value);
+    return isDataset ? text.replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    })[character]) : text;
+}
 
 function taxonRenderWithLink(taxon) {
    
     const stringText = 
-        taxon["common_name"] && taxon["scientific_name"] ? `<i>${taxon["scientific_name"]}</i> (${taxon["common_name"]})` :
-        taxon["common_name"] ? taxon["common_name"] :
-        taxon["scientific_name"] ? `<i>${taxon["scientific_name"]}</i>` : null
+        taxon["common_name"] && taxon["scientific_name"] ? `<i>${metadataText(taxon["scientific_name"])}</i> (${metadataText(taxon["common_name"])})` :
+        taxon["common_name"] ? metadataText(taxon["common_name"]) :
+        taxon["scientific_name"] ? `<i>${metadataText(taxon["scientific_name"])}</i>` : (isDataset ? "" : null)
 
     if (taxon["ncbi_id"]) {
-        return `<li class="vf-content"> ${stringText} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">${taxon["ncbi_id"]} <img src=\"${external_link.src}\" width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
+        return `<li class="vf-content"> ${stringText} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${metadataText(taxon["ncbi_id"])}\">${metadataText(taxon["ncbi_id"])} <img src=\"${external_link.src}\" width="15" alt="" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
     } else {
         return `<li class="vf-content"> ${stringText}</li>`;
     }
@@ -27,19 +37,21 @@ function growthProtocolRender(growthProtocol) {
 
 function renderValue(key, value) {
     if (key === "organism_classification") {
+        if (isDataset) return `<ul>${value.map(taxon => taxonRenderWithLink(taxon)).join("")}</ul>`;
         return `<ul>
             ${value.map((taxon) => taxonRenderWithLink(taxon)).join("")} 
             </ul>`;
     } else if (key === "growth_protocol") {
-        return `${growthProtocolRender(value)}`;
+        return metadataText(growthProtocolRender(value));
     } else if (key === "fbbi_id") {
         return renderFbbiTermsHtml(value);
     } else {
-        return multilineTextRender(value.toString().replace(/[\r\n|\r|\n]+/g, ", "))
+        return isDataset ? metadataText(value) : multilineTextRender(value.toString().replace(/[\r\n|\r|\n]+/g, ", "))
     }
 }
 
-const renderField = Object.keys(fieldMap).map((key) => {
+const fields = Object.keys(fieldMap).filter(key => data[key] != null && (!Array.isArray(data[key]) || data[key].length > 0));
+const renderField = !isDataset && Object.keys(fieldMap).map((key) => {
     if (key in fieldMap && !(data[key] == null)) {
         if (Array.isArray(data[key])) {
             if (data[key].length > 0) {
@@ -51,17 +63,28 @@ const renderField = Object.keys(fieldMap).map((key) => {
     }
 });
 
-if (!("default_open" in data) ) {
-    data.default_open = "True"
-}
+const defaultOpen = "default_open" in data ? data.default_open : true;
+// HTML open is a presence boolean; the legacy string "False" must not open a record.
+const initiallyOpen = isDataset
+    ? Boolean(defaultOpen) && defaultOpen !== "False" && defaultOpen !== "false"
+    : defaultOpen;
 ---
 
-<details open={"default_open" in data ? data.default_open: "True"} style="margin-bottom: 0.5rem;">
+<details class:list={{ "dataset-metadata__record": isDataset }} open={initiallyOpen} style={isDataset ? undefined : "margin-bottom: 0.5rem;"}>
     <summary>
-        <b>{data.title}</b> {data.default_open? ' ':'(as above)'}
+        <b>{isDataset ? data.title || "Untitled record" : data.title}</b> {!isDataset && !defaultOpen ? '(as above)' : ''}
     </summary>
 
-    <ul>
-        <Fragment set:html={renderField} ` />
-    </ul>
+    {isDataset ? (
+        <dl class="dataset-metadata__fields">
+            {fields.map(key => (
+                <div class="dataset-metadata__field" data-metadata-field={key}>
+                    <dt><b>{fieldMap[key]}:</b></dt>{" "}
+                    <dd><Fragment set:html={renderValue(key, data[key])} /></dd>
+                </div>
+            ))}
+        </dl>
+    ) : (
+        <ul><Fragment set:html={renderField} /></ul>
+    )}
 </details>
