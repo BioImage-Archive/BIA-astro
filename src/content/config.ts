@@ -1,5 +1,6 @@
 // 1. Import utilities from `astro:content`
 import { defineCollection, z } from 'astro:content';
+import { articleDateKey } from '../news/article-order.mjs';
 // 2. Define your collection(s)
 const case_studiesCollection = defineCollection({ 
     type: 'content',
@@ -17,7 +18,10 @@ const newsCollection = defineCollection({
         cover: image(),
         imageAlt: z.string(),
         figureLink: z.string(),
-        articleDate: z.string(),
+        articleDate: z.string().refine(
+            (value) => articleDateKey(value) !== null,
+            { message: 'Expected a real date in D Month YYYY format, e.g. 12 January 2026.' },
+        ),
       }),
     });
 

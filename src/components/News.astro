@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-const items = await getCollection("news_articles");
+import { sortNewsByDate } from "../news/article-order.mjs";
+const items = sortNewsByDate(await getCollection("news_articles"));
 
 ---
 
@@ -99,7 +100,7 @@ const items = await getCollection("news_articles");
   };
 
   // init
-  renderSlide(1);
+  renderSlide(0);
   startAutoplay();
 </script>
 
