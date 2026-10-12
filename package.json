@@ -10,11 +10,13 @@
     "astro": "astro",
     "prod": "NODE_ENV=production PORT=8080 HOST=0.0.0.0 node dist/bioimage-archive/server/entry.mjs",
     "local": "astro check && astro build && astro preview",
-    "test": "node --test tests/formatting/*.test.mjs",
+    "test": "node --test \"tests/**/*.test.mjs\"",
     "audit:dead-code": "node scripts/dead-code/audit.mjs",
     "audit:dead-code:knip": "knip --config configs/quality/knip.json --reporter json",
     "test:dead-code": "node --test scripts/dead-code/*.test.mjs && node scripts/dead-code/verify-tools.mjs",
-    "quality:check": "astro check --tsconfig configs/quality/tsconfig.check.json"
+    "quality:check": "astro check --tsconfig configs/quality/tsconfig.check.json",
+    "test:fbbi": "node --test tests/ontology/*.test.mjs",
+    "test:news": "node --test tests/news/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
