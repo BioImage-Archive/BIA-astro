@@ -1,6 +1,7 @@
 ---
 import external_link from  "../assets/bioimage-archive/external-link-svgrepo-com.png";
 import { multilineTextRender} from "./SharedJSFunctions.js"
+import { renderFbbiTermsHtml } from "./formatting/fbbi-terms.mjs";
 
 
 var { data, fieldMap } = Astro.props;
@@ -31,7 +32,8 @@ function renderValue(key, value) {
             </ul>`;
     } else if (key === "growth_protocol") {
         return `${growthProtocolRender(value)}`;
-
+    } else if (key === "fbbi_id") {
+        return renderFbbiTermsHtml(value);
     } else {
         return multilineTextRender(value.toString().replace(/[\r\n|\r|\n]+/g, ", "))
     }

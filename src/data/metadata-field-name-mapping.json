@@ -16,7 +16,8 @@
     "image_acquisition": {
         "protocol_description": "Protocol description",
         "imaging_instrument_description": "Imaging instrument",
-        "imaging_method_name": "Imaging method"
+        "imaging_method_name": "Imaging method",
+        "fbbi_id": "Imaging method ontology"
     },
     "analysis_method": {
         "protocol_description": "Protocol description"
