@@ -57,3 +57,18 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:fbbi
+
+  metadata-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:metadata
