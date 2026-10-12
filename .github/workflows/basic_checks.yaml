@@ -8,7 +8,7 @@ env:
   site_name: bia-beta-website # remainder added by netlify
 
 jobs:
-  news-tests:
+  tests:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,7 +21,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run test:news
+      - run: npm test
 
   wait-for-deploy:
     runs-on: ubuntu-latest
@@ -48,29 +48,3 @@ jobs:
             --ignore-url '.*\/dataset\/?.*' \
             --ignore-url '.*\/sodataset\/?.*' \
             --ignore-url '.*\/aidataset\/?.*'
-
-  fbbi-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run test:fbbi
-
-  metadata-tests:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run test:metadata
