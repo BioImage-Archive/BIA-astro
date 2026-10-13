@@ -6,7 +6,7 @@ import { sha256 } from './report.mjs';
 export const MAX_INPUT_BYTES = 8 * 1024 * 1024;
 
 export async function captureProvenance(root, files) {
-  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 10_000 });
+  const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 10_000, killSignal: 'SIGKILL' });
   if (await realpath(git('rev-parse', '--show-toplevel').trim()) !== await realpath(root)) {
     throw new Error('Run the audit from the Git repository root');
   }

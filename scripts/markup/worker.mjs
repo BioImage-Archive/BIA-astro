@@ -116,9 +116,9 @@ async function main() {
   }
   report.coverage.renderedRequested = Boolean(options.htmlDir || options.routes);
   report.coverage.renderedStatus = report.coverage.renderedRequested ? 'REQUESTED' : 'NOT_REQUESTED';
-  try { report.gitHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
+  try { report.gitHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', timeout: 10000, killSignal: 'SIGKILL', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
   catch { /* Archive checkouts can be audited, but no commit provenance can be claimed. */ }
-  try { report.gitStatus = execFileSync('git', ['status', '--short', '--untracked-files=no'], { cwd: root, encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
+  try { report.gitStatus = execFileSync('git', ['status', '--short', '--untracked-files=no'], { cwd: root, encoding: 'utf8', timeout: 10000, killSignal: 'SIGKILL', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
   catch { report.gitStatus = 'unavailable'; }
 
   const require = createRequire(path.join(root, 'package.json'));
