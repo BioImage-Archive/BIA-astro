@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { parse } from '@astrojs/compiler';
 import { is, walk } from '@astrojs/compiler/utils';
-import { eslintFindings, knipFindings, renderFindings, reportExitCode } from './report.mjs';
+import { eslintFindings, knipFindings, renderFindings, reportExitCode } from '../../scripts/dead-code/report.mjs';
 
 const root = '/work/BIA-astro';
 const eslintData = [{
@@ -211,4 +211,17 @@ test('Exit codes distinguish findings from a failed audit, even in report-only m
   assert.equal(reportExitCode(items, noStagesFailed, true), 0);
   assert.equal(reportExitCode([], [{ state: 'FAILED' }], true), 2);
   assert.equal(reportExitCode([{ kind: 'unresolved', status: 'ANALYSIS_DIAGNOSTIC' }], noStagesFailed, true), 2);
+});
+
+
+test('Source coverage rejects omitted, duplicate and ignored selected files', async () => {
+  const { verifyEslintSourceCoverage } = await import('../../scripts/dead-code/report.mjs');
+  const root = '/repository';
+  const input = { 'src/a.ts': 'hash', 'src/b.astro': 'hash' };
+  const a = { filePath: '/repository/src/a.ts', messages: [] };
+  const b = { filePath: '/repository/src/b.astro', messages: [] };
+  assert.deepEqual(verifyEslintSourceCoverage([a, b], root, input), { expectedSourceFiles: 2, analyzedSourceFiles: 2 });
+  assert.throws(() => verifyEslintSourceCoverage([a], root, input), /omitted selected source/);
+  assert.throws(() => verifyEslintSourceCoverage([a, a, b], root, input), /Duplicate ESLint/);
+  assert.throws(() => verifyEslintSourceCoverage([a, { ...b, messages: [{ ruleId: null, message: 'File ignored because of a matching ignore pattern.' }] }], root, input), /ignored a selected/);
 });

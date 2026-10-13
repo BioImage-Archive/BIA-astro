@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import { eslintFindings, knipFindings, renderFindings, reportExitCode, sortFindings } from './report.mjs';
+import { eslintFindings, knipFindings, renderFindings, reportExitCode, sortFindings, verifyEslintSourceCoverage } from './report.mjs';
 
 const args = new Set(process.argv.slice(2));
 const allowed = new Set(['--report-only', '--with-astro-check']);
@@ -25,6 +25,8 @@ const runId = `${new Date().toISOString().replace(/[:.]/g, '-')}-${process.pid}`
 const evidencePath = `artifacts/dead-code/${runId}`;
 const out = path.join(root, evidencePath);
 mkdirSync(out, { recursive: true });
+writeFileSync(path.join(root, 'artifacts', 'dead-codes.log'),
+  `BIA-ASTRO DEAD-CODE CANDIDATE AUDIT\nStatus: IN_PROGRESS\nEvidence: ${evidencePath}\n`);
 const require = createRequire(path.join(root, 'package.json'));
 const env = { ...process.env, NO_COLOR: '1', CI: 'true', ASTRO_TELEMETRY_DISABLED: '1' };
 delete env.FORCE_COLOR;
@@ -51,6 +53,11 @@ function read(file) {
 function digest(file) {
   const target = path.resolve(root, file);
   if (!target.startsWith(root + path.sep)) throw new Error(`Input outside repository: ${file}`);
+  const physical = realpathSync(target);
+  const repository = realpathSync(root);
+  if (physical !== repository && !physical.startsWith(repository + path.sep)) {
+    throw new Error(`Input resolves outside repository: ${file}`);
+  }
   return createHash('sha256').update(readFileSync(target)).digest('hex');
 }
 function packageInfo(name) {
@@ -138,6 +145,7 @@ function runTool(name, parameters, parse = null) {
       if (name === 'eslint' && data.length === 0) throw new Error('ESLint checked zero files');
       if (name === 'eslint') {
         stage.filesWithResults = data.length;
+        if (before.inputHashes) Object.assign(stage, verifyEslintSourceCoverage(data, root, before.inputHashes));
         stage.fatalDiagnostics = extracted.filter(finding => finding.fatal).length;
       }
       if (extracted.some(finding => finding.fatal)) throw new Error('Analyzer returned a parsing or rule-configuration failure');

@@ -45,6 +45,27 @@ function relativePath(file, root) {
   return path.relative(root, path.resolve(root, file)).split(path.sep).join('/');
 }
 
+// Every selected source file needs an actual analyzer result; a nonempty report
+// alone cannot establish coverage when configuration silently excludes a file.
+export function verifyEslintSourceCoverage(data, root, inputs) {
+  if (!Array.isArray(data)) throw new Error('Unexpected ESLint JSON: expected an array');
+  const expected = Object.keys(inputs).filter(file => file.startsWith('src/') &&
+    /\.(?:astro|[cm]?[jt]sx?)$/.test(file));
+  const observed = new Set();
+  for (const result of data) {
+    const file = relativePath(result.filePath, root);
+    if (observed.has(file)) throw new Error(`Duplicate ESLint file result: ${file}`);
+    observed.add(file);
+    if (result.messages?.some(message => message.ruleId == null &&
+      /^File ignored\b/i.test(message.message))) {
+      throw new Error(`ESLint ignored a selected input: ${file}`);
+    }
+  }
+  const omitted = expected.filter(file => !observed.has(file));
+  if (omitted.length) throw new Error(`ESLint omitted selected source inputs: ${omitted.join(', ')}`);
+  return { expectedSourceFiles: expected.length, analyzedSourceFiles: expected.length };
+}
+
 export function eslintFindings(data, root) {
   if (!Array.isArray(data)) throw new Error('Unexpected ESLint JSON: expected an array');
   const findings = [];

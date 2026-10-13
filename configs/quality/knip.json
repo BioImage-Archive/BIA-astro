@@ -10,7 +10,9 @@
   "entry": [
     "scripts/dead-code/audit.mjs",
     "scripts/dead-code/verify-tools.mjs",
-    "scripts/dead-code/*.test.mjs",
+    "scripts/markup/worker.*js",
+    "tests/dead-code/*.test.mjs",
+    "tests/metadata/fixtures/dataset-metadata.*js",
     "src/components/ViewableImageTable.js",
     "src/components/search/search-results.js",
     "src/layouts/HelpLayout.astro",
@@ -28,6 +30,7 @@
   "eslint": {
     "config": [
       "configs/quality/eslint.config.mjs",
+      "configs/quality/eslint.markup.config.*js",
       "eslint.config.{js,mjs,cjs,ts}"
     ]
   }

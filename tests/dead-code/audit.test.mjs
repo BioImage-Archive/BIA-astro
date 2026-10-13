@@ -5,7 +5,7 @@ import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, symlinkSy
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const executable = fileURLToPath(new URL('./audit.mjs', import.meta.url));
+const executable = fileURLToPath(new URL('../../scripts/dead-code/audit.mjs', import.meta.url));
 const gitLookup = spawnSync('which', ['git'], { encoding: 'utf8' });
 assert.equal(gitLookup.status, 0, 'Git is required for audit integration tests');
 const gitBinary = gitLookup.stdout.trim();
@@ -40,7 +40,9 @@ function fixture({ knip = { files: [], issues: [] }, eslint, knipExit = 0, durin
     mkdirSync(folder, { recursive: true });
     writeFileSync(path.join(folder, 'package.json'), JSON.stringify({ name, version: '0.0.0', bin: 'cli.cjs' }));
     writeFileSync(path.join(folder, 'cli.cjs'),
-      `${name === 'knip' ? duringScan : ''}\nconsole.log(${JSON.stringify(JSON.stringify(output))}); process.exitCode = ${exit};`);
+      `${name === 'knip' ? duringScan : ''}\n${name === 'eslint' && eslint === undefined
+        ? "const path = require('node:path'); const files = require('node:fs').readdirSync('src').filter(file => /\\.(?:astro|[cm]?[jt]sx?)$/.test(file)); console.log(JSON.stringify(files.map(file => ({filePath: path.resolve('src', file), messages: []}))));"
+        : `console.log(${JSON.stringify(JSON.stringify(output))});`} process.exitCode = ${exit};`);
   }
   git(root, ['init', '--quiet', '--template=']);
   git(root, ['config', 'user.name', 'Bijux audit fixture']);
@@ -212,4 +214,26 @@ test('A nested directory cannot borrow the parent repository provenance', () => 
   const result = run(nested, ['--report-only']);
   assert.equal(result.status, 2);
   assert.match(result.log, /not the Git repository root/);
+});
+
+
+test('A partial ESLint source inventory is incomplete in both modes', () => {
+  for (const flags of [[], ['--report-only']]) {
+    const root = fixture({ eslint: [{ filePath: 'src/a.ts', messages: [] }] });
+    writeFileSync(path.join(root, 'src/omitted.ts'), 'export const live = 1;\n');
+    const result = run(root, flags);
+    assert.equal(result.status, 2);
+    assert.match(result.log, /ESLint omitted selected source inputs: src\/omitted.ts/);
+  }
+});
+
+test('A source symlink cannot read inputs outside the audit repository', () => {
+  const root = fixture();
+  const outside = path.join(path.dirname(root), 'outside-input.ts');
+  writeFileSync(outside, 'export const external = 1;\n');
+  symlinkSync(outside, path.join(root, 'src/external.ts'));
+  const result = run(root, ['--report-only']);
+  assert.equal(result.status, 2);
+  assert.match(result.log, /Input resolves outside repository: src\/external.ts/);
+  assert.equal(result.report.inputHashesBefore, null);
 });

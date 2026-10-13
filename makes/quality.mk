@@ -11,7 +11,6 @@ quality:
 
 quality-test:
 	npm test
-	npm run test:dead-code
 
 quality-check:
 	npm run quality:check
