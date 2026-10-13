@@ -1,11 +1,17 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import { spawnSync } from 'node:child_process';
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const executable = fileURLToPath(new URL('../../scripts/dead-code/audit.mjs', import.meta.url));
+const output = path.resolve('artifacts/dead-code-tests');
+mkdirSync(output, { recursive: true });
+const suiteRoot = mkdtempSync(path.join(output, 'audit-suite-'));
+// Own both fixture repositories and their external-file test inputs. Keeping
+// these files after testing would make the ordinary Astro check analyze them.
+after(() => rmSync(suiteRoot, { recursive: true, force: true }));
 const gitLookup = spawnSync('which', ['git'], { encoding: 'utf8' });
 assert.equal(gitLookup.status, 0, 'Git is required for audit integration tests');
 const gitBinary = gitLookup.stdout.trim();
@@ -17,9 +23,7 @@ function git(fixture, args) {
 }
 
 function fixture({ knip = { files: [], issues: [] }, eslint, knipExit = 0, duringScan = '' } = {}) {
-  const directory = path.resolve('artifacts/dead-code-tests');
-  mkdirSync(directory, { recursive: true });
-  const root = mkdtempSync(path.join(directory, 'audit-contract-'));
+  const root = mkdtempSync(path.join(suiteRoot, 'audit-contract-'));
   for (const folder of ['src', 'scripts/dead-code', 'configs/quality', 'bin', 'disabled-hooks']) {
     mkdirSync(path.join(root, folder), { recursive: true });
   }
