@@ -37,10 +37,7 @@ export function taxonRender(taxon) {
  }
 
 
-export function multilineTextRender(value) {
-    const output = value.toString().trim().replace(/(?:[\r\n|\r|\n]+)/g, "<br/><br/>")
-    return output
-}
+export { multilineTextRender } from "./formatting/plain-text.js";
 
 
 export function formatBytesToHumanSize(sizeBytes) {
