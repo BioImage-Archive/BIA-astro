@@ -1,0 +1,10 @@
+[
+  { "path": "/bioimage-archive/", "mustContain": ["<title>The BioImage Archive</title>"] },
+  { "path": "/bioimage-archive/help/faq", "mustContain": ["<title>FAQs</title>"] },
+  { "path": "/bioimage-archive/study/S-BIAD3335", "mustContain": ["<title>S-BIAD3335:", "Optical Projection Tomography"] },
+  { "path": "/bioimage-archive/study/EMPIAR-12104", "mustContain": ["<title>EMPIAR-12104:", "Cryo-electron tomography"] },
+  { "path": "/bioimage-archive/galleries/volumeem", "mustContain": ["<title>EMPIAR - Volume EM Gallery</title>"] },
+  { "path": "/bioimage-archive/galleries/ai/model/powerful-chipmunk", "mustContain": ["<title>powerful-chipmunk</title>"] },
+  { "path": "/bioimage-archive/galleries/spatialomics/study/S-BIAD1093", "mustContain": ["<title>S-BIAD1093</title>"] },
+  { "path": "/bioimage-archive/image/001b8ef2-7a5e-4b94-b91c-d93f5095ee39", "mustContain": ["001b8ef2-7a5e-4b94-b91c-d93f5095ee39"] }
+]
