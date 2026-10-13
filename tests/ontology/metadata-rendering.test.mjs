@@ -21,16 +21,11 @@ before(async () => {
     await mkdir(output, { recursive: true });
     root = await mkdtemp(path.join(output, "application-"));
     await mkdir(path.join(root, "src/pages"), { recursive: true });
-    for (const relative of [
-        "src/components/DatasetDetail.astro", "src/components/DatasetInfo.astro",
-        "src/components/SharedJSFunctions.js", "src/components/formatting/fbbi-terms.mjs",
-        "src/components/formatting/physical-dimensions.js",
-        "src/assets/bioimage-archive/external-link-svgrepo-com.png",
-        "src/assets/bioimage-archive/image_fallback.png", "src/data/metadata-field-name-mapping.json",
-    ]) {
-        await mkdir(path.dirname(path.join(root, relative)), { recursive: true });
-        await cp(path.join(repository, relative), path.join(root, relative));
+    for (const relative of ["src/components", "src/assets", "src/styles"]) {
+        await cp(path.join(repository, relative), path.join(root, relative), { recursive: true });
     }
+    await mkdir(path.join(root, "src/data"), { recursive: true });
+    await cp(path.join(repository, "src/data/metadata-field-name-mapping.json"), path.join(root, "src/data/metadata-field-name-mapping.json"));
     await writeFile(path.join(root, "package.json"), '{"type":"module"}\n');
     await symlink(path.join(repository, "node_modules"), path.join(root, "node_modules"), "dir");
     await writeFile(path.join(root, "astro.config.mjs"), `

@@ -30,6 +30,8 @@ const cases = {
     omitted_year: "facet.year=2025",
     foreign_study: "size_t=1",
     foreign_image: "facet.year=2025",
+    scientific_bounds: "total_physical_size_x=%3E1e-9&total_physical_size_y=%E2%89%A42e-9&voxel_physical_size_x=1e-9-2e-9",
+    malformed_range: "size_t=1-2-3",
     scientific: "total_physical_size_x=1e-9&total_physical_size_y=2.50e-12&voxel_physical_size_x=1e-9",
 
 };
@@ -235,4 +237,34 @@ for (const [name, queryKey, value, title] of [
 test('omitted-group retention does not add image controls to study browse or vice versa', () => {
     assert.equal(inputs(pages.foreign_study, 'size_t').length, 0);
     assert.equal(inputs(pages.foreign_image, 'facet.year').length, 0);
+});
+
+
+test('scientific comparisons and range bounds preserve API operators and source precision', () => {
+    for (const [field, value] of [
+        ['total_physical_size_x', '>1e-9'], ['total_physical_size_y', '≤2e-9'],
+        ['voxel_physical_size_x', '1e-9-2e-9'],
+    ]) checked(pages.scientific_bounds, field, value);
+    const params = request('scientific_bounds').searchParams;
+    assert.equal(params.get('total_physical_size_x.gt'), '1e-9');
+    assert.equal(params.get('total_physical_size_y.lte'), '2e-9');
+    assert.equal(params.get('voxel_physical_size_x.gte'), '1e-9');
+    assert.equal(params.get('voxel_physical_size_x.lte'), '2e-9');
+    for (const field of ['total_physical_size_x', 'total_physical_size_y', 'voxel_physical_size_x']) {
+        assert.equal(params.has(`${field}.eq`), false);
+    }
+    const input = checked(pages.scientific_bounds, 'voxel_physical_size_x', '1e-9-2e-9');
+    const id = input.match(/\sid="([^"]+)"/)[1];
+    const label = pages.scientific_bounds.match(new RegExp(`<label\\b[^>]*for="${id}"[^>]*>([\\s\\S]*?)<\\/label>`))[1];
+    assert.match(label, /1 nm - 2 nm/);
+    assert.doesNotMatch(label, /undefined|NaN/);
+});
+
+test('malformed numeric ranges remain whole instead of discarding extra bounds', () => {
+    checked(pages.malformed_range, 'size_t', '1-2-3');
+    const params = request('malformed_range').searchParams;
+    assert.equal(params.get('size_t.eq'), '1-2-3');
+    assert.equal(params.has('size_t.gte'), false);
+    assert.equal(params.has('size_t.lte'), false);
+    assert.match(pages.malformed_range, />1-2-3</);
 });

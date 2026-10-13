@@ -1,5 +1,6 @@
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
+import { parseNumericRange } from "./formatting/numeric-ranges.mjs";
 
 export function getPlaceholderHeroImage(accessionID) {
     const match = (accessionID.match(/(\d{1,5})$/)) || ['0','1'];
@@ -72,8 +73,7 @@ function formatValueHumanReadable(fieldName, value) {
 
 export function formatFieldName(fieldName, fieldValue) {
   const bIsCompared = fieldValue.startsWith(">") || fieldValue.startsWith("<") || fieldValue.startsWith("≤") || fieldValue.startsWith("≥");
-  // A minus in a numeric literal belongs to its sign or exponent, not a range.
-  const bIsRange = fieldValue.includes("-") && Number.isNaN(Number(fieldValue));
+  const range = parseNumericRange(fieldValue);
   if(Number.isFinite(fieldValue)) {
     return formatValueHumanReadable(fieldName, fieldValue);
   }
@@ -81,8 +81,8 @@ export function formatFieldName(fieldName, fieldValue) {
     const fieldValueNumeric = fieldValue.slice(1);
     return `${fieldValue[0]} ${formatValueHumanReadable(fieldName, fieldValueNumeric)}`;
   }
-  else if (bIsRange) {
-    const [start, end] = fieldValue.split("-");
+  else if (range) {
+    const { start, end } = range;
     return `${formatValueHumanReadable(fieldName, start)} - ${formatValueHumanReadable(fieldName, end)}`;
   }
   else {
@@ -341,19 +341,6 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
       if (isPageURL) {
         url.searchParams.append(facetKey, stringValue);
       }
-      else if (stringValue.includes("-")) {
-        const [start, end] = stringValue.split("-");
-        
-        if(
-          start !== "" && !Number.isNaN(Number(start)) &&
-          end !== "" && !Number.isNaN(Number(end))) {
-            url.searchParams.append(`${facetKey}.gte`, start);
-            url.searchParams.append(`${facetKey}.lte`, end);
-          }
-        else {
-          url.searchParams.append(`${facetKey}.eq`, stringValue);
-        }
-      }
       else if (stringValue[0] === ">") {
         url.searchParams.append(`${facetKey}.gt`, stringValue.slice(1));
       }
@@ -370,7 +357,13 @@ export function generateParamString(baseURL, query, page, selectedFacets, pageSi
         url.searchParams.append(url.pathname.endsWith("image") ? "has.converted_image" : "has.thumbnail", "true");
       }
       else {
-        url.searchParams.append(`${facetKey}.eq`, stringValue);
+        const range = parseNumericRange(stringValue);
+        if (range) {
+          url.searchParams.append(`${facetKey}.gte`, range.start);
+          url.searchParams.append(`${facetKey}.lte`, range.end);
+        } else {
+          url.searchParams.append(`${facetKey}.eq`, stringValue);
+        }
       }
     }
   }
