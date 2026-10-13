@@ -13,10 +13,8 @@ const image = await getImageFromAPI(uuid);
 const accession_id = image ? image.accession_id : "";
 const studyInfo: Study = await getStudyFromApiByAccession(accession_id);
 
-let sourceImage;
-let annotatedImages = [];
-sourceImage = image;
-annotatedImages = await getAnnotationFromDerivedImages(sourceImage.uuid)
+const sourceImage = image;
+const annotatedImages = await getAnnotationFromDerivedImages(sourceImage.uuid)
 const organism = getTaxons(studyInfo).join(", ");
 const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.submission_dataset_uuid);
 const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
@@ -57,4 +55,5 @@ const breadcrumbs = [
         <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
         <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
         <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
-</BaseLayout>
+    </div>
+</BaseLayoutWithBreadcrumbs>

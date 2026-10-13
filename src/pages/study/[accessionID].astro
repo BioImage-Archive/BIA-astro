@@ -6,7 +6,7 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
 import Citation from "../../components/Citation.astro";
-import { buildDatasetFileSummary, buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -137,7 +137,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={`${study.accession_id}: ${study.title}`} breadcrumbs={breadcrumbs}>
-  <body>
+  <Fragment>
     <StudyTitleInfo study_info={study} emdbLinks={emdbLinks} pdbLinks={pdbLinks}/>
 
   <StudyContentsSummary 
@@ -330,7 +330,8 @@ const breadcrumbs = [
   {hasFileList && (
     <FileListTable file_list_urls={fileListUrls} ftp_path={ftpHttpsLink} globus_link={globusLink}/>
   )}
-</BaseLayout>
+  </Fragment>
+</BaseLayoutWithBreadcrumbs>
 
 <style>
   .study-info-item {
