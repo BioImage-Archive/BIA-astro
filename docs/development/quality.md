@@ -15,7 +15,7 @@ related_issue_url: https://embl.atlassian.net/browse/BIOIM-322
 
 # Repository quality checks
 
-The audit tooling and reviewed source corrections are delivered together. The [source-audit findings and runtime contracts](source-audit-findings.md) record the completed configured scan (33 retained candidates, zero parser diagnostics), verification and deliberate preservation decisions. Strict checks still fail while active candidates remain.
+The audit tooling and reviewed source corrections are delivered together. The [source-audit findings and runtime contracts](source-audit-findings.md) record the completed configured scan (34 retained candidates, zero parser diagnostics), verification and deliberate preservation decisions. Strict checks still fail while active candidates remain.
 
 ## Make interface
 
@@ -119,3 +119,9 @@ Keep actual removals in focused, reviewed changes. Validate the normal build and
 A strict CI dead-code gate should wait for baseline triage and an agreed exception policy. Report/failure-path tests can be automated independently; generated reports should be uploaded as artifacts rather than committed.
 
 The graph configuration also recognizes the optional markup worker, copied metadata fixture module and markup ESLint configuration when those independently maintained tools are installed. A real Knip integration fixture verifies the spawned worker and copied fixture import graphs and analyzer dependencies; absent optional files are glob matches rather than nonexistent hard-coded entries.
+
+## Shared analyzer dependencies
+
+The markup and dead-code audits use the same locked development-tool profile, including HTML-Validate 10.17.0 and Knip 5.70.1. Both independently reviewed branches retain identical development dependency declarations and lockfiles so combining them does not require competing dependency resolutions. Each branch keeps its own audit commands and source checks; application dependency declarations are unchanged.
+
+A standalone dead-code scan reports HTML-Validate as an unused development dependency until the markup audit is present. Retain that observation as the companion analyzer reservation; do not suppress it or describe it as a source defect. The combined graph uses both analyzers. Regenerate and validate the shared lockfile when changing this profile, and rerun installation, regressions and configured audits on both owning surfaces.

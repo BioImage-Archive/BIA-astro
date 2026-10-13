@@ -26,10 +26,11 @@ The initial audit reported 80 candidates and 21 parser diagnostics. These counts
 | Original reviewed baseline | 80 | 21 |
 | Tooling with accepted main (`b8933ae`) | 85 | 21 |
 | Reviewed corrections with accepted main | 33 | 0 |
+| Shared analyzer dependency profile | 34 | 0 |
 
-The configured scan now completes. Strict mode exits 1 because candidates remain; report-only mode exits 0. No audit rules or suppressions were relaxed. The historical cleanup retained 28 observations; five further observations come from accepted main and remain visible below. These counts describe review candidates, not confirmed production bugs.
+The configured scan now completes. Strict mode exits 1 because candidates remain; report-only mode exits 0. No audit rules or suppressions were relaxed. The historical cleanup retained 28 observations; five further observations come from accepted main and remain visible below. The shared analyzer profile adds one visible HTML-Validate development-dependency observation while its companion markup audit is absent. Retain that analyzer reservation; the combined graph uses it. These counts describe review candidates, not confirmed production bugs.
 
-Verification on 13 October 2026 passed **134 tests on Node 22.23.3**, including the real Astro probe. The scoped source check reports zero errors/warnings. The full production build succeeds in an isolated exact-source snapshot; local review worktrees are excluded from that build input. No page or public asset is removed. Browser comparisons describe exercised routes and matching accepted-main inputs, rather than claiming coverage of every runtime state.
+Verification on 13 October 2026 passed **137 tests on Node 22.23.3**, including the real Astro probe. The scoped source check reports zero errors/warnings. The full production build succeeds in an isolated exact-source snapshot; local review worktrees are excluded from that build input. No page or public asset is removed. Browser comparisons describe exercised routes and matching accepted-main inputs, rather than claiming coverage of every runtime state.
 
 The runner rejects omitted or duplicate source reports, ignored selected files and source symlinks escaping the repository. Its latest log is marked in progress before execution. A real Knip fixture also verifies optional spawned-worker, copied metadata-fixture and analyzer-config entry points when independently maintained tooling is combined.
 
@@ -81,6 +82,7 @@ CaseStudy's `img :global(img)` required an image inside another image, while its
 | Announcement collection loading | The result is unused by active markup, but the awaited content operation remains; deciding to retire the feature is separate work. |
 | `buildDatasetFileSummary` | Its only study-page call is currently commented out. Removing the unused import exposes the helper as a new candidate; retiring that feature and its related XML helpers is a separate decision. |
 | `getRelatedEntryLinks` export | Accepted main uses this function inside `SharedJSFunctions.js`; its export is a separate API-surface decision. Preserve the function and its callers. |
+| `html-validate` development dependency | Reserved companion analyzer in the shared locked audit profile. Its usage is supplied by the independently reviewed markup audit; keep the standalone observation visible rather than suppressing it. |
 | SPORA `sporaData`, `sporaIO` and `sporaBench` bindings | Four binding observations across the SPORA landing/dataset pages come from accepted main. Preserve the accepted imports and page implementations pending an initializer/feature review; this integration does not retire them. |
 
 The application corrections do not relax audit rules or remove runtime initializers. The configured graph explicitly preserves live browser scripts and optional worker/fixture entry points. Remaining candidates stay visible. A completed configured scan is narrower than complete runtime coverage; `make quality` can still fail because candidates remain, while report-only mode succeeds when analysis itself completes.
