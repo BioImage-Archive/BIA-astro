@@ -2,7 +2,7 @@
 import "/src/styles/bars_and_sections.css"
 import 'datatables.net';
 
-import DataTable from 'datatables.net-dt';
+import 'datatables.net-dt';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
@@ -32,29 +32,28 @@ const baseUrl = import.meta.env.BASE_URL;
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.12/css/styles.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" />
 
-    <!-- JS -->     
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <!-- JS -->
+    <script is:inline src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script is:inline src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
 
     <meta name="robots" content="noindex, nofollow">
 
     <title>{pageTitle}</title>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="embl-contenthub-footer" data-embl-js-content-hub-loader/>
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
   </head>
-
-  <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-  <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-  <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
-  <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
-
   <body class="vf-body">
+    <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
+  <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
+
     <Header />
     <Navigation />
     <Announcement />
     <slot />
     <Footer />
+    <div class="embl-contenthub-footer vf-content-hub-html"></div>
+    <!-- Script required for bottom bar -->
+    <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"/>
   </body>
-  
-  <!-- Script required for bottom bar -->
-  <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"/>
-  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader/>
 </html>

@@ -1,9 +1,11 @@
 const tableEl = document.querySelector("#viewable_images_table");
 
-const studyAccessionID = tableEl.dataset.studyAccessionId;
-const imagePageRoot = tableEl.dataset.imagePageRoot;
-const imageFallbackSrc = tableEl.dataset.imageFallbackSrc;
-const api_path = tableEl.dataset.apiPath;
+// Studies without interactive images render a message instead of this table.
+if (tableEl) {
+  const studyAccessionID = tableEl.dataset.studyAccessionId;
+  const imagePageRoot = tableEl.dataset.imagePageRoot;
+  const imageFallbackSrc = tableEl.dataset.imageFallbackSrc;
+  const api_path = tableEl.dataset.apiPath;
 
   function imageUrl(image) {
     return imagePageRoot
@@ -397,3 +399,4 @@ const api_path = tableEl.dataset.apiPath;
       saveTableState(table);
     });
   });
+}
