@@ -95,7 +95,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={image.uuid} breadcrumbs={breadcrumbs}>
-  <body>
+  <Fragment>
     <div class="vf-stack vf-stack--500">
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
@@ -224,11 +224,13 @@ const breadcrumbs = [
                 }
                 <script>
 
-                    let copyUrlButton = document.getElementById("CopyURLButton")
-                    let originalText = copyUrlButton.innerText;
-                    copyUrlButton.onclick=async() => {
-                        await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
-                    };
+                    const copyUrlButton = document.getElementById("CopyURLButton");
+                    if (copyUrlButton) {
+                        const originalText = copyUrlButton.innerText;
+                        copyUrlButton.onclick = async () => {
+                            await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
+                        };
+                    }
 
                     async function copyUrl(url: string, button: HTMLElement, originalText: string) {
                         await navigator.clipboard.writeText(url);
@@ -398,8 +400,9 @@ const breadcrumbs = [
                 </>
             )
         }
-    </body>
-</BaseLayout>
+    </div>
+  </Fragment>
+</BaseLayoutWithBreadcrumbs>
 <style>
   #meta-wrap[data-collapsed="true"] #meta-content { overflow: hidden; }
 </style>
