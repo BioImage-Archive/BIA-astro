@@ -1,7 +1,7 @@
 import { PUBLIC_SEARCH_API } from "astro:env/client";
 import imageFallback from "../assets/bioimage-archive/image_fallback.png"
 
-export function getPlaceholderHeroImage(accessionID) {
+function getPlaceholderHeroImage(accessionID) {
     const match = (accessionID.match(/(\d{1,5})$/)) || ['0','1'];
     const accessionIDNumber = parseInt(match[1]);
     const imageNumber = (accessionIDNumber % 45) + 1;
@@ -48,7 +48,7 @@ export function formatBytesToHumanSize(sizeBytes) {
   return `${Number(sizeBytes / Math.pow(1000, i)).toFixed(2)} ${['B', 'kB', 'MB', 'GB', 'TB', 'PB'][i]}`
 }
 
-export function formatMetresToHumanSize(metres) {
+function formatMetresToHumanSize(metres) {
   var i = metres == 0 ? 0 : Math.floor(Math.log(metres) / Math.log(1000)) * -1;
   var formatted = `${Number(metres / Math.pow(1000, i*-1)).toFixed(0)} ${['mm', 'µm', 'nm', "pm"][i-1]}`
   return formatted;
@@ -138,7 +138,7 @@ export function getLicenceLogo(licenceURL){
     if (isCreativeCommons){
       var logoURL = "http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/";
       if (licenceURL.includes("publicdomain/zero")){
-        return logoURL+= "cc-zero.svg"
+        return logoURL + "cc-zero.svg"
       }
       const licenceImage = licenceURL.split("licenses")[1].split("/")[1]
       logoURL += `${licenceImage}.svg`;
@@ -154,22 +154,12 @@ export function getDatasetStatsByUUID(study) {
     return aggregateDatasetStats(study?.dataset || []);
 }
 
-export function aggregateDatasetStats(datasets) {
+function aggregateDatasetStats(datasets) {
     const dataset_uuids = []
     for (var dataset of datasets) {
       dataset_uuids.push([dataset.uuid,dataset.file_reference_count,dataset.title])
     }
     return dataset_uuids
-}
-
-export function getImagingMethodType(study) {
-    const imagingTypeList = []
-    for (var methodNames in study?.imaging_method){
-      if (!imagingTypeList.includes(methodNames)) {
-                    imagingTypeList.push(methodNames)
-                }
-    }
-    return imagingTypeList
 }
 
 export function getTaxons(study) {
@@ -387,13 +377,6 @@ export async function getFromAPI(url){
     }
 }
 
-export async function getStudyFromApiByUUID(uuid){
-    // This can work with dataset uuid or study uuid.
-    const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/study?query=${uuid}`);
-    const study = response?.hits?.hits?.[0]?._source; 
-    return study
-}
-
 export async function getStudyFromApiByAccession(accessionID){
     const response = await getFromAPI(`${PUBLIC_SEARCH_API}/website/study?facet.accession_id=${accessionID}`);
     const study = response?.hits?.hits?.find(
@@ -541,11 +524,11 @@ export function getTutorialURLs(urlType){
     return urlType === "submission"? `${quickTourURL}/submitting-data-to-bioimage-archive-2/submission/` : quickTourURL
 }
 
-export function highlightText(text, query) {
+function highlightText(text, query) {
   return query && text ? applyHighlight(text, query) : text;
 }
 
-export function formatUniqueList(values = [], { sort = true, transform = value => value } = {}) {
+function formatUniqueList(values = [], { sort = true, transform = value => value } = {}) {
   if(values == null){
     return ""
   }
@@ -584,7 +567,7 @@ export function applyHighlight(text, query) {
     .join("");
 }
 
-export function textFragmentLink(baseUrl, highlightStr, query) {
+function textFragmentLink(baseUrl, highlightStr, query) {
   const clean = highlightStr.replace(/__HIT__|__\/HIT__/g, "").trim();
   if (!clean || !clean.toLowerCase().includes(query.toLowerCase()) ) return baseUrl;
   return `${baseUrl}#:~:text=${encodeURIComponent(clean)}`;
