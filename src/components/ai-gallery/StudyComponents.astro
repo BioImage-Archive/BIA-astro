@@ -20,15 +20,15 @@ const { title, content, id, license } = Astro.props;
                 }) : (
                 content.map( (dataset) => 
                     <p><b>{dataset.dataset_title}</b></p>
-                        <div style="padding-left: 1.5rem;">
+                        <div style="padding-left: 1.5rem;" data-annotation-dataset={dataset.dataset_uuid}>
                             {
                                 license ? <p><b>License: </b><a href={license.link}>{license.text}</a></p> : <span></span>
                             }  
                             <p><b>Organism: </b> <span set:html={dataset.organism}/></p>
                             <p><b>Imaging method: </b> {dataset.imaging}</p>
                             <div>
-                                <p><b>Annotation type: </b> <span id="annotation-type">{dataset.annotation_type}</span></p>
-                                <p><b>Annotation method: </b> <span id="annotation-method">{dataset.annotation_method}</span></p>
+                                <p><b>Annotation type: </b> <span data-annotation-type>{dataset.annotation_type}</span></p>
+                                <p><b>Annotation method: </b> <span data-annotation-method>{dataset.annotation_method}</span></p>
                             </div>
                         </div>
             ))

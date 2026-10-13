@@ -45,7 +45,7 @@ const annotatedImgS3Url = getPublicVisualisationURI(annotatedImageRep?.file_uri?
 ---
 <section class="vf-content">
   {hasNeuroGlancerURL.length > 0? (
-      <a target="_blank" href={hasNeuroGlancerURL}><button class="vf-button vf-button--primary vf-button--sm">Open overlay in Neuroglancer viewer</button></a>
+      <a target="_blank" href={hasNeuroGlancerURL} class="vf-button vf-button--primary vf-button--sm bia-button">Open overlay in Neuroglancer viewer</a>
     <div class="vf-grid">
       <div class="vf-grid__col--span-2"><iframe src={hasNeuroGlancerURL} style="height: 600px; width: 100%;border: none;"></iframe></div>
     </div>
@@ -184,8 +184,13 @@ const annotatedImgS3Url = getPublicVisualisationURI(annotatedImageRep?.file_uri?
           document.getElementById("OpenAnnotationInVizarr").href = buildVizarrViewerURL(s3url);
           document.getElementById("OpenAnnotationInITK").href = buildITKViewerURL(s3url);
           const studyInfo = JSON.parse(document.getElementById("study-json").textContent)
-          const annotationTypeMethod = studyInfo.find((d) => d['uuid'] == image.submission_dataset_uuid).annotation_process[0] || {title: "", annotation_criteria:""};          document.getElementById("annotation-type").innerText = annotationTypeMethod.title;
-          document.getElementById("annotation-method").innerText = annotationTypeMethod.annotation_criteria
+          const annotationTypeMethod = studyInfo.find((d) => d.uuid === image.submission_dataset_uuid)?.annotation_process?.[0];
+          const panel = Array.from(document.querySelectorAll("[data-annotation-dataset]"))
+              .find((element) => element.dataset.annotationDataset === image.submission_dataset_uuid);
+          if (panel) {
+              panel.querySelector("[data-annotation-type]").innerText = annotationTypeMethod?.title ?? "";
+              panel.querySelector("[data-annotation-method]").innerText = annotationTypeMethod?.annotation_criteria ?? "";
+          }
       };
       window.slide = function(direction) {
           const total = slides.length;

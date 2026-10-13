@@ -11,7 +11,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
 <article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:400px">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading title-container">
-            <div class="title-text"><a href={"/bioimage-archive/study/" + image.submitted_in_study_accession} style="text-decoration: none;color: #333;">{ image.label }</a></div>
+            <span class="title-text"><a href={"/bioimage-archive/study/" + image.submitted_in_study_accession} style="text-decoration: none;color: #333;">{ image.label }</a></span>
         </h3>
         <p class="subtitle-text">
             <i>{ image.organism }</i>, { image.imaging_method }
@@ -23,7 +23,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
             <a target="_blank" href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
         <div class="license-badge">
-            <a target="_blank" href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
+            <a target="_blank" href="https://creativecommons.org/public-domain/cc0/" rel="noopener">
                 <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0 License">
             </a>
         </div>
@@ -58,10 +58,10 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <div class="button-container">
-            <button><a target="_blank" href={ image.view_link }>View</a></button>
-            <button><a target="_blank" href={"/bioimage-archive/image/" + image.uuid}>Experiment metadata</a></button>
-            <button onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
-            <button><a target="_blank" href={rawDataLink}>Raw data</a></button>
+            <a target="_blank" href={ image.view_link } class="card-action bia-button">View</a>
+            <a target="_blank" href={"/bioimage-archive/image/" + image.uuid} class="card-action bia-button">Experiment metadata</a>
+            <button class="bia-button" onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
+            <a target="_blank" href={rawDataLink} class="card-action bia-button">Raw data</a>
         </div>
     </div>
 </article>
@@ -77,18 +77,18 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
         padding: 8px 12px 4px 12px;
         justify-content: center;
     }
-    button {
+    button, .card-action {
         padding: 6px 12px;
         border: 1px solid #666;
-        border-radius: 4px;
+        border-radius: var(--bia-button-radius, 4px);
         background: #f5f5f5;
         transition: all 0.2s ease;
     }
-    button:hover {
+    button:hover, .card-action:hover {
         background: #e0e0e0;
         transform: translateY(-1px);
     }
-    button a {
+    .card-action {
         text-decoration: none;
         color: #333;
     }
@@ -127,7 +127,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
         display: flex;
         flex-direction: column;
         gap: 4px;
-        border-radius: 4px;
+        border-radius: var(--bia-button-radius, 4px);
         max-width: 80%;
     }
     .physical-size, .image-size, .voxel-size {
@@ -162,7 +162,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
         right: 10px;
         background: rgba(243, 243, 243, 0.9);
         padding: 4px 8px;
-        border-radius: 4px;
+        border-radius: var(--bia-button-radius, 4px);
         font-size: 0.9em;
     }
     .study-link a {
@@ -178,7 +178,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
         right: 10px;
         background: rgba(243, 243, 243, 0.9);
         padding: 2px;
-        border-radius: 4px;
+        border-radius: var(--bia-button-radius, 4px);
     }
     .license-badge img {
         display: block;
@@ -194,7 +194,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
         right: 10px;
         background: rgb(243, 243, 243);
         padding: 8px;
-        border-radius: 4px;
+        border-radius: var(--bia-button-radius, 4px);
         transform: translateZ(0);
         backface-visibility: hidden;
     }
