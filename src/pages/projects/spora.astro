@@ -305,10 +305,6 @@ const projectNavItems = [
     padding-block: 0.5rem 0.5rem;
   }
 
-  .spora-content {
-    max-width: var(--vf-content-max-width, 1200px);
-  }
-
   .spora-hero {
     align-items: center;
     gap: 0.5rem;
@@ -373,8 +369,7 @@ const projectNavItems = [
 
 
 
-  .spora-getting-started,
-  .spora-citation-section {
+  .spora-getting-started {
     padding-block: 2.5rem;
   }
 
@@ -409,10 +404,6 @@ const projectNavItems = [
     text-align: left;
   }
 
-  .spora-citation-section {
-    background: #f8fafc;
-  }
-
   .spora-citation-box {
     position: relative;
     max-width: 44rem;
@@ -442,22 +433,6 @@ const projectNavItems = [
     padding: 0.35rem 0.8rem;
     cursor: pointer;
     font: 600 0.85rem/1 var(--spora-mono);
-  }
-
-  .spora-brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.2rem;
-    color: var(--spora-ink);
-    font: 800 1.35rem/1 var(--spora-mono);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-    text-transform: lowercase;
-    white-space: nowrap;
-  }
-
-  .spora-brand span {
-    color: var(--spora-accent);
   }
 
   .spora-stats {
@@ -598,13 +573,8 @@ const projectNavItems = [
       gap: 1rem;
     }
 
-    .spora-getting-started,
-    .spora-citation-section {
+    .spora-getting-started {
       padding-block: 1.75rem;
-    }
-
-    .spora-step-grid {
-      grid-template-columns: minmax(0, 1fr);
     }
 
     .spora-step-card {
