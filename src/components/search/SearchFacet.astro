@@ -4,12 +4,12 @@ import { formatBytes, formatFieldName } from "../SharedJSFunctions.js"
 const { facet, id} = Astro.props;
 const title = facet['title'];
 const totalCounts = facet['totalFacetCounts'];
-const filter = facet["valuesAndCounts"];
+const options = facet.options;
 const selectedValue= facet["selectedValue"];
 
 // Get the number of filter options available
 // Show TOP 10 warning if we have 10 or more
-const filterCount = facet.kind === "terms"? Object.keys(filter).length: 0;
+const filterCount = facet.kind === "terms"? options.filter(option => option.count !== null).length: 0;
 const showWarning = filterCount >= 10;
 
 const minBound = Number.isFinite(facet.globalMin) ? Math.floor(facet.globalMin) : 0;
@@ -50,7 +50,7 @@ export function capitalizeFirstLetter(str: string): string {
     <div class="facet-count">{totalCounts}</div>
   </div>
   <div class="facet-options" id={`facet-option-${id}`}>
-    {facet.kind === "terms" && Object.entries(filter).map(([key, count], index) => (
+    {facet.kind === "terms" && options.map(({ value: key, count }, index) => (
       <div class="facet-option">
           <div class="facet-label-group">
             <input
@@ -58,12 +58,12 @@ export function capitalizeFirstLetter(str: string): string {
               name={id}
               value={key}
               id={`${id}-${index}`}
-              checked={selectedValue ? Object.values(selectedValue).includes(key) : false}
+              checked={selectedValue ? selectedValue.includes(key) : false}
             />
           <label for={`${id}-${index}`} class="facet-label">
               <div class="facet-label-inner">
                 <div>{title !=="Image Format" && title !== "File Type"? formatFieldName(facet.title, capitalizeFirstLetter(key.replaceAll("_", " "))) : key}</div>
-                <div class="facet-count">{count}</div>
+                {count !== null && <div class="facet-count">{count}</div>}
               </div>
             </label>
           </div>

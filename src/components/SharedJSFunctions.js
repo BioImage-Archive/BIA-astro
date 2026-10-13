@@ -72,7 +72,8 @@ function formatValueHumanReadable(fieldName, value) {
 
 export function formatFieldName(fieldName, fieldValue) {
   const bIsCompared = fieldValue.startsWith(">") || fieldValue.startsWith("<") || fieldValue.startsWith("≤") || fieldValue.startsWith("≥");
-  const bIsRange = fieldValue.includes("-");
+  // A minus in a numeric literal belongs to its sign or exponent, not a range.
+  const bIsRange = fieldValue.includes("-") && Number.isNaN(Number(fieldValue));
   if(Number.isFinite(fieldValue)) {
     return formatValueHumanReadable(fieldName, fieldValue);
   }
