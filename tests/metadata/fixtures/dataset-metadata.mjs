@@ -59,6 +59,16 @@ export const testCases = [
         file_type_counts: { ".png": 3 }, additional_metadata: [
             { name: "file_type_counts", value: { file_type_counts: [{ file_type: ".tif", count: "invalid" }] } },
         ] } },
+    { id: "invalid-counts", dataset: { title: "Invalid count values", file_type_counts: {
+        ".png": 3, ".negative": -1, ".fractional": 1.5, ".boolean": false,
+        ".empty": "", ".whitespace": " ", ".array": [], ".unsafe": 9007199254740992,
+    } } },
+    { id: "invalid-fallback-counts", dataset: { title: "Invalid fallback count values", image_count: false },
+        datasetFileSummaryString: { datasets: [{ dataset: "Invalid fallback count values", file_count: -1 }] } },
+    { id: "numeric-counts", dataset: { title: "Numeric count values", file_type_counts: { ".png": "3", ".tif": 0 } } },
+    { id: "overflow-counts", dataset: { title: "Count aggregate overflow", file_type_counts: {
+        ".png": Number.MAX_SAFE_INTEGER, ".tif": 1,
+    } } },
 ];
 
 export const imageRecord = { ...record("Image record", "Line one\nLine two | pipe"), imaging_method_name: ["Method A", "Method B"] };

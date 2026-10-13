@@ -5,6 +5,14 @@ import "../styles/dataset-metadata.css";
 
 const { dataset, datasetFileSummaryString = null } = Astro.props;
 const hasDescription = dataset.description != null && dataset.description !== "";
+// Counts are cardinalities; booleans, fractions and rounded integers cannot describe files.
+function validFileCount(value) {
+    if (typeof value !== "number" && typeof value !== "string") return null;
+    if (typeof value === "string" && value.trim() === "") return null;
+    const count = Number(value);
+    return Number.isSafeInteger(count) && count >= 0 ? count : null;
+}
+
 function getAdditionalMetadataValue(name) {
     const metadata = dataset?.additional_metadata?.find((item) => item?.name === name);
     return metadata?.value?.[name] ?? null;
@@ -20,17 +28,15 @@ function getFileTypeCountEntries(fileTypeCounts) {
         : Object.entries(fileTypeCounts);
 
     return entries
-        .filter(([extension, count]) =>
+        .filter(([extension]) =>
             typeof extension === "string" &&
             extension.length > 0 &&
             extension !== "file" &&
-            extension !== "directory" &&
-            count != null &&
-            Number.isFinite(Number(count))
+            extension !== "directory"
         )
         .map(([extension, count]) => ({
             extension: extension.replace(/^\./, ""),
-            count: Number(count),
+            count: validFileCount(count),
         }));
 }
 
@@ -52,23 +58,26 @@ function formatVoxelSizes(voxelSizes) {
 
 const metadataFileTypeCounts = getAdditionalMetadataValue("file_type_counts");
 const metadataFileTypeCountEntries = getFileTypeCountEntries(metadataFileTypeCounts);
-const fileTypeCountEntries = metadataFileTypeCountEntries.length > 0
+const hasMetadataFileTypeCounts = metadataFileTypeCountEntries.some(({ count }) => count != null);
+const selectedFileTypeCountEntries = hasMetadataFileTypeCounts
     ? metadataFileTypeCountEntries
     : getFileTypeCountEntries(dataset?.file_type_counts);
+const fileTypeCountEntries = selectedFileTypeCountEntries.filter(({ count }) => count != null);
 const formattedFileTypeCounts = fileTypeCountEntries
     .map(({ extension, count }) => `${extension} (${count})`)
     .join(", ");
-const hasMetadataFileTypeCounts = metadataFileTypeCountEntries.length > 0;
 const metadataVoxelSize = formatVoxelSizes(getAdditionalMetadataValue("voxel_sizes"));
 const voxelSize = metadataVoxelSize ?? (dataset?.physical_voxel_size
     ? { label: "Physical Voxel Size", value: dataset.physical_voxel_size }
     : null);
-const totalFileTypeCount = fileTypeCountEntries.length > 0
+// A partial set of valid format counts cannot establish a complete file total.
+const summedFileTypeCount = fileTypeCountEntries.length > 0 && selectedFileTypeCountEntries.every(({ count }) => count != null)
     ? fileTypeCountEntries.reduce((total, { count }) => total + count, 0)
     : null;
+const totalFileTypeCount = validFileCount(summedFileTypeCount);
 const dsFromFileList = datasetFileSummaryString?.datasets?.find((ds) => ds.dataset == dataset.title) ?? null;
 const fileCountsFromFileList = dsFromFileList?.file_count ?? null;
-const fileCount = totalFileTypeCount ?? fileCountsFromFileList ?? dataset?.image_count ?? null;
+const fileCount = totalFileTypeCount ?? validFileCount(fileCountsFromFileList) ?? validFileCount(dataset?.image_count);
 const formatsFromFileList = dsFromFileList
     ? [
         dsFromFileList.data_format ? `${dsFromFileList.data_format}` : "",

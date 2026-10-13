@@ -262,3 +262,20 @@ test("merged FBBI searches remain available in dataset and default image present
     assert.match(sections["api-image"], />FBbi:00000256 \(search OLS\)<\/a>/);
     assert.doesNotMatch(sections["api-S-BIAD3397"], /data-metadata-field="fbbi_id"|\/ols4\/search/);
 });
+
+test("file-count summaries reject invalid cardinalities without inventing zero counts", () => {
+    assert.match(sections["invalid-counts"], /<b>Number of images\/files:<\/b> Not reported/);
+    assert.match(sections["invalid-counts"], /<b>Top 5 file formats:<\/b> png \(3\)<\/p>/);
+    assert.doesNotMatch(sections["invalid-counts"], /negative|fractional|boolean|whitespace|array|unsafe/);
+    assert.match(sections["invalid-fallback-counts"], /<b>Number of images\/files:<\/b> Not reported/);
+});
+
+test("safe numeric strings and actual zero counts remain reportable", () => {
+    assert.match(sections["numeric-counts"], /<b>Number of images\/files:<\/b> 3/);
+    assert.match(sections["numeric-counts"], /png \(3\), tif \(0\)/);
+});
+
+test("a sum outside the safe integer range does not display a rounded file total", () => {
+    assert.match(sections["overflow-counts"], /<b>Number of images\/files:<\/b> Not reported/);
+    assert.doesNotMatch(sections["overflow-counts"], /Number of images\/files:<\/b> 9007199254740992/);
+});
