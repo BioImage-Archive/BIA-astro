@@ -50,7 +50,7 @@ test('a present table retains initialization, image destinations and its API req
     const image = { uuid: 'image-id', dataset_title: 'Dataset A' };
     vm.runInNewContext(tableScript, {
         document: {
-            querySelector: () => element,
+            querySelector: selector => selector === "#viewable_images_table" ? element : null,
             addEventListener: (name, handler) => events.set(name, handler),
         },
         window: { addEventListener: (name, handler) => events.set(name, handler) },
