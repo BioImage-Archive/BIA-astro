@@ -9,7 +9,7 @@ const initiallyOpen = Boolean(defaultOpen) && defaultOpen !== "False" && default
 ---
 
 <details class="dataset-metadata__record" open={initiallyOpen}>
-    <summary><b>{data.title || "Untitled record"}</b></summary>
+    <summary><b>{data.title || "Untitled record"}</b> {!initiallyOpen ? '(as above)' : ''}</summary>
     <dl class="dataset-metadata__fields">
         {fields.map(key => (
             <div class="dataset-metadata__field" data-metadata-field={key}>

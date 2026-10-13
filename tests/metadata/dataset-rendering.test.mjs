@@ -13,6 +13,9 @@ let sections;
 let captures;
 let fieldMap;
 const records = html => [...html.matchAll(/<details\b[^>]*>[\s\S]*?<\/details>/g)].map(match => match[0]);
+const escapedText = value => String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+})[character]);
 
 before(async () => {
     const fixtures = new URL("../fixtures/api/", import.meta.url);
@@ -102,6 +105,29 @@ test("complete shared study responses preserve each dataset, record and mapped f
                     const keys = Object.keys(fieldMap[mapKey]).filter(key => record[key] != null && (!Array.isArray(record[key]) || record[key].length > 0));
                     assert.deepEqual([...rendered[recordIndex].matchAll(/data-metadata-field="([^"]+)"/g)].map(match => match[1]), keys);
                     for (const key of keys) assert(rendered[recordIndex].includes(`<dt><b>${fieldMap[mapKey][key]}:</b></dt>`));
+                    for (const key of keys.filter(key => !["organism_classification", "fbbi_id"].includes(key))) {
+                        const value = key === "growth_protocol" ? record[key].protocol_description : record[key];
+                        const field = rendered[recordIndex].match(new RegExp(`data-metadata-field="${key}">([\\s\\S]*?)<\\/div>`))[1];
+                        assert(field.includes(`<dd>${escapedText(value)}</dd>`), `${accession}: dataset ${index}, ${property}[${recordIndex}].${key}`);
+                    }
+                    if (keys.includes("organism_classification")) {
+                        const field = rendered[recordIndex].match(/data-metadata-field="organism_classification">([\s\S]*?)<\/div>/)[1];
+                        const taxa = [...field.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/g)].map(match => match[1]);
+                        assert.equal(taxa.length, record.organism_classification.length);
+                        for (const [taxonIndex, taxon] of record.organism_classification.entries()) {
+                            for (const name of [taxon.scientific_name, taxon.common_name].filter(Boolean)) {
+                                assert(taxa[taxonIndex].includes(escapedText(name)), `${accession}: taxon ${name}`);
+                            }
+                            if (taxon.ncbi_id) {
+                                const href = taxa[taxonIndex].match(/href="([^"]+)"/)[1];
+                                assert.equal(new URL(href).searchParams.get("id"), String(taxon.ncbi_id));
+                            }
+                        }
+                    }
+                    const initiallyOpen = !("default_open" in record) ||
+                        Boolean(record.default_open) && !["False", "false"].includes(record.default_open);
+                    const summary = rendered[recordIndex].match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/)[1];
+                    assert.equal(summary.includes("(as above)"), !initiallyOpen, `${accession}: ${property}[${recordIndex}] repetition marker`);
                 }
             }
         }
@@ -152,7 +178,23 @@ test("dataset and group headings use a semantic hierarchy and label/value markup
     assert.equal((sections.complete.match(/<h4\b/g) ?? []).length, 7);
     assert.equal((sections.complete.match(/<dl class="dataset-metadata__fields">/g) ?? []).length, 8);
     assert.doesNotMatch(sections.complete, /<ul>\s*<div/);
-    assert.doesNotMatch(sections.complete, /\(as above\)|name="/);
+    assert.doesNotMatch(sections.complete, /name="/);
+});
+
+test("repeated metadata summaries retain the as-above marker without marking initially open records", () => {
+    const stateSummaries = records(sections.states).map(record =>
+        record.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/)[1]);
+    assert.deepEqual(stateSummaries.map(summary => summary.includes("(as above)")),
+        [false, false, true, false, true, false, true, true, true, true]);
+    assert.match(sections.repeated, /<summary><b>Annotation<\/b>\s+\(as above\)<\/summary>/);
+    assert.match(sections.complete, /<summary><b>Acquisition<\/b>\s+\(as above\)<\/summary>/);
+
+    // Reusing a title does not by itself identify metadata as a repeated record.
+    const protocolSummaries = records(sections.complete)
+        .filter(record => record.includes("<b>Repeated protocol</b>"))
+        .map(record => record.match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/)[1]);
+    assert.equal(protocolSummaries.length, 2);
+    assert(protocolSummaries.every(summary => !summary.includes("(as above)")));
 });
 
 test("missing and legacy disclosure states produce real boolean attributes", () => {
