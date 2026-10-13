@@ -36,13 +36,16 @@ The ContentHub import uses its existing loader's supported named target in the b
 
 ## Verified result on 2026-10-13
 
-- Strict markup audit: **exit 0**, 104 Astro files, one authored HTML file, all 2,024 generated HTML files and eight selected HTTP responses. No configured findings, parser failures or execution failures were recorded.
-- All 26 Astro and 15 HTML analyzer probes pass without relaxing rules or adding suppressions.
-- `npm test`: **160 passed** on Node 22.23.3. Real-template checks cover raw HTML, destinations, footer ownership, repeated viewer IDs and annotation-dataset targeting. Browser-script tests cover optional controls, dependency execution order and Table/Tree pressed-state and iframe switching.
+- Fresh strict source markup audit: **exit 0**, 104 Astro files and one authored HTML file. No configured findings, parser failures or execution failures were recorded.
+- The previously recorded production audit checked all 2,024 generated HTML files and eight selected HTTP responses without findings or failures. Application source, dependencies and build configuration remain unchanged after the input-discovery and fragment-policy corrections; no repeated production build or browser run is claimed for those audit-only changes.
+- All 30 Astro and 15 HTML analyzer probes pass without relaxing rules or adding suppressions.
+- `npm test`: **162 passed** on Node 22.23.3. Real-template checks cover raw HTML, destinations, footer ownership, repeated viewer IDs and annotation-dataset targeting. Browser-script tests cover optional controls, dependency execution order and Table/Tree pressed-state and iframe switching.
 - Scoped source check: zero errors/warnings; the full production build and both public-file copies pass. Generated/HTTP HTML coverage is recorded separately from interactive browser coverage.
 - `SourceImage.astro` has no live consumer and is removed after reference review. No route or public asset is deleted.
 
 The acquisition-field renderer is shared with image metadata while dataset-specific presentation remains independently owned. Plain values are escaped before adding markup, taxon query values are encoded, literal pipe characters are preserved, and rendering does not change input records. Viewer metadata IDs use the copy-button key for repeated panes, while the annotation carousel's existing hooks remain stable.
+
+Selected nonregular Astro and HTML inputs now invalidate discovery before any read, including FIFOs in authored and generated trees. Both strict and report-only regression cases fail against the earlier runner and pass with incomplete status after the correction. The explicit-boundary rule also checks original fragment ranges: omitted `</>` boundaries cannot be satisfied by parser-inserted zero-width closures. Real-analyzer probes preserve closed/nested fragments, mapped content and adjacent top-level elements; real-runner regressions retain the correct strict/report-only findings and original source positions.
 
 Navigation actions are native anchors with an inert shared shape hook; commands remain buttons. Card action rules accept the button token while retaining their prior fallback when that theme is absent. Informational size panels, study/licence badges and cube illustrations keep their existing 4px corners independently of that token. Optional image-table/copy controls are guarded, and jQuery precedes dependent DataTables scripts. The actual file-view handler is tested so styling hooks cannot accidentally alter its selectors.
 
