@@ -12,7 +12,7 @@ const query = url.searchParams.get('query') || "";
 let pageTitle = query.length === 0? "Browse Images": "Search Images"; 
 ---
 <BaseLayoutWithBreadcrumbs pageTitle={pageTitle}>
-  <body>
+  <Fragment>
   {query.length === 0 && (
       <BrowseStudyHeading heading="Browse the BioImage Archive" contributeLink={"/bioimage-archive/submit"}> 
         <div slot="body_text">
@@ -22,5 +22,5 @@ let pageTitle = query.length === 0? "Browse Images": "Search Images";
     )
   }
   <SearchResults query={query} url={url} searchType="image"/>
-  </body>
+  </Fragment>
 </BaseLayoutWithBreadcrumbs>

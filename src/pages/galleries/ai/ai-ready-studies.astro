@@ -17,7 +17,7 @@ const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
 
 ---
 <BaseLayout pageTitle={ collection.name }>
-  <body>
+  <Fragment>
     <BrowseDatasetHeading
     heading={collection.title }
     subheading={collection.subtitle}
@@ -31,5 +31,5 @@ const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
           { Object.values(studyMetadata).map((study) => ( <StudyCard study={study} studyPageRoot={`galleries/ai/ai-ready-study`} taglist={study.additional_metadata.find(md => md.name==="ai_tags")?.value?.ai_tags[0] || []} annotationType={getAnnotationType(study.dataset)} /> )) }
         </div>
     </section>
-  </body>
+  </Fragment>
 </BaseLayout>

@@ -12,28 +12,31 @@ var { specimen } = Astro.props;
     Array.isArray(specimen.sample_of) &&
         specimen.sample_of.length > 0 && (
             <b>Biosamples:</b>
-            <ul>
+            <div class="metadata-fields">
                 {specimen.sample_of.map((biosample) => (
                     <DatasetDetail
                         data={biosample}
                         fieldMap={biosampleMap}
                     />
                 ))}
-            </ul>
+            </div>
         )
 }
 {
      Array.isArray(specimen.sample_of) &&
         specimen.imaging_preparation_protocol.length > 0 && (
             <b>Specimen Preparation Protocols:</b>
-            <ul>
+            <div class="metadata-fields">
                 {specimen.imaging_preparation_protocol.map((sipp) => (
                     <DatasetDetail
                         data={sipp}
                         fieldMap={sippMap}
                     />
                 ))}
-            </ul>
+            </div>
         )
 }
 </>
+<style>
+  .metadata-fields { padding-left: 20px; }
+</style>

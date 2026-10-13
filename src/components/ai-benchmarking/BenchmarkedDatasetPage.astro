@@ -35,7 +35,7 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
 
 ---
 
-<body>
+<Fragment>
     <StudyTitleInfo study_info={study} />
 
     <StudyContentsSummary 
@@ -83,7 +83,7 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
 
     <div style="overflow-wrap: anywhere;">
       <div><b>Description: </b> <Fragment set:html={multilineTextRender(study.description)}/></div>
-      <div><b>Licence: </b> <a href={study.licence_details.uri}>{study.licence_details.label}</a><div>
+      <div><b>Licence: </b> <a href={study.licence_details.uri}>{study.licence_details.label}</a></div>
       {
         studyAIInfo.tags && (
           <div><b>Tags:</b> {studyAIInfo.tags.reduce(formatListItem, "")}</div>
@@ -109,9 +109,9 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
 
   <hr/>
 
-  <BenchmarkingTable  tableRows={filteredTableInfo}, studyOrModelPageMode='study'/>
+  <BenchmarkingTable  tableRows={filteredTableInfo} studyOrModelPageMode='study'/>
 
   <hr/>
 
-  <ModelPredictionTable  tableRows={filteredTableInfo}, studyOrModelPageMode='study'/>
-</body>
+  <ModelPredictionTable  tableRows={filteredTableInfo} studyOrModelPageMode='study'/>
+</Fragment>

@@ -86,7 +86,7 @@ const annotation_info = getAnnotationMethodInformation()
     <div>
         <b style="font-size: 14pt;">{dataset.title}</b>
     </div>
-    <ul>
+    <div class="metadata-fields">
         {
             taxons && taxons.length > 0 && 
                 (
@@ -114,9 +114,15 @@ const annotation_info = getAnnotationMethodInformation()
         {
             annotation_info && (
                     <div>
-                    <b>Annotation Method:</b> {multilineTextRender(annotation_info)}
+                    <b>Annotation Method:</b> <Fragment set:html={multilineTextRender(annotation_info)}/>
                     </div>
             )
         }
-    </ul>
+    </div>
 </div>
+
+<style>
+    .metadata-fields {
+        padding-left: 20px;
+    }
+</style>

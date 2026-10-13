@@ -22,6 +22,7 @@ const sourceDataset = studyInfo.dataset.find((d) => d['uuid'] === sourceImage.su
 const imagingMethod = sourceDataset?.acquisition_process?.[0]?.imaging_method_name?.join(", ") || "";
 const annotationDatasets = studyInfo.dataset.filter(dataset => dataset.acquisition_process.length == 0 && dataset.annotation_process.length > 0);
 const annotatedDatasetContent = annotationDatasets.map((dataset) => ({
+  dataset_uuid: dataset.uuid,
   dataset_title: dataset.title,
   organism: organism,
   imaging: imagingMethod,
@@ -46,9 +47,7 @@ const breadcrumbs = [
                 </h1>
                 <h2 class="vf-intro__subheading">{studyInfo.title}</h2>
               <br />
-            <a href={`/bioimage-archive/galleries/ai/ai-ready-study/${studyInfo.accession_id}`}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
-                </a>
+            <a href={`/bioimage-archive/galleries/ai/ai-ready-study/${studyInfo.accession_id}`} class="vf-button vf-button--primary vf-button--sm bia-button">Study Page</a>
         </div>
         </section>
         <section class="vf-content "><a href={"/bioimage-archive/help/downloading-data#aws_client_download"}>How to download these images</a><br/></section>    
@@ -57,4 +56,5 @@ const breadcrumbs = [
         <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
         <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
         <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
-</BaseLayout>
+    </div>
+</BaseLayoutWithBreadcrumbs>

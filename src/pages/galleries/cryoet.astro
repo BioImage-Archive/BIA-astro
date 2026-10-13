@@ -6,7 +6,7 @@ import tomoproj from "../../data/collections/tomp.json";
 const tomograms = tomoproj["tomograms"];
 ---
 <BaseLayout pageTitle="Tomograms">
-  <body>
+  <Fragment>
     <section class="vf-intro | embl-grid embl-grid--has-centered-content">
         <div></div>
         <div>
@@ -25,5 +25,5 @@ const tomograms = tomoproj["tomograms"];
             { Object.values(tomograms).map((tomogram) => ( <TomogramCard tomogram={ tomogram } /> )) }
         </div>
     </section>
-  </body>
+  </Fragment>
 </BaseLayout>

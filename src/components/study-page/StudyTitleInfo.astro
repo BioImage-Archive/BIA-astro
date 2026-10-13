@@ -86,7 +86,7 @@ const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
                     const affiliationNames = author.affiliation ? author.affiliation.map(a => a.display_name).join('|') : '';
                     return (
                         <Fragment>
-                            <span class="author-container" data-affiliations={`|${affiliationNames}|`}>
+                            <div class="author-container" data-affiliations={`|${affiliationNames}|`}>
                                 <span set:html={authorFormat(author)}></span>
                                 {author.orcid &&
                                     <a href={`https://orcid.org/${author.orcid}`} target="_blank" rel="noopener noreferrer" style="margin-left: 0;">
@@ -108,7 +108,7 @@ const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
                                         </ul>
                                     )}
                                 </div>
-                            </span>{i + 1 < authors.length ? "," : ""}
+                            </div>{i + 1 < authors.length ? "," : ""}
                         </Fragment>
                     );
                 })
@@ -119,7 +119,7 @@ const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
             {
                 uniqueAffiliations.map((affil, index) => (  
                     <Fragment>                            
-                        <span class="affiliation-container" data-affiliation-name={affil.display_name}>
+                        <div class="affiliation-container" data-affiliation-name={affil.display_name}>
                             <span class="js-affiliation" id={`affiliation-${index + 1}`}>
                                 <sup class="affiliation-sup">{index + 1}</sup>
                                 {affil.display_name}
@@ -134,20 +134,20 @@ const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
                                     )}                 
                                 </div>
                             )}
-                        </span>
+                        </div>
                         {index + 1 === uniqueAffiliations.length ? "" : " "}
                     </Fragment>
                 ))
             }
         </div>
-        <div class="bia-related-entries"><p>
+        <div class="bia-related-entries">
             {
                 pdbLinks && <p>Related PDB entries: <Fragment set:html={pdbLinks} /> </p>
             }
             {
                 emdbLinks && <p>Related EMDB entries: <Fragment set:html={emdbLinks} /> </p>
             }
-        </p></div>
+        </div>
         </div>
 </section>
 
@@ -160,7 +160,7 @@ const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
 
 .author-container {
     position: relative;
-    display: inline;
+    display: inline-block;
 }
 
 .orcid-link img {
@@ -285,7 +285,7 @@ const isEMPIAR = studyInfo?.accession_id?.includes("EMPIAR");
 
 .affiliation-container {
     position: relative;
-    display: inline;
+    display: inline-block;
     color: #3B8FB6; 
     font-size: 0.9em; 
     font-family: 'IBM Plex Sans', sans-serif;

@@ -16,7 +16,7 @@ const studiesEntries = await Promise.all(
 const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
 ---
 <BaseLayout pageTitle={ collection.name }>
-  <body>
+  <Fragment>
       <BrowseDatasetHeading
       heading={collection.title }
       subheading={collection.subtitle}
@@ -30,5 +30,5 @@ const studyMetadata = Object.fromEntries(studiesEntries) as Studies;
           { Object.values(collection.accession_ids).map((accessionID) => ( <DatasetCard study={ studyMetadata[accessionID] } studyPageRoot="galleries/spatialomics/study"/> )) }
         </div>
      </section>  
-  </body>
+  </Fragment>
 </BaseLayout>

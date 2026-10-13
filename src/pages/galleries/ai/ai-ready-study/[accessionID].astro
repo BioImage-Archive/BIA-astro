@@ -64,6 +64,7 @@ const modelContent = {
   "Model link": modelInformation?.link
 }
 const annotatedDatasetContent = annotationDatasets.map((dataset) => ({
+  dataset_uuid: dataset.uuid,
   dataset_title: dataset.title,
   organism: organism,
   imaging: imaging_method,
@@ -116,7 +117,7 @@ const breadcrumbs = [
     </div>
   </StudyContentsSummary>
   <hr/>
-  <StudyComponents title="Curated Study Information", id="study" content={studyContent} />
+  <StudyComponents title="Curated Study Information" id="study" content={studyContent} />
   {modelInformation === undefined ? <br /> :  <StudyComponents title="Models Related To This Work" id="models" content={modelContent} />}
   <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent}/>
   <section class="vf-content | embl-grid embl-grid--has-centered-content">

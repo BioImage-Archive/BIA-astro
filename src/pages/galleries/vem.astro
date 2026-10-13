@@ -6,7 +6,7 @@ import datasets from "../../data/datasets-card-summary.json";
 import collection from '../../data/collections/vem.json';
 ---
 <BaseLayout pageTitle={ collection.name }>
-  <body>
+  <Fragment>
     <BrowseDatasetHeading
       heading={collection.title }
       subheading={collection.subtitle}
@@ -19,5 +19,5 @@ import collection from '../../data/collections/vem.json';
             { Object.values(collection.accession_ids).map((accessionID) => ( <DatasetCard dataset={datasets[accessionID]} datasetPagePath={`https://www.ebi.ac.uk/empiar/${accessionID}`}/>)) }
         </div>
     </section>
-  </body>
+  </Fragment>
 </BaseLayout>

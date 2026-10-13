@@ -55,20 +55,20 @@ function displayImagingType(dataset) {
     <div>
         <b style="font-size: 14pt;">{dataset.title}</b>
     </div>
-    <ul>
+    <div class="metadata-fields">
         {
             "biological_entity" in dataset &&
                 dataset.biological_entity &&
                 dataset.biological_entity.length > 0 && (
                     <b>Biosamples:</b>
-                    <ul>
+                    <div class="metadata-fields">
                         {dataset.biological_entity.map((biosample) => (
                             <DatasetDetail
                                 data={biosample}
                                 fieldMap={biosampleMap}
                             />
                         ))}
-                    </ul>
+                    </div>
                 )
         }
         {
@@ -82,15 +82,21 @@ function displayImagingType(dataset) {
         {
             "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0 && (
                 <b>Annotation Methods:</b>
-                <ul>
+                <div class="metadata-fields">
                     {dataset.annotation_process.map((annotation_method) => (
                         <DatasetDetail
                             data={annotation_method}
                             fieldMap={annotationMethodMap}
                         />
                     ))}
-                </ul>
+                </div>
             )
         }
-    </ul>
+    </div>
 </div>
+
+<style>
+    .metadata-fields {
+        padding-left: 20px;
+    }
+</style>
