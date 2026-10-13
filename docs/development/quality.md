@@ -6,7 +6,7 @@ status: maintained
 owner: Bijan Mousavi
 author: Bijan Mousavi
 created: 2026-10-07
-last_reviewed: 2026-10-07
+last_reviewed: 2026-10-13
 repository: BioImage-Archive/BIA-astro
 scope: Astro source checks, regression tests and dead-code candidate auditing
 related_issue: BIOIM-322
@@ -15,22 +15,26 @@ related_issue_url: https://embl.atlassian.net/browse/BIOIM-322
 
 # Repository quality checks
 
+The audit tooling and reviewed source corrections are delivered together. The [source-audit findings and runtime contracts](source-audit-findings.md) record the completed configured scan (33 retained candidates, zero parser diagnostics), verification and deliberate preservation decisions. Strict checks still fail while active candidates remain.
+
 ## Make interface
 
 The root `Makefile` imports `makes/quality.mk`; quality configuration lives in `configs/quality/`. Run from the repository root with npm dependencies installed. The recipes work with macOS GNU Make 3.81 and do not install packages or rewrite application source.
 
 | Command | Checks |
 | --- | --- |
-| `make quality` | Formatting regression tests, audit regression tests/Astro probe, normal source check, then strict candidate audit, in order. |
-| `make quality-test` | Existing formatting tests plus audit tests and Astro probe. |
+| `make quality` | All repository tests (including audit regressions and the Astro probe), normal source check, then strict candidate audit, in order. |
+| `make quality-test` | All repository tests, including audit tests and the Astro probe, through `npm test`. |
 | `make quality-check` | Astro check using the scoped, normal source-check configuration. |
 | `make quality-audit` | ESLint/Knip candidate inventory, failing on active findings or incomplete analysis. |
 | `make quality-report` | Same inventory with nonblocking findings; incomplete analysis still fails. |
 | `make quality-types` | Inventory plus stricter unused-local/parameter and JavaScript type diagnostics. |
 
-`make quality` keeps its check order under parallel Make invocation. It fails honestly when the audit cannot analyze a file; it is not expected to pass before existing parser diagnostics and active findings are triaged. A passing source check and build do not override an incomplete static inventory.
+`make quality` keeps its check order under parallel Make invocation. It fails when the audit cannot analyze a file or active candidates remain; a completed scan can therefore still fail the strict candidate gate. A passing source check and build do not override an incomplete static inventory.
 
 `configs/quality/tsconfig.check.json` scopes the normal check to source, quality scripts/configuration and tests, excluding generated evidence. The root `tsconfig.json` and existing build command are unchanged. The stricter audit tsconfig is opt-in because it exposes existing source issues beyond the regular check.
+
+`npm test` discovers every `tests/**/*.test.mjs` file, including the dead-code regression tests and the installed Astro analyzer integration probe. CI uses this same command. `npm run test:dead-code` remains available for focused checks; it runs the three files in `tests/dead-code/`. The standalone `scripts/dead-code/verify-tools.mjs` probe also remains available to the audit runner.
 
 ## Audit commands
 
@@ -38,6 +42,9 @@ Run from the repository root after `npm ci`:
 
 ```sh
 npm run test:dead-code
+npm run test:metadata
+npm run test:galleries
+npm run test:browser
 npm run audit:dead-code
 npm run audit:dead-code -- --report-only
 ```
@@ -79,7 +86,7 @@ The installed CLI must support `--tsconfig`. This stage can evaluate application
 
 Each run preserves raw JSON and stdout/stderr/failure logs under `artifacts/dead-code/<timestamp>-<pid>/`, plus `report.json`. The latest human-readable report points to that specific evidence directory. Generated output is ignored by Git; run directories accumulate without automatic deletion.
 
-Reports record commit, tracked dirty state, Node/package versions, lockfile/config hashes, source/config/test input hashes before and after the scan, stage status and timing. Untracked audit inputs are included in the hashes. Review the working tree as well as HEAD when auditing uncommitted changes. Changed input hashes or HEAD make the run incomplete.
+Reports record commit, tracked dirty state, Node/package versions, lockfile/config hashes, source/config/test input hashes before and after the scan, stage status and timing. Untracked audit inputs are included in the hashes. Review the working tree as well as HEAD when auditing uncommitted changes. Changed input hashes or HEAD make the run incomplete. Source inputs resolving outside the repository are rejected. Every selected JavaScript/TypeScript/Astro file under `src/` must appear in ESLint results; omitted, duplicate or ignored reports make analysis incomplete. The latest log is marked `IN_PROGRESS` before analysis, so interruption cannot leave an older completed report looking current.
 
 Provenance collection is an explicit stage before and after analysis. It requires the actual Git repository root, a committed HEAD, successful status/file enumeration and readable audit inputs/configuration/lockfile. Source snapshots hash file bytes, including untracked files; a missing tracked input or dangling input symlink fails the stage. Git subprocess stdout/stderr, command statuses and failure details are retained alongside analyzer evidence. Failed provenance cannot become a successful report-only scan. Git-free source archives and repositories with no commits therefore return incomplete status.
 
@@ -95,16 +102,18 @@ Existing inline suppressions are honored and shown when ESLint returns them. Dir
 
 Treat findings as candidates. An unused binding can still have a required initializer or imported module side effect. Preserve positional callbacks, framework route exports, browser globals, feature flags, deployment-specific adapters and public URLs until their contracts are understood.
 
-For example, `src/layouts/BaseLayout.astro` has an unused `DataTable` import binding and a separate bare DataTables import. Layouts also load DataTables/jQuery from CDNs, while browser code initializes tables. The unused binding does not establish that its package, bare import, stylesheet or CDN resource can be removed. Knip's unused direct `jquery` dependency finding also requires checking DataTables' transitive dependency and browser integration.
+For example, `src/layouts/BaseLayout.astro` retains bare imports of both DataTables modules. Layouts also load DataTables/jQuery from CDNs, while browser code initializes tables. Removing an unused import binding does not establish that its package, bare import, stylesheet or CDN resource can be removed. Knip's unused direct `jquery` dependency finding also requires checking DataTables' transitive dependency and browser integration.
 
 The same distinction applies to export declarations, ambient types and positional arguments. A function can have no external import while still having callers inside its module. TypeScript automatically loads the jQuery/DataTables type packages to supply browser-global contracts even without explicit imports. Unused callback parameters before a used parameter preserve its argument position; deleting them would change which value the callback receives.
 
 `ViewableImageTable.js` generates `.file-path` elements as HTML strings. Its component's selector is still reported by the local CSS analyzer, which cannot establish the generated DOM or scoped-style behavior. Preserve that style pending browser/scoping review. Selectors targeting child-generated table cells need the same review.
 
-Parse diagnostics mean a file could not be fully analyzed, not that it is unused. The baseline scan encounters existing markup/frontmatter that the parser rejects. Keep those failures visible; investigate source syntax and parser support before trusting a complete inventory. A successful application build can coexist with analyzer parse failures.
+Parse diagnostics mean a file could not be fully analyzed, not that it is unused. The initial baseline encountered markup/frontmatter that the parser rejected; correcting those source errors exposed additional candidates. Keep future failures visible and investigate source syntax and parser support before trusting a complete inventory. A successful application build can coexist with analyzer parse failures. [Source-audit decisions for BIOIM-347](source-audit-findings.md) describe the verified corrections and the contracts retained during that review.
 
 For a proposed removal, record the source location, reference searches, classification, side-effect/dynamic-reference risks, affected routes and required checks. Resolve missing graph entries and imports before treating unreachable files as confirmed unused. Rescan after removals because import changes can expose additional unreachable modules.
 
 Keep actual removals in focused, reviewed changes. Validate the normal build and affected browser interactions, including tables, downloads, galleries, focus states and supported deployment modes. Browser coverage describes only exercised behavior. Neither a passing build nor a successful static scan proves that every resource is unused or safe to delete.
 
 A strict CI dead-code gate should wait for baseline triage and an agreed exception policy. Report/failure-path tests can be automated independently; generated reports should be uploaded as artifacts rather than committed.
+
+The graph configuration also recognizes the optional markup worker, copied metadata fixture module and markup ESLint configuration when those independently maintained tools are installed. A real Knip integration fixture verifies the spawned worker and copied fixture import graphs and analyzer dependencies; absent optional files are glob matches rather than nonexistent hard-coded entries.
