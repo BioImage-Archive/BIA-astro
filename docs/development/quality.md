@@ -57,7 +57,7 @@ The audit writes `artifacts/dead-codes.log` even when findings or analyzer failu
 | 1 | Review candidates or active analysis diagnostics were found. |
 | 2 | Incomplete analysis: unavailable tools or provenance, unreadable required inputs, malformed output, parser/configuration failure, timeout, unresolved imports, changed inputs/HEAD, or failed optional type check. |
 
-`--report-only` makes findings nonblocking; it does not suppress failures. Unknown arguments, including `--fix`, are rejected. The runner invokes installed package executables and never downloads tools or runs automatic fixes.
+`--report-only` makes findings nonblocking; it does not suppress failures. Unknown arguments, including `--fix`, are rejected. The runner invokes installed package executables and never downloads tools or runs automatic fixes. Synchronous analyzer/Git calls use a hard kill at their deadline: a child that handles SIGTERM must not keep the runner blocked. Raw timeout, signal and output evidence remains available. The behavior is backed by an actual signal-handling subprocess regression and [Node's child-process contract](https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options).
 
 ## Configuration and compatibility
 

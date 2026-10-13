@@ -29,7 +29,7 @@ The initial audit reported 80 candidates and 21 parser diagnostics. These counts
 
 The configured scan now completes. Strict mode exits 1 because candidates remain; report-only mode exits 0. No audit rules or suppressions were relaxed. The historical cleanup retained 28 observations; five further observations come from accepted main and remain visible below. These counts describe review candidates, not confirmed production bugs.
 
-Verification on 13 October 2026 passed **131 tests on Node 22.23.3**, including the real Astro probe. The scoped source check reports zero errors/warnings. The full production build succeeds in an isolated exact-source snapshot; local review worktrees are excluded from that build input. No page or public asset is removed. Browser comparisons describe exercised routes and matching accepted-main inputs, rather than claiming coverage of every runtime state.
+Verification on 13 October 2026 passed **134 tests on Node 22.23.3**, including the real Astro probe. The scoped source check reports zero errors/warnings. The full production build succeeds in an isolated exact-source snapshot; local review worktrees are excluded from that build input. No page or public asset is removed. Browser comparisons describe exercised routes and matching accepted-main inputs, rather than claiming coverage of every runtime state.
 
 The runner rejects omitted or duplicate source reports, ignored selected files and source symlinks escaping the repository. Its latest log is marked in progress before execution. A real Knip fixture also verifies optional spawned-worker, copied metadata-fixture and analyzer-config entry points when independently maintained tooling is combined.
 

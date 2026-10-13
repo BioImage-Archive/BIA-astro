@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // Read-only source audit. Writes only artifacts; never runs --fix or installs packages.
 // Knip/Astro may evaluate project configuration; optional astro check can generate .astro/ files.
-import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { eslintFindings, knipFindings, renderFindings, reportExitCode, sortFindings, verifyEslintSourceCoverage } from './report.mjs';
+import { execute as executeCommand } from './execution.mjs';
 
 const args = new Set(process.argv.slice(2));
 const allowed = new Set(['--report-only', '--with-astro-check']);
@@ -36,14 +36,7 @@ const notes = [];
 const started = new Date().toISOString();
 
 function execute(command, parameters, timeout = 180_000) {
-  const result = spawnSync(command, parameters, {
-    cwd: root, env, encoding: 'utf8', timeout, maxBuffer: 64 * 1024 * 1024,
-  });
-  return {
-    command: [command, ...parameters], exitCode: result.status, signal: result.signal,
-    stdout: result.stdout ?? '', stderr: result.stderr ?? '',
-    error: result.error?.message ?? null,
-  };
+  return executeCommand(command, parameters, { cwd: root, env, timeout });
 }
 function read(file) {
   const target = path.resolve(root, file);
