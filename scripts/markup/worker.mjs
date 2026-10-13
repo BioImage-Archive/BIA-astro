@@ -57,6 +57,8 @@ async function walk(directory, generated = false, recordCoverage = true) {
   const out = [];
   for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {
     const file = path.join(directory, entry.name);
+    const ext = path.extname(file).toLowerCase();
+    const selected = ext === '.html' || (!generated && ext === '.astro');
     if (entry.isSymbolicLink()) {
       if (recordCoverage) report.coverage.excluded.push(`${relative(file)} (symbolic link not followed)`);
     } else if (entry.isDirectory()) {
@@ -67,9 +69,10 @@ async function walk(directory, generated = false, recordCoverage = true) {
         out.push(...await walk(file, generated, recordCoverage));
       }
     } else if (entry.isFile()) {
-      const ext = path.extname(file).toLowerCase();
-      if (ext === '.html' || (!generated && ext === '.astro')) out.push(file);
+      if (selected) out.push(file);
       else if (!generated && recordCoverage) report.coverage.otherSourceExtensions[ext || '[none]'] = (report.coverage.otherSourceExtensions[ext || '[none]'] ?? 0) + 1;
+    } else if (selected) {
+      throw new Error(`Audit input must be a regular file: ${relative(file)}`);
     }
   }
   return out;

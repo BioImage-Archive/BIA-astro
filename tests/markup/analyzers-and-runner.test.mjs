@@ -108,6 +108,27 @@ test('missing or empty requested build output fails instead of skipping coverage
     assert.match(result.report.failures.join('\n'), /Generated HTML/);
   }
 }));
+test('nonregular selected source and output files make strict and report-only audits incomplete', async () => {
+  for (const filename of ['src/unreadable.astro', 'public/unreadable.HTML', 'built/unreadable.html']) {
+    await checkout(async dir => {
+      const generated = filename.startsWith('built/');
+      if (generated) {
+        await mkdir(path.join(dir, 'built'));
+        await writeFile(path.join(dir, 'built/valid.html'), '<main>generated</main>');
+      }
+      execFileSync('mkfifo', [path.join(dir, filename)]);
+      for (const reportOnly of [false, true]) {
+        const result = await run(dir, [
+          ...(generated ? ['--html-dir', 'built'] : []),
+          ...(reportOnly ? ['--report-only'] : []),
+        ]);
+        assert.equal(result.status, 2, result.output);
+        assert.equal(result.report.execution.timedOut, false);
+        assert.ok(result.report.failures.some(failure => failure.includes(`Audit input must be a regular file: ${filename}`)));
+      }
+    });
+  }
+});
 test('generated raw HTML permits optional end tags but reports required closures and duplicate IDs', async () => checkout(async dir => {
   await mkdir(path.join(dir, 'built'));
   await writeFile(path.join(dir, 'built/optional.html'), '<ul><li>one<li>two</ul>');
