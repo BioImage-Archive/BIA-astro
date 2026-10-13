@@ -2,7 +2,7 @@
 // Read-only source audit. Writes only artifacts; never runs --fix or installs packages.
 // Knip/Astro may evaluate project configuration; optional astro check can generate .astro/ files.
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { closeSync, constants, existsSync, fstatSync, mkdirSync, openSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { eslintFindings, knipFindings, renderFindings, reportExitCode, sortFindings, verifyEslintSourceCoverage } from './report.mjs';
@@ -38,10 +38,21 @@ const started = new Date().toISOString();
 function execute(command, parameters, timeout = 180_000) {
   return executeCommand(command, parameters, { cwd: root, env, timeout });
 }
+function inputBytes(target, file) {
+  // Open without waiting on a pipe, then verify the opened file rather than a
+  // prior path stat. Provenance and source excerpts must not block on non-files.
+  const descriptor = openSync(target, constants.O_RDONLY | (constants.O_NONBLOCK ?? 0));
+  try {
+    if (!fstatSync(descriptor).isFile()) throw new Error(`Audit input must be a regular file: ${file}`);
+    return readFileSync(descriptor);
+  } finally {
+    closeSync(descriptor);
+  }
+}
 function read(file) {
   const target = path.resolve(root, file);
   if (target !== root && !target.startsWith(root + path.sep)) return null;
-  try { return readFileSync(target, 'utf8'); } catch { return null; }
+  try { return inputBytes(target, file).toString('utf8'); } catch { return null; }
 }
 function digest(file) {
   const target = path.resolve(root, file);
@@ -51,7 +62,7 @@ function digest(file) {
   if (physical !== repository && !physical.startsWith(repository + path.sep)) {
     throw new Error(`Input resolves outside repository: ${file}`);
   }
-  return createHash('sha256').update(readFileSync(target)).digest('hex');
+  return createHash('sha256').update(inputBytes(target, file)).digest('hex');
 }
 function packageInfo(name) {
   // Resolve local packages, never execute npx or fetch anything.

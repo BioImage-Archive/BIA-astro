@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { spawnSync } from 'node:child_process';
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, symlinkSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -148,6 +148,27 @@ test('Unreadable source inputs and missing required configuration are incomplete
   const result = run(root, ['--report-only']);
   assert.equal(result.status, 2);
   assert.match(result.log, /provenance-after: FAILED/);
+});
+
+test('Non-regular tracked inputs fail provenance without waiting for a writer', () => {
+  for (const flags of [[], ['--report-only']]) {
+    const root = fixture({ knip: { files: [], issues: [{ file: 'src/a.ts', exports: [{ name: 'unchanged', line: 1, col: 14 }] }] } });
+    const input = path.join(root, 'src/a.ts');
+    unlinkSync(input);
+    const createPipe = spawnSync('mkfifo', [input], { encoding: 'utf8', timeout: 5_000 });
+    assert.equal(createPipe.status, 0, createPipe.stderr);
+    const result = spawnSync(process.execPath, [executable, ...flags], {
+      cwd: root, encoding: 'utf8', timeout: 5_000,
+    });
+    assert(!result.error && !result.signal, result.error?.message ?? result.signal);
+    assert.equal(result.status, 2, result.stdout);
+    const log = readFileSync(path.join(root, 'artifacts/dead-codes.log'), 'utf8');
+    assert.match(log, /Audit input must be a regular file: src\/a\.ts/);
+    assert.match(log, /Status: INCOMPLETE/);
+    assert.match(log, /provenance-before: FAILED/);
+    assert.match(log, /provenance-after: FAILED/);
+    unlinkSync(input);
+  }
 });
 
 test('Changed source content and changed HEAD are incomplete even in report-only mode', () => {
