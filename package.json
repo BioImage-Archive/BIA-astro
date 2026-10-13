@@ -11,9 +11,9 @@
     "prod": "NODE_ENV=production PORT=8080 HOST=0.0.0.0 node dist/bioimage-archive/server/entry.mjs",
     "local": "astro check && astro build && astro preview",
     "test": "node --test \"tests/**/*.test.mjs\"",
+    "test:metadata": "node --test tests/metadata/*.test.mjs",
     "test:fbbi": "node --test tests/ontology/*.test.mjs",
-    "test:news": "node --test tests/news/*.test.mjs",
-    "test:metadata": "node --test tests/metadata/*.test.mjs"
+    "test:news": "node --test tests/news/*.test.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.1",
