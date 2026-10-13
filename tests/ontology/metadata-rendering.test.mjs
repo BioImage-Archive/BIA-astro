@@ -21,16 +21,11 @@ before(async () => {
     await mkdir(output, { recursive: true });
     root = await mkdtemp(path.join(output, "application-"));
     await mkdir(path.join(root, "src/pages"), { recursive: true });
-    for (const relative of [
-        "src/components/DatasetDetail.astro", "src/components/DatasetInfo.astro",
-        "src/components/SharedJSFunctions.js", "src/components/formatting/fbbi-terms.mjs",
-        "src/components/formatting/physical-dimensions.js",
-        "src/assets/bioimage-archive/external-link-svgrepo-com.png",
-        "src/assets/bioimage-archive/image_fallback.png", "src/data/metadata-field-name-mapping.json",
-    ]) {
-        await mkdir(path.dirname(path.join(root, relative)), { recursive: true });
-        await cp(path.join(repository, relative), path.join(root, relative));
+    for (const relative of ["src/components", "src/assets", "src/styles"]) {
+        await cp(path.join(repository, relative), path.join(root, relative), { recursive: true });
     }
+    await mkdir(path.join(root, "src/data"), { recursive: true });
+    await cp(path.join(repository, "src/data/metadata-field-name-mapping.json"), path.join(root, "src/data/metadata-field-name-mapping.json"));
     await writeFile(path.join(root, "package.json"), '{"type":"module"}\n');
     await symlink(path.join(repository, "node_modules"), path.join(root, "node_modules"), "dir");
     await writeFile(path.join(root, "astro.config.mjs"), `
@@ -64,21 +59,22 @@ const acquisition = image.creation_process.acquisition_process[0];
 const mismatched = { title: 'Independent arrays', imaging_method_name: ['Method A', 'Method B'], fbbi_id: ['FBbi:00000256'] };
 const unsupported = { title: 'Unsupported identifiers', fbbi_id: ['<img src=x onerror="alert(1)">', 'NCBITaxon:9606', 'FBbi:00000256'] };
 ---
-<section id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
-<section id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</section>
-<section id="absent"><DatasetDetail data={{ title: 'No identifiers', imaging_method_name: ['Unspecified'] }} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="null"><DatasetDetail data={{ title: 'Null identifiers', imaging_method_name: ['Unspecified'], fbbi_id: null }} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="mismatched"><DatasetDetail data={mismatched} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="unsupported"><DatasetDetail data={unsupported} fieldMap={fieldMap.image_acquisition} /></section>
-<section id="identifier-only"><DatasetDetail data={{ title: 'Identifier only', fbbi_id: ['FBbi:00000256'] }} fieldMap={fieldMap.image_acquisition} /></section>
+
+<article id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</article>
+<article id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</article>
+<article id="absent"><DatasetDetail data={{ title: 'No identifiers', imaging_method_name: ['Unspecified'] }} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="null"><DatasetDetail data={{ title: 'Null identifiers', imaging_method_name: ['Unspecified'], fbbi_id: null }} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="mismatched"><DatasetDetail data={mismatched} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="unsupported"><DatasetDetail data={unsupported} fieldMap={fieldMap.image_acquisition} /></article>
+<article id="identifier-only"><DatasetDetail data={{ title: 'Identifier only', fbbi_id: ['FBbi:00000256'] }} fieldMap={fieldMap.image_acquisition} /></article>
 `);
     await promisify(execFile)(process.execPath,
         [path.join(repository, "node_modules/astro/astro.js"), "build", "--root", root],
         { cwd: repository, timeout: 120000, maxBuffer: 2 * 1024 * 1024 });
     const html = await readFile(path.join(root, "dist/index.html"), "utf8");
-    sections = Object.fromEntries([...html.matchAll(/<section id="([^"]+)">([\s\S]*?)<\/section>/g)]
-        .map((match) => [match[1], match[2]]));
+    sections = Object.fromEntries([...html.matchAll(/<article id="([^"]+)">([\s\S]*?)<\/article>/g)]
+        .map((match) => [match[1], match[2].replace(/<\/dt>\s*<dd>/g, "&nbsp; ").replace(/<\/?(?:dt|dd)\b[^>]*>/g, "")]));
 });
 
 test("the reference study offers an FBBI search without claiming that its term exists", () => {
@@ -88,7 +84,9 @@ test("the reference study offers an FBBI search without claiming that its term e
     assert.equal((sections.study.match(/>FBbi:00000639 \(search OLS\)<\/a>/g) ?? []).length, 2);
     assert.doesNotMatch(sections.study, /\/entities\/|\/classes\/|href="https:\/\/purl\.obolibrary\.org/);
     assert.match(sections.study, /<i>Mus musculus<\/i> \(Mouse\)/);
-    assert.match(sections.study, /href="https:\/\/www\.ncbi\.nlm\.nih\.gov\/Taxonomy\/Browser\/wwwtax\.cgi\?id=NCBI:txid10090"/);
+    const taxonomyLink = sections.study.match(/href="(https:\/\/www\.ncbi\.nlm\.nih\.gov\/Taxonomy\/Browser\/wwwtax\.cgi\?[^" ]+)"/);
+    assert.ok(taxonomyLink);
+    assert.equal(new URL(taxonomyLink[1]).searchParams.toString(), "id=NCBI%3Atxid10090");
 });
 
 test("image acquisition metadata accepts the observed obo namespace alias", () => {
