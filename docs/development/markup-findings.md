@@ -53,7 +53,7 @@ Raw reports, builds, comparison inputs and browser evidence remain in ignored ro
 
 ## Combination with other changes
 
-An isolated, freshly installed application combines markup, dead-code corrections, dataset presentation, numeric facets and button geometry. The source changes merge without manual source resolutions. The shared package declarations and lockfile require explicit reconciliation when combining the two audit toolchains.
+An isolated, freshly installed application combines markup, dead-code corrections, dataset presentation, numeric facets and button geometry. Both audit branches use matching locked development dependencies, so their current reviewed heads merge without manual source or dependency resolution. All 120 merge orders of the five reviewed heads pass under both normal-merge and squash-content simulations and produce identical content. Changes to these heads or the base require another compatibility check.
 
 The reviewed combined regression suite and full production build pass on Node 22, and the markup audit completes without findings. Rerun these checks against the combined heads when either branch changes. The configured dead-code scan still has deliberately retained observations; neither successful analysis nor a successful merge approves their removal. Optional spawned workers, copied fixture modules and ESLint configurations are registered in the graph and covered by a real Knip integration test. Dependency and static-finding CI policy remain separate decisions.
 
