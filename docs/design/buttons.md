@@ -41,6 +41,8 @@ commands use a button. Form submit/reset actions retain the appropriate type.
 Plain links and text-style commands, filter chips, arrow glyphs, circular
 tooltip controls, disclosure summaries and navigation icons remain separate
 families. Cards, dialogs, images and input fields retain their own geometry.
+Volume-EM size panels, study/licence badges and cube illustrations retain
+their existing 4px corners; they do not inherit the action-radius token.
 Shared EMBL-EBI chrome and external viewer interfaces have separate styling
 ownership.
 

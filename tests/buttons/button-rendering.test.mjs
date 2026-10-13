@@ -237,7 +237,6 @@ test("search submission, selected file views and dialog commands retain native c
     }
 });
 
-
 test("file navigation actions are single native links with preserved destinations", () => {
     for (const html of pages.values()) {
         for (const [url, label] of [["https://example.org/files", "Browse HTTP"], ["https://example.org/globus", "Browse Globus"]]) {
@@ -247,6 +246,16 @@ test("file navigation actions are single native links with preserved destination
             assert.equal(attribute(link[0], "target"), "_blank");
             assert.doesNotMatch(link[1], /<button\b/);
             assert.match(link[1], new RegExp(label));
+        }
+    }
+});
+
+test("gallery information panels retain their own geometry", () => {
+    for (const [layout, css] of styles) {
+        for (const selector of ["size-bar", "study-link", "license-badge", "cube-wrapper"]) {
+            const rules = [...css.matchAll(new RegExp(`\\.${selector}\\[data-astro-cid-[^\\]]+\\]\\s*\\{([^}]*)\\}`, "g"))];
+            assert(rules.length > 0, `${layout}: ${selector} is rendered and styled`);
+            for (const rule of rules) assert.match(rule[1], /border-radius:\s*4px(?:;|$)/, `${layout}: ${selector} is not an action`);
         }
     }
 });
