@@ -121,7 +121,7 @@ for (const command of ['root', 'head', 'status', 'inputs']) {
         assert.equal(stage.state, 'FAILED');
         assert.match(stage.error, /Git .* failed/);
         assert(result.report.stages.filter(item => ['eslint', 'knip'].includes(item.name))
-          .every(item => item.state === 'COMPLETED'));
+          .every(item => item.state === (after ? 'COMPLETED' : 'SKIPPED')));
         assert.match(readFileSync(path.join(result.evidence, `${stage.name}.${command}.stderr.log`), 'utf8'), /controlled Git failure/);
       }
     });
@@ -248,13 +248,68 @@ test('A partial ESLint source inventory is incomplete in both modes', () => {
   }
 });
 
-test('A source symlink cannot read inputs outside the audit repository', () => {
-  const root = fixture();
-  const outside = path.join(path.dirname(root), 'outside-input.ts');
-  writeFileSync(outside, 'export const external = 1;\n');
-  symlinkSync(outside, path.join(root, 'src/external.ts'));
+test('Rejected source symlinks launch no analyzers and copy no external bytes into evidence', () => {
+  for (const flags of [[], ['--report-only', '--with-astro-check']]) {
+    const root = fixture();
+    const outside = path.join(path.dirname(root), 'outside-input.ts');
+    const privateContent = 'PRIVATE_CONTENT_OUTSIDE_THE_AUDIT_REPOSITORY';
+    writeFileSync(outside, `const external = "${privateContent}";\n`);
+    symlinkSync(outside, path.join(root, 'src/external.ts'));
+    // Every executable leaves evidence if launched. The ESLint output would
+    // include the rejected source bytes, just as its real JSON reporter does.
+    const marker = "require('node:fs').writeFileSync('artifacts/analyzer-launched', 'yes');";
+    for (const name of ['eslint', 'knip']) {
+      const cli = path.join(root, 'node_modules', name, 'cli.cjs');
+      writeFileSync(cli, marker + readFileSync(cli, 'utf8'));
+    }
+    const probe = path.join(root, 'scripts/dead-code/verify-tools.mjs');
+    writeFileSync(probe, "import { writeFileSync } from 'node:fs'; writeFileSync('artifacts/probe-launched', 'yes');");
+    writeFileSync(path.join(root, 'node_modules/eslint/cli.cjs'), marker +
+      `console.log(JSON.stringify([{filePath: 'src/external.ts', source: ${JSON.stringify(privateContent)}, messages: [{ruleId:'@typescript-eslint/no-unused-vars', message:'unused', line:1, column:7}]}]));`);
+    const result = run(root, flags);
+    assert.equal(result.status, 2);
+    assert.match(result.log, /Input resolves outside repository: src\/external.ts/);
+    assert.equal(result.report.inputHashesBefore, null);
+    assert(result.report.stages.filter(stage => !stage.name.startsWith('provenance-'))
+      .every(stage => stage.state === 'SKIPPED'));
+    assert(!readdirSync(path.join(root, 'artifacts')).includes('analyzer-launched'));
+    assert(!readdirSync(path.join(root, 'artifacts')).includes('probe-launched'));
+    for (const file of readdirSync(result.evidence)) {
+      assert(!readFileSync(path.join(result.evidence, file), 'utf8').includes(privateContent), file);
+    }
+    assert(!result.log.includes(privateContent));
+  }
+});
+
+test('Source excerpts reject a symlink introduced after successful initial provenance', () => {
+  const privateContent = 'PRIVATE_CONTENT_OUTSIDE_THE_AUDIT_REPOSITORY';
+  const root = fixture({
+    knip: { files: [], issues: [{ file: 'src/a.ts', exports: [{ name: 'unchanged', line: 1, col: 14 }] }] },
+    duringScan: "const fs = require('node:fs'); fs.unlinkSync('src/a.ts'); fs.symlinkSync(require('node:path').join(process.cwd(), '../outside-excerpt.ts'), 'src/a.ts');",
+  });
+  writeFileSync(path.join(path.dirname(root), 'outside-excerpt.ts'), `const external = "${privateContent}";\n`);
   const result = run(root, ['--report-only']);
   assert.equal(result.status, 2);
-  assert.match(result.log, /Input resolves outside repository: src\/external.ts/);
-  assert.equal(result.report.inputHashesBefore, null);
+  assert.equal(result.report.stages.find(stage => stage.name === 'provenance-before').state, 'COMPLETED');
+  assert.equal(result.report.stages.find(stage => stage.name === 'provenance-after').state, 'FAILED');
+  assert.match(result.log, /Input resolves outside repository: src\/a\.ts/);
+  assert(!result.log.includes(privateContent));
+});
+
+test('Source excerpts do not wait on a pipe introduced after initial provenance', () => {
+  const root = fixture({
+    knip: { files: [], issues: [{ file: 'src/a.ts', exports: [{ name: 'unchanged', line: 1, col: 14 }] }] },
+    duringScan: "require('node:fs').unlinkSync('src/a.ts'); const result = require('node:child_process').spawnSync('mkfifo', ['src/a.ts']); if (result.status !== 0) throw new Error('Fixture pipe creation failed');",
+  });
+  const result = spawnSync(process.execPath, [executable, '--report-only'], {
+    cwd: root, encoding: 'utf8', timeout: 5_000,
+  });
+  assert(!result.error && !result.signal, result.error?.message ?? result.signal);
+  assert.equal(result.status, 2);
+  const log = readFileSync(path.join(root, 'artifacts/dead-codes.log'), 'utf8');
+  assert.match(log, /provenance-before: COMPLETED/);
+  assert.match(log, /knip: COMPLETED/);
+  assert.match(log, /Audit input must be a regular file: src\/a\.ts/);
+  assert.match(log, /Status: INCOMPLETE/);
+  unlinkSync(path.join(root, 'src/a.ts'));
 });

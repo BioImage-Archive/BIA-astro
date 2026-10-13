@@ -49,12 +49,7 @@ function inputBytes(target, file) {
     closeSync(descriptor);
   }
 }
-function read(file) {
-  const target = path.resolve(root, file);
-  if (target !== root && !target.startsWith(root + path.sep)) return null;
-  try { return inputBytes(target, file).toString('utf8'); } catch { return null; }
-}
-function digest(file) {
+function inputPath(file) {
   const target = path.resolve(root, file);
   if (!target.startsWith(root + path.sep)) throw new Error(`Input outside repository: ${file}`);
   const physical = realpathSync(target);
@@ -62,7 +57,13 @@ function digest(file) {
   if (physical !== repository && !physical.startsWith(repository + path.sep)) {
     throw new Error(`Input resolves outside repository: ${file}`);
   }
-  return createHash('sha256').update(inputBytes(target, file)).digest('hex');
+  return physical;
+}
+function read(file) {
+  try { return inputBytes(inputPath(file), file).toString('utf8'); } catch { return null; }
+}
+function digest(file) {
+  return createHash('sha256').update(inputBytes(inputPath(file), file)).digest('hex');
 }
 function packageInfo(name) {
   // Resolve local packages, never execute npx or fetch anything.
@@ -122,6 +123,12 @@ function runTool(name, parameters, parse = null) {
   const begin = Date.now();
   const stage = { name, state: 'FAILED', exitCode: null, error: null };
   stages.push(stage);
+  if (!initialProvenanceComplete) {
+    stage.state = 'SKIPPED';
+    stage.skipReason = 'Initial provenance is incomplete; analyzer was not launched';
+    stage.durationMs = Date.now() - begin;
+    return;
+  }
   try {
     let result;
     if (name === 'astro-probe') {
@@ -170,8 +177,13 @@ function runTool(name, parameters, parse = null) {
 }
 
 const before = captureProvenance('provenance-before');
+const initialProvenanceComplete = stages.find(stage => stage.name === 'provenance-before').state === 'COMPLETED';
 const versions = {};
 for (const name of ['eslint', 'eslint-plugin-astro', 'typescript-eslint', 'knip', 'astro', '@astrojs/compiler', '@astrojs/check', 'typescript']) {
+  if (!initialProvenanceComplete) {
+    versions[name] = 'NOT INSPECTED / PROVENANCE FAILED';
+    continue;
+  }
   try { versions[name] = packageInfo(name).data.version; } catch { versions[name] = 'NOT INSTALLED / NOT RESOLVED'; }
 }
 
@@ -225,7 +237,7 @@ const text = [
   `Candidates: ${candidates}; analysis diagnostics: ${diagnostics}; suppressed findings: ${suppressed}`,
   `Versions: ${JSON.stringify(versions)}`, `Input hashes: ${JSON.stringify(report.hashes)}`,
   '', 'TOOL EXECUTION',
-  ...stages.map(stage => `${stage.name}: ${stage.state}; exit=${stage.exitCode}; ${stage.error ?? 'no execution error'}`),
+  ...stages.map(stage => `${stage.name}: ${stage.state}; exit=${stage.exitCode}; ${stage.error ?? stage.skipReason ?? 'no execution error'}`),
   '', 'SCOPE / LIMITATIONS', ...notes.map(note => `- ${note}`),
   '', 'FINDINGS GROUPED BY SOURCE FILE',
   findings.length ? renderFindings(findings, read) : 'No normalized findings. Consult execution status; this is not proof of no dead code.',
