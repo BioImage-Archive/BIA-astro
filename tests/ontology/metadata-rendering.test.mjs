@@ -47,6 +47,7 @@ export default defineConfig({
     await writeFile(path.join(root, "src/pages/index.astro"), `---
 import DatasetInfo from '../components/DatasetInfo.astro';
 import DatasetDetail from '../components/DatasetDetail.astro';
+import ImageInfo from '../components/ai-gallery/ImageInfo.astro';
 import fieldMap from '../data/metadata-field-name-mapping.json';
 import studyResponse from '../data/api/study-s-biad3335-response.json';
 import imageResponse from '../data/api/image-001b8ef2-7a5e-4b94-b91c-d93f5095ee39-response.json';
@@ -59,7 +60,10 @@ const acquisition = image.creation_process.acquisition_process[0];
 const mismatched = { title: 'Independent arrays', imaging_method_name: ['Method A', 'Method B'], fbbi_id: ['FBbi:00000256'] };
 const unsupported = { title: 'Unsupported identifiers', fbbi_id: ['<img src=x onerror="alert(1)">', 'NCBITaxon:9606', 'FBbi:00000256'] };
 ---
-
+<article id="viewer-panes">{['Source Image', 'Input', 'Input', 'Annotation'].map((label, index) =>
+  <ImageInfo url="https://example.org/image.ome.zarr" imageRep={image.representation[0]}
+    imageAtrributes={{}} text={label} btnID={label === 'Annotation' ? 'CopyAnnotationButton' : 'CopyInput' + index} />
+)}</article>
 <article id="study">{study.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</article>
 <article id="image"><DatasetDetail data={acquisition} fieldMap={fieldMap.image_acquisition} /></article>
 <article id="missing">{missingStudy.dataset.map(dataset => <DatasetInfo dataset={dataset} />)}</article>
@@ -115,4 +119,13 @@ test("unsupported values remain readable and cannot inject markup", () => {
     assert.match(sections.unsupported, /&lt;img src=x onerror=&quot;alert\(1\)&quot;&gt;, NCBITaxon:9606/);
     assert.doesNotMatch(sections.unsupported, /<img|<script/);
     assert.equal((sections.unsupported.match(/<a /g) ?? []).length, 1);
+});
+
+
+test("repeated viewer panes have unique identifiers and preserve annotation carousel hooks", () => {
+    const ids = [...sections["viewer-panes"].matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+    assert.equal(new Set(ids).size, ids.length);
+    for (const id of ["OpenAnnotationInVizarr", "OpenAnnotationInITK", "annotated-size", "annotated-metadata", "CopyAnnotationButton"])
+        assert(ids.includes(id), id);
+    assert.doesNotMatch(sections["viewer-panes"], /<a\b[^>]*>\s*<button\b|<button\b[^>]*>\s*<a\b/);
 });

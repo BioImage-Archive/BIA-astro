@@ -7,20 +7,18 @@ const publicUrl = getPublicVisualisationURI(url);
 const vizarrHref = buildVizarrViewerURL(publicUrl);
 const itkHref = buildITKViewerURL(publicUrl);
 
-const vizarrViewer = text == "Annotation"? "OpenAnnotationInVizarr": "OpenSourceInVizarr";
-const itkViewer = text == "Annotation"? "OpenAnnotationInITK": "OpenSourceInITK";
+// Preserve carousel hooks for the single annotation pane; repeated panes use their copy-button key.
+const viewerPrefix = text === "Annotation" ? "OpenAnnotation" : text === "Source Image" ? "OpenSource" : btnID;
+const vizarrViewer = `${viewerPrefix}InVizarr`;
+const itkViewer = `${viewerPrefix}InITK`;
+const metadataIdPrefix = text === "Annotation" ? "annotated" : btnID;
 
 ---
 <div style="min-width: 48%">
-    <a target="_blank" href={vizarrHref ?? "#"} id={vizarrViewer}>
-        <button class="vf-button vf-button--primary vf-button--sm">Open {text} in Vizarr viewer</button>
-    </a> 
-    <a target="_blank" href={itkHref ?? "#"} id={itkViewer}>
-        <button class="vf-button vf-button--primary vf-button--sm">Open {text} in ITK viewer</button>
-    </a>
-    <button class="vf-button vf-button--primary vf-button--sm" id={btnID} data-url={publicUrl ?? url}>Copy {text} OME-Zarr URI</button><br/>
-    <ImageMetadata imageRep={imageRep} imageAtrributes={imageAtrributes} />
-    </div>
+    <a target="_blank" href={vizarrHref ?? "#"} id={vizarrViewer} class="vf-button vf-button--primary vf-button--sm bia-button">Open {text} in Vizarr viewer</a>
+    <a target="_blank" href={itkHref ?? "#"} id={itkViewer} class="vf-button vf-button--primary vf-button--sm bia-button">Open {text} in ITK viewer</a>
+    <button class="vf-button vf-button--primary vf-button--sm bia-button" id={btnID} data-url={publicUrl ?? url}>Copy {text} OME-Zarr URI</button><br/>
+    <ImageMetadata idPrefix={metadataIdPrefix} imageRep={imageRep} imageAtrributes={imageAtrributes} />
 </div>
 <script type="module">
   window.addEventListener("DOMContentLoaded", () => {
