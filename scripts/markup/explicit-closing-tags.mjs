@@ -58,12 +58,20 @@ const rule = {
     messages: {
       missingEnd: '<{{name}}> has no matching explicit closing tag. Close it at the intended boundary; do not blindly append a tag at EOF.',
       optionalEnd: '<{{name}}> has no explicit closing tag. Even where HTML permits omission, repository readability policy requires </{{name}}> (or explicit Astro self-closing syntax).',
+      missingFragmentEnd: 'This Astro fragment has no explicit </> closing boundary. Close it at the intended boundary; do not blindly append a tag at EOF.',
     },
   },
   create(context) {
     const source = context.sourceCode ?? context.getSourceCode();
     if (!source.parserServices?.isAstro) return {};
     return {
+      JSXFragment(node) {
+        const opening = node.openingFragment;
+        if (!opening || source.getText(opening).trim() !== '<>') return;
+        const closing = node.closingFragment;
+        if (closing && /^<\/\s*>$/u.test(source.getText(closing).trim())) return;
+        context.report({ node: opening, messageId: 'missingFragmentEnd' });
+      },
       JSXElement(node) {
         const finding = inspectElement(node, (n) => source.getText(n));
         if (finding) {

@@ -46,7 +46,7 @@ Start the supported local built server first and substitute its actual origin/po
 
 ## Source policy and output rules
 
-The dedicated ESLint configuration uses the locked Astro parser and a small AST-based `markup/explicit-closing-tags` rule. It checks original tag ranges so parser-inserted closures cannot hide omissions. It preserves explicit Astro self-closing syntax, fragments, components, HTML voids and SVG. Strings/comments are not scanned as tags. The rule cannot decide the intended boundary, so it has no automatic fix.
+The dedicated ESLint configuration uses the locked Astro parser and a small AST-based `markup/explicit-closing-tags` rule. It checks original tag and fragment ranges so parser-inserted closures cannot hide omissions, including a synthetic zero-width fragment closing range. Authored `<>` fragments require a written `</>` boundary; compiler-generated wrappers are not treated as authored openings. It preserves explicit Astro self-closing syntax, closed fragments, components, HTML voids and SVG. Strings/comments are not scanned as tags. The rule cannot decide the intended boundary, so it has no automatic fix.
 
 Some HTML end tags are legally optional. Requiring them in authored Astro and HTML is an explicit readability policy; the report labels optional Astro closures `READABILITY_POLICY`. It does not claim that every omission is invalid HTML. HTML void elements such as `img`, `br` and `input` need no closing tag.
 
@@ -62,7 +62,7 @@ The audit uses locked ESLint 9.39.5, eslint-plugin-astro 1.3.1 and typescript-es
 
 HTML-Validate is locked to 10.17.0, compatible with Node 20.19+, 22.16+ or 24+. Top-level application dependency declarations are unchanged. Adding the analyzers also updates shared transitive lock entries; the lockfile and installation are verified together. The ESLint 9 profile is a maintenance limitation; adding this audit does not resolve its end-of-life status.
 
-Every audit executes 26 Astro and 15 HTML integration probes using the locally installed analyzers. A missing local tool, ignored source, failed probe, invalid configuration or unavailable provenance produces an incomplete result. Tests exercise nested discovery, non-mutation, missing/empty output, fatal source parsing, timeouts, malformed messages, HTTP response contracts and input changes. Regressions also cover ignored-name false positives, uppercase HTML, member/namespaced tags, symlinked output ancestors, malformed/inconsistent worker reports, generated route directories sharing source-exclusion names, streaming HTTP failures, rejected route-manifest provenance and artifact write failures.
+Every audit executes 30 Astro and 15 HTML integration probes using the locally installed analyzers. A missing local tool, ignored source, failed probe, invalid configuration or unavailable provenance produces an incomplete result. Tests exercise nested discovery, non-mutation, missing/empty output, fatal source parsing, timeouts, malformed messages, HTTP response contracts and input changes. Regressions also cover ignored-name false positives, uppercase HTML, member/namespaced tags, symlinked output ancestors, malformed/inconsistent worker reports, generated route directories sharing source-exclusion names, streaming HTTP failures, rejected route-manifest provenance and artifact write failures.
 
 ## Evidence and exit status
 

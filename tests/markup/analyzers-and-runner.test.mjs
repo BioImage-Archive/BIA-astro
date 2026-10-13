@@ -63,7 +63,7 @@ async function server(action, handler) {
 test('installed Astro analyzer passes all valid and invalid source probes', async () => {
   const eslint = new ESLint({ cwd: root, overrideConfigFile: path.join(root, 'configs/quality/eslint.markup.config.mjs'), fix: false, allowInlineConfig: false });
   const results = await probeAstro(eslint, path.join(root, 'src/markup-probe.astro'));
-  assert.equal(results.length, 26);
+  assert.equal(results.length, 30);
   assert.deepEqual(results.filter(result => !result.passed), []);
 });
 test('installed HTML analyzer validates raw text, including browser-repairable errors', async () => {
@@ -99,6 +99,24 @@ test('source parsing failure remains incomplete in report-only mode', async () =
   const result = await run(dir, ['--report-only']);
   assert.equal(result.status, 2, result.output);
   assert.ok(result.report.findings.some(finding => finding.parseIncomplete));
+}));
+test('source-written fragment boundaries cannot be satisfied by parser-inserted closing ranges', async () => checkout(async dir => {
+  const filename = path.join(dir, 'src/A.astro');
+  for (const [source, column] of [['<><div>OK</div>', 1], ['<><><div>OK</div></>', 3]]) {
+    await writeFile(filename, source);
+    for (const reportOnly of [false, true]) {
+      const result = await run(dir, reportOnly ? ['--report-only'] : []);
+      assert.equal(result.status, reportOnly ? 0 : 1, result.output);
+      assert.deepEqual(result.report.failures, []);
+      assert.equal(result.report.findings.length, 1);
+      const finding = result.report.findings[0];
+      assert.equal(finding.rule, 'markup/explicit-closing-tags');
+      assert.match(finding.message, /fragment.*explicit <\/> closing boundary/);
+      assert.equal(finding.line, 1);
+      assert.equal(finding.column, column);
+      assert.equal(await readFile(filename, 'utf8'), source);
+    }
+  }
 }));
 test('missing or empty requested build output fails instead of skipping coverage', async () => checkout(async dir => {
   await mkdir(path.join(dir, 'empty'));
