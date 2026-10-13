@@ -38,13 +38,13 @@ The ContentHub import uses its existing loader's supported named target in the b
 
 - Strict markup audit: **exit 0**, 104 Astro files, one authored HTML file, all 2,024 generated HTML files and eight selected HTTP responses. No configured findings, parser failures or execution failures were recorded.
 - All 26 Astro and 15 HTML analyzer probes pass without relaxing rules or adding suppressions.
-- `npm test`: **159 passed** on Node 22.23.3. Real-template checks cover raw HTML, destinations, footer ownership, repeated viewer IDs and annotation-dataset targeting. Browser-script tests cover optional controls, dependency execution order and Table/Tree pressed-state and iframe switching.
+- `npm test`: **160 passed** on Node 22.23.3. Real-template checks cover raw HTML, destinations, footer ownership, repeated viewer IDs and annotation-dataset targeting. Browser-script tests cover optional controls, dependency execution order and Table/Tree pressed-state and iframe switching.
 - Scoped source check: zero errors/warnings; the full production build and both public-file copies pass. Generated/HTTP HTML coverage is recorded separately from interactive browser coverage.
 - `SourceImage.astro` has no live consumer and is removed after reference review. No route or public asset is deleted.
 
 The acquisition-field renderer is shared with image metadata while dataset-specific presentation remains independently owned. Plain values are escaped before adding markup, taxon query values are encoded, literal pipe characters are preserved, and rendering does not change input records. Viewer metadata IDs use the copy-button key for repeated panes, while the annotation carousel's existing hooks remain stable.
 
-Navigation actions are native anchors with an inert shared shape hook; commands remain buttons. Card radius rules accept the button token while retaining their prior fallback when that theme is absent. Optional image-table/copy controls are guarded, and jQuery precedes dependent DataTables scripts. The actual file-view handler is tested so styling hooks cannot accidentally alter its selectors.
+Navigation actions are native anchors with an inert shared shape hook; commands remain buttons. Card action rules accept the button token while retaining their prior fallback when that theme is absent. Informational size panels, study/licence badges and cube illustrations keep their existing 4px corners independently of that token. Optional image-table/copy controls are guarded, and jQuery precedes dependent DataTables scripts. The actual file-view handler is tested so styling hooks cannot accidentally alter its selectors.
 
 Raw reports, builds, comparison inputs and browser evidence remain in ignored root `artifacts/`. Results apply to the configured rules and exercised content; API responses can change.
 
@@ -52,7 +52,7 @@ Raw reports, builds, comparison inputs and browser evidence remain in ignored ro
 
 An isolated, freshly installed application combines markup, dead-code corrections, dataset presentation, numeric facets and button geometry. The source changes merge without manual source resolutions. The shared package declarations and lockfile require explicit reconciliation when combining the two audit toolchains.
 
-The combined **273 tests pass** on Node 22. Its full production build passes, and the markup audit completes without findings. The configured dead-code scan still has deliberately retained observations; neither successful analysis nor a successful merge approves their removal. Optional spawned workers, copied fixture modules and ESLint configurations are registered in the graph and covered by a real Knip integration test. Dependency and static-finding CI policy remain separate decisions.
+The reviewed combined regression suite and full production build pass on Node 22, and the markup audit completes without findings. Rerun these checks against the combined heads when either branch changes. The configured dead-code scan still has deliberately retained observations; neither successful analysis nor a successful merge approves their removal. Optional spawned workers, copied fixture modules and ESLint configurations are registered in the graph and covered by a real Knip integration test. Dependency and static-finding CI policy remain separate decisions.
 
 ## Remaining verification boundaries
 

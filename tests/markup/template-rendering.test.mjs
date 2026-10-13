@@ -11,6 +11,7 @@ const repository = fileURLToPath(new URL('../../', import.meta.url));
 let application;
 let html;
 let logoHtml;
+let css;
 const validator = new HtmlValidate(JSON.parse(await readFile(path.join(repository, 'configs/quality/htmlvalidate.markup.json'), 'utf8')));
 after(async () => { if (application) await rm(application, { recursive: true, force: true }); });
 before(async () => {
@@ -74,6 +75,9 @@ const volumeImage = { submitted_in_study_accession: 'EMPIAR-12104', label: 'Volu
     await promisify(execFile)(process.execPath, [path.join(repository, 'node_modules/astro/astro.js'), 'build', '--root', application], { cwd: application, timeout: 120000, maxBuffer: 2 * 1024 * 1024 });
     html = await readFile(path.join(application, 'dist/index.html'), 'utf8');
     logoHtml = await readFile(path.join(application, 'dist/logos/index.html'), 'utf8');
+    const sheets = [...html.matchAll(/<link\b[^>]*href="(\/_astro\/[^" ]+\.css)"[^>]*>/g)];
+    css = (await Promise.all(sheets.map(match => readFile(path.join(application, 'dist', match[1]), 'utf8')))).join('\n');
+    css += [...html.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/g)].map(match => match[1]).join('\n');
 });
 
 test('actual shared templates produce valid raw HTML with repeated metadata, cards and news', async () => {
@@ -111,4 +115,12 @@ test('actual logo MDX renders headings and captions outside implicit Markdown pa
     const report = await validator.validateString(logoHtml);
     assert.equal(report.valid, true, JSON.stringify(report.results.flatMap(result => result.messages)));
     assert.equal((logoHtml.match(/download="/g) ?? []).length, 6);
+});
+
+test('native card action repairs preserve informational panel geometry', () => {
+    for (const selector of ['size-bar', 'study-link', 'license-badge', 'cube-wrapper']) {
+        const rules = [...css.matchAll(new RegExp(`\\.${selector}\\[data-astro-cid-[^\\]]+\\]\\s*\\{([^}]*)\\}`, 'g'))];
+        assert(rules.length > 0, `${selector} is rendered and styled`);
+        for (const rule of rules) assert.match(rule[1], /border-radius:\s*4px(?:;|$)/, `${selector} is not an action`);
+    }
 });
