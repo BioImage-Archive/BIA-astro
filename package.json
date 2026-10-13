@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "audit:markup": "node scripts/markup/audit.mjs",
+    "test:markup": "node --test tests/markup/*.test.mjs",
     "quality:markup:check": "astro check --tsconfig configs/quality/tsconfig.markup.json",
     "start": "astro dev",
     "build": "astro check && astro build && cp public/robots.txt dist/robots.txt && cp public/redirect_index.html dist/index.html",
