@@ -106,9 +106,7 @@ const breadcrumbs = [
                 </h1>
                 <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
                 <p class="studytitle">{imageDataset.title}</p>
-                <a href={ "/bioimage-archive/study/" + imageStudy.accession_id}>
-                    <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
-                </a> 
+                <a href={ "/bioimage-archive/study/" + imageStudy.accession_id} class="vf-button vf-button--primary vf-button--sm bia-button">Study Page</a>
             </div>
         </section>
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -139,7 +137,7 @@ const breadcrumbs = [
 
                                         <button
                                         id="file-path-toggle"
-                                        class="vf-button vf-button--primary vf-button--sm"
+                                        class="vf-button vf-button--primary vf-button--sm bia-button"
                                         type="button"
                                         aria-expanded="false"
                                         style="margin-top:12px;"
@@ -160,7 +158,7 @@ const breadcrumbs = [
                                             <div><b>{k}:</b> {String(v)}</div>
                                             ))}
                                         </div>
-                                        <button id="meta-toggle" class="vf-button vf-button--primary vf-button--sm" type="button" aria-expanded="false" style="margin-top:12px;" hidden>See more</button>
+                                        <button id="meta-toggle" class="vf-button vf-button--primary vf-button--sm bia-button" type="button" aria-expanded="false" style="margin-top:12px;" hidden>See more</button>
                                         </div>
                                 </div> 
                             )} 
@@ -193,7 +191,7 @@ const breadcrumbs = [
                 <br/>
                 {
                     interactiveImageRepresentation && (
-                        <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={viewerSourceURI ?? interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
+                        <button class="vf-button vf-button--primary vf-button--sm bia-button" id="CopyURLButton" data-url={viewerSourceURI ?? interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
                     )
                 }
                 {
@@ -203,23 +201,17 @@ const breadcrumbs = [
                 }
                 {
                     vizarrIFrameSource && (
-                        <a href={vizarrIFrameSource} target="_blank">
-                            <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
-                        </a>
+                        <a href={vizarrIFrameSource} target="_blank" class="vf-button vf-button--primary vf-button--sm bia-button">Open in Vizarr viewer</a>
                     )
                 }
                 {
                     itkLink && (
-                        <a href={itkLink} target="_blank">
-                            <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
-                        </a>
+                        <a href={itkLink} target="_blank" class="vf-button vf-button--primary vf-button--sm bia-button">Open in ITK viewer</a>
                     )
                 }
                 {
                     ng_link && (
-                        <a href={ng_link} target="_blank">
-                            <button class="vf-button vf-button--primary vf-button--sm">Open in neuroglancer</button>
-                        </a>
+                        <a href={ng_link} target="_blank" class="vf-button vf-button--primary vf-button--sm bia-button">Open in neuroglancer</a>
                     )
                 }
                 <script>

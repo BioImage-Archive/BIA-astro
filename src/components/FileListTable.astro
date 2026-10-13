@@ -16,13 +16,13 @@ if (file_list_urls) {
         </div>
         <div class="vf-grid__col--span-2" style="display:flex;">
             <div style="display:flex; flex: 1 1 auto;justify-content: flex-start;align-items: center;">
-                <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="table" aria-pressed="true">Table View</button>
-                <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button" data-view="tree" aria-pressed="false">Tree View</button>
-                <a class="vf-button vf-button--primary vf-button--sm" href="/bioimage-archive/help/explore-file-list">Help</a>
+                <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button bia-button" data-view="table" aria-pressed="true">Table View</button>
+                <button type="button" class="vf-button vf-button--primary vf-button--sm file-list-view-button bia-button" data-view="tree" aria-pressed="false">Tree View</button>
+                <a class="vf-button vf-button--primary vf-button--sm bia-button" href="/bioimage-archive/help/explore-file-list">Help</a>
             </div>
             <div style="display:flex">
-                <a class="vf-link" href={ftp_path} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">Browse HTTP</button></a>
-                <a class="vf-link" href={globus_link} target="_blank"><button class="vf-button vf-button--primary vf-button--sm">Browse Globus</button></a>
+                <a href={ftp_path} target="_blank" class="vf-link vf-button vf-button--primary vf-button--sm bia-button">Browse HTTP</a>
+                <a href={globus_link} target="_blank" class="vf-link vf-button vf-button--primary vf-button--sm bia-button">Browse Globus</a>
             </div>
         </div>
     </section>
