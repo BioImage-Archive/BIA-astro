@@ -1,0 +1,18 @@
+/* Shared geometry for application actions; variants retain their own
+ * colors, dimensions, focus indicators and pressed/selected behavior.
+ */
+:root {
+  --bia-button-radius: 0px;
+}
+
+:is(a, button, input).bia-button {
+  border-radius: var(--bia-button-radius);
+}
+
+/* Theme pagination only inside application-owned tables. Keep the vendor's
+ * focus, current-page and disabled styles; the scope also survives redraws.
+ */
+.bia-table-controls div.dt-container .dt-paging .dt-paging-button,
+.bia-table-controls .dataTables_wrapper .dataTables_paginate .paginate_button {
+  border-radius: var(--bia-button-radius);
+}
