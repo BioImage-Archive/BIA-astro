@@ -69,6 +69,12 @@ export const testCases = [
     { id: "overflow-counts", dataset: { title: "Count aggregate overflow", file_type_counts: {
         ".png": Number.MAX_SAFE_INTEGER, ".tif": 1,
     } } },
+    { id: "rounded-count", dataset: { title: "Fractional source count", image_count: "1.0000000000000001" } },
+    { id: "underflow-count", dataset: { title: "Underflowing source count", image_count: "-1e-400" } },
+    { id: "rounded-file-list", dataset: { title: "Fractional file-list fallback", image_count: 7 },
+        datasetFileSummaryString: { datasets: [{ dataset: "Fractional file-list fallback", file_count: "9007199254740991.1" }] } },
+    { id: "rounded-formats", dataset: { title: "Partially invalid format counts", image_count: 9,
+        file_type_counts: { ".png": "3.0", ".tif": "1e-400" } } },
 ];
 
 export const imageRecord = { ...record("Image record", "Line one\nLine two | pipe"), imaging_method_name: ["Method A", "Method B"] };

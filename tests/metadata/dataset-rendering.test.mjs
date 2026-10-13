@@ -275,6 +275,16 @@ test("safe numeric strings and actual zero counts remain reportable", () => {
     assert.match(sections["numeric-counts"], /png \(3\), tif \(0\)/);
 });
 
+test("compiled summaries reject rounded fractions and retain valid fallback counts", () => {
+    for (const id of ["rounded-count", "underflow-count"]) {
+        assert.match(sections[id], /<b>Number of images\/files:<\/b> Not reported/);
+    }
+    assert.match(sections["rounded-file-list"], /<b>Number of images\/files:<\/b> 7/);
+    assert.match(sections["rounded-formats"], /<b>Number of images\/files:<\/b> 9/);
+    assert.match(sections["rounded-formats"], /png \(3\)/);
+    assert.doesNotMatch(sections["rounded-formats"], /tif \(/);
+});
+
 test("a sum outside the safe integer range does not display a rounded file total", () => {
     assert.match(sections["overflow-counts"], /<b>Number of images\/files:<\/b> Not reported/);
     assert.doesNotMatch(sections["overflow-counts"], /Number of images\/files:<\/b> 9007199254740992/);
