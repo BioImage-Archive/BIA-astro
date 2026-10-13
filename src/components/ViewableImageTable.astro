@@ -13,7 +13,7 @@ const { study, images, imagePageRoot } = Astro.props;
       </h2>
     </div>
     {Array.isArray(images) && images.length > 0 ? (
-      <div>
+      <div class="bia-table-controls">
       <table id="viewable_images_table" class="vf-table vf-table--compact display" data-study-accession-id={study.accession_id}
       data-image-page-root={imagePageRoot || ""} data-image-fallback-src={imageFallback.src} data-api-path={SEARCH_API}>
         <thead>

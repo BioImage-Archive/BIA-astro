@@ -2,7 +2,7 @@
 const { datasetUUIDsAndFileStats } = Astro.props;
 ---
 
-<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing bia-table-controls">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="transcript_files">
         Omics Component
@@ -59,7 +59,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                         columns: [
                             { data: "uuid", title: "File UUID" },
                             { data: "file_path", title: "File Name" },
-                            { data: "uri", title: "Actions", render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` },
+                            { data: "uri", title: "Actions", render: (data) => `<button class="copy-btn bia-button" data-uri="${data}">Copy Url</button>` },
                         ],
                         pageLength: 25,
                         searching: true,
