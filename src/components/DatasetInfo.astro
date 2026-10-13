@@ -1,6 +1,6 @@
 ---
 import fieldMap from "../data/metadata-field-name-mapping.json";
-import DatasetDetail from "./DatasetDetail.astro";
+import DatasetMetadataRecord from "./DatasetMetadataRecord.astro";
 import "../styles/dataset-metadata.css";
 
 const { dataset, datasetFileSummaryString = null } = Astro.props;
@@ -112,7 +112,7 @@ const groups = [
             <section class="dataset-metadata__group" data-metadata-group={group.property}>
                 <h4 class="dataset-metadata__group-title">{group.label}</h4>
                 {group.records.map(record => (
-                    <DatasetDetail data={record} fieldMap={group.fields} presentation="dataset" />
+                    <DatasetMetadataRecord data={record} fieldMap={group.fields} />
                 ))}
             </section>
         ))}

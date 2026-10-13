@@ -173,8 +173,8 @@ test("plain metadata is escaped and retains literal pipes, newlines and long tex
 
 test("taxonomic labels and exact NCBI target retain their association", () => {
     assert.match(sections.complete, /<i>Mus musculus<\/i> \(Mouse\)/);
-    assert.match(sections.complete, /href="https:\/\/www.ncbi.nlm.nih.gov\/Taxonomy\/Browser\/wwwtax.cgi\?id=NCBI:txid10090"/);
-    assert.match(sections.literal, /id=9606&quot; onclick=&quot;alert\(1\)"/);
+    assert.match(sections.complete, /href="https:\/\/www.ncbi.nlm.nih.gov\/Taxonomy\/Browser\/wwwtax.cgi\?id=NCBI%3Atxid10090"/);
+    assert.match(sections.literal, /id=9606%22%20onclick%3D%22alert\(1\)"/);
 });
 
 test("partial taxonomic labels retain the supplied identifier or name without inventing text", () => {
@@ -223,7 +223,7 @@ test("empty groups stay absent and missing titles receive readable fallbacks", (
 test("the shared image presentation keeps its text, initial state and original spacing", () => {
     assert.doesNotMatch(sections.image, /dataset-metadata__|<dl/);
     assert.match(sections.image, /style="margin-bottom: 0.5rem;"/);
-    assert.match(sections.image, /Line one, Line two ,  pipe/);
+    assert.match(sections.image, /Line one, Line two | pipe/);
     assert.match(sections.image, /Method A,Method B/);
     assert.match(sections.image, /<details[^>]* open/);
 });

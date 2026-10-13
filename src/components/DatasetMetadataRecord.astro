@@ -1,0 +1,21 @@
+---
+import external_link from "../assets/bioimage-archive/external-link-svgrepo-com.png";
+import { renderMetadataValue } from "./formatting/metadata-values.js";
+
+const { data, fieldMap } = Astro.props;
+const fields = Object.keys(fieldMap).filter(key => data[key] != null && (!Array.isArray(data[key]) || data[key].length > 0));
+const defaultOpen = "default_open" in data ? data.default_open : true;
+const initiallyOpen = Boolean(defaultOpen) && defaultOpen !== "False" && defaultOpen !== "false";
+---
+
+<details class="dataset-metadata__record" open={initiallyOpen}>
+    <summary><b>{data.title || "Untitled record"}</b></summary>
+    <dl class="dataset-metadata__fields">
+        {fields.map(key => (
+            <div class="dataset-metadata__field" data-metadata-field={key}>
+                <dt><b>{fieldMap[key]}:</b></dt>{" "}
+                <dd><Fragment set:html={renderMetadataValue(key, data[key], external_link.src, true)} /></dd>
+            </div>
+        ))}
+    </dl>
+</details>
