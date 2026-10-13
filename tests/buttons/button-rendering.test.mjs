@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { parse } from "@astrojs/compiler";
 import { execFile } from "node:child_process";
 import { cp, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -177,18 +178,21 @@ test("the newsletter action is one native navigation link with its original dest
     }
 });
 
-test("application tables scope pagination geometry without changing native table identities", () => {
+test("application tables scope pagination geometry without changing native table identities", async () => {
     for (const [layout, html] of pages) {
+        const { ast } = await parse(html);
+        function scopeForTable(node, id, scoped = false) {
+            const attributes = node.attributes || [];
+            const insideScope = scoped || attributes.some(attribute => attribute.name === 'class' && /\bbia-table-controls\b/.test(attribute.value));
+            if (node.name === 'table' && attributes.some(attribute => attribute.name === 'id' && attribute.value === id)) return insideScope;
+            for (const child of node.children || []) {
+                const found = scopeForTable(child, id, insideScope);
+                if (found !== undefined) return found;
+            }
+        }
         for (const id of ["viewable_images_table", "sotables_file_references_table", "benchmarking_table",
             "model_prediction_table", "viewable_input_images_table", "specimen_track_table"]) {
-            const table = html.match(new RegExp(`<table\\b[^>]*id="${id}"[^>]*>`));
-            assert(table, `${layout}: ${id}`);
-            const prefix = html.slice(0, table.index);
-            if (id === "sotables_file_references_table") {
-                assert.match(prefix.slice(prefix.lastIndexOf('<section')), /class="[^"]*\bbia-table-controls\b/);
-            } else {
-                assert.match(prefix.slice(prefix.lastIndexOf('<div')), /class="[^"]*\bbia-table-controls\b/);
-            }
+            assert.equal(scopeForTable(ast, id), true, `${layout}: ${id} must exist inside the application table scope`);
         }
         const css = styles.get(layout);
         assert.match(css, /\.bia-table-controls div\.dt-container \.dt-paging \.dt-paging-button/);
