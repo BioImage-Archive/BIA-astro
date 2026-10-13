@@ -22,3 +22,6 @@ pnpm-debug.log*
 .aider*
 
 .netlify
+
+# local reports and run evidence
+/artifacts/
