@@ -24,7 +24,6 @@ import datasetBrowser from "../../assets/bioimage-archive/projects/spora/dataset
 
 const sporaIO = "https://spora.epfl.ch/docs/io/index.html";
 const sporaBench = "https://spora.epfl.ch/docs/bench/index.html";
-const sporaData = "https://spora.epfl.ch/docs/";
 const sporaDocs = "https://spora.epfl.ch/docs/";
 const cards = [
   {
@@ -81,14 +80,14 @@ const fileIcons = [fileIcon1, fileIcon2, fileIcon3, fileIcon4, fileIcon5, fileIc
 const gettingStartedSteps = [
   {
     number: "1",
-    title: "Download via command line",
+    title: "Download via Command Line",
     description: "Browse all cohorts and download spora or specific datasets using rclone from your terminal.",
     link: "/bioimage-archive/projects/spora/dataset",
     linkText: "Open Dataset Browser ›",
   },
   {
     number: "2",
-    title: "Download a small cohort directly",
+    title: "Download a Small Cohort Directly",
     description: "Try spora immediately by downloading allam2022spatially, a small lung cancer IMC cohort (~500MB).",
     code: `rclone copy ":s3,endpoint='https://livingobjects.ebi.ac.uk',secret_access_key=:bioimaging-01-pub/spora-submissions/allam2022spatially" ./allam2022spatially -P`,
     link: null,
@@ -96,10 +95,10 @@ const gettingStartedSteps = [
   },
 ];
 const sporaCitation = `@inproceedings{querfurth2026spora,
-  title={spora: A Unified Multimodal Dataset for Spatial Proteomics},
-  author={von Querfurth, Benedikt and Wenckstern, Johann and Jain, Eeshaan and Klein, Lukas and Cheng, Phil F and Cheng, Yexiang and Vincent-Cuaz, C\'edric and Frossard, Pascal and Haberecker, Martina and Wicki, Andreas and Michielin, Olivier and Bunne, Charlotte},
-  booktitle={The Fortieth Annual Conference on Neural Information Processing Systems (NeurIPS 2026)},
-  year={2026}
+  title = {{spora: A Unified Multimodal Dataset and Platform for Spatial Proteomics}},
+  author = {von Querfurth, Benedikt and Wenckstern, Johann and Jain, Eeshaan and Klein, Lukas and Cheng, Phil F. and Cheng, Yexiang and Vincent-Cuaz, Cédric and Frossard, Pascal and Haberecker, Martina and Wicki, Andreas and Michielin, Olivier and Bunne, Charlotte},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS) Evaluations & Datasets (E&D) Track},
+  year = {2026}
 }`;
 const projectNavItems = [
   { key: "", label: "Home", href: "/bioimage-archive/" },
@@ -110,7 +109,7 @@ const projectNavItems = [
 ];
 
 ---
-<Layout pageTitle="spora" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora" projectNavItems={projectNavItems}>
+<Layout pageTitle="spora" projectTitle="[spora]" projectSubTitle="AI-ready Spatial Proteomics Dataset and Platform" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora" projectNavItems={projectNavItems}>
   <section class="vf-content vf-u-fullbleed spora-shell">
     <section class="vf-grid vf-grid__col-3 spora-hero">
       <div class="spora-media-panel" aria-hidden="true">
@@ -119,7 +118,7 @@ const projectNavItems = [
         </div>
       </div>
       <div class="vf-stack vf-stack--400 spora-copy vf-grid__col--span-2" style="padding-left: 1%; padding-top:0%">
-        <h1 class="vf-text vf-text-heading--1">AI ready spatial proteomics dataset</h1>
+        <h1 class="vf-text vf-text-heading--1">AI-ready Spatial Proteomics Dataset<br class="spora-title-break" /> and Platform</h1>
         <p class="vf-text-body vf-text-body--2 spora-description">
           Download and explore standardized multiplexed imaging data to understand tissue architecture
           across cancer types and organs with spora.
@@ -182,7 +181,7 @@ const projectNavItems = [
     <br />
     <section class="vf-grid" style="padding:1em 0;">
       <div style="text-align: center;">
-        <h3 >Standardized file types and annotations for each sample:</h3>
+        <h3 >Standardized File Types and Annotations for Each Sample</h3>
         <div class="file-grid">{['Multiplex Images','Paired H&E Images','Tissue Masks','Cell Masks','Cell Types','Patient Data','Meta Data'].map((label, index) => <article><img src={fileIcons[index].src} alt="" /><strong>{label}</strong></article>)}</div>
       </div>
     </section>
@@ -254,8 +253,8 @@ const projectNavItems = [
   <hr class="vf-divider | vf-u-fullbleed"/>
   <section class="vf-content vf-u-fullbleed spora-shell">
     <div class="spora-section-heading">
-      <h2>Contribute data to spora</h2>
-      <p>Do you want to contribute to spora? Get in touch! <a href="mailto:benedikt.edlervonquerfurth@epfl.ch">benedikt.edlervonquerfurth@epfl.ch</a></p>
+      <h2>Contribute Data to Spora</h2>
+      <p>Do you want to contribute to spora? Get in touch! <a href="mailto:spora@epfl.ch">spora@epfl.ch</a></p>
     </div>
     <div></div>
   </section>
@@ -510,6 +509,17 @@ const projectNavItems = [
     font-size: 1.15rem;
 
   }
+
+  .spora-title-break {
+    display: none;
+  }
+
+@media (min-width: 841px) and (min-aspect-ratio: 17/10) and (max-aspect-ratio: 37/20) {
+  .spora-title-break {
+    display: initial;
+  }
+}
+
   @media (max-width: 840px) {
     .spora-hero {
       display: block;
@@ -627,7 +637,7 @@ const projectNavItems = [
     }
 
     .file-grid {
-      width: 100%;
+      width: inherit;
       margin-left: 0;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
