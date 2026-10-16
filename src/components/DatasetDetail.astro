@@ -1,67 +1,24 @@
 ---
-import external_link from  "../assets/bioimage-archive/external-link-svgrepo-com.png";
-import { multilineTextRender} from "./SharedJSFunctions.js"
-import { renderFbbiTermsHtml } from "./formatting/fbbi-terms.mjs";
+import external_link from "../assets/bioimage-archive/external-link-svgrepo-com.png";
+import { renderMetadataValue } from "./formatting/metadata-values.js";
 
-
-var { data, fieldMap } = Astro.props;
-
-function taxonRenderWithLink(taxon) {
-   
-    const stringText = 
-        taxon["common_name"] && taxon["scientific_name"] ? `<i>${taxon["scientific_name"]}</i> (${taxon["common_name"]})` :
-        taxon["common_name"] ? taxon["common_name"] :
-        taxon["scientific_name"] ? `<i>${taxon["scientific_name"]}</i>` : null
-
-    if (taxon["ncbi_id"]) {
-        return `<li class="vf-content"> ${stringText} <sup><a href=\"https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${taxon["ncbi_id"]}\">${taxon["ncbi_id"]} <img src=\"${external_link.src}\" width="15" style="vertical-align:middle;margin:0px 0px 4px 0px"/></a></sup></li>`;
-    } else {
-        return `<li class="vf-content"> ${stringText}</li>`;
-    }
-}
-
-function growthProtocolRender(growthProtocol) {
-    return growthProtocol["protocol_description"]
-}
-
-
-function renderValue(key, value) {
-    if (key === "organism_classification") {
-        return `<ul>
-            ${value.map((taxon) => taxonRenderWithLink(taxon)).join("")} 
-            </ul>`;
-    } else if (key === "growth_protocol") {
-        return `${growthProtocolRender(value)}`;
-    } else if (key === "fbbi_id") {
-        return renderFbbiTermsHtml(value);
-    } else {
-        return multilineTextRender(value.toString().replace(/[\r\n|\r|\n]+/g, ", "))
-    }
-}
-
-const renderField = Object.keys(fieldMap).map((key) => {
-    if (key in fieldMap && !(data[key] == null)) {
-        if (Array.isArray(data[key])) {
-            if (data[key].length > 0) {
-            return `<div style="overflow-wrap: anywhere;"><b>${fieldMap[key]}:</b>&nbsp; ${renderValue(key, data[key])}</div>`;
-            }
-        } else {
-            return `<div style="overflow-wrap: anywhere;"><b>${fieldMap[key]}:</b>&nbsp; ${renderValue(key, data[key])}</div>`;
-        }
-    }
-});
-
-if (!("default_open" in data) ) {
-    data.default_open = "True"
-}
+const { data, fieldMap } = Astro.props;
+const fields = Object.keys(fieldMap).filter(key => data[key] != null && (!Array.isArray(data[key]) || data[key].length > 0));
+const defaultOpen = "default_open" in data ? data.default_open : true;
+const initiallyOpen = Boolean(defaultOpen) && defaultOpen !== "False" && defaultOpen !== "false";
 ---
 
-<details open={"default_open" in data ? data.default_open: "True"} style="margin-bottom: 0.5rem;">
-    <summary>
-        <b>{data.title}</b> {data.default_open? ' ':'(as above)'}
-    </summary>
-
-    <ul>
-        <Fragment set:html={renderField} ` />
-    </ul>
+<details open={initiallyOpen} style="margin-bottom: 0.5rem;">
+    <summary><b>{data.title}</b> {!initiallyOpen ? '(as above)' : ''}</summary>
+    <div class="metadata-fields">
+        {fields.map(key => (
+            <div style="overflow-wrap: anywhere;">
+                <b>{fieldMap[key]}:</b>&nbsp; <Fragment set:html={renderMetadataValue(key, data[key], external_link.src)} />
+            </div>
+        ))}
+    </div>
 </details>
+
+<style>
+    .metadata-fields { padding-left: 20px; }
+</style>
