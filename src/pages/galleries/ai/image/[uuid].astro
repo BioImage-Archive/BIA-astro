@@ -57,4 +57,5 @@ const breadcrumbs = [
         <StudyComponents title="Annotated Datasets" id ="annotated_datasets" content={annotatedDatasetContent} license={license}/>
         <script type="application/json" id="images-length" set:html={JSON.stringify(annotatedImages.length)} />
         <script type="application/json" id="study-json" set:html={JSON.stringify(studyInfo.dataset)} />
-</BaseLayout>
+    </div>
+</BaseLayoutWithBreadcrumbs>

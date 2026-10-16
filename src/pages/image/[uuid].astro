@@ -95,7 +95,6 @@ const breadcrumbs = [
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={image.uuid} breadcrumbs={breadcrumbs}>
-  <body>
     <div class="vf-stack vf-stack--500">
         <section class="vf-content | embl-grid embl-grid--has-centered-content">
             <div></div>
@@ -398,8 +397,7 @@ const breadcrumbs = [
                 </>
             )
         }
-    </body>
-</BaseLayout>
+    </div>
 <style>
   #meta-wrap[data-collapsed="true"] #meta-content { overflow: hidden; }
 </style>
@@ -495,3 +493,5 @@ const breadcrumbs = [
     initFilePathCollapse();
   });
 </script>
+
+</BaseLayoutWithBreadcrumbs>
