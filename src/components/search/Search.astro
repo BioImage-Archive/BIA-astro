@@ -13,6 +13,7 @@ import {type SelectedFacets, type SearchHits, type FacetData, type PaginationDat
 import SearchResultsTable  from "./SearchResultsTable.astro"
 import SearchResultsCompactCards  from "./SearchCompactCards.astro"
 import { PUBLIC_SEARCH_API } from "astro:env/client";
+import { buildFacetOptions, getFacetQueryValues as readFacetQueryValues, isNumericFacet } from "./facet-options.mjs";
 
 const { url, query, searchType} =
   Astro.props as {
@@ -47,12 +48,7 @@ const cappedPage = Math.max(1, Math.floor(maxResultWindow / pageSize));
 const displayPage = cursor ? Math.max(cappedPage + 1, page) : page;
 
 function getFacetQueryValues(paramName: string) {
-  const directValues = url.searchParams.getAll(paramName);
-  if (directValues.length > 0) {
-    return directValues;
-  }
-
-  return url.searchParams.getAll(`${paramName}.eq`);
+  return readFacetQueryValues(url.searchParams, paramName);
 }
 
 const selectedFacets: SelectedFacets = {
@@ -114,6 +110,7 @@ const FACET_CONFIG: Record<
 let hits = {} as SearchHits;
 let facetData = {} as FacetData;
 let paginationData = {} as PaginationData;
+let hasFacetResponse = false;
 
 const hasQueryParam = query || query ==="";
 if (hasQueryParam) {
@@ -139,6 +136,7 @@ if (hasQueryParam) {
     const data = await res.json();
     hits = data.hits;
     facetData = data.facets;
+    hasFacetResponse = !!facetData && typeof facetData === "object" && !Array.isArray(facetData);
     paginationData = data.pagination;
   }
 }
@@ -191,7 +189,19 @@ function hasMinMax(x: any): x is { min: number; max: number; globalMin: number; 
 }
 
 
-const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
+const facetEntries = Object.entries(facetData);
+// Restore omitted numeric groups only for the endpoint that offers them.
+if (hasFacetResponse) {
+  for (const [facetKey, cfg] of Object.entries(FACET_CONFIG)) {
+    const supportsNumericGroup = isNumericFacet(cfg.queryKey!) &&
+      (searchType === "study" ? cfg.queryKey === "facet.year" : cfg.queryKey !== "facet.year");
+    if (supportsNumericGroup && selectedFacets[cfg.queryKey!]?.length && !(facetKey in facetData)) {
+      facetEntries.push([facetKey, { buckets: [], sum_other_doc_count: 0 }]);
+    }
+  }
+}
+
+const facets = facetEntries.reduce((acc, [facetKey, data]) => {
   const cfg = FACET_CONFIG[facetKey];
   if (!cfg) return acc;
 
@@ -199,49 +209,15 @@ const facets = Object.entries(facetData).reduce((acc, [facetKey, data]) => {
   if (cfg.type === "terms" || cfg.type === "boolean") {
     if (!hasBuckets(data)) return acc;
 
-    let valuesAndCounts = data.buckets
-      .slice()
-      .sort((a, b) => {
-        const aKey = (a.key_as_string ?? a.key ?? "").toString().toLowerCase();
-        const bKey = (b.key_as_string ?? b.key ?? "").toString().toLowerCase();
-        return aKey.localeCompare(bKey);
-      })
-      .reduce((obj, bucket) => {
-        const k = (bucket.key_as_string ?? bucket.key ?? "").toString();
-        obj[k] = bucket.doc_count;
-        return obj;
-      }, {} as Record<string, number>);
-    
-    // restore backend order
-    //   reduce above also causes 2048 to be misplaced so re-apply order
-    if([
-      "total_size_in_bytes",
-      "time_steps",
-      "total_physical_size_x",
-      "total_physical_size_y",
-      "total_physical_size_z",
-      "voxel_physical_size_x",
-      "voxel_physical_size_y",
-      "voxel_physical_size_z",
-      "image_pixel_z",
-      "image_pixel_x",
-      "image_pixel_y",
-    ].includes(facetKey)) {
-      const preservedOrderValuesAndCounts = {};
-      data.buckets.map((bucket) => {
-        // space needed so 2048 isn't a numeric key, which would cause it to be the first key in the dictionary, independent of insertion order
-        preservedOrderValuesAndCounts[" " + bucket.key] = bucket.doc_count;
-      });
-      valuesAndCounts = preservedOrderValuesAndCounts;
-    };
-
-    const totalFacetCounts =
-      Object.keys(valuesAndCounts).length + (data.sum_other_doc_count ?? 0);
+    const selectedValue = selectedFacets[cfg.queryKey!] ?? [];
+    const options = buildFacetOptions(data.buckets, cfg.queryKey, selectedValue);
+    const returnedOptionCount = options.filter(option => option.count !== null).length;
+    const totalFacetCounts = returnedOptionCount + (data.sum_other_doc_count ?? 0);
 
     acc[cfg.queryKey!] = {
       kind: cfg.type,
-      valuesAndCounts,
-      selectedValue: selectedFacets[cfg.queryKey!] ?? [],
+      options,
+      selectedValue,
       totalFacetCounts,
       title: cfg.title,
     };

@@ -1,0 +1,122 @@
+.dataset-metadata {
+    margin-block: 0 2rem;
+    min-inline-size: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* Match the metadata hierarchy even inside Visual Framework's vf-content. */
+section.dataset-metadata > h3.dataset-metadata__title {
+    margin-block: 0 .75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.dataset-metadata .dataset-metadata__body {
+    border-inline-start: 1px solid #d1d5d8;
+    padding-inline-start: 1rem;
+    min-inline-size: 0;
+}
+
+.dataset-metadata div.dataset-metadata__overview > p {
+    margin-block: 0 .375rem;
+    font-size: inherit;
+    white-space: pre-wrap;
+    line-height: inherit;
+}
+
+.dataset-metadata .dataset-metadata__group {
+    margin-block-start: 1rem;
+}
+
+.dataset-metadata .dataset-metadata__group > h4.dataset-metadata__group-title {
+    margin-block: 0 .125rem;
+    font-size: inherit;
+    font-weight: 600;
+    line-height: inherit;
+}
+
+.dataset-metadata .dataset-metadata__record {
+    margin-block: .125rem .5rem;
+    margin-inline-start: 1rem;
+    font-size: inherit;
+}
+
+.dataset-metadata .dataset-metadata__record > summary {
+    cursor: pointer;
+    padding-block: .25rem;
+    font-size: inherit;
+    line-height: inherit;
+    display: list-item;
+}
+
+.dataset-metadata .dataset-metadata__record > summary > b {
+    font-weight: 600;
+}
+
+.dataset-metadata .dataset-metadata__record > summary:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+.dataset-metadata .dataset-metadata__fields {
+    margin: 0;
+    padding-inline-start: 1rem;
+    min-inline-size: 0;
+    font-size: inherit;
+}
+
+.dataset-metadata .dataset-metadata__field {
+    margin-block: .25rem;
+    line-height: inherit;
+}
+
+/* VF gives definition labels heading-sized text; keep these at body size. */
+.dataset-metadata .dataset-metadata__record .dataset-metadata__fields .dataset-metadata__field > dt,
+.dataset-metadata .dataset-metadata__record .dataset-metadata__fields .dataset-metadata__field > dd {
+    display: inline;
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.dataset-metadata .dataset-metadata__field > dt > b {
+    font-weight: 500;
+}
+
+.dataset-metadata .dataset-metadata__field > dd {
+    white-space: pre-wrap;
+}
+
+.dataset-metadata .dataset-metadata__field ul {
+    margin-block: .125rem .25rem;
+    padding-inline-start: 1.25rem;
+}
+
+.dataset-metadata .dataset-metadata__field ul > li {
+    margin-block: 0 .125rem;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+@media (max-width: 40rem) {
+    .dataset-metadata .dataset-metadata__body {
+        padding-inline-start: .75rem;
+    }
+
+    .dataset-metadata .dataset-metadata__record {
+        margin-inline-start: .75rem;
+    }
+
+    .dataset-metadata .dataset-metadata__fields {
+        padding-inline-start: .5rem;
+    }
+}
+
+@media (forced-colors: active) {
+    .dataset-metadata .dataset-metadata__body {
+        border-inline-start-color: CanvasText;
+    }
+}

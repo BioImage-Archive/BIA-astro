@@ -1,17 +1,11 @@
 ---
 import fieldMap from "../data/metadata-field-name-mapping.json";
-import DatasetDetail from "./DatasetDetail.astro";
+import DatasetMetadataRecord from "./DatasetMetadataRecord.astro";
+import { validFileCount } from "./formatting/file-counts.mjs";
+import "../styles/dataset-metadata.css";
 
 const { dataset, datasetFileSummaryString = null } = Astro.props;
-const biosampleMap = fieldMap["biosample"];
-const sippMap = fieldMap["specimen_imaging_preparation_protocol"];
-const sgpMap = fieldMap["specimen_growth_protocol"];
-const imageAcquisitionMap = fieldMap["image_acquisition"];
-const analysisMethodMap = fieldMap["analysis_method"];
-const annotationMethodMap = fieldMap["annotation_method"];
-const correlationMethodMap = fieldMap["correlation_method"];
-
-const detail_section_style= "margin-bottom: 1rem;"
+const hasDescription = dataset.description != null && dataset.description !== "";
 
 function getAdditionalMetadataValue(name) {
     const metadata = dataset?.additional_metadata?.find((item) => item?.name === name);
@@ -28,17 +22,15 @@ function getFileTypeCountEntries(fileTypeCounts) {
         : Object.entries(fileTypeCounts);
 
     return entries
-        .filter(([extension, count]) =>
+        .filter(([extension]) =>
             typeof extension === "string" &&
             extension.length > 0 &&
             extension !== "file" &&
-            extension !== "directory" &&
-            count != null &&
-            Number.isFinite(Number(count))
+            extension !== "directory"
         )
         .map(([extension, count]) => ({
             extension: extension.replace(/^\./, ""),
-            count: Number(count),
+            count: validFileCount(count),
         }));
 }
 
@@ -60,23 +52,26 @@ function formatVoxelSizes(voxelSizes) {
 
 const metadataFileTypeCounts = getAdditionalMetadataValue("file_type_counts");
 const metadataFileTypeCountEntries = getFileTypeCountEntries(metadataFileTypeCounts);
-const fileTypeCountEntries = metadataFileTypeCountEntries.length > 0
+const hasMetadataFileTypeCounts = metadataFileTypeCountEntries.some(({ count }) => count != null);
+const selectedFileTypeCountEntries = hasMetadataFileTypeCounts
     ? metadataFileTypeCountEntries
     : getFileTypeCountEntries(dataset?.file_type_counts);
+const fileTypeCountEntries = selectedFileTypeCountEntries.filter(({ count }) => count != null);
 const formattedFileTypeCounts = fileTypeCountEntries
     .map(({ extension, count }) => `${extension} (${count})`)
     .join(", ");
-const hasMetadataFileTypeCounts = metadataFileTypeCountEntries.length > 0;
 const metadataVoxelSize = formatVoxelSizes(getAdditionalMetadataValue("voxel_sizes"));
 const voxelSize = metadataVoxelSize ?? (dataset?.physical_voxel_size
     ? { label: "Physical Voxel Size", value: dataset.physical_voxel_size }
     : null);
-const totalFileTypeCount = fileTypeCountEntries.length > 0
+// A partial set of valid format counts cannot establish a complete file total.
+const summedFileTypeCount = fileTypeCountEntries.length > 0 && selectedFileTypeCountEntries.every(({ count }) => count != null)
     ? fileTypeCountEntries.reduce((total, { count }) => total + count, 0)
     : null;
+const totalFileTypeCount = validFileCount(summedFileTypeCount);
 const dsFromFileList = datasetFileSummaryString?.datasets?.find((ds) => ds.dataset == dataset.title) ?? null;
 const fileCountsFromFileList = dsFromFileList?.file_count ?? null;
-const fileCount = totalFileTypeCount ?? fileCountsFromFileList ?? dataset?.image_count ?? null;
+const fileCount = totalFileTypeCount ?? validFileCount(fileCountsFromFileList) ?? validFileCount(dataset?.image_count);
 const formatsFromFileList = dsFromFileList
     ? [
         dsFromFileList.data_format ? `${dsFromFileList.data_format}` : "",
@@ -90,163 +85,39 @@ const fileFormatsLabel = hasMetadataFileTypeCounts
 const fileFormats = hasMetadataFileTypeCounts
     ? formattedFileTypeCounts
     : formatsFromFileList || formattedFileTypeCounts;
----
-<style>
-    .details > div{
-        padding-left: 20px
+const groups = [
+    ["biological_entity", "biosample", "Biosamples"],
+    ["specimen_imaging_preparation_protocol", "specimen_imaging_preparation_protocol", "Specimen Preparation Protocols"],
+    ["acquisition_process", "image_acquisition", "Image Acquisition Processes"],
+    ["other_creation_process", "specimen_growth_protocol", "Creation Protocols"],
+    ["analysis_method", "analysis_method", "Image Analysis Methods"],
+    ["correlation_method", "correlation_method", "Correlation Methods"],
+    ["annotation_process", "annotation_method", "Annotation Methods"],
+].map(([property, mapKey, label]) => {
+    const records = dataset[property] ?? [];
+    if (!Array.isArray(records)) {
+        throw new TypeError(`Dataset ${dataset.title ?? dataset.uuid ?? "(untitled)"}: ${property} must be an array`);
     }
-</style>
+    return { property, fields: fieldMap[mapKey], label, records };
+});
 
-<div style="margin-bottom: 1rem;">
-    
-    <div>
-        <b style="font-size: 14pt;">{dataset.title}</b>
-    </div>
-    <div class="details">
-
-        <div style={detail_section_style}>
-            <b>Description:</b>&nbsp;{dataset.description}
+---
+<section class="dataset-metadata">
+    <h3 class="dataset-metadata__title">{dataset.title || "Untitled dataset"}</h3>
+    <div class="dataset-metadata__body">
+        <div class="dataset-metadata__overview">
+            {hasDescription && <p><b>Description:</b> {dataset.description}</p>}
+            {voxelSize && <p><b>{voxelSize.label}:</b> {voxelSize.value}</p>}
+            <p><b>Number of images/files:</b> {fileCount ?? "Not reported"}</p>
+            {fileFormats && <p><b>{fileFormatsLabel}:</b> {fileFormats}</p>}
         </div>
-        {
-            voxelSize && (
-                <div style={detail_section_style}>
-                    <b>{voxelSize.label}:</b>&nbsp;{voxelSize.value}
-                </div>
-            )
-        }
-        <div style={detail_section_style}>
-            <b>Number of images/files:</b>&nbsp;{fileCount ?? "Not reported"}
-        </div>
-        {
-            (formattedFileTypeCounts || formatsFromFileList) && (
-                <div style={detail_section_style}>
-                    <b>{fileFormatsLabel}:</b>&nbsp;{fileFormats}
-                </div>
-            )
-        }
-        {
-            "biological_entity" in dataset &&
-                dataset.biological_entity &&
-                dataset.biological_entity.length > 0 && (
-                    <div class="details">
-                        <b>Biosamples:</b>
-                        <div style={detail_section_style}>
-                            {dataset.biological_entity.map((biosample) => (
-                                <DatasetDetail
-                                    data={biosample}
-                                    fieldMap={biosampleMap}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )
-        }
-        {
-            "specimen_imaging_preparation_protocol" in dataset &&
-                dataset.specimen_imaging_preparation_protocol &&
-                dataset.specimen_imaging_preparation_protocol.length > 0 && (
-                    <div class="details">
-                        <b>Specimen Preparation Protocols:</b>
-                        <div style={detail_section_style}>
-                            {dataset.specimen_imaging_preparation_protocol.map(
-                                (sipp) => (
-                                    <DatasetDetail
-                                        data={sipp}
-                                        fieldMap={sippMap}
-                                    />
-                                ),
-                            )}
-                        </div>
-                    </div>
-                )
-        }
-        {
-            "acquisition_process" in dataset &&
-                dataset.acquisition_process &&
-                dataset.acquisition_process.length > 0 && (
-                    <div class="details">
-
-                    <b>Image Acquisition Processes:</b>
-                    <div style={detail_section_style}>
-                        {dataset.acquisition_process.map(
-                            (image_acquisition) => (
-                                <DatasetDetail
-                                    data={image_acquisition}
-                                    fieldMap={imageAcquisitionMap}
-                                />
-                            ),
-                        )}
-                    </div>
-                    </div>
-                )
-        }
-        {
-            "other_creation_process" in dataset &&
-                dataset.other_creation_process &&
-                dataset.other_creation_process.length > 0 && (
-                                        <div class="details">
-
-                    <b>Creation Protocols:</b>
-                    <div style={detail_section_style}>
-                        {dataset.other_creation_process.map(
-                            (sgp) => (
-                                <DatasetDetail
-                                    data={sgp}
-                                    fieldMap={sgpMap}
-                                />
-                            ),
-                        )}
-                    </div>
-                                        </div>
-                )
-        }
-        {
-            "analysis_method" in dataset && dataset.analysis_method && dataset.analysis_method.length > 0 && (
-                <div class="details">
-                    <b>Image Analysis Methods:</b>
-                    <div style={detail_section_style}>
-                        {dataset.analysis_method.map((analysis_method) => (
-                            <DatasetDetail
-                                data={analysis_method}
-                                fieldMap={analysisMethodMap}
-                            />
-                        ))}
-                    </div>
-                    </div>
-                
-            )
-        }
-        {
-            "correlation_method" in dataset && dataset.correlation_method && dataset.correlation_method.length > 0 && (
-                                    <div class="details">
-
-                <b>Correlation Methods:</b>
-                <div style={detail_section_style}>
-                    {dataset.correlation_method.map((correlation_method) => (
-                        <DatasetDetail
-                            data={correlation_method}
-                            fieldMap={correlationMethodMap}
-                        />
-                    ))}
-                </div>
-                                    </div>
-            )
-        }
-        {
-            "annotation_process" in dataset && dataset.annotation_process && dataset.annotation_process.length > 0 && (
-                                    <div class="details">
-
-                <b>Annotation Methods:</b>
-                <div style={detail_section_style}>
-                    {dataset.annotation_process.map((annotation_method) => (
-                        <DatasetDetail
-                            data={annotation_method}
-                            fieldMap={annotationMethodMap}
-                        />
-                    ))}
-                </div>
-                </div>
-            )
-        }
+        {groups.filter(group => group.records.length > 0).map(group => (
+            <section class="dataset-metadata__group" data-metadata-group={group.property}>
+                <h4 class="dataset-metadata__group-title">{group.label}</h4>
+                {group.records.map(record => (
+                    <DatasetMetadataRecord data={record} fieldMap={group.fields} />
+                ))}
+            </section>
+        ))}
     </div>
-</div>
+</section>

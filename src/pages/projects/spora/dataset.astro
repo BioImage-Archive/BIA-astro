@@ -29,9 +29,6 @@ const imageTypeTitles = {
 const typePillClass = (type) => `pill pill--${String(type).toLowerCase()}`;
 const modalityPillClass = (modality) => `pill pill--${String(modality).toLowerCase()}`;
 const formatCancers = (cancers) => cancers.join(', ');
-const sporaIO = "https://spora.epfl.ch/docs/io/index.html";
-const sporaBench = "https://spora.epfl.ch/docs/bench/index.html";
-const sporaData = "https://spora.epfl.ch/docs/";
 const sporaDocs = "https://spora.epfl.ch/docs/";
 
 const projectNavItems = [
@@ -42,7 +39,7 @@ const projectNavItems = [
   { key: "spora", label: "Documentation", href: sporaDocs},
 ];
 ---
-<Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI ready spatial proteomics dataset" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset" projectNavItems={projectNavItems}>
+<Layout pageTitle="Dataset Browser" projectTitle="[spora]" projectSubTitle="AI-ready Spatial Proteomics Datasets and Platform" projectBannerImage={bannerImage} breadcrumbs="/bioimage-archive/projects/spora/dataset" projectNavItems={projectNavItems}>
 <section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing browser" data-datasets={JSON.stringify(datasets)} >
   <aside class="filters" aria-label="Dataset filters">
     <div class="filters-panel">
