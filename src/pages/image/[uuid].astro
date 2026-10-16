@@ -224,11 +224,13 @@ const breadcrumbs = [
                 }
                 <script>
 
-                    let copyUrlButton = document.getElementById("CopyURLButton")
-                    let originalText = copyUrlButton.innerText;
-                    copyUrlButton.onclick=async() => {
-                        await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
-                    };
+                    const copyUrlButton = document.getElementById("CopyURLButton");
+                    if (copyUrlButton) {
+                        const originalText = copyUrlButton.innerText;
+                        copyUrlButton.onclick = async () => {
+                            await copyUrl(copyUrlButton.dataset.url, copyUrlButton, originalText);
+                        };
+                    }
 
                     async function copyUrl(url: string, button: HTMLElement, originalText: string) {
                         await navigator.clipboard.writeText(url);

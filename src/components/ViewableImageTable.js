@@ -1,10 +1,11 @@
 const tableEl = document.querySelector("#viewable_images_table");
 
-const studyAccessionID = tableEl.dataset.studyAccessionId;
-const imagePageRoot = tableEl.dataset.imagePageRoot;
-const imageFallbackSrc = tableEl.dataset.imageFallbackSrc;
-const api_path = tableEl.dataset.apiPath;
-const hasSpecimenTracks = tableEl.dataset.hasSpecimenTracks === "true";
+if (tableEl) {
+  const studyAccessionID = tableEl.dataset.studyAccessionId;
+  const imagePageRoot = tableEl.dataset.imagePageRoot;
+  const imageFallbackSrc = tableEl.dataset.imageFallbackSrc;
+  const api_path = tableEl.dataset.apiPath;
+  const hasSpecimenTracks = tableEl.dataset.hasSpecimenTracks === "true";
 
   function imageUrl(image) {
     return imagePageRoot
@@ -412,3 +413,4 @@ const hasSpecimenTracks = tableEl.dataset.hasSpecimenTracks === "true";
       saveTableState(table);
     });
   });
+}
