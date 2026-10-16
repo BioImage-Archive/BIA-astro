@@ -30,5 +30,4 @@ const studyMetadata = Object.fromEntries(studiesEntries);
           { Object.entries(additionalStudyInfo).map(([accessionID, studyAIInfo]) => ( <StudyCard study={ studyMetadata[accessionID] } studyPageRoot={"galleries/ai/analysed-study"} taglist={studyAIInfo.tags || []} cardImageOverride={studyAIInfo.hero_image}/> )) }
         </div>
     </section>
-  </body>
 </BaseLayout>
