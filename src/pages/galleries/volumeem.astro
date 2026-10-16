@@ -82,8 +82,8 @@ function copyURI(button) {
                 <p style="margin-bottom: 10px;">2. Download the data recursively (no credentials needed):</p>
                 <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; margin-bottom: 15px; overflow-x: auto;">aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} "s3://${s3Info.bucket}/${s3Info.key}" "${s3Info.key.split('/').pop()}" --recursive</pre>
                 <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-                    <button class="bia-button" onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy S3 URI</button>
-                    <button class="bia-button" onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' \\'${s3Info.key.split('/').pop()}\\' --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
+                    <button onclick="navigator.clipboard.writeText('${uri}').then(() => this.closest('dialog').close())">Copy S3 URI</button>
+                    <button onclick="navigator.clipboard.writeText('aws s3 cp --no-sign-request --endpoint-url ${s3Info.endpoint} \\'s3://${s3Info.bucket}/${s3Info.key}\\' \\'${s3Info.key.split('/').pop()}\\' --recursive').then(() => this.closest('dialog').close())">Copy AWS Command</button>
                 </div>
             </div>
         `;
@@ -207,7 +207,7 @@ function copyURI(button) {
         </section>
     </div>
 
-    <div id="table-view" class="bia-table-controls" style="display: none;">
+    <div id="table-view" style="display: none;">
         <VolumeEMTable images={vemImages} />
     </div>
 
@@ -262,7 +262,7 @@ function copyURI(button) {
             display: inline-flex;
             background: #f0f0f0;
             padding: 4px;
-            border-radius: var(--bia-button-radius);
+            border-radius: 20px;
             gap: 4px;
             flex-shrink: 0;
         }
@@ -278,7 +278,7 @@ function copyURI(button) {
         .toggle-label {
             display: inline-block;
             padding: 8px 16px;
-            border-radius: var(--bia-button-radius);
+            border-radius: 16px;
             transition: all 0.3s ease;
         }
         .toggle-option input:checked + .toggle-label {
@@ -313,7 +313,7 @@ function copyURI(button) {
             display: inline-flex;
             background: #f0f0f0;
             padding: 4px;
-            border-radius: var(--bia-button-radius);
+            border-radius: 20px;
             gap: 4px;
             margin-bottom: 1em;
         }
@@ -329,7 +329,7 @@ function copyURI(button) {
         .column-label {
             display: inline-block;
             padding: 4px 12px;
-            border-radius: var(--bia-button-radius);
+            border-radius: 16px;
             transition: all 0.3s ease;
             font-size: 0.9em;
         }

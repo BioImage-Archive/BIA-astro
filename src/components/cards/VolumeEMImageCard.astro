@@ -11,7 +11,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
 <article class="vf-card vf-card--brand vf-card--bordered custom-card" style="max-width:400px">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading title-container">
-            <span class="title-text"><a href={"/bioimage-archive/study/" + image.submitted_in_study_accession} style="text-decoration: none;color: #333;">{ image.label }</a></span>
+            <div class="title-text"><a href={"/bioimage-archive/study/" + image.submitted_in_study_accession} style="text-decoration: none;color: #333;">{ image.label }</a></div>
         </h3>
         <p class="subtitle-text">
             <i>{ image.organism }</i>, { image.imaging_method }
@@ -23,7 +23,7 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
             <a target="_blank" href={"/bioimage-archive/study/" + image.submitted_in_study_accession}>{ image.submitted_in_study_accession }</a>
         </div>
         <div class="license-badge">
-            <a target="_blank" href="https://creativecommons.org/public-domain/cc0/" rel="noopener">
+            <a target="_blank" href="https://creativecommons.org/public-domain/cc0/" target="_blank" rel="noopener">
                 <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" alt="CC0 License">
             </a>
         </div>
@@ -58,14 +58,10 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
     </div>
     <div class="vf-card__content | vf-stack vf-stack--400">
         <div class="button-container">
-            <div class="button-row">
-                <a target="_blank" href={ image.view_link } class="card-action bia-button">View</a>
-                <a target="_blank" href={"/bioimage-archive/image/" + image.uuid} class="card-action bia-button">Experiment metadata</a>
-            </div>
-            <div class="button-row">
-                <button class="bia-button" onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
-                <a target="_blank" href={rawDataLink} class="card-action bia-button">Raw data</a>
-            </div>
+            <button><a target="_blank" href={ image.view_link }>View</a></button>
+            <button><a target="_blank" href={"/bioimage-archive/image/" + image.uuid}>Experiment metadata</a></button>
+            <button onclick="copyURI(this)" data-uri={image.ome_zarr_image_uri}>Copy OME-Zarr URI</button>
+            <button><a target="_blank" href={rawDataLink}>Raw data</a></button>
         </div>
     </div>
 </article>
@@ -76,32 +72,23 @@ const rawDataLink = accessionID.startsWith("S-BIAD")
     }
     .button-container {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 4px;
         padding: 8px 12px 4px 12px;
-    }
-    .button-row {
-        display: flex;
         justify-content: center;
-        gap: 4px;
     }
-    button, .card-action {
-        min-width: 0;
-        padding: 6px 10px;
-        font: inherit;
-        font-size: 0.875rem;
-        text-align: center;
-        overflow-wrap: anywhere;
+    button {
+        padding: 6px 12px;
         border: 1px solid #666;
-        border-radius: var(--bia-button-radius, 4px);
+        border-radius: 4px;
         background: #f5f5f5;
         transition: all 0.2s ease;
     }
-    button:hover, .card-action:hover {
+    button:hover {
         background: #e0e0e0;
         transform: translateY(-1px);
     }
-    .card-action {
+    button a {
         text-decoration: none;
         color: #333;
     }

@@ -13,8 +13,8 @@ const {
     <h2>{title}</h2>
     <pre><code></code></pre>
     <div class="dialog-actions">
-      <button class:list={[copyButtonClass, "bia-button"]} type="button">{copyLabel}</button>
-      <button class="spora-button spora-button--ghost bia-button" value="cancel">Close</button>
+      <button class={copyButtonClass} type="button">{copyLabel}</button>
+      <button class="spora-button spora-button--ghost" value="cancel">Close</button>
     </div>
   </form>
 </dialog>
@@ -69,6 +69,7 @@ const {
     justify-content: center;
     min-height: 2.75rem;
     border: 1px solid #11130f;
+    border-radius: 999px;
     background: #11130f;
     color: white;
     padding: 0.65rem 1.1rem;

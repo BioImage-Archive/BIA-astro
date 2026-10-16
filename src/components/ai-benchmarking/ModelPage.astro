@@ -82,7 +82,11 @@ const filteredTableInfo = tableInfo.filter( row => row.model === modelName)
     </figure>
   
     <div>
-      <a href={modelInfo.model_link} class="vf-button vf-button--primary vf-button--sm bia-button">Link to model</a>
+      <a href={modelInfo.model_link}>
+        <button class="vf-button vf-button--primary vf-button--sm"
+          >Link to model</button
+        >
+      </a>
     </div>
   </section>
 

@@ -151,7 +151,7 @@ const breadcrumbs = [
     <div slot="browse-files">
       {browseFilesLink && (
         <a
-          class="vf-button vf-button--primary vf-button--sm bia-button"
+          class="vf-button vf-button--primary vf-button--sm"
           href={browseFilesLink}
           target={hasFileList ? undefined : "_blank"}
           rel={hasFileList ? undefined : "noopener noreferrer"}
@@ -159,7 +159,7 @@ const breadcrumbs = [
       )}
       {!hasFileList && globusLink && (
         <a
-          class="vf-button vf-button--primary vf-button--sm bia-button"
+          class="vf-button vf-button--primary vf-button--sm"
           href={globusLink}
           target="_blank"
           rel="noopener noreferrer"
@@ -169,7 +169,7 @@ const breadcrumbs = [
     {
       isEMPIAR && (
         <div slot="download-metadata">
-          <a target="_blank" href={`https://ftp.ebi.ac.uk/pub/databases/emtest/empiar/headers/${accessionID.replace("EMPIAR-", "")}.xml`} class="vf-button vf-button--primary vf-button--sm bia-button">
+          <a target="_blank" href={`https://ftp.ebi.ac.uk/pub/databases/emtest/empiar/headers/${accessionID.replace("EMPIAR-", "")}.xml`} class="vf-button vf-button--primary vf-button--sm">
             Download Metadata
           </a>
         </div>

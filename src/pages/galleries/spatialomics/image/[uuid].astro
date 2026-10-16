@@ -115,7 +115,9 @@ const breadcrumbs = [
                   </h1>
                   <h2 class="vf-intro__subheading">{imageStudy.title}</h2>
                   <p class="studytitle">{imageDataset.title}</p>
-                  <a href={ "/bioimage-archive/galleries/spatialomics/study/" + imageStudy.accession_id} class="vf-button vf-button--primary vf-button--sm bia-button">Study Page</a>
+                  <a href={ "/bioimage-archive/galleries/spatialomics/study/" + imageStudy.accession_id}>
+                      <button class="vf-button vf-button--primary vf-button--sm">Study Page</button>
+                  </a> 
               </div>
           </section>
           <section class="vf-content | embl-grid embl-grid--has-centered-content">
@@ -164,7 +166,7 @@ const breadcrumbs = [
                   <br/>
                   {
                       interactiveImageRepresentation && (
-                          <button class="vf-button vf-button--primary vf-button--sm bia-button" id="CopyURLButton" data-url={viewerSourceURI ?? interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
+                          <button class="vf-button vf-button--primary vf-button--sm" id="CopyURLButton" data-url={viewerSourceURI ?? interactiveImageRepresentation.file_uri[0]}>Copy OME-Zarr URI</button>
                       )
                   }
                   {
@@ -174,17 +176,23 @@ const breadcrumbs = [
                   }
                   {
                       vizarrIFrameSource && (
-                          <a target="_blank" href={vizarrIFrameSource} class="vf-button vf-button--primary vf-button--sm bia-button">Open in Vizarr viewer</a>
+                          <a target="_blank" href={vizarrIFrameSource}>
+                              <button class="vf-button vf-button--primary vf-button--sm">Open in Vizarr viewer</button>
+                          </a>
                       )
                   }
                   {
                       itkLink && (
-                          <a target="_blank" href={itkLink} class="vf-button vf-button--primary vf-button--sm bia-button">Open in ITK viewer</a>
+                          <a target="_blank" href={itkLink}>
+                              <button class="vf-button vf-button--primary vf-button--sm">Open in ITK viewer</button>
+                          </a>
                       )
                   }
                   {
                       ng_link && (
-                          <a target="_blank" href={ng_link} class="vf-button vf-button--primary vf-button--sm bia-button">Open in neuroglancer</a>
+                          <a target="_blank" href={ng_link}>
+                              <button class="vf-button vf-button--primary vf-button--sm">Open in neuroglancer</button>
+                          </a>
                       )
                   }
                   <script>
