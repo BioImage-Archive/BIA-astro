@@ -18,6 +18,18 @@
       "url": "https://alpha.bioimagearchive.org/search/v1/website/study?facet.accession_id=S-BIAD3397",
       "capturedAt": "2026-10-05",
       "sha256": "635987ee122eab2bbcfa04218bfb8d7470eeb3fbd854991618dc750e240dbf23"
+    },
+    {
+      "file": "browse-image-response.json",
+      "url": "https://alpha.bioimagearchive.org/search/v1/website/browse/image?pagination.page=1&pagination.page_size=1",
+      "capturedAt": "2026-10-12T20:10:17.990Z",
+      "sha256": "40caf25ab7bce0bb9ae7dc850c5fa80d3ce1cf66c27a34bad76be7370f7df761"
+    },
+    {
+      "file": "browse-study-response.json",
+      "url": "https://alpha.bioimagearchive.org/search/v1/website/browse/study?pagination.page=1&pagination.page_size=1",
+      "capturedAt": "2026-10-12T20:10:18.064Z",
+      "sha256": "c8f6bf9c4d0bf1e1eda0ac3f5e54b8872828a9b6d749c2942035a8d12cd4de74"
     }
   ]
 }
