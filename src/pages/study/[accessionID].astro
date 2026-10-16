@@ -134,7 +134,6 @@ const breadcrumbs = [
 ---
 
 <BaseLayoutWithBreadcrumbs pageTitle={`${study.accession_id}: ${study.title}`} breadcrumbs={breadcrumbs}>
-  <body>
     <StudyTitleInfo study_info={study} emdbLinks={emdbLinks} pdbLinks={pdbLinks}/>
 
   <StudyContentsSummary 
@@ -327,7 +326,7 @@ const breadcrumbs = [
   {hasFileList && (
     <FileListTable file_list_urls={fileListUrls} ftp_path={ftpHttpsLink} globus_link={globusLink}/>
   )}
-</BaseLayout>
+</BaseLayoutWithBreadcrumbs>
 
 <style>
   .study-info-item {
