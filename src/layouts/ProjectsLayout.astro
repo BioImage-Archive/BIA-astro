@@ -3,6 +3,7 @@ import "/src/styles/bars_and_sections.css"
 import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
 import { PUBLIC_GTAG } from "astro:env/client";
+import PreviewBanner from "../components/PreviewBanner.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import Announcement from "../components/Announcement.astro";
 import { Image } from 'astro:assets';
@@ -42,6 +43,7 @@ const projectBannerImageSrc = typeof projectBannerImage === "string" ? projectBa
     <title>{pageTitle}</title>
   </head>
   <body class="vf-body">
+    <PreviewBanner />
     <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
     <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
     <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">

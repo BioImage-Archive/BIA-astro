@@ -1,0 +1,23 @@
+FROM node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392 AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY . .
+ENV ASTRO_OUTPUT=server \
+    ASTRO_TELEMETRY_DISABLED=1 \
+    PUBLIC_SEARCH_API=https://alpha.bioimagearchive.org/search/v1 \
+    PUBLIC_MONGO_API=https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2 \
+    PUBLIC_GTAG="" \
+    PUBLIC_WEBSITE_STATE=DEV
+RUN npm test && npm run build
+RUN npm prune --omit=dev --ignore-scripts --no-audit --no-fund
+
+FROM node:22-bookworm-slim@sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392
+WORKDIR /app
+ENV NODE_ENV=production HOST=0.0.0.0 PORT=8080
+COPY --from=build --chown=node:node /app/dist ./dist
+COPY --from=build --chown=node:node /app/node_modules ./node_modules
+COPY --from=build --chown=node:node /app/package.json ./package.json
+USER node
+EXPOSE 8080
+CMD ["node", "--use-env-proxy", "dist/bioimage-archive/server/entry.mjs"]

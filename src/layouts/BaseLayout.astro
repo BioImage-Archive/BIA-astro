@@ -8,6 +8,7 @@ import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
 import Announcement from "../components/Announcement.astro";
 import { PUBLIC_GTAG } from "astro:env/client";
+import PreviewBanner from "../components/PreviewBanner.astro";
 const { pageTitle } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL;
 ---
@@ -47,6 +48,7 @@ const baseUrl = import.meta.env.BASE_URL;
   <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
 
   <body class="vf-body">
+    <PreviewBanner />
     <Header />
     <Navigation />
     <Announcement />

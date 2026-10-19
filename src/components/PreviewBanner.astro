@@ -1,0 +1,9 @@
+---
+const previewPr = process.env.BIA_PREVIEW_PR;
+const previewSha = process.env.BIA_PREVIEW_SHA?.slice(0, 12);
+---
+{previewPr && (
+  <aside role="status" style="padding: 8px 16px; background: #fff3cd; color: #332701;">
+    Review preview · PR #{previewPr} · commit {previewSha} · live archive data
+  </aside>
+)}

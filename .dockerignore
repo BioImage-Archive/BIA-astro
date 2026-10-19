@@ -1,3 +1,7 @@
 **/.git
 **/node_modules
-**/.dist
+**/dist
+**/.astro
+**/.netlify
+**/.env*
+**/.DS_Store
