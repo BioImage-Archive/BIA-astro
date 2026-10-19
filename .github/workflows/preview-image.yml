@@ -1,0 +1,63 @@
+name: Build preview image
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: preview-image-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: github.event.pull_request.head.repo.full_name == github.repository && !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      IMAGE: ghcr.io/bioimage-archive/bia-astro-preview
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test, build and publish the exact PR commit
+        id: image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          file: Dockerfile.preview
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/bioimage-archive/bia-astro-preview:pr-${{ env.PR_NUMBER }}-${{ env.HEAD_SHA }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/BioImage-Archive/BIA-astro
+            org.opencontainers.image.revision=${{ env.HEAD_SHA }}
+      - name: Preview access instructions
+        env:
+          IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
+        run: |
+          {
+            echo "### Preview image built for PR #${PR_NUMBER}"
+            echo "Commit: \`${HEAD_SHA}\`"
+            echo "Image: \`${IMAGE}@${IMAGE_DIGEST}\`"
+            echo
+            echo "The private deployment workflow checks for successful builds approximately every five minutes."
+            echo "[Check deployment health](https://github.com/BioImage-Archive/bia-astro-previews/actions) before opening the preview."
+            echo
+            echo '```sh'
+            echo "kubectl -n bia-previews port-forward svc/astro-pr-${PR_NUMBER} 4321:8080"
+            echo '```'
+            echo 'Then open http://localhost:4321/bioimage-archive/ while the command is running.'
+          } >> "$GITHUB_STEP_SUMMARY"

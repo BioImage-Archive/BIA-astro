@@ -16,7 +16,7 @@ const adapter = isNetlify()
   : node({ mode: 'standalone' });
 
 export default defineConfig({
-  //output: 'server',
+  output: process.env.ASTRO_OUTPUT === 'server' ? 'server' : 'static',
   //integrations: [mdx(), preact()]
   integrations: [mdx()],
 
