@@ -5,6 +5,9 @@ the Node tests and Astro build, then publishes a Linux/amd64 image to GHCR.
 It builds the PR head commit, rather than GitHub's synthetic merge commit.
 Fork PRs are excluded from this initial internal preview system.
 
+After this setup is merged, existing PR branches must merge or rebase onto main
+to pick up the preview Dockerfile and server-mode support, then push to build.
+
 The separate private repository `BioImage-Archive/bia-astro-previews` checks for
 successful builds approximately every five minutes, deploys by image digest,
 and checks the homepage and live search. Its workflow summary shows deployment

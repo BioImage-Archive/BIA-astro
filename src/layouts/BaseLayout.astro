@@ -8,10 +8,9 @@ import Footer from '../components/Footer.astro';
 import Navigation from '../components/Navigation.astro';
 import Announcement from "../components/Announcement.astro";
 import { PUBLIC_GTAG } from "astro:env/client";
+import PreviewBanner from "../components/PreviewBanner.astro";
 const { pageTitle } = Astro.props;
 const baseUrl = import.meta.env.BASE_URL;
-const previewPr = process.env.BIA_PREVIEW_PR;
-const previewSha = process.env.BIA_PREVIEW_SHA?.slice(0, 12);
 ---
 <html lang="en" class="vf-js" style="scroll-padding-top: 48px">
   <head>
@@ -49,11 +48,7 @@ const previewSha = process.env.BIA_PREVIEW_SHA?.slice(0, 12);
   <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
 
   <body class="vf-body">
-    {previewPr && (
-      <aside role="status" style="padding: 8px 16px; background: #fff3cd; color: #332701;">
-        Review preview · PR #{previewPr} · commit {previewSha} · live archive data
-      </aside>
-    )}
+    <PreviewBanner />
     <Header />
     <Navigation />
     <Announcement />
