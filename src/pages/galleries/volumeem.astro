@@ -102,6 +102,8 @@ function copyURI(button) {
         });
     }
 
+    let dataTable;
+
     function toggleView(viewId) {
         const views = ['card-view', 'table-view', 'grid-view'];
         views.forEach(id => {
@@ -150,7 +152,7 @@ function copyURI(button) {
 
             document.getElementById('visibleCount').textContent = searchTerm ? visibleCount : 'all';
         });
-        const dataTable = new DataTable('.vf-table', {
+        dataTable = new DataTable('.vf-table', {
             pageLength: 25,
             order: [[1, 'asc']], // Sort by Label column by default
             columnDefs: [
