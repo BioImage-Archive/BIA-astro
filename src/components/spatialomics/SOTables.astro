@@ -25,7 +25,6 @@ const { datasetUUIDsAndFileStats } = Astro.props;
       document.addEventListener("DOMContentLoaded", function () {
         const dropdown = document.getElementById("sotables_dataset_selector") as HTMLSelectElement; // Get the dropdown element
         const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); // Ensure datasetUuids is parsed correctly
-        let dataTable;
 
         // Function to initialize or update the DataTable
         const initializeDataTable = async (datasetUuid, totalFiles) => {
@@ -54,7 +53,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                         );
                     });
                     // Initialize the DataTable
-                    dataTable = $('#sotables_file_references_table').DataTable({
+                    $('#sotables_file_references_table').DataTable({
                         data: filteredFiles,
                         columns: [
                             { data: "uuid", title: "File UUID" },
@@ -67,7 +66,7 @@ const { datasetUUIDsAndFileStats } = Astro.props;
                         processing: true,
                         scrollX: true,
                         columnDefs: [{ type: "natural", targets: 0 }],
-                        createdRow: (row, data) => {
+                        createdRow: (row) => {
                             $(row).find(".copy-btn").on("click", function () {
                                 const link = $(this).data("uri");
                                 navigator.clipboard.writeText(link).then(() => {

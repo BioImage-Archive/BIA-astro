@@ -1,30 +1,12 @@
 ---
 import DatasetDetail from "../DatasetDetail.astro";
 import fieldMap from "../../data/metadata-field-name-mapping.json";
-import { formatListItem, taxonRender } from "../SharedJSFunctions";
+import { formatListItem } from "../SharedJSFunctions";
 
 const { dataset } = Astro.props;
 const biosampleMap = fieldMap["biosample"];
 const annotationMethodMap = fieldMap["annotation_method"];
 
-
-function getTaxons(dataset) {
-    var taxons
-    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
-        taxons = [];
-    }
-
-    taxons = dataset.biological_entity
-        .flatMap(entity => entity.organism_classification || [])
-        .filter(item => typeof item === "object"); 
-
-    var taxonHTMLList = new Array()
-    for (var taxon of taxons) {
-        taxonHTMLList.push(taxonRender(taxon))
-    }
-
-    return taxonHTMLList
-};
 
 function getImagingType(dataset) {
     var imagingTypeList = new Array()
