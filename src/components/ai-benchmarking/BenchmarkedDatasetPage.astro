@@ -86,7 +86,7 @@ const exampleAnnotationURI = studyAIInfo.hero_image_gt
       <div><b>Licence: </b> <a href={study.licence_details.uri}>{study.licence_details.label}</a></div>
       {
         studyAIInfo.tags && (
-          <div><b>Tags: </b> {studyAIInfo.tags.reduce(formatListItem, "")}</div>
+          <div><b>Tags: </b>{studyAIInfo.tags.reduce(formatListItem, "")}</div>
         )
       }
     </div>
