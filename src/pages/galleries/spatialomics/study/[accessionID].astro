@@ -26,35 +26,10 @@ const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 
 let hasTranscripts = false;
 
-const fetchDatasetDetails = async (datasetUuid: string) => {
-    const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
-    const apiUrl = `${PUBLIC_MONGO_API}/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
-    const response = await fetch(apiUrl);
-    const fileData = await response.json();
-    if (!Array.isArray(fileData)) return false;
-    const attributes = fileData.flatMap(file => file.additional_metadata || []);
-    const dataTypeAttr = attributes.find(attr => 
-        attr.name === 'attributes_from_biostudies.File' && (
-            attr.value?.attributes?.Data_Type === 'transcripts' ||
-            attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-            attr.value?.attributes?.Description?.includes('Feature barcode') ||
-            attr.value?.attributes?.Description?.includes('feature matrix')
-        )
-    );
-    return dataTypeAttr ? true : false;
-};    
-
-const checkForTranscripts = async () => {
-    for (const [uuid] of datasetUUIDsAndFileStats) {
-        const dataType = await fetchDatasetDetails(uuid);
-        if (dataType) {
-            hasTranscripts = true;
-            break;
-        }
-    }
-};
-
-await checkForTranscripts();
+const transcriptFileListURL = getSimpleAttributeValue(study, 'so_file_list_visualisation')
+if (transcriptFileListURL && transcriptFileListURL.length > 0) {
+    hasTranscripts = true;
+}
 
 const tableOfContents = {
   "Curated Study Information": "study",
@@ -170,5 +145,5 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
       </div>
     </section>
     )}
-    {hasTranscripts && ( <hr/> <SOTables datasetUUIDsAndFileStats={datasetUUIDsAndFileStats}/>)}
+    {hasTranscripts && ( <hr/> <SOTables fileListURL={transcriptFileListURL} />)}
 </BaseLayoutWithBreadcrumbs>
