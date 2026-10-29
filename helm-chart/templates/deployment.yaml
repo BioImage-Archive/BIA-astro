@@ -42,3 +42,5 @@ spec:
               value: "{{ .Values.env.publicMongoApi }}"
             - name: PUBLIC_GTAG
               value: "{{ .Values.env.publicGtag }}"
+            - name: PUBLIC_WEBSITE_STATE
+              value: "{{ .Values.env.publicWebsiteState }}"
