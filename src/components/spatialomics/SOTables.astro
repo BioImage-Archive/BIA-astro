@@ -9,7 +9,7 @@ const { fileListURL } = Astro.props;
       </h2>
     </div>
     <div class="file-list-viewer-frame vf-grid__col--span-2">
-        <iframe id="file-list-table-viewer" class="file-list-viewer is-active" data-src={fileListURL} loading="lazy" allow="clipboard-write"></iframe>
+        <iframe id="file-list-table-viewer" title="Omics Component - Transcripts" class="file-list-viewer" data-src={fileListURL} loading="lazy" allow="clipboard-write"></iframe>
     </div>
 </section>
 
@@ -18,22 +18,15 @@ const { fileListURL } = Astro.props;
     height: 810px;
     overflow-anchor: none;
     position: relative;
-    width: 100%;
+    width: inherit;
   }
 
   .file-list-viewer {
     border: 0;
     height: 800px;
     inset: 0;
-    pointer-events: none;
     position: absolute;
-    visibility: hidden;
     width: 100%;
-  }
-
-  .file-list-viewer.is-active {
-    pointer-events: auto;
-    visibility: visible;
   }
 </style>
 <script>
@@ -67,31 +60,4 @@ const { fileListURL } = Astro.props;
       window.addEventListener("load", loadFileListIframes, { once: true });
     }
   }
-
-  document.addEventListener("click", function (event) {
-    if (!(event.target instanceof HTMLElement)) return;
-
-    const button = event.target.closest(".file-list-view-button");
-    if (!(button instanceof HTMLElement)) return;
-    event.preventDefault();
-
-    const selectedView = button.dataset.view;
-    const selectedIframe = document.getElementById(`file-list-${selectedView}-viewer`);
-    if (!(selectedIframe instanceof HTMLIFrameElement)) return;
-
-    button.blur();
-    loadFileListIframes();
-
-    document.querySelectorAll(".file-list-viewer").forEach((iframe) => {
-      if (iframe instanceof HTMLIFrameElement) {
-        iframe.classList.toggle("is-active", iframe === selectedIframe);
-      }
-    });
-
-    document.querySelectorAll(".file-list-view-button").forEach((viewButton) => {
-      if (viewButton instanceof HTMLElement) {
-        viewButton.setAttribute("aria-pressed", String(viewButton === button));
-      }
-    });
-  });
 </script>
