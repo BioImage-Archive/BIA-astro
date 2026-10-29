@@ -6,7 +6,7 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
 import Citation from "../../components/Citation.astro";
-import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
+import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI, getImageFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -28,11 +28,46 @@ const tableOfContents = {
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 const images = study?.image ?? []
-const dirNumber = accessionID.replace("S-BIAD", "").replace("EMPIAR-", "");
-const isEMPIAR = accessionID.includes("EMPIAR");
-const ftpLink = await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
-const ftpHttpsLink = isEMPIAR? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`: ftpLink?.httpLink;
-const globusLink = isEMPIAR? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
+const isEMPIAR = accessionID.startsWith("EMPIAR-");
+const isBIA = accessionID.startsWith("EBIA");
+
+const originalStudyLink = isEMPIAR
+  ? `https://www.ebi.ac.uk/empiar/${accessionID}`
+  : isBIA
+    ? `/bioimage-archive/study/${accessionID}`
+    : `https://www.ebi.ac.uk/biostudies/BioImages/studies/${accessionID}`;
+
+const studyInfo = isEMPIAR
+  ? null
+  : await getFromAPI(
+      `https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`
+    );
+
+const empiarPath = `/empiar/world_availability/${accessionID.replace(/^EMPIAR-/, "")}`;
+
+async function getFTPLinkForEBIA(imageUUID, accessionID) {
+  if (!imageUUID) return null;
+
+  const image = await getImageFromAPI(imageUUID);
+  const ftpLink = image?.representation
+    ?.flatMap((rep) => rep?.file_uri ?? [])
+    .find((uri) => uri.startsWith("https://ftp.ebi.ac.uk/bioimaging/")
+      && uri.includes(`/${accessionID}/`));
+
+  return ftpLink ? ftpLink.split(`/${accessionID}/`)[0] + `/${accessionID}` : null;
+}
+
+const ftpHttpsLink = isEMPIAR
+  ? `https://ftp.ebi.ac.uk${empiarPath}`
+  : isBIA
+    ? await getFTPLinkForEBIA(images[0]?.uuid, accessionID)
+    : studyInfo?.httpLink;
+
+const globusLink = isEMPIAR
+  ? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=${empiarPath}/`
+  : isBIA ? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=${ftpHttpsLink.replace("https://ftp.ebi.ac.uk/", "")}/`
+  : studyInfo?.globusLink || "";   
+
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
 const hasFileList = Boolean(fileListUrls?.table_view && fileListUrls?.tree_view);
 const browseFilesLink = hasFileList ? "#file_list" : ftpHttpsLink;
@@ -113,18 +148,33 @@ export const doiToTag = (doi?: string | null) =>
   doi?.trim() ? `<a class="vf-link" href=${doi}>doi:${doi.trim().replace(/^https?:\/\/doi\.org\//i, "")}</a>` : "";
 
 export const generateHowToCiteText = (study: Study) => {
+  const { accession_id: accessionID } = study;
+  const isEMPIAR = accessionID.startsWith("EMPIAR-");
+  const isEBIA = accessionID.startsWith("EBIA");
+
   const authors = (study.author ?? [])
     .map(a => formatAuthor(a.display_name))
     .filter(Boolean)
     .join(", ");
 
-  const repo = study.accession_id?.includes("EMPIAR") ? "EMPIAR" : "BioImage Archive";
-  const urlForStudy = repo ==="EMPIAR"? "https://www.ebi.ac.uk/empiar/": "https://www.ebi.ac.uk/biostudies/BioImages/studies/"
-  const doi = doiToTag(study.doi) || `<a class="vf-link" href="${urlForStudy}${study.accession_id}">${urlForStudy}${study.accession_id}</a>`;
+  const repo = isEMPIAR ? "EMPIAR" : "BioImage Archive";
 
-  return [authors, `(${study.release_date.split("-")[0]})`, study.title.trim()+".", ` ${repo}, ${study.accession_id}.`, doi]
-    .filter(Boolean)
-    .join(" ") + ".";
+  const studyURL = isEMPIAR
+    ? `https://www.ebi.ac.uk/empiar/${accessionID}`
+    : isEBIA
+      ? `https://beta.bioimagearchive.org/bioimage-archive/study/${accessionID}`
+      : `https://www.ebi.ac.uk/biostudies/BioImages/studies/${accessionID}`;
+
+  const citationLink = doiToTag(study.doi)
+    || `<a class="vf-link" href="${studyURL}">${studyURL}</a>`;
+
+  return [
+    authors,
+    `(${study.release_date.split("-")[0]})`,
+    `${study.title.trim()}.`,
+    `${repo}, ${accessionID}.`,
+    citationLink,
+  ].filter(Boolean).join(" ") + ".";
 };
 const howToCite = generateHowToCiteText(study);
 const breadcrumbs = [
@@ -138,7 +188,7 @@ const breadcrumbs = [
 
   <StudyContentsSummary 
     tableOfContents={tableOfContents} 
-    originalStudyLink={`https://www.ebi.ac.uk/biostudies/BioImages/studies/${study.accession_id}`} 
+    originalStudyLink={originalStudyLink} 
     headlineStats={headlineStats}
   >
     <div slot="hero-image">
