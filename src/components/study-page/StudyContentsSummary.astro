@@ -9,7 +9,9 @@ if (originalStudyLink?.startsWith("https://www.ebi.ac.uk/empiar/") || originalSt
   original_study_button_label = "View in EMPIAR";
 } else if (originalStudyLink?.startsWith("https://www.ebi.ac.uk/bioimage-archive/") || originalStudyLink?.startsWith("https://www.ebi.ac.uk/biostudies/BioImages/studies/S-")) {
   original_study_button_label = "View in BioStudies";
-} 
+} else if (originalStudyLink?.startsWith("/bioimage-archive/study/EBIA-")) {
+  original_study_button_label = "View in BioImage Archive";
+}
 ---
 <section class="vf-content | embl-grid embl-grid--has-centered-content">
   <div>
@@ -32,9 +34,11 @@ if (originalStudyLink?.startsWith("https://www.ebi.ac.uk/empiar/") || originalSt
   <slot name="hero-image"/>
 
   <div class="study-page-actions">
-    <a href={originalStudyLink} target="_blank" class="vf-button vf-button--primary vf-button--sm">
-      {original_study_button_label}
-    </a>
+    {original_study_button_label!=="View in BioImage Archive" && (
+      <a href={originalStudyLink} target="_blank" class="vf-button vf-button--primary vf-button--sm">
+        {original_study_button_label}
+      </a>
+    )}
     <slot name="ftp-link" />
     <slot name="how-to-cite" />
     <slot name="browse-files" />

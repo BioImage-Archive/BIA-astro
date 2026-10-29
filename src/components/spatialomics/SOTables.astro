@@ -1,144 +1,63 @@
 ---
-const { datasetUUIDsAndFileStats } = Astro.props;
+const { fileListURL } = Astro.props;
 ---
 
-<section class="vf-intro | embl-grid embl-grid--has-centered-content | section-spacing">
+<section class="embl-grid embl-grid--has-centered-content | section-spacing">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading" id="transcript_files">
         Omics Component
       </h2>
     </div>
-    <div>
-      <p>     
-        Shows up to 1000 transcript or related files of any selected dataset.
-      </p>
-      <b>Dataset: </b> 
-      <select id="sotables_dataset_selector" class="form-select" data-dataset-uuids={JSON.stringify(datasetUUIDsAndFileStats)}>
-        <option value="" disabled selected>Select a Dataset</option>
-      </select>
-      
-      <table id="sotables_file_references_table" class="vf-table display"></table>
+    <div class="file-list-viewer-frame vf-grid__col--span-2">
+        <iframe id="file-list-table-viewer" title="Omics Component - Transcripts" class="file-list-viewer" data-src={fileListURL} loading="lazy" allow="clipboard-write"></iframe>
     </div>
-
-    <script>
-
-      document.addEventListener("DOMContentLoaded", function () {
-        const dropdown = document.getElementById("sotables_dataset_selector") as HTMLSelectElement; // Get the dropdown element
-        const datasetDetails = JSON.parse(dropdown.dataset.datasetUuids); // Ensure datasetUuids is parsed correctly
-        let dataTable;
-
-        // Function to initialize or update the DataTable
-        const initializeDataTable = async (datasetUuid, totalFiles) => {
-            // set page size parameter of the api url with an upper limit of 1000
-            const pageSize = totalFiles < 1000 ? totalFiles : 1000;
-            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
-            // Destroy the existing DataTable instance if it exists
-            if (($.fn.DataTable as any).isDataTable('#sotables_file_references_table')) {
-                $('#sotables_file_references_table').DataTable().destroy();
-                $('#sotables_file_references_table').empty(); // Clear the table's HTML content
-            }
-
-            // Fetch data and initialize the DataTable
-            fetch(apiUrl)
-                .then((response) => response.json())
-                .then((fileData) => {
-                    const filteredFiles = fileData.filter(file => {
-                        const additional_metadata = file.additional_metadata || [];
-                        return additional_metadata.some(attr => 
-                            attr.name === 'attributes_from_biostudies.File' && (
-                                attr.value?.attributes?.Data_Type === 'transcripts' ||
-                                attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-                                attr.value?.attributes?.Description?.includes('Feature barcode') ||
-                                attr.value?.attributes?.Description?.includes('feature matrix')
-                            )
-                        );
-                    });
-                    // Initialize the DataTable
-                    dataTable = $('#sotables_file_references_table').DataTable({
-                        data: filteredFiles,
-                        columns: [
-                            { data: "uuid", title: "File UUID" },
-                            { data: "file_path", title: "File Name" },
-                            { data: "uri", title: "Actions", render: (data) => `<button class="copy-btn" data-uri="${data}">Copy Url</button>` },
-                        ],
-                        pageLength: 25,
-                        searching: true,
-                        ordering: true,
-                        processing: true,
-                        scrollX: true,
-                        columnDefs: [{ type: "natural", targets: 0 }],
-                        createdRow: (row, data) => {
-                            $(row).find(".copy-btn").on("click", function () {
-                                const link = $(this).data("uri");
-                                navigator.clipboard.writeText(link).then(() => {
-                                  this.innerText = "URL Copied";
-                                  setTimeout(() => {
-                                      this.innerText = "Copy Url";
-                                  }, 700);
-                                });
-                            });
-                        }
-                    });
-                })
-                .catch((error) => {
-                    console.error("Error fetching data:", error);
-                });
-        };
-
-        // Function to fetch dataset details including Data_Type
-        const fetchDatasetDetails = async (datasetUuid) => {
-            const pageSize = 1000; // Fetch up to 1000 file references to get the attributes
-            const apiUrl = `https://wwwdev.ebi.ac.uk/bioimage-archive/api/v2/dataset/${datasetUuid}/file_reference?page_size=${pageSize}`;
-            const response = await fetch(apiUrl);
-            const fileData = await response.json();
-            const additional_metadata = fileData.flatMap(file => file.additional_metadata || []);
-            const dataTypeAttr = additional_metadata.find(attr => 
-                attr.name === 'attributes_from_biostudies.File' && (
-                    attr.value?.attributes?.Data_Type === 'transcripts' ||
-                    attr.value?.attributes?.Data_Type === 'Transcript_Coordinates' ||
-                    attr.value?.attributes?.Description?.includes('Feature barcode') ||
-                    attr.value?.attributes?.Description?.includes('feature matrix')
-                )
-            );
-            return dataTypeAttr ? true : false;
-        };    
-
-
-        // Populate the dropdown menu with dataset details
-        const filteredDatasets = [];
-        datasetDetails.forEach(([uuid, fileCount, title]) => {
-            fetchDatasetDetails(uuid).then((dataType) => {
-                if (dataType) {
-                    const option = document.createElement("option");
-                    option.value = uuid;
-                    option.text = `${title}`; 
-                    dropdown.appendChild(option);
-                    filteredDatasets.push([uuid, fileCount, title]);
-                }
-                if (filteredDatasets.length === 1) {
-                    dropdown.value = uuid;
-                    initializeDataTable(uuid, fileCount);
-                }
-            }).catch((error) => {
-                console.error(`Error fetching details for dataset ${uuid}:`, error);
-            });
-        });
-        // Event listener for dropdown menu selection
-        dropdown.addEventListener("change", () => {
-            const selectedIndex = dropdown.selectedIndex; // Get the selected index
-            if (selectedIndex > 0) { // Ignore the first "placeholder" option
-                const [selectedUuid, totalFiles] = filteredDatasets[selectedIndex - 1]; // Adjust for 0-based index
-                initializeDataTable(selectedUuid, totalFiles); // Initialize the table with selected dataset
-            }
-        });
-        // Trigger a default load for the first dataset 
-        dropdown.addEventListener("datasetLoaded", () => {
-            if (filteredDatasets.length > 0) {
-                dropdown.selectedIndex = 1; // Automatically select the first dataset
-                const [defaultUuid, defaultTotalFiles] = filteredDatasets[0];
-                initializeDataTable(defaultUuid, defaultTotalFiles);
-            }
-        });
-    });
-    </script>
 </section>
+
+<style>
+  .file-list-viewer-frame {
+    height: 810px;
+    overflow-anchor: none;
+    position: relative;
+    width: inherit;
+  }
+
+  .file-list-viewer {
+    border: 0;
+    height: 800px;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+</style>
+<script>
+  function loadFileListIframe(iframe: Element) {
+    if (!(iframe instanceof HTMLIFrameElement)) return;
+    if (iframe.src || !iframe.dataset.src) return;
+
+    iframe.src = iframe.dataset.src;
+  }
+
+  function loadFileListIframes() {
+    document.querySelectorAll(".file-list-viewer").forEach(loadFileListIframe);
+  }
+
+  const fileListViewerFrame = document.querySelector(".file-list-viewer-frame");
+
+  if (fileListViewerFrame instanceof HTMLElement) {
+    if (typeof IntersectionObserver !== "undefined") {
+      const fileListObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+
+          loadFileListIframes();
+          fileListObserver.disconnect();
+        },
+        { rootMargin: "1200px 0px" }
+      );
+
+      fileListObserver.observe(fileListViewerFrame);
+    } else {
+      window.addEventListener("load", loadFileListIframes, { once: true });
+    }
+  }
+</script>
