@@ -5,22 +5,28 @@
   "gallery_item_basepath": "/bioimage-archive/galleries/",
   "collections": [
     {
-      "name":"ai",
-      "title":"AI Gallery",
-      "subtitle":"Explore AI-ready image data and how AI models perform on different datasets",
-      "summary_image":"/bioimage-archive/ai-galleries/ai_gallery.png"
+      "name": "ai",
+      "title": "AI Gallery",
+      "subtitle": "Explore AI-ready image data and how AI models perform on different datasets",
+      "summary_image": "/bioimage-archive/ai-galleries/ai_gallery.png"
     },
     {
-      "name":"volumeem",
-      "title":"Volume EM Gallery",
-      "subtitle":"A selection of EMPIAR datasets",
-      "summary_image":"https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/EMPIAR-10967/IM1/IM1-representative-512-512.png"
+      "name": "volumeem",
+      "title": "Volume EM Gallery",
+      "subtitle": "A selection of EMPIAR datasets",
+      "summary_image": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/EMPIAR-10967/IM1/IM1-representative-512-512.png"
     },
     {
-      "name":"spatialomics",
-      "title":"Spatial Omics Gallery",
-      "subtitle":"A selection of spatial omics datasets",
-      "summary_image":"https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD570/S-BIAD570-example.png"
+      "name": "spatialomics",
+      "title": "Spatial Omics Gallery",
+      "subtitle": "A selection of spatial omics datasets",
+      "summary_image": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD570/S-BIAD570-example.png"
+    },
+    {
+      "name": "biological-visions",
+      "title": "Biological Visions",
+      "subtitle": "Explore the beauty of life through microscopy",
+      "summary_image": "https://livingobjects.ebi.ac.uk/bioimaging-integrator-data/S-BIAD3785/71d44e81-1f8f-407f-b795-6ad072e4b3b0/1d468653-1928-4ecc-a9de-e764d69e3571/artwork_rgb_v1_1024_1024.png"
     }
   ]
 }
