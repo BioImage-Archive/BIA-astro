@@ -34,7 +34,7 @@ interface Image {
         </tr>
     </thead>
     <tbody>
-        {Object.entries(images).map(([uuid, image]: [string, Image]) => (
+        {Object.entries(images).map(([, image]: [string, Image]) => (
             <tr>
                 <td style="width: 100px;">
                     <img src={image.thumbnail_src} alt="" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy"/>
