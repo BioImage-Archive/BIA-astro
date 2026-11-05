@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "lung-architecture",
+    "accession": "S-BIAD3785",
+    "imageUuid": "71d44e81-1f8f-407f-b795-6ad072e4b3b0",
+    "representationUuid": "1d468653-1928-4ecc-a9de-e764d69e3571",
+    "title": "Lung architecture",
+    "creator": "Isabel Uwagboe",
+    "affiliation": "King’s College London",
+    "caption": "The intricate cellular architecture of the deep lung, revealed through immunofluorescence microscopy.",
+    "alt": "Branching orange and gold structures surround dark air spaces in human lung tissue, with blue cell nuclei and scattered bright green cells.",
+    "recognition": "Winner · KCL Nikon Imaging Centre competition, 2024"
+  },
+  {
+    "accession": "S-BIAD3554",
+    "slug": "geometry-of-mitosis",
+    "title": "The geometry of mitosis",
+    "creator": "Bhagya Lakshmi Ravindranath",
+    "affiliation": "Danish Cancer Institute",
+    "caption": "A floral arrangement of dividing cells reveals the geometry of mitosis.",
+    "alt": "A red and green microscopic flower sits between two silvery butterfly-like chromosome arrangements on black.",
+    "recognition": "Joint winner · 3rd Danish BioImaging Microscopy Image Contest, 2026",
+    "imageUuid": "2f44c91f-e9ff-425f-8325-249d930ee79b",
+    "representationUuid": "42e39c80-3e41-4cdf-876f-907247b6710e"
+  },
+  {
+    "accession": "S-BIAD3555",
+    "slug": "ethereal-onion-skin",
+    "title": "Ethereal onion skin",
+    "creator": "Ria Rodriguez",
+    "affiliation": "University of Copenhagen",
+    "caption": "Folded onion epidermis becomes an ethereal landscape in blue and violet fluorescence.",
+    "alt": "Translucent folds of onion skin glow violet, blue and turquoise against a deep blue background.",
+    "recognition": "Joint winner · 3rd Danish BioImaging Microscopy Image Contest, 2026",
+    "imageUuid": "2b7f36c5-6ba8-4d57-9e75-c457bdc86349",
+    "representationUuid": "67479b07-601d-4614-9301-786b35b5378f"
+  },
+  {
+    "accession": "S-BIAD3971",
+    "slug": "winters-anatomy",
+    "title": "Winter’s Anatomy — When Lungs Become Trees",
+    "creator": "Claudia Victoria Benke",
+    "affiliation": "Phase Contrast Imaging Flagship Node Trieste",
+    "caption": "The branching airways of a human lung echo a leafless winter tree.",
+    "alt": "A finely branching grey lung airway structure casts a tree-like shadow across a pale background.",
+    "recognition": "Winner · Euro-BioImaging Four Seasons of the Invisible — Winter",
+    "imageUuid": "d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b",
+    "representationUuid": "26df8e4f-32ce-4d3b-8502-1eeeffcb5bc0"
+  },
+  {
+    "accession": "S-BIAD3974",
+    "slug": "nano-ice-skaters",
+    "title": "Nano Ice skaters",
+    "creator": "Hélène Roberge",
+    "affiliation": "VIB-BIC Leuven",
+    "caption": "Frozen dust particles resemble tiny skaters in a chance microscopic winter scene.",
+    "alt": "Small grey clusters resemble figures skating over a diagonally ridged, snowy-looking surface.",
+    "recognition": "Runner-up · Euro-BioImaging Four Seasons of the Invisible — Winter",
+    "imageUuid": "7a77d052-2387-4eed-aa5d-a2a1e8fcf267",
+    "representationUuid": "a17fa325-2508-4f72-9f5e-934a8142d142"
+  },
+  {
+    "accession": "S-BIAD4013",
+    "slug": "first-of-spring",
+    "title": "Primula veris — First of spring",
+    "creator": "Sebastian Wasserstrom",
+    "affiliation": "Lund University Bioimaging Centre",
+    "caption": "A pollen grain rests on the textured petal of a cowslip, one of spring’s first flowers.",
+    "alt": "A round green pollen grain rests on a deeply textured golden petal against a blue background.",
+    "recognition": "Runner-up · Euro-BioImaging Four Seasons of the Invisible — Spring",
+    "imageUuid": "968d9a8b-00be-45a7-8bcd-718b82497040",
+    "representationUuid": "8e58bc57-5e4d-4318-9c30-526de65e82e0"
+  }
+]

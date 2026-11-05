@@ -1,0 +1,33 @@
+---
+const { title = 'Biological Visions', immersive = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Explore the beauty of life through a collection of microscopy artworks from the BioImage Archive." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/bioimage-archive/BIA-logo.svg" type="image/svg+xml" />
+    <title>{title} · BioImage Archive</title>
+  </head>
+  <body class:list={[{ immersive }]}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>
+<style is:global>
+  :root { color-scheme:dark; --bg:#101313; --ink:#f4f2e9; --muted:#a9b1ab; --accent:#cee09d; --line:#303735; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:Arial,Helvetica,sans-serif; -webkit-font-smoothing:antialiased; }
+  body.immersive { overflow:hidden; }
+  a { color:inherit; text-underline-offset:5px; }
+  button { font:inherit; color:inherit; cursor:pointer; }
+  button,a { -webkit-tap-highlight-color:transparent; }
+  a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid var(--accent); outline-offset:5px; }
+  button:disabled { opacity:.4; cursor:default; }
+  .skip-link { position:fixed;top:-100px;left:20px;padding:12px;background:var(--ink);color:var(--bg);z-index:20; }
+  .skip-link:focus { top:12px; }
+  ::selection { background:#cee09d;color:#101313; }
+  @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important;transition:none!important; } }
+</style>

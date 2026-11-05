@@ -1,0 +1,1 @@
+import{aV as c}from"./register-D78ravL0.js";class l extends c{decodeBlock(r){const a=new DataView(r),n=[];for(let e=0;e<r.byteLength;++e){let t=a.getInt8(e);if(t<0){const o=a.getUint8(e+1);t=-t;for(let s=0;s<=t;++s)n.push(o);e+=1}else{for(let o=0;o<=t;++o)n.push(a.getUint8(e+o+1));e+=t+1}}return new Uint8Array(n).buffer}}export{l as default};
