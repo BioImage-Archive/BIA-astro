@@ -5,31 +5,25 @@ const { dataset, datasetAIInfo, studyAccessionID } = Astro.props;
 const studyMetadata = Object.fromEntries([[studyAccessionID, await getStudyFromApiByAccession(studyAccessionID)]])
 
 function getTaxons(dataset) {
-    var taxons
-    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
-        taxons = [];
+    if (!Array.isArray(dataset.biological_entity)) {
+        return [];
     }
 
-    taxons = dataset.biological_entity
-        .flatMap(entity => entity.organism_classification || [])
-        .filter(item => typeof item === "object"); 
+    const taxons = dataset.biological_entity
+        .flatMap(entity => entity?.organism_classification || [])
+        .filter(item => item && typeof item === "object" && !Array.isArray(item));
 
-    var taxonHTMLList = new Array()
-    for (var taxon of taxons) {
-        taxonHTMLList.push(taxonRender(taxon))
-    }
-
-    return taxonHTMLList
+    return taxons.map(taxonRender).filter(Boolean);
 };
 
 function getBiologicalEntity(dataset) {
-    var biosamples
-    if (!dataset.biological_entity || !Array.isArray(dataset.biological_entity)) {
-        biosamples = [];
+    if (!Array.isArray(dataset.biological_entity)) {
+        return "";
     }
 
-    biosamples = dataset.biological_entity
-        .flatMap(entity => entity.biological_entity_description || []); 
+    const biosamples = dataset.biological_entity
+        .flatMap(entity => entity?.biological_entity_description || [])
+        .filter(description => typeof description === "string" && description.length > 0);
 
     return biosamples.reduce(formatListItem, "")
 };
@@ -37,9 +31,10 @@ function getBiologicalEntity(dataset) {
 
 function getImagingType(dataset) {
     var imagingTypeList = new Array()
-    for (var ia of dataset.acquisition_process) {
+    for (var ia of Array.isArray(dataset.acquisition_process) ? dataset.acquisition_process : []) {
+        if (!Array.isArray(ia?.imaging_method_name)) continue;
         for (var method_names of ia.imaging_method_name) {
-            if (!imagingTypeList.includes(method_names)) {
+            if (typeof method_names === "string" && method_names.length > 0 && !imagingTypeList.includes(method_names)) {
                 imagingTypeList.push(method_names)
             }
         }
@@ -63,6 +58,8 @@ function renderTaxonList(taxon_list) {
 }
 
 const taxons = getTaxons(dataset)
+const biologicalEntity = getBiologicalEntity(dataset)
+const imagingType = displayImagingType(dataset)
 
 
 function getAnnotationMethodInformation() {
@@ -88,7 +85,7 @@ const annotation_info = getAnnotationMethodInformation()
     </div>
     <ul>
         {
-            taxons && taxons.length > 0 && 
+            taxons.length > 0 &&
                 (
                     <div>
                         <b>Organism:</b> <Fragment set:html={renderTaxonList(taxons)}/>
@@ -96,18 +93,18 @@ const annotation_info = getAnnotationMethodInformation()
                 )
         }
         {
-            taxons && taxons.length > 0 && 
+            biologicalEntity &&
                 (
                     <div>
-                    <b>Biological Entity:</b> {getBiologicalEntity(dataset)}
+                    <b>Biological Entity:</b> {biologicalEntity}
                     </div>
                 )
         }
         {
-            taxons && taxons.length > 0 && 
+            imagingType &&
                 (
                     <div>
-                    <b>Imaging Method:</b> {displayImagingType(dataset)}
+                    <b>Imaging Method:</b> {imagingType}
                     </div>
                 )
         }
