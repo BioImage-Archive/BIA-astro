@@ -1,0 +1,45 @@
+---
+const { study, cardLink } = Astro.props;
+
+function toTitleCase(str: string) {
+  return str.replace(
+    /\w\S*/g,
+    text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+  );
+}
+
+
+const cardTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
+const authors = study.author_display_name.join(", ")
+---
+<article class="vf-card vf-card--brand vf-card--bordered dark-custom-card">
+    <img src={ study.example_image_uri } alt={study.title} title={study.title} class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading">
+            <a class="vf-card__link gallery-card-link" style="color:white"
+                href={`/bioimage-archive/galleries/biological-visions/${cardLink? cardLink: study.accession_id}`}>
+                {cardTitle}
+                <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
+            </a></span>
+        </h3>
+        <p class="vf-card__subheading">{authors}</p>
+    </div>
+</article>
+<style>
+    .dark-custom-card {
+        background-color: #373A36;
+        color:white;
+    }
+    .gallery-card-link {
+        display: flex;
+        align-items: center;
+        background-color: #373A36;
+        color: white;
+    }
+
+    .gallery-card-link svg {
+        position: static;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+</style>
