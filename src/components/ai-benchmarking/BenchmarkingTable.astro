@@ -26,7 +26,7 @@ export function formatSingleParameter(acc, key_value) {
 }
 
 export function formatRowAnalysisParameters(analysisParameters) {
-    return Object.entries(analysisParameters).filter(([key, value]) => value != null).reduce(formatSingleParameter, "")
+    return Object.entries(analysisParameters).filter(([, value]) => value != null).reduce(formatSingleParameter, "")
 }
 
 const filtered_table_rows = tableRows.filter(row => row.precision != null)
