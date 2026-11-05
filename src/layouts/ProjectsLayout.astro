@@ -41,13 +41,14 @@ const projectBannerImageSrc = typeof projectBannerImage === "string" ? projectBa
     <meta name="robots" content="noindex, nofollow">
     
     <title>{pageTitle}</title>
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="embl-contenthub-footer" data-embl-js-content-hub-loader>
   </head>
   <body class="vf-body">
     <PreviewBanner />
     <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
     <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.8/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
-    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
     <header>
     <section class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
         style={{
@@ -76,9 +77,8 @@ const projectBannerImageSrc = typeof projectBannerImage === "string" ? projectBa
     <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath}/>
     <slot />
     <Footer />
+    <div class="embl-contenthub-footer vf-content-hub-html"></div>
+    <!-- Script required for bottom bar -->
+    <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
   </body>
-  
-  <!-- Script required for bottom bar -->
-  <script src="https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js"></script>
-  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
 </html>
