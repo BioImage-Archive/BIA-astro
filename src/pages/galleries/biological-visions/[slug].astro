@@ -66,6 +66,7 @@ const viewerUrl = new URL(
 const sourceURI = interactiveImageRepresentation?.file_uri;
 viewerUrl.searchParams.set("source", Array.isArray(sourceURI) ? sourceURI[0] : sourceURI ?? "");
 viewerUrl.searchParams.set("menuOpen", "false");
+viewerUrl.searchParams.set("scaleBar", "false");
 
 const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
 ---
