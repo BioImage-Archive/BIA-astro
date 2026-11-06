@@ -62,7 +62,7 @@ const interactiveImageRepresentation = image.representation.find( (rep) => rep.i
 const viewerUrl = new URL(
   "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html"
 );
-
+const rawImageURI = image.representation.find( (rep) => rep.image_format !== ".ome.zarr")?.file_uri || "";
 const sourceURI = interactiveImageRepresentation?.file_uri;
 viewerUrl.searchParams.set("source", Array.isArray(sourceURI) ? sourceURI[0] : sourceURI ?? "");
 viewerUrl.searchParams.set("menuOpen", "false");
@@ -121,7 +121,8 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
       <dt>Licence</dt>
       <dd><a href={study.licence_details.uri}>{study.licence_details.label} ↗</a></dd>
     </dl>
-    <a class="vf-link" href={`/bioimage-archive/image/${image.uuid}`}>Experimental metadata ↗</a>
+    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={`/bioimage-archive/image/${image.uuid}`}>Experimental metadata ↗</a>
+    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={rawImageURI} target="_blank" rel="noopener noreferrer">Download Raw image ↗</a>
   </dialog>
 </BaseLayout>
 
