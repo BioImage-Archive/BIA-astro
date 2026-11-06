@@ -1,5 +1,5 @@
 ---
-const {pageTitle, pagePath}=Astro.props; 
+const {pageTitle, pagePath, darktheme = false}=Astro.props;
 const getBreadcrumbsFromUrl=(path)=>{
     let breadcrumbs = []
     const splitPath=path.split('/'); 
@@ -16,7 +16,7 @@ const getBreadcrumbsFromUrl=(path)=>{
 const breadcrumbs = Array.isArray(pagePath) ? pagePath : getBreadcrumbsFromUrl(pagePath).reverse();
 ---
 
-<div style="padding-bottom: 2rem;" class="breadcrums">
+<div style="padding-bottom: 2rem;" class:list={["breadcrums", { "breadcrums--dark": darktheme }]}>
     {
         breadcrumbs && 
         breadcrumbs.map(breadcrumb=>(
@@ -36,8 +36,12 @@ const breadcrumbs = Array.isArray(pagePath) ? pagePath : getBreadcrumbsFromUrl(p
         align-content:center;
         gap:0.5rem;
     }
+    .breadcrums--dark {
+        --breadcrumb-link-color: white;
+        color: white;
+    }
     a{
-        color: black;
+        color: var(--breadcrumb-link-color, black);
         font-size: small;
     }
     span{

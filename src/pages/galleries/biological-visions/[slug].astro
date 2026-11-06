@@ -27,15 +27,36 @@ function getImageUUIDFromStudyImage(exampleURI: string | string[], images: any[]
   });
   return thumbnailImage?.uuid || ""
 }
+
 const { slug } = Astro.params;
-const { accessionID } = Astro.props;
+
+const accessionID =
+  Astro.props.accessionID ??
+  (slug
+    ? collection.artworks[slug as keyof typeof collection.artworks]
+    : undefined);
+
+if (!accessionID) {
+  return new Response("Artwork not found", { status: 404 });
+}
+
+const study = await getStudyFromApiByAccession(accessionID) as Study | undefined;
+
+if (!study) {
+  console.error(`Study not found for accession: ${accessionID}`);
+  return new Response("Study unavailable", { status: 502 });
+}
+
+const imageUUID = getImageUUIDFromStudyImage(
+  study.example_image_uri,
+  study.image ?? []
+);
+
 const gallerySlugs = Object.keys(collection.artworks);
 const currentIndex = gallerySlugs.indexOf(slug!);
 const previousSlug = gallerySlugs[(currentIndex - 1 + gallerySlugs.length) % gallerySlugs.length];
 const nextSlug = gallerySlugs[(currentIndex + 1) % gallerySlugs.length];
 const galleryImageURL = (imageSlug: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/galleries/biological-visions/${imageSlug}`;
-const study = await getStudyFromApiByAccession(accessionID) as Study;
-const imageUUID = getImageUUIDFromStudyImage(study.example_image_uri, study?.image);
 const image = await getImageFromAPI(imageUUID);
 const interactiveImageRepresentation = image.representation.find( (rep) => rep.image_format === ".ome.zarr");
 const viewerUrl = new URL(
@@ -149,7 +170,6 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
 <style>
     :global(.vf-intro__heading),
     :global(.vf-intro__subheading),
-    :global(.breadcrums a),
     :global(.vf-content) {
         color: white;
     }
