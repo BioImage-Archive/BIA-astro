@@ -16,5 +16,6 @@ resources:
 env:
   publicSearchApi: "http://search:8080/v1"
   publicMongoApi: "http://api:8080/v2"
+  publicWebsiteState: "DEV" # DEV, STAGING, PROD
   publicGtag: "" # leave empty for dev
   
