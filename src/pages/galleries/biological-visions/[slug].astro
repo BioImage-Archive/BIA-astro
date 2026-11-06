@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../../../layouts/BiologicalVisionsLayout.astro';
+import collection from '../../../data/collections/biological-visions.json';
+import { getStudyFromApiByAccession, getMetadataValue, getImageFromAPI, multilineTextRender } from "../../../components/SharedJSFunctions"
+import { type Study } from "../../../components/SharedInterface.astro"
+import AuthorAffiliation from '../../../components/AuthorAffiliation.astro';
+
+
+export function getStaticPaths() {
+  return Object.entries(collection.artworks).map(([slug, accessionID]) => ({
+    params: { slug },
+    props: { accessionID },
+  }));
+}
+
+function toTitleCase(str: string) {
+  return str.replace(
+    /\w\S*/g,
+    text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+  );
+}
+function getImageUUIDFromStudyImage(exampleURI: string | string[], images: any[]){
+  const selectedURI = Array.isArray(exampleURI) ? exampleURI[0] : exampleURI;
+  const thumbnailImage = images.find(img => {
+    const meta = getMetadataValue(img.additional_metadata, "image_static_display_uri");
+    return meta?.slice?.uri === selectedURI;
+  });
+  return thumbnailImage?.uuid || ""
+}
+
+const { slug } = Astro.params;
+
+const accessionID =
+  Astro.props.accessionID ??
+  (slug
+    ? collection.artworks[slug as keyof typeof collection.artworks]
+    : undefined);
+
+if (!accessionID) {
+  return new Response("Artwork not found", { status: 404 });
+}
+
+const study = await getStudyFromApiByAccession(accessionID) as Study | undefined;
+
+if (!study) {
+  console.error(`Study not found for accession: ${accessionID}`);
+  return new Response("Study unavailable", { status: 502 });
+}
+
+const imageUUID = getImageUUIDFromStudyImage(
+  study.example_image_uri,
+  study.image ?? []
+);
+
+const gallerySlugs = Object.keys(collection.artworks);
+const currentIndex = gallerySlugs.indexOf(slug!);
+const previousSlug = gallerySlugs[(currentIndex - 1 + gallerySlugs.length) % gallerySlugs.length];
+const nextSlug = gallerySlugs[(currentIndex + 1) % gallerySlugs.length];
+const galleryImageURL = (imageSlug: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/galleries/biological-visions/${imageSlug}`;
+const image = await getImageFromAPI(imageUUID);
+const interactiveImageRepresentation = image.representation.find( (rep) => rep.image_format === ".ome.zarr");
+const viewerUrl = new URL(
+  "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html"
+);
+const rawImageURI = image.representation.find( (rep) => rep.image_format !== ".ome.zarr")?.file_uri || "";
+const sourceURI = interactiveImageRepresentation?.file_uri;
+viewerUrl.searchParams.set("source", Array.isArray(sourceURI) ? sourceURI[0] : sourceURI ?? "");
+viewerUrl.searchParams.set("menuOpen", "false");
+viewerUrl.searchParams.set("scaleBar", "false");
+
+const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
+---
+<BaseLayout pageTitle={pageTitle} darktheme={true}>
+  <br />
+  <section class="vf-content embl-grid embl-grid--has-centered-content biological-visions-gallery gallery-heading">
+    <div class="gallery-heading-spacer" aria-hidden="true"></div>
+    <div class="biological-visions-gallery gallery-heading-content">
+      <h1 class="vf-intro__heading">{pageTitle}</h1>
+    </div>
+  </section>
+  <section class="vf-content embl-grid embl-grid--has-centered-content biological-visions-gallery gallery-heading">
+    <div class="gallery-heading-spacer" aria-hidden="true"></div>
+    <div class="biological-visions-gallery gallery-heading-content">
+      <div class="gallery-authors"><AuthorAffiliation studyInfo={study}/></div>
+      <br />
+      <button class="about-trigger" type="button" aria-haspopup="dialog" aria-controls="about">About this image</button>
+    </div>
+  </section>
+  <section class="vf-content biological-visions-gallery">
+    <div class="image-viewer-div">
+      <a class="gallery-arrow" href={galleryImageURL(previousSlug)} aria-label="Previous image in Biological Visions gallery" title="Previous image">
+        <span aria-hidden="true">❮</span>
+      </a>
+      <iframe
+          name="vizarr"
+          allow="loopback-network; local-network-access"
+          data-viewer-url={viewerUrl.toString()}
+          data-image-width={interactiveImageRepresentation?.size_x}
+          data-image-height={interactiveImageRepresentation?.size_y}
+          title={`Vizarr viewer for image ${image.uuid}`}
+          class="image-viewer"
+      ></iframe>
+      <a class="gallery-arrow" href={galleryImageURL(nextSlug)} aria-label="Next image in Biological Visions gallery" title="Next image">
+        <span aria-hidden="true">❯</span>
+      </a>
+    </div>
+  </section>
+  <dialog id="about" class="about-panel vf-content" aria-labelledby="about-title">
+    <form method="dialog" class="about-close-form">
+      <button class="vf-button vf-button--primary vf-button--sm about-close" aria-label="Close image information" autofocus>Close ×</button>
+    </form>
+    <p>Biological Visions</p>
+    <h2 id="about-title" class="vf-intro__subheading">{pageTitle}</h2>
+    <div class="gallery-authors"><AuthorAffiliation studyInfo={study}/></div>
+    <div class="about-description"><Fragment set:html={multilineTextRender(study.description)} /></div>
+    <dl class="about-details">
+      <dt>Collection record</dt>
+      <dd><a href={`/bioimage-archive/study/${study.accession_id}`}>{study.accession_id} ↗</a></dd>
+      <dt>Imaging method</dt>
+      <dd>{study.imaging_method.join(", ")}</dd>
+      <dt>Licence</dt>
+      <dd><a href={study.licence_details.uri}>{study.licence_details.label} ↗</a></dd>
+    </dl>
+    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={`/bioimage-archive/image/${image.uuid}`}>Experimental metadata ↗</a>
+    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={rawImageURI} target="_blank" rel="noopener noreferrer">Download Raw image ↗</a>
+  </dialog>
+</BaseLayout>
+
+<script>
+  const aboutPanel = document.querySelector<HTMLDialogElement>('#about');
+  document.querySelector<HTMLButtonElement>('.about-trigger')?.addEventListener('click', () => {
+    aboutPanel?.showModal();
+  });
+  aboutPanel?.addEventListener('click', (event) => {
+    if (event.target !== aboutPanel) return;
+    const bounds = aboutPanel.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      aboutPanel.close();
+    }
+  });
+
+  document.querySelectorAll<HTMLIFrameElement>('iframe[data-viewer-url]').forEach((iframe) => {
+    // Wait until layout provides the actual iframe dimensions, including mobile styles.
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      if (width <= 0 || height <= 0) return;
+
+      const url = new URL(iframe.dataset.viewerUrl!);
+      const imageWidth = Number(iframe.dataset.imageWidth);
+      const imageHeight = Number(iframe.dataset.imageHeight);
+
+      if (Number.isFinite(imageWidth) && imageWidth > 0 &&
+          Number.isFinite(imageHeight) && imageHeight > 0) {
+        // Orthographic zoom is log2(screen pixels / image pixels).
+        const scale = Math.min(width / imageWidth, height / imageHeight) * 1.05;
+        url.searchParams.set('viewState', JSON.stringify({
+          target: [imageWidth / 2, imageHeight / 2],
+          zoom: Math.log2(scale),
+        }));
+      }
+
+      // Without valid pixel dimensions, Vizarr supplies its own initial fit.
+      iframe.src = url.toString();
+      observer.disconnect();
+    });
+    observer.observe(iframe);
+  });
+</script>
+
+
+<style>
+    :global(.vf-intro__heading),
+    :global(.vf-intro__subheading),
+    :global(.vf-content) {
+        color: white;
+    }
+    
+    :global(body) {
+        background-color: #1E1E1E;
+        color: white;
+    }
+    :global(body nav.vf-navigation.navbar) {
+        border-bottom: 0;
+    }
+    .biological-visions-gallery :global(*:not(.author-card, .author-card *, .affiliation-card, .affiliation-card *)){
+        color: white;
+    }
+    .image-viewer {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      border: 0;
+    }
+
+    .image-viewer-div{
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: clamp(8px, 1.5vw, 24px);
+      padding-inline: 0%;
+    }
+    .gallery-arrow {
+      font-size: clamp(36px, 4vw, 56px);
+      line-height: 1;
+      text-decoration: none;
+      background: transparent;
+      border: 0;
+      margin: 0;
+      padding: 12px;
+      min-width: 44px;
+      min-height: 44px;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .biological-visions-gallery a.gallery-arrow:hover,
+    .biological-visions-gallery a.gallery-arrow:focus {
+      text-decoration: none;
+    }
+    .gallery-arrow:hover { opacity: 0.75; }
+
+    .about-trigger {
+      border: 0;
+      padding: 0;
+      background: transparent;
+      font: inherit;
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+      cursor: pointer;
+    }
+
+    .about-panel {
+      box-sizing: border-box;
+      position: fixed;
+      inset: 0 0 0 auto;
+      margin: 0;
+      width: min(700px, 92vw);
+      height: 100dvh;
+      max-width: 100vw;
+      max-height: 100dvh;
+      padding: clamp(24px, 5vw, 64px);
+      border: 0;
+      border-left: 1px solid rgb(208 208 206 / 40%);
+      background: rgb(30 30 30 / 94%);
+      backdrop-filter: blur(16px);
+      color: white;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      font: inherit;
+    }
+
+    .about-panel::backdrop { background: rgb(0 0 0 / 30%); }
+    /* VF assigns explicit colours to content elements, including dl/dt/dd.
+       Override them here, including HTML inserted from the description. */
+    #about.about-panel.vf-content,
+    #about.about-panel.vf-content :global(*:not(.author-card, .author-card *, .affiliation-card, .affiliation-card *)) {
+      color: white;
+    }
+    :global(body:has(.about-panel[open])) { overflow: hidden; }
+    .about-close-form { display: flex; justify-content: flex-end; margin: 0 0 24px; }
+    .about-close { margin: 0; }
+    .about-panel h2 { margin-block: 24px; }
+    .about-description { margin: 32px 0; }
+    .about-details {
+      display: grid;
+      grid-template-columns: minmax(100px, 1fr) minmax(0, 2fr);
+      gap: 16px 24px;
+      border-top: 1px solid rgb(255 255 255 / 20%);
+      padding-top: 24px;
+    }
+    .about-details dd { margin: 0; overflow-wrap: anywhere; color: white; }
+    .about-panel a:not(.vf-button) { color: white; }
+    #about.about-panel a:not(.vf-button):hover { color: #8db5ed; }
+    .about-panel :focus-visible,
+    .about-trigger:focus-visible,
+    .gallery-arrow:focus-visible { outline: 2px solid #3b6fb6; outline-offset: 4px; }
+
+    /* Keep the shared component's light tooltip cards readable on this page. */
+    .gallery-authors :global(.author-card),
+    .gallery-authors :global(.affiliation-card) {
+      color: black;
+    }
+    .gallery-authors :global(.author-card *),
+    .gallery-authors :global(.affiliation-card *) {
+      color: inherit;
+    }
+    .gallery-authors :global(.highlight) {
+      background-color: #3b6fb6;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .about-panel { width: 100%; }
+      .about-details { grid-template-columns: 1fr; gap: 4px; }
+      .about-details dd { margin-bottom: 16px; }
+    }
+
+    .gallery-heading-content {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 1024px) {
+      .gallery-heading.embl-grid {
+        display: block;
+      }
+      .gallery-heading-spacer { display: none; }
+      .gallery-heading .vf-intro__heading {
+        font-size: clamp(28px, 4vw, 40px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .image-viewer-div { gap: 8px; padding-inline: 0; }
+      .gallery-arrow { padding: 8px; }
+      .image-viewer {
+        aspect-ratio: 1 / 1;
+      }
+    }
+</style>

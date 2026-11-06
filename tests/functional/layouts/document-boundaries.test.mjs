@@ -33,7 +33,7 @@ for (const layout of layouts) {
         assert.equal(children.filter(node => node.name === 'slot').length, 1);
         assert(children.indexOf(targets[0]) > children.indexOf(footers[0]));
         const scripts = children.filter(node => node.name === 'script'
-            && attributes(node).get('src') === 'https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js');
+            && attributes(node).get('src') === 'https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js');
         assert.equal(scripts.length, 1);
         assert(children.indexOf(scripts[0]) > children.indexOf(targets[0]));
         for (const suffix of ['ebi-header-footer.css', 'fonts.css']) {

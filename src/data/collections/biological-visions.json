@@ -1,0 +1,15 @@
+{
+  "name": "biological-visions",
+  "title": "Biological Visions Gallery",
+  "subtitle": "A collection of beautiful images seen through the scientist eye",
+  "description": "This gallery is a showcase of biological images selected for their artistic value. The images in these entries are award-winning and presented as the author intended them to be seen.",
+  "accession_ids": ["S-BIAD3971", "S-BIAD3555", "S-BIAD3785", "S-BIAD4013", "S-BIAD3554", "S-BIAD3974"],
+  "artworks": {
+    "winters-anatomy": "S-BIAD3971", 
+    "etheral-onion-skin": "S-BIAD3555", 
+    "lung-architecture": "S-BIAD3785",  
+    "first-of-spring": "S-BIAD4013",  
+    "geometry-of-mitosis": "S-BIAD3554",  
+    "nano-ice-skaters": "S-BIAD3974"
+  }
+}

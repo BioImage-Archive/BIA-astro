@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BiologicalVisionsLayout.astro';
+import BrowseDatasetHeading from '../../components/BrowseStudiesHeading.astro';
+import MinimalCard from '../../components/cards/BiologicalVisionCard.astro';
+import { getStudyFromApiByAccession} from "../../components/SharedJSFunctions";
+import collection from '../../data/collections/biological-visions.json';
+
+const studiesEntries = await Promise.all(
+  Object.entries(collection.artworks).map(async ([slug, accessionID]) => {
+    const study = await getStudyFromApiByAccession(accessionID);
+    return { slug, study };
+  })
+);
+
+---
+<BaseLayout pageTitle={collection.title} darktheme={true}>
+    <div class="biological-visions-gallery">
+        <BrowseDatasetHeading heading={collection.title} subheading={collection.subtitle}>
+            <p class="vf-hero__text" slot="body_text">{collection.description}</p>
+        </BrowseDatasetHeading>
+        <section class="vf-card-container vf-card-container__col-3 " style="--vf-card__image--aspect-ratio: 16 / 9;">
+            <div class="vf-card-container__inner">
+                  { studiesEntries.map(({ slug, study }) => ( <MinimalCard study={study} cardLink={slug}/> )) }
+            </div>
+        </section>
+    </div>
+    
+</BaseLayout>
+<style>
+    :global(.vf-intro__heading),
+    :global(.vf-intro__subheading) {
+        color: white;
+    }
+
+    :global(body) {
+        background-color: #1E1E1E;
+        color: white;
+    }
+    :global(body nav.vf-navigation.navbar) {
+        border-bottom: 0;
+    }
+    .biological-visions-gallery :global(*){
+        color: white;
+    }
+
+</style>
