@@ -78,9 +78,9 @@ Our submission template includes form elements in which you can acknowledge fund
 
 #### How should I cite the BioImage Archive?
 
-Citing BioImage Archive in general: please use the following publication: 
+Citing BioImage Archive in general: 
 
- - Hartley M, Kleywegt GJ, Patwardhan A, Sarkans U, Swedlow JR, Brazma A. The BioImage Archive – Building a Home for Life-Sciences Microscopy Data. *J. Mol. Biol.* 2022 June;434(11). doi:10.1016/j.jmb.2022.167505. PMID: 35189131.
+ - Zulueta-Coarasa T, Yoldas A, Anita L, Babalola K, Bircan K, Cattavitello C, Clementel D, Ma M, Mandloi T, Marks D, Rookyard C, Sherwood F, Somasundharam S, Velasquez M, Weyand S, Hartley M. BioImage Archive: bringing bioimaging data together. *Nucleic Acids Research.* 2026; gkag1108, doi.org/10.1093/nar/gkag1108. PMID: 42984421.
 
 Citing EMPIAR: 
 
