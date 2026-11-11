@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { parse } from '@astrojs/compiler';
 
-const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout', 'MinimalLayout'];
+const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout', 'MinimalLayout', 'BiologicalVisionsLayout'];
 const attributes = node => new Map((node.attributes || []).map(attribute => [attribute.name, attribute.value]));
 const templateChildren = node => (node.children || []).filter(child => !['text', 'comment', 'frontmatter', 'doctype'].includes(child.type));
 const descendants = node => [node, ...(node.children || []).flatMap(descendants)];

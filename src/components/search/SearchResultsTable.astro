@@ -1,15 +1,7 @@
 ---
 const { results, resultType, query, cardImageOverride } = Astro.props;
-import { highlightOrganism,  getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue, highlightLinks, applyHighlight, formatHighlightedList } from "../SharedJSFunctions.js";
+import { highlightOrganism,  getStudyImage, getThumbnail, getInteractiveImageRepresentation, formatPhysicalDimensions, formatPixelDimensions, getSimpleAttributeValue, highlightLinks, applyHighlight, formatHighlightedList } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
-
-export function getImageRep(image){
-    const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
-    const interactiveImageRepresentation = (image.representation.find(
-        (rep) => rep.uuid == vizarrRepUuid
-    ) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
-    return interactiveImageRepresentation
-}
 
 function highlightImageFormat(image, query){
     const imageFormat = [
@@ -76,9 +68,9 @@ function highlightImageFormat(image, query){
                         <td><HighlightedText text={formatHighlightedList(item?._source?.imaging_method || item?._source?.annotation_type?.map((at: string) => at.replace(/_/g, " ")), query, {sort: false})} />{}</td>
                         <td><HighlightedText text={highlightImageFormat(item?._source, query).join(", ")} /></td>
                         <td>{formatPhysicalDimensions(item._source)}</td>
-                        <td>{getImageRep(item._source) && formatPixelDimensions(getImageRep(item._source))}</td>
-                        <td>{getImageRep(item._source)?.size_c || ""}</td>
-                        <td>{getImageRep(item._source)?.size_t|| ""}</td>
+                        <td>{getInteractiveImageRepresentation(item._source) && formatPixelDimensions(getInteractiveImageRepresentation(item._source))}</td>
+                        <td>{getInteractiveImageRepresentation(item._source)?.size_c || ""}</td>
+                        <td>{getInteractiveImageRepresentation(item._source)?.size_t|| ""}</td>
                     </tr>
 
                 )

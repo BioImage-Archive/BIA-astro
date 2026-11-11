@@ -98,6 +98,14 @@ export function getSimpleAttributeValue(obj, attrName) {
       ?.value[attrName] ?? null;
 }
 
+export function getInteractiveImageRepresentation(img) {
+  const vizarrRepUuid = getSimpleAttributeValue(img, "recommended_vizarr_representation");
+  const interactiveImageRepresentation = (img?.representation.find(
+      (rep) => rep.uuid == vizarrRepUuid
+  ) ?? img?.representation.find( (rep) => rep.image_format === ".ome.zarr") )
+  return interactiveImageRepresentation
+}
+
 export function getPublicVisualisationURI(uri) {
     if (!uri) {
         return null;

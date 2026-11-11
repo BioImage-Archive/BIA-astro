@@ -1,8 +1,7 @@
 ---
 const { result, resultType, highlight } = Astro.props;
 import imageFallback from "../../assets/bioimage-archive/image_fallback.png"
-import { getHighlightTextString, getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions } from "../SharedJSFunctions.js";
-import {getImageRep} from "./SearchResultsTable.astro"
+import { getHighlightTextString, getStudyImage, getThumbnail, formatPhysicalDimensions, formatPixelDimensions, getInteractiveImageRepresentation } from "../SharedJSFunctions.js";
 import  HighlightedText  from "../HighlightedText.astro";
 
 const thumbnail = resultType === "study"? getStudyImage(result): getThumbnail(result);
@@ -21,7 +20,7 @@ const hasPhysical =
   isNonZeroNumber(result?.total_physical_size_y) ||
   isNonZeroNumber(result?.total_physical_size_z);
 
-const interactiveImageRepresentation = resultType === "study"? [] : getImageRep(result);
+const interactiveImageRepresentation = resultType === "study"? [] : getInteractiveImageRepresentation(result);
 
 const hasPixel =
   isNonZeroNumber(interactiveImageRepresentation?.size_x) ||

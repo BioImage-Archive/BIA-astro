@@ -7,7 +7,7 @@ import WebsiteStateButton from '../../../../components/WebsiteStateButton.astro'
 import fieldMap from "../../../../data/metadata-field-name-mapping.json";
 
 import fallbackImage from "../../../../assets/bioimage-archive/image_fallback.png"
-import {buildITKViewerURL, buildVizarrViewerURL, getPublicVisualisationURI, getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByAccession } from "../../../../components/SharedJSFunctions.js"
+import {buildITKViewerURL, buildVizarrViewerURL, getInteractiveImageRepresentation, getPublicVisualisationURI, getSimpleAttributeValue, getImageFromAPI, getStudyFromApiByAccession } from "../../../../components/SharedJSFunctions.js"
 import { type Study, type ImageCreationProcess, type ImageRep, type Image } from "../../../../components/SharedInterface.astro"
 
 const biosampleMap = fieldMap["biosample"];
@@ -21,10 +21,7 @@ const { uuid } = Astro.params;
 const image = await getImageFromAPI(uuid) as Image;
 const accession_id = image ? image.accession_id : "";
 const imageStudy: Study = await getStudyFromApiByAccession(accession_id);
-const vizarrRepUuid = getSimpleAttributeValue(image, "recommended_vizarr_representation");
-const interactiveImageRepresentation = image.representation.find(
-    (rep) => rep.uuid === vizarrRepUuid
-)
+const interactiveImageRepresentation = getInteractiveImageRepresentation(image);
 const imageDataset = imageStudy?.dataset.find(ds => ds.uuid === image.submission_dataset_uuid);
 
 const viewerSourceURI = getPublicVisualisationURI(interactiveImageRepresentation?.file_uri?.[0]);

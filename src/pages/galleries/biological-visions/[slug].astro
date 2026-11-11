@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../../layouts/BiologicalVisionsLayout.astro';
 import collection from '../../../data/collections/biological-visions.json';
-import { getStudyFromApiByAccession, getMetadataValue, getImageFromAPI, multilineTextRender } from "../../../components/SharedJSFunctions"
+import { getStudyFromApiByAccession, getMetadataValue, getInteractiveImageRepresentation, getImageFromAPI, getPublicVisualisationURI } from "../../../components/SharedJSFunctions"
 import { type Study } from "../../../components/SharedInterface.astro"
 import AuthorAffiliation from '../../../components/AuthorAffiliation.astro';
+import { multilineTextRender } from "../../../components/formatting/plain-text.js";
 
 
 export function getStaticPaths() {
@@ -32,7 +33,7 @@ const { slug } = Astro.params;
 
 const accessionID =
   Astro.props.accessionID ??
-  (slug
+  (slug && Object.hasOwn(collection.artworks, slug)
     ? collection.artworks[slug as keyof typeof collection.artworks]
     : undefined);
 
@@ -43,7 +44,10 @@ if (!accessionID) {
 const study = await getStudyFromApiByAccession(accessionID) as Study | undefined;
 
 if (!study) {
-  console.error(`Study not found for accession: ${accessionID}`);
+  if (Astro.isPrerendered) {
+    throw new Error(`Required artwork study unavailable: ${accessionID}`);
+  }
+
   return new Response("Study unavailable", { status: 502 });
 }
 
@@ -57,13 +61,14 @@ const currentIndex = gallerySlugs.indexOf(slug!);
 const previousSlug = gallerySlugs[(currentIndex - 1 + gallerySlugs.length) % gallerySlugs.length];
 const nextSlug = gallerySlugs[(currentIndex + 1) % gallerySlugs.length];
 const galleryImageURL = (imageSlug: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/galleries/biological-visions/${imageSlug}`;
-const image = await getImageFromAPI(imageUUID);
-const interactiveImageRepresentation = image.representation.find( (rep) => rep.image_format === ".ome.zarr");
+const image = imageUUID? await getImageFromAPI(imageUUID) : undefined;
+
+const interactiveImageRepresentation = image? getInteractiveImageRepresentation(image) : undefined;
 const viewerUrl = new URL(
   "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html"
 );
-const rawImageURI = image.representation.find( (rep) => rep.image_format !== ".ome.zarr")?.file_uri || "";
-const sourceURI = interactiveImageRepresentation?.file_uri;
+const rawImageURI = image?.representation.find( (rep) => rep.image_format !== ".ome.zarr")?.file_uri?.[0] || "";
+const sourceURI = getPublicVisualisationURI(interactiveImageRepresentation?.file_uri?.[0]);
 viewerUrl.searchParams.set("source", Array.isArray(sourceURI) ? sourceURI[0] : sourceURI ?? "");
 viewerUrl.searchParams.set("menuOpen", "false");
 viewerUrl.searchParams.set("scaleBar", "false");
@@ -81,29 +86,31 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
   <section class="vf-content embl-grid embl-grid--has-centered-content biological-visions-gallery gallery-heading">
     <div class="gallery-heading-spacer" aria-hidden="true"></div>
     <div class="biological-visions-gallery gallery-heading-content">
-      <div class="gallery-authors"><AuthorAffiliation studyInfo={study}/></div>
+      <div class="gallery-authors"><AuthorAffiliation studyInfo={study} idPrefix="gallery-affiliation"/></div>
       <br />
       <button class="about-trigger" type="button" aria-haspopup="dialog" aria-controls="about">About this image</button>
     </div>
   </section>
   <section class="vf-content biological-visions-gallery">
-    <div class="image-viewer-div">
-      <a class="gallery-arrow" href={galleryImageURL(previousSlug)} aria-label="Previous image in Biological Visions gallery" title="Previous image">
-        <span aria-hidden="true">❮</span>
-      </a>
-      <iframe
-          name="vizarr"
-          allow="loopback-network; local-network-access"
-          data-viewer-url={viewerUrl.toString()}
-          data-image-width={interactiveImageRepresentation?.size_x}
-          data-image-height={interactiveImageRepresentation?.size_y}
-          title={`Vizarr viewer for image ${image.uuid}`}
-          class="image-viewer"
-      ></iframe>
-      <a class="gallery-arrow" href={galleryImageURL(nextSlug)} aria-label="Next image in Biological Visions gallery" title="Next image">
-        <span aria-hidden="true">❯</span>
-      </a>
-    </div>
+    {sourceURI && (
+      <div class="image-viewer-div">
+        <a class="gallery-arrow" href={galleryImageURL(previousSlug)} aria-label="Previous image in Biological Visions gallery" title="Previous image">
+          <span aria-hidden="true">❮</span>
+        </a>
+          <iframe
+            name="vizarr"
+            allow="loopback-network; local-network-access"
+            data-viewer-url={viewerUrl.toString()}
+            data-image-width={interactiveImageRepresentation?.size_x}
+            data-image-height={interactiveImageRepresentation?.size_y}
+            title={`Vizarr viewer for image ${image.uuid}`}
+            class="image-viewer"
+          ></iframe>
+        <a class="gallery-arrow" href={galleryImageURL(nextSlug)} aria-label="Next image in Biological Visions gallery" title="Next image">
+          <span aria-hidden="true">❯</span>
+        </a>
+      </div>
+    )}
   </section>
   <dialog id="about" class="about-panel vf-content" aria-labelledby="about-title">
     <form method="dialog" class="about-close-form">
@@ -111,8 +118,8 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
     </form>
     <p>Biological Visions</p>
     <h2 id="about-title" class="vf-intro__subheading">{pageTitle}</h2>
-    <div class="gallery-authors"><AuthorAffiliation studyInfo={study}/></div>
-    <div class="about-description"><Fragment set:html={multilineTextRender(study.description)} /></div>
+    <div class="gallery-authors"><AuthorAffiliation studyInfo={study} idPrefix="about-affiliation"/></div>
+    <div class="about-description"><Fragment set:html={multilineTextRender(study.description ?? "")} /></div>
     <dl class="about-details">
       <dt>Collection record</dt>
       <dd><a href={`/bioimage-archive/study/${study.accession_id}`}>{study.accession_id} ↗</a></dd>
@@ -121,7 +128,7 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
       <dt>Licence</dt>
       <dd><a href={study.licence_details.uri}>{study.licence_details.label} ↗</a></dd>
     </dl>
-    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={`/bioimage-archive/image/${image.uuid}`}>Experimental metadata ↗</a>
+    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={`/bioimage-archive/image/${image?.uuid}`}>Experimental metadata ↗</a>
     <a class="vf-button vf-button--primary vf-button--sm vf-link" href={rawImageURI} target="_blank" rel="noopener noreferrer">Download Raw image ↗</a>
   </dialog>
 </BaseLayout>

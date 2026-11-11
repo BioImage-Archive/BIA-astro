@@ -13,7 +13,7 @@ const cardTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
 const authors = study.author_display_name.join(", ")
 ---
 <article class="vf-card vf-card--brand vf-card--bordered dark-custom-card">
-    <img src={ study.example_image_uri } alt={study.title} title={study.title} class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
+    <img src={ study.example_image_uri?.[0] } alt={study.title} title={study.title} class="vf-card__image" loading="lazy" style="aspect-ratio: 1/1;">
     <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading">
             <a class="vf-card__link gallery-card-link" style="color:white"

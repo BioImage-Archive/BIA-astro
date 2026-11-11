@@ -9,14 +9,14 @@ const { darktheme = false } = Astro.props;
 const euroBioImageLogo = darktheme? euroBioImageLogoDark : euroBioImageLogoLight;
 ---
 <hr />
-<footer>
+<footer class:list={{ "bia-footer--dark": darktheme }}>
   <section class="vf-gird bia-footer-inner">
     <div class="bia-footer-block" style="flex: 1;justify-content: flex-start;">
       <div class="elixir-logo-kite" aria-hidden="true">
-        <a target="_blank" href="https://elixir-europe.org/platforms/data/elixir-deposition-databases" class="vf-link"><img src={elixirDepoLogo.src} style="width: 100px; height: 100px" loading="lazy"/></a>
+        <a target="_blank" href="https://elixir-europe.org/platforms/data/elixir-deposition-databases" class="vf-link"><img src={elixirDepoLogo.src} width="100" height="100" loading="lazy"/></a>
       </div>
       <div class="elixir-logo-kite" aria-hidden="true">
-        <a target="_blank" href="https://elixir-europe.org/platforms/data/core-data-resources" class="vf-link"><img src={elixirCoreLogo.src} style="width: 100px; height: 100px" loading="lazy"/> </a>
+        <a target="_blank" href="https://elixir-europe.org/platforms/data/core-data-resources" class="vf-link"><img src={elixirCoreLogo.src} width="100" height="100" loading="lazy"/> </a>
       </div>
       <p class="bia-footer-text">
         The BioImage Archive is an ELIXIR <a target="_blank" href="https://elixir-europe.org/platforms/data/elixir-deposition-databases" class="vf-link">Deposition Database</a> and <a target="_blank" href="https://elixir-europe.org/platforms/data/core-data-resources" class="vf-link">Core Data Resource</a>.
@@ -29,11 +29,22 @@ const euroBioImageLogo = darktheme? euroBioImageLogoDark : euroBioImageLogoLight
           <a target="_blank" href="http://www.eurobioimaging.eu/" class="vf-link">Euro-BioImaging</a>.
         </div>
       </div>
-      <a target="_blank" href="http://www.eurobioimaging.eu/" class="vf-link"><div class="eubi-logo-kite" aria-hidden="true"><img src={euroBioImageLogo.src} style="width: 100px; height: 100px" loading="lazy"/></div></a>
+      <a target="_blank" href="http://www.eurobioimaging.eu/" class="vf-link"><div class="eubi-logo-kite" aria-hidden="true"><img src={euroBioImageLogo.src} width="100" height="100" loading="lazy"/></div></a>
     </div>
   </section>
 </footer>
 <style>
+.bia-footer--dark .vf-link,
+.bia-footer--dark .vf-link:visited {
+  color: #8db5ed;
+}
+
+.bia-footer--dark .vf-link:hover,
+.bia-footer--dark .vf-link:focus,
+.bia-footer--dark .vf-link:active {
+  color: white;
+}
+
 .bia-footer-inner{
   display: flex;
   align-items: center;
@@ -94,6 +105,7 @@ const euroBioImageLogo = darktheme? euroBioImageLogoDark : euroBioImageLogoLight
     flex-basis: 100px;
   }
 
+  .eubi-logo-kite img,
   .elixir-logo-kite img {
     height: 72px;
     width: 72px;
