@@ -106,6 +106,8 @@ def main():
         summary = f'Published PR #{number} at `{sha}`: `{tag}`. Kubernetes checks every five minutes.\n'
         print(summary)
         Path(os.environ['GITHUB_STEP_SUMMARY']).write_text(summary)
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+            output.write(f'pr={number}\nsha={sha}\n')
 
 
 if __name__ == '__main__':
