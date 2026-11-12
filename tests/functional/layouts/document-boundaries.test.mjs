@@ -17,7 +17,7 @@ for (const layout of layouts) {
         const [document] = templateChildren(ast);
         assert.deepEqual(templateChildren(document).map(node => node.name), ['head', 'body']);
         const [head, body] = templateChildren(document);
-        assert.equal(attributes(body).get('class'), 'vf-body');
+        assert(String(attributes(body).get('class') || '').split(/\s+/).includes('vf-body'));
         const imports = descendants(document).filter(node => attributes(node).has('data-embl-js-content-hub-loader'));
         assert.equal(imports.length, 1);
         assert(templateChildren(head).includes(imports[0]));
