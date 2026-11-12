@@ -55,3 +55,15 @@ then `kubectl -n bia-ci get cronjobs,jobs` and the most recent reconciliation Jo
 logs. The private `BioImage-Archive/bia-astro-previews` repository maintains the
 controller. Its Actions reconciliation is an optional manual fallback; it shares
 a lock with the CronJob. Existing Netlify checks remain separate.
+
+## Publishing checks and recovery
+
+The publisher validates one Linux/amd64 image tagged `preview-build:artifact`,
+then loads and inspects it by that tag. Configuration hashes are not always
+Docker-addressable image IDs. A fresh `docker save` must preserve the validated
+configuration and any OCI provenance before publication. The final tag retains
+the PR number and full SHA; Kubernetes deploys by registry digest.
+
+The temporary tag requires isolated Docker daemons, as provided by the current
+GitHub-hosted runners. Archives with provenance require a containerd image store;
+failed identity or provenance checks stop publication.

@@ -26,6 +26,10 @@ jobs:
         with:
           ref: main
           persist-credentials: false
+      - name: Record Docker version and image store
+        run: |
+          docker version
+          docker info --format '{{json .DriverStatus}}'
       - name: Validate and publish the image without executing it
         id: publish
         env:

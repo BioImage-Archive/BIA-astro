@@ -59,6 +59,8 @@ jobs:
           persist-credentials: false
       - name: Test and build without registry credentials
         run: |
+          docker version
+          docker info --format '{{json .DriverStatus}}'
           docker build -f Dockerfile.preview --tag preview-build:artifact .
           docker save --output "$RUNNER_TEMP/image.tar" preview-build:artifact
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
