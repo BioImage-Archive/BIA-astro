@@ -78,17 +78,17 @@ Our submission template includes form elements in which you can acknowledge fund
 
 #### How should I cite the BioImage Archive?
 
-Citing BioImage Archive in general: please use the following publication: 
+Citing BioImage Archive in general: 
 
- - Hartley M, Kleywegt GJ, Patwardhan A, Sarkans U, Swedlow JR, Brazma A. The BioImage Archive – Building a Home for Life-Sciences Microscopy Data. *J. Mol. Biol.* 2022 June;434(11). doi:10.1016/j.jmb.2022.167505. PMID: 35189131.
+ - Zulueta-Coarasa T, Yoldas A, Anita L, Babalola K, Bircan K, Cattavitello C, Clementel D, Ma M, Mandloi T, Marks D, Rookyard C, Sherwood F, Somasundharam S, Velasquez M, Weyand S, Hartley M. BioImage Archive: bringing bioimaging data together. *Nucleic Acids Research.* 2026; gkag1108, [doi.org/10.1093/nar/gkag1108](https://doi.org/10.1093/nar/gkag1108). PMID: 42984421.
 
 Citing EMPIAR: 
 
- - Iudin A, Korir PK, Salavert-Torres J, Kleywegt GJ, Patwardhan A. EMPIAR: a public archive for raw electron microscopy image data. *Nat Methods.* 2016 May;13(5) 387-388. doi:10.1038/nmeth.3806. PMID: 27067018.
+ - Iudin A, Korir PK, Somasundharam S, Weyand S, Cattavitello C, Fonseca N, Salih O, Kleywegt GJ, Patwardhan A. EMPIAR: the Electron Microscopy Public Image Archive. *Nucleic Acids Research.* 2023; 51, D1503-D1511. [doi.org/10.1093/nar/gkac1062](https://doi.org/10.1093/nar/gkac1062). PMID: 36440762
 
 Citing BioStudies: 
 
- - Sarkans U, Gostev M, Athar A, Behrangi E, Melnichuk O, Ali A, Minguet J, Rada JC, Snow C, Tikhonov A, Brazma A, McEntyre J. The BioStudies database-one stop shop for all data supporting a life sciences study. *Nucleic Acids Res.* 2018 Jan;46(D1) D1266-D1270. doi:10.1093/nar/gkx965. PMID: 29069414; PMCID: PMC5753238.
+ - Sarkans U, Gostev M, Athar A, Behrangi E, Melnichuk O, Ali A, Minguet J, Rada JC, Snow C, Tikhonov A, Brazma A, McEntyre J. The BioStudies database-one stop shop for all data supporting a life sciences study. *Nucleic Acids Research.* 2018 Jan;46(D1) D1266-D1270. [doi:10.1093/nar/gkx965](https://doi.org/10.1093/nar/gkx965). PMID: 29069414; PMCID: PMC5753238.
 
 Citing a particular dataset in the BioImage Archive: 
 
