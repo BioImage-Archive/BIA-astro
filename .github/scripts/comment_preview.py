@@ -1,4 +1,4 @@
-"""Update one PR comment after publication and the current head's PR checks."""
+"""Update one PR comment after publication, website tests and preview safety checks."""
 import json
 import os
 import re
@@ -60,7 +60,7 @@ def wait_for_checks(number, sha):
                        f'?event=pull_request&head_sha={sha}&per_page=100')['workflow_runs']
             run = latest_run(runs, sha)
             if run and job_name:
-                # Website tests run independently of Netlify deployment/link checks.
+                # Use the tests job even when Netlify leaves its workflow running or failed.
                 checks[name] = latest_job(run, job_name)
             else:
                 checks[name] = run

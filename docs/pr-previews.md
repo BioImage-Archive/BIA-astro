@@ -16,7 +16,8 @@ Branches need the preview Dockerfile and server-mode support from main.
    operation does not depend on GitHub's best-effort scheduled workflows.
 4. The final job in **Publish preview image** waits for the `tests` job in
    **Basic website checks** and **Test preview publishing rules** for the same
-   PR head to finish, excluding Netlify checks. After successful image publication,
+   PR head to finish. It does not wait for the overall website workflow or its
+   Netlify deployment/link checks. After successful image publication,
    it creates or updates one bot comment with the preview link, commit and check
    results (including failures). It skips closed/draft PRs and superseded heads.
    It runs trusted main-branch code with PR write access and no registry write access.

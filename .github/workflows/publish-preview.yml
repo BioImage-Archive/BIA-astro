@@ -38,7 +38,7 @@ jobs:
         run: python3 .github/scripts/publish_preview.py
 
   comment:
-    name: Comment with preview link after PR checks
+    name: Comment with preview link after tests and preview safety checks
     needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 25
@@ -54,7 +54,7 @@ jobs:
         with:
           ref: main
           persist-credentials: false
-      - name: Wait for PR workflows and update the preview comment
+      - name: Wait for website tests and preview safety checks, then update the comment
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ needs.publish.outputs.pr }}

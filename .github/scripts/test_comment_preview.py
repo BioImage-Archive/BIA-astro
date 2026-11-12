@@ -1,5 +1,6 @@
 import copy
 import json
+import os
 import unittest
 from unittest.mock import patch
 
@@ -48,7 +49,8 @@ class PreviewCommentTests(unittest.TestCase):
     @patch.object(preview.time, 'sleep')
     @patch.object(preview, 'api')
     def test_netlify_checks_do_not_delay_or_change_the_website_test_result(self, api, sleep):
-        for status, conclusion in [('in_progress', None), ('completed', 'failure')]:
+        for status, conclusion in [('in_progress', None), ('completed', 'failure'),
+                                   ('completed', 'timed_out')]:
             with self.subTest(status=status):
                 tests = dict(self.run, name='tests')
                 netlify = [dict(self.run, name=name, status=status, conclusion=conclusion)
@@ -61,6 +63,43 @@ class PreviewCommentTests(unittest.TestCase):
                 self.assertIs(checks['Website tests'], tests)
                 self.assertEqual(checks['Website tests']['conclusion'], 'success')
                 sleep.assert_not_called()
+
+    @patch.object(preview.time, 'sleep')
+    @patch.object(preview, 'update_comment')
+    @patch.object(preview, 'api')
+    def test_posts_comment_after_tests_when_netlify_times_out(self, api, update_comment, sleep):
+        tests = dict(self.run, name='tests')
+        netlify = dict(self.run, id=11, name='wait-for-deploy', conclusion='timed_out')
+        api.side_effect = [
+            self.pr, {'workflow_runs': [dict(self.run, conclusion='failure')]},
+            {'jobs': [tests, netlify]}, {'workflow_runs': [self.run]}, self.pr,
+        ]
+        with patch.dict(os.environ, {'PR_NUMBER': '213', 'HEAD_SHA': self.sha,
+                                     'PREVIEW_BASE_URL': 'https://preview.bioimagearchive.org',
+                                     'PUBLISH_RUN_URL': self.run['html_url']}):
+            preview.main()
+        update_comment.assert_called_once()
+        number, body = update_comment.call_args.args
+        self.assertEqual(number, 213)
+        self.assertIn(f'[Website tests]({tests["html_url"]}): success', body)
+        self.assertIn('[Open preview]', body)
+        self.assertNotIn('Netlify', body)
+        self.assertNotIn('timed_out', body)
+        sleep.assert_not_called()
+
+    @patch.object(preview.time, 'sleep')
+    @patch.object(preview, 'api')
+    def test_reports_failed_tests_without_waiting_for_netlify(self, api, sleep):
+        tests = dict(self.run, name='tests', conclusion='failure')
+        netlify = dict(self.run, id=11, name='wait-for-deploy', status='in_progress', conclusion=None)
+        api.side_effect = [
+            self.pr, {'workflow_runs': [dict(self.run, status='in_progress', conclusion=None)]},
+            {'jobs': [tests, netlify]}, {'workflow_runs': [self.run]},
+        ]
+        checks = preview.wait_for_checks(213, self.sha)
+        self.assertIs(checks['Website tests'], tests)
+        self.assertEqual(checks['Website tests']['conclusion'], 'failure')
+        sleep.assert_not_called()
 
     @patch.object(preview.time, 'sleep')
     @patch.object(preview, 'api')
