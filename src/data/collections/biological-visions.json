@@ -5,11 +5,11 @@
   "description": "This gallery is a showcase of biological images selected for their artistic value. The images in these entries are award-winning and presented as the author intended them to be seen.",
   "accession_ids": ["S-BIAD3971", "S-BIAD3555", "S-BIAD3785", "S-BIAD4013", "S-BIAD3554", "S-BIAD3974"],
   "artworks": {
-    "winters-anatomy": "S-BIAD3971", 
-    "etheral-onion-skin": "S-BIAD3555", 
-    "lung-architecture": "S-BIAD3785",  
-    "first-of-spring": "S-BIAD4013",  
-    "geometry-of-mitosis": "S-BIAD3554",  
-    "nano-ice-skaters": "S-BIAD3974"
+    "winters-anatomy": {"accession_id": "S-BIAD3971", "image_uuid": "d0d3e20d-58ff-4ebf-aa1f-bc239fbce19b"},
+    "etheral-onion-skin": {"accession_id": "S-BIAD3555", "image_uuid": "2b7f36c5-6ba8-4d57-9e75-c457bdc86349"},
+    "lung-architecture": {"accession_id": "S-BIAD3785", "image_uuid": "71d44e81-1f8f-407f-b795-6ad072e4b3b0"},
+    "first-of-spring": {"accession_id": "S-BIAD4013", "image_uuid": "968d9a8b-00be-45a7-8bcd-718b82497040"},
+    "geometry-of-mitosis": {"accession_id": "S-BIAD3554","image_uuid": "2f44c91f-e9ff-425f-8325-249d930ee79b"},
+    "nano-ice-skaters": {"accession_id": "S-BIAD3974", "image_uuid": "7a77d052-2387-4eed-aa5d-a2a1e8fcf267"}
   }
 }

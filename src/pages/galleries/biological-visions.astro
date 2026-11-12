@@ -6,8 +6,8 @@ import { getStudyFromApiByAccession} from "../../components/SharedJSFunctions";
 import collection from '../../data/collections/biological-visions.json';
 
 const studiesEntries = await Promise.all(
-  Object.entries(collection.artworks).map(async ([slug, accessionID]) => {
-    const study = await getStudyFromApiByAccession(accessionID);
+  Object.entries(collection.artworks).map(async ([slug, artwork]) => {
+    const study = await getStudyFromApiByAccession(artwork.accession_id);
     return { slug, study };
   })
 );

@@ -99,11 +99,12 @@ export function getSimpleAttributeValue(obj, attrName) {
 }
 
 export function getInteractiveImageRepresentation(img) {
-  const vizarrRepUuid = getSimpleAttributeValue(img, "recommended_vizarr_representation");
-  const interactiveImageRepresentation = (img?.representation.find(
-      (rep) => rep.uuid == vizarrRepUuid
-  ) ?? img?.representation.find( (rep) => rep.image_format === ".ome.zarr") )
-  return interactiveImageRepresentation
+  const uuid = img?.additional_metadata?.find(
+    a => a.name === "recommended_vizarr_representation" && a.provenance === "bia_curation"
+  )?.value?.attribute_key ?? getSimpleAttributeValue(img, "recommended_vizarr_representation");
+
+  return img?.representation?.find(r => r.uuid == uuid)
+    ?? img?.representation?.find(r => r.image_format === ".ome.zarr");
 }
 
 export function getPublicVisualisationURI(uri) {

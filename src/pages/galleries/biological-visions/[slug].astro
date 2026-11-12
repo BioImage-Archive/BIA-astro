@@ -1,16 +1,17 @@
 ---
 import BaseLayout from '../../../layouts/BiologicalVisionsLayout.astro';
 import collection from '../../../data/collections/biological-visions.json';
-import { getStudyFromApiByAccession, getMetadataValue, getInteractiveImageRepresentation, getImageFromAPI, getPublicVisualisationURI } from "../../../components/SharedJSFunctions"
+import fallbackImage from "../../../assets/bioimage-archive/image_fallback.png"
+import { getStudyFromApiByAccession, getStudyImage, getMetadataValue, getInteractiveImageRepresentation, getImageFromAPI, getPublicVisualisationURI } from "../../../components/SharedJSFunctions"
 import { type Study } from "../../../components/SharedInterface.astro"
 import AuthorAffiliation from '../../../components/AuthorAffiliation.astro';
 import { multilineTextRender } from "../../../components/formatting/plain-text.js";
 
 
 export function getStaticPaths() {
-  return Object.entries(collection.artworks).map(([slug, accessionID]) => ({
+  return Object.entries(collection.artworks).map(([slug, artwork]) => ({
     params: { slug },
-    props: { accessionID },
+    props: { accessionID: artwork.accession_id },
   }));
 }
 
@@ -20,21 +21,13 @@ function toTitleCase(str: string) {
     text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
   );
 }
-function getImageUUIDFromStudyImage(exampleURI: string | string[], images: any[]){
-  const selectedURI = Array.isArray(exampleURI) ? exampleURI[0] : exampleURI;
-  const thumbnailImage = images.find(img => {
-    const meta = getMetadataValue(img.additional_metadata, "image_static_display_uri");
-    return meta?.slice?.uri === selectedURI;
-  });
-  return thumbnailImage?.uuid || ""
-}
 
 const { slug } = Astro.params;
 
 const accessionID =
   Astro.props.accessionID ??
   (slug && Object.hasOwn(collection.artworks, slug)
-    ? collection.artworks[slug as keyof typeof collection.artworks]
+    ? collection.artworks[slug as keyof typeof collection.artworks].accession_id
     : undefined);
 
 if (!accessionID) {
@@ -51,23 +44,21 @@ if (!study) {
   return new Response("Study unavailable", { status: 502 });
 }
 
-const imageUUID = getImageUUIDFromStudyImage(
-  study.example_image_uri,
-  study.image ?? []
-);
-
 const gallerySlugs = Object.keys(collection.artworks);
 const currentIndex = gallerySlugs.indexOf(slug!);
 const previousSlug = gallerySlugs[(currentIndex - 1 + gallerySlugs.length) % gallerySlugs.length];
 const nextSlug = gallerySlugs[(currentIndex + 1) % gallerySlugs.length];
 const galleryImageURL = (imageSlug: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/galleries/biological-visions/${imageSlug}`;
+
+const imageUUID = collection?.artworks?.[slug]?.image_uuid;
 const image = imageUUID? await getImageFromAPI(imageUUID) : undefined;
 
 const interactiveImageRepresentation = image? getInteractiveImageRepresentation(image) : undefined;
 const viewerUrl = new URL(
   "https://livingobjects.ebi.ac.uk/bioimaging-01-pub/bia-zarr-test/vizarr/index.html"
 );
-const rawImageURI = image?.representation.find( (rep) => rep.image_format !== ".ome.zarr")?.file_uri?.[0] || "";
+const rawImageURI = image?.representation?.find( (rep) => rep.image_format !== ".ome.zarr")?.file_uri?.[0] || "";
+const studyImageURI = getStudyImage(study);
 const sourceURI = getPublicVisualisationURI(interactiveImageRepresentation?.file_uri?.[0]);
 viewerUrl.searchParams.set("source", Array.isArray(sourceURI) ? sourceURI[0] : sourceURI ?? "");
 viewerUrl.searchParams.set("menuOpen", "false");
@@ -92,11 +83,11 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
     </div>
   </section>
   <section class="vf-content biological-visions-gallery">
-    {sourceURI && (
       <div class="image-viewer-div">
         <a class="gallery-arrow" href={galleryImageURL(previousSlug)} aria-label="Previous image in Biological Visions gallery" title="Previous image">
           <span aria-hidden="true">❮</span>
         </a>
+        {sourceURI ? (
           <iframe
             name="vizarr"
             allow="loopback-network; local-network-access"
@@ -106,11 +97,13 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
             title={`Vizarr viewer for image ${image.uuid}`}
             class="image-viewer"
           ></iframe>
+        ) : (
+          <img class="image-viewer" src={studyImageURI? studyImageURI : fallbackImage.src} alt={pageTitle} />
+        )}
         <a class="gallery-arrow" href={galleryImageURL(nextSlug)} aria-label="Next image in Biological Visions gallery" title="Next image">
           <span aria-hidden="true">❯</span>
         </a>
       </div>
-    )}
   </section>
   <dialog id="about" class="about-panel vf-content" aria-labelledby="about-title">
     <form method="dialog" class="about-close-form">
@@ -128,8 +121,12 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
       <dt>Licence</dt>
       <dd><a href={study.licence_details.uri}>{study.licence_details.label} ↗</a></dd>
     </dl>
-    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={`/bioimage-archive/image/${image?.uuid}`}>Experimental metadata ↗</a>
-    <a class="vf-button vf-button--primary vf-button--sm vf-link" href={rawImageURI} target="_blank" rel="noopener noreferrer">Download Raw image ↗</a>
+    {image && (
+      <a class="vf-button vf-button--primary vf-button--sm vf-link" href={`/bioimage-archive/image/${image.uuid}`}>Experimental metadata ↗</a>
+    )}
+    {rawImageURI && (
+      <a class="vf-button vf-button--primary vf-button--sm vf-link" href={rawImageURI} target="_blank" rel="noopener noreferrer">Download Raw image ↗</a>
+    )}
   </dialog>
 </BaseLayout>
 
@@ -198,6 +195,7 @@ const pageTitle = toTitleCase(study.title.replace("Biological Visions: ", ""));
       width: 100%;
       height: auto;
       aspect-ratio: 16 / 9;
+      object-fit: contain;
       border: 0;
     }
 

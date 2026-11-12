@@ -46,7 +46,7 @@ const baseUrl = import.meta.env.BASE_URL;
     <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
     <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="embl-contenthub-footer" data-embl-js-content-hub-loader/>
   </head>
-  <body class="vf-body">
+  <body class="vf-body vf-u-background-color-ui--black">
     <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
     <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
     
@@ -68,7 +68,7 @@ const baseUrl = import.meta.env.BASE_URL;
                 </div>
             </section>
     </header>
-    <Navigation />
+    <Navigation darktheme={darktheme}/>
     <Announcement />
     <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath} darktheme={darktheme}/>
     <slot />
