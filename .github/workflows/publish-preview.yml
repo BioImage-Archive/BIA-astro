@@ -6,7 +6,6 @@ on:
 permissions:
   contents: read
   actions: read
-  packages: write
 concurrency:
   group: publish-preview-${{ github.event.workflow_run.id }}
   cancel-in-progress: false
@@ -15,13 +14,51 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+      packages: write
+    outputs:
+      pr: ${{ steps.publish.outputs.pr }}
+      sha: ${{ steps.publish.outputs.sha }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
           persist-credentials: false
+      - name: Record Docker version and image store
+        run: |
+          docker version
+          docker info --format '{{json .DriverStatus}}'
       - name: Validate and publish the image without executing it
+        id: publish
         env:
           GH_TOKEN: ${{ github.token }}
           BUILD_RUN_ID: ${{ github.event.workflow_run.id }}
         run: python3 .github/scripts/publish_preview.py
+
+  comment:
+    name: Comment with preview link after tests and preview safety checks
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: write
+    concurrency:
+      group: preview-comment-${{ needs.publish.outputs.pr }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Wait for website tests and preview safety checks, then update the comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ needs.publish.outputs.pr }}
+          HEAD_SHA: ${{ needs.publish.outputs.sha }}
+          PREVIEW_BASE_URL: ${{ vars.PREVIEW_BASE_URL || 'https://preview.bioimagearchive.org' }}
+          PUBLISH_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 .github/scripts/comment_preview.py
