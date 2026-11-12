@@ -8,7 +8,7 @@ import { parse } from '@astrojs/compiler';
 
 const repository = fileURLToPath(new URL('../../../', import.meta.url));
 const output = new URL('../../../artifacts/table-dependency-order/', import.meta.url);
-const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout'];
+const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout', 'BiologicalVisionsLayout'];
 const pages = new Map();
 let root;
 after(async () => { if (root) await rm(root, { recursive: true, force: true }); });

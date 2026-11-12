@@ -1,13 +1,13 @@
 ---
 export interface Study {
   dataset?: any[];
-  accession_id?: string;
-  title?: string;
+  accession_id: string;
+  title: string;
   grant?: any[];
   funding_statement?: string;
   doi?: string; 
-  release_date?: string; 
-  author?: any[]; 
+  release_date: string; 
+  author: any[]; 
   related_publication?: any[];
   see_also?: any[];
   acknowledgement?: string;
@@ -20,6 +20,8 @@ export interface Study {
   annotation_type?: any[]
   pdb_accession?: string[];
   emdb_accession?: string[];
+  imaging_method: string[];
+  example_image_uri: string[];
 }
 export interface Studies {
     accession_id: Study;

@@ -1,5 +1,5 @@
 ---
-const {projectNavItems} = Astro.props;
+const {projectNavItems, darktheme = false} = Astro.props;
 const nav = projectNavItems ?? [
   { key: "", label: "Home", href: "/bioimage-archive/" },
   {
@@ -25,6 +25,7 @@ const nav = projectNavItems ?? [
       { label: "AI Gallery", href: "/bioimage-archive/galleries/ai" },
       { label: "Volume EM", href: "/bioimage-archive/galleries/volumeem" },
       { label: "Spatial Omics", href: "/bioimage-archive/galleries/spatialomics" },
+      { label: "Biological Visions", href: "/bioimage-archive/galleries/biological-visions" },
     ],
   },
   {
@@ -149,7 +150,27 @@ const brandHref = homeItem?.href ?? "/bioimage-archive/";
     padding: 6px 0;
     z-index: 10;
   }
-
+  .dark-navbar {
+    background-color: #373a36;
+    color: white;
+    margin-top: 0;
+  }
+  .dark-navbar .nav-dropdown {
+    background-color: #373a36;
+  }
+  .dark-navbar .vf-navigation__link,
+  .dark-navbar .nav-dropdown__link {
+    color: white;
+  }
+  .dark-navbar .vf-navigation__link:hover,
+  .dark-navbar .vf-navigation__link:focus,
+  .dark-navbar .nav-dropdown__link:hover,
+  .dark-navbar .nav-dropdown__link:focus,
+  .dark-navbar .vf-navigation__link.is-current,
+  .dark-navbar .nav-dropdown__link.is-current {
+    background: #373a36;
+    color: white;
+  }
   .nav-dropdown__item {
     list-style: none;
   }
@@ -249,7 +270,7 @@ const brandHref = homeItem?.href ?? "/bioimage-archive/";
 
 </style>
 
-<nav class="vf-navigation vf-navigation--main navbar vf-u-fullbleed">
+<nav class:list={["vf-navigation vf-navigation--main navbar vf-u-fullbleed", { "dark-navbar": darktheme }]}>
   <a class="nav-brand" href={brandHref}>{brandLabel}</a>
   <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Toggle navigation">
     <span aria-hidden="true">&#9776;</span>

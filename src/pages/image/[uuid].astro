@@ -11,7 +11,7 @@ import ImageTable from '../../components/image/ImageTable.astro';
 
 import fieldMap from "../../data/metadata-field-name-mapping.json";
 import fallbackImage from "../../assets/bioimage-archive/image_fallback.png"
-import {buildITKViewerURL, buildVizarrViewerURL, getPublicVisualisationURI, getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getDownstreamDisplayImages, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
+import {buildITKViewerURL, buildVizarrViewerURL, getInteractiveImageRepresentation, getPublicVisualisationURI, getSimpleAttributeValue, getImageFromAPI, getImagesFromAPI, getDownstreamDisplayImages, getStudyFromApiByAccession, formatPhysicalVoxelDimensions, formatPhysicalDimensions, formatPixelDimensions } from "../../components/SharedJSFunctions.js"
 import { type Study, type Image, type ImageCreationProcess, type SpecimenInfo } from "../../components/SharedInterface.astro"
 
 const imageAcquisitionMap = fieldMap["image_acquisition"];
@@ -21,13 +21,7 @@ const protocolMap = fieldMap["protocol"];
 const { uuid } = Astro.params;
 
 const image = await getImageFromAPI(uuid) as Image;
-
-const vizarrRep = image?.additional_metadata?.find(attr => attr.name === "recommended_vizarr_representation" && attr.provenance==="bia_curation")
-      ?.value["attribute_key"] ?? null
-const vizarrRepUuid = vizarrRep ?? getSimpleAttributeValue(image, "recommended_vizarr_representation");
-const interactiveImageRepresentation = (image.representation.find(
-    (rep) => rep.uuid == vizarrRepUuid
-) ?? image.representation.find( (rep) => rep.image_format === ".ome.zarr") )
+const interactiveImageRepresentation = getInteractiveImageRepresentation(image);
 
 const accession_id = image ? image.accession_id : "";
 const isEMPIAR = accession_id.startsWith("EMPIAR");

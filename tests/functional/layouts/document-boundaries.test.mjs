@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
 import { parse } from '@astrojs/compiler';
 
-const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout', 'MinimalLayout'];
+const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout', 'MinimalLayout', 'BiologicalVisionsLayout'];
 const attributes = node => new Map((node.attributes || []).map(attribute => [attribute.name, attribute.value]));
 const templateChildren = node => (node.children || []).filter(child => !['text', 'comment', 'frontmatter', 'doctype'].includes(child.type));
 const descendants = node => [node, ...(node.children || []).flatMap(descendants)];
@@ -17,7 +17,7 @@ for (const layout of layouts) {
         const [document] = templateChildren(ast);
         assert.deepEqual(templateChildren(document).map(node => node.name), ['head', 'body']);
         const [head, body] = templateChildren(document);
-        assert.equal(attributes(body).get('class'), 'vf-body');
+        assert(String(attributes(body).get('class') || '').split(/\s+/).includes('vf-body'));
         const imports = descendants(document).filter(node => attributes(node).has('data-embl-js-content-hub-loader'));
         assert.equal(imports.length, 1);
         assert(templateChildren(head).includes(imports[0]));
@@ -33,7 +33,7 @@ for (const layout of layouts) {
         assert.equal(children.filter(node => node.name === 'slot').length, 1);
         assert(children.indexOf(targets[0]) > children.indexOf(footers[0]));
         const scripts = children.filter(node => node.name === 'script'
-            && attributes(node).get('src') === 'https://assets.emblstatic.net/vf/v2.5.12/scripts/scripts.js');
+            && attributes(node).get('src') === 'https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js');
         assert.equal(scripts.length, 1);
         assert(children.indexOf(scripts[0]) > children.indexOf(targets[0]));
         for (const suffix of ['ebi-header-footer.css', 'fonts.css']) {

@@ -98,6 +98,15 @@ export function getSimpleAttributeValue(obj, attrName) {
       ?.value[attrName] ?? null;
 }
 
+export function getInteractiveImageRepresentation(img) {
+  const uuid = img?.additional_metadata?.find(
+    a => a.name === "recommended_vizarr_representation" && a.provenance === "bia_curation"
+  )?.value?.attribute_key ?? getSimpleAttributeValue(img, "recommended_vizarr_representation");
+
+  return img?.representation?.find(r => r.uuid == uuid)
+    ?? img?.representation?.find(r => r.image_format === ".ome.zarr");
+}
+
 export function getPublicVisualisationURI(uri) {
     if (!uri) {
         return null;

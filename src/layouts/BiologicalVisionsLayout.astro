@@ -1,0 +1,80 @@
+---
+import "/src/styles/bars_and_sections.css"
+import biaLogo from "../assets/bioimage-archive/BIA_new_logo.png"
+import bannerImage from "../assets/bioimage-archive/banner.webp";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { PUBLIC_WEBSITE_STATE } from "astro:env/client";
+import Footer from '../components/Footer.astro';
+import Navigation from '../components/Navigation.astro';
+import Announcement from "../components/Announcement.astro";
+import { PUBLIC_GTAG } from "astro:env/client";
+import PreviewBanner from "../components/PreviewBanner.astro";
+const { pageTitle, breadcrumbs, darktheme = false } = Astro.props;
+const pagePath = breadcrumbs != null ? breadcrumbs : Astro.url.pathname;
+const state = PUBLIC_WEBSITE_STATE === "DEV"? "Alpha": "Beta";
+const baseUrl = import.meta.env.BASE_URL;
+---
+<html lang="en" class="vf-js" style="scroll-padding-top: 48px">
+  <head>
+    <!-- Google tag (gtag.js) -->
+		<script is:inline async src={"https://www.googletagmanager.com/gtag/js?id=" + PUBLIC_GTAG}></script>
+		<script
+			set:html={`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '${PUBLIC_GTAG}');
+			`}
+		/>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/BIA-logo.svg`} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.30/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" />
+
+    <!-- JS -->     
+    <script is:inline defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script is:inline defer src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> 
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>{pageTitle}</title>
+    <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.5.30/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all">
+    <link rel="stylesheet" href="https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all">
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="embl-contenthub-footer" data-embl-js-content-hub-loader/>
+  </head>
+  <body class="vf-body vf-u-background-color-ui--black">
+    <header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
+    <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
+    
+    <PreviewBanner />
+    <header>
+        <section 
+            class="vf-hero vf-hero--800 vf-hero--search | vf-u-fullbleed"
+            style={`background-image: url('${bannerImage.src}');`}>
+                <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
+                    <section style="display: flex; gap: 10px;">
+                        <div>
+                            <img src={biaLogo.src} style="width:80px">
+                        </div>
+                        <div>
+                            <h2 class="vf-hero__heading">BioImage Archive {state === "Alpha" && <span class="vf-badge vf-badge--primary vf-badge--phases">{state}</span>}</h2>
+                            <p class="vf-hero__subheading">A resource for open, FAIR life science imaging data</p>
+                        </div>
+                    </section>
+                </div>
+            </section>
+    </header>
+    <Navigation darktheme={darktheme}/>
+    <Announcement />
+    <Breadcrumbs pageTitle={pageTitle} pagePath={pagePath} darktheme={darktheme}/>
+    <slot />
+    <Footer darktheme={darktheme}/>  
+    <div class="embl-contenthub-footer vf-content-hub-html"></div>
+    <!-- Script required for bottom bar -->
+    <script src="https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js"/>
+  </body>
+</html>
