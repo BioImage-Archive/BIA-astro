@@ -511,7 +511,7 @@ function initSortOptions(root) {
       const selectedSortOrder = sortOrder?.value || "";
       const shouldResetSort = event?.target?.value === "";
       if (!shouldResetSort && (selectedSortBy || selectedSortOrder)) {
-        url.searchParams.set("sort_by", selectedSortBy || "relevance");
+        url.searchParams.set("sort_by", selectedSortBy || sortBy?.dataset.defaultSort || "relevance");
         url.searchParams.set("sort_order", selectedSortOrder || "desc");
         url.searchParams.set("sort_source", "user");
       }

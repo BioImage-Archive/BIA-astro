@@ -28,7 +28,7 @@ const hasSortParam = url.searchParams.has("sort_by") || url.searchParams.has("so
 const hasPageSizeParam = url.searchParams.has("pagination.page_size");
 const hasSearchQuery = query !== undefined && query !== null && query !== "";
 const releaseDateSortField = searchType === "image" ? "study_release_date" : "release_date";
-const requestedSortBy = url.searchParams.get("sort_by") || url.searchParams.get("sortBy") || "relevance";
+const requestedSortBy = url.searchParams.get("sort_by") || url.searchParams.get("sortBy") || (searchType === "study" ? "release_date" : "relevance");
 const requestedSortOrder = url.searchParams.get("sort_order") || url.searchParams.get("sortOrder") || "desc";
 const requestedSortSource = url.searchParams.get("sort_source") || "";
 const normalizedSortBy =
@@ -76,10 +76,11 @@ const selectedFacets: SelectedFacets = {
 };
 
 const hasSelectedFilters = Object.values(selectedFacets).some((values) => values?.length > 0);
-const isUserSelectedSort = requestedSortSource === "user" || (hasSortParam && sortBy !== "relevance");
-const shouldApplySort = hasSortParam || hasSearchQuery;
-const shouldKeepSort = shouldApplySort && (isUserSelectedSort || hasSearchQuery || hasSelectedFilters);
-const sortSource = isUserSelectedSort ? "user" : "query";
+const isUserSelectedSort = requestedSortSource === "user" || (hasSortParam && requestedSortSource !== "default" && sortBy !== "relevance");
+const shouldApplySort = searchType === "study" || hasSortParam || hasSearchQuery;
+const shouldKeepSort = shouldApplySort && (searchType === "study" || isUserSelectedSort || hasSearchQuery || hasSelectedFilters);
+const sortSource = isUserSelectedSort ? "user" : searchType === "study" ? "default" : "query";
+const showSelectedSort = shouldKeepSort && (searchType !== "study" || isUserSelectedSort);
 
 const FACET_CONFIG: Record<
   string,
@@ -363,16 +364,16 @@ const facets = facetEntries.reduce((acc, [facetKey, data]) => {
                       <option value="60" selected={pageSize === 60}>60 per page</option>
                       <option value="90" selected={pageSize === 90}>90 per page</option>
                     </select>
-                    <select name="sort_by" id="sortBy" class="toolbar-select vf-u-type__text-body--5" aria-label="Sort by">
-                      <option value="" selected={!shouldKeepSort}>Sort by</option>
-                      <option value="relevance" selected={shouldKeepSort && sortBy === "relevance"}>Relevance</option>
-                      <option value={releaseDateSortField} selected={shouldKeepSort && sortBy === releaseDateSortField}>Release date</option>
-                      <option value="accession_id" selected={shouldKeepSort && sortBy === "accession_id"}>Accession</option>
+                    <select name="sort_by" id="sortBy" data-default-sort={sortBy} class="toolbar-select vf-u-type__text-body--5" aria-label="Sort by">
+                      <option value="" selected={!showSelectedSort}>Sort by</option>
+                      <option value="relevance" selected={showSelectedSort && sortBy === "relevance"}>Relevance</option>
+                      <option value={releaseDateSortField} selected={showSelectedSort && sortBy === releaseDateSortField}>Release date</option>
+                      <option value="accession_id" selected={showSelectedSort && sortBy === "accession_id"}>Accession</option>
                     </select>
                     <select name="sort_order" id="sortOrder" class="toolbar-select vf-u-type__text-body--5" aria-label="Sort order">
-                      <option value="" selected={!shouldKeepSort}>Sort order</option>
-                      <option value="desc" selected={shouldKeepSort && sortOrder === "desc"}>Descending</option>
-                      <option value="asc" selected={shouldKeepSort && sortOrder === "asc"}>Ascending</option>
+                      <option value="" selected={!showSelectedSort}>Sort order</option>
+                      <option value="desc" selected={showSelectedSort && sortOrder === "desc"}>Descending</option>
+                      <option value="asc" selected={showSelectedSort && sortOrder === "asc"}>Ascending</option>
                     </select>
                   </div>
                 </div>
