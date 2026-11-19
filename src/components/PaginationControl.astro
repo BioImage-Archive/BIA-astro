@@ -118,7 +118,7 @@ const showCursorTailEllipsis =
   data-next-href={nextPageHref ?? ""}
   data-next-cursor-page={String(display_page + 1)}
 >
-    <ul class="vf-pagination__list | vf-list vf-list--inline" style="display: flex; flex-wrap: wrap; gap: 0.25rem;">
+    <ul class="vf-pagination__list | vf-list vf-list--inline">
     <li class="vf-pagination__item vf-pagination__item--previous-page">
       {previousHref
         ? <a href={buildDisplayURL()} data-fetch-url={previousHref} data-nav-state={JSON.stringify({ page: display_page - 1 })}>Previous</a>
@@ -158,3 +158,19 @@ const showCursorTailEllipsis =
     </li>
     </ul>
 </nav>
+
+<style>
+  .vf-pagination :global(.vf-pagination__list) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .vf-pagination :global(.vf-pagination__item > a),
+  .vf-pagination :global(.vf-pagination__item > span) {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+  }
+</style>

@@ -752,6 +752,54 @@ function buildRelatedEntryPreviewLink({ accession, href, thumbnailURL, type, mea
   `;
 }
 
+export async function getFTPandGlobusLinks(study) {
+  const accessionID = study?.accession_id;
+  const isEMPIAR = accessionID?.toUpperCase().startsWith("EMPIAR-");
+  const isBIA = accessionID?.toUpperCase().startsWith("BIA-");
+  const ftpLink = await getStudyFTPLink(study, accessionID, isEMPIAR, isBIA);
+  const globusLink = `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=${ftpLink.replace("https://ftp.ebi.ac.uk/", "")}/`;
+  return { ftpLink, globusLink };
+}
+
+async function getStudyFTPLink(study, accessionID, isEMPIAR, isBIA) {
+  const images = study?.image ?? []
+  const imageUUID = images[0]?.uuid || null;
+  
+  const empiarPath = `/empiar/world_availability/${accessionID.replace(/^EMPIAR-/, "")}`;
+
+  const metadataLink = getMetadataValue(
+    study?.additional_metadata,
+    "ftp_link"
+  )?.ftp_link;
+
+  if (metadataLink) return metadataLink;
+
+  if (isEMPIAR) {
+    return `https://ftp.ebi.ac.uk${empiarPath}`;
+  }
+
+  if (isBIA) {
+    return getFTPLinkForEBIA(imageUUID, accessionID);
+  }
+
+  const studyInfo = await getFromAPI(
+      `https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`
+    );
+  return studyInfo?.httpLink;
+}
+
+async function getFTPLinkForEBIA(imageUUID, accessionID) {
+  if (!imageUUID) return null;
+
+  const image = await getImageFromAPI(imageUUID);
+  const ftpLink = image?.representation
+    ?.flatMap((rep) => rep?.file_uri ?? [])
+    .find((uri) => uri.startsWith("https://ftp.ebi.ac.uk/bioimaging/")
+      && uri.includes(`/${accessionID}/`));
+
+  return ftpLink ? ftpLink.split(`/${accessionID}/`)[0] + `/${accessionID}` : null;
+}
+
 function getHrefFromLinkValue(link) {
   const value = String(link ?? "").trim();
   const markdownLink = value.match(/^\[[^\]]+\]\(([^)]+)\)$/);

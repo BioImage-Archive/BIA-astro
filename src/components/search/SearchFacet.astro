@@ -10,7 +10,7 @@ const selectedValue= facet["selectedValue"];
 // Get the number of filter options available
 // Show TOP 10 warning if we have 10 or more
 const filterCount = facet.kind === "terms"? options.filter(option => option.count !== null).length: 0;
-const showWarning = filterCount >= 10;
+const showWarning = filterCount >= 10 && title != "Release Year";
 
 const minBound = Number.isFinite(facet.globalMin) ? Math.floor(facet.globalMin) : 0;
 const maxBound = Number.isFinite(facet.globalMax) ? Math.ceil(facet.globalMax): 100;
