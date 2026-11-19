@@ -1,13 +1,13 @@
 ---
-import { getFromAPI } from "../components/SharedJSFunctions.js"
-const { accessionID } = Astro.props;
+import { getFromAPI, getFTPandGlobusLinks } from "../components/SharedJSFunctions.js"
+const { study } = Astro.props;
+const accessionID = study.accession_id;
+
+
 const dirNumber = accessionID.replace("S-BIAD", "").replace("EMPIAR-", "");
-const ftpLink = accessionID.includes("EMPIAR")
-  ? `https://ftp.ebi.ac.uk/empiar/world_availability/${dirNumber}`
-  : await getFromAPI(`https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`);
-const ftpHttpsLink = ftpLink?.httpLink || ftpLink;
-const globusLink = accessionID.includes("EMPIAR")? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink?.globusLink || "";
+const { ftpLink, globusLink } = await getFTPandGlobusLinks(study);
+//const ftpHttpsLink = accessionID.includes("EMPIAR")? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=/empiar/world_availability/${dirNumber}/`: ftpLink || "";
 
 ---
-<a target="_blank" href={ftpHttpsLink+"/"} class="vf-button vf-button--primary vf-button--sm">Browse files on HTTP</a>
+<a target="_blank" href={ftpLink+"/"} class="vf-button vf-button--primary vf-button--sm">Browse files on HTTP</a>
 <a target="_blank" href={globusLink} class="vf-button vf-button--primary vf-button--sm">Browse files on Globus</a>

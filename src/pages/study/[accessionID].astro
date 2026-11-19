@@ -6,7 +6,7 @@ import DatasetInfo from "../../components/DatasetInfo.astro";
 import ViewableImageTable from "../../components/ViewableImageTable.astro";
 import FileListTable from "../../components/FileListTable.astro";
 import Citation from "../../components/Citation.astro";
-import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, formatBytesToHumanSize, getFromAPI, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI, getImageFromAPI} from "../../components/SharedJSFunctions.js"
+import { buildPDBandEMDBLinks, getMetadataValue, multilineTextRender, getFTPandGlobusLinks, formatBytesToHumanSize, getStudyImage, getStudyFromApiByAccession, getAllStudiesFromAPI} from "../../components/SharedJSFunctions.js"
 import { type Study } from "../../components/SharedInterface.astro"
 
 export async function getStaticPaths() {
@@ -37,40 +37,12 @@ const originalStudyLink = isEMPIAR
     ? `/bioimage-archive/study/${accessionID}`
     : `https://www.ebi.ac.uk/biostudies/BioImages/studies/${accessionID}`;
 
-const studyInfo = isEMPIAR
-  ? null
-  : await getFromAPI(
-      `https://www.ebi.ac.uk/biostudies/api/v1/studies/${accessionID}/info`
-    );
-
-const empiarPath = `/empiar/world_availability/${accessionID.replace(/^EMPIAR-/, "")}`;
-
-async function getFTPLinkForEBIA(imageUUID, accessionID) {
-  if (!imageUUID) return null;
-
-  const image = await getImageFromAPI(imageUUID);
-  const ftpLink = image?.representation
-    ?.flatMap((rep) => rep?.file_uri ?? [])
-    .find((uri) => uri.startsWith("https://ftp.ebi.ac.uk/bioimaging/")
-      && uri.includes(`/${accessionID}/`));
-
-  return ftpLink ? ftpLink.split(`/${accessionID}/`)[0] + `/${accessionID}` : null;
-}
-
-const ftpHttpsLink = isEMPIAR
-  ? `https://ftp.ebi.ac.uk${empiarPath}`
-  : isBIA
-    ? await getFTPLinkForEBIA(images[0]?.uuid, accessionID)
-    : studyInfo?.httpLink;
-
-const globusLink = isEMPIAR
-  ? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=${empiarPath}/`
-  : isBIA ? `https://app.globus.org/file-manager?origin_id=47772002-3e5b-4fd3-b97c-18cee38d6df2&origin_path=${ftpHttpsLink.replace("https://ftp.ebi.ac.uk/", "")}/`
-  : studyInfo?.globusLink || "";   
+const { ftpLink, globusLink } = await getFTPandGlobusLinks(study);
+ 
 
 const fileListUrls = getMetadataValue(study?.additional_metadata, "file_list_visualisation");
 const hasFileList = Boolean(fileListUrls?.table_view && fileListUrls?.tree_view);
-const browseFilesLink = hasFileList ? "#file_list" : ftpHttpsLink;
+const browseFilesLink = hasFileList ? "#file_list" : ftpLink;
 
 if (hasFileList) {
   tableOfContents["Browse All Files"] = "file_list";
@@ -374,7 +346,7 @@ const breadcrumbs = [
     <hr />
   )}
   {hasFileList && (
-    <FileListTable file_list_urls={fileListUrls} ftp_path={ftpHttpsLink} globus_link={globusLink}/>
+    <FileListTable file_list_urls={fileListUrls} ftp_path={ftpLink} globus_link={globusLink}/>
   )}
 </BaseLayoutWithBreadcrumbs>
 

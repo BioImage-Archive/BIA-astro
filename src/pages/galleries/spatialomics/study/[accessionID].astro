@@ -9,7 +9,6 @@ import SOTables from '../../../../components/spatialomics/SOTables.astro';
 import { type Study } from "../../../../components/SharedInterface.astro"
 import spatialomicsCollection from "../../../../data/collections/spatialomics.json"
 import { getStudyImage, getDatasetStatsByUUID, getSimpleAttributeValue, getStudyFromApiByAccession, getImagesByAccessionID} from "../../../../components/SharedJSFunctions.js"
-import { PUBLIC_MONGO_API } from "astro:env/client";
 
 export function getStaticPaths() {
   return spatialomicsCollection.accession_ids.map((id) => {
@@ -22,7 +21,6 @@ export function getStaticPaths() {
 const { accessionID } = Astro.params;
 const study = await getStudyFromApiByAccession(accessionID) as Study;
 
-const datasetUUIDsAndFileStats = getDatasetStatsByUUID(study);
 
 let hasTranscripts = false;
 
@@ -84,7 +82,7 @@ const code_links = getSimpleAttributeValue(study, 'see_also_code')
       </figure>
     </div>
     <div slot="ftp-link">
-      <StudyFiles accessionID={accessionID}/>
+      <StudyFiles study={study}/>
     </div>
     </StudyContentsSummary>
 

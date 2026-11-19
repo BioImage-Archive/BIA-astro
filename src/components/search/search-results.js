@@ -498,7 +498,7 @@ function initPageSize(root) {
 
 function initSortOptions(root) {
     const sortBy = root.querySelector("#sortBy");
-    const sortOrder = root.querySelector("#sortOrder");
+    const sortDirections = root.querySelectorAll(".sort-direction");
     const updateSort = (event) => {
       const url = new URL(window.location.href);
       url.searchParams.delete("sortBy");
@@ -508,7 +508,7 @@ function initSortOptions(root) {
       url.searchParams.delete("sort_source");
 
       const selectedSortBy = sortBy?.value || "";
-      const selectedSortOrder = sortOrder?.value || "";
+      const selectedSortOrder = event.currentTarget?.dataset.sortOrder || sortBy?.dataset.sortOrder || "desc";
       const shouldResetSort = event?.target?.value === "";
       if (!shouldResetSort && (selectedSortBy || selectedSortOrder)) {
         url.searchParams.set("sort_by", selectedSortBy || sortBy?.dataset.defaultSort || "relevance");
@@ -522,7 +522,7 @@ function initSortOptions(root) {
     };
 
     sortBy?.addEventListener("change", updateSort);
-    sortOrder?.addEventListener("change", updateSort);
+    sortDirections.forEach(button => button.addEventListener("click", updateSort));
 }
 
 function initSearchResultsShell(root = document) {
