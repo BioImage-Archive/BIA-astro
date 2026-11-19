@@ -19,6 +19,10 @@ export default defineConfig({
   output: process.env.ASTRO_OUTPUT === 'server' ? 'server' : 'static',
   //integrations: [mdx(), preact()]
   integrations: [mdx()],
+  
+  build: {
+    concurrency: 2
+  },
 
   outDir: './dist/bioimage-archive',
 
