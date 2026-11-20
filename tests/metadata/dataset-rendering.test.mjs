@@ -285,7 +285,7 @@ test("additional metadata retains precedence for counts, formats and voxel axes"
     const html = sections["additional-metadata"];
     assert.match(html, /<b>Number of images\/files:<\/b> 7/);
     assert.match(html, /<b>File types and counts:<\/b> tif \(5\), csv \(2\)/);
-    assert.match(html, /<b>Voxel size \(X × Y\):<\/b> 1.25 × 2.5/);
+    assert.match(html, /<b>Voxel size \(X × Y × Z\):<\/b> 1.25 Å × 25 Å × 10000 Å/);
     assert.doesNotMatch(html, /obsolete|999|Top 5 file formats|Physical Voxel Size/);
 });
 

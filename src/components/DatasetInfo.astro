@@ -34,13 +34,31 @@ function getFileTypeCountEntries(fileTypeCounts) {
         }));
 }
 
+function formatVoxelSize(value) {
+    if (value == null) return null;
+    if (typeof value !== "number" && typeof value !== "string") return null;
+    if (typeof value === "string" && value.trim() === "") return null;
+
+    const numericValue = typeof value === "string" ? Number(value) : value;
+    if (!Number.isFinite(numericValue)) {
+        return typeof value === "string" ? value : null;
+    }
+
+    // Numeric voxel sizes are recorded in metres; one ångström is 1e-10 metres.
+    const formattedValue = (numericValue / 1e-10).toLocaleString("en-GB", {
+        useGrouping: false,
+        maximumSignificantDigits: 10,
+    });
+    return `${formattedValue} Å`;
+}
+
 function formatVoxelSizes(voxelSizes) {
     const voxelSize = Array.isArray(voxelSizes) ? voxelSizes[0] : voxelSizes;
     if (!voxelSize || typeof voxelSize !== "object") return null;
 
     const dimensions = ["x", "y", "z"].flatMap((axis) => {
-        const value = voxelSize[`voxel_size_${axis}`];
-        return value == null || value === "" ? [] : [{ axis, value: String(value) }];
+        const value = formatVoxelSize(voxelSize[`voxel_size_${axis}`]);
+        return value == null ? [] : [{ axis, value }];
     });
     if (dimensions.length === 0) return null;
 
@@ -61,8 +79,9 @@ const formattedFileTypeCounts = fileTypeCountEntries
     .map(({ extension, count }) => `${extension} (${count})`)
     .join(", ");
 const metadataVoxelSize = formatVoxelSizes(getAdditionalMetadataValue("voxel_sizes"));
-const voxelSize = metadataVoxelSize ?? (dataset?.physical_voxel_size
-    ? { label: "Physical Voxel Size", value: dataset.physical_voxel_size }
+const physicalVoxelSize = formatVoxelSize(dataset?.physical_voxel_size);
+const voxelSize = metadataVoxelSize ?? (physicalVoxelSize != null
+    ? { label: "Physical Voxel Size", value: physicalVoxelSize }
     : null);
 // A partial set of valid format counts cannot establish a complete file total.
 const summedFileTypeCount = fileTypeCountEntries.length > 0 && selectedFileTypeCountEntries.every(({ count }) => count != null)
