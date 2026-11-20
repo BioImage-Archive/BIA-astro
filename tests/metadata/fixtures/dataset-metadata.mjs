@@ -53,6 +53,9 @@ export const testCases = [
             { name: "file_type_counts", value: { file_type_counts: [{ file_type: ".tif", count: 5 }, { file_type: ".csv", count: 2 }] } },
             { name: "voxel_sizes", value: { voxel_sizes: [{ voxel_size_x: 1.25e-10, voxel_size_y: "2.5e-9", voxel_size_z: "0.000001" }] } },
         ] } },
+    { id: "pixel-size", dataset: { title: "2D pixel sizes", additional_metadata: [
+        { name: "voxel_sizes", value: { voxel_sizes: [{ voxel_size_x: "2.5e-9", voxel_size_y: 5e-9, voxel_size_z: null }] } },
+    ] } },
     { id: "file-list", dataset: { title: "File-list fallback", image_count: 1 },
         datasetFileSummaryString: { datasets: [{ dataset: "File-list fallback", file_count: 12, data_format: "csv" }] } },
     { id: "metadata-fallback", dataset: { title: "Invalid additional metadata", image_count: 9,

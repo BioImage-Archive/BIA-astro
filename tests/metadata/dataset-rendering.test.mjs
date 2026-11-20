@@ -289,6 +289,12 @@ test("additional metadata retains precedence for counts, formats and voxel axes"
     assert.doesNotMatch(html, /obsolete|999|Top 5 file formats|Physical Voxel Size/);
 });
 
+test("2D axis metadata uses pixel size while 3D metadata uses voxel size", () => {
+    assert.match(sections["pixel-size"], /<b>Pixel size \(X × Y\):<\/b> 25 Å × 50 Å/);
+    assert.doesNotMatch(sections["pixel-size"], /Voxel size/);
+    assert.match(sections["additional-metadata"], /<b>Voxel size \(X × Y × Z\):<\/b>/);
+});
+
 test("file-list fallbacks and invalid additional metadata retain main behavior", () => {
     assert.match(sections["file-list"], /<b>Number of images\/files:<\/b> 12/);
     assert.match(sections["file-list"], /<b>File formats:<\/b> csv/);

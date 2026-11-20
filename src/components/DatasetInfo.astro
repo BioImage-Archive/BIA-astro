@@ -62,8 +62,9 @@ function formatVoxelSizes(voxelSizes) {
     });
     if (dimensions.length === 0) return null;
 
+    const sizeLabel = dimensions.some(({ axis }) => axis === "z") ? "Voxel size" : "Pixel size";
     return {
-        label: `Voxel size (${dimensions.map(({ axis }) => axis.toUpperCase()).join(" × ")})`,
+        label: `${sizeLabel} (${dimensions.map(({ axis }) => axis.toUpperCase()).join(" × ")})`,
         value: dimensions.map(({ value }) => value).join(" × "),
     };
 }
