@@ -3,6 +3,7 @@ import elixirDepoLogo from "../assets/bioimage-archive/ELIXIR service logos_EDD_
 import elixirCoreLogo from "../assets/bioimage-archive/ELIXIR service logos_CDR_Full.png"
 import euroBioImageLogoDark from "../assets/bioimage-archive/euro_bio_imaging_logo_dark.png"
 import euroBioImageLogoLight from "../assets/bioimage-archive/euro_bio_imaging_logo_light.png"
+import EmblFooter from "./EMBLFooter.astro";
 
 const { darktheme = false } = Astro.props;
 
@@ -33,6 +34,7 @@ const euroBioImageLogo = darktheme? euroBioImageLogoDark : euroBioImageLogoLight
     </div>
   </section>
 </footer>
+<EmblFooter />
 <style>
 .bia-footer--dark .vf-link,
 .bia-footer--dark .vf-link:visited {
