@@ -9,8 +9,10 @@ import { parse } from '@astrojs/compiler';
 const repository = fileURLToPath(new URL('../../../', import.meta.url));
 const output = new URL('../../../artifacts/table-dependency-order/', import.meta.url);
 const layouts = ['BaseLayout', 'EMPIARLayout', 'ProjectsLayout', 'BiologicalVisionsLayout'];
+const renderedLayouts = [...layouts, 'MinimalLayout'];
 const pages = new Map();
 let root;
+let footerRequests;
 after(async () => { if (root) await rm(root, { recursive: true, force: true }); });
 
 before(async () => {
@@ -21,8 +23,8 @@ before(async () => {
     await symlink(repository + '/node_modules', root + '/node_modules', 'dir');
     await writeFile(root + '/package.json', '{"type":"module"}\n');
     await writeFile(root + '/astro.config.mjs', `import {defineConfig,envField} from 'astro/config';
-export default defineConfig({cacheDir:'./.astro-cache',vite:{cacheDir:'./.vite'},base:'/bioimage-archive',env:{schema:Object.fromEntries(Object.entries({PUBLIC_GTAG:'',PUBLIC_WEBSITE_STATE:'DEV',PUBLIC_SEARCH_API:'https://fixture.invalid'}).map(([name,value])=>[name,envField.string({access:'public',context:'client',default:value})]))}});\n`);
-    for (const layout of layouts) {
+export default defineConfig({build:{concurrency:2},cacheDir:'./.astro-cache',vite:{cacheDir:'./.vite'},base:'/bioimage-archive',env:{schema:Object.fromEntries(Object.entries({PUBLIC_GTAG:'',PUBLIC_WEBSITE_STATE:'DEV',PUBLIC_SEARCH_API:'https://fixture.invalid'}).map(([name,value])=>[name,envField.string({access:'public',context:'client',default:value})]))}});\n`);
+    for (const layout of renderedLayouts) {
         await writeFile(root + '/src/pages/' + layout + '.astro', `---
 import Layout from ${JSON.stringify(repository + '/src/layouts/' + layout + '.astro')};
 ---
@@ -35,17 +37,49 @@ import Gallery from ${JSON.stringify(repository + '/src/pages/galleries/volumeem
 ---
 <Gallery />\n`);
     const { stdout, stderr } = await promisify(execFile)(process.execPath,
-        [repository + '/node_modules/astro/astro.js', 'build', '--root', root], {
+        ['--import', repository + '/tests/fixtures/embl-footer-fetch.mjs',
+            repository + '/node_modules/astro/astro.js', 'build', '--root', root], {
             cwd: repository, timeout: 120000, maxBuffer: 2 * 1024 * 1024,
-            env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1' },
+            env: { ...process.env, ASTRO_TELEMETRY_DISABLED: '1',
+                BIA_EMBL_FOOTER_REQUEST_LOG: root + '/footer-requests.log' },
         });
     await writeFile(new URL('rendering-build.log', output), stdout + stderr);
-    for (const layout of [...layouts, 'VolumeEMGallery']) {
+    footerRequests = await readFile(root + '/footer-requests.log', 'utf8');
+    for (const layout of [...renderedLayouts, 'VolumeEMGallery']) {
         const html = await readFile(root + '/dist/' + layout + '/index.html', 'utf8');
         pages.set(layout, html);
         await writeFile(new URL(layout + '.html', output), html);
     }
 });
+
+test('all prerendered layouts share a single EMBL footer request per build', () => {
+    assert.equal(footerRequests, 'fetch\n');
+});
+
+function descendants(node) {
+    return [node, ...(node.children || []).flatMap(descendants)];
+}
+
+for (const layout of renderedLayouts) {
+    test(layout + ' includes exactly one EMBL footer in the built HTML without a browser fetch', async () => {
+        const html = pages.get(layout);
+        const { ast } = await parse(html);
+        const nodes = descendants(ast);
+        const attributes = node => new Map((node.attributes || []).map(item => [item.name, item.value]));
+        const hasClass = (node, name) => String(attributes(node).get('class') || '').split(/\s+/).includes(name);
+        const wrappers = nodes.filter(node => hasClass(node, 'embl-contenthub-footer'));
+        assert.equal(wrappers.length, 1);
+        const footer = descendants(wrappers[0]).filter(node => node.name === 'footer' && hasClass(node, 'vf-footer'));
+        assert.equal(footer.length, 1);
+        const body = nodes.find(node => node.name === 'body');
+        assert(descendants(body).includes(wrappers[0]));
+        assert(!nodes.some(node => node.name === 'footer' && descendants(node).slice(1).includes(wrappers[0])),
+            'the EMBL footer must not be nested inside another footer');
+        assert.match(html, /EMBL footer fixture/);
+        assert(!nodes.some(node => attributes(node).has('data-embl-js-content-hub-loader')));
+        assert.doesNotMatch(html, /https:\/\/assets\.emblstatic\.net\/vf\/[^"'\s]+\/scripts\/scripts\.js/);
+    });
+}
 
 function scripts(node) {
     return [

@@ -1,0 +1,7 @@
+---
+import { getEmblFooterHtml } from "../server/embl-footer.mjs";
+
+const html = await getEmblFooterHtml();
+---
+
+<div class="embl-contenthub-footer" set:html={html} />

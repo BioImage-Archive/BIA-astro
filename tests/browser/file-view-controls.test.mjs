@@ -1,85 +1,124 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
-import vm from 'node:vm';
-import ts from 'typescript';
+import { initializeFileListViewer } from '../../src/scripts/file-list-viewer.js';
 
-const source = await readFile(new URL('../../src/components/FileListTable.astro',import.meta.url),'utf8');
-const script = source.match(/<script>([\s\S]*?)<\/script>/)[1];
-const javascript = ts.transpileModule(script,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
-function controls() {
-  class Element {}
-  class HTMLElement extends Element {blur(){} }
+function controls({ omics = false, observe = true, readyState = 'loading', separateContainers = false } = {}) {
+  class HTMLElement { blur() {} }
   class HTMLIFrameElement extends HTMLElement {}
-  const buttons=['table','tree'].map(view=>Object.assign(new HTMLElement(),{dataset:{view},pressed:view==='table'?'true':'false',setAttribute(name,value){assert.equal(name,'aria-pressed');this.pressed=value;}}));
-  const frames=['table','tree'].map(view=>{
-   const classes=new Set(view==='table'?['is-active']:[]);
-   return Object.assign(new HTMLIFrameElement(),{src:'',dataset:{src:`https://example.org/${view}`},classes,classList:{toggle(name,active){active?classes.add(name):classes.delete(name);}}});
+  const buttons = (omics ? [] : ['table', 'tree']).map(view => Object.assign(new HTMLElement(), {
+    dataset: { view }, pressed: view === 'table' ? 'true' : 'false',
+    setAttribute(name, value) { assert.equal(name, 'aria-pressed'); this.pressed = value; },
+  }));
+  const frames = (omics ? ['table'] : ['table', 'tree']).map(view => {
+    const classes = new Set(view === 'table' ? ['is-active'] : []);
+    let src = '';
+    const frame = Object.assign(new HTMLIFrameElement(), {
+      dataset: { src: `https://example.org/${view}` }, classes, navigations: 0,
+      classList: { toggle(name, active) { if (active) classes.add(name); else classes.delete(name); } },
+    });
+    Object.defineProperty(frame, 'src', {
+      get: () => src,
+      set(value) { src = value; frame.navigations++; },
+    });
+    return frame;
   });
-  let click;
-  vm.runInNewContext(javascript,{Element,HTMLElement,HTMLIFrameElement,window:{addEventListener(){}},document:{
-   querySelector:()=>new HTMLElement(),
-   querySelectorAll(selector){if(selector==='.file-list-viewer')return frames;assert.equal(selector,'.file-list-view-button');return buttons;},
-   getElementById(id){return frames[['file-list-table-viewer','file-list-tree-viewer'].indexOf(id)];},
-   addEventListener(event,handler){assert.equal(event,'click');click=handler;}
-  }});
+  const groups = separateContainers ? frames.map(frame => [frame]) : [frames];
+  const containers = groups.map(group => ({ querySelectorAll: () => group }));
+  const observers = [];
+  const clicks = [];
+  const events = new Map();
+  const window = {
+    HTMLElement, HTMLIFrameElement,
+    addEventListener(event, handler, options) { events.set(event, { handler, options }); },
+  };
+  if (observe) window.IntersectionObserver = class {
+    constructor(callback, options) {
+      assert.equal(options.rootMargin, '1200px 0px');
+      this.callback = callback;
+      observers.push(this);
+    }
+    observe(container) { assert(containers.includes(container)); this.container = container; }
+    disconnect() { this.disconnected = true; }
+  };
+  const document = {
+    defaultView: window, readyState,
+    querySelectorAll(selector) {
+      if (selector === '.file-list-viewer-frame') return containers;
+      if (selector === '.file-list-viewer') return frames;
+      assert.equal(selector, '.file-list-view-button'); return buttons;
+    },
+    getElementById(id) { return frames[['file-list-table-viewer', 'file-list-tree-viewer'].indexOf(id)]; },
+    addEventListener(event, handler) { assert.equal(event, 'click'); clicks.push(handler); },
+  };
+  initializeFileListViewer(document);
   function select(view) {
-   const target=Object.assign(new HTMLElement(),{closest(selector){assert.equal(selector,'.file-list-view-button');return buttons.find(button=>button.dataset.view===view);}});
-   let prevented=false;click({target,preventDefault(){prevented=true;}});return prevented;
+    const target = Object.assign(new HTMLElement(), {
+      closest(selector) { assert.equal(selector, '.file-list-view-button'); return buttons.find(button => button.dataset.view === view); },
+    });
+    let prevented = false;
+    clicks.forEach(click => click({ target, preventDefault() { prevented = true; } }));
+    return prevented;
   }
-  return {buttons,frames,select};
+  return { document, buttons, frames, select, observers, events, clicks };
 }
-test('file views switch the actual iframe and preserve matching pressed state',()=>{
-  const {buttons,frames,select}=controls();
-  assert(select('tree'));assert.deepEqual(buttons.map(button=>button.pressed),['false','true']);assert.deepEqual(frames.map(frame=>frame.classes.has('is-active')),[false,true]);
-  assert.deepEqual(frames.map(frame=>frame.src),['https://example.org/table','https://example.org/tree']);
-  assert(select('table'));assert.deepEqual(buttons.map(button=>button.pressed),['true','false']);assert.deepEqual(frames.map(frame=>frame.classes.has('is-active')),[true,false]);
+
+test('file views switch the actual iframe and preserve matching pressed state', () => {
+  const { buttons, frames, select } = controls();
+  assert(select('tree'));
+  assert.deepEqual(buttons.map(button => button.pressed), ['false', 'true']);
+  assert.deepEqual(frames.map(frame => frame.classes.has('is-active')), [false, true]);
+  assert.deepEqual(frames.map(frame => frame.src), ['https://example.org/table', 'https://example.org/tree']);
+  assert(select('table'));
+  assert.deepEqual(buttons.map(button => button.pressed), ['true', 'false']);
+  assert.deepEqual(frames.map(frame => frame.classes.has('is-active')), [true, false]);
+  assert.deepEqual(frames.map(frame => frame.navigations), [1, 1]);
 });
-test('unrelated clicks leave the existing file view state untouched',()=>{
-  const {buttons,frames,select}=controls();assert.equal(select('unrelated'),false);assert.deepEqual(buttons.map(button=>button.pressed),['true','false']);assert(frames.every(frame=>frame.src===''));
+
+test('unrelated clicks leave the existing file view state untouched', () => {
+  const { buttons, frames, select } = controls();
+  assert.equal(select('unrelated'), false);
+  assert.deepEqual(buttons.map(button => button.pressed), ['true', 'false']);
+  assert(frames.every(frame => frame.src === ''));
 });
 
-test('omics iframe loads once when it enters view', async () => {
-  const source = await readFile(new URL('../../src/components/spatialomics/SOTables.astro', import.meta.url), 'utf8');
-  const script = source.match(/<script>([\s\S]*?)<\/script>/)[1];
-  const javascript = ts.transpileModule(script, {
-    compilerOptions: { target: ts.ScriptTarget.ES2022 },
-  }).outputText;
+test('omics iframe loads once when it enters view', () => {
+  const { frames: [iframe], observers: [observer] } = controls({ omics: true });
+  assert.equal(iframe.navigations, 0);
+  observer.callback([{ isIntersecting: false }]);
+  assert.equal(iframe.navigations, 0);
+  assert.equal(observer.disconnected, undefined);
+  observer.callback([{ isIntersecting: true }]);
+  assert.equal(iframe.src, 'https://example.org/table');
+  assert.equal(observer.disconnected, true);
+  observer.callback([{ isIntersecting: true }]);
+  assert.equal(iframe.navigations, 1);
+});
 
-  class Element {}
-  class HTMLElement extends Element {}
-  class HTMLIFrameElement extends HTMLElement {}
-  const container = new HTMLElement();
-  const url = 'https://example.org/transcripts';
-  let src = '', navigations = 0, intersect, disconnected = false;
-  const iframe = Object.assign(new HTMLIFrameElement(), { dataset: { src: url } });
-  Object.defineProperty(iframe, 'src', {
-    get: () => src,
-    set(value) { src = value; navigations++; },
-  });
+test('each file-list container loads independently when entering view', () => {
+  const { frames, observers } = controls({ separateContainers: true });
+  observers[0].callback([{ isIntersecting: true }]);
+  assert.deepEqual(frames.map(frame => frame.navigations), [1, 0]);
+  observers[1].callback([{ isIntersecting: true }]);
+  assert.deepEqual(frames.map(frame => frame.navigations), [1, 1]);
+});
 
-  vm.runInNewContext(javascript, {
-    Element, HTMLElement, HTMLIFrameElement,
-    IntersectionObserver: class {
-      constructor(callback) { intersect = callback; }
-      observe(element) { assert.equal(element, container); }
-      disconnect() { disconnected = true; }
-    },
-    document: {
-      querySelector: () => container,
-      querySelectorAll: () => [iframe],
-    },
-  });
+test('both component initializers share one observer and click listener', () => {
+  const page = controls();
+  initializeFileListViewer(page.document);
+  assert.equal(page.observers.length, 1);
+  assert.equal(page.clicks.length, 1);
+});
 
-  assert.equal(navigations, 0);
-  intersect([{ isIntersecting: false }]);
-  assert.equal(navigations, 0);
-  assert.equal(disconnected, false);
+test('without IntersectionObserver the file list loads on window load', () => {
+  const { frames, events } = controls({ observe: false });
+  assert(frames.every(frame => frame.navigations === 0));
+  assert.equal(events.get('load').options.once, true);
+  events.get('load').handler();
+  assert.deepEqual(frames.map(frame => frame.navigations), [1, 1]);
+});
 
-  intersect([{ isIntersecting: true }]);
-  assert.equal(iframe.src, url);
-  assert.equal(disconnected, true);
-
-  intersect([{ isIntersecting: true }]);
-  assert.equal(navigations, 1);
+test('without IntersectionObserver an already loaded document loads its file list immediately', () => {
+  const { frames, events } = controls({ observe: false, readyState: 'complete' });
+  assert.deepEqual(frames.map(frame => frame.navigations), [1, 1]);
+  assert.equal(events.size, 0);
 });

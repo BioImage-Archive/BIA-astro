@@ -59,61 +59,7 @@ if (file_list_urls) {
 </style>
 
 <script>
-  function loadFileListIframe(iframe: Element) {
-    if (!(iframe instanceof HTMLIFrameElement)) return;
-    if (iframe.src || !iframe.dataset.src) return;
+  import { initializeFileListViewer } from "../scripts/file-list-viewer.js";
 
-    iframe.src = iframe.dataset.src;
-  }
-
-  function loadFileListIframes() {
-    document.querySelectorAll(".file-list-viewer").forEach(loadFileListIframe);
-  }
-
-  const fileListViewerFrame = document.querySelector(".file-list-viewer-frame");
-
-  if (fileListViewerFrame instanceof HTMLElement) {
-    if (typeof IntersectionObserver !== "undefined") {
-      const fileListObserver = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((entry) => entry.isIntersecting)) return;
-
-          loadFileListIframes();
-          fileListObserver.disconnect();
-        },
-        { rootMargin: "1200px 0px" }
-      );
-
-      fileListObserver.observe(fileListViewerFrame);
-    } else {
-      window.addEventListener("load", loadFileListIframes, { once: true });
-    }
-  }
-
-  document.addEventListener("click", function (event) {
-    if (!(event.target instanceof HTMLElement)) return;
-
-    const button = event.target.closest(".file-list-view-button");
-    if (!(button instanceof HTMLElement)) return;
-    event.preventDefault();
-
-    const selectedView = button.dataset.view;
-    const selectedIframe = document.getElementById(`file-list-${selectedView}-viewer`);
-    if (!(selectedIframe instanceof HTMLIFrameElement)) return;
-
-    button.blur();
-    loadFileListIframes();
-
-    document.querySelectorAll(".file-list-viewer").forEach((iframe) => {
-      if (iframe instanceof HTMLIFrameElement) {
-        iframe.classList.toggle("is-active", iframe === selectedIframe);
-      }
-    });
-
-    document.querySelectorAll(".file-list-view-button").forEach((viewButton) => {
-      if (viewButton instanceof HTMLElement) {
-        viewButton.setAttribute("aria-pressed", String(viewButton === button));
-      }
-    });
-  });
+  initializeFileListViewer(document);
 </script>

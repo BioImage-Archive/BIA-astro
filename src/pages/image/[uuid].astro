@@ -398,96 +398,12 @@ const breadcrumbs = [
   #meta-wrap[data-collapsed="true"] #meta-content { overflow: hidden; }
 </style>
 
-<script is:inline>
-  function initMetaCollapse() {
-    const wrap = document.getElementById("meta-wrap");
-    const content = document.getElementById("meta-content");
-    const btn = document.getElementById("meta-toggle");
+<script>
+  import { initializeImageMetadata } from "../../scripts/image-metadata.js";
 
-    const MAX = 250; // your limit (or 500 to match iframe)
-
-    if (!wrap || !content || !btn) return;
-
-    const overflow = content.scrollHeight > MAX;
-
-    // ✅ remove button entirely if not needed
-    if (!overflow) {
-      btn.remove();
-      return;
-    }
-
-    // collapse initially
-    wrap.dataset.collapsed = "true";
-    content.style.maxHeight = `${MAX}px`;
-    content.style.overflow = "hidden";
-
-    btn.onclick = () => {
-      const open = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", String(!open));
-      btn.innerText = open ? "See more" : "See less";
-      wrap.dataset.collapsed = String(open);
-      content.style.maxHeight = open ? `${MAX}px` : "";
-    };
-  }
-
-  document.addEventListener("astro:page-load", initMetaCollapse);
-  document.addEventListener("DOMContentLoaded", initMetaCollapse);
-</script>
-
-<script is:inline>
-  function initMetaCollapse() {
-    const wrap = document.getElementById("meta-wrap");
-    const content = document.getElementById("meta-content");
-    const btn = document.getElementById("meta-toggle");
-
-    const MAX = 250;
-
-    if (!wrap || !content || !btn) return;
-
-    const overflow = content.scrollHeight > MAX;
-
-    if (!overflow) {
-      btn.remove();
-      return;
-    }
-
-    wrap.dataset.collapsed = "true";
-    content.style.maxHeight = `${MAX}px`;
-    content.style.overflow = "hidden";
-
-    btn.onclick = () => {
-      const open = btn.getAttribute("aria-expanded") === "true";
-      btn.setAttribute("aria-expanded", String(!open));
-      btn.innerText = open ? "See more" : "See less";
-      wrap.dataset.collapsed = String(open);
-      content.style.maxHeight = open ? `${MAX}px` : "";
-    };
-  }
-
-  function initFilePathCollapse() {
-    const extra = document.getElementById("file-path-extra");
-    const btn = document.getElementById("file-path-toggle");
-
-    if (!extra || !btn) return;
-
-    btn.onclick = () => {
-      const open = btn.getAttribute("aria-expanded") === "true";
-
-      btn.setAttribute("aria-expanded", String(!open));
-      btn.innerText = open ? "See more" : "See less";
-      extra.hidden = open;
-    };
-  }
-
-  document.addEventListener("astro:page-load", () => {
-    initMetaCollapse();
-    initFilePathCollapse();
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    initMetaCollapse();
-    initFilePathCollapse();
-  });
+  const initialize = () => initializeImageMetadata(document);
+  initialize();
+  document.addEventListener("astro:page-load", initialize);
 </script>
 
 </BaseLayoutWithBreadcrumbs>

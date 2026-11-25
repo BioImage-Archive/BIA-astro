@@ -30,34 +30,7 @@ const { fileListURL } = Astro.props;
   }
 </style>
 <script>
-  function loadFileListIframe(iframe: Element) {
-    if (!(iframe instanceof HTMLIFrameElement)) return;
-    if (iframe.src || !iframe.dataset.src) return;
+  import { initializeFileListViewer } from "../../scripts/file-list-viewer.js";
 
-    iframe.src = iframe.dataset.src;
-  }
-
-  function loadFileListIframes() {
-    document.querySelectorAll(".file-list-viewer").forEach(loadFileListIframe);
-  }
-
-  const fileListViewerFrame = document.querySelector(".file-list-viewer-frame");
-
-  if (fileListViewerFrame instanceof HTMLElement) {
-    if (typeof IntersectionObserver !== "undefined") {
-      const fileListObserver = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((entry) => entry.isIntersecting)) return;
-
-          loadFileListIframes();
-          fileListObserver.disconnect();
-        },
-        { rootMargin: "1200px 0px" }
-      );
-
-      fileListObserver.observe(fileListViewerFrame);
-    } else {
-      window.addEventListener("load", loadFileListIframes, { once: true });
-    }
-  }
+  initializeFileListViewer(document);
 </script>

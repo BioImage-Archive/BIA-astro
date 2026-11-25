@@ -9,7 +9,7 @@ const templateChildren = node => (node.children || []).filter(child => !['text',
 const descendants = node => [node, ...(node.children || []).flatMap(descendants)];
 
 for (const layout of layouts) {
-    test(layout + ' places its masthead, content slot and footer loader inside the body', async () => {
+    test(layout + ' places its masthead, content slot and shared footer inside the body', async () => {
         const source = await readFile(new URL('../../../src/layouts/' + layout + '.astro', import.meta.url), 'utf8');
         const { ast, diagnostics } = await parse(source);
         assert.deepEqual(diagnostics.filter(item => item.severity === 1), []);
@@ -19,23 +19,21 @@ for (const layout of layouts) {
         const [head, body] = templateChildren(document);
         assert(String(attributes(body).get('class') || '').split(/\s+/).includes('vf-body'));
         const imports = descendants(document).filter(node => attributes(node).has('data-embl-js-content-hub-loader'));
-        assert.equal(imports.length, 1);
-        assert(templateChildren(head).includes(imports[0]));
-        const target = attributes(imports[0]).get('data-target');
-        assert(target && target !== 'self');
-        const targets = descendants(body).filter(node => String(attributes(node).get('class') || '').split(/\s+/).includes(target));
-        assert.equal(targets.length, 1);
+        assert.equal(imports.length, 0, 'the footer must not use the browser content-hub loader');
+        assert.equal(descendants(document).filter(node =>
+            String(attributes(node).get('class') || '').split(/\s+/).includes('embl-contenthub-footer')).length,
+        0, 'the shared Footer component owns the EMBL footer');
         const children = templateChildren(body);
         assert.equal(children.filter(node => attributes(node).get('id') === 'masthead-black-bar').length, 1);
         assert.equal(children.filter(node => node.type === 'component' && node.name === 'PreviewBanner').length, 1);
         const footers = children.filter(node => node.type === 'component' && node.name === 'Footer');
         assert.equal(footers.length, 1);
-        assert.equal(children.filter(node => node.name === 'slot').length, 1);
-        assert(children.indexOf(targets[0]) > children.indexOf(footers[0]));
-        const scripts = children.filter(node => node.name === 'script'
-            && attributes(node).get('src') === 'https://assets.emblstatic.net/vf/v2.5.30/scripts/scripts.js');
-        assert.equal(scripts.length, 1);
-        assert(children.indexOf(scripts[0]) > children.indexOf(targets[0]));
+        const slots = children.filter(node => node.name === 'slot');
+        assert.equal(slots.length, 1);
+        assert(children.indexOf(footers[0]) > children.indexOf(slots[0]));
+        assert(!descendants(document).some(node => node.name === 'script'
+            && /^https:\/\/assets\.emblstatic\.net\/vf\/.*\/scripts\/scripts\.js$/.test(attributes(node).get('src') || '')),
+        'the full Visual Framework bundle makes unwanted cross-origin requests');
         for (const suffix of ['ebi-header-footer.css', 'fonts.css']) {
             assert(templateChildren(head).some(node => node.name === 'link' && String(attributes(node).get('href')).endsWith(suffix)));
         }
